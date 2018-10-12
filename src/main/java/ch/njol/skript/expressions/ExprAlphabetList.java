@@ -42,7 +42,7 @@ import ch.njol.util.Kleenean;
  */
 @Name("Alphabetical Sort")
 @Description("Sorts given strings in alphabetical order.")
-@Examples({"set {_list::*} to alphabetically sorted {_list::*"})
+@Examples({"set {list::*} to alphabetically sorted {list::*}"})
 @Since("2.2-Fixes-V9c")
 public class ExprAlphabetList extends SimpleExpression<String>{
 	

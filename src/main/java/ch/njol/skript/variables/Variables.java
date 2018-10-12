@@ -77,6 +77,14 @@ public abstract class Variables {
 	static {
 		yggdrasil.registerSingleClass(Kleenean.class, "Kleenean");
 		yggdrasil.registerClassResolver(new ConfigurationSerializer<ConfigurationSerializable>() {
+			{
+				init(); // separate method for the annotation
+			}
+ 			@SuppressWarnings({"unchecked", "null"})
+			private final void init() {
+				// used by asserts
+				info = Classes.getExactClassInfo(ConfigurationSerializable.class);
+ 			}
 			@SuppressWarnings({"unchecked"})
 			@Override
 			@Nullable

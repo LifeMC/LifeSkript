@@ -28,15 +28,18 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.util.SimpleLiteral;
+import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
 
 /**
@@ -66,8 +69,33 @@ public class ExprNumbers extends SimpleExpression<Number> {
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		start = matchedPattern == 0 ? (Expression<Number>) exprs[0] : new SimpleLiteral<Number>(1, false);
 		end = (Expression<Number>) exprs[1 - matchedPattern];
+		if (end instanceof Literal) {
+			int amount = ((Literal<Number>) end).getSingle().intValue();
+			if (amount == 0 && isInLoop()) {
+				Skript.warning("Looping zero times makes the code inside of the loop useless");
+			} else if (amount == 1 & isInLoop()) {
+				Skript.warning("Since you're looping exactly one time, you could simply remove the loop instead");
+			} else if (amount < 0) {
+				if (isInLoop()) {
+					Skript.error("Looping a negative amount of times is impossible");
+					return false;
+				}
+			}
+		}
 		integer = parseResult.mark == 1 || matchedPattern == 1;
 		return true;
+	}
+	
+	private static boolean isInLoop() {
+		Node node = SkriptLogger.getNode();
+		if (node == null) {
+			return false;
+		}
+		String key = node.getKey();
+		if (key == null) {
+			return false;
+		}
+		return key.startsWith("loop ");
 	}
 	
 	@Override

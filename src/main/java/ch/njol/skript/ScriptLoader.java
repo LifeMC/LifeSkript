@@ -524,7 +524,7 @@ final public class ScriptLoader {
 				}
 				
 				if (Skript.logHigh())
-					Skript.info("loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "'");
+					Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "'");
 				
 				currentScript = null;
 			} finally {

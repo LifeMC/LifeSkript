@@ -28,6 +28,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
@@ -76,6 +77,7 @@ public abstract class SkriptConfig {
 	final static Option<Boolean> checkForNewVersion = new Option<Boolean>("check for new version", false);
 	final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(12 * 60 * 60 * 1000))
 			.setter(new Setter<Timespan>() {
+				@SuppressWarnings("null")
 				@Override
 				public void set(final Timespan t) {
 					final Task ct = Updater.checkerTask;
@@ -92,7 +94,7 @@ public abstract class SkriptConfig {
 	// everything handled by Variables
 	public final static OptionSection databases = new OptionSection("databases");
 	
-	public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<Boolean>("use player UUIDs in variable names", false); // TODO change to true later (as well as in the default config)
+	public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<Boolean>("use player UUIDs in variable names", false);
 	public final static Option<Boolean> enablePlayerVariableFix = new Option<Boolean>("player variable fix", true);
 
 	
@@ -133,15 +135,15 @@ public abstract class SkriptConfig {
 		@Nullable
 		public EventPriority convert(final String s) {
 			try {
-				return EventPriority.valueOf(s.toUpperCase());
+				return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
 			} catch (final IllegalArgumentException e) {
 				Skript.error("The plugin priority has to be one of lowest, low, normal, high, or highest.");
-				return null;
+				return EventPriority.NORMAL;
 			}
 		}
 	});
 	
-	public final static Option<Boolean> logPlayerCommands = new Option<Boolean>("log player commands", false);
+	public final static Option<Boolean> logPlayerCommands = new Option<Boolean>("log player commands", true);
 	
 	/**
 	 * Maximum number of digits to display after the period for floats and doubles
@@ -152,8 +154,8 @@ public abstract class SkriptConfig {
 	
 	public final static Option<Boolean> caseSensitive = new Option<Boolean>("case sensitive", false);
 	
-	public final static Option<Boolean> disableVariableConflictWarnings = new Option<Boolean>("disable variable conflict warnings", false);
-	public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<Boolean>("disable variable will not be saved warnings", false);
+	public final static Option<Boolean> disableVariableConflictWarnings = new Option<Boolean>("disable variable conflict warnings", true);
+	public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<Boolean>("disable variable will not be saved warnings", true);
 	
 	
 	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false)

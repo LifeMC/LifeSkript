@@ -387,9 +387,8 @@ public class BlockStateBlock implements Block {
 	}
 
 	@Override
-	public void setType(final Material arg0, final boolean arg1) {
-		// TODO Auto-generated method stub
-		
+	public void setType(final Material type, final boolean applyPhysics) {
+		setType(type); //REMIND Generate seperate method for applyPhysics
 	}
 	
 }
