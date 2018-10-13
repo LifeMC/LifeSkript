@@ -51,12 +51,13 @@ import ch.njol.util.Kleenean;
 @Events("Script Load/Unload")
 public class ExprScript extends SimpleExpression<String> {
 	static {
-		Skript.registerExpression(ExprScript.class, String.class, ExpressionType.SIMPLE, "[the] script[['s] name]");
+		Skript.registerExpression(ExprScript.class, String.class, ExpressionType.SIMPLE, "[the] script[['s] name]", "name of [the] script");
 	}
 	
 	@SuppressWarnings("null")
 	private String name;
 	
+	@SuppressWarnings({"null", "unused"})
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		final Config script = ScriptLoader.currentScript;

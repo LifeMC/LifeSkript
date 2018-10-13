@@ -36,6 +36,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.TriggerItem;
 import ch.njol.skript.util.Timespan;
@@ -62,6 +63,12 @@ public class Delay extends Effect {
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		duration = (Expression<Timespan>) exprs[0];
+		if (duration instanceof Literal) {
+			final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
+			if (millis > 86400000L) {
+				Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
+			}
+		}
 		return true;
 	}
 	
@@ -78,7 +85,7 @@ public class Delay extends Effect {
 				return null;
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
 				@Override
-				public void run() {
+				public final void run() {
 					if (Skript.debug())
 						Skript.info(getIndentation() + "... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
 					TriggerItem.walk(next, e);

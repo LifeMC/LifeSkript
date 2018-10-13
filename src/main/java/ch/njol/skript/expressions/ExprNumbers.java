@@ -70,7 +70,7 @@ public class ExprNumbers extends SimpleExpression<Number> {
 		start = matchedPattern == 0 ? (Expression<Number>) exprs[0] : new SimpleLiteral<Number>(1, false);
 		end = (Expression<Number>) exprs[1 - matchedPattern];
 		if (end instanceof Literal) {
-			int amount = ((Literal<Number>) end).getSingle().intValue();
+			final int amount = ((Literal<Number>) end).getSingle().intValue();
 			if (amount == 0 && isInLoop()) {
 				Skript.warning("Looping zero times makes the code inside of the loop useless");
 			} else if (amount == 1 & isInLoop()) {
@@ -87,11 +87,11 @@ public class ExprNumbers extends SimpleExpression<Number> {
 	}
 	
 	private static boolean isInLoop() {
-		Node node = SkriptLogger.getNode();
+		final Node node = SkriptLogger.getNode();
 		if (node == null) {
 			return false;
 		}
-		String key = node.getKey();
+		final String key = node.getKey();
 		if (key == null) {
 			return false;
 		}

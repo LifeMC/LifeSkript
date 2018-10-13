@@ -75,7 +75,7 @@ public abstract class SkriptConfig {
 			});
 	
 	final static Option<Boolean> checkForNewVersion = new Option<Boolean>("check for new version", false);
-	final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(12 * 60 * 60 * 1000))
+	final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(0))
 			.setter(new Setter<Timespan>() {
 				@SuppressWarnings("null")
 				@Override
@@ -89,7 +89,7 @@ public abstract class SkriptConfig {
 	
 	public final static Option<Boolean> enableEffectCommands = new Option<Boolean>("enable effect commands", false);
 	public final static Option<String> effectCommandToken = new Option<String>("effect command token", "!");
-	public final static Option<Boolean> allowOpsToUseEffectCommands = new Option<Boolean>("allow ops to use effect commands", false);
+	public final static Option<Boolean> allowOpsToUseEffectCommands = new Option<Boolean>("allow ops to use effect commands", true);
 	
 	// everything handled by Variables
 	public final static OptionSection databases = new OptionSection("databases");
@@ -157,6 +157,9 @@ public abstract class SkriptConfig {
 	public final static Option<Boolean> disableVariableConflictWarnings = new Option<Boolean>("disable variable conflict warnings", true);
 	public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<Boolean>("disable variable will not be saved warnings", true);
 	
+	public final static Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<Boolean>("disable expression is already a text warnings", false);
+	
+	public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<Boolean>("disable variable name starting with expression warnings", false);
 	
 	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false)
 			.optional(true);

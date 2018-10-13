@@ -149,6 +149,11 @@ import ch.njol.util.coll.iterator.EnumerationIterable;
  */
 public final class Skript extends JavaPlugin implements Listener {
 	
+	// ================ CONSTANTS ================
+	
+	private static final String LATEST_VERSION_DOWNLOAD_LINK =
+			"https://github.com/LifeMC/LifeSkript/releases/latest/";
+	
 	// ================ PLUGIN ================
 	
 	@Nullable
@@ -445,20 +450,30 @@ public final class Skript extends JavaPlugin implements Listener {
 
 			@Override
 			public final void run() {
-				final String s = getLatestVersion();
-				if(s == null) return;
-				if(!s.equalsIgnoreCase(getInstance().getDescription().getVersion())){
-					Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + s + " has been released. It's highly recommended to upgrade to the latest version.");
+				try {
+					final String s = getLatestVersion();
+					if(s == null) return;
+					if(!s.trim().equalsIgnoreCase(getInstance().getDescription().getVersion().trim())){
+						Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + s + " has been released. It's highly recommended to upgrade to the latest skript version.");
+						printDownloadLink();
+					}
+				} catch(final Throwable tw) {
+					Bukkit.getLogger().warning("[Skript] Unable to check updates, make sure you are using the latest version of Skript!");
+					printDownloadLink();
 				}
 			}
 			
 		});
 	}
 	
+	static final void printDownloadLink() {
+		Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);
+	}
+	
 	@Nullable
 	static final String getLatestVersion() {
 		try {
-	      final URL url = new URL("http://www.lifemcserver.com/skript-latest.php");
+	      final URL url = new URL("https://www.lifemcserver.com/skript-latest.php");
 	      final Scanner scanner = new Scanner(url.openStream(), "UTF-8");
 	      @Nullable String str = null;
 	      while (scanner.hasNext()) {
@@ -1087,19 +1102,19 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @param info Description of the error and additional information
 	 * @return an EmptyStacktraceException to throw if code execution should terminate.
 	 */
-	public final static EmptyStacktraceException exception(final String... info) {
+	public final static RuntimeException exception(final String... info) {
 		return exception(null, info);
 	}
 	
-	public final static EmptyStacktraceException exception(final @Nullable Throwable cause, final String... info) {
+	public final static RuntimeException exception(final @Nullable Throwable cause, final String... info) {
 		return exception(cause, null, null, info);
 	}
 	
-	public final static EmptyStacktraceException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
+	public final static RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
 		return exception(cause, thread, null, info);
 	}
 	
-	public final static EmptyStacktraceException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
+	public final static RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
 		return exception(cause, null, item, info);
 	}
 	
@@ -1110,7 +1125,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @param info Description of the error and additional information
 	 * @return an EmptyStacktraceException to throw if code execution should terminate.
 	 */
-	public final static EmptyStacktraceException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
+	public final static RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
 		
 		logEx();
 		logEx("[Skript] Severe Error:");
@@ -1157,7 +1172,11 @@ public final class Skript extends JavaPlugin implements Listener {
 		logEx("End of Error.");
 		logEx();
 		
-		return new EmptyStacktraceException();
+		if(!FileUtils.RUNNINGJAVA6) {
+			return new EmptyStacktraceException();
+		} else {
+			return new RuntimeException();
+		}
 	}
 	
 	final static void logEx() {

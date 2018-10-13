@@ -26,13 +26,12 @@ import static ch.njol.yggdrasil.Tag.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 	
 	@SuppressWarnings("null")
-	private final static Charset UTF_8 = StandardCharsets.UTF_8;
+	private final static Charset UTF_8 = Charset.forName("UTF-8");
 	
 	private final OutputStream out;
 	

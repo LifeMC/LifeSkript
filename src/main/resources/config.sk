@@ -74,7 +74,7 @@ effect command token: !
 #	!create explosion of force 10000 - likely crashes the server or at least hangs it up for a long time
 #	!ban all players - as the effect implies
 
-allow ops to use effect commands: false
+allow ops to use effect commands: true
 # Whether server operators which do not have the permission "skript.effectcommands" should have access to effect commands.
 # This setting is mainly useful for servers that do not run any permissions plugin.
 
@@ -86,12 +86,13 @@ player variable fix: true
 #Basicly the variable holds the old player object when a player has rejoined thus rendering the variable kinda broken.
 #This fix should work around that and whenever a invalid(old) player object is attempted to be get through a variable
 #It will check if the player is online and then get the valid(new) player object and update the variable object to that one.
-#By Mirre
+
 
 use player UUIDs in variable names: false
 # Whether to use a player's UUID instead of their name in variables, e.g. {home.%player%} will look like
 # {home.e5240337-a4a2-39dd-8ed9-e5ce729a8522} instead of {home.njol}.
 # Please note that if this setting is changed old variables WILL NOT be renamed automatically.
+# If you are using Skript first time, you should make this true. Only one reason for making default value "false" is the compatibility.
 
 
 date format: default
@@ -146,14 +147,25 @@ case sensitive: false
 # Variable names are case-insensitive irrespective of this setting.
 
 
-disable variable conflict warnings: true
+disable variable will not be saved warnings: true
+#Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
+
+
+disable expression is already a text warnings: false
+# Disables the "... is already a text, so you should not put it in one" warnings.
+
+
+disable variable conflict warnings: false
 # Disables warnings of potential variable name conflicts if set to true.
 # I recommend to not touch this option, but if you do so you should at least set it back to false
 # whenever you create new scripts with new variables.
 
-disable variable will not be saved warnings: true
-#Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
-#By Mirre.
+
+disable variable name starting with expression warnings: false
+# Disables the "Starting a variable's name with an expression is discouraged" warning.
+# I recommend to not touch this option, but if you do so you should at least set it back to false
+# whenever you create new scripts with new variables.
+
 
 # ==== Variables ====
 
@@ -203,7 +215,7 @@ databases:
 		# Where to save the variables to. For a CSV file, the file extension '.csv' is recommended, but not required, but SQLite database files must end in '.db' (SQLibrary forces this).
 		# The file path can either be absolute (e.g. 'C:\whatever\...' [Windows] or '/usr/whatever/...' [Unix]), or relative to the server directory (e.g. './plugins/Skript/...').
 		
-		backup interval: 2 hours
+		backup interval: 4 hours
 		# Creates a backup of the file every so often. This can be useful if you ever want to revert variables to an older state.
 		# Variables are saved constantly no matter what is set here, thus a server crash will never make you loose any variables.
 		# Set this to 0 to disable this feature.
@@ -252,7 +264,7 @@ databases:
 		
 		file: ./plugins/Skript/variables.csv
 		
-		backup interval: 2 hours
+		backup interval: 4 hours
 	
 	# PS: If you don't want some variables to be saved in any database (e.g. variables that contain an %entity% which usually despawn when the server is shut down)
 	# you can modify the last database's pattern to not match all variables, e.g. use '(?!x_).*' to match all variables that don't start with 'x_'.

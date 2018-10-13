@@ -383,8 +383,7 @@ public class DelayedChangeBlock implements Block {
 		}
 		return loc;
 	}
-
-	@Override
+	
 	public void setType(final Material type, final boolean applyPhysics) {
 		setType(type); //REMIND Generate seperate method for applyPhysics
 	}

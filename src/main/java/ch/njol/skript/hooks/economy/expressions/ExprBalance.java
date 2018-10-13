@@ -45,7 +45,7 @@ import ch.njol.skript.hooks.economy.classes.Money;
 @Since("2.0")
 public class ExprBalance extends SimplePropertyExpression<OfflinePlayer, Money> {
 	static {
-		register(ExprBalance.class, Money.class, "(money|balance|[bank] account)", "players");
+		register(ExprBalance.class, Money.class, "(money|balance|[bank] account)", "offlineplayers");
 	}
 	
 	@SuppressWarnings("deprecation")

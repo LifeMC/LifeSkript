@@ -19,53 +19,71 @@
  * 
  */
 
-package ch.njol.skript.conditions;
+package ch.njol.skript.effects;
 
+import java.util.List;
+
+import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
+
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
-import ch.njol.skript.lang.Condition;
+import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Loop;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.TriggerItem;
 import ch.njol.util.Kleenean;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Event Cancelled")
-@Description("Checks whether or not the event is cancelled")
-@Examples({"on click:",
-		"\tif event is cancelled:",
-		"\t\tbroadcast \"no clicks allowed!\""
-})
-@Since("2.2-Fixes-V9c")
 /**
  * @author Peter Güttinger
  */
-public class CondCancelled extends Condition {
+@Name("Continue")
+@Description("Skips the value currently being looped, moving on to the next value if it exists.")
+@Examples("loop all players:\n" +
+		"\tif loop-value does not have permission \"moderator\":\n" +
+		"\t\tcontinue # filter out non moderators\n" +
+		"\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
+@Since("2.2-Fixes-V10")
+public class EffContinue extends Effect {
 
 	static {
-		Skript.registerCondition(CondCancelled.class,
-				"[the] event is cancel[l]ed",
- 				"[the] event (is not|isn't) cancel[l]ed"
-		);
+		Skript.registerEffect(EffContinue.class, "continue [loop]");
 	}
 
+	@SuppressWarnings("null")
+	private Loop loop;
+
 	@Override
-	public boolean check(final Event e) {
-		return (e instanceof Cancellable && ((Cancellable) e).isCancelled()) ^ isNegated();
+	protected void execute(final Event e) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Nullable
+	@Override
+	protected TriggerItem walk(final Event e) {
+		TriggerItem.walk(loop, e);
+		return null;
 	}
 
 	@Override
 	public String toString(@Nullable final Event e, final boolean debug) {
-		return isNegated() ? "event is not cancelled" : "event is cancelled";
+		return "continue";
 	}
 
 	@Override
+	@SuppressWarnings("null")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-		setNegated(matchedPattern == 1);
+		final List<Loop> loops = ScriptLoader.currentLoops;
+		if (loops.isEmpty()) {
+			Skript.error("Continue may only be used in loops");
+			return false;
+		}
+		loop = loops.get(loops.size() - 1); // the most recent loop
 		return true;
 	}
 

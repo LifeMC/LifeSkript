@@ -26,8 +26,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +37,7 @@ import ch.njol.skript.classes.Converter;
  */
 public abstract class FileUtils {
 	
-	private static boolean RUNNINGJAVA6 = true;// = System.getProperty("java.version").startsWith("1.6"); // doesn't work reliably?
+	public static boolean RUNNINGJAVA6 = true;// = System.getProperty("java.version").startsWith("1.6"); // doesn't work reliably?
 	static {
 		try {
 			new File(".").toPath();
@@ -85,9 +83,9 @@ public abstract class FileUtils {
 			throw new IOException("Can't rename " + from.getName() + " to " + to.getName() + ": The target file already exists");
 		if (!RUNNINGJAVA6) {
 			if (replace)
-				Files.move(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+				java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
 			else
-				Files.move(from.toPath(), to.toPath(), StandardCopyOption.ATOMIC_MOVE);
+				java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.ATOMIC_MOVE);
 		} else {
 			File moveTo = null;
 			if (replace && to.exists()) {
@@ -111,7 +109,7 @@ public abstract class FileUtils {
 	
 	public final static void copy(final File from, final File to) throws IOException {
 		if (!RUNNINGJAVA6) {
-			Files.copy(from.toPath(), to.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+			java.nio.file.Files.copy(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
 		} else {
 			FileInputStream in = null;
 			FileOutputStream out = null;

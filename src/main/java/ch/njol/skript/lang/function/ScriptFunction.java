@@ -40,6 +40,7 @@ public class ScriptFunction<T> extends Function<T> {
 	
 	final Trigger trigger;
 	
+	@SuppressWarnings("null")
 	@SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public ScriptFunction(final String name, final Parameter<?>[] parameters, final SectionNode node, @Nullable final ClassInfo<T> returnType, final boolean single) {
 		super(name, parameters, returnType, single);
