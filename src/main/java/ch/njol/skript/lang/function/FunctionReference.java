@@ -167,17 +167,26 @@ public class FunctionReference<T> {
 	}
 	
 	@Nullable
+	@SuppressWarnings({"unused", "null", "unchecked"})
 	protected T[] execute(final Event e) {
+		if (function == null)
+			function = (Function<? extends T>) Functions.getFunction(functionName);
+		if (function == null) {
+			Skript.error("Invalid function call to function that does not exist yet. Be careful when using functions in 'script load' events!");
+			return null;
+		}
+		
 		final Object[][] params = new Object[singleUberParam ? 1 : parameters.length][];
 		if (singleUberParam && parameters.length > 1) {
 			final ArrayList<Object> l = new ArrayList<Object>();
-			for (int i = 0; i < params.length; i++)
+			for (int i = 0; i < parameters.length; i++)
 				l.addAll(Arrays.asList(parameters[i].getArray(e))); // TODO what if an argument is not available? pass null or abort?
 			params[0] = l.toArray();
 		} else {
 			for (int i = 0; i < params.length; i++)
 				params[i] = parameters[i].getArray(e); // TODO what if an argument is not available? pass null or abort?
 		}
+		assert function != null;
 		return function.execute(params);
 	}
 	
