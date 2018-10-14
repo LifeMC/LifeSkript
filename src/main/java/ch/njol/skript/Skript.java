@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -116,6 +117,7 @@ import ch.njol.util.Closeable;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NullableChecker;
 import ch.njol.util.StringUtils;
+import ch.njol.util.WebUtils;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.EnumerationIterable;
@@ -153,6 +155,9 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	private static final String LATEST_VERSION_DOWNLOAD_LINK =
 			"https://github.com/LifeMC/LifeSkript/releases/latest/";
+	
+	private static final String ISSUES_LINK =
+			"https://github.com/LifeMC/LifeSkript/issues/";
 	
 	// ================ PLUGIN ================
 	
@@ -423,6 +428,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			}
 		});
 		
+		/*
 		Bukkit.getPluginManager().registerEvents(new Listener() {
 			@EventHandler
 			public void onJoin(final PlayerJoinEvent e) {
@@ -444,21 +450,36 @@ public final class Skript extends JavaPlugin implements Listener {
 				}
 			}
 		}, this);
-		
+		*/
 		
 		Bukkit.getScheduler().runTaskAsynchronously(getInstance(), new Runnable(){
 
 			@Override
 			public final void run() {
 				try {
-					final String s = getLatestVersion();
-					if(s == null) return;
-					if(!s.trim().equalsIgnoreCase(getInstance().getDescription().getVersion().trim())){
-						Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + s + " has been released. It's highly recommended to upgrade to the latest skript version.");
+					final String current = getInstance().getDescription().getVersion();
+					if(current == null || current.length() < 1) return;
+					
+					final String latest = getLatestVersion();
+					if(latest == null) return;
+					
+					final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
+					final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
+					
+					if(!latestTrimmed.equals(currentTrimmed)) {
+						Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
+						if(Skript.debug())
+							Bukkit.getLogger().info("[Skript] Current version: " + currentTrimmed);
+							Bukkit.getLogger().info("[Skript] Latest version: " + latestTrimmed);
 						printDownloadLink();
+					} else {
+						Bukkit.getLogger().info("[Skript] You are using the latest version of the Skript. No new updates available. Thanks for using Skript!");
+						printIssuesLink();
 					}
 				} catch(final Throwable tw) {
 					Bukkit.getLogger().warning("[Skript] Unable to check updates, make sure you are using the latest version of Skript!");
+					if(Skript.logHigh())
+						Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw);
 					printDownloadLink();
 				}
 			}
@@ -470,17 +491,14 @@ public final class Skript extends JavaPlugin implements Listener {
 		Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);
 	}
 	
+	static final void printIssuesLink() {
+		Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK);
+	}
+	
 	@Nullable
 	static final String getLatestVersion() {
 		try {
-	      final URL url = new URL("https://www.lifemcserver.com/skript-latest.php");
-	      final Scanner scanner = new Scanner(url.openStream(), "UTF-8");
-	      @Nullable String str = null;
-	      while (scanner.hasNext()) {
-	          str = str != null ? str + scanner.next() : scanner.next();
-	      }
-	      scanner.close();
-	      return str;
+			return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
 	    }
 	    catch (final Throwable tw) { return null; }
 	}
@@ -1132,7 +1150,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		logEx(info);
 		logEx();
 		logEx("If you're developing an add-on for Skript this likely means that you have done something wrong.");
-		logEx("If you're a server admin however please go to https://github.com/LifeMC/LifeSkript/issues/");
+		logEx("If you're a server admin however please go to " + ISSUES_LINK);
 		logEx("and check whether this error has already been reported.");
 		logEx("If not please create a new ticket with a meaningful title, copy & paste this whole error into it,");
 		logEx("and describe what you did before it happened and/or what you think caused the error.");
