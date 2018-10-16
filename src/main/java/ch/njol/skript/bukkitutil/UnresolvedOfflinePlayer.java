@@ -51,12 +51,16 @@ public class UnresolvedOfflinePlayer implements OfflinePlayer {
 	final static LinkedBlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<UnresolvedOfflinePlayer>();
 	
 	final static Thread resolverThread = Skript.newThread(new Runnable() {
-		@SuppressWarnings("deprecation")
 		@Override
-		public void run() {
+		@SuppressWarnings("deprecation")
+		public final void run() {
 			while (true) {
 				try {
+					if(toResolve == null) continue;
+					
 					final UnresolvedOfflinePlayer p = toResolve.take();
+					if(p == null) continue;
+					
 					p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
 					p.callback.run(p);
 				} catch (final InterruptedException e) {
@@ -64,13 +68,16 @@ public class UnresolvedOfflinePlayer implements OfflinePlayer {
 				}
 			}
 		}
-	}, "Skript offline player resolver thread (fetches UUIDs from the minecraft servers)");
+	}, "Skript offline player resolver thread"); // too long names not good
+	
 	static {
 		resolverThread.start();
 		Skript.closeOnDisable(new Closeable() {
 			@Override
 			public void close() {
-				resolverThread.interrupt();
+				try {
+					resolverThread.interrupt();					
+				} catch(final Throwable tw) {}
 			}
 		});
 	}

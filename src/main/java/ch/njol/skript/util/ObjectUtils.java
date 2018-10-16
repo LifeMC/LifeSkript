@@ -105,7 +105,7 @@ public final class ObjectUtils {
      * @return the result of calling {@code toString} on the first
      * argument if it is not {@code null} and the second argument
      * otherwise.
-     * @see Objects#toString(Object)
+     * @see ObjectUtils#toString(Object)
      */
     @SuppressWarnings("null")
 	public static String toString(final Object o, final String nullDefault) {

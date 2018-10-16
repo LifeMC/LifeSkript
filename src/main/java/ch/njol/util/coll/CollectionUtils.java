@@ -46,7 +46,7 @@ public abstract class CollectionUtils {
 	 * Finds an object in an array using {@link Object#equals(Object)} (can find null elements).
 	 * 
 	 * @param array The array to search in
-	 * @param o The object to search for
+	 * @param t The object to search for
 	 * @return The index of the first occurrence of the given object or -1 if not found
 	 */
 	public static <T> int indexOf(final @Nullable T[] array, final @Nullable T t) {
@@ -392,7 +392,7 @@ public abstract class CollectionUtils {
 	}
 	
 	/**
-	 * Shorthand for <code>{@link permutation permutation}(0, length - 1)</code>
+	 * Shorthand for <code>{@link CollectionUtils#permutation(int, int) permutation(0, length - 1)}</code>
 	 */
 	public final static int[] permutation(final int length) {
 		return permutation(0, length - 1);

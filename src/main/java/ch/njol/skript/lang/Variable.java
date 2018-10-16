@@ -134,7 +134,7 @@ public class Variable<T> implements Expression<T> {
 			if (printErrors)
 				Skript.error("A variable's name must not contain the separator '" + SEPARATOR + "' multiple times in a row (error in variable {" + name + "})");
 			return false;
-		} else if (name.contains(SINGLE_SEPARATOR_CHAR) && !name.contains(SEPARATOR)) {
+		} else if (name.replace(SEPARATOR, "").contains(SINGLE_SEPARATOR_CHAR)) {
 			if (printErrors)
 				Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '"
 						+ SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");

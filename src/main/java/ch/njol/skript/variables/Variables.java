@@ -80,10 +80,10 @@ public abstract class Variables {
 			{
 				init(); // separate method for the annotation
 			}
- 			@SuppressWarnings({"unchecked", "null"})
+ 			@SuppressWarnings({"unchecked", "null", "cast"})
 			private final void init() {
 				// used by asserts
-				info = Classes.getExactClassInfo(ConfigurationSerializable.class);
+ 				info = (ClassInfo<? extends ConfigurationSerializable>) (ClassInfo<?>) Classes.getExactClassInfo(Object.class);
  			}
 			@SuppressWarnings({"unchecked"})
 			@Override
