@@ -28,6 +28,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.events.bukkit.SkriptStartEvent;
 import ch.njol.skript.events.bukkit.SkriptStopEvent;
 import ch.njol.skript.lang.Literal;
@@ -54,7 +55,8 @@ public class EvtSkript extends SelfRegisteringSkriptEvent {
 	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
 		isStart = matchedPattern == 0;
 		if (parser.mark == 0) {
-			Skript.warning("Server start/stop events are actually called when Skript is started or stopped. It is thus recommended to use 'on Skript start/stop' instead.");
+			if(!SkriptConfig.disableStartStopEventWarnings.value())
+				Skript.warning("Server start/stop events are actually called when Skript is started or stopped. It is thus recommended to use 'on Skript start/stop' instead.");
 		}
 		return true;
 	}

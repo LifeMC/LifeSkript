@@ -161,6 +161,8 @@ public abstract class SkriptConfig {
 	
 	public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<Boolean>("disable variable name starting with expression warnings", false);
 	
+	public final static Option<Boolean> disableStartStopEventWarnings = new Option<Boolean>("disable start stop event warnings", false);
+	
 	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false)
 			.optional(true);
 	

@@ -154,6 +154,8 @@ disable variable will not be saved warnings: true
 disable expression is already a text warnings: false
 # Disables the "... is already a text, so you should not put it in one" warnings.
 
+disable start stop event warnings: false
+# Disables the "Server start/stop events are actually called when Skript is started or stopped." warnings.
 
 disable variable conflict warnings: false
 # Disables warnings of potential variable name conflicts if set to true.
