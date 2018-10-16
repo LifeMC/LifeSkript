@@ -467,7 +467,7 @@ public final class Skript extends JavaPlugin implements Listener {
 							Bukkit.getLogger().info("[Skript] Latest version: " + latestTrimmed);
 						printDownloadLink();
 					} else {
-						Bukkit.getLogger().info("[Skript] You are using the latest version (" + latestTrimmed + ") of the Skript. No new updates available. Thanks for using Skript!");
+						Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!");
 						printIssuesLink();
 					}
 				} catch(final Throwable tw) {

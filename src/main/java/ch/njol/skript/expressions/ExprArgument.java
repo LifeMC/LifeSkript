@@ -72,6 +72,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 	private Argument<?> arg;
 	
 	@Override
+	@SuppressWarnings({"null", "unused"})
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
 		final List<Argument<?>> currentArguments = Commands.currentArguments;
 		if (currentArguments == null) {

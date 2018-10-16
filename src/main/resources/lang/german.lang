@@ -149,6 +149,7 @@ updater:
 # -- Commands --
 commands:
 	no permission message: Du hast nicht die Erlaubnis diesen Befehl zu verwenden!
+	cooldown message: Sie verwenden diesen Befehl zu oft, versuchen Sie es später erneut
 	executable by players: Dieser Befehl kann nur von Spielern verwendet werden
 	executable by console: Dieser Befehl kann nur von der Konsole verwendet werden
 	usage: Syntax:

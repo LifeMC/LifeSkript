@@ -68,6 +68,7 @@ import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
@@ -75,6 +76,8 @@ import ch.njol.skript.log.BukkitLoggerFilter;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.StringMode;
+import ch.njol.skript.util.Timespan;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Callback;
 import ch.njol.util.NonNullPair;
@@ -137,6 +140,10 @@ public abstract class Commands { //NOSONAR
 			.addEntry("description", true)
 			.addEntry("permission", true)
 			.addEntry("permission message", true)
+			.addEntry("cooldown", true)
+			.addEntry("cooldown message", true)
+			.addEntry("cooldown bypass", true)
+			.addEntry("cooldown storage", true)
 			.addEntry("aliases", true)
 			.addEntry("executable by", true)
 			.addSection("trigger", false);
@@ -314,9 +321,10 @@ public abstract class Commands { //NOSONAR
 	}
 	
 	@SuppressWarnings("null")
-	private final static Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)(\\s+(.+))?$"),
+	private final static Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
 			argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
 	
+	@SuppressWarnings("null")
 	@Nullable
 	public final static ScriptCommand loadCommand(final SectionNode node) {
 		final String key = node.getKey();
@@ -447,6 +455,35 @@ public abstract class Commands { //NOSONAR
 			}
 		}
 		
+		final String cooldownString = ScriptLoader.replaceOptions(node.get("cooldown", ""));
+		Timespan cooldown = null;
+		if (!cooldownString.isEmpty()) {
+			// ParseContext doesn't matter for Timespan's parser
+			cooldown = Classes.parse(cooldownString, Timespan.class, ParseContext.DEFAULT);
+			if (cooldown == null) {
+				Skript.warning("'" + cooldownString + "' is an invalid timespan for the cooldown");
+			}
+		}
+
+		final String cooldownMessageString = ScriptLoader.replaceOptions(node.get("cooldown message", ""));
+		boolean usingCooldownMessage = !cooldownMessageString.isEmpty();
+		VariableString cooldownMessage = null;
+		if (usingCooldownMessage) {
+			cooldownMessage = VariableString.newInstance(cooldownMessageString);
+		}
+
+		String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
+		
+		if (usingCooldownMessage && cooldownString.isEmpty()) {
+			Skript.warning("command /" + command + " has a cooldown message set, but not a cooldown");
+		}
+
+		String cooldownStorageString = ScriptLoader.replaceOptions(node.get("cooldown storage", ""));
+		VariableString cooldownStorage = null;
+		if (!cooldownStorageString.isEmpty()) {
+			cooldownStorage = VariableString.newInstance(cooldownStorageString, StringMode.VARIABLE_NAME);
+		}
+		
 		if (!permissionMessage.isEmpty() && permission.isEmpty()) {
 			Skript.warning("command /" + command + " has a permission message set, but not a permission");
 		}
@@ -463,7 +500,7 @@ public abstract class Commands { //NOSONAR
 		Commands.currentArguments = currentArguments;
 		final ScriptCommand c;
 		try {
-			c = new ScriptCommand(config, command, "" + pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, executableBy, ScriptLoader.loadItems(trigger));
+			c = new ScriptCommand(config, command, "" + pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, executableBy, ScriptLoader.loadItems(trigger));
 		} finally {
 			Commands.currentArguments = null;
 		}
@@ -481,6 +518,12 @@ public abstract class Commands { //NOSONAR
 //	}
 	
 	public static void registerCommand(final ScriptCommand command) {
+		final ScriptCommand existingCommand = commands.get(command.getLabel());
+		if (existingCommand != null && existingCommand.getLabel().equals(command.getLabel())) {
+			final File f = existingCommand.getScript();
+			Skript.error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
+			return;
+		}
 		if (commandMap != null) {
 			assert cmKnownCommands != null;// && cmAliases != null;
 			command.register(commandMap, cmKnownCommands, cmAliases);

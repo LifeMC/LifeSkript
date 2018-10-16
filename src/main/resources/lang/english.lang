@@ -147,6 +147,7 @@ updater:
 # -- Commands --
 commands:
 	no permission message: You don't have the required permission to use this command
+	cooldown message: You are using this command too often, please try again later
 	executable by players: This command can only be used by players
 	executable by console: This command can only be used by the console
 	usage: Usage:
