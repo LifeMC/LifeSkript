@@ -299,8 +299,8 @@ public final class Skript extends JavaPlugin implements Listener {
 		
 		final long tick = testing() ? Bukkit.getWorlds().get(0).getFullTime() : 0;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-			@SuppressWarnings("synthetic-access")
 			@Override
+			@SuppressWarnings("synthetic-access")
 			public void run() {
 				assert Bukkit.getWorlds().get(0).getFullTime() == tick;
 				
@@ -818,7 +818,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			throw new SkriptAPIException("Registering is disabled after initialisation!");
 	}
 	
-	private static void stopAcceptingRegistrations() {
+	static void stopAcceptingRegistrations() {
 		acceptRegistrations = false;
 		
 		Converters.createMissingConverters();
