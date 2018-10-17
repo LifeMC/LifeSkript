@@ -53,6 +53,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 	
 	private int time = 0;
 	
+	@SuppressWarnings("null")
 	protected SimpleExpression() {}
 	
 	@Override
@@ -163,9 +164,9 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 	}
 	
 	// TODO return a kleenean (UNKNOWN if 'all' is null or empty)
-	public final static <T> boolean check(final @Nullable T[] all, final Checker<? super T> c, final boolean invert, final boolean and) {
+	public static <T> boolean check(final @Nullable T[] all, final Checker<? super T> c, final boolean invert, final boolean and) {
 		if (all == null)
-			return false;
+			return invert;
 		boolean hasElement = false;
 		for (final T t : all) {
 			if (t == null)
@@ -178,7 +179,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 				return invert ^ true;
 		}
 		if (!hasElement)
-			return false;
+			return invert;
 		return invert ^ and;
 	}
 	
@@ -198,11 +199,20 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 		assert !CollectionUtils.containsSuperclass(to, getReturnType());
 		return ConvertedExpression.newInstance(this, to);
 	}
-	
+
+	/**
+	 * Usually, you want to override {@link SimpleExpression#getConvertedExpr(Class[])}.
+	 * However, it may be useful to override this method if you have an expression with a return
+	 * type that is unknown until runtime (like variables). Usually, you'll be fine with just
+	 * the default implementation. This method is final on versions below 2.2-dev36.
+	 *
+	 * @param to The desired return type of the returned expression
+	 * @return The converted expression
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
+	public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
 		if (CollectionUtils.containsSuperclass(to, getReturnType()))
 			return (Expression<? extends R>) this;
 		return this.getConvertedExpr(to);
@@ -325,5 +335,4 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 	public boolean getAnd() {
 		return true;
 	}
-	
 }

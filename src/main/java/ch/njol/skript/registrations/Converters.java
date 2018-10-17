@@ -219,6 +219,45 @@ public abstract class Converters {
 		return r;
 	}
 	
+	/**
+	 * Strictly converts an array to a non-null array of the specified class.
+	 * Uses registered {@link ch.njol.skript.registrations.Converters} to convert.
+	 *
+	 * @param original The array to convert
+	 * @param to       What to convert {@code original} to
+	 * @return {@code original} converted to an array of {@code to}
+	 * @throws ClassCastException if one of {@code original}'s
+	 * elements cannot be converted to a {@code to}
+	 */
+	@SuppressWarnings({"unchecked", "null"})
+	public static <T> T[] convertStrictly(final Object[] original, final Class<T> to) throws ClassCastException {
+		final T[] end = (T[]) Array.newInstance(to, original.length);
+		for (int i = 0; i < original.length; i++) {
+			final T converted = Converters.convert(original[i], to);
+			if (converted != null)
+				end[i] = converted;
+			else
+				throw new ClassCastException();
+		}
+		return end;
+	}
+
+	/**
+	 * Strictly converts an object to the specified class
+	 *
+	 * @param original The object to convert
+	 * @param to What to convert {@code original} to
+	 * @return {@code original} converted to a {@code to}
+	 * @throws ClassCastException if {@code original} could not be converted to a {@code to}
+	 */
+	public static <T> T convertStrictly(final Object original, final Class<T> to) throws ClassCastException {
+		final T converted = convert(original, to);
+		if (converted != null)
+			return converted;
+		else
+			throw new ClassCastException();
+	}
+	
 	private final static Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<Pair<Class<?>, Class<?>>, Converter<?, ?>>();
 	
 	/**

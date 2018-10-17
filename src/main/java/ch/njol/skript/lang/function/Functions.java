@@ -126,14 +126,20 @@ public abstract class Functions {
 					if (p.name.toLowerCase(Locale.ENGLISH).equals(paramName.toLowerCase(Locale.ENGLISH)))
 						return error("Each argument's name must be unique, but the name '" + paramName + "' occurs at least twice.");
 				}
+				String argType = n.group(2);
+				boolean nullable = false;
+				if (argType.endsWith("?")) {
+					nullable = true;
+					argType = argType.substring(0, argType.length() - 1);
+ 				}
 				ClassInfo<?> c;
-				c = Classes.getClassInfoFromUserInput("" + n.group(2));
-				final NonNullPair<String, Boolean> pl = Utils.getEnglishPlural("" + n.group(2));
+				c = Classes.getClassInfoFromUserInput("" + argType);
+				final NonNullPair<String, Boolean> pl = Utils.getEnglishPlural("" + argType);
 				if (c == null)
 					c = Classes.getClassInfoFromUserInput(pl.getFirst());
 				if (c == null)
-					return error("Cannot recognise the type '" + n.group(2) + "'");
-				final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), n.group(3));
+					return error("Cannot recognise the type '" + argType + "'");
+				final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), n.group(3), nullable);
 				if (p == null)
 					return null;
 				params.add(p);

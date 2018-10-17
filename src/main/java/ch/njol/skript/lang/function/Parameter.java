@@ -69,15 +69,24 @@ public final class Parameter<T> {
 		return type;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Nullable
 	public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
+		if(def != null) {
+			final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
+			return newInstance(name, type, single, def, isNone);
+		} else {
+			return newInstance(name, type, single, def, false);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Nullable
+	public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
 		if (!Variable.isValidVariableName(name, false, false)) {
 			Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
 			return null;
 		}
 		Expression<? extends T> d = null;
-		boolean isNone = false;
 		if (def != null) {
 //			if (def.startsWith("%") && def.endsWith("%")) {
 //				final RetainingLogHandler log = SkriptLogger.startRetainingLog();
@@ -103,9 +112,7 @@ public final class Parameter<T> {
 					d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
 				}
 				if (d == null) {
-					if((def.contains("none") || def.contains("null")) && def.contains("value of")) {
-						isNone = true;
-					} else {
+					if(!isNone) {
 						log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
 						return null;
 					}

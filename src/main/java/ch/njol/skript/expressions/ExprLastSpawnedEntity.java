@@ -73,6 +73,7 @@ public class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
 	
 	@Override
 	@Nullable
+	@SuppressWarnings({"null", "unused"})
 	protected Entity[] get(final Event e) {
 		final Entity en = spawned ? EffSpawn.lastSpawned : EffShoot.lastSpawned;
 		if (en == null)
