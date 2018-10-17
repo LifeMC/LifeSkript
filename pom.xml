@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.njol</groupId>
-	<artifactId>skript</artifactId>
+	<artifactId>Skript</artifactId>
 	<version>2.2-Fixes-V10b</version>
 	<name>Skript</name>
 	<description>A plugin for the Minecraft server API Bukkit that allows to create scripts in natural language.</description>

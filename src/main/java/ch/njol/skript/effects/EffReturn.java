@@ -60,7 +60,7 @@ public class EffReturn extends Effect {
 	@SuppressWarnings("null")
 	private Expression<?> value;
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "unused", "null"})
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		final ScriptFunction<?> f = Functions.currentFunction;

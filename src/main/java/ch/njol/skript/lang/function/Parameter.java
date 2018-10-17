@@ -45,6 +45,7 @@ public final class Parameter<T> {
 	final Expression<? extends T> def;
 	
 	final boolean single;
+	final boolean isNone;
 	
 	@SuppressWarnings("null")
 	public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
@@ -52,6 +53,16 @@ public final class Parameter<T> {
 		this.type = type;
 		this.def = def;
 		this.single = single;
+		this.isNone = false;
+	}
+	
+	@SuppressWarnings("null")
+	public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
+		this.name = name != null ? name.toLowerCase() : null;
+		this.type = type;
+		this.def = def;
+		this.single = single;
+		this.isNone = isNone;
 	}
 	
 	public ClassInfo<T> getType() {
@@ -66,6 +77,7 @@ public final class Parameter<T> {
 			return null;
 		}
 		Expression<? extends T> d = null;
+		boolean isNone = false;
 		if (def != null) {
 //			if (def.startsWith("%") && def.endsWith("%")) {
 //				final RetainingLogHandler log = SkriptLogger.startRetainingLog();
@@ -91,8 +103,12 @@ public final class Parameter<T> {
 					d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
 				}
 				if (d == null) {
-					log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
-					return null;
+					if((def.contains("none") || def.contains("null")) && def.contains("value of")) {
+						isNone = true;
+					} else {
+						log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
+						return null;
+					}
 				}
 				log.printLog();
 			} finally {
@@ -100,7 +116,7 @@ public final class Parameter<T> {
 			}
 //			}
 		}
-		return new Parameter<T>(name, type, single, d);
+		return new Parameter<T>(name, type, single, d, isNone);
 	}
 	
 	@Override

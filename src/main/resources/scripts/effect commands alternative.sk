@@ -1,0 +1,12 @@
+command /eval <text>:
+	description: Evaluates the given effect.
+	usage: /eval <effect>
+	executable by: players and console
+	permission: skript.eval
+	permission-message: &4No permission!
+	trigger:
+		execute arg-1
+		if last execute state is false:
+			send last execute errors to command sender
+		else:
+			send "&aExecuted without errors!" to command sender

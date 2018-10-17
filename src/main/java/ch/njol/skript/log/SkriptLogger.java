@@ -21,7 +21,9 @@
 
 package ch.njol.skript.log;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -165,6 +167,9 @@ public abstract class SkriptLogger {
 	public static void log(final Level level, final String message) {
 		log(new LogEntry(level, message, node));
 	}
+		
+	@Nullable private static List<LogEntry> suppressed;
+	private static volatile boolean suppressing = false;
 	
 	public static void log(final @Nullable LogEntry entry) {
 		if (entry == null)
@@ -183,8 +188,33 @@ public abstract class SkriptLogger {
 					continue;
 			}
 		}
+		if(suppressing && suppressed != null) {
+			suppressed.add(entry);
+			return;
+		}
 		entry.logged();
-		LOGGER.log(entry.getLevel(), "[Skript] " + entry.getMessage());
+		LOGGER.log(entry.getLevel(), format(entry));
+	}
+	
+	public static void startSuppressing() {
+		suppressed = new ArrayList<LogEntry>();
+		suppressing = true;
+	}
+	
+	@SuppressWarnings("null")
+	public static List<LogEntry> stopSuppressing() {
+		if(suppressed == null) {
+			return new ArrayList<LogEntry>();
+		}
+		return suppressed;
+	}
+	
+	public static void cleanSuppressState() {
+		suppressed = null;
+	}
+	
+	public static String format(final LogEntry entry) {
+		return "[Skript] " + entry.getMessage();
 	}
 	
 	public static void logAll(final Collection<LogEntry> entries) {

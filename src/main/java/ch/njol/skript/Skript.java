@@ -147,10 +147,10 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	// ================ CONSTANTS ================
 	
-	private static final String LATEST_VERSION_DOWNLOAD_LINK =
+	public static final String LATEST_VERSION_DOWNLOAD_LINK =
 			"https://github.com/LifeMC/LifeSkript/releases/latest/";
 	
-	private static final String ISSUES_LINK =
+	public static final String ISSUES_LINK =
 			"https://github.com/LifeMC/LifeSkript/issues/";
 	
 	// ================ PLUGIN ================
@@ -462,9 +462,10 @@ public final class Skript extends JavaPlugin implements Listener {
 					
 					if(!latestTrimmed.equals(currentTrimmed)) {
 						Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
-						if(Skript.debug())
+						if(Skript.debug()) {
 							Bukkit.getLogger().info("[Skript] Current version: " + currentTrimmed);
 							Bukkit.getLogger().info("[Skript] Latest version: " + latestTrimmed);
+						}
 						printDownloadLink();
 					} else {
 						Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!");

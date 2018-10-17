@@ -67,24 +67,24 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
 	@Override
     @Nullable
     @SuppressWarnings("null")
-    protected Object[] get(Event e) {
+    protected Object[] get(final Event e) {
         if (!(e instanceof ScriptCommandEvent)) {
             return null;
         }
-        ScriptCommandEvent event = ((ScriptCommandEvent) e);
-        ScriptCommand scriptCommand = event.getSkriptCommand();
+        final ScriptCommandEvent event = (ScriptCommandEvent) e;
+        final ScriptCommand scriptCommand = event.getSkriptCommand();
 
-        CommandSender sender = event.getSender();
+        final CommandSender sender = event.getSender();
         if (scriptCommand.getCooldown() == null || !(sender instanceof Player)) {
             return null;
         }
-        Player player = (Player) event.getSender();
-        UUID uuid = player.getUniqueId();
+        final Player player = (Player) event.getSender();
+        final UUID uuid = player.getUniqueId();
 
         switch (mark) {
             case 0:
             case 1:
-                long ms = mark != 1
+                final long ms = mark != 1
                         ? scriptCommand.getRemainingMilliseconds(uuid, event)
                         : scriptCommand.getElapsedMilliseconds(uuid, event);
                 return new Timespan[]{new Timespan(ms)};
@@ -110,12 +110,12 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(@Nullable Event e, boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the " + getExpressionName();
     }
 
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         mark = parseResult.mark;
         if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
             Skript.error("The expression '" + getExpressionName() + " time' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
@@ -144,7 +144,7 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
 	@Nullable
     @Override
     @SuppressWarnings("incomplete-switch")
-    public Class<?>[] acceptChange(Changer.ChangeMode mode) {
+    public Class<?>[] acceptChange(final Changer.ChangeMode mode) {
         switch (mode) {
             case ADD:
             case REMOVE:
@@ -169,29 +169,29 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
 
 	@Override
     @SuppressWarnings({"incomplete-switch", "null"})
-	public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
+	public void change(final Event e, @Nullable final Object[] delta, final Changer.ChangeMode mode) {
         if (!(e instanceof ScriptCommandEvent)) {
             return;
         }
-        ScriptCommandEvent commandEvent = (ScriptCommandEvent) e;
-        ScriptCommand command = commandEvent.getSkriptCommand();
-        Timespan cooldown = command.getCooldown();
-        CommandSender sender = commandEvent.getSender();
+        final ScriptCommandEvent commandEvent = (ScriptCommandEvent) e;
+        final ScriptCommand command = commandEvent.getSkriptCommand();
+        final Timespan cooldown = command.getCooldown();
+        final CommandSender sender = commandEvent.getSender();
         if (cooldown == null || !(sender instanceof Player)) {
             return;
         }
-        long cooldownMs = cooldown.getMilliSeconds();
-        UUID uuid = ((Player) sender).getUniqueId();
+        final long cooldownMs = cooldown.getMilliSeconds();
+        final UUID uuid = ((Player) sender).getUniqueId();
 
         if (mark <= 1) {
-            Timespan timespan = delta == null ? new Timespan(0) : (Timespan) delta[0];
+            final Timespan timespan = delta == null ? new Timespan(0) : (Timespan) delta[0];
             switch (mode) {
                 case ADD:
                 case REMOVE:
-                    long change = (mode == Changer.ChangeMode.ADD ? 1 : -1) * timespan.getMilliSeconds();
+                    final long change = (mode == Changer.ChangeMode.ADD ? 1 : -1) * timespan.getMilliSeconds();
                     if (mark == 0) {
                         // Remaining time
-                        long remaining = command.getRemainingMilliseconds(uuid, commandEvent);
+                        final long remaining = command.getRemainingMilliseconds(uuid, commandEvent);
                         long changed = remaining + change;
                         if (changed < 0) {
                             changed = 0;
@@ -199,7 +199,7 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                         command.setRemainingMilliseconds(uuid, commandEvent, changed);
                     } else {
                         // Elapsed time
-                        long elapsed = command.getElapsedMilliseconds(uuid, commandEvent);
+                        final long elapsed = command.getElapsedMilliseconds(uuid, commandEvent);
                         long changed = elapsed + change;
                         if (changed > cooldownMs) {
                             changed = cooldownMs;
@@ -234,7 +234,7 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                     command.setLastUsage(uuid, commandEvent, null);
                     break;
                 case SET:
-                    Date date = delta == null ? null : (Date) delta[0];
+                    final Date date = delta == null ? null : (Date) delta[0];
                     command.setLastUsage(uuid, commandEvent, date);
                     break;
             }

@@ -71,9 +71,10 @@ public abstract class Function<T> {
 	}
 	
 	// TODO allow setting parameters by name
+	@SuppressWarnings({"null", "unused"})
 	public int getMinParameters() {
 		for (int i = parameters.length - 1; i >= 0; i--) {
-			if (parameters[i].def == null)
+			if (parameters[i].def == null && !parameters[i].isNone)
 				return i + 1;
 		}
 		return 0;
@@ -102,7 +103,7 @@ public abstract class Function<T> {
 		for (int i = 0; i < parameters.length; i++) {
 			final Parameter<?> p = parameters[i];
 			final Object[] val = i < params.length ? params[i] : p.def != null ? p.def.getArray(e) : null;
-			if (val == null || val.length == 0)
+			if (!p.isNone && (val == null || val.length == 0))
 				return null;
 			ps[i] = val;
 		}

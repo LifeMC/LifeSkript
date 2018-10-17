@@ -50,7 +50,7 @@ public class ScriptCommandEvent extends CommandEvent {
 		return cooldownCancelled;
 	}
 
-	public void setCooldownCancelled(boolean cooldownCancelled) {
+	public void setCooldownCancelled(final boolean cooldownCancelled) {
 		this.cooldownCancelled = cooldownCancelled;
 	}
 

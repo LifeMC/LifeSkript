@@ -466,19 +466,19 @@ public abstract class Commands { //NOSONAR
 		}
 
 		final String cooldownMessageString = ScriptLoader.replaceOptions(node.get("cooldown message", ""));
-		boolean usingCooldownMessage = !cooldownMessageString.isEmpty();
+		final boolean usingCooldownMessage = !cooldownMessageString.isEmpty();
 		VariableString cooldownMessage = null;
 		if (usingCooldownMessage) {
 			cooldownMessage = VariableString.newInstance(cooldownMessageString);
 		}
 
-		String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
+		final String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
 		
 		if (usingCooldownMessage && cooldownString.isEmpty()) {
 			Skript.warning("command /" + command + " has a cooldown message set, but not a cooldown");
 		}
 
-		String cooldownStorageString = ScriptLoader.replaceOptions(node.get("cooldown storage", ""));
+		final String cooldownStorageString = ScriptLoader.replaceOptions(node.get("cooldown storage", ""));
 		VariableString cooldownStorage = null;
 		if (!cooldownStorageString.isEmpty()) {
 			cooldownStorage = VariableString.newInstance(cooldownStorageString, StringMode.VARIABLE_NAME);

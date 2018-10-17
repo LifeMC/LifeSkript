@@ -80,11 +80,15 @@ public class ScriptFunction<T> extends Function<T> {
 		for (int i = 0; i < parameters.length; i++) {
 			final Parameter<?> p = parameters[i];
 			final Object[] val = params[i];
-			if (p.single) {
-				Variables.setVariable(p.name, val[0], e, true);
-			} else {
-				for (int j = 0; j < val.length; j++) {
-					Variables.setVariable(p.name + "::" + (j + 1), val[j], e, true);
+			if(val != null && !p.isNone) {
+				if (p.single) {
+					if(val.length > 0) {
+						Variables.setVariable(p.name, val[0], e, true);
+					}
+				} else {
+					for (int j = 0; j < val.length; j++) {
+						Variables.setVariable(p.name + "::" + (j + 1), val[j], e, true);
+					}
 				}
 			}
 		}

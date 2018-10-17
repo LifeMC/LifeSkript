@@ -125,7 +125,7 @@ public class ScriptCommand implements CommandExecutor {
 	 */
 	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final ArrayList<String> aliases, final String permission, final String permissionMessage,@Nullable final Timespan cooldown,
 			 @Nullable final VariableString cooldownMessage, final String cooldownBypass,
-			 @Nullable VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
+			 @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
 		Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
 		this.name = name;
 		label = "" + name.toLowerCase();
@@ -210,8 +210,8 @@ public class ScriptCommand implements CommandExecutor {
 		
 		cooldownCheck : {
 			if (sender instanceof Player && cooldown != null) {
-				Player player = ((Player) sender);
-				UUID uuid = player.getUniqueId();
+				final Player player = (Player) sender;
+				final UUID uuid = player.getUniqueId();
 
 				// Cooldown bypass
 				if (!cooldownBypass.isEmpty() && player.hasPermission(cooldownBypass)) {
@@ -250,7 +250,7 @@ public class ScriptCommand implements CommandExecutor {
 		return true; // Skript prints its own error message anyway
 	}
 	
-	boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String commandLabel, final String rest) {		
+	boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String commandLabel, final String rest) {
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
 		try {
 			final boolean ok = SkriptParser.parseArguments(rest, ScriptCommand.this, event);
@@ -412,7 +412,7 @@ public class ScriptCommand implements CommandExecutor {
 	}
 
 	@Nullable
-	private String getStorageVariableName(Event event) {
+	private String getStorageVariableName(final Event event) {
 		assert cooldownStorage != null;
 		String variableString = cooldownStorage.getSingle(event);
 		if (variableString == null) {
@@ -428,20 +428,20 @@ public class ScriptCommand implements CommandExecutor {
 	}
 
 	@Nullable
-	public Date getLastUsage(UUID uuid, Event event) {
+	public Date getLastUsage(final UUID uuid, final Event event) {
 		if (cooldownStorage == null) {
 			return lastUsageMap.get(uuid);
 		} else {
-			String name = getStorageVariableName(event);
+			final String name = getStorageVariableName(event);
 			assert name != null;
 			return (Date) Variables.getVariable(name, null, false);
 		}
 	}
 
-	public void setLastUsage(UUID uuid, Event event, @Nullable Date date) {
+	public void setLastUsage(final UUID uuid, final Event event, @Nullable final Date date) {
 		if (cooldownStorage != null) {
 			// Using a variable
-			String name = getStorageVariableName(event);
+			final String name = getStorageVariableName(event);
 			assert name != null;
 			Variables.setVariable(name, date, null, false);
 		} else {
@@ -454,12 +454,12 @@ public class ScriptCommand implements CommandExecutor {
 		}
 	}
 
-	public long getRemainingMilliseconds(UUID uuid, Event event) {
-		Date lastUsage = getLastUsage(uuid, event);
+	public long getRemainingMilliseconds(final UUID uuid, final Event event) {
+		final Date lastUsage = getLastUsage(uuid, event);
 		if (lastUsage == null) {
 			return 0;
 		}
-		Timespan cooldown = this.cooldown;
+		final Timespan cooldown = this.cooldown;
 		assert cooldown != null;
 		long remaining = cooldown.getMilliSeconds() - getElapsedMilliseconds(uuid, event);
 		if (remaining < 0) {
@@ -468,23 +468,23 @@ public class ScriptCommand implements CommandExecutor {
 		return remaining;
 	}
 
-	public void setRemainingMilliseconds(UUID uuid, Event event, long milliseconds) {
-		Timespan cooldown = this.cooldown;
+	public void setRemainingMilliseconds(final UUID uuid, final Event event, final long milliseconds) {
+		final Timespan cooldown = this.cooldown;
 		assert cooldown != null;
-		long cooldownMs = cooldown.getMilliSeconds();
+		final long cooldownMs = cooldown.getMilliSeconds();
 		if (milliseconds > cooldownMs) {
 			throw new IllegalArgumentException("Remaining time may not be longer than the cooldown");
 		}
 		setElapsedMilliSeconds(uuid, event, cooldownMs - milliseconds);
 	}
 
-	public long getElapsedMilliseconds(UUID uuid, Event event) {
-		Date lastUsage = getLastUsage(uuid, event);
+	public long getElapsedMilliseconds(final UUID uuid, final Event event) {
+		final Date lastUsage = getLastUsage(uuid, event);
 		return lastUsage == null ? 0 : new Date().getTimestamp() - lastUsage.getTimestamp();
 	}
 
-	public void setElapsedMilliSeconds(UUID uuid, Event event, long milliseconds) {
-		Date date = new Date();
+	public void setElapsedMilliSeconds(final UUID uuid, final Event event, final long milliseconds) {
+		final Date date = new Date();
 		date.subtract(new Timespan(milliseconds));
 		setLastUsage(uuid, event, date);
 	}

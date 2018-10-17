@@ -49,7 +49,7 @@ public class ExprCmdCooldown extends SimpleExpression<Timespan> {
    }
     @Nullable
    @Override
-   protected Timespan[] get(Event e) {
+   protected Timespan[] get(final Event e) {
        if (!(e instanceof ScriptCommandEvent)) {
            return null;
        }
@@ -64,11 +64,11 @@ public class ExprCmdCooldown extends SimpleExpression<Timespan> {
        return Timespan.class;
    }
     @Override
-   public String toString(@Nullable Event e, boolean debug) {
+   public String toString(@Nullable final Event e, final boolean debug) {
        return "the cooldown of the command";
    }
     @Override
-   public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+   public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
        if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
            Skript.error("The expression 'cooldown' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
            return false;

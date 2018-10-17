@@ -84,7 +84,7 @@ public class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 		} catch (final NoSuchFieldException e) {} catch (final SecurityException e) {}
 		if (getClaim == null && claimsField == null) {
 			Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "."
-					+ " Please report this at http://dev.bukkit.org/bukkit-plugins/skript/tickets/ if this error occurred after you updated GriefPrevention.");
+					+ " Please report this at " + Skript.ISSUES_LINK  + " if this error occurred after you updated GriefPrevention.");
 			return false;
 		}
 		return super.init();
