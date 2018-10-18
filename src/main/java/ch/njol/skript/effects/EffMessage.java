@@ -48,7 +48,7 @@ import ch.njol.util.Kleenean;
 @Since("1.0")
 public class EffMessage extends Effect {
 	static {
-		Skript.registerEffect(EffMessage.class, "(message|send [message]) %strings% [to %commandsenders%]");
+		Skript.registerEffect(EffMessage.class, "(message|msg|tell|send [message]) %strings% [to %commandsenders%]");
 	}
 	
 	@SuppressWarnings("null")

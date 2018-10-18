@@ -19,49 +19,47 @@
  * 
  */
 
-package ch.njol.skript.effects;
-
-import static ch.njol.skript.effects.Delay.*;
+package ch.njol.skript.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.effects.Delay;
+import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.TriggerItem;
-import ch.njol.skript.util.Timespan;
 
 /**
- * @author Peter Güttinger
+ * Effects that extend this class are ran asynchronously. Next trigger item will be ran
+ * in main server thread, as if there had been a delay before.
+ * <p>
+ * Majority of Skript and Minecraft APIs are not thread-safe, so be careful.
  */
-public class IndeterminateDelay extends Delay {
+public abstract class AsyncEffect extends Effect {
 	
 	@Override
 	@Nullable
 	protected TriggerItem walk(final Event e) {
 		debug(e, true);
-		final long start = Skript.debug() ? System.nanoTime() : 0;
 		final TriggerItem next = getNext();
-		if (next != null) {
-			delayed.add(e);
-			final Timespan d = duration.getSingle(e);
-			if (d == null)
-				return null;
-			Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					if (Skript.debug())
-						Skript.info(getIndentation() + "... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
-					TriggerItem.walk(next, e);
+		Delay.addDelayedEvent(e);
+		Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), new Runnable() {
+			@Override
+			@SuppressWarnings("synthetic-access")
+			public final void run() {
+				execute(e); // Execute this effect
+				if (next != null) {
+					Bukkit.getScheduler().runTask(Skript.getInstance(), new Runnable() {
+						@Override
+						public final void run() { // Walk to next item synchronously
+							TriggerItem.walk(next, e);
+						}
+					});
 				}
-			}, d.getTicks_i());
-		}
-		return null;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "wait for operation to finish";
-	}
+	        }
+	    });
+        return null;
+    }
 	
 }

@@ -163,14 +163,13 @@ public final class ObjectUtils {
      * returns {@code false}.
      *
      * @apiNote This method exists to be used as a
-     * {@link java.util.function.Predicate}, {@code filter(Objects::isNull)}
+     * {@code filter(Objects::isNull)}
      *
      * @param obj a reference to be checked against {@code null}
      * @return {@code true} if the provided reference is {@code null} otherwise
      * {@code false}
      *
-     * @see java.util.function.Predicate
-     * @since 1.8
+     * @since 1.6
      */
     public static boolean isNull(@Nullable final Object obj) {
         return obj == null;
@@ -181,14 +180,13 @@ public final class ObjectUtils {
      * otherwise returns {@code false}.
      *
      * @apiNote This method exists to be used as a
-     * {@link java.util.function.Predicate}, {@code filter(Objects::nonNull)}
+     * {@code filter(Objects::nonNull)}
      *
      * @param obj a reference to be checked against {@code null}
      * @return {@code true} if the provided reference is non-{@code null}
      * otherwise {@code false}
      *
-     * @see java.util.function.Predicate
-     * @since 1.8
+     * @since 1.6
      */
     public static boolean nonNull(@Nullable final Object obj) {
         return obj != null;
