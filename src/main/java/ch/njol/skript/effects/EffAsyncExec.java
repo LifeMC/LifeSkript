@@ -27,7 +27,6 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Default;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -37,30 +36,25 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
 
 /**
  * @author Peter Güttinger
  */
-@Name("Execute")
-@Description("Execute a effect dynamically in runtime")
+@Name("Async Execute")
+@Description("Execute a effect dynamically and asynchronously in runtime")
 @Examples({"command /eval <text>:",
 		"\tdescription: Evaluates the given effect.",
 		"\tusage: /eval <effect>",
 		"\texecutable by: players",
 		"\ttrigger:",
-		"\t\texecute arg-1 if the player has permission \"skript.eval\""})
+		"\t\texecute arg-1 async if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
-public class EffExec extends Effect {
+public class EffAsyncExec extends AsyncEffect {
 	static {
-		Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");
+		Skript.registerEffect(EffAsyncExec.class, "(exec[ute]|eval[uate]) %string% async[hronously]");
 	}
-	
-	@Default(bool = false)
-	public static volatile boolean lastExecuteState;
-	
-	@Nullable @Default(str = "null")
-	public static volatile String lastExecuteErrors;
 	
 	@SuppressWarnings("null")
 	private Expression<String> input;
@@ -93,15 +87,15 @@ public class EffExec extends Effect {
 				errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
 			}
 			assert errorBuilder != null;
-			lastExecuteErrors = errorBuilder.toString();
+			EffExec.lastExecuteErrors = errorBuilder.toString();
 		}
-		lastExecuteState = entryList.isEmpty(); entryList.clear();
+		EffExec.lastExecuteState = entryList.isEmpty(); entryList.clear();
 		SkriptLogger.cleanSuppressState();
 	}
 	
 	@Override
 	public String toString(final @Nullable Event e, final boolean debug) {
-		return "exec " + input.toString(e, debug);
+		return "exec " + input.toString(e, debug) + " async";
 	}
 	
 }
