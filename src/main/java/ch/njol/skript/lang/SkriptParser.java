@@ -24,6 +24,7 @@ package ch.njol.skript.lang;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -697,7 +698,7 @@ public class SkriptParser {
 				return null;
 			}
 			if ((flags & PARSE_EXPRESSIONS) == 0) {
-				Skript.error("Functions cannot be used here.");
+				Skript.error("Functions cannot be used here (or there is a problem with your arguments).");
 				log.printError();
 				return null;
 			}
@@ -1364,7 +1365,19 @@ public class SkriptParser {
 		int time = 0;
 	}
 	
+	private static final HashMap<String,ExprInfo> exprInfoCache = new HashMap<String,ExprInfo>();
+	
 	private static ExprInfo getExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+		ExprInfo r = exprInfoCache.get(s);
+		if (r == null) {
+			r = createExprInfo(s);
+			exprInfoCache.put(s, r);
+		}
+		
+		return r;
+	}
+	
+	private static ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
 		final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
 		r.isOptional = s.startsWith("-");
 		if (r.isOptional)
