@@ -59,8 +59,8 @@ public class EffKill extends Effect {
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		entities = (Expression<Entity>) vars[0];
+	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+		entities = (Expression<Entity>) exprs[0];
 		return true;
 	}
 	
@@ -75,6 +75,11 @@ public class EffKill extends Effect {
 				if (creative)
 					((Player) entity).setGameMode(GameMode.CREATIVE);
 			}
+			
+			// if everything done so far has failed to kill this thing
+			// We also don't want to remove a player as this would remove the player's data from the server.
+			if (entity.isValid() && !(entity instanceof Player))
+				entity.remove();
 		}
 	}
 	
