@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.njol</groupId>
 	<artifactId>Skript</artifactId>
-	<version>2.2-Fixes-V10b</version>
+	<version>2.2-Fixes-V10c</version>
 	<name>Skript</name>
 	<description>Skript is a Bukkit/Spigot plugin which allows server admins to customize their server easily, but without the hassle of programming a plugin or asking/paying someone to program a plugin for them.</description>
 	<url>https://github.com/LifeMC/LifeSkript</url>
