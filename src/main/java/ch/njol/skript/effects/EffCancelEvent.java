@@ -75,7 +75,7 @@ public class EffCancelEvent extends Effect {
 		}
 		cancel = matchedPattern == 0;
 		final Class<? extends Event>[] es = ScriptLoader.getCurrentEvents();
-		if (es == null || (es.length < 1)) {
+		if (es == null || es.length < 1) {
 			Skript.error("The cancel event effect only usable in a event", ErrorQuality.SEMANTIC_ERROR);
 			return false;
 		}

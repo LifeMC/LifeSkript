@@ -24,8 +24,6 @@ package ch.njol.skript.entity;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Minecart;
-import org.bukkit.entity.PoweredMinecart;
-import org.bukkit.entity.StorageMinecart;
 import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.RideableMinecart;
@@ -33,6 +31,7 @@ import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.compat.Compatibility;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.variables.Variables;
@@ -42,13 +41,23 @@ import ch.njol.skript.variables.Variables;
  */
 @SuppressWarnings("deprecation")
 public class MinecartData extends EntityData<Minecart> {
+	
+	static final Class<? extends Minecart> storageMinecart =
+			Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart");
+			
+	static final Class<? extends Minecart> poweredMinecart =
+			Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart");
+			
 	@SuppressWarnings("null")
 	private static enum MinecartType {
+		
 		ANY(Minecart.class, "minecart"),
+
 		NORMAL(Skript.classExists("org.bukkit.entity.minecart.RideableMinecart") ? RideableMinecart.class : Minecart.class, "regular minecart"),
-		STORAGE(Skript.classExists("org.bukkit.entity.minecart.StorageMinecart") ? org.bukkit.entity.minecart.StorageMinecart.class : StorageMinecart.class, "storage minecart"),
-		POWERED(Skript.classExists("org.bukkit.entity.minecart.PoweredMinecart") ? org.bukkit.entity.minecart.PoweredMinecart.class : PoweredMinecart.class, "powered minecart"),
-		// 1.5
+		
+		STORAGE((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart"), "storage minecart"),
+		POWERED((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart"), "powered minecart"),
+		
 		HOPPER(Skript.classExists("org.bukkit.entity.minecart.HopperMinecart") ? HopperMinecart.class : null, "hopper minecart"),
 		EXPLOSIVE(Skript.classExists("org.bukkit.entity.minecart.ExplosiveMinecart") ? ExplosiveMinecart.class : null, "explosive minecart"),
 		SPAWNER(Skript.classExists("org.bukkit.entity.minecart.SpawnerMinecart") ? SpawnerMinecart.class : null, "spawner minecart");
@@ -122,7 +131,7 @@ public class MinecartData extends EntityData<Minecart> {
 	@Override
 	public boolean match(final Minecart entity) {
 		if (type == MinecartType.NORMAL && type.c == Minecart.class) // pre-1.5
-			return !(entity instanceof PoweredMinecart || entity instanceof StorageMinecart);
+			return !(poweredMinecart.isAssignableFrom(entity.getClass()) || storageMinecart.isAssignableFrom(entity.getClass()));
 		return type.c != null && type.c.isInstance(entity);
 	}
 	

@@ -1367,7 +1367,7 @@ public class SkriptParser {
 	
 	private static final HashMap<String,ExprInfo> exprInfoCache = new HashMap<String,ExprInfo>();
 	
-	private static ExprInfo getExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+	private static ExprInfo getExprInfo(final String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
 		ExprInfo r = exprInfoCache.get(s);
 		if (r == null) {
 			r = createExprInfo(s);

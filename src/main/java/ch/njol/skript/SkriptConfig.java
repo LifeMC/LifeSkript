@@ -48,6 +48,7 @@ import ch.njol.skript.util.Timespan;
 import ch.njol.util.Setter;
 
 /**
+ * FIXME Note from Njol, marked as important!?
  * Important: don't save values from the config, a '/skript reload config/configs/all' won't work correctly otherwise!
  * 
  * @author Peter Güttinger

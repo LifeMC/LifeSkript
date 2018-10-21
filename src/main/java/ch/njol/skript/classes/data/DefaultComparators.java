@@ -41,11 +41,9 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
-import org.bukkit.entity.PoweredMinecart;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Snowball;
-import org.bukkit.entity.StorageMinecart;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.ThrownExpBottle;
 import org.bukkit.entity.ThrownPotion;
@@ -206,9 +204,9 @@ public class DefaultComparators {
 			entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
 			entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
 			entityMaterials.put(Minecart.class, Material.MINECART);
-		} else {
-			entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
-			entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
+		} else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
+			entityMaterials.put(org.bukkit.entity.StorageMinecart.class, Material.STORAGE_MINECART);
+			entityMaterials.put(org.bukkit.entity.PoweredMinecart.class, Material.POWERED_MINECART);
 			entityMaterials.put(Minecart.class, Material.MINECART);
 		}
 	}

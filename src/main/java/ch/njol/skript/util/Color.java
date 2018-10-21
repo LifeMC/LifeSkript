@@ -28,6 +28,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.eclipse.jdt.annotation.Nullable;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.localization.Adjective;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.LanguageChangeListener;
@@ -79,7 +80,7 @@ public enum Color implements YggdrasilSerializable {
 	private final static Color[] byWool = new Color[16];
 	static {
 		for (final Color c : values()) {
-			byWool[c.wool.getData()] = c;
+			byWool[getData(c.wool)] = c;
 		}
 	}
 	
@@ -105,7 +106,7 @@ public enum Color implements YggdrasilSerializable {
 	}
 	
 	public byte getDye() {
-		return (byte) (15 - wool.getData());
+		return (byte) (15 - getData(wool));
 	}
 	
 	public DyeColor getWoolColor() {
@@ -113,7 +114,7 @@ public enum Color implements YggdrasilSerializable {
 	}
 	
 	public byte getWool() {
-		return wool.getData();
+		return getData(wool);
 	}
 	
 	public String getChat() {
@@ -160,11 +161,26 @@ public enum Color implements YggdrasilSerializable {
 	}
 	
 	public final static Color byWoolColor(final DyeColor color) {
-		return byWool(color.getData());
+		return byWool(getData(color));
 	}
 	
 	public final org.bukkit.Color getBukkitColor() {
 		return bukkit;
+	}
+	
+	private static boolean getWoolData =
+			Skript.methodExists(DyeColor.class, "getWoolData");
+	
+	public final static byte getData(final DyeColor color) {
+		if(getWoolData) {
+			return color.getWoolData();
+		}
+		try {
+			return color.getData();
+		} catch(final Throwable tw) {
+			getWoolData = !getWoolData;
+			return getData(color);
+		}
 	}
 	
 }

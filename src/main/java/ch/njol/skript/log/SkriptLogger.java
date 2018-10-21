@@ -50,10 +50,7 @@ public abstract class SkriptLogger {
 	static boolean debug;
 	
 	@SuppressWarnings("null")
-	public final static Level DEBUG = Level.INFO; // CraftBukkit 1.7+ uses the worst logging library I've ever encountered
-//			new Level("DEBUG", Level.INFO.intValue()) {
-//				private final static long serialVersionUID = 8959282461654206205L;
-//			};
+	public final static Level DEBUG = Level.INFO;
 	
 	@SuppressWarnings("null")
 	public final static Logger LOGGER = Bukkit.getServer() != null ? Bukkit.getLogger() : Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); // cannot use Bukkit in tests
@@ -192,8 +189,26 @@ public abstract class SkriptLogger {
 			suppressed.add(entry);
 			return;
 		}
+		if(suppressWarnings && entry.getLevel() == Level.WARNING) {
+			return;
+		}
+		if(suppressErrors && entry.getLevel() == Level.SEVERE) {
+			return;
+		}
 		entry.logged();
 		LOGGER.log(entry.getLevel(), format(entry));
+	}
+	
+	private static boolean suppressWarnings;
+	
+	public static void suppressWarnings(final boolean suppressWarnings) {
+		SkriptLogger.suppressWarnings = suppressWarnings;
+	}
+	
+	private static boolean suppressErrors;
+	
+	public static void suppressErrors(final boolean suppressErrors) {
+		SkriptLogger.suppressErrors = suppressErrors;
 	}
 	
 	public static void startSuppressing() {

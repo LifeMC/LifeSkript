@@ -559,7 +559,7 @@ public final class BukkitEventValues {
 		
 		// --- HangingEvents ---
 		// 1.4.3
-		if (Skript.supports("org.bukkit.event.hanging.HangingEvent")) {
+		if (Skript.classExists("org.bukkit.event.hanging.HangingEvent")) {
 			EventValues.registerEventValue(HangingEvent.class, Hanging.class, new Getter<Hanging, HangingEvent>() {
 				@Override
 				@Nullable
@@ -582,7 +582,7 @@ public final class BukkitEventValues {
 					return e.getPlayer();
 				}
 			}, 0);
-		} else {
+		} else if (Skript.classExists("org.bukkit.event.painting.PaintingEvent")) {
 			EventValues.registerEventValue(PaintingEvent.class, Painting.class, new Getter<Painting, PaintingEvent>() {
 				@Override
 				@Nullable

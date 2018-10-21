@@ -507,6 +507,8 @@ final public class ScriptLoader {
 					final Trigger trigger;
 					try {
 						trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
+						trigger.setLineNumber(node.getLine());
+ 						trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
 					} finally {
 						deleteCurrentEvent();
 					}

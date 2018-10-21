@@ -1,5 +1,4 @@
 /*
-
  *   This file is part of Skript.
  *
  *  Skript is free software: you can redistribute it and/or modify
@@ -20,38 +19,8 @@
  * 
  */
 
-package ch.njol.skript.util;
-
-import java.io.File;
-import java.util.HashMap;
-
 /**
- * @author Mirreducki
- * 
+ * @author TheDGOfficial
  */
-public class ScriptOptions {
-	
-	private final HashMap<File, Boolean> usesNewLoops = new HashMap<File, Boolean>();
-	
-	@SuppressWarnings("null")
-	private static ScriptOptions instance = null;
-	
-	private ScriptOptions(){
-		ScriptOptions.instance = this;
-	}
-	
-	@SuppressWarnings("null")
-	public static ScriptOptions getInstance(){
-		return instance != null ? instance : new ScriptOptions();
-	}
-	
-	public boolean usesNewLoops(final File file){
-		if(usesNewLoops.containsKey(file))
-			return usesNewLoops.get(file);
-		return true;
-	}
-	
-	public void setUsesNewLoops(final File file, final boolean b){
-		usesNewLoops.put(file, b);
-	}
-}
+@org.eclipse.jdt.annotation.NonNullByDefault
+package ch.njol.skript.compat;
