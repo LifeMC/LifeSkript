@@ -21,6 +21,12 @@
 
 package ch.njol.skript.entity;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.compat.Compatibility;
+import ch.njol.skript.lang.Literal;
+import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.variables.Variables;
+
 import java.util.ArrayList;
 
 import org.bukkit.entity.Minecart;
@@ -30,21 +36,17 @@ import org.bukkit.entity.minecart.RideableMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.eclipse.jdt.annotation.Nullable;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.compat.Compatibility;
-import ch.njol.skript.lang.Literal;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.variables.Variables;
-
 /**
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
 public class MinecartData extends EntityData<Minecart> {
 	
+	@Nullable
 	static final Class<? extends Minecart> storageMinecart =
 			Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart");
 			
+	@Nullable
 	static final Class<? extends Minecart> poweredMinecart =
 			Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart");
 			
@@ -129,6 +131,7 @@ public class MinecartData extends EntityData<Minecart> {
 	public void set(final Minecart entity) {}
 	
 	@Override
+	@SuppressWarnings("null")
 	public boolean match(final Minecart entity) {
 		if (type == MinecartType.NORMAL && type.c == Minecart.class) // pre-1.5
 			return !(poweredMinecart.isAssignableFrom(entity.getClass()) || storageMinecart.isAssignableFrom(entity.getClass()));

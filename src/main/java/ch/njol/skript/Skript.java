@@ -51,6 +51,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -717,12 +718,13 @@ public final class Skript extends JavaPlugin implements Listener {
 		disableScripts();
 		
 		Bukkit.getScheduler().cancelTasks(this);
+		HandlerList.unregisterAll((JavaPlugin) getInstance());
 		
 		for (final Closeable c : closeOnDisable) {
 			try {
 				c.close();
-			} catch (final Exception e) {
-				Skript.exception(e, "An error occurred while shutting down.", "This might or might not cause any issues.");
+			} catch (final Throwable tw) {
+				Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
 			}
 		}
 		
@@ -876,9 +878,11 @@ public final class Skript extends JavaPlugin implements Listener {
 	public static SkriptAddon registerAddon(final JavaPlugin p) {
 		checkAcceptRegistrations();
 		if (addons.containsKey(p.getName()))
-			throw new IllegalArgumentException("The plugin " + p.getName() + " is already registered");
+			throw new IllegalArgumentException("The addon " + p.getName() + " is already registered!");
 		final SkriptAddon addon = new SkriptAddon(p);
 		addons.put(p.getName(), addon);
+		if(Skript.logVeryHigh())
+			Skript.info("The addon " + p.getDescription().getFullName() + " was registered to Skript successfully.");
 		return addon;
 	}
 	
@@ -914,8 +918,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	// ================ CONDITIONS & EFFECTS ================
 	
-	private final static Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<SyntaxElementInfo<? extends Condition>>(50);
-	private final static Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<SyntaxElementInfo<? extends Effect>>(50);
+	private final static Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<SyntaxElementInfo<? extends Condition>>(100);
+	private final static Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<SyntaxElementInfo<? extends Effect>>(100);
 	private final static Collection<SyntaxElementInfo<? extends Statement>> statements = new ArrayList<SyntaxElementInfo<? extends Statement>>(100);
 	
 	/**

@@ -23,6 +23,9 @@ package ch.njol.skript.compat;
 
 import ch.njol.skript.Skript;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * @author TheDGOfficial
  */
@@ -39,7 +42,7 @@ public abstract class Compatibility {
 	 * If you must do operations specific to old or new one,
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@SuppressWarnings("null")
+	@NonNull @SuppressWarnings("null")
 	public final static <Superclass> Class<? extends Superclass> getClass(final String oldClass, final String newClass, final Class<Superclass> superClass) {
 		
 		if(Skript.classExists(newClass)) {
@@ -71,7 +74,7 @@ public abstract class Compatibility {
 	 * If you must do operations specific to old or new one,
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@SuppressWarnings("null")
+	@Nullable @SuppressWarnings("null")
 	public final static <Superclass> Class<? extends Superclass> getClass(final String oldClass, final String newClass) {
 		
 		return Compatibility.<Superclass>getClass(oldClass, newClass, null);
@@ -88,7 +91,7 @@ public abstract class Compatibility {
 	 * If you must do operations specific to old or new one,
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@SuppressWarnings("null")
+	@Nullable @SuppressWarnings("null")
 	public final static Class<?> getClassNoSuper(final String oldClass, final String newClass) {
 		
 		return getClass(oldClass, newClass, null);

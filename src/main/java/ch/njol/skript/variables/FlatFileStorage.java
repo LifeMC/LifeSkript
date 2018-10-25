@@ -325,7 +325,7 @@ public class FlatFileStorage extends VariablesStorage {
 		}
 	}
 	
-	@SuppressWarnings({"unused", "null"})
+	@SuppressWarnings({"unused", "null", "resource"})
 	@Override
 	protected final boolean connect() {
 		synchronized (connectionLock) {
