@@ -466,11 +466,7 @@ public final class Skript extends JavaPlugin implements Listener {
 						final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
 						
 						if(!latestTrimmed.equals(currentTrimmed)) {
-							Bukkit.getLogger().info("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
-							if(Skript.debug()) {
-								Bukkit.getLogger().info("[Skript] Current version: " + currentTrimmed);
-								Bukkit.getLogger().info("[Skript] Latest version: " + latestTrimmed);
-							}
+							Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
 							printDownloadLink();
 							updateAvailable = true;
 						} else {
@@ -478,7 +474,7 @@ public final class Skript extends JavaPlugin implements Listener {
 							printIssuesLink();
 						}
 					} catch(final Throwable tw) {
-						Bukkit.getLogger().warning("[Skript] Unable to check updates, make sure you are using the latest version of Skript!");
+						Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")");
 						if(Skript.logHigh())
 							Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw);
 						printDownloadLink();
