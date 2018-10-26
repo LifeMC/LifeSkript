@@ -199,13 +199,13 @@ public abstract class SkriptLogger {
 		LOGGER.log(entry.getLevel(), format(entry));
 	}
 	
-	private static boolean suppressWarnings;
+	private static volatile boolean suppressWarnings;
 	
 	public static void suppressWarnings(final boolean suppressWarnings) {
 		SkriptLogger.suppressWarnings = suppressWarnings;
 	}
 	
-	private static boolean suppressErrors;
+	private static volatile boolean suppressErrors;
 	
 	public static void suppressErrors(final boolean suppressErrors) {
 		SkriptLogger.suppressErrors = suppressErrors;

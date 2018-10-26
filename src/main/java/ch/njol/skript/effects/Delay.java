@@ -29,6 +29,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -39,6 +40,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.TriggerItem;
+import ch.njol.skript.lang.function.FunctionEvent;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 
@@ -68,6 +70,9 @@ public class Delay extends Effect {
 			if (millis > 86400000L) {
 				Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
 			}
+		}
+		if (ScriptLoader.isCurrentEvent(FunctionEvent.class)) {
+			Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
 		}
 		return true;
 	}

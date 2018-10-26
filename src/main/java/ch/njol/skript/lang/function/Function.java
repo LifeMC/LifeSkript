@@ -83,9 +83,7 @@ public abstract class Function<T> {
 	public int getMaxParameters() {
 		return parameters.length;
 	}
-	
-	// FIXME what happens with a delay in a function?
-	
+		
 	/**
 	 * @param params An array with at least {@link #getMinParameters()} elements and at most {@link #getMaxParameters()} elements.
 	 * @return The result of the function

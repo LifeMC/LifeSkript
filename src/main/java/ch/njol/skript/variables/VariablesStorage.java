@@ -147,20 +147,19 @@ public abstract class VariablesStorage implements Closeable {
 			}
 			if (!file.canRead()) {
 				Skript.error("Cannot read from the database file '" + file.getName() + "'!");
-//				Skript.error("This means that no variables will be available and can also prevent new variables from being saved!");
-//				try {
-//					final File backup = FileUtils.backup(file);
-//					Skript.error("A backup of your variables.csv was created as " + backup.getName());
-//				} catch (final IOException e) {
-//					Skript.error("Failed to create a backup of your variables.csv: " + e.getLocalizedMessage());
-//					loadError = true;
-//				}
+				Skript.error("This means that no variables will be available and can also prevent new variables from being saved!");
+				try {
+					final File backup = FileUtils.backup(file);
+					Skript.error("A backup of your variables.csv was created as " + backup.getName());
+				} catch (final IOException e) {
+					Skript.error("Failed to create a backup of your variables.csv: " + e.getLocalizedMessage());
+				}
 				return false;
 			}
 			
 			if (!"0".equals(getValue(n, "backup interval"))) {
 				final Timespan backupInterval = getValue(n, "backup interval", Timespan.class);
-				if (backupInterval != null)
+				if (backupInterval != null && backupInterval.getMilliSeconds() > 0)
 					startBackupTask(backupInterval);
 			}
 		}
