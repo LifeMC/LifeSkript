@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 import org.bukkit.event.Event;
@@ -282,7 +283,7 @@ final public class ScriptLoader {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private final static ScriptInfo loadScript(final File f) {
+	public final static ScriptInfo loadScript(final File f) {
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -339,7 +340,10 @@ final public class ScriptLoader {
 //			}
 //		}
 		try {
+			
+			final Date startDate = new Date();
 			final Config config = new Config(f, true, false, ":");
+			
 			if (SkriptConfig.keepConfigsLoaded.value())
 				SkriptConfig.configs.add(config);
 			int numTriggers = 0;
@@ -525,8 +529,10 @@ final public class ScriptLoader {
 					numTriggers++;
 				}
 				
+				final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
+				
 				if (Skript.logHigh())
-					Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "'");
+					Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
 				
 				currentScript = null;
 			} finally {
@@ -561,8 +567,8 @@ final public class ScriptLoader {
 			return new ScriptInfo(1, numTriggers, numCommands, numFunctions);
 		} catch (final IOException e) {
 			Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
-		} catch (final Exception e) {
-			Skript.exception(e, "Could not load " + f.getName());
+		} catch (final Throwable tw) {
+			Skript.exception(tw, "Could not load " + f.getName());
 		} finally {
 			SkriptLogger.setNode(null);
 		}

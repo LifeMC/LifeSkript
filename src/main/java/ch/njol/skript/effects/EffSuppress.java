@@ -52,9 +52,9 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-Fixes-V11")
 public class EffSuppress extends Effect  {
 	static {
-		Skript.registerEffect(EffSuppress.class, 
+		Skript.registerEffect(EffSuppress.class,
 				"start [the] (suppressing|hiding|disabling) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-string%]");
-		Skript.registerEffect(EffStopSuppress.class, 
+		Skript.registerEffect(EffStopSuppress.class,
 				"stop [the] (suppressing|hiding|disabling) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-string%]");
 		// the latest optional string part is for the justification, e.g:
 		// start suppressing warnings because "It is false positive"
