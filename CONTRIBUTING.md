@@ -1,9 +1,9 @@
 # What is Contributing?
 Contributing, means helping this project to grow, makes you a Contributor in this repository. This the page for reading before contributing.
 
-# Contributor & Collabrator
+# Difference between Contributor and Collabrator
 Contributor is a person outside of the core development team and contributed to this repository via making pull requests.
-Collabrator is a person inside of the core development team and have access to this repository.
+Collabrator is a person inside of the core development team and have write access to this repository.
 
 # Contributing to this repository
 Step by step:
@@ -27,3 +27,8 @@ Step by step:
 * Now the project is imported into eclipse. The project settings etc. are all automatically setted because we have pre-configured .settings etc. files.
 * For building jar, don't use Eclipse's export function. Right-click the project and click Show In -> System Explorer, this opens the repository path in your system. After this, run the build project.ink shorcut, or the build.bat with administrator rights. For running build.bat with administrator rights, just rightclick the file and select "Run as Administrator".
 * After doing all things, the project is ready and waiting you to change something. After changing "something" in the project, you can use privately for your server etc. or make a pull request (read above for how-to) for making changes available also on main project and usable by everyone used this plugin.
+
+# Requirements for testing project
+* You must enable Java Assertions. (via "java -ea -jar X.jar", the **-ea** does this.)
+* You must use debug mode in Skript config. (via "verbosity: debug")
+* You must have at least one script and variable to test Skript works properly.
