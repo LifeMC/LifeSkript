@@ -38,6 +38,8 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 
+import java.util.regex.Matcher;
+
 /**
  * @author Peter Güttinger
  */
@@ -60,8 +62,8 @@ public class EffReplace extends Effect {
 	@SuppressWarnings("null")
 	private Expression<String> haystack, needles, replacement;
 	
-	@SuppressWarnings({"unchecked", "null"})
 	@Override
+	@SuppressWarnings({"unchecked", "null"})
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		haystack = (Expression<String>) exprs[1 + matchedPattern];
 		if (!ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
@@ -74,6 +76,7 @@ public class EffReplace extends Effect {
 	}
 	
 	@Override
+	@SuppressWarnings("null")
 	protected void execute(final Event e) {
 		String h = haystack.getSingle(e);
 		final String[] ns = needles.getAll(e);
@@ -82,7 +85,7 @@ public class EffReplace extends Effect {
 			return;
 		for (final String n : ns) {
 			assert n != null;
-			h = StringUtils.replace(h, n, r, SkriptConfig.caseSensitive.value());
+			h = StringUtils.replace(h, n, Matcher.quoteReplacement(r), SkriptConfig.caseSensitive.value());
 		}
 		haystack.change(e, new String[] {h}, ChangeMode.SET);
 	}

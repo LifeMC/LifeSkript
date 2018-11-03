@@ -284,6 +284,17 @@ public final class Skript extends JavaPlugin implements Listener {
 			
 			try {
 				getAddonInstance().loadClasses("ch.njol.skript", "conditions", "effects", "events", "expressions", "entity");
+				if (logHigh()) {
+					if (getAddonInstance().getUnloadableClassCount() > 0) {
+						if(Skript.logVeryHigh()) {
+							info("Total of " + getAddonInstance().getUnloadableClassCount() + " classes are excluded from Skript. This maybe because of your version. Try enabling debug logging for more info.");
+						} else if(!Skript.isRunningMinecraft(1, 7, 10) && !Skript.isRunningMinecraft(1, 8, 8)) {
+							info("Total of " + getAddonInstance().getUnloadableClassCount() + " classes are excluded from Skript. This maybe because of your version. Try enabling debug logging for more info.");
+						}
+					} else {
+						info("Total of " + getAddonInstance().getLoadedClassCount() + " classes loaded from Skript.");
+					}
+				}
 			} catch (final Throwable tw) {
 				exception(tw, "Could not load required .class files: " + tw.getLocalizedMessage());
 				setEnabled(false);

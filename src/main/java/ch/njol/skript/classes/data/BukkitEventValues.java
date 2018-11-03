@@ -505,7 +505,7 @@ public final class BukkitEventValues {
 			}
 		}, 0);
 		// PlayerItemConsumeEvent
-		if (Skript.supports("org.bukkit.event.player.PlayerItemConsumeEvent")) {
+		if (Skript.classExists("org.bukkit.event.player.PlayerItemConsumeEvent")) {
 			EventValues.registerEventValue(PlayerItemConsumeEvent.class, ItemStack.class, new Getter<ItemStack, PlayerItemConsumeEvent>() {
 				@Override
 				@Nullable
@@ -515,7 +515,7 @@ public final class BukkitEventValues {
 			}, 0);
 		}
 		// PlayerItemBreakEvent
-		if (Skript.supports("org.bukkit.event.player.PlayerItemBreakEvent")) {
+		if (Skript.classExists("org.bukkit.event.player.PlayerItemBreakEvent")) {
 			EventValues.registerEventValue(PlayerItemBreakEvent.class, ItemStack.class, new Getter<ItemStack, PlayerItemBreakEvent>() {
 				@Override
 				@Nullable

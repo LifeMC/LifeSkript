@@ -475,7 +475,7 @@ public abstract class Aliases { //NOSONAR
 			missing.append("<any>, ");
 			r++;
 		}
-		if (r > 0)
+		if (r > 0 && Skript.logHigh())
 			Skript.warning("" + missing.substring(0, missing.length() - 2));
 		return r;
 	}

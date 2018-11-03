@@ -394,7 +394,6 @@ final public class ScriptLoader {
 						}
 						continue;
 					} else if (event.equalsIgnoreCase("variables")) {
-						// TODO allow to make these override existing variables
 						node.convertToEntries(0, "=");
 						for (final Node n : node) {
 							if (!(n instanceof EntryNode)) {
@@ -427,6 +426,9 @@ final public class ScriptLoader {
 								Skript.error("Invalid use of percent signs in variable name");
 								continue;
 							}
+							// Variables feature is for setting default variables,
+							// Not a shortcut for setting variables at startup.
+							// So if variable already exists, do nothing and continue.
 							if (Variables.getVariable(name, null, false) != null)
 								continue;
 							Object o;
@@ -630,7 +632,7 @@ final public class ScriptLoader {
 					Skript.error("undefined option " + m.group());
 					return m.group();
 				}
-				return option;
+				return Matcher.quoteReplacement(option);
 			}
 		});
 		assert r != null;

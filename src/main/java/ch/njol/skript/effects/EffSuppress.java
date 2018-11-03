@@ -53,9 +53,9 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffSuppress extends Effect  {
 	static {
 		Skript.registerEffect(EffSuppress.class,
-				"start [the] (suppressing|hiding|disabling) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-string%]");
+				"start [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
 		Skript.registerEffect(EffStopSuppress.class,
-				"stop [the] (suppressing|hiding|disabling) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-string%]");
+				"stop [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
 		// the latest optional string part is for the justification, e.g:
 		// start suppressing warnings because "It is false positive"
 	}
@@ -66,6 +66,11 @@ public class EffSuppress extends Effect  {
 	@SuppressWarnings("null")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
 		mark = parseResult.mark;
+		if(mark > 0) {
+			SkriptLogger.suppressErrors(true);
+		} else {
+			SkriptLogger.suppressWarnings(true);
+		}
 		return true;
 	}
 	

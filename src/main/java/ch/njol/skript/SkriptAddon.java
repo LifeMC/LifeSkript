@@ -49,6 +49,9 @@ public final class SkriptAddon {
 	public final Version version;
 	private final String name;
 	
+	private volatile int loadedClasses;
+	private volatile int unloadableClasses;
+	
 	/**
 	 * Package-private constructor. Use {@link Skript#registerAddon(JavaPlugin)} to get a SkriptAddon for your plugin.
 	 * 
@@ -77,6 +80,14 @@ public final class SkriptAddon {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getLoadedClassCount() {
+		return loadedClasses;
+	}
+	
+	public int getUnloadableClassCount() {
+		return unloadableClasses;
 	}
 	
 	/**
@@ -108,15 +119,30 @@ public final class SkriptAddon {
 						final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
 						try {
 							Class.forName(c, true, plugin.getClass().getClassLoader());
+							loadedClasses++; // successfully loaded
 						} catch (final NoClassDefFoundError ncdfe) {
 							// not supported or not available on this version, skip it.
-							if(Skript.debug()) {
-								ncdfe.printStackTrace();
+							if(Skript.logHigh()) {
+								if(!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from a addon)
+									Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
+								} else {
+									if(Skript.debug()) {
+										Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
+									}
+								}
 							}
+							unloadableClasses++;
 						} catch (final ClassNotFoundException ex) {
 							Skript.exception(ex, "Cannot load class " + c + " from " + this);
+							unloadableClasses++;
 						} catch (final ExceptionInInitializerError err) {
 							Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
+							unloadableClasses++;
+						} catch (final LinkageError le) {
+							if(Skript.debug()) {
+								Skript.exception(le, "Cannot load class " + c + " from " + this);
+							}
+							unloadableClasses++;
 						}
 						continue;
 					}

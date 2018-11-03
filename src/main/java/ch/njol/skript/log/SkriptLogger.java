@@ -168,6 +168,9 @@ public abstract class SkriptLogger {
 	@Nullable private static List<LogEntry> suppressed;
 	private static volatile boolean suppressing = false;
 	
+	private static volatile boolean suppressWarnings;
+	private static volatile boolean suppressErrors;
+	
 	public static void log(final @Nullable LogEntry entry) {
 		if (entry == null)
 			return;
@@ -198,15 +201,11 @@ public abstract class SkriptLogger {
 		entry.logged();
 		LOGGER.log(entry.getLevel(), format(entry));
 	}
-	
-	private static volatile boolean suppressWarnings;
-	
+		
 	public static void suppressWarnings(final boolean suppressWarnings) {
 		SkriptLogger.suppressWarnings = suppressWarnings;
 	}
-	
-	private static volatile boolean suppressErrors;
-	
+		
 	public static void suppressErrors(final boolean suppressErrors) {
 		SkriptLogger.suppressErrors = suppressErrors;
 	}

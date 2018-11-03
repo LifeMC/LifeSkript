@@ -70,7 +70,7 @@ public class ItemType implements Unit, Iterable<ItemData>, Container<ItemStack>,
 	private final static Message m_named = new Message("aliases.named");
 	
 	// 1.4.5
-	public final static boolean itemMetaSupported = Skript.supports("org.bukkit.inventory.meta.ItemMeta");
+	public final static boolean itemMetaSupported = Skript.classExists("org.bukkit.inventory.meta.ItemMeta");
 	
 	/**
 	 * Note to self: use {@link #add_(ItemData)} to add item datas, don't add them directly to this list.
