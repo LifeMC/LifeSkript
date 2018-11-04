@@ -322,13 +322,13 @@ public final class Skript extends JavaPlugin implements Listener {
 					
 					// load hooks
 					try {
-						final JarFile jar = new JarFile(getFile());
+						final JarFile jar = new JarFile(getPluginFile());
 						try {
 							for (final JarEntry e : new EnumerationIterable<JarEntry>(jar.entries())) {
 								if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count("" + e.getName(), '/') <= 5) {
 									final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
 									try {
-										final Class<?> hook = Class.forName(c, true, getClassLoader());
+										final Class<?> hook = Class.forName(c, true, getBukkitClassLoader());
 										if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
 											hook.getDeclaredConstructor().setAccessible(true);
 											hook.getDeclaredConstructor().newInstance();
@@ -747,12 +747,12 @@ public final class Skript extends JavaPlugin implements Listener {
 				try {
 					final Field modifiers = Field.class.getDeclaredField("modifiers");
 					modifiers.setAccessible(true);
-					final JarFile jar = new JarFile(getFile());
+					final JarFile jar = new JarFile(getPluginFile());
 					try {
 						for (final JarEntry e : new EnumerationIterable<JarEntry>(jar.entries())) {
 							if (e.getName().endsWith(".class")) {
 								try {
-									final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getClassLoader());
+									final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader());
 									for (final Field f : c.getDeclaredFields()) {
 										if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
 											if (Modifier.isFinal(f.getModifiers())) {
@@ -1299,6 +1299,16 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	public static void error(final CommandSender sender, final String error) {
 		sender.sendMessage(SKRIPT_PREFIX + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
+	}
+	
+	@SuppressWarnings("null")
+	public static File getPluginFile() {
+		return getInstance().getFile();
+	}
+	
+	@SuppressWarnings("null")
+	public static ClassLoader getBukkitClassLoader() {
+		return getInstance().getClassLoader();
 	}
 	
 }

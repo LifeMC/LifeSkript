@@ -26,6 +26,7 @@ import ch.njol.skript.compat.Compatibility;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.variables.Variables;
+import ch.njol.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -85,7 +86,7 @@ public class MinecartData extends EntityData<Minecart> {
 				if (t.c != null)
 					cn.add(t.codeName);
 			}
-			codeNames = cn.toArray(new String[0]);
+			codeNames = cn.toArray(StringUtils.EMPTY_STRING_ARRAY);
 		}
 	}
 	

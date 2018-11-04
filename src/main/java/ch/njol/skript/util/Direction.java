@@ -498,9 +498,7 @@ public class Direction implements YggdrasilRobustSerializable {
 	
 	@Override
 	public boolean missingField(@NonNull final Field field) throws StreamCorruptedException {
-		if (!field.getName().equals("relative"))
-			return true;
-		return false;
+		return !field.getName().equals("relative");
 	}
 	
 }

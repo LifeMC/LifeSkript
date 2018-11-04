@@ -80,11 +80,13 @@ public class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<
 	@Nullable
 	private String[] worldNames = null;
 	
+	public final static World[] EMPTY_WORLD_ARRAY = new World[0];
+	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override
 	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
 		tick = ((Literal<Time>) args[0]).getSingle().getTicks();
-		worlds = args[1] == null ? Bukkit.getWorlds().toArray(new World[0]) : ((Literal<World>) args[1]).getAll();
+		worlds = args[1] == null ? Bukkit.getWorlds().toArray(EMPTY_WORLD_ARRAY) : ((Literal<World>) args[1]).getAll();
 		if (args[1] != null) {
 			worldNames = new String[worlds.length];
 			for (int i = 0; i < worlds.length; i++)
@@ -197,6 +199,26 @@ public class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<
 	@Override
 	public int compareTo(final @Nullable EvtAtTime e) {
 		return e == null ? tick : tick - e.tick;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.tick;
+		return result;
+	}
+
+	@Override
+	public boolean equals(@Nullable Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof EvtAtTime))
+			return false;
+		EvtAtTime other = (EvtAtTime) obj;
+		return compareTo(other) == 0;
 	}
 	
 }

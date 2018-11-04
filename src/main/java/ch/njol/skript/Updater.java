@@ -90,6 +90,57 @@ public final class Updater {
 		public int compareTo(final @Nullable VersionInfo o) {
 			return version.compareTo(o == null ? null : o.version);
 		}
+
+		@Override
+		@SuppressWarnings("null")
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((this.changelog == null) ? 0 : this.changelog.hashCode());
+			result = prime * result + ((this.date == null) ? 0 : this.date.hashCode());
+			result = prime * result + ((this.downloadURL == null) ? 0 : this.downloadURL.hashCode());
+			result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+			result = prime * result + ((this.version == null) ? 0 : this.version.hashCode());
+			return result;
+		}
+
+		@Override
+		@SuppressWarnings({"null", "unused"})
+		public boolean equals(@Nullable Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (!(obj instanceof VersionInfo))
+				return false;
+			VersionInfo other = (VersionInfo) obj;
+			if (this.changelog == null) {
+				if (other.changelog != null)
+					return false;
+			} else if (!this.changelog.equals(other.changelog))
+				return false;
+			if (this.date == null) {
+				if (other.date != null)
+					return false;
+			} else if (!this.date.equals(other.date))
+				return false;
+			if (this.downloadURL == null) {
+				if (other.downloadURL != null)
+					return false;
+			} else if (!this.downloadURL.equals(other.downloadURL))
+				return false;
+			if (this.name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!this.name.equals(other.name))
+				return false;
+			if (this.version == null) {
+				if (other.version != null)
+					return false;
+			} else if (!this.version.equals(other.version))
+				return false;
+			return true;
+		}
 	}
 	
 	/**

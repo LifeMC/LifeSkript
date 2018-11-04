@@ -115,6 +115,8 @@ public class SkriptCommand implements CommandExecutor {
 		Skript.error(sender, StringUtils.fixCapitalization(what));
 	}
 	
+	private final static File[] EMPTY_FILE_ARRAY = new File[0];
+	
 	@Override
 	@SuppressFBWarnings("REC_CATCH_EXCEPTION")
 	public boolean onCommand(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
@@ -168,7 +170,7 @@ public class SkriptCommand implements CommandExecutor {
 				if (args[1].equals("all")) {
 					try {
 						info(sender, "enable.all.enabling");
-						final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(new File[0]);
+						final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EMPTY_FILE_ARRAY);
 						assert files != null;
 						ScriptLoader.loadScripts(files);
 						if (r.numErrors() == 0) {

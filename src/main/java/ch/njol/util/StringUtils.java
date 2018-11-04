@@ -31,6 +31,8 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class StringUtils {
 	
+	public final static String[] EMPTY_STRING_ARRAY = new String[0];
+	
 	public final static void checkIndices(final String s, final int start, final int end) {
 		if (start < 0 || end > s.length())
 			throw new StringIndexOutOfBoundsException("invalid start/end indices " + start + "," + end + " for string \"" + s + "\" (length " + s.length() + ")");

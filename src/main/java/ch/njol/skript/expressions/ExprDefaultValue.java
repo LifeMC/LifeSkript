@@ -89,7 +89,7 @@ public class ExprDefaultValue<T> extends SimpleExpression<T> {
 	@SuppressWarnings({"unchecked", "null"})
 	protected T[] get(final Event e) {
 		final Object[] first = this.first.getArray(e);
-		final Object values[] = first.length != 0 ? first : second.getArray(e);
+		final Object[] values = first.length != 0 ? first : second.getArray(e);
 		try {
 			return Converters.convertStrictly(values, superType);
 		} catch (final ClassCastException e1) {

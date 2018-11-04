@@ -76,12 +76,14 @@ public class ExprDrops extends SimpleExpression<ItemStack> {
 		return true;
 	}
 	
+	private final static ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
+	
 	@Override
 	@Nullable
 	protected ItemStack[] get(final Event e) {
 		if (!(e instanceof EntityDeathEvent))
 			return new ItemStack[0];
-		return ((EntityDeathEvent) e).getDrops().toArray(new ItemStack[0]);
+		return ((EntityDeathEvent) e).getDrops().toArray(EMPTY_ITEMSTACK_ARRAY);
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -70,9 +70,7 @@ public class Experience implements YggdrasilSerializable {
 		if (!(obj instanceof Experience))
 			return false;
 		final Experience other = (Experience) obj;
-		if (xp != other.xp)
-			return false;
-		return true;
+		return xp == other.xp;
 	}
 	
 }

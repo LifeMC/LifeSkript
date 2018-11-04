@@ -41,6 +41,7 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.entity.EntityData;
+import ch.njol.skript.events.EvtAtTime;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.Literal;
@@ -210,7 +211,7 @@ public class ExprEntities extends SimpleExpression<Entity> {
 				return super.iterator(e);
 			return new NonNullIterator<Entity>() {
 				
-				private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(new World[0]) : worlds.getArray(e);
+				private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
 				private int w = -1;
 				
 				private final EntityData<?>[] ts = types.getAll(e);

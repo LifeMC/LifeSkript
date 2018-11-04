@@ -43,15 +43,27 @@ public abstract class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@NonNull @SuppressWarnings("null")
-	public final static <Superclass> Class<? extends Superclass> getClass(final String oldClass, final String newClass, final Class<Superclass> superClass) {
+	public final static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
 		
 		if(Skript.classExists(newClass)) {
 			
-			return (Class<? extends Superclass>) Skript.classForName(newClass);
+			final Class<?> clazz = Skript.classForName(newClass);
+			
+			// Should be never happen.
+			if(clazz == null)
+				return superClass;
+			
+			return (Class<? extends Superclass>) clazz;
 			
 		} else if(Skript.classExists(oldClass)) {
 			
-			return (Class<? extends Superclass>) Skript.classForName(oldClass);
+			final Class<?> clazz = Skript.classForName(oldClass);
+			
+			// Should be never happen.
+			if(clazz == null)
+				return superClass;
+			
+			return (Class<? extends Superclass>) clazz;
 			
 		} else {
 			
@@ -75,7 +87,7 @@ public abstract class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@Nullable @SuppressWarnings("null")
-	public final static <Superclass> Class<? extends Superclass> getClass(final String oldClass, final String newClass) {
+	public final static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return Compatibility.<Superclass>getClass(oldClass, newClass, null);
 		
@@ -92,7 +104,7 @@ public abstract class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@Nullable @SuppressWarnings("null")
-	public final static Class<?> getClassNoSuper(final String oldClass, final String newClass) {
+	public final static Class<?> getClassNoSuper(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return getClass(oldClass, newClass, null);
 		
