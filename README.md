@@ -1,10 +1,10 @@
 # LifeSkript Skript Fork
-LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java. It can also be useful if you do know Java; some tasks are quicker to do with Skript, and so it can be used for prototyping etc.
+LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java. It can also be useful if you do know Java; some tasks are quicker to do with Skript, and so it can be used for prototyping etc., also Skript is a very easy and understandable domain-specific scripting language, written in plain english sentences. Read the wiki for a great tutorial.
 
 # Server Compatibility
 Requirements for running Skript is:
 - Java 6 **or later** installed.
-- A bukkit or bukkit-based (craftbukkit, spigot, paperspigot etc.) server to run Skript.
+- A bukkit or bukkit-based (craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
 - Minecraft version compatibility is:
   - Tested: 1.7.10 - 1.8.8
   - Can maybe work: 1.2.5+
@@ -14,7 +14,7 @@ Requirements for running Skript is:
 Feel free to report all issues, make pull requests etc. but i can't guarantee these issues will be fixed.
 
 # Download Links
-You can download latest release from below:
+You can download latest release from here:
 https://github.com/LifeMC/LifeSkript/releases/latest/
 
 If you want to use dev versions or your custom version, you should clone the repo and compile yourself.
