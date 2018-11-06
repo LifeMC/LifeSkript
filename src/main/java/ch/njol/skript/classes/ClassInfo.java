@@ -104,7 +104,8 @@ public class ClassInfo<T> implements Debuggable {
 	 * @param parser A parser to parse values of this class or null if not applicable
 	 */
 	public ClassInfo<T> parser(final Parser<? extends T> parser) {
-		assert this.parser == null;
+		//for mundosk - fix assertion error
+		//assert this.parser == null;
 		this.parser = parser;
 		return this;
 	}
@@ -147,7 +148,8 @@ public class ClassInfo<T> implements Debuggable {
 	}
 	
 	public ClassInfo<T> serializeAs(final Class<?> serializeAs) {
-		assert this.serializeAs == null;
+		//for skquery - fix assertion error
+		//assert this.serializeAs == null;
 		if (serializer != null)
 			throw new IllegalStateException("Can't set this class to be serialized as another one if a serializer is already set");
 		this.serializeAs = serializeAs;

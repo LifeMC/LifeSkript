@@ -477,17 +477,46 @@ public final class Skript extends JavaPlugin implements Listener {
 						final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
 						
 						if(!latestTrimmed.equals(currentTrimmed)) {
-							Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
+							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+								
+								@Override
+								public final void run() {
+									Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
+								}
+								
+							});
 							printDownloadLink();
 							updateAvailable = true;
 						} else {
-							Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!");
+							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+								
+								@Override
+								public final void run() {
+									Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!");
+								}
+								
+							});
 							printIssuesLink();
 						}
 					} catch(final Throwable tw) {
-						Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")");
-						if(Skript.logHigh())
-							Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw);
+						Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+							
+							@Override
+							public final void run() {
+								Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")");
+							}
+							
+						});
+						if(Skript.logHigh()) {
+							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+								
+								@Override
+								public final void run() {
+									Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw);
+								}
+								
+							});
+						}
 						printDownloadLink();
 					}
 				}
@@ -500,11 +529,25 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	static final void printDownloadLink() {
-		Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);
+		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+			
+			@Override
+			public final void run() {
+				Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);				
+			}
+			
+		});
 	}
 	
 	static final void printIssuesLink() {
-		Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK);
+		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+			
+			@Override
+			public final void run() {
+				Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK);
+			}
+			
+		});
 	}
 	
 	@Nullable
@@ -1225,7 +1268,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		logEx("Running CraftBukkit: " + runningCraftBukkit);
 		logEx();
 		logEx("Current node: " + SkriptLogger.getNode());
-		logEx("Current item: " + (item == null ? "null" : item.toString(null, true)));
+		logEx("Current item: " + (item == null ? "not available" : item.toString(null, true)));
 		if (item != null && item.getTrigger() != null) {
 			final Trigger trigger = item.getTrigger();
 			if (trigger != null) {
@@ -1236,7 +1279,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		logEx();
 		logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
 		logEx();
-		logEx("Language: " + Language.getName());
+		logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1));
 		logEx();
 		logEx("End of Error.");
 		logEx();
