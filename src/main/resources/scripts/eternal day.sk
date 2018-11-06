@@ -1,6 +1,7 @@
-#
+﻿#
 # Makes eternal day in all worlds by setting each world's time to morning in the evening.
 #
 
-at 18:00:
-	set time to 7:00
+# makes infite day time
+at 18:00: # at start of the night time
+	set time to 7:00 # restart it to day time

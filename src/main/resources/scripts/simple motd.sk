@@ -1,9 +1,12 @@
-#
+﻿#
 # A simple message of the day script.
 # The MOTD can be set with the /setmotd command,
 # and it will be sent to each player when they log in
 # and when they use the /motd command.
 #
+
+# This not sets the server MOTD in the server list!
+# This script is only for sending MOTD to joined players.
 
 command /setmotd <text>:
 	permission: skript.setmotd

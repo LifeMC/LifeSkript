@@ -1,4 +1,4 @@
-command /eval <text>:
+﻿command /eval <text>:
 	description: Evaluates the given effect.
 	usage: /eval <effect>
 	executable by: players and console
@@ -7,6 +7,6 @@ command /eval <text>:
 	trigger:
 		execute arg-1
 		if last execute state is false:
-			send last execute errors to command sender
+			send last execute errors to command sender # use command sender instead of player to be able to use as console.
 		else:
 			send "&aExecuted without errors!" to command sender

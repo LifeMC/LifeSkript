@@ -1,6 +1,11 @@
-#
+﻿#
 # Disables rain & thunder in all worlds
 #
 
+# You can also disable for specific worlds,
+# just change it to:
+# on weather change to rain or thunder in world "worldname":
 on weather change to rain or thunder:
+	# This cancels the event.
+	# So weather cannot be changed to rain or thunder.
 	cancel event

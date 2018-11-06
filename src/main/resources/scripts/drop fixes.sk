@@ -1,14 +1,23 @@
-#
+﻿#
 # these triggers fix some drops.
 #
 
+# minecraft doesn't drops glass after break.
 on break of glass:
-	drop glass
+	drop event-block
 
+# also same for thin glass
 on break of thin glass:
-	drop thin glass
+	drop event-block
 
+# bookshelf drops books, this changes this behaviour with
+# dropping only the bookshelf itself.
 on break of bookshelf:
+	# If you are cancelling the event,
+	# You are overriding the event.
+	# So you must do minecraft's jobs yourself.
 	cancel event
+	# Set block  to air, like minecraft.
 	set block to air
-	drop bookshelf
+	# Drop the breaked block. (bookshelf)
+	drop event-block
