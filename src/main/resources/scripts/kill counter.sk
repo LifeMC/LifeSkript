@@ -1,4 +1,4 @@
-#
+﻿#
 # Counts kills per life, in total, and the highest kill streak.
 #
 
@@ -20,6 +20,6 @@ command /kills:
 		if {killcounter::%player%::kills_total} is not set:
 			set {killcounter::%player%::kills_total} to 0
 		if {killcounter::%player%::kills_session_max} is not set:
-			set {killcounter::%player%::kills_session_max} 0
+			set {killcounter::%player%::kills_session_max} to 0
 		message "You have killed %{killcounter::%player%::kills_session}% mobs and players in this life out of %{killcounter::%player%::kills_total}% kills in total."
 		message "Your maximum kill streak is %{killcounter::%player%::kills_session_max}% kills in one life."

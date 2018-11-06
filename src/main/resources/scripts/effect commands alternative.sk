@@ -3,7 +3,7 @@
 	usage: /eval <effect>
 	executable by: players and console
 	permission: skript.eval
-	permission-message: &4No permission!
+	permission message: &4No permission!
 	trigger:
 		execute arg-1
 		if last execute state is false:

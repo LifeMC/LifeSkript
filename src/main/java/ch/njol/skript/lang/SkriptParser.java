@@ -1163,8 +1163,10 @@ public class SkriptParser {
 											return res;
 										}
 									}
-// results in useless errors most of the time
-//									Skript.error("'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes), ErrorQuality.NOT_AN_EXPRESSION);
+									//TODO Test this, if it is a useful error, it should be implemented as a error or warning.
+									if(Skript.debug()) {
+										Skript.error("'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes), ErrorQuality.NOT_AN_EXPRESSION);
+									}
 									return null;
 								} finally {
 									log2.printError();
