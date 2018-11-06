@@ -128,7 +128,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
 		boolean hasValue = false;
 		final Class<? extends Event>[] es = ScriptLoader.getCurrentEvents();
 		if (es == null) {
-			assert false;
+			//assert false;
 			return false;
 		}
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
