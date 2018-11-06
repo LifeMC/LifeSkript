@@ -32,13 +32,15 @@ public class NumberArithmetic implements Arithmetic<Number, Number> {
 	}
 	
 	@Override
+	@SuppressWarnings("null")
 	public Number add(final Number value, final Number difference) {
-		return new Double(value.doubleValue() + difference.doubleValue());
+		return Double.valueOf(value.doubleValue() + difference.doubleValue());
 	}
 	
 	@Override
+	@SuppressWarnings("null")
 	public Number subtract(final Number value, final Number difference) {
-		return new Double(value.doubleValue() - difference.doubleValue());
+		return Double.valueOf(value.doubleValue() - difference.doubleValue());
 	}
 	
 }
