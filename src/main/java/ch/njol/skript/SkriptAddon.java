@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
@@ -49,8 +50,8 @@ public final class SkriptAddon {
 	public final Version version;
 	private final String name;
 	
-	private volatile int loadedClasses;
-	private volatile int unloadableClasses;
+	private final AtomicInteger loadedClasses = new AtomicInteger();
+	private final AtomicInteger unloadableClasses = new AtomicInteger();
 	
 	/**
 	 * Package-private constructor. Use {@link Skript#registerAddon(JavaPlugin)} to get a SkriptAddon for your plugin.
@@ -83,11 +84,11 @@ public final class SkriptAddon {
 	}
 	
 	public int getLoadedClassCount() {
-		return loadedClasses;
+		return loadedClasses.get();
 	}
 	
 	public int getUnloadableClassCount() {
-		return unloadableClasses;
+		return unloadableClasses.get();
 	}
 	
 	/**
@@ -119,7 +120,7 @@ public final class SkriptAddon {
 						final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
 						try {
 							Class.forName(c, true, plugin.getClass().getClassLoader());
-							loadedClasses++; // successfully loaded
+							loadedClasses.incrementAndGet(); // successfully loaded
 						} catch (final NoClassDefFoundError ncdfe) {
 							// not supported or not available on this version, skip it.
 							if(Skript.logHigh()) {
@@ -131,18 +132,18 @@ public final class SkriptAddon {
 									}
 								}
 							}
-							unloadableClasses++;
+							unloadableClasses.incrementAndGet();
 						} catch (final ClassNotFoundException ex) {
 							Skript.exception(ex, "Cannot load class " + c + " from " + this);
-							unloadableClasses++;
+							unloadableClasses.incrementAndGet();
 						} catch (final ExceptionInInitializerError err) {
 							Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
-							unloadableClasses++;
+							unloadableClasses.incrementAndGet();
 						} catch (final LinkageError le) {
 							if(Skript.debug()) {
 								Skript.exception(le, "Cannot load class " + c + " from " + this);
 							}
-							unloadableClasses++;
+							unloadableClasses.incrementAndGet();
 						}
 						continue;
 					}

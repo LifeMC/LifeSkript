@@ -59,6 +59,8 @@ public class CaseInsensitiveString implements Serializable, Comparable<CharSeque
 	@SuppressWarnings("null")
 	@Override
 	public boolean equals(final @Nullable Object o) {
+		if (o == null)
+			return false;
 		if (o == this)
 			return true;
 		if (o instanceof CharSequence)

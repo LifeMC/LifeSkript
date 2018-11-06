@@ -23,6 +23,7 @@ package ch.njol.skript.expressions;
 
 import org.bukkit.Location;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.NonNull;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.Description;
@@ -83,7 +84,7 @@ public class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 	
 		@SuppressWarnings({"incomplete-switch", "null"})
 		@Override
-		public void change(final Event e, final Object[] delta, final ChangeMode mode) {
+		public void change(final Event e, final @NonNull Object[] delta, final ChangeMode mode) {
 			final Location l = getExpr().getSingle(e);
 			if(delta[0] == null || l == null)
 				return;

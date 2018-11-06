@@ -44,6 +44,7 @@ import ch.njol.skript.bukkitutil.PlayerUtils;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.Serializer;
+import ch.njol.skript.events.EvtAtTime;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.ParseContext;
@@ -482,7 +483,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 		}
 		final List<E> list = new ArrayList<E>();
 		if (worlds == null)
-			worlds = Bukkit.getWorlds().toArray(new World[0]);
+			worlds = Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY);
 		for (final World w : worlds) {
 			for (final E e : w.getEntitiesByClass(type)) {
 				for (final EntityData<?> t : types) {

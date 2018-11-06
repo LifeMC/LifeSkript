@@ -73,7 +73,7 @@ public class ExprNumbers extends SimpleExpression<Number> {
 			final int amount = ((Literal<Number>) end).getSingle().intValue();
 			if (amount == 0 && isInLoop()) {
 				Skript.warning("Looping zero times makes the code inside of the loop useless");
-			} else if (amount == 1 & isInLoop()) {
+			} else if (amount == 1 && isInLoop()) {
 				Skript.warning("Since you're looping exactly one time, you could simply remove the loop instead");
 			} else if (amount < 0) {
 				if (isInLoop()) {
