@@ -52,7 +52,8 @@ public abstract class WebUtils {
 	 * @throws IOException If any connection errors occured when making the http request to the address.
 	 * @return The web response from the given url as {@link java.lang.String String}, maybe null in some cases.
 	 */
-	public static final @Nullable String getResponse(final String address) throws IOException {
+	@Nullable
+	public static final String getResponse(final String address) throws IOException {
 		
 		return getResponse(address, "application/json; charset=utf-8");
 		
@@ -67,7 +68,8 @@ public abstract class WebUtils {
 	 * @throws IOException If any connection errors occured when making the http request to the address.
 	 * @return The web response from the given url as {@link java.lang.String String}, maybe null in some cases.
 	 */
-	public static final @Nullable String getResponse(final String address, final String contentType) throws IOException {
+	@Nullable
+	public static final String getResponse(final String address, final String contentType) throws IOException {
 		
 		String response = null;
 		

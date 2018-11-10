@@ -1163,7 +1163,7 @@ public class SkriptParser {
 											return res;
 										}
 									}
-									Skript.error("'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes), ErrorQuality.NOT_AN_EXPRESSION);
+									//Skript.error("'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes), ErrorQuality.NOT_AN_EXPRESSION);
 									return null;
 								} finally {
 									log2.printError();
