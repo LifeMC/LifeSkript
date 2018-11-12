@@ -21,20 +21,6 @@
 
 package ch.njol.skript.expressions;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -55,6 +41,21 @@ import ch.njol.util.NullableChecker;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.NonNullIterator;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger
@@ -169,9 +170,23 @@ public class ExprEntities extends SimpleExpression<Entity> {
 		return false;
 	}
 	
-	@SuppressWarnings("null")
+	private final static boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
+	
+	@Nullable
+	private final static Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
+		if(getNearbyEntities) {
+			return l.getWorld().getNearbyEntities(l, x, y, z);
+		} else {
+			// The NMS method will be included in next LifeSpigot release.
+			// https://www.lifemcserver.com/forum/konular/lifespigot-sueruemue-yayinlandi-lifespigot-1-7-x-1-8-x.2369/
+			// Return empty collection for servers not using life spigot and 1.8.
+			return Collections.emptyList();
+		}
+	}
+	
 	@Override
 	@Nullable
+	@SuppressWarnings("null")
 	public Iterator<? extends Entity> iterator(final Event e) {
 		if (matchedPattern >= 2) {
 			final Location l;
@@ -191,7 +206,7 @@ public class ExprEntities extends SimpleExpression<Entity> {
 			if (n == null)
 				return null;
 			final double d = n.doubleValue();
-			final Collection<Entity> es = l.getWorld().getNearbyEntities(l, d, d, d);
+			final Collection<Entity> es = getNearbyEntities(l, d, d, d);
 			final double radiusSquared = d * d * Skript.EPSILON_MULT;
 			final EntityData<?>[] ts = types.getAll(e);
 			return new CheckedIterator<Entity>(es.iterator(), new NullableChecker<Entity>() {
