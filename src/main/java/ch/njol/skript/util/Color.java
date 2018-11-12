@@ -175,12 +175,7 @@ public enum Color implements YggdrasilSerializable {
 		if(getWoolData) {
 			return color.getWoolData();
 		}
-		try {
-			return color.getData();
-		} catch(final Throwable tw) {
-			getWoolData = !getWoolData;
-			return getData(color);
-		}
+		return color.getData();
 	}
 	
 }
