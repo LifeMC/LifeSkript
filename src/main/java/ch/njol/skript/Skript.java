@@ -1280,7 +1280,11 @@ public final class Skript extends JavaPlugin implements Listener {
 			if (trigger != null) {
 				final File script = trigger.getScript();
 				logEx("Current trigger: " + trigger.toString(null, true) + " (" + (script == null ? "null" : script.getName()) + ", line " + trigger.getLineNumber() + ")");
+			} else {
+				logEx("Current trigger: not available");
 			}
+		} else {
+			logEx("Current trigger: no trigger");
 		}
 		logEx();
 		logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
