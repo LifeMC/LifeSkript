@@ -275,8 +275,10 @@ public abstract class Classes {
 	 * @return The closest superclass's info
 	 */
 	@SuppressWarnings({"unchecked", "null"})
-	public static <T> ClassInfo<? super T> getSuperClassInfo(final Class<T> c) {
-		assert c != null;
+	public static <T> ClassInfo<? super T> getSuperClassInfo(final @Nullable Class<T> c) {
+		// Check null status
+		if(c == null)
+			return null;
 		checkAllowClassInfoInteraction();
 		final ClassInfo<?> i = superClassInfos.get(c);
 		if (i != null)
@@ -656,9 +658,6 @@ public abstract class Classes {
 	public final static SerializedVariable.Value serialize(@Nullable Object o) {
 		if (o == null)
 			return null;
-		
-		// temporary
-		assert Bukkit.isPrimaryThread();
 		
 		ClassInfo<?> ci = getSuperClassInfo(o.getClass());
 		if (ci.getSerializeAs() != null) {
