@@ -41,17 +41,22 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class WebUtils {
 	
-	/**
-	 * Connects to the given address and returns the web response as {@link java.lang.String String}.
-	 * 
-	 * This the overloaded version of the original {@link WebUtils#getResponse(String, String)} method.
-	 * This overloaded version of the original method is just uses the default content type (json).
-	 * 
-	 * @param address - The url (address) of the web server / web site to connect and get response from it.
-	 * 
-	 * @throws IOException If any connection errors occured when making the http request to the address.
-	 * @return The web response from the given url as {@link java.lang.String String}, maybe null in some cases.
-	 */
+    /**
+     * Connects to the given address and returns the web response as
+     * {@link java.lang.String String}.
+     *
+     * This the overloaded version of the original
+     * {@link WebUtils#getResponse(String, String)} method. This overloaded version
+     * of the original method is just uses the default content type (json).
+     *
+     * @param address - The url (address) of the web server / web site to connect
+     *                and get response from it.
+     *
+     * @throws IOException If any connection errors occured when making the http
+     *                     request to the address.
+     * @return The web response from the given url as {@link java.lang.String
+     *         String}, maybe null in some cases.
+     */
 	@Nullable
 	public static final String getResponse(final String address) throws IOException {
 		
@@ -59,15 +64,20 @@ public abstract class WebUtils {
 		
 	}
 	
-	/**
-	 * Connects to the given address and returns the web response as {@link java.lang.String String}.
-	 * 
-	 * @param address - The url (address) of the web server / web site to connect and get response from it.
-	 * @param contentType - The content type header of the http web request to the selected address / url.
-	 * 
-	 * @throws IOException If any connection errors occured when making the http request to the address.
-	 * @return The web response from the given url as {@link java.lang.String String}, maybe null in some cases.
-	 */
+    /**
+     * Connects to the given address and returns the web response as
+     * {@link java.lang.String String}.
+     *
+     * @param address     - The url (address) of the web server / web site to
+     *                    connect and get response from it.
+     * @param contentType - The content type header of the http web request to the
+     *                    selected address / url.
+     *
+     * @throws IOException If any connection errors occured when making the http
+     *                     request to the address.
+     * @return The web response from the given url as {@link java.lang.String
+     *         String}, maybe null in some cases.
+     */
 	@Nullable
 	public static final String getResponse(final String address, final String contentType) throws IOException {
 		

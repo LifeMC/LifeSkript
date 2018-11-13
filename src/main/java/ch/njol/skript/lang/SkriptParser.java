@@ -73,7 +73,7 @@ import ch.njol.util.coll.CollectionUtils;
  * 
  * @author Peter Güttinger
  */
-public class SkriptParser {
+public final class SkriptParser {
 	
 	final String expr;
 	
@@ -1083,7 +1083,10 @@ public class SkriptParser {
 										try {
 											mark = Integer.parseInt(pattern.substring(j + 1, j2));
 											j = j2;
-										} catch (final NumberFormatException e) {}
+										} catch (final NumberFormatException e) {
+											//FIXME Check this
+											assert false : e;
+										}
 									}
 								}
 								res = parse_i(pattern, i, j + 1);
@@ -1163,7 +1166,9 @@ public class SkriptParser {
 											return res;
 										}
 									}
+									//FIXME Also check this
 									//Skript.error("'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes), ErrorQuality.NOT_AN_EXPRESSION);
+									assert false : "'" + expr.substring(i, i2) + "' is " + notOfType(vi.classes);
 									return null;
 								} finally {
 									log2.printError();

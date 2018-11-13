@@ -21,6 +21,22 @@
 
 package ch.njol.skript.classes.data;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.Comparator;
+import ch.njol.skript.entity.EntityData;
+import ch.njol.skript.registrations.Comparators;
+import ch.njol.skript.util.Date;
+import ch.njol.skript.util.PotionEffectUtils;
+import ch.njol.skript.util.StructureType;
+import ch.njol.skript.util.Time;
+import ch.njol.skript.util.Timeperiod;
+import ch.njol.skript.util.Timespan;
+import ch.njol.util.StringUtils;
+import ch.njol.util.coll.CollectionUtils;
+
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
@@ -39,7 +55,6 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Slime;
@@ -49,33 +64,14 @@ import org.bukkit.entity.ThrownExpBottle;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Wither;
 import org.bukkit.entity.WitherSkull;
-import org.bukkit.entity.minecart.ExplosiveMinecart;
-import org.bukkit.entity.minecart.HopperMinecart;
-import org.bukkit.entity.minecart.RideableMinecart;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.SkriptConfig;
-import ch.njol.skript.aliases.ItemType;
-import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.classes.Comparator;
-import ch.njol.skript.entity.EntityData;
-import ch.njol.skript.registrations.Comparators;
-import ch.njol.skript.util.Date;
-import ch.njol.skript.util.PotionEffectUtils;
-import ch.njol.skript.util.StructureType;
-import ch.njol.skript.util.Time;
-import ch.njol.skript.util.Timeperiod;
-import ch.njol.skript.util.Timespan;
-import ch.njol.util.StringUtils;
-import ch.njol.util.coll.CollectionUtils;
 
 /**
  * @author Peter Güttinger
  */
 @SuppressWarnings({"rawtypes", "deprecation"})
-public class DefaultComparators {
+public final class DefaultComparators {
 	
 	public DefaultComparators() {}
 	
@@ -190,7 +186,11 @@ public class DefaultComparators {
 		entityMaterials.put(EnderPearl.class, Material.ENDER_PEARL);
 		entityMaterials.put(Snowball.class, Material.SNOW_BALL);
 		entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);
-//		entityMaterials.put(Fish.class, Material.RAW_FISH); // TODO 1.7
+		if(Skript.classExists("org.bukkit.entity.FishHook")) {
+			entityMaterials.put(org.bukkit.entity.FishHook.class, Material.FISHING_ROD);
+		} else if(Skript.classExists("org.bukkit.entity.Fish")) {
+			entityMaterials.put(org.bukkit.entity.Fish.class, Material.FISHING_ROD);
+		}
 		entityMaterials.put(TNTPrimed.class, Material.TNT);
 		entityMaterials.put(Slime.class, Material.SLIME_BALL);
 		if (Skript.classExists("org.bukkit.entity.ItemFrame"))
@@ -200,14 +200,14 @@ public class DefaultComparators {
 		if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
 			entityMaterials.put(org.bukkit.entity.minecart.StorageMinecart.class, Material.STORAGE_MINECART);
 			entityMaterials.put(org.bukkit.entity.minecart.PoweredMinecart.class, Material.POWERED_MINECART);
-			entityMaterials.put(RideableMinecart.class, Material.MINECART);
-			entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
-			entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
-			entityMaterials.put(Minecart.class, Material.MINECART);
+			entityMaterials.put(org.bukkit.entity.minecart.RideableMinecart.class, Material.MINECART);
+			entityMaterials.put(org.bukkit.entity.minecart.HopperMinecart.class, Material.HOPPER_MINECART);
+			entityMaterials.put(org.bukkit.entity.minecart.ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
+			entityMaterials.put(org.bukkit.entity.Minecart.class, Material.MINECART);
 		} else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
 			entityMaterials.put(org.bukkit.entity.StorageMinecart.class, Material.STORAGE_MINECART);
 			entityMaterials.put(org.bukkit.entity.PoweredMinecart.class, Material.POWERED_MINECART);
-			entityMaterials.put(Minecart.class, Material.MINECART);
+			entityMaterials.put(org.bukkit.entity.Minecart.class, Material.MINECART);
 		}
 	}
 	public final static Comparator<EntityData, ItemType> entityItemComparator = new Comparator<EntityData, ItemType>() {

@@ -1,19 +1,6 @@
 package ch.njol.skript;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.util.ChatPaginator;
-import org.bukkit.util.ChatPaginator.ChatPage;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.ScriptLoader.ScriptInfo;
-import ch.njol.skript.Updater.UpdateState;
-import ch.njol.skript.Updater.VersionInfo;
 import ch.njol.skript.classes.Converter;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
@@ -24,8 +11,17 @@ import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Color;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
-import ch.njol.skript.util.Utils;
 import ch.njol.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.eclipse.jdt.annotation.Nullable;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /*
@@ -52,7 +48,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * @author Peter Güttinger
  */
-public class SkriptCommand implements CommandExecutor {
+public final class SkriptCommand implements CommandExecutor {
 	private final static String NODE = "skript command";
 	
 	// TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
@@ -90,6 +86,7 @@ public class SkriptCommand implements CommandExecutor {
 	private final static ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
 	private final static ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
 	
+	@SuppressWarnings("unused")
 	private final static ArgsMessage m_changes_title = new ArgsMessage(NODE + ".update.changes.title");
 	
 	private final static void reloaded(final CommandSender sender, final RedirectingLogHandler r, String what, final Object... args) {
@@ -105,6 +102,7 @@ public class SkriptCommand implements CommandExecutor {
 		Skript.info(sender, StringUtils.fixCapitalization(what));
 	}
 	
+	@SuppressWarnings("unused")
 	private final static void message(final CommandSender sender, String what, final Object... args) {
 		what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
 		Skript.message(sender, StringUtils.fixCapitalization(what));
@@ -283,118 +281,12 @@ public class SkriptCommand implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("update")) {
 				Updater.stateLock.writeLock().lock();
 				try {
-					final UpdateState state = Updater.state;
 					if (args[1].equals("check")) {
-						switch (state) {
-							case NOT_STARTED:
-								Updater.check(sender, false, false);
-								break;
-							case CHECK_IN_PROGRESS:
-								Skript.info(sender, "" + Updater.m_check_in_progress);
-								break;
-							case CHECK_ERROR:
-								Updater.check(sender, false, false);
-								break;
-							case CHECKED_FOR_UPDATE:
-								if (Updater.latest.get() == null)
-									Skript.info(sender, Skript.getVersion().isStable() ? "" + Updater.m_running_latest_version : "" + Updater.m_running_latest_version_beta);
-								else
-									Skript.info(sender, "" + Updater.m_update_available);
-								break;
-							case DOWNLOAD_IN_PROGRESS:
-								Skript.info(sender, "" + Updater.m_download_in_progress);
-								break;
-							case DOWNLOAD_ERROR:
-								Skript.info(sender, "" + Updater.m_download_error);
-								break;
-							case DOWNLOADED:
-								Skript.info(sender, "" + Updater.m_downloaded);
-								break;
-						}
+						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
 					} else if (args[1].equalsIgnoreCase("changes")) {
-						if (state == UpdateState.NOT_STARTED) {
-							Skript.info(sender, "" + Updater.m_not_started);
-						} else if (state == UpdateState.CHECK_IN_PROGRESS) {
-							Skript.info(sender, "" + Updater.m_check_in_progress);
-						} else if (state == UpdateState.CHECK_ERROR) {
-							Skript.info(sender, "" + Updater.m_check_error);
-						} else if (Updater.latest.get() == null) {
-							Skript.info(sender, Skript.getVersion().isStable() ? "" + Updater.m_running_latest_version : "" + Updater.m_running_latest_version_beta);
-//						} else if (args.length == 2 && Updater.infos.size() != 1) {
-//							info(sender, "update.changes.multiple versions.title", Updater.infos.size(), Skript.getVersion());
-//							String versions = Updater.infos.get(0).version.toString();
-//							for (int i = Updater.infos.size() - 1; i >= 0; i--)
-//								versions += ", " + Updater.infos.get(i).version.toString();
-//							Skript.message(sender, "  " + versions);
-//							message(sender, "update.changes.multiple versions.footer");
-						} else {
-//							VersionInfo info = null;
-							int pageNum = 1;
-//							if (Updater.infos.size() == 1) {
-//								info = Updater.latest.get();
-							if (args.length >= 3 && args[2].matches("\\d+")) {
-								final String a2 = args[2];
-								assert a2 != null;
-								pageNum = Utils.parseInt(a2); // Eclipse complains about null here, not where args[2] is dereferenced above...
-							}
-//							} else {
-//								final String version = args[2];
-//								for (final VersionInfo i : Updater.infos) {
-//									if (i.version.toString().equals(version)) {
-//										info = i;
-//										break;
-//									}
-//								}
-//								if (info == null) {
-//									error(sender, "update.changes.invalid version", version);
-//									return true;
-//								}
-//								if (args.length >= 4 && args[3].matches("\\d+"))
-//									pageNum = Utils.parseInt(args[3]);
-//							}
-							final StringBuilder changes = new StringBuilder();
-							for (final VersionInfo i : Updater.infos) {
-								if (changes.length() != 0)
-									changes.append("\n");
-								changes.append(Skript.SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(m_changes_title.toString(i.version, i.date)));
-								changes.append("\n");
-								changes.append(i.changelog);
-							}
-							final ChatPage page = ChatPaginator.paginate(changes.toString(), pageNum, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH, ChatPaginator.OPEN_CHAT_PAGE_HEIGHT - 2);
-							sender.sendMessage(page.getLines());
-							if (pageNum < page.getTotalPages())
-								message(sender, "update.changes.next page", pageNum, page.getTotalPages(), pageNum + 1);
-						}
+						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
 					} else if (args[1].equalsIgnoreCase("download")) {
-						switch (state) {
-							case NOT_STARTED:
-								Updater.check(sender, true, false);
-								break;
-							case CHECK_IN_PROGRESS:
-								Skript.info(sender, "" + Updater.m_check_in_progress);
-								break;
-							case CHECK_ERROR:
-								Updater.check(sender, true, false);
-//								info(sender, Language.format("updater.check_error", updater.error));
-								break;
-							case CHECKED_FOR_UPDATE:
-								if (Updater.latest.get() == null) {
-									Skript.info(sender, Skript.getVersion().isStable() ? "" + Updater.m_running_latest_version : "" + Updater.m_running_latest_version_beta);
-								} else {
-									Updater.download(sender, false);
-								}
-								break;
-							case DOWNLOAD_IN_PROGRESS:
-								Skript.info(sender, "" + Updater.m_download_in_progress);
-								break;
-							case DOWNLOADED:
-								Skript.info(sender, "" + Updater.m_downloaded);
-								break;
-							case DOWNLOAD_ERROR:
-//								Skript.info(sender, "" + Updater.m_download_error);
-								Updater.download(sender, false);
-								break;
-						}
+						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
 					}
 				} finally {
 					Updater.stateLock.writeLock().unlock();

@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
  * 
  * @author Peter Güttinger
  */
-public class CaseInsensitiveString implements Serializable, Comparable<CharSequence>, CharSequence {
+public final class CaseInsensitiveString implements Serializable, Comparable<CharSequence>, CharSequence {
 	
 	private static final long serialVersionUID = 1205018864604639962L;
 	

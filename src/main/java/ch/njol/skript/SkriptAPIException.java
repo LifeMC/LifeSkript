@@ -26,7 +26,7 @@ package ch.njol.skript;
  * 
  * @author Peter Güttinger
  */
-public class SkriptAPIException extends RuntimeException {
+public final class SkriptAPIException extends RuntimeException {
 	private final static long serialVersionUID = -4556442222803379002L;
 	
 	public SkriptAPIException(final String message) {

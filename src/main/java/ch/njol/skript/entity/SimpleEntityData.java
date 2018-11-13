@@ -48,6 +48,7 @@ import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.PigZombie;
@@ -164,6 +165,7 @@ public class SimpleEntityData extends EntityData<Entity> {
 		
 		// supertypes
 		types.add(new SimpleEntityDataInfo("human", HumanEntity.class, true));
+		types.add(new SimpleEntityDataInfo("monster", Monster.class, true));
 		types.add(new SimpleEntityDataInfo("creature", Creature.class, true));
 		types.add(new SimpleEntityDataInfo("projectile", Projectile.class, true));
 		types.add(new SimpleEntityDataInfo("living entity", LivingEntity.class, true));

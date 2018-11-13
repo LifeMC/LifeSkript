@@ -163,6 +163,9 @@ public final class Skript extends JavaPlugin implements Listener {
 	static boolean disabled = false;
 	static boolean updateAvailable = false;
 	
+	@Nullable
+	static String latestVersion;
+	
 	public static Skript getInstance() {
 		final Skript i = instance;
 		if (i == null)
@@ -462,6 +465,8 @@ public final class Skript extends JavaPlugin implements Listener {
 			}, this);
 			*/
 			
+			latestVersion = getInstance().getDescription().getVersion();
+			
 			Bukkit.getScheduler().runTaskAsynchronously(getInstance(), new Runnable(){
 
 				@Override
@@ -487,6 +492,7 @@ public final class Skript extends JavaPlugin implements Listener {
 							});
 							printDownloadLink();
 							updateAvailable = true;
+							latestVersion = latest;
 						} else {
 							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 								
@@ -533,7 +539,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			
 			@Override
 			public final void run() {
-				Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);				
+				Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);
 			}
 			
 		});
