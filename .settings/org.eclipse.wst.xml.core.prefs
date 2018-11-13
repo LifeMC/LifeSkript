@@ -16,4 +16,4 @@ namespaceInPITarget=2
 use-project-settings=true
 whitespaceAtStart=2
 whitespaceBeforeTagName=2
-xinclude=false
+xinclude=true
