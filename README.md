@@ -1,5 +1,5 @@
 # LifeSkript Skript Fork
-LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java.<br />
+LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify servers without learning Java.<br />
 It can also be useful if you know Java; some tasks are quicker to do with Skript, and so it can be used for prototyping etc.
 
 Also, Skript is a very easy and understandable domain-specific scripting language, written in plain english sentences. Read the wiki for a great tutorial.
