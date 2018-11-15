@@ -170,17 +170,53 @@ public class ExprEntities extends SimpleExpression<Entity> {
 		return false;
 	}
 	
-	private final static boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
+	// World#getNearbyEntities only available on 1.8 and above.
+	public final static boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
 	
+	// We don't want to try the World#getNearbyEntities method everytime in case of a fail.
+	public volatile static boolean hardFail;
+	
+	/**
+	 * A safe way for getting nearby entities by a location and a x, y, z value.
+	 * This the version-safe mirror of the original method, {@link World#getNearbyEntities(Location, double, double, double)}.
+	 * 
+	 * @param l The location.
+	 * @param x The x value.
+	 * @param y The y value.
+	 * @param z The z value.
+	 * 
+	 * @return The collection of entities nearby the given arguments.
+	 */
 	@Nullable
-	private final static Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
+	public final static Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
 		if(getNearbyEntities) {
 			return l.getWorld().getNearbyEntities(l, x, y, z);
 		} else {
-			// The NMS method will be included in next LifeSpigot release.
-			// https://www.lifemcserver.com/forum/konular/lifespigot-sueruemue-yayinlandi-lifespigot-1-7-x-1-8-x.2369/
-			// Return empty collection for servers not using life spigot and 1.8.
-			return Collections.emptyList();
+			// Don't try it, known to be not exist
+			if(hardFail) {
+				
+				// Return empty collection. The warning should be already printed in first hard fail.
+				return Collections.emptyList();
+			}
+			try {
+				
+				// Try it
+				final Collection<Entity> col = l.getWorld().getNearbyEntities(l, x, y, z);
+				
+				// Success
+				hardFail = false;
+				return col;
+				
+			} catch(final NoSuchMethodError e) { // Method not exists
+				
+				if(!hardFail) { // Give the warning only in first use
+					Skript.warning("This server version not supports getNearbyEntities method. This method is only available on minecraft 1.8 and above. The LifeSpigot adds this method to lower versions. Look it LifeSpigot if you want to fix this issue, or just don't use the entities expression.");
+				}
+				
+				// Return empty collection (list) in case of a hard fail.
+				hardFail = true;
+				return Collections.emptyList();
+			}
 		}
 	}
 	

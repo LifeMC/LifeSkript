@@ -168,14 +168,35 @@ public enum Color implements YggdrasilSerializable {
 		return bukkit;
 	}
 	
-	private static boolean getWoolData =
+	// FIXME Oh.. The methodExists is not working properly in general, or only on enums?
+	public volatile static boolean getWoolData =
 			Skript.methodExists(DyeColor.class, "getWoolData");
 	
+	// We don't want a infinite method loop, java has a StackOverflowException, but just guarantee it.
+	public volatile static int infiniNumTrack;
+	
+	/**
+	 * A safe way for getting data of a dye color.
+	 * Works between different versions.
+	 * 
+	 * @param color The color.
+	 * 
+	 * @return The data of the given color.
+	 */
 	public final static byte getData(final DyeColor color) {
-		if(getWoolData) {
-			return color.getWoolData();
+		try {
+			if(getWoolData) {
+				return color.getWoolData();
+			}
+			return color.getData();
+		} catch(final NoSuchMethodError e) {
+			getWoolData = !getWoolData;
+			if(infiniNumTrack > 2) {
+				throw new IllegalStateException("Unable to find required methods. Please report this error.");
+			}
+			infiniNumTrack++;
+			return getData(color);
 		}
-		return color.getData();
 	}
 	
 }
