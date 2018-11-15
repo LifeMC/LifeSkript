@@ -46,7 +46,7 @@ import ch.njol.util.Closeable;
  * @author Peter Güttinger
  */
 @SuppressWarnings("null")
-public class UnresolvedOfflinePlayer implements OfflinePlayer {
+public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	
 	final static LinkedBlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<UnresolvedOfflinePlayer>();
 	

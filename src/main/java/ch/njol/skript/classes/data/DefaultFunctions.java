@@ -46,7 +46,7 @@ import ch.njol.util.StringUtils;
  * @author Peter Güttinger
  */
 @SuppressWarnings("null")
-public class DefaultFunctions {
+public final class DefaultFunctions {
 	public DefaultFunctions() {}
 	
 	private final static String s(final double n) {

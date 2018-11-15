@@ -35,7 +35,7 @@ import ch.njol.skript.util.Getter;
 /**
  * @author Peter Güttinger
  */
-public class EventValues {
+public final class EventValues {
 	
 	private EventValues() {}
 	

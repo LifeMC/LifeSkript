@@ -73,6 +73,7 @@ import ch.njol.skript.classes.data.SkriptClasses;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.doc.Documentation;
 import ch.njol.skript.events.EvtSkript;
+import ch.njol.skript.expressions.ExprEntities;
 import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Effect;
@@ -102,6 +103,7 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Comparators;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.registrations.EventValues;
+import ch.njol.skript.util.Color;
 import ch.njol.skript.util.EmptyStacktraceException;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
@@ -528,6 +530,22 @@ public final class Skript extends JavaPlugin implements Listener {
 				}
 				
 			});
+			
+			if(Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
+				
+				Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+					
+					@Override
+					public final void run() {
+						
+						Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
+						Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
+						
+					}
+					
+				});
+				
+			}
 			
 		} catch(final Throwable tw) {
 			exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");

@@ -76,7 +76,7 @@ import ch.njol.yggdrasil.Fields;
 /**
  * @author Peter Güttinger
  */
-public class SimpleEntityData extends EntityData<Entity> {
+public final class SimpleEntityData extends EntityData<Entity> {
 	
 	public final static class SimpleEntityDataInfo {
 		final String codeName;

@@ -65,7 +65,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 
 @ContainerType(ItemStack.class)
 @SuppressWarnings("deprecation")
-public class ItemType implements Unit, Iterable<ItemData>, Container<ItemStack>, YggdrasilExtendedSerializable {
+public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemStack>, YggdrasilExtendedSerializable {
 	
 	private final static Message m_named = new Message("aliases.named");
 	

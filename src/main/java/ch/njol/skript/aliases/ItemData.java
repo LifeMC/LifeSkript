@@ -39,7 +39,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public class ItemData implements Cloneable, YggdrasilSerializable {
+public final class ItemData implements Cloneable, YggdrasilSerializable {
 	static {
 		Variables.yggdrasil.registerSingleClass(ItemData.class, "ItemData");
 	}

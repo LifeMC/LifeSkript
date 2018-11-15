@@ -79,7 +79,7 @@ import ch.njol.yggdrasil.Fields;
  * @author Peter Güttinger
  */
 // TODO vectors
-public class BukkitClasses {
+public final class BukkitClasses {
 	
 	static {
 		Classes.registerClass(new ClassInfo<Entity>(Entity.class, "entity")

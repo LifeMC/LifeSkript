@@ -31,7 +31,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 /**
  * @author Peter Güttinger
  */
-public class PlayerData extends EntityData<Player> {
+public final class PlayerData extends EntityData<Player> {
 	static {
 		EntityData.register(PlayerData.class, "player", Player.class, 1, "non-op", "player", "op");
 	}

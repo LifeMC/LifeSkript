@@ -52,7 +52,7 @@ import ch.njol.util.StringUtils;
 @Examples({"block contains 20 cobblestone",
 		"player has 4 flint and 2 iron ingots"})
 @Since("1.0")
-public class CondContains extends Condition {
+public final class CondContains extends Condition {
 	static {
 		Skript.registerCondition(CondContains.class,
 				"%inventories% ha(s|ve) %itemtypes% [in [(the[ir]|his|her|its)] inventory]",

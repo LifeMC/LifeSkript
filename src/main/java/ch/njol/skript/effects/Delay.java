@@ -53,7 +53,7 @@ import ch.njol.util.Kleenean;
 		"halt for 5 minecraft hours",
 		"wait a tick"})
 @Since("1.4")
-public class Delay extends Effect {
+public final class Delay extends Effect {
 	static {
 		Skript.registerEffect(Delay.class, "(wait|halt) [for] %timespan%");
 	}

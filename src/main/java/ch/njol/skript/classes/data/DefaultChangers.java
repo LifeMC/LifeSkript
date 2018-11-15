@@ -44,7 +44,7 @@ import ch.njol.util.coll.CollectionUtils;
 /**
  * @author Peter Güttinger
  */
-public class DefaultChangers { //NOSONAR
+public final class DefaultChangers { //NOSONAR
 	
 	public final static Changer<Entity> entityChanger = new Changer<Entity>() {
 		@SuppressWarnings("unchecked")

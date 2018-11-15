@@ -69,7 +69,7 @@ import ch.njol.yggdrasil.Fields;
  * @author Peter Güttinger
  */
 @SuppressWarnings("rawtypes")
-public class SkriptClasses {
+public final class SkriptClasses {
 	public SkriptClasses() {}
 	
 	static {

@@ -39,7 +39,7 @@ import ch.njol.util.coll.CollectionUtils;
 /**
  * @author Peter Güttinger
  */
-public class DroppedItemData extends EntityData<Item> {
+public final class DroppedItemData extends EntityData<Item> {
 	static {
 		register(DroppedItemData.class, "dropped item", Item.class, "dropped item");
 	}

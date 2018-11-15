@@ -40,7 +40,7 @@ import ch.njol.skript.util.Timespan;
 /**
  * @author Peter Güttinger
  */
-public class EvtPeriodical extends SelfRegisteringSkriptEvent {
+public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 	static {
 		Skript.registerEvent("*Periodical", EvtPeriodical.class, ScheduledNoWorldEvent.class, "every %timespan%")
 				.description(SkriptEventInfo.NO_DOC);

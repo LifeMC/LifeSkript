@@ -47,7 +47,7 @@ import ch.njol.util.coll.CollectionUtils;
 /**
  * @author Peter Güttinger
  */
-public class FallingBlockData extends EntityData<FallingBlock> {
+public final class FallingBlockData extends EntityData<FallingBlock> {
 	static {
 		register(FallingBlockData.class, "falling block", FallingBlock.class, "falling block");
 	}
