@@ -34,9 +34,11 @@ import ch.njol.skript.Skript;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public abstract class PlayerChatEventHandler {
+public final class PlayerChatEventHandler {
 	
-	private PlayerChatEventHandler() {}
+	private PlayerChatEventHandler() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static boolean usesAsyncEvent = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent");
 	

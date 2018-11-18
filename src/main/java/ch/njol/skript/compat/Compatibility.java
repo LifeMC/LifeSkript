@@ -27,9 +27,20 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
+ * A class about compatibility.
+ * 
  * @author TheDGOfficial
+ * 
+ * @since 2.2-Fixes-V10
  */
-public abstract class Compatibility {
+public final class Compatibility {
+	
+	/**
+	 * Static magic.
+	 */
+	private Compatibility() {
+		throw new UnsupportedOperationException();
+	}
 	
 	/**
 	 * Gets the most compatible class.

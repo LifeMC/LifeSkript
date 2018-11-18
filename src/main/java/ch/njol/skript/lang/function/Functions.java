@@ -49,8 +49,11 @@ import ch.njol.util.StringUtils;
 /**
  * @author Peter Güttinger
  */
-public abstract class Functions {
-	private Functions() {}
+public final class Functions {
+	
+	private Functions() {
+		throw new UnsupportedOperationException();
+	}
 	
 	final static class FunctionData {
 		final Function<?> function;

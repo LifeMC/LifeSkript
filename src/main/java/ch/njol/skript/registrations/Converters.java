@@ -41,9 +41,11 @@ import ch.njol.util.Pair;
 /**
  * @author Peter Güttinger
  */
-public abstract class Converters {
+public final class Converters {
 	
-	private Converters() {}
+	private Converters() {
+		throw new UnsupportedOperationException();
+	}
 	
 	private static List<ConverterInfo<?, ?>> converters = new ArrayList<ConverterInfo<?, ?>>(50);
 	

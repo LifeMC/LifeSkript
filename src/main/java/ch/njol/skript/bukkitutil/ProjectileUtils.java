@@ -35,8 +35,11 @@ import ch.njol.skript.Skript;
  * @author Peter Güttinger
  */
 @SuppressWarnings("null")
-public abstract class ProjectileUtils {
-	private ProjectileUtils() {}
+public final class ProjectileUtils {
+	
+	private ProjectileUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	private static Method getShooter, setShooter;
 	static {

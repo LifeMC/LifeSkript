@@ -36,8 +36,11 @@ import ch.njol.util.Math2;
  */
 
 @SuppressWarnings("null")
-public abstract class HealthUtils {
-	private HealthUtils() {}
+public final class HealthUtils {
+	
+	private HealthUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	private final static boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);
 	private static Method getHealth, setHealth, getMaxHealth, setMaxHealth, damage;

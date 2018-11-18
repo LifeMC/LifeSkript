@@ -68,9 +68,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * @author Peter Güttinger
  */
-public abstract class Classes {
+public final class Classes {
 	
-	private Classes() {}
+	private Classes() {
+		throw new UnsupportedOperationException();
+	}
 	
 	@Nullable
 	private static ClassInfo<?>[] classInfos = null;

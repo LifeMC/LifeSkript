@@ -89,7 +89,7 @@ import ch.njol.util.StringUtils;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public abstract class Commands { //NOSONAR
+public final class Commands { //NOSONAR
 	
 	public final static ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
 	public final static Message m_correct_usage = new Message("commands.correct usage");

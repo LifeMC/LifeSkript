@@ -36,8 +36,11 @@ import ch.njol.skript.Skript;
  * 
  * @author Peter Güttinger
  */
-public abstract class Workarounds {
-	private Workarounds() {}
+public final class Workarounds {
+	
+	private Workarounds() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static void init() {}
 	

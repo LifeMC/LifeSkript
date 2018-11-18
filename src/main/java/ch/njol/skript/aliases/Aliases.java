@@ -60,7 +60,11 @@ import ch.njol.util.Setter;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public abstract class Aliases { //NOSONAR
+public final class Aliases { //NOSONAR
+	
+	private Aliases() {
+		throw new UnsupportedOperationException();
+	}
 	
 	/**
 	 * Note to self: never use this, use {@link #getAlias_i(String)} instead.
