@@ -48,7 +48,7 @@ import ch.njol.util.Kleenean;
 		"	message \"Welcome back to %region%!\"",
 		"	send \"%player% just entered %region%!\" to all members of the region"})
 @Since("2.1")
-public class CondIsMember extends Condition {
+public final class CondIsMember extends Condition {
 	static {
 		Skript.registerCondition(CondIsMember.class,
 				"%offlineplayers% (is|are) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%",

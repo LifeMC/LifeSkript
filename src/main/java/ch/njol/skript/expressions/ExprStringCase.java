@@ -43,7 +43,7 @@ import ch.njol.util.Kleenean;
 @Description("Copy of given text in upper or lower case.")
 @Examples("\"oops!\" in upper case # OOPS!")
 @Since("2.2-Fixes-V9c")
-public class ExprStringCase extends SimpleExpression<String> {
+public final class ExprStringCase extends SimpleExpression<String> {
 
 	private final static int UPPER = 0, LOWER = 1;
 	

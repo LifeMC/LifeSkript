@@ -62,7 +62,7 @@ import ch.njol.util.coll.iterator.SingleItemIterator;
  * 
  * @author Peter Güttinger
  */
-public class VariableString implements Expression<String> {
+public final class VariableString implements Expression<String> {
 	
 	private final static class ExpressionInfo {
 		ExpressionInfo(final Expression<?> expr) {

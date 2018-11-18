@@ -33,7 +33,7 @@ import ch.njol.skript.util.Getter;
 /**
  * @author Peter Güttinger
  */
-public class ExperienceSpawnEvent extends Event implements Cancellable {
+public final class ExperienceSpawnEvent extends Event implements Cancellable {
 	static {
 		EventValues.registerEventValue(ExperienceSpawnEvent.class, Location.class, new Getter<Location, ExperienceSpawnEvent>() {
 			@Override

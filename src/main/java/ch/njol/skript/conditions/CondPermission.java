@@ -45,7 +45,7 @@ import ch.njol.util.Kleenean;
 		"victim has the permission \"admin\":",
 		"	send \"You're attacking an admin!\" to attacker"})
 @Since("1.0")
-public class CondPermission extends Condition {
+public final class CondPermission extends Condition {
 	static {
 		Skript.registerCondition(CondPermission.class,
 				"[%commandsenders%] (do[es]n't|don't|do[es] not) have [the] permission[s] %strings%",

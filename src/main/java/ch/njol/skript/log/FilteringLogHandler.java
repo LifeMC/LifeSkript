@@ -26,7 +26,7 @@ import java.util.logging.Level;
 /**
  * @author Peter Güttinger
  */
-public class FilteringLogHandler extends LogHandler {
+public final class FilteringLogHandler extends LogHandler {
 	
 	private final int minimum;
 	

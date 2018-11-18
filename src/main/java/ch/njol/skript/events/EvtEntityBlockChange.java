@@ -37,7 +37,7 @@ import ch.njol.util.Checker;
 /**
  * @author Peter Güttinger
  */
-public class EvtEntityBlockChange extends SkriptEvent {
+public final class EvtEntityBlockChange extends SkriptEvent {
 	static {
 		Skript.registerEvent("Enderman/Sheep", EvtEntityBlockChange.class, EntityChangeBlockEvent.class, ChangeEvent.patterns)
 				.description("Called when an enderman places or picks up a block, or a sheep eats grass respectively.")

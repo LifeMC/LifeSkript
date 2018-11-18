@@ -35,7 +35,7 @@ import ch.njol.skript.classes.Converter;
 /**
  * @author Peter Güttinger
  */
-public abstract class FileUtils {
+public final class FileUtils {
 	
 	public static boolean RUNNINGJAVA6 = true;// = System.getProperty("java.version").startsWith("1.6"); // doesn't work reliably?
 	static {

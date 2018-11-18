@@ -41,7 +41,7 @@ import ch.njol.util.coll.CollectionUtils;
 /**
  * @author Peter Güttinger
  */
-public class FunctionReference<T> {
+public final class FunctionReference<T> {
 	
 	final String functionName;
 	

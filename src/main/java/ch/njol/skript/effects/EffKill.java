@@ -49,7 +49,7 @@ import ch.njol.util.Kleenean;
 		"kill all creepers in the player's world",
 		"kill all endermen, witches and bats"})
 @Since("1.0")
-public class EffKill extends Effect {
+public final class EffKill extends Effect {
 	static {
 		Skript.registerEffect(EffKill.class, "kill %entities%");
 	}

@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * @author Peter G�ttinger
  *
  */
-public class NotifyingReference<V>
+public final class NotifyingReference<V>
 {
   @Nullable
   private volatile V value;

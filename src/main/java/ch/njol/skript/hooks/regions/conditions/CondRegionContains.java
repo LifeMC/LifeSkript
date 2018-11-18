@@ -49,7 +49,7 @@ import ch.njol.util.Kleenean;
 		"	region contains {flags.%world%.red}",
 		"	message \"The red flag is near!\""})
 @Since("2.1")
-public class CondRegionContains extends Condition {
+public final class CondRegionContains extends Condition {
 	static {
 		Skript.registerCondition(CondRegionContains.class,
 				"[[the] region] %regions% contain[s] %directions% %locations%", "%locations% (is|are) ([contained] in|part of) [[the] region] %regions%",

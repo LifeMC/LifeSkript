@@ -43,7 +43,7 @@ import ch.njol.skript.lang.ExpressionType;
 		"	region is {forbidden region}",
 		"	cancel the event"})
 @Since("2.1")
-public class ExprRegion extends EventValueExpression<Region> {
+public final class ExprRegion extends EventValueExpression<Region> {
 	static {
 		Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, "[the] [event-]region");
 	}

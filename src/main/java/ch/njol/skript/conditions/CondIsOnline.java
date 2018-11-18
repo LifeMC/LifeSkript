@@ -44,7 +44,7 @@ import ch.njol.util.Kleenean;
 @Examples({"player is online",
 		"player-argument is offline"})
 @Since("1.4")
-public class CondIsOnline extends Condition {
+public final class CondIsOnline extends Condition {
 	
 	static {
 		Skript.registerCondition(CondIsOnline.class, "%offlineplayers% ((is|are) online|(is not|isn't|are not|aren't) offline)", "%offlineplayers% ((is|are) offline|(is not|isn't|are not|aren't) online)");

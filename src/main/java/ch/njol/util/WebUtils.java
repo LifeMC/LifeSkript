@@ -39,7 +39,14 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author TheDGOfficial
  * @since 2.2-Fixes-V10b
  */
-public abstract class WebUtils {
+public final class WebUtils {
+	
+	/**
+	 * Static magic.
+	 */
+	private WebUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
     /**
      * Connects to the given address and returns the web response as

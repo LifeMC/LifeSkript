@@ -38,7 +38,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
  * @author Peter Güttinger
  * @edited by Mirreducki. Increased maximum timespan.
  */
-public class Timespan implements YggdrasilSerializable, Comparable<Timespan> { // REMIND unit
+public final class Timespan implements YggdrasilSerializable, Comparable<Timespan> { // REMIND unit
 
 	private final static Noun m_tick = new Noun("time.tick");
 	private final static Noun m_second = new Noun("time.second");

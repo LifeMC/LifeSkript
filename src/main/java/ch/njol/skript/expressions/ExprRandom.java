@@ -48,7 +48,7 @@ import ch.njol.util.coll.CollectionUtils;
 @Examples({"give a diamond to a random player out of all players",
 		"give a random item out of all items to the player"})
 @Since("1.4.9")
-public class ExprRandom extends SimpleExpression<Object> {
+public final class ExprRandom extends SimpleExpression<Object> {
 	static {
 		Skript.registerExpression(ExprRandom.class, Object.class, ExpressionType.COMBINED, "[a] random %*classinfo% [out] of %objects%");
 	}

@@ -58,6 +58,7 @@ public class ExprParseError extends SimpleExpression<String> {
 	}
 	
 	@Override
+	@SuppressWarnings("null")
 	protected String[] get(final Event e) {
 		return ExprParse.lastError == null ? new String[0] : new String[] {ExprParse.lastError};
 	}

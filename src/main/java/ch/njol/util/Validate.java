@@ -26,7 +26,11 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public abstract class Validate {
+public final class Validate {
+	
+	private Validate() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public static void notNull(final Object... objects) {
 		for (int i = 0; i < objects.length; i++) {

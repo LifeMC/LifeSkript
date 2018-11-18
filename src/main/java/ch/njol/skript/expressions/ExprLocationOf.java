@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 @Examples({"set {home.%player%} to the location of the player",
 		"message \"You home was set to %player's location% in %player's world%.\""})
 @Since("")
-public class ExprLocationOf extends WrapperExpression<Location> {
+public final class ExprLocationOf extends WrapperExpression<Location> {
 	static {
 		Skript.registerExpression(ExprLocationOf.class, Location.class, ExpressionType.PROPERTY, "(location|position) of %location%", "%location%'[s] (location|position)");
 	}

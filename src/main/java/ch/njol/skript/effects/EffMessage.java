@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 		"if the targeted entity exists:",
 		"	message \"You're currently looking at a %type of the targeted entity%!\""})
 @Since("1.0")
-public class EffMessage extends Effect {
+public final class EffMessage extends Effect {
 	static {
 		Skript.registerEffect(EffMessage.class, "(message|msg|tell|send [message]) %strings% [to %commandsenders%]");
 	}

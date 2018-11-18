@@ -39,7 +39,7 @@ import ch.njol.util.coll.iterator.ArrayIterator;
  * @author Peter Güttinger
  * @see SimpleLiteral
  */
-public class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> implements Literal<T> {
+public final class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> implements Literal<T> {
 	
 	protected transient T[] data;
 	

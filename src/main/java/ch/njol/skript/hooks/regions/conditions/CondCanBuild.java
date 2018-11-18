@@ -53,7 +53,7 @@ import ch.njol.util.Kleenean;
 		"			stop",
 		"		set the targeted block to argument"})
 @Since("2.0")
-public class CondCanBuild extends Condition {
+public final class CondCanBuild extends Condition {
 	static {
 		Skript.registerCondition(CondCanBuild.class,
 				"%players% (can|(is|are) allowed to) build %directions% %locations%",

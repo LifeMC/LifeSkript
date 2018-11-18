@@ -35,7 +35,7 @@ import ch.njol.util.Checker;
 /**
  * @author Peter Güttinger
  */
-public class EvtGrow extends SkriptEvent {
+public final class EvtGrow extends SkriptEvent {
 	static {
 		Skript.registerEvent("Grow", EvtGrow.class, StructureGrowEvent.class, "grow [of %-structuretype%]")
 				.description("Called when a tree or giant mushroom grows to full size.")

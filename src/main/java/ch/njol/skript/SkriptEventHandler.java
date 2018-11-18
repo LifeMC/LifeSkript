@@ -51,8 +51,11 @@ import ch.njol.skript.lang.function.Functions;
 /**
  * @author Peter Güttinger
  */
-public abstract class SkriptEventHandler {
-	private SkriptEventHandler() {}
+public final class SkriptEventHandler {
+	
+	private SkriptEventHandler() {
+		throw new UnsupportedOperationException();
+	}
 	
 	final static Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<Class<? extends Event>, List<Trigger>>();
 	
@@ -137,7 +140,7 @@ public abstract class SkriptEventHandler {
 				!(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY)
 				|| e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
 			if (Skript.logVeryHigh())
-				Skript.info(" -x- was cancelled");
+				Skript.info(e.getClass().getSimpleName() + " was cancelled");
 			return;
 		}
 		

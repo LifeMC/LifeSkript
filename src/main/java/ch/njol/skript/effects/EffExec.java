@@ -51,7 +51,7 @@ import ch.njol.util.Kleenean;
 		"\ttrigger:",
 		"\t\texecute arg-1 if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
-public class EffExec extends Effect {
+public final class EffExec extends Effect {
 	static {
 		Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");
 	}

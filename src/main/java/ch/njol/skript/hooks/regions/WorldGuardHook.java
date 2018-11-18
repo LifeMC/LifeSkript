@@ -56,7 +56,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 /**
  * @author Peter Güttinger
  */
-public class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
+public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
 	
 	public WorldGuardHook() throws IOException {}
 	

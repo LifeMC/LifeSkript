@@ -50,7 +50,7 @@ import ch.njol.util.Kleenean;
 		"		set {command.%player%.lastused} to now",
 		"		# ... actual command trigger here ..."})
 @Since("2.0")
-public class CondDate extends Condition {
+public final class CondDate extends Condition {
 	static {
 		Skript.registerCondition(CondDate.class,
 				"%date% (was|were)( more|(n't| not) less) than %timespan% [ago]",

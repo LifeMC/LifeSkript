@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class Version implements Serializable, Comparable<Version> {
+public final class Version implements Serializable, Comparable<Version> {
 	private final static long serialVersionUID = 8687040355286333293L;
 	
 	private final int[] version = new int[3];

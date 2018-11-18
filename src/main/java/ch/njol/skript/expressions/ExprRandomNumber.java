@@ -47,7 +47,7 @@ import ch.njol.util.Math2;
 @Examples({"set the player's health to a random number between 5 and 10",
 		"send \"You rolled a %random integer from 1 to 6%!\" to the player"})
 @Since("1.4")
-public class ExprRandomNumber extends SimpleExpression<Number> {
+public final class ExprRandomNumber extends SimpleExpression<Number> {
 	static {
 		Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED,
 				"[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");

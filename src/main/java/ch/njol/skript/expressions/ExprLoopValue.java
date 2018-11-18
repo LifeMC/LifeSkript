@@ -122,7 +122,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 		}
 		if (loop.getLoopedExpression() instanceof Variable) {
 			isVariableLoop = true;
-			if (((Variable<?>) loop.getLoopedExpression()).isIndexLoop(s))
+			if (Variable.isIndexLoop(s))
 				isIndex = true;
 		}
 		this.loop = loop;

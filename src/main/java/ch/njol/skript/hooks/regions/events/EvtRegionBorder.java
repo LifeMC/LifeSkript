@@ -52,7 +52,7 @@ import ch.njol.util.Checker;
 /**
  * @author Peter Güttinger
  */
-public class EvtRegionBorder extends SelfRegisteringSkriptEvent {
+public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 	static {
 		Skript.registerEvent("Region Enter/Leave", EvtRegionBorder.class, RegionBorderEvent.class,
 				"(0¦enter[ing]|1¦leav(e|ing)|1¦exit[ing]) [of] ([a] region|[[the] region] %-regions%)",

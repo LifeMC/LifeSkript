@@ -45,7 +45,7 @@ import ch.njol.util.Kleenean;
 		"chance of {var}% # {var} between 0 and 100",
 		"chance of {var} # {var} between 0 and 1"})
 @Since("1.0")
-public class CondChance extends Condition {
+public final class CondChance extends Condition {
 	static {
 		Skript.registerCondition(CondChance.class, "chance of %number%(1¦\\%|)");
 	}

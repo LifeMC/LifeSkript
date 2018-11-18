@@ -21,7 +21,7 @@
 
 package ch.njol.skript.lang;
 
-public class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
+public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
 	
 	public Class<T> returnType;
 	

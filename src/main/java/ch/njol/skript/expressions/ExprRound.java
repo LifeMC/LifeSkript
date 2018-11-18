@@ -47,7 +47,7 @@ import ch.njol.util.Math2;
 		"set {_x} to floor({_y}) - ceil({_x})",
 		"add rounded down argument to the player's health"})
 @Since("2.0")
-public class ExprRound extends PropertyExpression<Number, Long> {
+public final class ExprRound extends PropertyExpression<Number, Long> {
 	static {
 		Skript.registerExpression(ExprRound.class, Long.class, ExpressionType.PROPERTY,
 				"(a|the|) round[ed] down %number%",

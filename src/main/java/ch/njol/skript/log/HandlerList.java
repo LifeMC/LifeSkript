@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class HandlerList implements Iterable<LogHandler> {
+public final class HandlerList implements Iterable<LogHandler> {
 	
 	private final LinkedList<LogHandler> list = new LinkedList<LogHandler>();
 	

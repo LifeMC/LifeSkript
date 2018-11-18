@@ -26,7 +26,7 @@ import org.bukkit.event.HandlerList;
 /**
  * @author Peter Güttinger
  */
-public class ScheduledNoWorldEvent extends ScheduledEvent {
+public final class ScheduledNoWorldEvent extends ScheduledEvent {
 	
 	public ScheduledNoWorldEvent() {
 		super(null);

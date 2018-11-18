@@ -35,7 +35,7 @@ import java.util.UUID;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-public class JRESerializer extends YggdrasilSerializer<Object> {
+public final class JRESerializer extends YggdrasilSerializer<Object> {
 	
 	private final static Class<?>[] supportedClasses = {
 			ArrayList.class, LinkedList.class,

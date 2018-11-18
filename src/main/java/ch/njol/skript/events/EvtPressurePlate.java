@@ -36,7 +36,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 /**
  * @author Peter Güttinger
  */
-public class EvtPressurePlate extends SkriptEvent {
+public final class EvtPressurePlate extends SkriptEvent {
 	static {
 		// TODO is EntityInteractEvent similar for entities?
 		Skript.registerEvent("Pressure Plate / Trip", EvtPressurePlate.class, PlayerInteractEvent.class,

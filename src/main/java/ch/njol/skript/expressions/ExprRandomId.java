@@ -44,7 +44,7 @@ import ch.njol.util.Kleenean;
 @Description("Gets a random UUID.")
 @Examples("set {id} to random id")
 @Since("2.2-Fixes-V10c")
-public class ExprRandomId extends SimpleExpression<String> {
+public final class ExprRandomId extends SimpleExpression<String> {
 	static {
 		Skript.registerExpression(ExprRandomId.class, String.class, ExpressionType.SIMPLE,
 				"[a] [new] random [uu]id");

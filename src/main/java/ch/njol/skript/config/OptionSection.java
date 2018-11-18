@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class OptionSection {
+public final class OptionSection {
 	
 	public final String key;
 	

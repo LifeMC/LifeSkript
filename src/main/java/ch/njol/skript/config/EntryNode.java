@@ -28,7 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class EntryNode extends Node implements Entry<String, String> {
+public final class EntryNode extends Node implements Entry<String, String> {
 	
 	private String value;
 	

@@ -48,7 +48,7 @@ import ch.njol.util.Kleenean;
 		"    projectile is arrow",
 		"    toggle the block at the arrow"})
 @Since("1.4")
-public class EffToggle extends Effect {
+public final class EffToggle extends Effect {
 	static {
 		Skript.registerEffect(EffToggle.class, "(close|turn off|de[-]activate) %blocks%", "(toggle|switch) [[the] state of] %blocks%", "(open|turn on|activate) %blocks%");
 	}

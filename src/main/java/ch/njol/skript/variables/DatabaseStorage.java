@@ -55,7 +55,7 @@ import ch.njol.util.SynchronizedReference;
  * 
  * @author Peter Güttinger
  */
-public class DatabaseStorage extends VariablesStorage {
+public final class DatabaseStorage extends VariablesStorage {
 	
 	public final static int MAX_VARIABLE_NAME_LENGTH = 380, // MySQL: 767 bytes max; cannot set max bytes, only max characters
 			MAX_CLASS_CODENAME_LENGTH = 50, // checked when registering a class

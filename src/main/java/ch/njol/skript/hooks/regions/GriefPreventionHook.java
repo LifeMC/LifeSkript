@@ -55,7 +55,7 @@ import ch.njol.yggdrasil.YggdrasilID;
 /**
  * @author Peter Güttinger
  */
-public class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
+public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 	
 	public GriefPreventionHook() throws IOException {}
 	

@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class CondCancelled extends Condition {
+public final class CondCancelled extends Condition {
 
 	static {
 		Skript.registerCondition(CondCancelled.class,

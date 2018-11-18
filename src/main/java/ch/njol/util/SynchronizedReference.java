@@ -22,10 +22,9 @@ package ch.njol.util;
 import javax.annotation.Nullable;
 
 /**
- * @author Peter G�ttinger
- *
+ * @author Peter Güttinger
  */
-public class SynchronizedReference<V>
+public final class SynchronizedReference<V>
 {
   @Nullable
   private volatile V value;

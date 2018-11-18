@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 @Examples({"drop 5 apples at the event-location # exactly the same as writing 'drop 5 apples'",
 		"set {_loc} to the location 1 meter above the player"})
 @Since("2.0")
-public class ExprLocation extends WrapperExpression<Location> {
+public final class ExprLocation extends WrapperExpression<Location> {
 	static {
 		Skript.registerExpression(ExprLocation.class, Location.class, ExpressionType.SIMPLE, "[the] [event-](location|position)");
 		Skript.registerExpression(ExprLocation.class, Location.class, ExpressionType.COMBINED, "[the] (location|position) %directions% [%location%]");

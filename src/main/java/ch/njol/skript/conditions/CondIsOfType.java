@@ -48,7 +48,7 @@ import ch.njol.util.Kleenean;
 @Examples({"tool is of type {*selected type}",
 		"victim is of type {villager type}"})
 @Since("1.4")
-public class CondIsOfType extends Condition {
+public final class CondIsOfType extends Condition {
 	static {
 		Skript.registerCondition(CondIsOfType.class,
 				"%itemstacks/entities% (is|are) of type[s] %itemtypes/entitydatas%", "%itemstacks/entities% (isn't|is not|aren't|are not) of type[s] %itemtypes/entitydatas%");

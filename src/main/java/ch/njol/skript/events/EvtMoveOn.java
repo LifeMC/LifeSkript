@@ -53,7 +53,7 @@ import ch.njol.skript.registrations.Classes;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jump
+public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jump
 
 //	private final static class BlockLocation {
 //		final World world;

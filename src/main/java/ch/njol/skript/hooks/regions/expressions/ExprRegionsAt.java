@@ -55,7 +55,7 @@ import ch.njol.util.Kleenean;
 		"	else:",
 		"		message \"Regions containing this sign: <gold>%{_regions::*}%<r>.\""})
 @Since("2.1")
-public class ExprRegionsAt extends SimpleExpression<Region> {
+public final class ExprRegionsAt extends SimpleExpression<Region> {
 	static {
 		Skript.registerExpression(ExprRegionsAt.class, Region.class, ExpressionType.PROPERTY,
 				"[the] region(1¦s|) %direction% %locations%");

@@ -63,15 +63,17 @@ public final class Delay extends Effect {
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+	public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		duration = (Expression<Timespan>) exprs[0];
 		if (duration instanceof Literal) {
 			final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
 			if (millis > 86400000L) {
+				//TODO Allow suppressing this via a config value.
 				Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
 			}
 		}
 		if (ScriptLoader.isCurrentEvent(FunctionEvent.class)) {
+			//TODO Also allow this can be suppressed via a config value.
 			Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
 		}
 		return true;
@@ -79,7 +81,7 @@ public final class Delay extends Effect {
 	
 	@Override
 	@Nullable
-	protected TriggerItem walk(final Event e) {
+	protected final TriggerItem walk(final Event e) {
 		debug(e, true);
 		final long start = Skript.debug() ? System.nanoTime() : 0;
 		final TriggerItem next = getNext();
@@ -112,12 +114,12 @@ public final class Delay extends Effect {
 	}
 	
 	@Override
-	protected void execute(final Event e) {
+	protected final void execute(final Event e) {
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
+	public final String toString(final @Nullable Event e, final boolean debug) {
 		return "wait for " + duration.toString(e, debug) + (e == null ? "" : "...");
 	}
 	

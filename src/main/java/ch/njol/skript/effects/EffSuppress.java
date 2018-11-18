@@ -37,10 +37,6 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-// FIXME Doesn't work well when scripts loaded at startup.
-// (works only when reloading scripts in runtime)
-// and doesn't work well with throw effect.
-
 @Name("Suppress Warnings / Errors")
 @Description("Suppress warnings or errors.")
 @Examples({"on load:",

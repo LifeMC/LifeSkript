@@ -36,7 +36,7 @@ import ch.njol.util.Setter;
 /**
  * @author Peter Güttinger
  */
-public class SectionValidator implements NodeValidator {
+public final class SectionValidator implements NodeValidator {
 	
 	private final static class NodeInfo {
 		public NodeValidator v;

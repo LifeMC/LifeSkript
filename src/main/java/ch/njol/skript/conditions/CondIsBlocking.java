@@ -36,7 +36,7 @@ import ch.njol.skript.doc.Since;
 @Description("Checks whether a player is blocking with his sword.")
 @Examples("victim is blocking")
 @Since("")
-public class CondIsBlocking extends PropertyCondition<Player> {
+public final class CondIsBlocking extends PropertyCondition<Player> {
 	
 	static {
 		register(CondIsBlocking.class, "(blocking|defending)", "players");

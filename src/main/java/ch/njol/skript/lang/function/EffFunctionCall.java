@@ -34,7 +34,7 @@ import ch.njol.util.Kleenean;
 /**
  * @author Peter Güttinger
  */
-public class EffFunctionCall extends Effect {
+public final class EffFunctionCall extends Effect {
 	
 	private final FunctionReference<?> function;
 	

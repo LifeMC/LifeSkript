@@ -55,7 +55,7 @@ import ch.njol.util.Kleenean;
 		"	victim has the permission \"skript.god\"",
 		"	cancel the event"})
 @Since("1.0")
-public class EffCancelEvent extends Effect {
+public final class EffCancelEvent extends Effect {
 	static {
 		Skript.registerEffect(EffCancelEvent.class, "(disallow|cancel) [the] [current] event", "(allow|uncancel) [the] [current] event");
 	}

@@ -46,7 +46,7 @@ import ch.njol.util.coll.CollectionUtils;
  * @author Peter Güttinger
  */
 @SuppressWarnings("unchecked")
-public class EvtClick extends SkriptEvent {
+public final class EvtClick extends SkriptEvent {
 	
 	// Important: a click on an entity fires both an PlayerInteractEntityEvent and a PlayerInteractEvent
 	

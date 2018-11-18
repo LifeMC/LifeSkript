@@ -59,7 +59,7 @@ import ch.njol.util.NotifyingReference;
  * 
  * @author Peter Güttinger
  */
-public class FlatFileStorage extends VariablesStorage {
+public final class FlatFileStorage extends VariablesStorage {
 	
 	@SuppressWarnings("null")
 	public final static Charset UTF_8 = Charset.forName("UTF-8");
@@ -427,7 +427,7 @@ public class FlatFileStorage extends VariablesStorage {
 	 * @param parent The parent's name with {@link Variable#SEPARATOR} at the end
 	 * @param map
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "null"})
 	private final void save(final PrintWriter pw, final String parent, final TreeMap<String, Object> map) {
 		outer: for (final Entry<String, Object> e : map.entrySet()) {
 			final Object val = e.getValue();

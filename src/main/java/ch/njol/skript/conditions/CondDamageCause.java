@@ -56,7 +56,7 @@ import ch.njol.util.Kleenean;
 		"	damage wasn't caused by a block explosion, an attack, a projectile, a potion, fire, burning, thorns or poison",
 		"	clear drops"})
 @Since("2.0")
-public class CondDamageCause extends Condition {
+public final class CondDamageCause extends Condition {
 	static {
 		Skript.registerCondition(CondDamageCause.class, "[the] damage (was|is|has)(0¦|1¦n('|o)t) [been] (caused|done|made) by %damagecause%");
 	}

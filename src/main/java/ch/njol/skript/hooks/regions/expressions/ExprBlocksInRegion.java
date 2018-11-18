@@ -53,7 +53,7 @@ import ch.njol.util.coll.iterator.EmptyIterator;
 @Examples({"loop all blocks in the region {arena.%{faction.%player%}%}:",
 		"	clear the loop-block"})
 @Since("2.1")
-public class ExprBlocksInRegion extends SimpleExpression<Block> {
+public final class ExprBlocksInRegion extends SimpleExpression<Block> {
 	static {
 		Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED,
 				"[(all|the)] blocks (in|of) [[the] region[s]] %regions%");

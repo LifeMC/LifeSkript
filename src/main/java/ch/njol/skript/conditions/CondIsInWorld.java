@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 		"argument isn't in world \"world_nether\"",
 		"the player is in the world of the victim"})
 @Since("1.4")
-public class CondIsInWorld extends Condition {
+public final class CondIsInWorld extends Condition {
 	static {
 		Skript.registerCondition(CondIsInWorld.class, "%entities% (is|are) in [[the] world[s]] %worlds%", "%entities% (is not|isn't|are not|aren't) in [[the] world[s]] %worlds%");
 	}

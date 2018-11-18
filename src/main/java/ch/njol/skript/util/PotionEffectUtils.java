@@ -38,9 +38,11 @@ import ch.njol.skript.localization.LanguageChangeListener;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public abstract class PotionEffectUtils {
+public final class PotionEffectUtils {
 	
-	private PotionEffectUtils() {}
+	private PotionEffectUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	final static Map<String, PotionEffectType> types = new HashMap<String, PotionEffectType>();
 	

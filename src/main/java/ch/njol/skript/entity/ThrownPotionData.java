@@ -43,7 +43,7 @@ import ch.njol.util.coll.CollectionUtils;
 /**
  * @author Peter Güttinger
  */
-public class ThrownPotionData extends EntityData<ThrownPotion> {
+public final class ThrownPotionData extends EntityData<ThrownPotion> {
 	static {
 		register(ThrownPotionData.class, "thrown potion", ThrownPotion.class, "thrown potion");
 	}

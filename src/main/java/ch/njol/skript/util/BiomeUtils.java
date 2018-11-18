@@ -27,8 +27,11 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public abstract class BiomeUtils {
-	private BiomeUtils() {}
+public final class BiomeUtils {
+	
+	private BiomeUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	private final static EnumUtils<Biome> util = new EnumUtils<Biome>(Biome.class, "biomes");
 	

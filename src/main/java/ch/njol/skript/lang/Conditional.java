@@ -36,7 +36,7 @@ import ch.njol.skript.config.SectionNode;
  * @see TriggerSection
  * @see Condition
  */
-public class Conditional extends TriggerSection {
+public final class Conditional extends TriggerSection {
 	
 	private final Condition cond;
 	

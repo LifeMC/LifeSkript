@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @author Peter Güttinger
  */
-public class ArrayIterator<T> implements Iterator<T> {
+public final class ArrayIterator<T> implements Iterator<T> {
 	
 	@Nullable
 	private final T[] array;

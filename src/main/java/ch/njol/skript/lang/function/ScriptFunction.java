@@ -36,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * @author Peter Güttinger
  */
-public class ScriptFunction<T> extends Function<T> {
+public final class ScriptFunction<T> extends Function<T> {
 	
 	final Trigger trigger;
 	

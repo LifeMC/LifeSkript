@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class Trigger extends TriggerSection {
+public final class Trigger extends TriggerSection {
 	
 	private final String name;
 	private final SkriptEvent event;

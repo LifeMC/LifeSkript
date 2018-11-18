@@ -48,7 +48,7 @@ import ch.njol.util.Kleenean;
 @Examples({"loop all worlds:",
 		"	broadcast \"You're in %loop-world%\" to loop-world"})
 @Since("1.0")
-public class ExprWorlds extends SimpleExpression<World> {
+public final class ExprWorlds extends SimpleExpression<World> {
 	
 	static {
 		Skript.registerExpression(ExprWorlds.class, World.class, ExpressionType.SIMPLE, "[(the|all)] worlds");

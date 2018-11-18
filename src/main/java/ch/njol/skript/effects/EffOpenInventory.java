@@ -45,7 +45,7 @@ import ch.njol.util.Kleenean;
 @Examples({"show the victim's inventory to the player",
 		"open the player's inventory for the player"})
 @Since("2.0, 2.1.1 (closing)")
-public class EffOpenInventory extends Effect {
+public final class EffOpenInventory extends Effect {
 	static {
 		Skript.registerEffect(EffOpenInventory.class,
 				"(0¦open|1¦show) ((crafting [table]|workbench) (view|window|inventory|)|%-inventory%) (to|for) %players%",

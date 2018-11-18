@@ -49,7 +49,7 @@ import ch.njol.util.Kleenean;
 		"\t\tcontinue # filter out non moderators\n" +
 		"\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
 @Since("2.2-Fixes-V10")
-public class EffContinue extends Effect {
+public final class EffContinue extends Effect {
 
 	static {
 		Skript.registerEffect(EffContinue.class, "continue [loop]");

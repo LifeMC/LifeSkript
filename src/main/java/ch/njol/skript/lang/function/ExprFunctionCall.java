@@ -32,7 +32,7 @@ import ch.njol.util.Kleenean;
 /**
  * @author Peter Güttinger
  */
-public class ExprFunctionCall<T> extends SimpleExpression<T> {
+public final class ExprFunctionCall<T> extends SimpleExpression<T> {
 	
 	private final FunctionReference<T> function;
 	

@@ -65,9 +65,11 @@ import ch.njol.yggdrasil.Yggdrasil;
 /**
  * @author Peter Güttinger
  */
-public abstract class Variables {
+public final class Variables {
 	
-	private Variables() {}
+	private Variables() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static short YGGDRASIL_VERSION = 1;
 	
@@ -428,14 +430,12 @@ public abstract class Variables {
 	}
 	
 	public final static SerializedVariable serialize(final String name, final @Nullable Object value) {
-		//FIXME assert Bukkit.isPrimaryThread();
 		final SerializedVariable.Value var = serialize(value);
 		return new SerializedVariable(name, var);
 	}
 	
 	@Nullable
 	public final static SerializedVariable.Value serialize(final @Nullable Object value) {
-		//FIXME assert Bukkit.isPrimaryThread();
 		return Classes.serialize(value);
 	}
 	

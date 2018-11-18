@@ -24,7 +24,7 @@ package ch.njol.skript.classes;
 /**
  * @author Peter Güttinger
  */
-public class NumberArithmetic implements Arithmetic<Number, Number> {
+public final class NumberArithmetic implements Arithmetic<Number, Number> {
 	
 	@Override
 	public Number difference(final Number first, final Number second) {

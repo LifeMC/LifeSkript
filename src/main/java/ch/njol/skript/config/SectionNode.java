@@ -43,7 +43,7 @@ import ch.njol.util.coll.iterator.CheckedIterator;
 /**
  * @author Peter Güttinger
  */
-public class SectionNode extends Node implements Iterable<Node> {
+public final class SectionNode extends Node implements Iterable<Node> {
 	
 	private final ArrayList<Node> nodes = new ArrayList<Node>();
 	

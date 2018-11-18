@@ -29,7 +29,7 @@ import ch.njol.skript.config.SectionNode;
 /**
  * @author Peter Güttinger
  */
-public class While extends TriggerSection {
+public final class While extends TriggerSection {
 	
 	private final Condition c;
 	

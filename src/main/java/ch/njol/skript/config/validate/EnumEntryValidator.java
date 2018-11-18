@@ -31,7 +31,7 @@ import ch.njol.util.Setter;
 /**
  * @author Peter Güttinger
  */
-public class EnumEntryValidator<E extends Enum<E>> extends EntryValidator {
+public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator {
 	
 	private final Class<E> enumType;
 	private final Setter<E> setter;

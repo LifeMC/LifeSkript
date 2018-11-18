@@ -27,8 +27,11 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public abstract class SoundUtils {
-	private SoundUtils() {}
+public final class SoundUtils {
+	
+	private SoundUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	static {
 		assert false;

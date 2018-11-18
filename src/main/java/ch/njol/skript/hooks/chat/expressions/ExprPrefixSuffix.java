@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 		"	broadcast \"%player's prefix%%player's display name%%player's suffix%: %message%\" to the player's world",
 		"set the player's prefix to \"[<red>Admin<reset>] \""})
 @Since("2.0")
-public class ExprPrefixSuffix extends SimplePropertyExpression<Player, String> {
+public final class ExprPrefixSuffix extends SimplePropertyExpression<Player, String> {
 	static {
 		register(ExprPrefixSuffix.class, String.class, "[chat] (1¦prefix|2¦suffix)", "players");
 	}

@@ -45,7 +45,7 @@ import ch.njol.util.Kleenean;
 @Examples({"execute console command \"/stop\"",
 		"send \"message to console\" to the console"})
 @Since("1.3.1")
-public class LitConsole extends SimpleLiteral<ConsoleCommandSender> {
+public final class LitConsole extends SimpleLiteral<ConsoleCommandSender> {
 	static {
 		Skript.registerExpression(LitConsole.class, ConsoleCommandSender.class, ExpressionType.SIMPLE, "[the] (console|server)");
 	}

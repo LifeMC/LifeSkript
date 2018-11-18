@@ -34,7 +34,7 @@ import ch.njol.skript.Skript;
 /**
  * @author Peter Güttinger
  */
-public class VaultHook extends Hook<Vault> {
+public final class VaultHook extends Hook<Vault> {
 	
 	public VaultHook() throws IOException {}
 	

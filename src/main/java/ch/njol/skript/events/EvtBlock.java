@@ -55,7 +55,7 @@ import ch.njol.util.Checker;
  * @author Peter Güttinger
  */
 @SuppressWarnings({"deprecation", "unchecked"})
-public class EvtBlock extends SkriptEvent {
+public final class EvtBlock extends SkriptEvent {
 	
 	static {
 		// TODO 'block destroy' event for any kind of block destruction (player, water, trampling, fall (sand, toches, ...), etc) -> BlockPhysicsEvent?

@@ -29,7 +29,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 /**
  * @author Peter Güttinger
  */
-public class Date implements Comparable<Date>, YggdrasilSerializable {
+public final class Date implements Comparable<Date>, YggdrasilSerializable {
 	
 	private long timestamp;
 	

@@ -41,7 +41,7 @@ import ch.njol.skript.lang.ExpressionType;
 		"ban the IP-address of the player",
 		"broadcast \"Banned the IP %IP of player%\""})
 @Since("1.4")
-public class ExprIP extends SimplePropertyExpression<Player, String> {
+public final class ExprIP extends SimplePropertyExpression<Player, String> {
 	static {
 		Skript.registerExpression(ExprIP.class, String.class, ExpressionType.PROPERTY, "IP[s][( |-)address[es]] of %players%", "%players%'[s] IP[s][( |-)address[es]]");
 	}

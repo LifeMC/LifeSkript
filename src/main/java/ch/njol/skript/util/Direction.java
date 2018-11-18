@@ -52,7 +52,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable;
 /**
  * @author Peter Güttinger
  */
-public class Direction implements YggdrasilRobustSerializable {
+public final class Direction implements YggdrasilRobustSerializable {
 	
 	/**
 	 * A direction that doesn't point anywhere, i.e. equal to 'at'.

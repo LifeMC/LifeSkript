@@ -33,7 +33,7 @@ import ch.njol.skript.util.Utils;
  * 
  * @author Peter Güttinger
  */
-public class LiteralList<T> extends ExpressionList<T> implements Literal<T> {
+public final class LiteralList<T> extends ExpressionList<T> implements Literal<T> {
 	
 	public LiteralList(final Literal<? extends T>[] literals, final Class<T> returnType, final boolean and) {
 		super(literals, returnType, and);

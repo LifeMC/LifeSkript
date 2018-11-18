@@ -39,7 +39,7 @@ import ch.njol.util.StringUtils;
 /**
  * @author Peter Güttinger
  */
-public class Money {
+public final class Money {
 	static {
 		Classes.registerClass(new ClassInfo<Money>(Money.class, "money")
 				.user("money")

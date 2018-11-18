@@ -30,7 +30,7 @@ import ch.njol.skript.Skript;
 /**
  * @author Peter Güttinger
  */
-public class Adjective extends Message {
+public final class Adjective extends Message {
 	
 	// at least in German adjectives behave differently with a definite article. Cases are still not supported though and will likely never be.
 	private final static int DEFINITE_ARTICLE = -100;

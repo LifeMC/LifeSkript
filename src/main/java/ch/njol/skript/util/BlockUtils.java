@@ -39,7 +39,7 @@ import ch.njol.util.coll.CollectionUtils;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public abstract class BlockUtils { //NOSONAR
+public final class BlockUtils { //NOSONAR
 	
 	private final static BlockFace[] torch = new BlockFace[] {
 			null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN

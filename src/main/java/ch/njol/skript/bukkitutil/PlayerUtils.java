@@ -41,8 +41,11 @@ import ch.njol.skript.util.Task;
  * 
  * @author Peter Güttinger
  */
-public abstract class PlayerUtils {
-	private PlayerUtils() {}
+public final class PlayerUtils {
+	
+	private PlayerUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	final static Set<Player> inviUpdate = new HashSet<Player>();
 	
@@ -68,6 +71,7 @@ public abstract class PlayerUtils {
 	};
 	
 	private final static boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
+	
 	@Nullable
 	private static Method getOnlinePlayers = null;
 	

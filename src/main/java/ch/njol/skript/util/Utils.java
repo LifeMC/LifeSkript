@@ -52,9 +52,11 @@ import ch.njol.util.StringUtils;
  * 
  * @author Peter Güttinger
  */
-public abstract class Utils {
+public final class Utils {
 	
-	private Utils() {}
+	private Utils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static Random random = new Random();
 	

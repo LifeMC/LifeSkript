@@ -37,7 +37,7 @@ import ch.njol.yggdrasil.YggdrasilException;
  * 
  * @author Peter Güttinger
  */
-public class JREFieldHandler implements FieldHandler {
+public final class JREFieldHandler implements FieldHandler {
 	
 	/**
 	 * Not used

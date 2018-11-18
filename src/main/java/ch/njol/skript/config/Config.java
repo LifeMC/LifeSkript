@@ -42,7 +42,7 @@ import ch.njol.skript.config.validate.SectionValidator;
  * 
  * @author Peter Güttinger
  */
-public class Config {
+public final class Config {
 	
 	boolean simple = false;
 	

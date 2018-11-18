@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 	"else:",
 		"broadcast {_msg}"})
 @Since("2.2-Fixes-V10c")
-public class ExprNone extends SimpleExpression<Object> {
+public final class ExprNone extends SimpleExpression<Object> {
     static {
         Skript.registerExpression(ExprNone.class, Object.class, ExpressionType.SIMPLE,
                 "[the] (none|null) value of [the] [type] %*classinfo%");

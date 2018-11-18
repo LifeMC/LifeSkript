@@ -39,8 +39,11 @@ import ch.njol.util.Pair;
  * 
  * @author Peter Güttinger
  */
-public abstract class CollectionUtils {
-	private CollectionUtils() {}
+public final class CollectionUtils {
+	
+	private CollectionUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	/**
 	 * Finds an object in an array using {@link Object#equals(Object)} (can find null elements).

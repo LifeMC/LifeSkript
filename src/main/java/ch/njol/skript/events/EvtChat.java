@@ -47,7 +47,7 @@ import ch.njol.skript.util.Task;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public class EvtChat extends SelfRegisteringSkriptEvent {
+public final class EvtChat extends SelfRegisteringSkriptEvent {
 	static {
 		Skript.registerEvent("Chat", EvtChat.class, PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class, "chat")
 				.description("Called whenever a player chats.")

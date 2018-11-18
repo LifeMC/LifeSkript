@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class SerializedVariable {
+public final class SerializedVariable {
 	public String name;
 	@Nullable
 	public Value value;

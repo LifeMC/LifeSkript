@@ -31,7 +31,7 @@ import ch.njol.util.Kleenean;
  * 
  * @author Peter Güttinger
  */
-public class Patterns<T> {
+public final class Patterns<T> {
 	
 	private final String[] patterns;
 	private final Object[] ts;

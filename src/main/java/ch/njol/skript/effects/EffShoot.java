@@ -52,7 +52,7 @@ import ch.njol.util.Kleenean;
 		"make the player shoot a creeper at speed 10",
 		"shoot a pig from the creeper"})
 @Since("1.4")
-public class EffShoot extends Effect {
+public final class EffShoot extends Effect {
 	static {
 		Skript.registerEffect(EffShoot.class,
 				"shoot %entitydatas% [from %livingentities/locations%] [(at|with) (speed|velocity) %-number%] [%-direction%]",

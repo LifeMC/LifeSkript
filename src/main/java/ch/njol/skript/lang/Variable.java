@@ -66,7 +66,7 @@ import ch.njol.util.coll.iterator.EmptyIterator;
 /**
  * @author Peter Güttinger
  */
-public class Variable<T> implements Expression<T> {
+public final class Variable<T> implements Expression<T> {
 	
 	private final static String SINGLE_SEPARATOR_CHAR = ":";
 	public final static String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
@@ -581,7 +581,7 @@ public class Variable<T> implements Expression<T> {
 		return s.equalsIgnoreCase("var") || s.equalsIgnoreCase("variable") || s.equalsIgnoreCase("value") || s.equalsIgnoreCase("index");
 	}
 	
-	public boolean isIndexLoop(final String s) {
+	public static boolean isIndexLoop(final String s) {
 		return s.equalsIgnoreCase("index");
 	}
 	

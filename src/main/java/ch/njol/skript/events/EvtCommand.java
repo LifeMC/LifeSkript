@@ -37,7 +37,7 @@ import ch.njol.util.coll.CollectionUtils;
  * @author Peter Güttinger
  */
 @SuppressWarnings("unchecked")
-public class EvtCommand extends SkriptEvent { // TODO condition to check whether a given command exists, & a conditon to check whether it's a custom skript command
+public final class EvtCommand extends SkriptEvent { // TODO condition to check whether a given command exists, & a conditon to check whether it's a custom skript command
 	static {
 		Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), "command [%-string%]")
 				.description("Called when a player enters a command (not neccessarily a Skript command).")

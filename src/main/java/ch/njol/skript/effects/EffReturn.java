@@ -49,7 +49,7 @@ import ch.njol.util.Kleenean;
 @Examples({"function double(i: number) :: number:",
 		"	return 2 * {_i}"})
 @Since("2.2")
-public class EffReturn extends Effect {
+public final class EffReturn extends Effect {
 	static {
 		Skript.registerEffect(EffReturn.class, "return %objects%");
 	}

@@ -47,7 +47,7 @@ import ch.njol.util.Kleenean;
 @Examples({"set {_loc} to the location at arg-1, arg-2, arg-3 of the world arg-4",
 		"distance between the player and the location (0, 0, 0) is less than 200"})
 @Since("2.0")
-public class ExprLocationAt extends SimpleExpression<Location> {
+public final class ExprLocationAt extends SimpleExpression<Location> {
 	static {
 		Skript.registerExpression(ExprLocationAt.class, Location.class, ExpressionType.COMBINED,
 				"[the] (location|position) [at] [\\(][x[ ][=[ ]]]%number%, [y[ ][=[ ]]]%number%, [and] [z[ ][=[ ]]]%number%[\\)] [[(in|of) [[the] world]] %world%]");

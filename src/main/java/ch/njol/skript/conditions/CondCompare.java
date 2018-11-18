@@ -58,7 +58,7 @@ import ch.njol.util.Kleenean;
 		"time in the player's world is greater than 8:00",
 		"the creature is not an enderman or an ender dragon"})
 @Since("1.0")
-public class CondCompare extends Condition {
+public final class CondCompare extends Condition {
 	
 	private final static Patterns<Relation> patterns = new Patterns<Relation>(new Object[][] {
 			{"(1¦neither|) %objects% ((is|are)(|2¦(n't| not|4¦ neither)) ((greater|more|higher|bigger|larger) than|above)|\\>) %objects%", Relation.GREATER},

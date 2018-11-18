@@ -40,7 +40,7 @@ import ch.njol.skript.util.Container.ContainerType;
  * 
  * @author Peter Güttinger
  */
-public class Loop extends TriggerSection {
+public final class Loop extends TriggerSection {
 	
 	private final Expression<?> expr;
 	

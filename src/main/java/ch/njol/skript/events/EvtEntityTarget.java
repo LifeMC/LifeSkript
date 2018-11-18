@@ -33,7 +33,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 /**
  * @author Peter Güttinger
  */
-public class EvtEntityTarget extends SkriptEvent {
+public final class EvtEntityTarget extends SkriptEvent {
 	static {
 		Skript.registerEvent("Target", EvtEntityTarget.class, EntityTargetEvent.class, "[entity] target", "[entity] un[-]target")
 				.description("Called when a mob starts/stops following/attacking another entity, usually a player.")

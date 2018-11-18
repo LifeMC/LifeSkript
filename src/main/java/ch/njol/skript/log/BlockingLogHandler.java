@@ -26,7 +26,7 @@ package ch.njol.skript.log;
  * 
  * @author Peter Güttinger
  */
-public class BlockingLogHandler extends LogHandler {
+public final class BlockingLogHandler extends LogHandler {
 	
 	@Override
 	public LogResult log(final LogEntry entry) {

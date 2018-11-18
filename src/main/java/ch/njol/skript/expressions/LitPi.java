@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The most famous constant. It has the value 3.141592653589793 in Java and Skript.")
 @Examples("set {_pi} to pi # 3.141592653589793")
 @Since("2.2-Fixes-V10c")
-public class LitPi extends SimpleLiteral<Double> {
+public final class LitPi extends SimpleLiteral<Double> {
 	static {
 		Skript.registerExpression(LitPi.class, Double.class, ExpressionType.SIMPLE, "[the] pi [(number|double|constant)]");
 	}

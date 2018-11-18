@@ -56,7 +56,7 @@ import ch.njol.util.Kleenean;
 @Examples({"on place of TNT:",
 		"	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
 @Since("2.0")
-public class EffLog extends AsyncEffect {
+public final class EffLog extends AsyncEffect {
 	static {
 		Skript.registerEffect(EffLog.class, "log %strings% [(to|in) [file[s]] %-strings%]");
 	}

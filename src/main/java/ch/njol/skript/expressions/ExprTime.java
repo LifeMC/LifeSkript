@@ -50,7 +50,7 @@ import ch.njol.util.coll.CollectionUtils;
 @Examples({"time in world is between 18:00 and 6:00:",
 		"	broadcast \"It's night-time, watch out for monsters!\""})
 @Since("1.0")
-public class ExprTime extends PropertyExpression<World, Time> {
+public final class ExprTime extends PropertyExpression<World, Time> {
 	static {
 		Skript.registerExpression(ExprTime.class, Time.class, ExpressionType.PROPERTY, "[the] time [(in|of) %worlds%]", "%worlds%'[s] time");
 	}

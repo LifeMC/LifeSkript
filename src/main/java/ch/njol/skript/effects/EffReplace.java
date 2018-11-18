@@ -52,7 +52,7 @@ import java.util.regex.Matcher;
 		"	replace all \"fuck\", \"bitch\" and \"ass\" with \"****\" in the message"})
 @Since("2.0")
 // TODO add 'replace all <items> in <inventories> with <item>'
-public class EffReplace extends Effect {
+public final class EffReplace extends Effect {
 	static {
 		Skript.registerEffect(EffReplace.class,
 				"replace (all|every|) %strings% in %string% with %strings%",

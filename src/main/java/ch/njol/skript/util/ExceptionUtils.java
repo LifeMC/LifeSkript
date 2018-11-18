@@ -7,8 +7,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import ch.njol.skript.Skript;
 import ch.njol.skript.localization.Language;
 
-public abstract class ExceptionUtils {
-	private ExceptionUtils() {}
+public final class ExceptionUtils {
+	
+	private ExceptionUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	private final static String IO_NODE = "io exceptions";
 	

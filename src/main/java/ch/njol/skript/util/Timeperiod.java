@@ -28,7 +28,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 /**
  * @author Peter Güttinger
  */
-public class Timeperiod implements YggdrasilSerializable {
+public final class Timeperiod implements YggdrasilSerializable {
 	
 	public final int start, end;
 	

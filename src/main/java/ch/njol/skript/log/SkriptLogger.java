@@ -37,7 +37,7 @@ import ch.njol.skript.log.LogHandler.LogResult;
 /**
  * @author Peter Güttinger
  */
-public abstract class SkriptLogger {
+public final class SkriptLogger {
 	
 	@SuppressWarnings("null")
 	public final static Level SEVERE = Level.SEVERE;

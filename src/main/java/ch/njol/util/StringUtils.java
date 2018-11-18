@@ -29,7 +29,11 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public abstract class StringUtils {
+public final class StringUtils {
+	
+	private StringUtils() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static String[] EMPTY_STRING_ARRAY = new String[0];
 	

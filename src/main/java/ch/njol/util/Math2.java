@@ -25,7 +25,11 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
  * @author Peter Güttinger
  */
 @NonNullByDefault(false)
-public abstract class Math2 {
+public final class Math2 {
+	
+	private Math2() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static int min(final int a, final int b, final int c) {
 		return a <= b ? a <= c ? a : c : b <= c ? b : c;

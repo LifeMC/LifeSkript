@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @author Peter Güttinger
  */
-public class NodeMap {
+public final class NodeMap {
 	
 	private final Map<String, Node> map = new HashMap<String, Node>();
 	

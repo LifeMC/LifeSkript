@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * 
  * @author Peter Güttinger
  */
-public class RedirectingLogHandler extends LogHandler {
+public final class RedirectingLogHandler extends LogHandler {
 	
 	@Nullable
 	private final CommandSender recipient;

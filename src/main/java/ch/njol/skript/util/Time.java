@@ -34,7 +34,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 /**
  * @author Peter Güttinger
  */
-public class Time implements YggdrasilSerializable {
+public final class Time implements YggdrasilSerializable {
 	
 	private final static int TICKS_PER_HOUR = 1000, TICKS_PER_DAY = 24 * TICKS_PER_HOUR;
 	private final static double TICKS_PER_MINUTE = 1000. / 60;
