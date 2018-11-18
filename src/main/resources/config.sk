@@ -157,6 +157,12 @@ disable expression is already a text warnings: false
 disable start stop event warnings: false
 # Disables the "Server start/stop events are actually called when Skript is started or stopped." warnings.
 
+disable too long delay warnings: false
+# Disables the "Delays greater than one day are not persistent ..." warnings.
+
+disable delays in functions causes function to return instantly warnings: false
+# Disables the "Delays in functions causes function to return instantly, this may cause bugs ..." warnings.
+
 disable variable conflict warnings: false
 # Disables warnings of potential variable name conflicts if set to true.
 # I recommend to not touch this option, but if you do so you should at least set it back to false

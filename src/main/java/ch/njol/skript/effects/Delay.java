@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -67,15 +68,13 @@ public final class Delay extends Effect {
 		duration = (Expression<Timespan>) exprs[0];
 		if (duration instanceof Literal) {
 			final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
-			if (millis > 86400000L) {
-				//TODO Allow suppressing this via a config value.
-				Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
-			}
+			if (millis > 86400000L)
+				if (!SkriptConfig.disableTooLongDelayWarnings.value())
+					Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
 		}
-		if (ScriptLoader.isCurrentEvent(FunctionEvent.class)) {
-			//TODO Also allow this can be suppressed via a config value.
-			Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
-		}
+		if (ScriptLoader.isCurrentEvent(FunctionEvent.class))
+			if (!SkriptConfig.disableDelaysInFunctionsWarnings.value())
+				Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
 		return true;
 	}
 	

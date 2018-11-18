@@ -51,8 +51,11 @@ import ch.njol.util.Setter;
  * @author Peter Güttinger
  */
 @SuppressWarnings("unused")
-public abstract class SkriptConfig {
-	private SkriptConfig() {}
+public final class SkriptConfig {
+	
+	private SkriptConfig() {
+		throw new UnsupportedOperationException();
+	}
 	
 	@Nullable
 	static Config mainConfig;
@@ -152,6 +155,8 @@ public abstract class SkriptConfig {
 	
 	public final static Option<Boolean> caseSensitive = new Option<Boolean>("case sensitive", false);
 	
+	// Disable warnings options
+	
 	public final static Option<Boolean> disableVariableConflictWarnings = new Option<Boolean>("disable variable conflict warnings", true);
 	public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<Boolean>("disable variable will not be saved warnings", true);
 	
@@ -160,6 +165,12 @@ public abstract class SkriptConfig {
 	public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<Boolean>("disable variable name starting with expression warnings", false);
 	
 	public final static Option<Boolean> disableStartStopEventWarnings = new Option<Boolean>("disable start stop event warnings", false);
+	
+	public final static Option<Boolean> disableTooLongDelayWarnings = new Option<Boolean>("disable too long delay warnings", false);
+	
+	public final static Option<Boolean> disableDelaysInFunctionsWarnings = new Option<Boolean>("disable delays in functions causes function to return instantly warnings", false);
+	
+	// Disable warnings options
 	
 	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false)
 			.optional(true);
@@ -210,7 +221,8 @@ public abstract class SkriptConfig {
 				try {
 					final InputStream in = Skript.getInstance().getResource("config.sk");
 					if (in == null) {
-						Skript.error("Your config is outdated, but Skript couldn't find the newest config in its jar. Please download Skript again from dev.bukkit.org.");
+						Skript.error("Your config is outdated, but Skript couldn't find the newest config in its jar. Please download Skript again from the link below:");
+						Skript.printDownloadLink();
 						return false;
 					}
 					final Config newConfig = new Config(in, "Skript.jar/config.sk", false, false, ":");
