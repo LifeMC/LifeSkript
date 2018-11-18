@@ -111,7 +111,7 @@ public final class SkriptLogger {
 			int i = 1;
 			while (!h.equals(handlers.remove()))
 				i++;
-			LOGGER.severe("[Skript] " + i + " log handler" + (i == 1 ? " was" : "s were") + " not stopped properly! (at " + getCaller() + ") [if you're a server admin and you see this message please file a bug report at http://dev.bukkit.org/server-mods/skript/tickets/ if there is not already one]");
+			LOGGER.severe("[Skript] " + i + " log handler" + (i == 1 ? " was" : "s were") + " not stopped properly! (at " + getCaller() + ") [if you're a server admin and you see this message please create a bug report at " + Skript.ISSUES_LINK + " if there is not already one]");
 		}
 	}
 	
