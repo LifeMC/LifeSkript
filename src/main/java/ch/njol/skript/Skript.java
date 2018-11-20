@@ -443,6 +443,41 @@ public final class Skript extends JavaPlugin implements Listener {
 				}
 			});
 			
+			if(Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
+				
+				Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+					
+					@Override
+					public final void run() {
+						
+						Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
+						Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
+						
+					}
+					
+				});
+				
+			}
+			
+			Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+				
+				@Override
+				public final void run() {
+					
+					if(minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
+						
+						if(!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
+							
+							Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
+							
+						}
+						
+					}
+					
+				}
+				
+			});
+			
 			/*
 			Bukkit.getPluginManager().registerEvents(new Listener() {
 				@EventHandler
@@ -527,41 +562,6 @@ public final class Skript extends JavaPlugin implements Listener {
 						}
 						printDownloadLink();
 					}
-				}
-				
-			});
-			
-			if(Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
-				
-				Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-					
-					@Override
-					public final void run() {
-						
-						Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
-						Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
-						
-					}
-					
-				});
-				
-			}
-			
-			Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-				
-				@Override
-				public final void run() {
-					
-					if(minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
-						
-						if(!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
-							
-							Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
-							
-						}
-						
-					}
-					
 				}
 				
 			});
