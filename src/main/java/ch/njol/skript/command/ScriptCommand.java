@@ -55,6 +55,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import ch.njol.skript.Skript;
 import ch.njol.skript.command.Commands.CommandAliasHelpTopic;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.TriggerItem;
@@ -88,7 +89,8 @@ public class ScriptCommand implements CommandExecutor {
 	private final String label;
 	private final List<String> aliases;
 	private List<String> activeAliases;
-	private final String permission, permissionMessage;
+	private String permission;
+ 	private final Expression<String> permissionMessage;
 	private final String description;
 	@Nullable
 	private final Timespan cooldown;
@@ -123,15 +125,17 @@ public class ScriptCommand implements CommandExecutor {
 	 * @param permissionMessage message to display if the player doesn't have the given permission
 	 * @param items trigger to execute
 	 */
-	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final ArrayList<String> aliases, final String permission, final String permissionMessage,@Nullable final Timespan cooldown,
+	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final ArrayList<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown,
 			 @Nullable final VariableString cooldownMessage, final String cooldownBypass,
 			 @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
 		Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
 		this.name = name;
 		label = "" + name.toLowerCase();
 		this.permission = permission;
-		this.permissionMessage = permissionMessage.isEmpty() ? Language.get("commands.no permission message") : Utils.replaceEnglishChatStyles(permissionMessage);
-		
+		this.permissionMessage = permissionMessage == null ?
+				new SimpleLiteral<String>(Language.get("commands.no permission message"), false)
+ 				: permissionMessage;
+				
 		this.cooldown = cooldown;
 		this.cooldownMessage = cooldownMessage == null
 				? new SimpleLiteral<String>(Language.get("commands.cooldown message"),false)
@@ -169,7 +173,9 @@ public class ScriptCommand implements CommandExecutor {
 			bukkitCommand.setDescription(description);
 			bukkitCommand.setLabel(label);
 			bukkitCommand.setPermission(permission);
-			bukkitCommand.setPermissionMessage(permissionMessage);
+			// We can only set the message if it's available at parse time (aka a literal)
+			if (permissionMessage instanceof Literal)
+ 				bukkitCommand.setPermissionMessage(((Literal<String>) permissionMessage).getSingle());
 			bukkitCommand.setUsage(usage);
 			bukkitCommand.setExecutor(this);
 			return bukkitCommand;
@@ -204,7 +210,7 @@ public class ScriptCommand implements CommandExecutor {
 		final ScriptCommandEvent event = new ScriptCommandEvent(ScriptCommand.this, sender);
 		
 		if (!permission.isEmpty() && !sender.hasPermission(permission)) {
-			sender.sendMessage(permissionMessage);
+			sender.sendMessage(permissionMessage.getSingle(event));
 			return false;
 		}
 		

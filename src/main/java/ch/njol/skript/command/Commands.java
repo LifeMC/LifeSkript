@@ -66,9 +66,11 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.lang.Effect;
+import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.VariableString;
+import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
@@ -167,14 +169,14 @@ public final class Commands { //NOSONAR
 	private final static Listener commandListener = new Listener() {
 		@SuppressWarnings("null")
 		@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-		public void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+		public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
 			if (handleCommand(e.getPlayer(), e.getMessage().substring(1)))
 				e.setCancelled(true);
 		}
 		
 		@SuppressWarnings("null")
 		@EventHandler(priority = EventPriority.HIGHEST)
-		public void onServerCommand(final ServerCommandEvent e) {
+		public final void onServerCommand(final ServerCommandEvent e) {
 			if (e.getCommand() == null || e.getCommand().isEmpty())
 				return;
 			if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
@@ -439,7 +441,15 @@ public final class Commands { //NOSONAR
 		else if (aliases.get(0).isEmpty())
 			aliases = new ArrayList<String>(0);
 		final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
-		final String permissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
+		
+		final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
+ 		Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ?
+				null
+				: VariableString.newInstance(rawPermissionMessage);
+ 		if (permissionMessage != null && ((VariableString) permissionMessage).isSimple()) {
+			permissionMessage = new SimpleLiteral<String>(rawPermissionMessage, false);
+		}
+
 		final SectionNode trigger = (SectionNode) node.get("trigger");
 		if (trigger == null)
 			return null;
@@ -484,7 +494,7 @@ public final class Commands { //NOSONAR
 			cooldownStorage = VariableString.newInstance(cooldownStorageString, StringMode.VARIABLE_NAME);
 		}
 		
-		if (!permissionMessage.isEmpty() && permission.isEmpty()) {
+		if (permissionMessage != null && permission.isEmpty()) {
 			Skript.warning("command /" + command + " has a permission message set, but not a permission");
 		}
 		

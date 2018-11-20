@@ -21,15 +21,6 @@
 
 package ch.njol.skript.events;
 
-import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.Comparator.Relation;
@@ -41,6 +32,15 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Checker;
 import ch.njol.util.coll.CollectionUtils;
+
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.Event;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger
@@ -91,14 +91,12 @@ public final class EvtClick extends SkriptEvent {
 	
 	@Override
 	public boolean check(final Event e) {
-		final Player player;
 		final Block block;
 		final Entity entity;
 		
 		if (e instanceof PlayerInteractEntityEvent) {
 			if (click == LEFT || types == null) // types == null  will be handled by the PlayerInteractEvent that is fired as well
 				return false;
-			player = ((PlayerInteractEntityEvent) e).getPlayer();
 			entity = ((PlayerInteractEntityEvent) e).getRightClicked();
 			block = null;
 		} else if (e instanceof PlayerInteractEvent) {
@@ -119,7 +117,6 @@ public final class EvtClick extends SkriptEvent {
 			}
 			if ((this.click & click) == 0)
 				return false;
-			player = ((PlayerInteractEvent) e).getPlayer();
 			block = ((PlayerInteractEvent) e).getClickedBlock();
 			entity = null;
 		} else {
@@ -130,7 +127,7 @@ public final class EvtClick extends SkriptEvent {
 		if (tools != null && !tools.check(e, new Checker<ItemType>() {
 			@Override
 			public boolean check(final ItemType t) {
-				return t.isOfType(player.getItemInHand());
+				return t.isOfType(((PlayerInteractEvent) e).getItem());
 			}
 		})) {
 			return false;
