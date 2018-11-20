@@ -341,7 +341,11 @@ final public class ScriptLoader {
 //		}
 		try {
 			
-			final Date startDate = new Date();
+			@Nullable Date startDate = null;
+			
+			if(Skript.logHigh())
+				startDate = new Date();
+			
 			final Config config = new Config(f, true, false, ":");
 			
 			if (SkriptConfig.keepConfigsLoaded.value())
@@ -531,12 +535,15 @@ final public class ScriptLoader {
 					numTriggers++;
 				}
 				
-				final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-				
-				if (Skript.logHigh())
+				if (Skript.logHigh() && startDate != null) {
+					
+					final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
 					Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
+					
+				}
 				
 				currentScript = null;
+				
 			} finally {
 				numErrors.stop();
 			}
