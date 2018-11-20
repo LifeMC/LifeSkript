@@ -622,6 +622,12 @@ final public class ScriptLoader {
 		return info;
 	}
 	
+	/**
+	 * Replaces options in a string. May return null, but only if the input is null.
+	 * 
+	 * @param s The string to replace options.
+	 * @return The replaced string. May return null, but only if the input is null.
+ 	 */
 	public final static String replaceOptions(final String s) {
 		final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
 			@Override

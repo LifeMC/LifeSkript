@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
 import ch.njol.skript.classes.ClassInfo;
@@ -101,7 +102,8 @@ public final class Functions {
 	@Nullable
 	public final static Function<?> loadFunction(final SectionNode node) {
 		SkriptLogger.setNode(node);
-		final String definition = node.getKey();
+		final String key = node.getKey();
+ 		final String definition = ScriptLoader.replaceOptions(key == null ? "" : key);
 		assert definition != null;
 		final Matcher m = functionPattern.matcher(definition);
 		if (!m.matches())
