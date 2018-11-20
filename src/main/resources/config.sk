@@ -184,7 +184,7 @@ databases:
 	#
 	# You can define as many databases as you want, just make sure to choose a distinct name for each one, and don't forget to set all options correctly.
 	#
-	# To be able to use a database you'll need to download the plugin 'SQLibrary' from http://dev.bukkit.org/server-mods/sqlibrary/files/
+	# To be able to use a database you'll need to download the plugin 'SQLibrary' from http://dev.bukkit.org/projects/sqlibrary/files
 	# and install it in your server's plugin directory like other plugins.
 	#
 	# Please note that '/skript reload' will not reload this section, i.e. you'll have to restart Skript for changes to take effect.
