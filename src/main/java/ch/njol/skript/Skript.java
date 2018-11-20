@@ -547,12 +547,34 @@ public final class Skript extends JavaPlugin implements Listener {
 				
 			}
 			
+			Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+				
+				@Override
+				public final void run() {
+					
+					if(minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
+						
+						if(!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
+							
+							Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
+							
+						}
+						
+					}
+					
+				}
+				
+			});
+			
 		} catch(final Throwable tw) {
+			
 			exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
+			
 		}
+		
 	}
 	
-	static final void printDownloadLink() {
+	public static final void printDownloadLink() {
 		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 			
 			@Override
@@ -563,7 +585,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		});
 	}
 	
-	static final void printIssuesLink() {
+	public static final void printIssuesLink() {
 		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 			
 			@Override
@@ -575,15 +597,15 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	@Nullable
-	static final String getLatestVersion() {
+	public static final String getLatestVersion() {
 		try {
 			return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
 	    }
 	    catch (final Throwable tw) { return null; }
 	}
 	
-	private static Version minecraftVersion = new Version(666);
-	private static boolean runningCraftBukkit = false;
+	static Version minecraftVersion = new Version(666);
+	static boolean runningCraftBukkit = false;
 	
 	public static Version getMinecraftVersion() {
 		return minecraftVersion;
@@ -597,7 +619,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	/**
-	 * @return Whether this server is running Minecraft <tt>major.minor</tt> or higher
+	 * @return Whether this server is running Minecraft <tt>major.minor</tt> <b>or higher</b>
 	 */
 	public static boolean isRunningMinecraft(final int major, final int minor) {
 		return minecraftVersion.compareTo(major, minor) >= 0;
@@ -792,7 +814,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		disableScripts();
 		
 		Bukkit.getScheduler().cancelTasks(this);
-		HandlerList.unregisterAll((JavaPlugin) getInstance());
+		HandlerList.unregisterAll((JavaPlugin) this);
 		
 		for (final Closeable c : closeOnDisable) {
 			try {
@@ -1036,8 +1058,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	// ================ EXPRESSIONS ================
 	
-	private final static List<ExpressionInfo<?, ?>> expressions = new ArrayList<ExpressionInfo<?, ?>>(100);
-	
+	private final static List<ExpressionInfo<?, ?>> expressions = new ArrayList<ExpressionInfo<?, ?>>(300);
 	private final static int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
 	
 	/**
@@ -1083,7 +1104,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	// ================ EVENTS ================
 	
-	private final static Collection<SkriptEventInfo<?>> events = new ArrayList<SkriptEventInfo<?>>(50);
+	private final static Collection<SkriptEventInfo<?>> events = new ArrayList<SkriptEventInfo<?>>(100);
 	
 	/**
 	 * Registers an event.
