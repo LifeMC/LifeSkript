@@ -89,7 +89,7 @@ public class ScriptCommand implements CommandExecutor {
 	private final String label;
 	private final List<String> aliases;
 	private List<String> activeAliases;
-	private String permission;
+	private final String permission;
  	private final Expression<String> permissionMessage;
 	private final String description;
 	@Nullable
