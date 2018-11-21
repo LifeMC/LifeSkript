@@ -19,7 +19,7 @@
  * 
  */
 
-package ch.njol.skript.mirre;
+package ch.njol.skript;
 
 import java.io.File;
 import java.io.IOException;
