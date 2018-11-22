@@ -109,6 +109,11 @@ public class ExprEntity extends SimpleExpression<Entity> {
 	}
 	
 	@Override
+	public boolean isDefault() {
+		return true;
+ 	}
+	
+	@Override
 	@Nullable
 	protected Entity[] get(final Event e) {
 		final Entity[] es = entity.getArray(e);

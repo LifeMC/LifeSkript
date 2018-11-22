@@ -75,11 +75,9 @@ public class ExprNumbers extends SimpleExpression<Number> {
 				Skript.warning("Looping zero times makes the code inside of the loop useless");
 			} else if (amount == 1 && isInLoop()) {
 				Skript.warning("Since you're looping exactly one time, you could simply remove the loop instead");
-			} else if (amount < 0) {
-				if (isInLoop()) {
-					Skript.error("Looping a negative amount of times is impossible");
-					return false;
-				}
+			} else if (amount < 0 && isInLoop()) {
+				Skript.error("Looping a negative amount of times is impossible");
+				return false;
 			}
 		}
 		integer = parseResult.mark == 1 || matchedPattern == 1;

@@ -36,18 +36,19 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 
 /**
  * @author Peter Güttinger
- * @edited by Mirreducki. Increased maximum timespan.
  */
-public final class Timespan implements YggdrasilSerializable, Comparable<Timespan> { // REMIND unit
+public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 
 	private final static Noun m_tick = new Noun("time.tick");
 	private final static Noun m_second = new Noun("time.second");
 	private final static Noun m_minute = new Noun("time.minute");
 	private final static Noun m_hour = new Noun("time.hour");
 	private final static Noun m_day = new Noun("time.day");
+	
 	final static Noun[] names = {m_tick, m_second, m_minute, m_hour, m_day};
 	final static long[] times = {50L, 1000L, 1000L * 60L, 1000L * 60L * 60L, 1000L * 60L * 60L * 24L};
 	final static HashMap<String, Long> parseValues = new HashMap<String, Long>();
+	
 	static {
 		Language.addListener(new LanguageChangeListener() {
 			@Override
@@ -143,7 +144,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
 	
 	/**
 	 * @deprecated Use fromTicks_i(long ticks) instead. Since this method limits timespan to 50 * Integer.MAX_VALUE.
-	 * @addon I only keep this to allow for older addons to still work. / Mirre
+	 * I only keep this to allow for older addons to still work. / Mirre
 	 */
 	@Deprecated
 	public static Timespan fromTicks(final int ticks) {

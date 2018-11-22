@@ -95,6 +95,9 @@ public class ExprArgument extends SimpleExpression<Object> {
 				if (i > currentArguments.size()) {
 					Skript.error("The command doesn't have a " + StringUtils.fancyOrderNumber(i) + " argument", ErrorQuality.SEMANTIC_ERROR);
 					return false;
+				} else if (i < 1) {
+					Skript.error("Command arguments start from one; argument number " + i + " is invalid", ErrorQuality.SEMANTIC_ERROR);
+ 					return false;
 				}
 				arg = currentArguments.get(i - 1);
 				break;

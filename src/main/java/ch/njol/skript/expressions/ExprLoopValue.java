@@ -84,12 +84,16 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 	// if this loops a variable and isIndex is true, return the index of the variable instead of the value
 	boolean isIndex = false;
 	
+	@SuppressWarnings("null")
+	private static final Pattern pattern = 
+			Pattern.compile("^(.+)-(\\d+)$");
+	
 	@Override
 	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
 		name = parser.expr;
 		String s = "" + parser.regexes.get(0).group();
 		int i = -1;
-		final Matcher m = Pattern.compile("^(.+)-(\\d+)$").matcher(s);
+		final Matcher m = pattern.matcher(s);
 		if (m.matches()) {
 			s = "" + m.group(1);
 			i = Utils.parseInt("" + m.group(2));
@@ -99,8 +103,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 		Loop loop = null;
 		
 		@SuppressWarnings("null")
-		final
-		boolean b = ScriptOptions.getInstance().usesNewLoops(ScriptLoader.currentScript.getFile());
+		final boolean b = ScriptOptions.getInstance().usesNewLoops(ScriptLoader.currentScript.getFile());
 		for (final Loop l : ScriptLoader.currentLoops) {
 			if (c != null && c.isAssignableFrom(l.getLoopedExpression().getReturnType()) || (b ? "value".equals(s) : false) || l.getLoopedExpression().isLoopOf(s)) {
 				if (j < i) {
