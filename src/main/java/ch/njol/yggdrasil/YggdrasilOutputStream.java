@@ -60,7 +60,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 	protected abstract void writePrimitive_(Object o) throws IOException;
 	
 	private final void writePrimitive(final Object o) throws IOException {
-		final Tag t = Tag.getType(o.getClass());
+		final Tag t = getType(o.getClass());
 		assert t.isWrapper();
 		final Tag p = t.getPrimitive();
 		assert p != null;
@@ -69,7 +69,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 	}
 	
 	private final void writeWrappedPrimitive(final Object o) throws IOException {
-		final Tag t = Tag.getType(o.getClass());
+		final Tag t = getType(o.getClass());
 		assert t.isWrapper();
 		writeTag(t);
 		writePrimitiveValue(o);
