@@ -87,7 +87,7 @@ public final class Config {
 			}
 			
 			if (Skript.logVeryHigh())
-				Skript.info("loading '" + fileName + "'");
+				Skript.info("Loading '" + fileName + "'");
 			
 			final ConfigReader r = new ConfigReader(source);
 			try {

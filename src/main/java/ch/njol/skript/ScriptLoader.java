@@ -350,6 +350,7 @@ final public class ScriptLoader {
 			
 			if (SkriptConfig.keepConfigsLoaded.value())
 				SkriptConfig.configs.add(config);
+			
 			int numTriggers = 0;
 			int numCommands = 0;
 			int numFunctions = 0;
