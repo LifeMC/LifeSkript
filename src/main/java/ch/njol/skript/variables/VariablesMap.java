@@ -93,7 +93,7 @@ final class VariablesMap {
 			Map<String, Object> current = treeMap;
 			for (int i = 0; i < split.length; i++) {
 				final String n = split[i];
-				if (n.equals("*")) {
+				if ("*".equals(n)) {
 					assert i == split.length - 1;
 					return current;
 				}
@@ -150,7 +150,7 @@ final class VariablesMap {
 					else
 						((TreeMap<String, Object>) current).put(null, value);
 					break;
-				} else if (i == split.length - 2 && split[i + 1].equals("*")) {
+				} else if (i == split.length - 2 && "*".equals(split[i + 1])) {
 					assert value == null;
 					deleteFromHashMap(StringUtils.join(split, Variable.SEPARATOR, 0, i + 1), (TreeMap<String, Object>) current);
 					final Object v = ((TreeMap<String, Object>) current).get(null);

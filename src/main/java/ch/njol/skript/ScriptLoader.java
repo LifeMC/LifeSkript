@@ -720,7 +720,7 @@ final public class ScriptLoader {
 					items.add(new While(c, (SectionNode) n));
 					if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
 						hasDelayBefore = Kleenean.UNKNOWN;
-				} else if (name.equalsIgnoreCase("else")) {
+				} else if ("else".equalsIgnoreCase(name)) {
 					if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
 						Skript.error("'else' has to be placed just after an 'if' or 'else if' section");
 						continue;

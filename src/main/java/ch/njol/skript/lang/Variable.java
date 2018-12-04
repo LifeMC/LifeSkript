@@ -122,9 +122,9 @@ public final class Variable<T> implements Expression<T> {
 			if (printErrors)
 				Skript.error("A variable's name must neither start nor end with the separator '" + SEPARATOR + "' (error in variable {" + name + "})");
 			return false;
-		} else if (name.contains("*") && (!allowListVariable || name.indexOf("*") != name.length() - 1 || !name.endsWith(SEPARATOR + "*"))) {
+		} else if (name.contains("*") && (!allowListVariable || name.indexOf('*') != name.length() - 1 || !name.endsWith(SEPARATOR + "*"))) {
 			if (printErrors) {
-				if (name.indexOf("*") == 0)
+				if (name.indexOf('*') == 0)
 					Skript.error("[2.0] Local variables now start with an underscore, e.g. {_local variable}. The asterisk is reserved for list variables. (error in variable {" + name + "})");
 				else
 					Skript.error("A variable's name must not contain any asterisks except at the end after '" + SEPARATOR + "' to denote a list variable, e.g. {variable" + SEPARATOR + "*} (error in variable {" + name + "})");
@@ -578,11 +578,11 @@ public final class Variable<T> implements Expression<T> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return s.equalsIgnoreCase("var") || s.equalsIgnoreCase("variable") || s.equalsIgnoreCase("value") || s.equalsIgnoreCase("index");
+		return "var".equalsIgnoreCase(s) || "variable".equalsIgnoreCase(s) || "value".equalsIgnoreCase(s) || "index".equalsIgnoreCase(s);
 	}
 	
 	public static boolean isIndexLoop(final String s) {
-		return s.equalsIgnoreCase("index");
+		return "index".equalsIgnoreCase(s);
 	}
 	
 	@Override

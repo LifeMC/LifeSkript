@@ -108,23 +108,14 @@ public class LogEntry {
 		return toString();
 	}
 	
-	private boolean used = false;
-	
 	void discarded(final String info) {
-		used = true;
 		if (tracked)
 			SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Exception().getStackTrace()[1] + "; " + info);
 	}
 	
 	void logged() {
-		used = true;
 		if (tracked)
 			SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " logged" + findCaller());
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		assert used : message + from;
 	}
 	
 	@Override

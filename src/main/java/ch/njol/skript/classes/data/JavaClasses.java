@@ -438,9 +438,9 @@ public final class JavaClasses {
 					@Override
 					@Nullable
 					public Boolean deserialize(final String s) {
-						if (s.equals("true"))
+						if ("true".equals(s))
 							return Boolean.TRUE;
-						if (s.equals("false"))
+						if ("false".equals(s))
 							return Boolean.FALSE;
 						return null;
 					}

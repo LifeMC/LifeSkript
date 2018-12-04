@@ -39,9 +39,11 @@ import ch.njol.util.Pair;
 /**
  * @author Peter Güttinger
  */
-public class Comparators {
+public final class Comparators {
 	
-	private Comparators() {}
+	private Comparators() {
+		throw new UnsupportedOperationException();
+	}
 	
 	public final static Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<ComparatorInfo<?, ?>>();
 	

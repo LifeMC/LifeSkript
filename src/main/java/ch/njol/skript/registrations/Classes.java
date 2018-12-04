@@ -75,7 +75,8 @@ public final class Classes {
 	}
 	
 	@Nullable
-	private static ClassInfo<?>[] classInfos = null;
+	private static ClassInfo<?>[] classInfos;
+	
 	private final static List<ClassInfo<?>> tempClassInfos = new ArrayList<ClassInfo<?>>();
 	private final static HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<Class<?>, ClassInfo<?>>();
 	private final static HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<Class<?>, ClassInfo<?>>();

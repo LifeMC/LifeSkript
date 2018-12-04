@@ -148,7 +148,7 @@ public class EndermanData extends EntityData<Enderman> {
 			if (t.length != 2)
 				return false;
 			final Object o = Classes.deserialize(t[0], t[1].replace(",,", ",").replace("::", ":"));
-			if (o == null || !(o instanceof ItemType))
+			if (!(o instanceof ItemType))
 				return false;
 			hand[i] = (ItemType) o;
 		}

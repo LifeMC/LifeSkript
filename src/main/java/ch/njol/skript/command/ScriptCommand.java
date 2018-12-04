@@ -366,7 +366,7 @@ public class ScriptCommand implements CommandExecutor {
 		help.addTopic(t);
 		helps.add(t);
 		final HelpTopic aliases = help.getHelpTopic("Aliases");
-		if (aliases != null && aliases instanceof IndexHelpTopic) {
+		if (aliases instanceof IndexHelpTopic) {
 			aliases.getFullText(Bukkit.getConsoleSender()); // CraftBukkit has a lazy IndexHelpTopic class (org.bukkit.craftbukkit.help.CustomIndexHelpTopic) - maybe its used for aliases as well
 			try {
 				final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
@@ -389,7 +389,7 @@ public class ScriptCommand implements CommandExecutor {
 	public void unregisterHelp() {
 		Bukkit.getHelpMap().getHelpTopics().removeAll(helps);
 		final HelpTopic aliases = Bukkit.getHelpMap().getHelpTopic("Aliases");
-		if (aliases != null && aliases instanceof IndexHelpTopic) {
+		if (aliases instanceof IndexHelpTopic) {
 			try {
 				final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
 				topics.setAccessible(true);

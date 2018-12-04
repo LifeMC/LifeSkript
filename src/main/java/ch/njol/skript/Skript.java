@@ -510,10 +510,14 @@ public final class Skript extends JavaPlugin implements Listener {
 				public final void run() {
 					try {
 						final String current = getInstance().getDescription().getVersion();
-						if(current == null || current.length() < 1) return;
+						
+						if(current == null || current.length() < 1) 
+							return;
 						
 						final String latest = getLatestVersion();
-						if(latest == null) return;
+						
+						if(latest == null) 
+							return;
 						
 						final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
 						final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
@@ -653,7 +657,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	 */
 	@SuppressWarnings({"null", "unused"})
 	public final static boolean classExists(final String className) {
-		if(className == null) return false;
+		if(className == null)
+			return false;
 		try {
 			Class.forName(className);
 			return true;
@@ -673,7 +678,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	@Nullable
 	@SuppressWarnings({"null", "unused"})
 	public final static Class<?> classForName(final String className) {
-		if(className == null) return null;
+		if(className == null)
+			return null;
 		try {
 			return Class.forName(className);
 		} catch (final ClassNotFoundException ex) {
@@ -691,7 +697,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	 */
 	@SuppressWarnings("null")
 	public final static boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
-		if(c == null || methodName == null) return false;
+		if(c == null || methodName == null)
+			return false;
 		try {
 			c.getDeclaredMethod(methodName, parameterTypes);
 			return true;
@@ -715,7 +722,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	 */
 	@SuppressWarnings("null")
 	public final static boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
-		if(c == null || methodName == null) return false;
+		if(c == null || methodName == null)
+			return false;
 		try {
 			final Method m = c.getDeclaredMethod(methodName, parameterTypes);
 			return m.getReturnType() == returnType;
@@ -735,7 +743,8 @@ public final class Skript extends JavaPlugin implements Listener {
 	 */
 	@SuppressWarnings("null")
 	public final static boolean fieldExists(final Class<?> c, final String fieldName) {
-		if(c == null || fieldName == null) return false;
+		if(c == null || fieldName == null)
+			return false;
 		try {
 			c.getDeclaredField(fieldName);
 			return true;

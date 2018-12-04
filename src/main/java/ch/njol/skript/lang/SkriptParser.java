@@ -1393,7 +1393,7 @@ public final class SkriptParser {
 			if (r.isOptional)
 				s = "" + s.substring(1);
 		}
-		final int a = s.indexOf("@");
+		final int a = s.indexOf('@');
 		if (a != -1) {
 			r.time = Integer.parseInt(s.substring(a + 1));
 			s = "" + s.substring(0, a);

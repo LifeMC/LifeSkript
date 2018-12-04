@@ -181,7 +181,7 @@ public class Documentation {
 					flag = s.substring(0, 1);
 					s = s.substring(1);
 				}
-				final int a = s.indexOf("@");
+				final int a = s.indexOf('@');
 				if (a != -1)
 					s = s.substring(0, a);
 				final StringBuilder b = new StringBuilder("%");

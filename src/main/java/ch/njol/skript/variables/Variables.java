@@ -117,7 +117,7 @@ public final class Variables {
 		if (c == null)
 			throw new SkriptAPIException("Cannot load variables before the config");
 		final Node databases = c.getMainNode().get("databases");
-		if (databases == null || !(databases instanceof SectionNode)) {
+		if (!(databases instanceof SectionNode)) {
 			Skript.error("The config is missing the required 'databases' section that defines where the variables are saved");
 			return false;
 		}

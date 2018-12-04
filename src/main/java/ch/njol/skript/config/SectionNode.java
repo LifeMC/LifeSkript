@@ -200,7 +200,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 	 */
 	public String get(final String name, final String def) {
 		final Node n = this.get(name);
-		if (n == null || !(n instanceof EntryNode))
+		if (!(n instanceof EntryNode))
 			return def;
 		return ((EntryNode) n).getValue();
 	}
