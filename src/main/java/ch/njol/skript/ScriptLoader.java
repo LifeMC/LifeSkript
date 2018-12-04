@@ -721,7 +721,7 @@ final public class ScriptLoader {
 					if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
 						hasDelayBefore = Kleenean.UNKNOWN;
 				} else if (name.equalsIgnoreCase("else")) {
-					if (items.size() == 0 || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+					if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
 						Skript.error("'else' has to be placed just after an 'if' or 'else if' section");
 						continue;
 					}
@@ -732,7 +732,7 @@ final public class ScriptLoader {
 					((Conditional) items.get(items.size() - 1)).loadElseClause((SectionNode) n);
 					hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore));
 				} else if (StringUtils.startsWithIgnoreCase(name, "else if ")) {
-					if (items.size() == 0 || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+					if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
 						Skript.error("'else if' has to be placed just after another 'if' or 'else if' section");
 						continue;
 					}
