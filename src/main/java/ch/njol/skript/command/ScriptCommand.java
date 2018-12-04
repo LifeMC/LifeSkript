@@ -125,7 +125,7 @@ public class ScriptCommand implements CommandExecutor {
 	 * @param permissionMessage message to display if the player doesn't have the given permission
 	 * @param items trigger to execute
 	 */
-	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final ArrayList<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown,
+	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown,
 			 @Nullable final VariableString cooldownMessage, final String cooldownBypass,
 			 @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
 		Validate.notNull(name, pattern, arguments, description, usage, aliases, items);

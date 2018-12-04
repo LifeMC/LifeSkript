@@ -293,7 +293,7 @@ public class Noun extends Message {
 			return PLURAL_TOKEN;
 		if (gender == NO_GENDER)
 			return NO_GENDER_TOKEN;
-		return (Language.useLocal && Language.localized != null ? Language.localized : Language.english).get("genders." + gender + ".id");
+		return (Language.useLocal && Language.localized != null ? Language.localized : Language.english).get(GENDERS_SECTION + gender + ".id");
 	}
 	
 	/**

@@ -34,7 +34,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
 	@Nullable
 	private final T[] array;
 	
-	private int index = 0;
+	private int index;
 	
 	public ArrayIterator(final @Nullable T[] array) {
 		this.array = array;
@@ -47,10 +47,10 @@ public final class ArrayIterator<T> implements Iterator<T> {
 	
 	@Override
 	public boolean hasNext() {
-		final T[] array = this.array;
-		if (array == null)
+		final T[] arr = this.array;
+		if (arr == null)
 			return false;
-		return index < array.length;
+		return index < arr.length;
 	}
 	
 	@Override

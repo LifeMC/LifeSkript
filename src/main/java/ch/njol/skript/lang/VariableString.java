@@ -185,7 +185,7 @@ public final class VariableString implements Expression<String> {
 					return null;
 				}
 				if (c + 1 == c2) {
-					if (string.size() > 0 && string.get(string.size() - 1) instanceof String) {
+					if (!string.isEmpty() && string.get(string.size() - 1) instanceof String) {
 						string.set(string.size() - 1, (String) string.get(string.size() - 1) + "%");
 					} else {
 						string.add("%");
@@ -207,7 +207,7 @@ public final class VariableString implements Expression<String> {
 									i.flags |= Language.F_PLURAL;
 									c2++; // remove the 's'
 								}
-								if (string.size() > 0 && string.get(string.size() - 1) instanceof String) {
+								if (!string.isEmpty() && string.get(string.size() - 1) instanceof String) {
 									final String last = (String) string.get(string.size() - 1);
 									if (c2 <= s.length() - 2 && s.charAt(c2 + 1) == '>' && last.endsWith("<")) {
 										i.toChatStyle = true;
@@ -237,7 +237,7 @@ public final class VariableString implements Expression<String> {
 					c = s.length();
 				final String l = s.substring(c2 + 1, c);
 				if (!l.isEmpty()) {
-					if (string.size() > 0 && string.get(string.size() - 1) instanceof String) {
+					if (!string.isEmpty() && string.get(string.size() - 1) instanceof String) {
 						string.set(string.size() - 1, (String) string.get(string.size() - 1) + l);
 					} else {
 						string.add(l);

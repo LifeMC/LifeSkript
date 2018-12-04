@@ -79,7 +79,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 			Skript.error("The expression 'argument' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
 			return false;
 		}
-		if (currentArguments.size() == 0) {
+		if (currentArguments.isEmpty()) {
 			Skript.error("This command doesn't have any arguments", ErrorQuality.SEMANTIC_ERROR);
 			return false;
 		}
@@ -114,7 +114,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 				@SuppressWarnings("unchecked")
 				final ClassInfo<?> c = ((Literal<ClassInfo<?>>) exprs[0]).getSingle();
 				@SuppressWarnings("null")
-				final int num = parser.regexes.size() > 0 ? Utils.parseInt(parser.regexes.get(0).group()) : -1;
+				final int num = !parser.regexes.isEmpty() ? Utils.parseInt(parser.regexes.get(0).group()) : -1;
 				int j = 1;
 				for (final Argument<?> a : currentArguments) {
 					if (!c.getC().isAssignableFrom(a.getType()))

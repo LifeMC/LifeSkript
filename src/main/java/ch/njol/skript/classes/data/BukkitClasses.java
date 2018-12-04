@@ -491,7 +491,7 @@ public final class BukkitClasses {
 							final List<Player> ps = Bukkit.matchPlayer(s);
 							if (ps.size() == 1)
 								return ps.get(0);
-							if (ps.size() == 0)
+							if (ps.isEmpty())
 								Skript.error("There is no player online whose name starts with '" + s + "'");
 							else
 								Skript.error("There are several players online whose names start with '" + s + "'");

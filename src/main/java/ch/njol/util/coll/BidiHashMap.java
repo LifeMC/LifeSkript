@@ -76,7 +76,7 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	@Nullable
 	public T2 put(final @Nullable T1 key, final @Nullable T2 value) {
 		if (key == null || value == null)
-			throw new NullPointerException("Can't store null in a BidiHashMap");
+			throw new IllegalArgumentException("Can't store null in a BidiHashMap");
 		
 		removeDirect(key);
 		other.removeDirect(value);
@@ -87,7 +87,7 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	
 	@SuppressWarnings("null")
 	@Override
-	public void putAll(final Map<? extends T1, ? extends T2> m) {
+	public void putAll(final @Nullable Map<? extends T1, ? extends T2> m) {
 		for (final Entry<? extends T1, ? extends T2> e : m.entrySet()) {
 			put(e.getKey(), e.getValue());
 		}
@@ -150,6 +150,39 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	@Override
 	public BidiHashMap<T1, T2> clone() {
 		return new BidiHashMap<T1, T2>(this);
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((this.other == null) ? 0 : this.other.hashCode());
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@SuppressWarnings({"null", "unused"})
+	@Override
+	public boolean equals(@Nullable Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof BidiHashMap))
+			return false;
+		BidiHashMap<?, ?> other = (BidiHashMap<?, ?>) obj;
+		if (this.other == null) {
+			if (other.other != null)
+				return false;
+		} else if (!this.other.equals(other.other))
+			return false;
+		return true;
 	}
 	
 }

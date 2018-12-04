@@ -465,7 +465,7 @@ public final class Variables {
 	}, "Skript variable save thread");
 	
 	public static void close() {
-		while (queue.size() > 0) {
+		while (!queue.isEmpty()) {
 			try {
 				Thread.sleep(10);
 			} catch (final InterruptedException e) {}

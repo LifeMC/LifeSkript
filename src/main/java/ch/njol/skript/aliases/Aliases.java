@@ -93,12 +93,15 @@ public final class Aliases { //NOSONAR
 	
 	static String itemSingular = "item";
 	static String itemPlural = "items";
+	
 	@Nullable
-	static String itemGender = null;
+	static String itemGender;
+	
 	static String blockSingular = "block";
 	static String blockPlural = "blocks";
+	
 	@Nullable
-	static String blockGender = null;
+	static String blockGender;
 	
 	// this is not an alias!
 	private final static ItemType everything = new ItemType();
@@ -239,7 +242,7 @@ public final class Aliases { //NOSONAR
 				boolean hasDefault = false;
 				for (final Entry<String, ItemType> v : variations.get(var).entrySet()) {
 					final String n;
-					if (v.getKey().equalsIgnoreCase("{default}")) {
+					if ("{default}".equalsIgnoreCase(v.getKey())) {
 						hasDefault = true;
 						if (v.getValue() == null)
 							continue;
@@ -273,7 +276,7 @@ public final class Aliases { //NOSONAR
 			final int end = name.indexOf('>', i + 1);
 			if (end != -1) {
 				final String x = name.substring(i + 1, end);
-				if (x.equalsIgnoreCase("any")) {
+				if ("any".equalsIgnoreCase(x)) {
 					String s = name.substring(0, i) + m_any.toString() + name.substring(end + 1);
 					final int g = s.lastIndexOf('@');
 					if (g != -1)
@@ -496,7 +499,7 @@ public final class Aliases { //NOSONAR
 			Skript.error(m_empty_string.toString());
 			return null;
 		}
-		if (s.equals("*"))
+		if ("*".equals(s))
 			return everything;
 		
 		final ItemType t = new ItemType();
@@ -840,7 +843,7 @@ public final class Aliases { //NOSONAR
 								} else if (!(a instanceof EntryNode)) {
 									continue;
 								}
-								final boolean noDefault = ((EntryNode) a).getValue().isEmpty() && ((EntryNode) a).getKey().equalsIgnoreCase("{default}");
+								final boolean noDefault = ((EntryNode) a).getValue().isEmpty() && "{default}".equalsIgnoreCase(((EntryNode) a).getKey());
 								final ItemType t = noDefault ? null : parseAlias(((EntryNode) a).getValue());
 								if (t != null || noDefault)
 									vs.put(Noun.normalizePluralMarkers(((EntryNode) a).getKey()), t);

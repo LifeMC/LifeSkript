@@ -71,7 +71,7 @@ public class ExprAttacked extends SimpleExpression<Entity> {
 			Skript.error("The expression 'victim' can only be used in a damage or death event", ErrorQuality.SEMANTIC_ERROR);
 			return false;
 		}
-		final String type = parser.regexes.size() == 0 ? null : parser.regexes.get(0).group();
+		final String type = parser.regexes.isEmpty() ? null : parser.regexes.get(0).group();
 		if (type == null) {
 			this.type = EntityData.fromClass(Entity.class);
 		} else {

@@ -271,7 +271,7 @@ public abstract class VariablesStorage implements Closeable {
 	 */
 	@Override
 	public void close() {
-		while (changesQueue.size() > 0) {
+		while (!changesQueue.isEmpty()) {
 			try {
 				Thread.sleep(10);
 			} catch (final InterruptedException e) {}

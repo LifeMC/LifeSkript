@@ -207,7 +207,7 @@ public class ExprLore extends SimpleExpression<String> {
 					return;
 			}
 		}
-		meta.setLore(lore == null || lore.size() == 0 ? null : lore);
+		meta.setLore(lore == null || lore.isEmpty() ? null : lore);
 		if (i instanceof ItemStack)
 			((ItemStack) i).setItemMeta(meta);
 		else

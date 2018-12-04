@@ -59,7 +59,7 @@ public final class EvtGameMode extends SkriptEvent {
 			return mode.check(e, new Checker<GameMode>() {
 				@Override
 				public boolean check(final GameMode m) {
-					return ((PlayerGameModeChangeEvent) e).getNewGameMode().equals(m);
+					return ((PlayerGameModeChangeEvent) e).getNewGameMode() == m;
 				}
 			});
 		}

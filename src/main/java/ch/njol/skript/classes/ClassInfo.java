@@ -50,37 +50,43 @@ public class ClassInfo<T> implements Debuggable {
 	private final Noun name;
 	
 	@Nullable
-	private DefaultExpression<T> defaultExpression = null;
+	private DefaultExpression<T> defaultExpression;
 	
 	@Nullable
-	private Parser<? extends T> parser = null;
+	private Parser<? extends T> parser;
 	
 	@Nullable
-	private Pattern[] userInputPatterns = null;
+	private Pattern[] userInputPatterns;
 	
 	@Nullable
-	private Changer<? super T> changer = null;
+	private Changer<? super T> changer;
 	
 	@Nullable
-	private Serializer<? super T> serializer = null;
-	@Nullable
-	private Class<?> serializeAs = null;
+	private Serializer<? super T> serializer;
 	
 	@Nullable
-	private Arithmetic<? super T, ?> math = null;
-	@Nullable
-	private Class<?> mathRelativeType = null;
+	private Class<?> serializeAs;
 	
 	@Nullable
-	private String docName = null;
+	private Arithmetic<? super T, ?> math;
+	
 	@Nullable
-	private String[] description = null;
+	private Class<?> mathRelativeType;
+	
 	@Nullable
-	private String[] usage = null;
+	private String docName;
+	
 	@Nullable
-	private String[] examples = null;
+	private String[] description;
+	
 	@Nullable
-	private String since = null;
+	private String[] usage;
+	
+	@Nullable
+	private String[] examples;
+	
+	@Nullable
+	private String since;
 	
 	/**
 	 * @param c The class

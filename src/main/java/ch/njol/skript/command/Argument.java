@@ -44,7 +44,7 @@ import ch.njol.skript.variables.Variables;
  * 
  * @author Peter Güttinger
  */
-public class Argument<T> {
+public final class Argument<T> {
 	
 	@Nullable
 	private final String name;
@@ -59,7 +59,7 @@ public class Argument<T> {
 	
 	private final boolean optional;
 	
-	private transient WeakHashMap<Event, T[]> current = new WeakHashMap<Event, T[]>();
+	private WeakHashMap<Event, T[]> current = new WeakHashMap<Event, T[]>();
 	
 	private Argument(@Nullable final String name, final @Nullable Expression<? extends T> def, final ClassInfo<T> type, final boolean single, final int index, final boolean optional) {
 		this.name = name;
