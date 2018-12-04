@@ -211,7 +211,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			Workarounds.init();
 			
 			version = new Version("" + getDescription().getVersion());
-			runningCraftBukkit = Bukkit.getServer().getClass().getName().equals("org.bukkit.craftbukkit.CraftServer");
+			runningCraftBukkit = Bukkit.getServer().getClass().getName().equals("org.bukkit.craftbukkit.CraftServer"); //NOSONAR
 			final String bukkitV = Bukkit.getBukkitVersion();
 			final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
 			if (!m.find()) {

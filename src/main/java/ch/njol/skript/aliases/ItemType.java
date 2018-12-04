@@ -21,30 +21,6 @@
 
 package ch.njol.skript.aliases;
 
-import java.io.NotSerializableException;
-import java.io.StreamCorruptedException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.RandomAccess;
-
-import org.bukkit.Bukkit;
-import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Unit;
 import ch.njol.skript.localization.Adjective;
@@ -62,6 +38,30 @@ import ch.njol.util.coll.iterator.EmptyIterable;
 import ch.njol.util.coll.iterator.SingleItemIterable;
 import ch.njol.yggdrasil.Fields;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.NotSerializableException;
+import java.io.StreamCorruptedException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
+import java.util.Random;
+import java.util.RandomAccess;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 @ContainerType(ItemStack.class)
 @SuppressWarnings("deprecation")
@@ -438,7 +438,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 		}
 	}
 	
-	public void addAll(final Collection<ItemData> types) {
+	public void addAll(final Iterable<ItemData> types) {
 		for (final ItemData type : types) {
 			if (type != null) {
 				this.types.add(type);

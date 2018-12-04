@@ -95,7 +95,10 @@ public final class EffExec extends Effect {
 			assert errorBuilder != null;
 			lastExecuteErrors = errorBuilder.toString();
 		}
-		lastExecuteState = entryList.isEmpty(); entryList.clear();
+		
+		lastExecuteState = entryList.isEmpty();
+		entryList.clear();
+		
 		SkriptLogger.cleanSuppressState();
 	}
 	

@@ -21,18 +21,18 @@
 
 package ch.njol.skript.log;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.config.Node;
+import ch.njol.skript.log.LogHandler.LogResult;
+
+import org.bukkit.Bukkit;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.config.Node;
-import ch.njol.skript.log.LogHandler.LogResult;
 
 /**
  * @author Peter Güttinger
@@ -231,7 +231,7 @@ public final class SkriptLogger {
 		return "[Skript] " + entry.getMessage();
 	}
 	
-	public static void logAll(final Collection<LogEntry> entries) {
+	public static void logAll(final Iterable<LogEntry> entries) {
 		for (final LogEntry entry : entries) {
 			if (entry == null)
 				continue;

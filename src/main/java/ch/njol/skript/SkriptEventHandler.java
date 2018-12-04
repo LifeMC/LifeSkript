@@ -23,6 +23,7 @@ package ch.njol.skript;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -273,7 +274,7 @@ public final class SkriptEventHandler {
 		}
 	}
 	
-	public final static boolean containsSuperclass(final Set<Class<?>> classes, final Class<?> c) {
+	public final static boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
 		if (classes.contains(c))
 			return true;
 		for (final Class<?> cl : classes) {

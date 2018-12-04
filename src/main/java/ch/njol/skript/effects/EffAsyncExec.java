@@ -89,7 +89,10 @@ public class EffAsyncExec extends AsyncEffect {
 			assert errorBuilder != null;
 			EffExec.lastExecuteErrors = errorBuilder.toString();
 		}
-		EffExec.lastExecuteState = entryList.isEmpty(); entryList.clear();
+		
+		EffExec.lastExecuteState = entryList.isEmpty();
+		entryList.clear();
+		
 		SkriptLogger.cleanSuppressState();
 	}
 	
