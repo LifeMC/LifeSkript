@@ -67,7 +67,7 @@ public class ExprName extends SimplePropertyExpression<Object, String> {
 	final static int ITEMSTACK = 1, ENTITY = 2, PLAYER = 4;
 	final static String[] types = {"itemstacks/slots", "livingentities", "players"};
 	
-	private static enum NameType {
+	private enum NameType {
 		NAME("name", "name[s]", PLAYER | ITEMSTACK | ENTITY, ITEMSTACK | ENTITY) {
 			@Override
 			void set(final @Nullable Object o, final @Nullable String s) {

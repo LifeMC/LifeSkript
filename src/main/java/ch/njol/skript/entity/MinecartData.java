@@ -52,7 +52,7 @@ public class MinecartData extends EntityData<Minecart> {
 			Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart");
 			
 	@SuppressWarnings("null")
-	private static enum MinecartType {
+	private enum MinecartType {
 		
 		ANY(Minecart.class, "minecart"),
 
