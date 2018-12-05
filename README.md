@@ -18,7 +18,7 @@ Feel free to report all issues, make pull requests etc. but i can't guarantee th
 
 # Versioning System
 * Stable Releases: No suffix. Just (generally) a major version. (like V10, V11 etc.)
-* Dev Releases (tested): Stable version + A suffix from alphabet. (like V10b, V10c etc.)
+* Beta Releases (tested): Stable version + A suffix from alphabet. (like V10b, V10c etc.)
 * Nightly Builds (untested): Not available via official download. Clone this repo and build yourself.
 
 # Download Links
