@@ -159,10 +159,6 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>lifemc-repo</id>
-			<url>http://lifemcserver.com</url>
-		</repository>
-		<repository>
 			<id>njol-repo</id>
 			<url>http://maven.njol.ch/repo</url>
 		</repository>
@@ -177,6 +173,10 @@
 		<repository>
 			<id>spigot-repo</id>
 			<url>http://hub.spigotmc.org/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>lifemc-repo</id>
+			<url>http://lifemcserver.com</url>
 		</repository>
 	</repositories>
 	<build>
