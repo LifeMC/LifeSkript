@@ -1358,7 +1358,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
 	}
 	
-	public static String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
+	public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
 	
 //	static {
 //		Language.addListener(new LanguageChangeListener() {

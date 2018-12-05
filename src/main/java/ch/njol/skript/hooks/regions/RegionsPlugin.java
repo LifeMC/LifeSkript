@@ -46,7 +46,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 	
 	public RegionsPlugin() throws IOException {}
 	
-	public static Collection<RegionsPlugin<?>> plugins = new ArrayList<RegionsPlugin<?>>(2);
+	public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<RegionsPlugin<?>>(2);
 	
 	static {
 		Variables.yggdrasil.registerClassResolver(new ClassResolver() {

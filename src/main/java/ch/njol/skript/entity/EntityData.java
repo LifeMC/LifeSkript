@@ -80,7 +80,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	// must be here to be initialised before 'new SimpleLiteral' is called in the register block below
 	private final static List<EntityDataInfo<?>> infos = new ArrayList<EntityDataInfo<?>>();
 	
-	public static Serializer<EntityData> serializer = new Serializer<EntityData>() {
+	public static final Serializer<EntityData> serializer = new Serializer<EntityData>() {
 		@Override
 		public Fields serialize(final EntityData o) throws NotSerializableException {
 			final Fields f = o.serialize();

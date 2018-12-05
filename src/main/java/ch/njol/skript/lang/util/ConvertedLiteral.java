@@ -41,7 +41,7 @@ import ch.njol.util.coll.iterator.ArrayIterator;
  */
 public final class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> implements Literal<T> {
 	
-	protected transient T[] data;
+	transient T[] data;
 	
 	public ConvertedLiteral(final Literal<F> source, final T[] data, final Class<T> to) {
 		super(source, to, new Converter<F, T>() {

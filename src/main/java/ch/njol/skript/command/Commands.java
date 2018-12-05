@@ -196,7 +196,8 @@ public final class Commands { //NOSONAR
 		}
 	};
 	
-	public static boolean suppressUnknownCommandMessage;
+	static boolean suppressUnknownCommandMessage;
+	
 	static {
 		BukkitLoggerFilter.addFilter(new Filter() {
 			@Override
