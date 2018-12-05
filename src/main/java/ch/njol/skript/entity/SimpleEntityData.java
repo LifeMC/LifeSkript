@@ -183,6 +183,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
 		EntityData.register(SimpleEntityData.class, "simple", Entity.class, 0, codeNames);
 	}
 	
+	@SuppressWarnings("hiding")
 	private transient SimpleEntityDataInfo info;
 	
 	public SimpleEntityData() {

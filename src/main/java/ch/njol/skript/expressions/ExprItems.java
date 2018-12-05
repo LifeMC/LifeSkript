@@ -105,16 +105,16 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 		if (types == null) {
 			iter = new Iterator<ItemStack>() {
 				
-				private final Iterator<Material> iter = new ArrayIterator<Material>(Material.values());
+				private final Iterator<Material> iterator = new ArrayIterator<Material>(Material.values());
 				
 				@Override
 				public boolean hasNext() {
-					return iter.hasNext();
+					return iterator.hasNext();
 				}
 				
 				@Override
 				public ItemStack next() {
-					return new ItemStack(iter.next());
+					return new ItemStack(iterator.next());
 				}
 				
 				@Override
