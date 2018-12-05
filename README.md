@@ -1,4 +1,4 @@
-# LifeSkript Skript Fork
+# LifeSkript Skript Fork [![Build Status](https://travis-ci.org/LifeMC/LifeSkript.svg?branch=master)](https://travis-ci.org/LifeMC/LifeSkript)
 LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify servers without learning Java.<br />
 It can also be useful if you know Java; some tasks are quicker to do with Skript, and so it can be used for prototyping etc.
 
