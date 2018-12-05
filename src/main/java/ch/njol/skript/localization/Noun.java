@@ -392,6 +392,7 @@ public class Noun extends Message {
 	}
 	
 	public final static String toString(final String singular, final String plural, final int gender, final int flags) {
+		//FIXME Is this should be getArticleWithSpace(gender, flags) ?
 		return getArticleWithSpace(flags, gender) + ((flags & Language.F_PLURAL) != 0 ? plural : singular);
 	}
 	
