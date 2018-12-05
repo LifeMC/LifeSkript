@@ -654,12 +654,12 @@ final public class ScriptLoader {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<TriggerItem> loadItems(final SectionNode node) {
+	public static List<TriggerItem> loadItems(final SectionNode node) {
 		
 		if (Skript.debug())
 			indentation += "    ";
 		
-		final ArrayList<TriggerItem> items = new ArrayList<TriggerItem>();
+		final List<TriggerItem> items = new ArrayList<TriggerItem>();
 		
 		Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
 		

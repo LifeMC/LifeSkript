@@ -21,6 +21,9 @@
 
 package ch.njol.skript.config;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.config.validate.SectionValidator;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,13 +32,10 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.config.validate.SectionValidator;
 
 /**
  * Represents a config file.
@@ -242,7 +242,7 @@ public final class Config {
 		return main.isEmpty();
 	}
 	
-	public HashMap<String, String> toMap(final String separator) {
+	public Map<String, String> toMap(final String separator) {
 		return main.toMap("", separator);
 	}
 	
