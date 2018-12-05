@@ -43,8 +43,6 @@ import ch.njol.yggdrasil.Fields.FieldContext;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustEnum;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable;
-import ch.njol.yggdrasil.xml.YggXMLInputStream;
-import ch.njol.yggdrasil.xml.YggXMLOutputStream;
 
 /**
  * Yggdrasil is a simple data format to store object graphs.
@@ -115,16 +113,6 @@ public final class Yggdrasil {
 	
 	public YggdrasilInputStream newInputStream(final InputStream in) throws IOException {
 		return new DefaultYggdrasilInputStream(this, in);
-	}
-	
-	@Deprecated
-	public YggXMLOutputStream newXMLOutputStream(final OutputStream out) throws IOException {
-		return new YggXMLOutputStream(this, out);
-	}
-	
-	@Deprecated
-	public YggdrasilInputStream newXMLInputStream(final InputStream in) throws IOException {
-		return new YggXMLInputStream(this, in);
 	}
 	
 	public void registerClassResolver(final ClassResolver r) {
