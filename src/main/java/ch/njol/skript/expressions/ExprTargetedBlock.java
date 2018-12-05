@@ -86,6 +86,8 @@ public class ExprTargetedBlock extends PropertyExpression<Player, Block> {
 		return Classes.getDebugMessage(getAll(e));
 	}
 	
+	public static final boolean set = Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class);
+	
 	@SuppressWarnings("deprecation")
 	@Nullable
 	Block getTargetedBlock(final @Nullable Player p, final Event e) {
@@ -105,7 +107,7 @@ public class ExprTargetedBlock extends PropertyExpression<Player, Block> {
 //		}
 		try {
 			Block b;
-			if(Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class)){
+			if(set){
 				b = p.getTargetBlock((Set<Material>)null, SkriptConfig.maxTargetBlockDistance.value());
 			}else{
 				b = p.getTargetBlock((HashSet<Byte>)null, SkriptConfig.maxTargetBlockDistance.value());
