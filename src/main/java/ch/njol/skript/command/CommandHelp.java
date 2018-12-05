@@ -45,8 +45,10 @@ public class CommandHelp {
 	private final static Message m_usage = new Message("commands.usage");
 	
 	private String command;
+	
 	@Nullable
-	private Message description = null;
+	private Message description;
+	
 	private final String argsColor;
 	
 	@Nullable
@@ -55,7 +57,7 @@ public class CommandHelp {
 	private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<String, Object>();
 	
 	@Nullable
-	private Message wildcardArg = null;
+	private Message wildcardArg;
 	
 	public CommandHelp(final String command, final Color argsColor, final String langNode) {
 		this.command = command;

@@ -46,7 +46,7 @@ public class CombinedIterator<T> implements Iterator<T> {
 	}
 	
 	@Nullable
-	private Iterator<T> current = null;
+	private Iterator<T> current;
 	
 	@SuppressWarnings("null")
 	@Override
@@ -61,7 +61,7 @@ public class CombinedIterator<T> implements Iterator<T> {
 	 * The iterator that returned the last element (stored for possible removal of said element)
 	 */
 	@Nullable
-	private Iterator<T> last = null;
+	private Iterator<T> last;
 	
 	@Nullable
 	@Override
