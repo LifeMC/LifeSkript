@@ -39,7 +39,7 @@ public final class OptionSection {
 	
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final <T> T get(String key) {
+	public <T> T get(String key) {
 		if (this.getClass() == OptionSection.class)
 			return null;
 		key = "" + key.toLowerCase(Locale.ENGLISH);

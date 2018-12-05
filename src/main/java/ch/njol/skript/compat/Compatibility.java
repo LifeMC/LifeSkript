@@ -54,7 +54,7 @@ public final class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@NonNull @SuppressWarnings("null")
-	public final static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
+	public static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
 		
 		if(Skript.classExists(newClass)) {
 			
@@ -98,7 +98,7 @@ public final class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@Nullable @SuppressWarnings("null")
-	public final static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
+	public static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return Compatibility.<Superclass>getClass(oldClass, newClass, null);
 		
@@ -115,7 +115,7 @@ public final class Compatibility {
 	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
 	@Nullable @SuppressWarnings("null")
-	public final static Class<?> getClassNoSuper(@NonNull final String oldClass, @NonNull final String newClass) {
+	public static Class<?> getClassNoSuper(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return getClass(oldClass, newClass, null);
 		

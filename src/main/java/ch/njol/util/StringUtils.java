@@ -37,7 +37,7 @@ public final class StringUtils {
 	
 	public final static String[] EMPTY_STRING_ARRAY = new String[0];
 	
-	public final static void checkIndices(final String s, final int start, final int end) {
+	public static void checkIndices(final String s, final int start, final int end) {
 		if (start < 0 || end > s.length())
 			throw new StringIndexOutOfBoundsException("invalid start/end indices " + start + "," + end + " for string \"" + s + "\" (length " + s.length() + ")");
 	}
@@ -70,7 +70,7 @@ public final class StringUtils {
 	 */
 	@SuppressWarnings("null")
 	@Nullable
-	public final static String replaceAll(final CharSequence string, final String regex, final Callback<String, Matcher> callback) {
+	public static String replaceAll(final CharSequence string, final String regex, final Callback<String, Matcher> callback) {
 		return replaceAll(string, Pattern.compile(regex), callback);
 	}
 	
@@ -84,7 +84,7 @@ public final class StringUtils {
 	 * @return
 	 */
 	@Nullable
-	public final static String replaceAll(final CharSequence string, final Pattern regex, final Callback<String, Matcher> callback) {
+	public static String replaceAll(final CharSequence string, final Pattern regex, final Callback<String, Matcher> callback) {
 		final Matcher m = regex.matcher(string);
 		final StringBuffer sb = new StringBuffer();
 		while (m.find()) {
@@ -115,7 +115,7 @@ public final class StringUtils {
 		return r;
 	}
 	
-	public final static boolean contains(final String s, final char c, final int start, final int end) {
+	public static boolean contains(final String s, final char c, final int start, final int end) {
 		checkIndices(s, start, end);
 		for (int i = start; i < end; i++) {
 			if (s.charAt(i) == c)
@@ -131,7 +131,7 @@ public final class StringUtils {
 	 * @param accuracy Maximum number of digits after the period
 	 * @return
 	 */
-	public static final String toString(final double d, final int accuracy) {
+	public static String toString(final double d, final int accuracy) {
 		assert accuracy >= 0;
 		if (accuracy <= 0)
 			return "" + Math.round(d);
@@ -144,7 +144,7 @@ public final class StringUtils {
 		return "" + s.substring(0, c + 1);
 	}
 	
-	public static final String firstToUpper(final String s) {
+	public static String firstToUpper(final String s) {
 		if (s.isEmpty())
 			return s;
 		if (Character.isUpperCase(s.charAt(0)))
@@ -160,7 +160,7 @@ public final class StringUtils {
 	 * @param end
 	 * @return
 	 */
-	public static final String substring(final String s, int start, int end) {
+	public static String substring(final String s, int start, int end) {
 		if (start < 0)
 			start = start + s.length();
 		if (end < 0)
@@ -191,7 +191,7 @@ public final class StringUtils {
 		return new String(s);
 	}
 	
-	private final static int indexOf(final char[] s, final int start, final char... cs) {
+	private static int indexOf(final char[] s, final int start, final char... cs) {
 		for (int i = start; i < s.length; i++) {
 			for (final char c : cs)
 				if (s[i] == c)
@@ -207,7 +207,7 @@ public final class StringUtils {
 	 * @param index
 	 * @return
 	 */
-	public final static double numberAfter(final CharSequence s, final int index) {
+	public static double numberAfter(final CharSequence s, final int index) {
 		return numberAt(s, index, true);
 	}
 	
@@ -218,7 +218,7 @@ public final class StringUtils {
 	 * @param index
 	 * @return
 	 */
-	public final static double numberBefore(final CharSequence s, final int index) {
+	public static double numberBefore(final CharSequence s, final int index) {
 		return numberAt(s, index, false);
 	}
 	
@@ -233,7 +233,7 @@ public final class StringUtils {
 	 * @param forward Whether to search forwards or backwards
 	 * @return The number found or -1 if no matching number was found
 	 */
-	public final static double numberAt(final CharSequence s, final int index, final boolean forward) {
+	public static double numberAt(final CharSequence s, final int index, final boolean forward) {
 		assert s != null;
 		assert index >= 0 && index < s.length() : index;
 		final int direction = forward ? 1 : -1;
@@ -294,7 +294,7 @@ public final class StringUtils {
 		return string.substring(string.length() - end.length()).equalsIgnoreCase(end);
 	}
 	
-	public final static String multiply(final @Nullable String s, final int amount) {
+	public static String multiply(final @Nullable String s, final int amount) {
 		assert amount >= 0 : amount;
 		if (s == null)
 			return "";
@@ -309,7 +309,7 @@ public final class StringUtils {
 		return new String(multiplied);
 	}
 	
-	public final static String multiply(final char c, final int amount) {
+	public static String multiply(final char c, final int amount) {
 		if (amount == 0)
 			return "";
 		final char[] multiplied = new char[amount];
@@ -374,7 +374,7 @@ public final class StringUtils {
 	 * @param start Index of the first digit
 	 * @return The index <i>after</i> the last digit or <tt>start</tt> if there are no digits at the given index
 	 */
-	public final static int findLastDigit(final String s, final int start) {
+	public static int findLastDigit(final String s, final int start) {
 		int end = start;
 		while (end < s.length() && '0' <= s.charAt(end) && s.charAt(end) <= '9')
 			end++;
@@ -396,17 +396,17 @@ public final class StringUtils {
 		return false;
 	}
 	
-	public final static boolean equals(final String s1, final String s2, final boolean caseSensitive) {
+	public static boolean equals(final String s1, final String s2, final boolean caseSensitive) {
 		return caseSensitive ? s1.equals(s2) : s1.equalsIgnoreCase(s2);
 	}
 	
-	public final static boolean contains(final String haystack, final String needle, final boolean caseSensitive) {
+	public static boolean contains(final String haystack, final String needle, final boolean caseSensitive) {
 		if (caseSensitive)
 			return haystack.contains(needle);
 		return haystack.toLowerCase().contains(needle.toLowerCase());
 	}
 	
-	public final static String replace(final String haystack, final String needle, final String replacement, final boolean caseSensitive) {
+	public static String replace(final String haystack, final String needle, final String replacement, final boolean caseSensitive) {
 		if (caseSensitive)
 			return "" + haystack.replace(needle, replacement);
 		return "" + haystack.replaceAll("(?ui)" + Pattern.quote(needle), replacement);

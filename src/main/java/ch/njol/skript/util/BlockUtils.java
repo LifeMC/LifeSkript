@@ -276,7 +276,7 @@ public final class BlockUtils { //NOSONAR
 			isSolid[i] = true;
 	}
 	
-	public final static boolean isSolid(final int type) {
+	public static boolean isSolid(final int type) {
 		if (type < 0 || type >= isSolid.length)
 			throw new IllegalArgumentException(type + " is not a block id");
 		return isSolid[type];

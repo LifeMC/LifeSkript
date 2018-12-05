@@ -67,7 +67,7 @@ public final class ScriptFunction<T> extends Function<T> {
 	 * @param e
 	 * @param value
 	 */
-	public final void setReturnValue(final FunctionEvent e, final @Nullable T[] value) {
+	public void setReturnValue(final FunctionEvent e, final @Nullable T[] value) {
 		assert !returnValueSet;
 		returnValueSet = true;
 		returnValue = value;

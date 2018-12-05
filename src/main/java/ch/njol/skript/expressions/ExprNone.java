@@ -57,30 +57,30 @@ public final class ExprNone extends SimpleExpression<Object> {
     
 	@Override
     @SuppressWarnings("null")
-	public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		noneType = exprs[0];
         return true;
     }
 	
 	@Override
 	@Nullable
-	protected final Object[] get(final Event e) {
+	protected Object[] get(final Event e) {
 		return null;
 	}
 	
     @Override
-    public final boolean isSingle() {
+    public boolean isSingle() {
         return true;
     }
     
 	@Override
     @SuppressWarnings("null")
-	public final Class<? extends Object> getReturnType() {
+	public Class<? extends Object> getReturnType() {
         return noneType.getReturnType();
     }
 	
 	@SuppressWarnings("null")
-	public final String toString(final @Nullable Event e, final boolean debug) {
+	public String toString(final @Nullable Event e, final boolean debug) {
 		return "none value of " + getReturnType().getSimpleName().toLowerCase();
 	}
 }

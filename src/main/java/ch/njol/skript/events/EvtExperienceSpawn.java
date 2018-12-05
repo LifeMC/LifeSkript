@@ -89,7 +89,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
 	private static boolean registeredExecutor;
 	
 	@SuppressWarnings("unchecked")
-	private final static void registerExecutor() {
+	private static void registerExecutor() {
 		if (registeredExecutor)
 			return;
 		for (final Class<? extends Event> c : new Class[] {BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class})

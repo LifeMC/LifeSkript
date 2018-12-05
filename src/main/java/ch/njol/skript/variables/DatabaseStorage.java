@@ -365,7 +365,7 @@ public final class DatabaseStorage extends VariablesStorage {
 	}
 	
 	@SuppressWarnings("null")
-	private final boolean connect(final boolean first) {
+	private boolean connect(final boolean first) {
 		synchronized (db) {
 			// isConnected doesn't work in SQLite
 //			if (db.isConnected())

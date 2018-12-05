@@ -151,7 +151,7 @@ public final class SkriptParser {
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final static <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
+	public static <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
 		expr = "" + expr.trim();
 		if (expr.isEmpty())
 			return null;
@@ -164,7 +164,7 @@ public final class SkriptParser {
 	 * Can print an error.
 	 */
 	@Nullable
-	public final static <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
+	public static <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
 		expr = "" + expr.trim();
 		if (expr.isEmpty()) {
 			Skript.error(defaultError);
@@ -185,7 +185,7 @@ public final class SkriptParser {
 	}
 	
 	@Nullable
-	public final static <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
+	public static <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
 		expr = "" + expr.trim();
 		if (expr.isEmpty()) {
 			Skript.error(defaultError);
@@ -207,7 +207,7 @@ public final class SkriptParser {
 	}
 	
 	@Nullable
-	private final <T extends SyntaxElement> T parse(final Iterator<? extends SyntaxElementInfo<? extends T>> source) {
+	private <T extends SyntaxElement> T parse(final Iterator<? extends SyntaxElementInfo<? extends T>> source) {
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
 		try {
 			while (source.hasNext()) {
@@ -271,7 +271,7 @@ public final class SkriptParser {
 	 * Prints errors
 	 */
 	@Nullable
-	private final static <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
+	private static <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
 		if (varPattern.matcher(expr).matches())
 			return Variable.newInstance("" + expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
 		return null;
@@ -279,7 +279,7 @@ public final class SkriptParser {
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Nullable
-	private final <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
+	private <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
 		assert types.length > 0;
 		assert types.length == 1 || !CollectionUtils.contains(types, Object.class);
 		if (expr.isEmpty())
@@ -388,7 +388,7 @@ public final class SkriptParser {
 	
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
+	public <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
 		if (expr.length() == 0)
 			return null;
 		
@@ -688,7 +688,7 @@ public final class SkriptParser {
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
+	public <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
 		if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
 			return null;
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
@@ -944,7 +944,7 @@ public final class SkriptParser {
 	 * @param cs
 	 * @return "not an x" or "neither an x, a y nor a z"
 	 */
-	public final static String notOfType(final Class<?>... cs) {
+	public static String notOfType(final Class<?>... cs) {
 		if (cs.length == 1) {
 			final Class<?> c = cs[0];
 			assert c != null;
@@ -966,7 +966,7 @@ public final class SkriptParser {
 		}
 	}
 	
-	public final static String notOfType(final ClassInfo<?>... cs) {
+	public static String notOfType(final ClassInfo<?>... cs) {
 		if (cs.length == 1) {
 			return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
 		} else {
@@ -992,7 +992,7 @@ public final class SkriptParser {
 	 * @return The next index (can be expr.length()), or -1 if an invalid string, variable or bracket is found or if <tt>i >= expr.length()</tt>.
 	 * @throws StringIndexOutOfBoundsException if <tt>i < 0</tt>
 	 */
-	public final static int next(final String expr, final int i, final ParseContext context) {
+	public static int next(final String expr, final int i, final ParseContext context) {
 		if (i >= expr.length())
 			return -1;
 		if (i < 0)
@@ -1016,7 +1016,7 @@ public final class SkriptParser {
 		return i + 1;
 	}
 	
-	private final static int getGroupLevel(final String pattern, final int j) {
+	private static int getGroupLevel(final String pattern, final int j) {
 		assert j >= 0 && j <= pattern.length() : j + "; " + pattern;
 		int level = 0;
 		for (int i = 0; i < j; i++) {
@@ -1043,7 +1043,7 @@ public final class SkriptParser {
 	 * @return Parsed result or null on error (which does not imply that an error was printed)
 	 */
 	@Nullable
-	private final ParseResult parse_i(final String pattern, int i, int j) {
+	private ParseResult parse_i(final String pattern, int i, int j) {
 		ParseResult res;
 		int end, i2;
 		
@@ -1259,7 +1259,7 @@ public final class SkriptParser {
 	 * @return The pattern with %codenames% and a boolean array that contains whetehr the expressions are plural or not
 	 */
 	@Nullable
-	public final static NonNullPair<String, boolean[]> validatePattern(final String pattern) {
+	public static NonNullPair<String, boolean[]> validatePattern(final String pattern) {
 		final List<Boolean> ps = new ArrayList<Boolean>();
 		int groupLevel = 0, optionalLevel = 0;
 		final Deque<Character> groups = new LinkedList<Character>();
@@ -1329,7 +1329,7 @@ public final class SkriptParser {
 	}
 	
 	@Nullable
-	private final static NonNullPair<String, boolean[]> error(final String error) {
+	private static NonNullPair<String, boolean[]> error(final String error) {
 		Skript.error("Invalid pattern: " + error);
 		return null;
 	}
@@ -1337,7 +1337,7 @@ public final class SkriptParser {
 	private final static Message m_quotes_error = new Message("skript.quotes error");
 	private final static Message m_brackets_error = new Message("skript.brackets error");
 	
-	public final static boolean validateLine(final String line) {
+	public static boolean validateLine(final String line) {
 		if (StringUtils.count(line, '"') % 2 != 0) {
 			Skript.error(m_quotes_error.toString());
 			return false;

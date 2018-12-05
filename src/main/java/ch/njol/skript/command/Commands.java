@@ -114,7 +114,7 @@ public final class Commands { //NOSONAR
 	}
 	
 	@SuppressWarnings("unchecked")
-	private final static void init() {
+	private static void init() {
 		try {
 			if (Bukkit.getPluginManager() instanceof SimplePluginManager) {
 				final Field commandMapField = SimplePluginManager.class.getDeclaredField("commandMap");
@@ -161,11 +161,11 @@ public final class Commands { //NOSONAR
 	@SuppressWarnings("null")
 	private final static Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
 	
-	private final static String escape(final String s) {
+	private static String escape(final String s) {
 		return "" + escape.matcher(s).replaceAll("\\\\$0");
 	}
 	
-	private final static String unescape(final String s) {
+	private static String unescape(final String s) {
 		return "" + unescape.matcher(s).replaceAll("$0");
 	}
 	
@@ -260,7 +260,7 @@ public final class Commands { //NOSONAR
 	 * @param command full command string without the slash
 	 * @return whether to cancel the event
 	 */
-	final static boolean handleCommand(final CommandSender sender, final String command) {
+	static boolean handleCommand(final CommandSender sender, final String command) {
 		final String[] cmd = command.split("\\s+", 2);
 		cmd[0] = cmd[0].toLowerCase();
 		if (cmd[0].endsWith("?")) {
@@ -285,7 +285,7 @@ public final class Commands { //NOSONAR
 	}
 	
 	@SuppressWarnings("unchecked")
-	final static boolean handleEffectCommand(final CommandSender sender, String command) {
+	static boolean handleEffectCommand(final CommandSender sender, String command) {
 		if (!(sender instanceof ConsoleCommandSender || sender.hasPermission("skript.effectcommands") || SkriptConfig.allowOpsToUseEffectCommands.value() && sender.isOp()))
 			return false;
 		final boolean wasLocal = Language.setUseLocal(false);
@@ -331,7 +331,7 @@ public final class Commands { //NOSONAR
 	
 	@SuppressWarnings("null")
 	@Nullable
-	public final static ScriptCommand loadCommand(final SectionNode node) {
+	public static ScriptCommand loadCommand(final SectionNode node) {
 		final String key = node.getKey();
 		if (key == null)
 			return null;
@@ -568,7 +568,7 @@ public final class Commands { //NOSONAR
 	
 	private static boolean registeredListeners;
 	
-	public final static void registerListeners() {
+	public static void registerListeners() {
 		if (!registeredListeners) {
 			Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
 			Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
@@ -576,7 +576,7 @@ public final class Commands { //NOSONAR
 		}
 	}
 	
-	public final static void clearCommands() {
+	public static void clearCommands() {
 		final SimpleCommandMap commandMap = Commands.commandMap;
 		if (commandMap != null) {
 			final Map<String, Command> cmKnownCommands = Commands.cmKnownCommands;

@@ -131,7 +131,7 @@ public final class Utils {
 		return target;
 	}
 	
-	public final static Pair<String, Integer> getAmount(final String s) {
+	public static Pair<String, Integer> getAmount(final String s) {
 		if (s.matches("\\d+ of .+")) {
 			return new Pair<String, Integer>(s.split(" ", 3)[2], Utils.parseInt("" + s.split(" ", 2)[0]));
 		} else if (s.matches("\\d+ .+")) {
@@ -229,7 +229,7 @@ public final class Utils {
 	 * @return Pair of singular string + boolean whether it was plural
 	 */
 	@SuppressWarnings("null")
-	public final static NonNullPair<String, Boolean> getEnglishPlural(final String s) {
+	public static NonNullPair<String, Boolean> getEnglishPlural(final String s) {
 		assert s != null;
 		if (s.isEmpty())
 			return new NonNullPair<String, Boolean>("", Boolean.FALSE);
@@ -248,7 +248,7 @@ public final class Utils {
 	 * @param s
 	 * @return The english plural of the given word
 	 */
-	public final static String toEnglishPlural(final String s) {
+	public static String toEnglishPlural(final String s) {
 		assert s != null && s.length() != 0;
 		for (final String[] p : plurals) {
 			if (s.endsWith(p[0]))
@@ -265,7 +265,7 @@ public final class Utils {
 	 * @param p
 	 * @return The english plural of the given word, or the word itself if p is false.
 	 */
-	public final static String toEnglishPlural(final String s, final boolean p) {
+	public static String toEnglishPlural(final String s, final boolean p) {
 		if (p)
 			return toEnglishPlural(s);
 		return s;
@@ -279,7 +279,7 @@ public final class Utils {
 	 * @see #A(String)
 	 * @see #a(String, boolean)
 	 */
-	public final static String a(final String s) {
+	public static String a(final String s) {
 		return a(s, false);
 	}
 	
@@ -291,7 +291,7 @@ public final class Utils {
 	 * @see #a(String)
 	 * @see #a(String, boolean)
 	 */
-	public final static String A(final String s) {
+	public static String A(final String s) {
 		return a(s, true);
 	}
 	
@@ -303,7 +303,7 @@ public final class Utils {
 	 * @return The given string with an appended a/an (or A/An if capA is true) and a space at the beginning
 	 * @see #a(String)
 	 */
-	public final static String a(final String s, final boolean capA) {
+	public static String a(final String s, final boolean capA) {
 		assert s != null && s.length() != 0;
 		if ("aeiouAEIOU".indexOf(s.charAt(0)) != -1) {
 			if (capA)
@@ -393,7 +393,7 @@ public final class Utils {
 	}
 	
 	@Nullable
-	public final static String getChatStyle(final String s) {
+	public static String getChatStyle(final String s) {
 		final Color c = Color.byName(s);
 		if (c != null)
 			return c.getChat();
@@ -409,7 +409,7 @@ public final class Utils {
 	 * @param message
 	 * @return message with localised chat styles converted to Minecraft's format
 	 */
-	public final static String replaceChatStyles(final String message) {
+	public static String replaceChatStyles(final String message) {
 		if (message.isEmpty())
 			return message;
 		String m = StringUtils.replaceAll("" + message.replace("<<none>>", ""), stylePattern, new Callback<String, Matcher>() {
@@ -436,7 +436,7 @@ public final class Utils {
 	 * @param message
 	 * @return message with english chat styles converted to Minecraft's format
 	 */
-	public final static String replaceEnglishChatStyles(final String message) {
+	public static String replaceEnglishChatStyles(final String message) {
 		if (message.isEmpty())
 			return message;
 		String m = StringUtils.replaceAll(message, stylePattern, new Callback<String, Matcher>() {
@@ -470,7 +470,7 @@ public final class Utils {
 	}
 	
 	// TODO improve
-	public final static Class<?> getSuperType(final Class<?>... cs) {
+	public static Class<?> getSuperType(final Class<?>... cs) {
 		assert cs.length > 0;
 		Class<?> r = cs[0];
 		assert r != null;
@@ -509,7 +509,7 @@ public final class Utils {
 	 * @param s
 	 * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
 	 */
-	public final static int parseInt(final String s) {
+	public static int parseInt(final String s) {
 		assert s.matches("-?\\d+");
 		try {
 			return Integer.parseInt(s);
@@ -526,7 +526,7 @@ public final class Utils {
 	 * @param s
 	 * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
 	 */
-	public final static long parseLong(final String s) {
+	public static long parseLong(final String s) {
 		assert s.matches("-?\\d+");
 		try {
 			return Long.parseLong(s);

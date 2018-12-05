@@ -322,7 +322,7 @@ public final class Updater {
 	 * 
 	 * @param sender
 	 */
-	final static void getChangelogs(final CommandSender sender) {
+	static void getChangelogs(final CommandSender sender) {
 		InputStream in = null;
 		InputStreamReader r = null;
 		try {

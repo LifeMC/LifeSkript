@@ -65,7 +65,7 @@ public final class WebUtils {
      *         String}, maybe null in some cases.
      */
 	@Nullable
-	public static final String getResponse(final String address) throws IOException {
+	public static String getResponse(final String address) throws IOException {
 		
 		return getResponse(address, "application/json; charset=utf-8");
 		
@@ -86,7 +86,7 @@ public final class WebUtils {
      *         String}, maybe null in some cases.
      */
 	@Nullable
-	public static final String getResponse(final String address, final String contentType) throws IOException {
+	public static String getResponse(final String address, final String contentType) throws IOException {
 		
 		String response = null;
 		

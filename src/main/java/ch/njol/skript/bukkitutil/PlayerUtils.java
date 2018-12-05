@@ -49,7 +49,7 @@ public final class PlayerUtils {
 	
 	final static Set<Player> inviUpdate = new HashSet<Player>();
 	
-	public final static void updateInventory(final @Nullable Player p) {
+	public static void updateInventory(final @Nullable Player p) {
 		if (p != null)
 			inviUpdate.add(p);
 	}
@@ -76,7 +76,7 @@ public final class PlayerUtils {
 	private static Method getOnlinePlayers;
 	
 	@SuppressWarnings({"null", "unchecked"})
-	public final static Collection<? extends Player> getOnlinePlayers() {
+	public static Collection<? extends Player> getOnlinePlayers() {
 		if (hasCollecionGetOnlinePlayers) {
 			return Bukkit.getOnlinePlayers();
 		} else {

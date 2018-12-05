@@ -116,7 +116,7 @@ public final class SkriptConfig {
 		}
 	});
 	
-	public final static String formatDate(final long timestamp) {
+	public static String formatDate(final long timestamp) {
 		final DateFormat f = dateFormat.value();
 		synchronized (f) {
 			return "" + f.format(timestamp);
@@ -182,7 +182,7 @@ public final class SkriptConfig {
 	 * This should only be used in special cases
 	 */
 	@Nullable
-	public final static Config getConfig() {
+	public static Config getConfig() {
 		return mainConfig;
 	}
 	

@@ -64,7 +64,7 @@ public final class Delay extends Effect {
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override
-	public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		duration = (Expression<Timespan>) exprs[0];
 		if (duration instanceof Literal) {
 			final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
@@ -80,7 +80,7 @@ public final class Delay extends Effect {
 	
 	@Override
 	@Nullable
-	protected final TriggerItem walk(final Event e) {
+	protected TriggerItem walk(final Event e) {
 		debug(e, true);
 		final long start = Skript.debug() ? System.nanoTime() : 0;
 		final TriggerItem next = getNext();
@@ -104,21 +104,21 @@ public final class Delay extends Effect {
 	@SuppressWarnings("null")
 	protected final static Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<Event, Boolean>());
 	
-	public final static boolean isDelayed(final Event e) {
+	public static boolean isDelayed(final Event e) {
 		return delayed.contains(e);
 	}
 	
-	public final static void addDelayedEvent(final Event event){
+	public static void addDelayedEvent(final Event event){
 		delayed.add(event);
 	}
 	
 	@Override
-	protected final void execute(final Event e) {
+	protected void execute(final Event e) {
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	public final String toString(final @Nullable Event e, final boolean debug) {
+	public String toString(final @Nullable Event e, final boolean debug) {
 		return "wait for " + duration.toString(e, debug) + (e == null ? "" : "...");
 	}
 	

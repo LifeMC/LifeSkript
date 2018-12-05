@@ -49,11 +49,11 @@ public final class LoggerFilter implements Filter, Closeable {
 		return true;
 	}
 	
-	public final void addFilter(final Filter f) {
+	public void addFilter(final Filter f) {
 		filters.add(f);
 	}
 	
-	public final boolean removeFilter(final Filter f) {
+	public boolean removeFilter(final Filter f) {
 		return filters.remove(f);
 	}
 	

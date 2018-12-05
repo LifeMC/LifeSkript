@@ -26,7 +26,7 @@ public interface NullableChecker<T> extends Checker<T> {
 	@Override
 	boolean check(final @Nullable T o);
 	
-	final NullableChecker<Object> nullChecker = new NullableChecker<Object>() {
+	NullableChecker<Object> nullChecker = new NullableChecker<Object>() {
 		@Override
 		public boolean check(final @Nullable Object o) {
 			return o != null;

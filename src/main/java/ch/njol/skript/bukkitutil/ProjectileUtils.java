@@ -58,7 +58,7 @@ public final class ProjectileUtils {
 	}
 	
 	@Nullable
-	public final static Object getShooter(final @Nullable Projectile p) {
+	public static Object getShooter(final @Nullable Projectile p) {
 		if (p == null)
 			return null;
 		try {
@@ -75,7 +75,7 @@ public final class ProjectileUtils {
 		}
 	}
 	
-	public final static void setShooter(final Projectile p, final @Nullable Object shooter) {
+	public static void setShooter(final Projectile p, final @Nullable Object shooter) {
 		try {
 			setShooter.invoke(p, shooter);
 		} catch (final IllegalAccessException e) {

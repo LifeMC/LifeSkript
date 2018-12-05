@@ -98,7 +98,7 @@ public final class Classes {
 		tempClassInfos.add(info);
 	}
 	
-	public final static void onRegistrationsStop() {
+	public static void onRegistrationsStop() {
 		
 		sortClassInfos();
 		
@@ -126,7 +126,7 @@ public final class Classes {
 	 * Sorts the class infos according to sub/superclasses and relations set with {@link ClassInfo#before(String...)} and {@link ClassInfo#after(String...)}.
 	 */
 	@SuppressFBWarnings("LI_LAZY_INIT_STATIC")
-	private final static void sortClassInfos() {
+	private static void sortClassInfos() {
 		assert classInfos == null;
 		
 		// merge before, after & sub/supertypes in after
@@ -218,7 +218,7 @@ public final class Classes {
 		
 	}
 	
-	private final static void checkAllowClassInfoInteraction() {
+	private static void checkAllowClassInfoInteraction() {
 		if (Skript.isAcceptRegistrations())
 			throw new IllegalStateException("Cannot use classinfos until registration is over");
 	}
@@ -377,7 +377,7 @@ public final class Classes {
 	 * @return The name of the class or null if the given class wasn't registered.
 	 */
 	@Nullable
-	public final static String getExactClassName(final Class<?> c) {
+	public static String getExactClassName(final Class<?> c) {
 		checkAllowClassInfoInteraction();
 		final ClassInfo<?> ci = exactClassInfos.get(c);
 		return ci == null ? null : ci.getCodeName();
@@ -466,7 +466,7 @@ public final class Classes {
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final static <T> Parser<? extends T> getParser(final Class<T> to) {
+	public static <T> Parser<? extends T> getParser(final Class<T> to) {
 		checkAllowClassInfoInteraction();
 		final ClassInfo<?>[] classInfos = Classes.classInfos;
 		if (classInfos == null)
@@ -499,7 +499,7 @@ public final class Classes {
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
-	public final static <T> Parser<? extends T> getExactParser(final Class<T> c) {
+	public static <T> Parser<? extends T> getExactParser(final Class<T> c) {
 		if (Skript.isAcceptRegistrations()) {
 			for (final ClassInfo<?> ci : tempClassInfos) {
 				if (ci.getC() == c)
@@ -512,7 +512,7 @@ public final class Classes {
 		}
 	}
 	
-	private final static <F, T> Parser<T> createConvertedParser(final Parser<?> parser, final Converter<F, T> converter) {
+	private static <F, T> Parser<T> createConvertedParser(final Parser<?> parser, final Converter<F, T> converter) {
 		return new Parser<T>() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -557,11 +557,11 @@ public final class Classes {
 		return toString(o, StringMode.DEBUG, 0);
 	}
 	
-	public final static <T> String toString(final @Nullable T o, final StringMode mode) {
+	public static <T> String toString(final @Nullable T o, final StringMode mode) {
 		return toString(o, mode, 0);
 	}
 	
-	private final static <T> String toString(final @Nullable T o, final StringMode mode, final int flags) {
+	private static <T> String toString(final @Nullable T o, final StringMode mode, final int flags) {
 		assert flags == 0 || mode == StringMode.MESSAGE;
 		if (o == null)
 			return "<none>";
@@ -591,23 +591,23 @@ public final class Classes {
 		return mode == StringMode.VARIABLE_NAME ? "object:" + o : "" + o;
 	}
 	
-	public final static String toString(final Object[] os, final int flags, final boolean and) {
+	public static String toString(final Object[] os, final int flags, final boolean and) {
 		return toString(os, and, null, StringMode.MESSAGE, flags);
 	}
 	
-	public final static String toString(final Object[] os, final int flags, final @Nullable ChatColor c) {
+	public static String toString(final Object[] os, final int flags, final @Nullable ChatColor c) {
 		return toString(os, true, c, StringMode.MESSAGE, flags);
 	}
 	
-	public final static String toString(final Object[] os, final boolean and) {
+	public static String toString(final Object[] os, final boolean and) {
 		return toString(os, and, null, StringMode.MESSAGE, 0);
 	}
 	
-	public final static String toString(final Object[] os, final boolean and, final StringMode mode) {
+	public static String toString(final Object[] os, final boolean and, final StringMode mode) {
 		return toString(os, and, null, mode, 0);
 	}
 	
-	private final static String toString(final Object[] os, final boolean and, final @Nullable ChatColor c, final StringMode mode, final int flags) {
+	private static String toString(final Object[] os, final boolean and, final @Nullable ChatColor c, final StringMode mode, final int flags) {
 		if (os.length == 0)
 			return toString(null);
 		if (os.length == 1)
@@ -635,7 +635,7 @@ public final class Classes {
 	@SuppressWarnings("null")
 	private final static Charset UTF_8 = Charset.forName("UTF-8");
 	
-	private final static byte[] getYggdrasilStart(final ClassInfo<?> c) throws NotSerializableException {
+	private static byte[] getYggdrasilStart(final ClassInfo<?> c) throws NotSerializableException {
 		assert Enum.class.isAssignableFrom(Kleenean.class) && Tag.getType(Kleenean.class) == Tag.T_ENUM : Tag.getType(Kleenean.class); // TODO why is this check here?
 		final Tag t = Tag.getType(c.getC());
 		assert t.isWrapper() || t == Tag.T_STRING || t == Tag.T_OBJECT || t == Tag.T_ENUM;
@@ -658,7 +658,7 @@ public final class Classes {
 	 * Must be called on the appropriate thread for the given value (i.e. the main thread currently)
 	 */
 	@Nullable
-	public final static SerializedVariable.Value serialize(@Nullable Object o) {
+	public static SerializedVariable.Value serialize(@Nullable Object o) {
 		if (o == null)
 			return null;
 		
@@ -705,7 +705,7 @@ public final class Classes {
 		}
 	}
 	
-	private final static boolean equals(final @Nullable Object o, final @Nullable Object d) {
+	private static boolean equals(final @Nullable Object o, final @Nullable Object d) {
 		if (o instanceof Chunk) { // CraftChunk does neither override equals nor is it a "coordinate-specific singleton" like Block
 			if (!(d instanceof Chunk))
 				return false;
@@ -716,12 +716,12 @@ public final class Classes {
 	}
 	
 	@Nullable
-	public final static Object deserialize(final ClassInfo<?> type, final byte[] value) {
+	public static Object deserialize(final ClassInfo<?> type, final byte[] value) {
 		return deserialize(type, new ByteArrayInputStream(value));
 	}
 	
 	@Nullable
-	public final static Object deserialize(final String type, final byte[] value) {
+	public static Object deserialize(final String type, final byte[] value) {
 		final ClassInfo<?> ci = getClassInfoNoError(type);
 		if (ci == null)
 			return null;
@@ -729,7 +729,7 @@ public final class Classes {
 	}
 	
 	@Nullable
-	public final static Object deserialize(final ClassInfo<?> type, InputStream value) {
+	public static Object deserialize(final ClassInfo<?> type, InputStream value) {
 		Serializer<?> s;
 		assert (s = type.getSerializer()) != null && (s.mustSyncDeserialization() ? Bukkit.isPrimaryThread() : true) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
 		YggdrasilInputStream in = null;
@@ -764,7 +764,7 @@ public final class Classes {
 	 */
 	@Deprecated
 	@Nullable
-	public final static Object deserialize(final String type, final String value) {
+	public static Object deserialize(final String type, final String value) {
 		assert Bukkit.isPrimaryThread();
 		final ClassInfo<?> ci = getClassInfoNoError(type);
 		if (ci == null)

@@ -129,7 +129,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 		});
 	}
 	
-	final static void callEvent(final Region r, final PlayerMoveEvent me, final boolean enter) {
+	static void callEvent(final Region r, final PlayerMoveEvent me, final boolean enter) {
 		final Player p = me.getPlayer();
 		assert p != null;
 		final RegionBorderEvent e = new RegionBorderEvent(r, p, enter);
@@ -170,7 +170,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 	
 	private static boolean registered;
 	
-	private final static void register() {
+	private static void register() {
 		if (registered)
 			return;
 		Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {}, SkriptConfig.defaultEventPriority.value(), ee, Skript.getInstance(), true);

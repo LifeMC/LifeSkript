@@ -57,7 +57,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @return The unique name of this constant.
 	 * @see Enum#name()
 	 */
-	public final String name() {
+	public String name() {
 		return name;
 	}
 	
@@ -79,7 +79,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @return The unique ID of this constant.
 	 * @see Enum#ordinal()
 	 */
-	public final int ordinal() {
+	public int ordinal() {
 		return ordinal;
 	}
 	
@@ -87,7 +87,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * Returns {@link #ordinal()}, i.e. distinct hash codes for distinct constants.
 	 */
 	@Override
-	public final int hashCode() {
+	public int hashCode() {
 		return ordinal;
 	}
 	
@@ -95,7 +95,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * Checks for reference equality (==).
 	 */
 	@Override
-	public final boolean equals(@Nullable final Object obj) {
+	public boolean equals(@Nullable final Object obj) {
 		return obj == this;
 	}
 	
@@ -106,7 +106,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @throws CloneNotSupportedException always
 	 */
 	@Override
-	protected final Object clone() throws CloneNotSupportedException {
+	protected Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 	
@@ -118,7 +118,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @see Enum#getDeclaringClass()
 	 */
 	@SuppressWarnings({"unchecked"})
-	public final Class<T> getDeclaringClass() {
+	public Class<T> getDeclaringClass() {
 		return getDeclaringClass(getClass());
 	}
 	
@@ -128,7 +128,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @return The pseudo-enum class of the given class.
 	 * @see Enum#getDeclaringClass()
 	 */
-	public final static <T extends PseudoEnum<T>> Class<? super T> getDeclaringClass(final Class<T> type) {
+	public static <T extends PseudoEnum<T>> Class<? super T> getDeclaringClass(final Class<T> type) {
 		Class<? super T> c = type;
 		while (c.isAnonymousClass())
 			c = c.getSuperclass();
@@ -145,7 +145,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @return All constants registered so far.
 	 * @see Enum#valueOf(Class, String)
 	 */
-	public final List<T> values() {
+	public List<T> values() {
 		return values(getDeclaringClass(), info);
 	}
 	
@@ -159,13 +159,13 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @throws IllegalArgumentException If <tt>{@link #getDeclaringClass(Class) getDeclaringClass}(c) != c</tt> (i.e. if the given class is anonymous).
 	 * @see Enum#valueOf(Class, String)
 	 */
-	public final static <T extends PseudoEnum<T>> List<T> values(final Class<T> c) throws IllegalArgumentException {
+	public static <T extends PseudoEnum<T>> List<T> values(final Class<T> c) throws IllegalArgumentException {
 		if (c != getDeclaringClass(c))
 			throw new IllegalArgumentException(c + " != " + getDeclaringClass(c));
 		return values(c, getInfo(c));
 	}
 	
-	private final static <T extends PseudoEnum<T>> List<T> values(final Class<T> c, final Info<T> info) {
+	private static <T extends PseudoEnum<T>> List<T> values(final Class<T> c, final Info<T> info) {
 		info.readLock.lock();
 		try {
 			return new ArrayList<T>(info.values);
@@ -183,7 +183,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @see #valueOf(String)
 	 */
 	@SuppressWarnings("null")
-	public final T getConstant(final int id) throws IndexOutOfBoundsException {
+	public T getConstant(final int id) throws IndexOutOfBoundsException {
 		info.readLock.lock();
 		try {
 			return info.values.get(id);
@@ -195,7 +195,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	/**
 	 * @return How many constants are currently registered
 	 */
-	public final int numConstants() {
+	public int numConstants() {
 		info.readLock.lock();
 		try {
 			return info.values.size();
@@ -210,7 +210,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @see Enum#valueOf(Class, String)
 	 */
 	@Nullable
-	public final T valueOf(final String name) {
+	public T valueOf(final String name) {
 		info.readLock.lock();
 		try {
 			return info.map.get(name);
@@ -226,7 +226,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	 * @see Enum#valueOf(Class, String)
 	 */
 	@Nullable
-	public final static <T extends PseudoEnum<T>> T valueOf(final Class<T> c, final String name) {
+	public static <T extends PseudoEnum<T>> T valueOf(final Class<T> c, final String name) {
 		final Info<T> info = getInfo(c);
 		info.readLock.lock();
 		try {
@@ -253,7 +253,7 @@ public final class PseudoEnum<T extends PseudoEnum<T>> {
 	private final static Map<Class<? extends PseudoEnum<?>>, Info<?>> infos = new HashMap<Class<? extends PseudoEnum<?>>, Info<?>>();
 	
 	@SuppressWarnings("unchecked")
-	private final static <T extends PseudoEnum<T>> Info<T> getInfo(final Class<T> c) {
+	private static <T extends PseudoEnum<T>> Info<T> getInfo(final Class<T> c) {
 		synchronized (infos) {
 			Info<T> info = (Info<T>) infos.get(getDeclaringClass(c));
 			if (info == null)

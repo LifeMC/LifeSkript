@@ -75,7 +75,7 @@ public final class SkriptAddon {
 	}
 	
 	@Override
-	public final String toString() {
+	public String toString() {
 		return name;
 	}
 	

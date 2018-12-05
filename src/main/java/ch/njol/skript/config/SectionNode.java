@@ -251,11 +251,11 @@ public final class SectionNode extends Node implements Iterable<Node> {
 		return true;
 	}
 	
-	final static SectionNode load(final Config c, final ConfigReader r) throws IOException {
+	static SectionNode load(final Config c, final ConfigReader r) throws IOException {
 		return new SectionNode(c).load_i(r);
 	}
 	
-	final static SectionNode load(final String name, final String comment, final SectionNode parent, final ConfigReader r) throws IOException {
+	static SectionNode load(final String name, final String comment, final SectionNode parent, final ConfigReader r) throws IOException {
 		parent.config.level++;
 		final SectionNode node = new SectionNode(name, comment, parent, r.getLineNum()).load_i(r);
 		SkriptLogger.setNode(parent);
@@ -263,7 +263,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 		return node;
 	}
 	
-	private final static String readableWhitespace(final String s) {
+	private static String readableWhitespace(final String s) {
 		if (s.matches(" +"))
 			return s.length() + " space" + (s.length() == 1 ? "" : "s");
 		if (s.matches("\t+"))
@@ -272,7 +272,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 	}
 	
 	@SuppressWarnings({"null", "unused"})
-	private final SectionNode load_i(final ConfigReader r) throws IOException {
+	private SectionNode load_i(final ConfigReader r) throws IOException {
 		boolean indentationSet = false;
 		String fullLine;
 		while ((fullLine = r.readLine()) != null) {

@@ -85,7 +85,7 @@ final class VariablesMap {
 	 */
 	@SuppressWarnings("unchecked")
 	@Nullable
-	final Object getVariable(final String name) {
+	Object getVariable(final String name) {
 		if (!name.endsWith("*")) {
 			return hashMap.get(name);
 		} else {
@@ -119,7 +119,7 @@ final class VariablesMap {
 	 * @param value The variable's value. Use <tt>null</tt> to delete the variable.
 	 */
 	@SuppressWarnings("unchecked")
-	final void setVariable(final String name, final @Nullable Object value) {
+	void setVariable(final String name, final @Nullable Object value) {
 		if (!name.endsWith("*")) {
 			if (value == null)
 				hashMap.remove(name);

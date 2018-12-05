@@ -578,7 +578,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		
 	}
 	
-	public static final void printDownloadLink() {
+	public static void printDownloadLink() {
 		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 			
 			@Override
@@ -589,7 +589,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		});
 	}
 	
-	public static final void printIssuesLink() {
+	public static void printIssuesLink() {
 		Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 			
 			@Override
@@ -601,7 +601,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	@Nullable
-	public static final String getLatestVersion() {
+	public static String getLatestVersion() {
 		try {
 			return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
 	    }
@@ -645,7 +645,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @deprecated use {@link #classExists(String)}
 	 */
 	@Deprecated
-	public final static boolean supports(final String className) {
+	public static boolean supports(final String className) {
 		return classExists(className);
 	}
 	
@@ -656,7 +656,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @return Whether the given class exists.
 	 */
 	@SuppressWarnings({"null", "unused"})
-	public final static boolean classExists(final String className) {
+	public static boolean classExists(final String className) {
 		if(className == null)
 			return false;
 		try {
@@ -677,7 +677,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 */
 	@Nullable
 	@SuppressWarnings({"null", "unused"})
-	public final static Class<?> classForName(final String className) {
+	public static Class<?> classForName(final String className) {
 		if(className == null)
 			return null;
 		try {
@@ -696,7 +696,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @return Whether the given method exists.
 	 */
 	@SuppressWarnings("null")
-	public final static boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
+	public static boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
 		if(c == null || methodName == null)
 			return false;
 		try {
@@ -721,7 +721,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @return Whether the given method exists.
 	 */
 	@SuppressWarnings("null")
-	public final static boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+	public static boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
 		if(c == null || methodName == null)
 			return false;
 		try {
@@ -742,7 +742,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @return Whether the given field exists.
 	 */
 	@SuppressWarnings("null")
-	public final static boolean fieldExists(final Class<?> c, final String fieldName) {
+	public static boolean fieldExists(final Class<?> c, final String fieldName) {
 		if(c == null || fieldName == null)
 			return false;
 		try {
@@ -758,7 +758,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	/**
 	 * Clears triggers, commands, functions and variable names
 	 */
-	final static void disableScripts() {
+	static void disableScripts() {
 		VariableString.variableNames.clear();
 		SkriptEventHandler.removeAllTriggers();
 		Commands.clearCommands();
@@ -768,7 +768,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	/**
 	 * Prints errors from reloading the config & scripts
 	 */
-	final static void reload() {
+	static void reload() {
 		disableScripts();
 		reloadMainConfig();
 		reloadAliases();
@@ -778,7 +778,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	/**
 	 * Prints errors
 	 */
-	final static void reloadScripts() {
+	static void reloadScripts() {
 		disableScripts();
 		ScriptLoader.loadScripts();
 	}
@@ -786,14 +786,14 @@ public final class Skript extends JavaPlugin implements Listener {
 	/**
 	 * Prints errors
 	 */
-	final static void reloadMainConfig() {
+	static void reloadMainConfig() {
 		SkriptConfig.load();
 	}
 	
 	/**
 	 * Prints errors
 	 */
-	final static void reloadAliases() {
+	static void reloadAliases() {
 		Aliases.clear();
 		Aliases.load();
 	}
@@ -929,7 +929,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	public final static int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
 	
 	// TODO localise Infinity, -Infinity, NaN (and decimal point?)
-	public final static String toString(final double n) {
+	public static String toString(final double n) {
 		return StringUtils.toString(n, SkriptConfig.numberAccuracy.value());
 	}
 	
@@ -943,7 +943,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	/**
 	 * Creates a new Thread and sets its UncaughtExceptionHandler. The Thread is not started automatically.
 	 */
-	public final static Thread newThread(final Runnable r, final String name) {
+	public static Thread newThread(final Runnable r, final String name) {
 		final Thread t = new Thread(r, name);
 		t.setUncaughtExceptionHandler(UEH);
 		return t;
@@ -1149,7 +1149,7 @@ public final class Skript extends JavaPlugin implements Listener {
 		return r;
 	}
 	
-	public final static Collection<SkriptEventInfo<?>> getEvents() {
+	public static Collection<SkriptEventInfo<?>> getEvents() {
 		return events;
 	}
 	
@@ -1162,7 +1162,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @param command
 	 * @return Whether the command was run
 	 */
-	public final static boolean dispatchCommand(final CommandSender sender, final String command) {
+	public static boolean dispatchCommand(final CommandSender sender, final String command) {
 		try {
 			if (sender instanceof Player) {
 				final PlayerCommandPreprocessEvent e = new PlayerCommandPreprocessEvent((Player) sender, "/" + command);
@@ -1185,27 +1185,27 @@ public final class Skript extends JavaPlugin implements Listener {
 	
 	// ================ LOGGING ================
 	
-	public final static boolean logNormal() {
+	public static boolean logNormal() {
 		return SkriptLogger.log(Verbosity.NORMAL);
 	}
 	
-	public final static boolean logHigh() {
+	public static boolean logHigh() {
 		return SkriptLogger.log(Verbosity.HIGH);
 	}
 	
-	public final static boolean logVeryHigh() {
+	public static boolean logVeryHigh() {
 		return SkriptLogger.log(Verbosity.VERY_HIGH);
 	}
 	
-	public final static boolean debug() {
+	public static boolean debug() {
 		return SkriptLogger.debug();
 	}
 	
-	public final static boolean testing() {
+	public static boolean testing() {
 		return debug() || Skript.class.desiredAssertionStatus();
 	}
 	
-	public final static boolean log(final Verbosity minVerb) {
+	public static boolean log(final Verbosity minVerb) {
 		return SkriptLogger.log(minVerb);
 	}
 	
@@ -1259,19 +1259,19 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @param info Description of the error and additional information
 	 * @return an EmptyStacktraceException to throw if code execution should terminate.
 	 */
-	public final static RuntimeException exception(final String... info) {
+	public static RuntimeException exception(final String... info) {
 		return exception(null, info);
 	}
 	
-	public final static RuntimeException exception(final @Nullable Throwable cause, final String... info) {
+	public static RuntimeException exception(final @Nullable Throwable cause, final String... info) {
 		return exception(cause, null, null, info);
 	}
 	
-	public final static RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
+	public static RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
 		return exception(cause, thread, null, info);
 	}
 	
-	public final static RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
+	public static RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
 		return exception(cause, null, item, info);
 	}
 	
@@ -1282,7 +1282,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	 * @param info Description of the error and additional information
 	 * @return an EmptyStacktraceException to throw if code execution should terminate.
 	 */
-	public final static RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
+	public static RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
 		
 		logEx();
 		logEx("[Skript] Severe Error:");
@@ -1349,11 +1349,11 @@ public final class Skript extends JavaPlugin implements Listener {
 		}
 	}
 	
-	final static void logEx() {
+	static void logEx() {
 		SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX);
 	}
 	
-	final static void logEx(final String... lines) {
+	static void logEx(final String... lines) {
 		for (final String line : lines)
 			SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
 	}

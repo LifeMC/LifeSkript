@@ -246,7 +246,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 		}
 	}
 	
-	private final static void unsetItemMetaEnchs(final @Nullable ItemMeta meta) {
+	private static void unsetItemMetaEnchs(final @Nullable ItemMeta meta) {
 		if (meta == null)
 			return;
 		for (final Enchantment e : meta.getEnchants().keySet())
@@ -647,7 +647,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 		return addTo(getCopiedContents(invi));
 	}
 	
-	public final static ItemStack[] getCopiedContents(final Inventory invi) {
+	public static ItemStack[] getCopiedContents(final Inventory invi) {
 		final ItemStack[] buf = invi.getContents();
 		for (int i = 0; i < buf.length; i++)
 			if (buf[i] != null)
@@ -912,7 +912,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	 * @param sub
 	 * @return Whether all item types in <tt>sub</tt> have at least one {@link #isSupertypeOf(ItemType) super type} in <tt>set</tt>
 	 */
-	public final static boolean isSubset(final ItemType[] set, final ItemType[] sub) {
+	public static boolean isSubset(final ItemType[] set, final ItemType[] sub) {
 		outer: for (final ItemType i : sub) {
 			assert i != null;
 			for (final ItemType t : set) {

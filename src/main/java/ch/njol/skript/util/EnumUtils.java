@@ -60,7 +60,7 @@ public final class EnumUtils<E extends Enum<E>> {
 	/**
 	 * Updates the names if the language has changed or the enum was modified (using reflection).
 	 */
-	final void validate(final boolean force) {
+	 void validate(final boolean force) {
 		boolean update = force;
 		
 		final int newL = c.getEnumConstants().length;
@@ -81,18 +81,18 @@ public final class EnumUtils<E extends Enum<E>> {
 	}
 	
 	@Nullable
-	public final E parse(final String s) {
+	public E parse(final String s) {
 		validate(false);
 		return parseMap.get(s.toLowerCase());
 	}
 	
 	@SuppressWarnings("null")
-	public final String toString(final E e, final int flags) {
+	public String toString(final E e, final int flags) {
 		validate(false);
 		return names[e.ordinal()];
 	}
 	
-	public final String getAllNames() {
+	public String getAllNames() {
 		validate(false);
 		return StringUtils.join(names, ", ");
 	}

@@ -36,7 +36,7 @@ public final class BiomeUtils {
 	private final static EnumUtils<Biome> util = new EnumUtils<Biome>(Biome.class, "biomes");
 	
 	@Nullable
-	public final static Biome parse(final String s) {
+	public static Biome parse(final String s) {
 		return util.parse(s);
 	}
 	
@@ -44,7 +44,7 @@ public final class BiomeUtils {
 		return util.toString(b, flags);
 	}
 	
-	public final static String getAllNames() {
+	public static String getAllNames() {
 		return util.getAllNames();
 	}
 	

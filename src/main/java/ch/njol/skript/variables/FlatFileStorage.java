@@ -228,7 +228,7 @@ public final class FlatFileStorage extends VariablesStorage {
 		return new File(file);
 	}
 	
-	final static String encode(final byte[] data) {
+	static String encode(final byte[] data) {
 		final char[] r = new char[data.length * 2];
 		for (int i = 0; i < data.length; i++) {
 			r[2 * i] = Character.toUpperCase(Character.forDigit((data[i] & 0xF0) >>> 4, 16));
@@ -237,7 +237,7 @@ public final class FlatFileStorage extends VariablesStorage {
 		return new String(r);
 	}
 	
-	final static byte[] decode(final String hex) {
+	static byte[] decode(final String hex) {
 		final byte[] r = new byte[hex.length() / 2];
 		for (int i = 0; i < r.length; i++) {
 			r[i] = (byte) ((Character.digit(hex.charAt(2 * i), 16) << 4) + Character.digit(hex.charAt(2 * i + 1), 16));
@@ -249,7 +249,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	private final static Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
 	
 	@Nullable
-	final static String[] splitCSV(final String line) {
+	static String[] splitCSV(final String line) {
 		final Matcher m = csv.matcher(line);
 		int lastEnd = 0;
 		final ArrayList<String> r = new ArrayList<String>();
@@ -297,7 +297,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	@SuppressWarnings("null")
 	private final static Pattern containsWhitespace = Pattern.compile("\\s");
 	
-	private final static void writeCSV(final PrintWriter pw, final String... values) {
+	private static void writeCSV(final PrintWriter pw, final String... values) {
 		assert values.length == 3; // name, type, value
 		for (int i = 0; i < values.length; i++) {
 			if (i != 0)
@@ -312,7 +312,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	
 	@SuppressWarnings("null")
 	@Override
-	protected final void disconnect() {
+	protected void disconnect() {
 		synchronized (connectionLock) {
 			clearChangesQueue();
 			synchronized (changesWriter) {
@@ -327,7 +327,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	
 	@SuppressWarnings({"unused", "null", "resource"})
 	@Override
-	protected final boolean connect() {
+	protected boolean connect() {
 		synchronized (connectionLock) {
 			synchronized (changesWriter) {
 				if (changesWriter.get() != null)
@@ -357,7 +357,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	 * @param finalSave whether this is the last save in this session or not.
 	 */
 	@SuppressWarnings({"null", "unused"})
-	public final void saveVariables(final boolean finalSave) {
+	public void saveVariables(final boolean finalSave) {
 		if (finalSave) {
 			final Task st = saveTask;
 			if (st != null)
@@ -428,7 +428,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	 * @param map
 	 */
 	@SuppressWarnings({"unchecked", "null"})
-	private final void save(final PrintWriter pw, final String parent, final TreeMap<String, Object> map) {
+	private void save(final PrintWriter pw, final String parent, final TreeMap<String, Object> map) {
 		outer: for (final Entry<String, Object> e : map.entrySet()) {
 			final Object val = e.getValue();
 			if (val == null)

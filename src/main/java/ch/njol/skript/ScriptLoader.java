@@ -233,7 +233,7 @@ final public class ScriptLoader {
 	 * @param directory
 	 * @return Info on the loaded scripts
 	 */
-	public final static ScriptInfo loadScripts(final File directory) {
+	public static ScriptInfo loadScripts(final File directory) {
 		final ScriptInfo i = new ScriptInfo();
 		final boolean wasLocal = Language.setUseLocal(false);
 		try {
@@ -259,7 +259,7 @@ final public class ScriptLoader {
 	 * @param files
 	 * @return Info on the loaded scripts
 	 */
-	public final static ScriptInfo loadScripts(final File[] files) {
+	public static ScriptInfo loadScripts(final File[] files) {
 		Arrays.sort(files);
 		final ScriptInfo i = new ScriptInfo();
 		final boolean wasLocal = Language.setUseLocal(false);
@@ -283,7 +283,7 @@ final public class ScriptLoader {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public final static ScriptInfo loadScript(final File f) {
+	public static ScriptInfo loadScript(final File f) {
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -591,13 +591,13 @@ final public class ScriptLoader {
 	 * @param folder
 	 * @return Info on the unloaded scripts
 	 */
-	final static ScriptInfo unloadScripts(final File folder) {
+	static ScriptInfo unloadScripts(final File folder) {
 		final ScriptInfo r = unloadScripts_(folder);
 		Functions.validateFunctions();
 		return r;
 	}
 	
-	private final static ScriptInfo unloadScripts_(final File folder) {
+	private static ScriptInfo unloadScripts_(final File folder) {
 		final ScriptInfo info = new ScriptInfo();
 		final File[] files = folder.listFiles(scriptFilter);
 		for (final File f : files) {
@@ -616,13 +616,13 @@ final public class ScriptLoader {
 	 * @param script
 	 * @return Info on the unloaded script
 	 */
-	final static ScriptInfo unloadScript(final File script) {
+	static ScriptInfo unloadScript(final File script) {
 		final ScriptInfo r = unloadScript_(script);
 		Functions.validateFunctions();
 		return r;
 	}
 	
-	private final static ScriptInfo unloadScript_(final File script) {
+	private static ScriptInfo unloadScript_(final File script) {
 		final ScriptInfo info = SkriptEventHandler.removeTriggers(script);
 		synchronized (loadedScripts) {
 			loadedScripts.subtract(info);
@@ -636,7 +636,7 @@ final public class ScriptLoader {
 	 * @param s The string to replace options.
 	 * @return The replaced string. May return null, but only if the input is null.
  	 */
-	public final static String replaceOptions(final String s) {
+	public static String replaceOptions(final String s) {
 		final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
 			@Override
 			@Nullable
@@ -803,35 +803,35 @@ final public class ScriptLoader {
 		}
 	}
 	
-	public final static int loadedScripts() {
+	public static int loadedScripts() {
 		synchronized (loadedScripts) {
 			return loadedScripts.files;
 		}
 	}
 	
-	public final static int loadedCommands() {
+	public static int loadedCommands() {
 		synchronized (loadedScripts) {
 			return loadedScripts.commands;
 		}
 	}
 	
-	public final static int loadedFunctions() {
+	public static int loadedFunctions() {
 		synchronized (loadedScripts) {
 			return loadedScripts.functions;
 		}
 	}
 	
-	public final static int loadedTriggers() {
+	public static int loadedTriggers() {
 		synchronized (loadedScripts) {
 			return loadedScripts.triggers;
 		}
 	}
 	
-	public final static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
+	public static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
 		return CollectionUtils.containsSuperclass(currentEvents, event);
 	}
 	
-	public final static boolean isCurrentEvent(final Class<? extends Event>... events) {
+	public static boolean isCurrentEvent(final Class<? extends Event>... events) {
 		return CollectionUtils.containsAnySuperclass(currentEvents, events);
 	}
 	

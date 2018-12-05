@@ -62,7 +62,7 @@ public final class SkriptEventHandler {
 	
 	private final static List<Trigger> selfRegisteredTriggers = new ArrayList<Trigger>();
 	
-	private final static Iterator<Trigger> getTriggers(final Class<? extends Event> event) {
+	private static Iterator<Trigger> getTriggers(final Class<? extends Event> event) {
 		return new Iterator<Trigger>() {
 			@Nullable
 			private Class<?> e = event;
@@ -258,7 +258,7 @@ public final class SkriptEventHandler {
 	private final static Listener listener = new Listener() {};
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	final static void registerBukkitEvents() {
+	static void registerBukkitEvents() {
 		for (final Class<? extends Event> e : triggers.keySet()) {
 			assert e != null;
 			if (!containsSuperclass((Set) registeredEvents, e)) { // I just love Java's generics
@@ -275,7 +275,7 @@ public final class SkriptEventHandler {
 		}
 	}
 	
-	public final static boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
+	public static boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
 		if (classes.contains(c))
 			return true;
 		for (final Class<?> cl : classes) {

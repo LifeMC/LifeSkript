@@ -38,13 +38,13 @@ public final class SynchronizedReference<V>
   public SynchronizedReference() {}
   
   @Nullable
-  public final V get()
+  public V get()
   {
     assert Thread.holdsLock(this);
     return this.value;
   }
   
-  public final void set(@Nullable final V newValue)
+  public void set(@Nullable final V newValue)
   {
     assert Thread.holdsLock(this);
     this.value = newValue;

@@ -139,7 +139,7 @@ public final class Yggdrasil {
 			fieldHandlers.add(h);
 	}
 	
-	public final boolean isSerializable(final Class<?> c) {
+	public boolean isSerializable(final Class<?> c) {
 		try {
 			return c.isPrimitive() || c == Object.class || (Enum.class.isAssignableFrom(c) || PseudoEnum.class.isAssignableFrom(c)) && getIDNoError(c) != null ||
 					(YggdrasilSerializable.class.isAssignableFrom(c) || getSerializer(c) != null) && newInstance(c) != c;// whatever, just make true out if it (null is a valid return value)
@@ -215,7 +215,7 @@ public final class Yggdrasil {
 	 * @param f
 	 * @return The field's id as given by its {@link YggdrasilID} annotation, or its name if it's not annotated.
 	 */
-	public final static String getID(final Field f) {
+	public static String getID(final Field f) {
 		final YggdrasilID yid = f.getAnnotation(YggdrasilID.class);
 		if (yid != null) {
 			return yid.value();
@@ -224,7 +224,7 @@ public final class Yggdrasil {
 	}
 	
 	@SuppressWarnings("null")
-	public final static String getID(final Enum<?> e) {
+	public static String getID(final Enum<?> e) {
 		try {
 			return getID(e.getDeclaringClass().getDeclaredField(e.name()));
 		} catch (final NoSuchFieldException ex) {
@@ -234,7 +234,7 @@ public final class Yggdrasil {
 	}
 	
 	@SuppressWarnings({"unchecked", "null", "unused"})
-	public final static <T extends Enum<T>> Enum<T> getEnumConstant(final Class<T> c, final String id) throws StreamCorruptedException {
+	public static <T extends Enum<T>> Enum<T> getEnumConstant(final Class<T> c, final String id) throws StreamCorruptedException {
 		final Field[] fields = c.getDeclaredFields();
 		for (final Field f : fields) {
 			assert f != null;
@@ -314,7 +314,7 @@ public final class Yggdrasil {
 	
 	@SuppressWarnings({"rawtypes", "unchecked", "unused", "null"})
 	@Nullable
-	final Object newInstance(final Class<?> c) throws StreamCorruptedException, NotSerializableException {
+	Object newInstance(final Class<?> c) throws StreamCorruptedException, NotSerializableException {
 		final YggdrasilSerializer s = getSerializer(c);
 		if (s != null) {
 			if (!s.canBeInstantiated(c)) { // only used by isSerializable - return null if OK, throw an YggdrasilException if not

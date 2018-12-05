@@ -42,7 +42,7 @@ public final class Workarounds {
 		throw new UnsupportedOperationException();
 	}
 	
-	public final static void init() {}
+	public static void init() {}
 	
 	static {
 		// allows to properly remove a player's tool in right click events
