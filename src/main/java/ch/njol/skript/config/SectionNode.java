@@ -59,7 +59,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 	 * Note to self: use getNodeMap()
 	 */
 	@Nullable
-	private NodeMap nodeMap = null;
+	private NodeMap nodeMap;
 	
 	private NodeMap getNodeMap() {
 		NodeMap nodeMap = this.nodeMap;

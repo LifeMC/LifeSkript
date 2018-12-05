@@ -47,7 +47,7 @@ public enum WeatherType {
 	
 	final static Map<String, WeatherType> byName = new HashMap<String, WeatherType>();
 	
-	private WeatherType(final String... names) {
+	WeatherType(final String... names) {
 		this.names = names;
 	}
 	

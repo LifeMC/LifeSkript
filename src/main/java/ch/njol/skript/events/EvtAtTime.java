@@ -78,7 +78,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 	 * null if all worlds
 	 */
 	@Nullable
-	private String[] worldNames = null;
+	private String[] worldNames;
 	
 	public final static World[] EMPTY_WORLD_ARRAY = new World[0];
 	

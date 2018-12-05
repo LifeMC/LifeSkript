@@ -66,8 +66,9 @@ public final class SkriptEventHandler {
 		return new Iterator<Trigger>() {
 			@Nullable
 			private Class<?> e = event;
+			
 			@Nullable
-			private Iterator<Trigger> current = null;
+			private Iterator<Trigger> current;
 			
 			@Override
 			public boolean hasNext() {
@@ -101,7 +102,7 @@ public final class SkriptEventHandler {
 	}
 	
 	@Nullable
-	static Event last = null;
+	static Event last;
 	
 	final static EventExecutor ee = new EventExecutor() {
 		@Override

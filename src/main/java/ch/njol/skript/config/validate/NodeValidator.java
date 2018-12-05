@@ -28,6 +28,6 @@ import ch.njol.skript.config.Node;
  */
 public interface NodeValidator {
 	
-	public boolean validate(Node node);
+	boolean validate(final Node node);
 	
 }

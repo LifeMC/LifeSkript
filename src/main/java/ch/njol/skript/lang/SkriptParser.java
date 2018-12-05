@@ -124,7 +124,7 @@ public final class SkriptParser {
 		 * Defaults to 0. Any marks encountered in the pattern will be XORed with the existing value, in particular if only one mark is encountered this value will be set to that
 		 * mark.
 		 */
-		public int mark = 0;
+		public int mark;
 		
 		public ParseResult(final SkriptParser parser, final String pattern) {
 			expr = parser.expr;
@@ -379,7 +379,7 @@ public final class SkriptParser {
 	private final static String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
 	private final static String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
 	
-	private boolean suppressMissingAndOrWarnings = false;
+	private boolean suppressMissingAndOrWarnings;
 	
 	private SkriptParser suppressMissingAndOrWarnings() {
 		suppressMissingAndOrWarnings = true;
@@ -1361,7 +1361,7 @@ public final class SkriptParser {
 		final boolean[] isPlural;
 		boolean isOptional;
 		int flagMask = ~0;
-		int time = 0;
+		int time;
 	}
 	
 	private static final HashMap<String,ExprInfo> exprInfoCache = new HashMap<String,ExprInfo>();

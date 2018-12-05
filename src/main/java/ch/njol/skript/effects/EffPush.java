@@ -55,7 +55,7 @@ public class EffPush extends Effect {
 	@SuppressWarnings("null")
 	private Expression<Direction> direction;
 	@Nullable
-	private Expression<Number> speed = null;
+	private Expression<Number> speed;
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override

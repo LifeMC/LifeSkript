@@ -336,7 +336,7 @@ public final class Variables {
 	final static SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>>(new HashMap<String, NonNullPair<Object, VariablesStorage>>());
 	
 	private static final int MAX_CONFLICT_WARNINGS = 50;
-	private static int loadConflicts = 0;
+	private static int loadConflicts;
 	
 	/**
 	 * Sets a variable and moves it to the appropriate database if the config was changed. Must only be used while variables are loaded when Skript is starting.
@@ -445,7 +445,7 @@ public final class Variables {
 	
 	final static BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<SerializedVariable>();
 	
-	static volatile boolean closed = false;
+	static volatile boolean closed;
 	
 	private final static Thread saveThread = Skript.newThread(new Runnable() {
 		@Override

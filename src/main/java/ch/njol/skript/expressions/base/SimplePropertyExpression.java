@@ -48,10 +48,6 @@ public abstract class SimplePropertyExpression<F, T> extends PropertyExpression<
 	protected abstract String getPropertyName();
 	
 	@Override
-	@Nullable
-	public abstract T convert(F f);
-	
-	@Override
 	protected T[] get(final Event e, final F[] source) {
 		return super.get(source, this);
 	}

@@ -160,10 +160,10 @@ public final class Skript extends JavaPlugin implements Listener {
 	// ================ PLUGIN ================
 	
 	@Nullable
-	static Skript instance = null;
+	static Skript instance;
 	
-	static boolean disabled = false;
-	static boolean updateAvailable = false;
+	static boolean disabled;
+	static boolean updateAvailable;
 	
 	@Nullable
 	static String latestVersion;
@@ -182,7 +182,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	@Nullable
-	private static Version version = null;
+	private static Version version;
 	
 	public static Version getVersion() {
 		final Version v = version;
@@ -511,12 +511,12 @@ public final class Skript extends JavaPlugin implements Listener {
 					try {
 						final String current = getInstance().getDescription().getVersion();
 						
-						if(current == null || current.length() < 1) 
+						if(current == null || current.length() < 1)
 							return;
 						
 						final String latest = getLatestVersion();
 						
-						if(latest == null) 
+						if(latest == null)
 							return;
 						
 						final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
@@ -609,7 +609,7 @@ public final class Skript extends JavaPlugin implements Listener {
 	}
 	
 	static Version minecraftVersion = new Version(666);
-	static boolean runningCraftBukkit = false;
+	static boolean runningCraftBukkit;
 	
 	public static Version getMinecraftVersion() {
 		return minecraftVersion;

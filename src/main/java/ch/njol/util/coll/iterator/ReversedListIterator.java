@@ -21,6 +21,7 @@ package ch.njol.util.coll.iterator;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -56,7 +57,7 @@ public class ReversedListIterator<T> implements ListIterator<T> {
 	
 	@Override
 	@Nullable
-	public T next() {
+	public T next() throws NoSuchElementException {
 		return iter.previous();
 	}
 	

@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 public class SingleItemIterator<T> implements Iterator<T> {
 	
 	private final T item;
-	private boolean returned = false;
+	private boolean returned;
 	
 	public SingleItemIterator(final T item) {
 		this.item = item;

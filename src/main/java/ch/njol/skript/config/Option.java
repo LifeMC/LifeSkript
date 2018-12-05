@@ -39,10 +39,11 @@ import ch.njol.util.Setter;
 public class Option<T> {
 	
 	public final String key;
-	private boolean optional = false;
+	private boolean optional;
 	
 	@Nullable
-	private String value = null;
+	private String value;
+	
 	private final Converter<String, ? extends T> parser;
 	private final T defaultValue;
 	private T parsedValue;

@@ -57,7 +57,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 	}
 	
 	private final HashMap<String, Integer> writtenShortStrings = new HashMap<String, Integer>();
-	int nextShortStringID = 0;
+	int nextShortStringID;
 	
 	/**
 	 * Writes a class ID or Field name

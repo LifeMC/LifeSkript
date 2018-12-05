@@ -102,7 +102,7 @@ public class EffChange extends Effect {
 	@SuppressWarnings("null")
 	private Expression<?> changed;
 	@Nullable
-	private Expression<?> changer = null;
+	private Expression<?> changer;
 	
 	@SuppressWarnings("null")
 	private ChangeMode mode;

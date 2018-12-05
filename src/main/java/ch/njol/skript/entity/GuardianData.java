@@ -38,7 +38,7 @@ public class GuardianData extends EntityData<Guardian> {
 	
 	
 	
-	private boolean isElder = false;
+	private boolean isElder;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

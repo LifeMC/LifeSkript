@@ -86,7 +86,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
 		triggers.clear();
 	}
 	
-	private static boolean registeredExecutor = false;
+	private static boolean registeredExecutor;
 	
 	@SuppressWarnings("unchecked")
 	private final static void registerExecutor() {

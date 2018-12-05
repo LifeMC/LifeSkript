@@ -52,7 +52,7 @@ public class CommandHelp {
 	private final String argsColor;
 	
 	@Nullable
-	private String langNode = null;
+	private String langNode;
 	
 	private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<String, Object>();
 	

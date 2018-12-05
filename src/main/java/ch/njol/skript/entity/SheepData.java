@@ -45,8 +45,9 @@ public class SheepData extends EntityData<Sheep> {
 	}
 	
 	@Nullable
-	private Color[] colors = null;
-	private int sheared = 0;
+	private Color[] colors;
+	
+	private int sheared;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -91,7 +92,7 @@ public class SheepData extends EntityData<Sheep> {
 	}
 	
 	@Nullable
-	private Adjective[] adjectives = null;
+	private Adjective[] adjectives;
 	
 	@Override
 	public String toString(final int flags) {

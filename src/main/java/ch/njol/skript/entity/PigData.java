@@ -35,7 +35,7 @@ public class PigData extends EntityData<Pig> {
 		register(PigData.class, "pig", Pig.class, 1, "unsaddled pig", "pig", "saddled pig");
 	}
 	
-	private int saddled = 0;
+	private int saddled;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

@@ -62,7 +62,7 @@ public class EffHealth extends Effect {
 	private Expression<?> damageables;
 	@Nullable
 	private Expression<Number> damage;
-	private boolean heal = false;
+	private boolean heal;
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override

@@ -23,6 +23,7 @@ package ch.njol.util.coll.iterator;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -53,7 +54,7 @@ public class EnumerationIterable<T> implements Iterable<T> {
 			
 			@Override
 			@Nullable
-			public T next() {
+			public T next() throws NoSuchElementException {
 				return e.nextElement();
 			}
 			

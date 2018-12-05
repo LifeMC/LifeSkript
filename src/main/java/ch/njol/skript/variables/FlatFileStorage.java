@@ -69,7 +69,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	 */
 	private final NotifyingReference<PrintWriter> changesWriter = new NotifyingReference<PrintWriter>();
 	
-	private volatile boolean loaded = false;
+	private volatile boolean loaded;
 	
 	final AtomicInteger changes = new AtomicInteger(0);
 	private final int REQUIRED_CHANGES_FOR_RESAVE = 1000;
@@ -77,7 +77,7 @@ public final class FlatFileStorage extends VariablesStorage {
 	@Nullable
 	private Task saveTask;
 	
-	private boolean loadError = false;
+	private boolean loadError;
 	
 	protected FlatFileStorage(final String name) {
 		super(name);

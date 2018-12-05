@@ -54,7 +54,7 @@ public interface Changer<T> {
 	 *         mark them as supported.
 	 */
 	@Nullable
-	Class<?>[] acceptChange(ChangeMode mode);
+	Class<?>[] acceptChange(final ChangeMode mode);
 	
 	/**
 	 * @param what The objects to change
@@ -63,7 +63,7 @@ public interface Changer<T> {
 	 * @param mode
 	 * @throws UnsupportedOperationException (optional) if this method was called on an unsupported ChangeMode.
 	 */
-	void change(T[] what, @Nullable Object[] delta, ChangeMode mode);
+	void change(final T[] what, final @Nullable Object[] delta, final ChangeMode mode);
 	
 	public static abstract class ChangerUtils {
 		

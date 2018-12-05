@@ -44,7 +44,7 @@ import ch.njol.skript.config.validate.SectionValidator;
  */
 public final class Config {
 	
-	boolean simple = false;
+	boolean simple;
 	
 	/**
 	 * One level of the indentation, e.g. a tab or 4 spaces.
@@ -60,17 +60,18 @@ public final class Config {
 	
 	String line = "";
 	
-	int level = 0;
+	int level;
 	
 	private final SectionNode main;
 	
-	int errors = 0;
+	int errors;
 	
 	final boolean allowEmptySections;
 	
 	String fileName;
+	
 	@Nullable
-	File file = null;
+	File file;
 	
 	public Config(final InputStream source, final String fileName, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
 		try {

@@ -27,7 +27,6 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Default;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -56,10 +55,9 @@ public final class EffExec extends Effect {
 		Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");
 	}
 	
-	@Default(bool = false)
 	public static volatile boolean lastExecuteState;
 	
-	@Nullable @Default(str = "null")
+	@Nullable
 	public static volatile String lastExecuteErrors;
 	
 	@SuppressWarnings("null")

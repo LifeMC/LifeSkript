@@ -73,7 +73,7 @@ public final class PlayerUtils {
 	private final static boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
 	
 	@Nullable
-	private static Method getOnlinePlayers = null;
+	private static Method getOnlinePlayers;
 	
 	@SuppressWarnings({"null", "unchecked"})
 	public final static Collection<? extends Player> getOnlinePlayers() {

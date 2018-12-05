@@ -46,7 +46,7 @@ public class ErrorDescLogHandler extends LogHandler {
 		this.success = success;
 	}
 	
-	private boolean hadError = false;
+	private boolean hadError;
 	
 	@Override
 	public LogResult log(final LogEntry entry) {

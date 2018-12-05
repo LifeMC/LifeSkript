@@ -95,7 +95,7 @@ public class ExprItemsIn extends SimpleExpression<Slot> {
 			@SuppressWarnings("null")
 			Inventory current = is.next();
 			
-			int next = 0;
+			int next;
 			
 			@SuppressWarnings("null")
 			@Override

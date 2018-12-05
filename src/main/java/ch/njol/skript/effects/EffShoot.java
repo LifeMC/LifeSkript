@@ -71,7 +71,7 @@ public final class EffShoot extends Effect {
 	private Expression<Direction> direction;
 	
 	@Nullable
-	public static Entity lastSpawned = null;
+	public static Entity lastSpawned;
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override

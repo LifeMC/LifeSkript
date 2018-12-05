@@ -33,10 +33,6 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public abstract class YggdrasilSerializer<T> implements ClassResolver {
 	
-	@Override
-	@Nullable
-	public abstract Class<? extends T> getClass(String id);
-	
 	/**
 	 * Serialises the given object.
 	 * <p>

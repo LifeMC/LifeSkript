@@ -69,7 +69,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 		private final String pattern;
 		final Checker<EntityChangeBlockEvent> checker;
 		
-		private ChangeEvent(final String pattern, final Checker<EntityChangeBlockEvent> c) {
+		ChangeEvent(final String pattern, final Checker<EntityChangeBlockEvent> c) {
 			this.pattern = pattern;
 			checker = c;
 		}

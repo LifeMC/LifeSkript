@@ -43,7 +43,7 @@ import ch.njol.yggdrasil.YggdrasilSerializer;
 public abstract class Serializer<T> extends YggdrasilSerializer<T> {
 	
 	@Nullable
-	protected ClassInfo<? extends T> info = null;
+	protected ClassInfo<? extends T> info;
 	
 	void register(final ClassInfo<? extends T> info) {
 		assert this.info == null && info != null;

@@ -37,7 +37,7 @@ public class RabbitData extends EntityData<Rabbit> {
     	}
     }
 
-    private int type = 0;
+    private int type;
     
 
     @Override

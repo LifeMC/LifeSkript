@@ -28,10 +28,10 @@ package ch.njol.skript.classes;
  */
 public interface Arithmetic<A, R> {
 	
-	R difference(A first, A second);
+	R difference(final A first, final A second);
 	
-	A add(A value, R difference);
+	A add(final A value, final R difference);
 	
-	A subtract(A value, R difference);
+	A subtract(final A value, final R difference);
 	
 }

@@ -80,12 +80,12 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 	private Loop loop;
 	
 	// whether this loops a variable
-	boolean isVariableLoop = false;
+	boolean isVariableLoop;
 	// if this loops a variable and isIndex is true, return the index of the variable instead of the value
-	boolean isIndex = false;
+	boolean isIndex;
 	
 	@SuppressWarnings("null")
-	private static final Pattern pattern = 
+	private static final Pattern pattern =
 			Pattern.compile("^(.+)-(\\d+)$");
 	
 	@Override

@@ -71,7 +71,7 @@ public enum Color implements YggdrasilSerializable {
 	@Nullable
 	Adjective adjective;
 	
-	private Color(final DyeColor wool, final ChatColor chat, final org.bukkit.Color bukkit) {
+	Color(final DyeColor wool, final ChatColor chat, final org.bukkit.Color bukkit) {
 		this.wool = wool;
 		this.chat = chat;
 		this.bukkit = bukkit;

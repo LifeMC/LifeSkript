@@ -56,7 +56,7 @@ public final class FallingBlockData extends EntityData<FallingBlock> {
 	private final static Adjective m_adjective = new Adjective("entities.falling block.adjective");
 	
 	@Nullable
-	private ItemType[] types = null;
+	private ItemType[] types;
 	
 	@SuppressWarnings("unchecked")
 	@Override

@@ -30,9 +30,9 @@ import org.eclipse.jdt.annotation.Nullable;
 public abstract class NonNullIterator<T> implements Iterator<T> {
 	
 	@Nullable
-	private T current = null;
+	private T current;
 	
-	private boolean ended = false;
+	private boolean ended;
 	
 	@Override
 	public final boolean hasNext() {

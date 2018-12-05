@@ -41,7 +41,7 @@ public final class Conditional extends TriggerSection {
 	private final Condition cond;
 	
 	@Nullable
-	private TriggerSection elseClause = null;
+	private TriggerSection elseClause;
 	
 	public Conditional(final Condition cond, final SectionNode node) {
 		super(node);

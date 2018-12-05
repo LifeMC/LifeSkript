@@ -60,7 +60,7 @@ public class EffIgnite extends Effect {
 	private Expression<Entity> entities;
 	private boolean ignite;
 	@Nullable
-	private Expression<Timespan> duration = null;
+	private Expression<Timespan> duration;
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override

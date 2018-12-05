@@ -52,7 +52,7 @@ public abstract class VariablesStorage implements Closeable {
 	
 	final LinkedBlockingQueue<SerializedVariable> changesQueue = new LinkedBlockingQueue<SerializedVariable>(QUEUE_SIZE);
 	
-	protected volatile boolean closed = false;
+	protected volatile boolean closed;
 	
 	protected final String databaseName;
 	

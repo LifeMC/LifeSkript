@@ -105,7 +105,7 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 		
 		public final char sign;
 		
-		private Operator(final char sign) {
+		Operator(final char sign) {
 			this.sign = sign;
 		}
 		

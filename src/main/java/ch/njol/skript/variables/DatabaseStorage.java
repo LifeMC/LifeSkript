@@ -108,7 +108,7 @@ public final class DatabaseStorage extends VariablesStorage {
 		
 		final String createQuery;
 		
-		private Type(final String createQuery) {
+		Type(final String createQuery) {
 			this.createQuery = createQuery;
 		}
 		
@@ -121,7 +121,7 @@ public final class DatabaseStorage extends VariablesStorage {
 	@SuppressWarnings("null")
 	final SynchronizedReference<Database> db = new SynchronizedReference<Database>(null);
 	
-	private boolean monitor = false;
+	private boolean monitor;
 	long monitor_interval;
 	
 	private final static String guid = "" + UUID.randomUUID().toString();

@@ -35,7 +35,7 @@ import ch.njol.util.Math2;
 public final class CyclicList<E> extends AbstractList<E> {
 	
 	private final Object[] items;
-	private int start = 0;
+	private int start;
 	
 	public CyclicList(final int size) {
 		this.items = new Object[size];

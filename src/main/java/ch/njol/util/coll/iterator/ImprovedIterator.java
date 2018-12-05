@@ -28,7 +28,7 @@ public class ImprovedIterator<T> implements Iterator<T> {
 	private final Iterator<T> iter;
 	
 	@Nullable
-	private T current = null;
+	private T current;
 	
 	public ImprovedIterator(final Iterator<T> iter) {
 		this.iter = iter;

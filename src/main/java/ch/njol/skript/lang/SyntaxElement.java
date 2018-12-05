@@ -45,7 +45,7 @@ public interface SyntaxElement {
 	 * @return Whether this expression was initialised successfully. An error should be printed prior to returning false to specify the cause.
 	 * @see ScriptLoader#isCurrentEvent(Class...)
 	 */
-	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult);
+	boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult);
 	
 	// TODO [code style] add equals to be able to find out whether two elements are equal (useful for e.g. 'if <a>: ... [else] if not <a>: ...')
 	

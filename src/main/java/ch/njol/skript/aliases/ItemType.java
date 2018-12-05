@@ -77,14 +77,14 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	 */
 	final ArrayList<ItemData> types = new ArrayList<ItemData>();
 	
-	private boolean all = false;
+	private boolean all;
 	
 	private int amount = -1;
 	
 	/**
 	 * How many different items this item type represents
 	 */
-	private int numItems = 0;
+	private int numItems;
 	
 	// TODO empty == unenchanted, add expression "unenchanted <item>"
 	@Nullable
@@ -94,13 +94,13 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	 * Guaranteed to be of type ItemMeta.
 	 */
 	@Nullable
-	transient Object meta = null;
+	transient Object meta;
 	
 	/**
 	 * ItemTypes to use instead of this one if adding to an inventory or setting a block.
 	 */
 	@Nullable
-	private ItemType item = null, block = null;
+	private ItemType item, block;
 	
 	void setItem(final @Nullable ItemType item) {
 		if (equals(item)) { // can happen if someone defines a 'x' and 'x item/block' alias that have the same value, e.g. 'dirt' and 'dirt block'
@@ -678,7 +678,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	@Override
 	public Iterator<ItemData> iterator() {
 		return new Iterator<ItemData>() {
-			private int next = 0;
+			private int next;
 			
 			@Override
 			public boolean hasNext() {

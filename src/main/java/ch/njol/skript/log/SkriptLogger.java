@@ -43,7 +43,7 @@ public final class SkriptLogger {
 	public final static Level SEVERE = Level.SEVERE;
 	
 	@Nullable
-	private static Node node = null;
+	private static Node node;
 	
 	private static Verbosity verbosity = Verbosity.NORMAL;
 	
@@ -166,7 +166,7 @@ public final class SkriptLogger {
 	}
 		
 	@Nullable private static List<LogEntry> suppressed;
-	private static volatile boolean suppressing = false;
+	private static volatile boolean suppressing;
 	
 	private static volatile boolean suppressWarnings;
 	private static volatile boolean suppressErrors;

@@ -38,7 +38,7 @@ import ch.njol.util.Checker;
  */
 public abstract class Condition extends Statement {
 	
-	private boolean negated = false;
+	private boolean negated;
 	
 	protected Condition() {}
 	

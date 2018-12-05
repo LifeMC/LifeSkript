@@ -247,7 +247,7 @@ public class ExprName extends SimplePropertyExpression<Object, String> {
 		return type.get(o instanceof Slot ? ((Slot) o).getItem() : o);
 	}
 	
-	private int changeType = 0;
+	private int changeType;
 	
 	// TODO find a better method for handling changes (in general)
 	// e.g. a Changer that takes an object and returns another which should then be saved if applicable (the Changer includes the ChangeMode)

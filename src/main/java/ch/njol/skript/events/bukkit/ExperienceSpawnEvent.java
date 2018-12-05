@@ -70,7 +70,7 @@ public final class ExperienceSpawnEvent extends Event implements Cancellable {
 		return l;
 	}
 	
-	private boolean cancelled = false;
+	private boolean cancelled;
 	
 	@Override
 	public boolean isCancelled() {

@@ -206,7 +206,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 	
 	// any Objects
 	
-	private int nextObjectID = 0;
+	private int nextObjectID;
 	private final IdentityHashMap<Object, Integer> writtenObjects = new IdentityHashMap<Object, Integer>();
 	
 	public final void writeObject(final @Nullable Object o) throws IOException {

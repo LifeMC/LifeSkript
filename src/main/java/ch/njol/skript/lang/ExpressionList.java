@@ -131,9 +131,10 @@ public class ExpressionList<T> implements Expression<T> {
 			return null;
 		}
 		return new Iterator<T>() {
-			private int i = 0;
+			private int i;
+			
 			@Nullable
-			private Iterator<? extends T> current = null;
+			private Iterator<? extends T> current;
 			
 			@Override
 			public boolean hasNext() {
@@ -248,7 +249,7 @@ public class ExpressionList<T> implements Expression<T> {
 		}
 	}
 	
-	private int time = 0;
+	private int time;
 	
 	@Override
 	public boolean setTime(final int time) {

@@ -66,12 +66,14 @@ public class Language {
 	private static String name = "english";
 	
 	final static HashMap<String, String> english = new HashMap<String, String>();
+	
 	/**
 	 * May be null.
 	 */
 	@Nullable
-	static HashMap<String, String> localized = null;
-	static boolean useLocal = false;
+	static HashMap<String, String> localized;
+	
+	static boolean useLocal;
 	
 	private static HashMap<Plugin, Version> langVersion = new HashMap<Plugin, Version>();
 	

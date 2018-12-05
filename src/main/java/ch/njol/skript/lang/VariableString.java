@@ -70,8 +70,8 @@ public final class VariableString implements Expression<String> {
 		}
 		
 		final Expression<?> expr;
-		int flags = 0;
-		boolean toChatStyle = false;
+		int flags;
+		boolean toChatStyle;
 	}
 	
 	private final String orig;

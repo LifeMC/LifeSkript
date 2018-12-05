@@ -184,7 +184,7 @@ public final class Updater {
 	public final static Message m_internal_error = new Message("updater.internal error");
 	
 	@Nullable
-	static Task checkerTask = null;
+	static Task checkerTask;
 	
 	static void start() {
 		return;

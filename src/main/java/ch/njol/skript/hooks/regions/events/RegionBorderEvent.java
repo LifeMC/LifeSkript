@@ -55,7 +55,7 @@ public final class RegionBorderEvent extends Event implements Cancellable {
 		return player;
 	}
 	
-	private boolean cancelled = false;
+	private boolean cancelled;
 	
 	@Override
 	public boolean isCancelled() {

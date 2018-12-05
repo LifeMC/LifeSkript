@@ -79,7 +79,7 @@ public class ExprColorOf extends SimplePropertyExpression<Object, Color> {
 		return Color.class;
 	}
 	
-	boolean changeItemStack = false;
+	boolean changeItemStack;
 	
 	@SuppressWarnings("unchecked")
 	@Override

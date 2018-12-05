@@ -268,7 +268,7 @@ public class ExprEntities extends SimpleExpression<Entity> {
 				private final EntityData<?>[] ts = types.getAll(e);
 				
 				@Nullable
-				private Iterator<? extends Entity> curIter = null;
+				private Iterator<? extends Entity> curIter;
 				
 				@Override
 				@Nullable

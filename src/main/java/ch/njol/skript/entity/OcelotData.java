@@ -35,7 +35,7 @@ public class OcelotData extends EntityData<Ocelot> {
 		EntityData.register(OcelotData.class, "ocelot", Ocelot.class, 1, "wild ocelot", "ocelot", "cat");
 	}
 	
-	int tamed = 0;
+	int tamed;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

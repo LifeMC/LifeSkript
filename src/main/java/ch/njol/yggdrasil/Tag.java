@@ -66,7 +66,7 @@ public enum Tag {
 	public final Class<?> c;
 	public final String name;
 	
-	private Tag(final int tag, final @Nullable Class<?> c, final String name) {
+	Tag(final int tag, final @Nullable Class<?> c, final String name) {
 		assert 0 <= tag && tag <= 0xFF : tag;
 		this.tag = (byte) tag;
 		this.c = c;

@@ -68,7 +68,8 @@ public final class EvtClick extends SkriptEvent {
 	}
 	
 	@Nullable
-	private Literal<?> types = null;
+	private Literal<?> types;
+	
 	@Nullable
 	private Literal<ItemType> tools;
 	

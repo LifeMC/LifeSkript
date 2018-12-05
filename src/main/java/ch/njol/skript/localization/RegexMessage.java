@@ -39,7 +39,7 @@ public class RegexMessage extends Message {
 	private final int flags;
 	
 	@Nullable
-	private Pattern pattern = null;
+	private Pattern pattern;
 	
 	/**
 	 * A pattern that doesn't match anything

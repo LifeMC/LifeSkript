@@ -57,7 +57,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 	private final boolean and;
 	
 	@Nullable
-	private UnparsedLiteral source = null;
+	private UnparsedLiteral source;
 	
 	protected transient T[] data;
 	
@@ -217,7 +217,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 	@Override
 	public NonNullIterator<T> iterator(final Event e) {
 		return new NonNullIterator<T>() {
-			private int i = 0;
+			private int i;
 			
 			@Override
 			@Nullable

@@ -62,7 +62,7 @@ public final class EffSpawn extends Effect {
 	private Expression<Number> amount;
 	
 	@Nullable
-	public static Entity lastSpawned = null;
+	public static Entity lastSpawned;
 	
 	@SuppressWarnings({"unchecked", "null"})
 	@Override

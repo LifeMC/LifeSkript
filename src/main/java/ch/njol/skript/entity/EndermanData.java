@@ -46,7 +46,7 @@ public class EndermanData extends EntityData<Enderman> {
 	}
 	
 	@Nullable
-	private ItemType[] hand = null;
+	private ItemType[] hand;
 	
 	@SuppressWarnings("unchecked")
 	@Override

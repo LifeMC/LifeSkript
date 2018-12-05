@@ -160,7 +160,7 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((this.other == null) ? 0 : this.other.hashCode());
+		result = prime * result + (this.other == null ? 0 : this.other.hashCode());
 		return result;
 	}
 
@@ -169,14 +169,14 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	 */
 	@SuppressWarnings({"null", "unused"})
 	@Override
-	public boolean equals(@Nullable Object obj) {
+	public boolean equals(@Nullable final Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
 		if (!(obj instanceof BidiHashMap))
 			return false;
-		BidiHashMap<?, ?> other = (BidiHashMap<?, ?>) obj;
+		final BidiHashMap<?, ?> other = (BidiHashMap<?, ?>) obj;
 		if (this.other == null) {
 			if (other.other != null)
 				return false;

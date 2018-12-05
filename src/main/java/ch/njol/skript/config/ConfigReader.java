@@ -39,10 +39,10 @@ public class ConfigReader extends BufferedReader {
 	
 	@Nullable
 	private String line;
-	private boolean reset = false;
-	private int ln = 0;
+	private boolean reset;
+	private int ln;
 	
-	private boolean hasNonEmptyLine = false;
+	private boolean hasNonEmptyLine;
 	
 	public ConfigReader(final InputStream source) {
 		super(new InputStreamReader(source, UTF_8));

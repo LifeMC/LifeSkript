@@ -39,11 +39,13 @@ public abstract class JavaFunction<T> extends Function<T> {
 	public abstract T[] execute(FunctionEvent e, Object[][] params);
 	
 	@Nullable
-	private String[] description = null;
+	private String[] description;
+	
 	@Nullable
-	private String[] examples = null;
+	private String[] examples;
+
 	@Nullable
-	private String since = null;
+	private String since;
 	
 	/**
 	 * Only used for Skript's documentation.

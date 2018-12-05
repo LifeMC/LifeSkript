@@ -95,13 +95,13 @@ final public class ScriptLoader {
 	private final static PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
 	
 	@Nullable
-	public static Config currentScript = null;
+	public static Config currentScript;
 	
 	/**
 	 * use {@link #setCurrentEvent(String, Class...)}
 	 */
 	@Nullable
-	private static String currentEventName = null;
+	private static String currentEventName;
 	
 	@Nullable
 	public static String getCurrentEventName() {
@@ -112,7 +112,7 @@ final public class ScriptLoader {
 	 * use {@link #setCurrentEvent(String, Class...)}
 	 */
 	@Nullable
-	private static Class<? extends Event>[] currentEvents = null;
+	private static Class<? extends Event>[] currentEvents;
 	
 	/**
 	 * Call {@link #deleteCurrentEvent()} after parsing

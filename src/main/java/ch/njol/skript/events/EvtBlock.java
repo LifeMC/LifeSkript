@@ -85,7 +85,7 @@ public final class EvtBlock extends SkriptEvent {
 	@Nullable
 	private Literal<ItemType> types;
 	
-	private boolean mine = false;
+	private boolean mine;
 	
 	@Override
 	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {

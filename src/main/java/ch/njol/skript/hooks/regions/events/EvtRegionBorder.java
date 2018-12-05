@@ -144,7 +144,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 	// even WorldGuard doesn't have events, and this way all region plugins are supported for sure.
 	private final static EventExecutor ee = new EventExecutor() {
 		@Nullable
-		Event last = null;
+		Event last;
 		
 		@SuppressWarnings("null")
 		@Override
@@ -168,7 +168,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 		}
 	};
 	
-	private static boolean registered = false;
+	private static boolean registered;
 	
 	private final static void register() {
 		if (registered)

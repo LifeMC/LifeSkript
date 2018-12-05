@@ -93,11 +93,11 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //	private final static HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
 	final static HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<Integer, List<Trigger>>();
 	@SuppressWarnings("null")
-	ItemType[] types = null;
+	ItemType[] types;
 //	private World world;
 //	private int x, y, z;
 	
-	private static boolean registeredExecutor = false;
+	private static boolean registeredExecutor;
 	private final static EventExecutor executor = new EventExecutor() {
 		@SuppressWarnings("null")
 		@Override

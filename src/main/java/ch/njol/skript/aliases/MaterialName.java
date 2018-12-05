@@ -29,7 +29,7 @@ import ch.njol.util.NonNullPair;
 final class MaterialName {
 	String singular;
 	String plural;
-	int gender = 0;
+	int gender;
 	private final int id;
 	final HashMap<NonNullPair<Short, Short>, NonNullPair<String, String>> names = new HashMap<NonNullPair<Short, Short>, NonNullPair<String, String>>();
 	

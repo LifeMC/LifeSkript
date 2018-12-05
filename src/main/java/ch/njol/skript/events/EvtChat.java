@@ -57,7 +57,7 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
 	
 	final static Collection<Trigger> triggers = new ArrayList<Trigger>();
 	
-	private static boolean registeredExecutor = false;
+	private static boolean registeredExecutor;
 	private final static EventExecutor executor = new EventExecutor() {
 		
 		final void execute(final Event e) {

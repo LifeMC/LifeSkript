@@ -56,7 +56,7 @@ public enum StructureType {
 	private Noun name;
 	private final TreeType[] types;
 	
-	private StructureType(final TreeType... types) {
+	StructureType(final TreeType... types) {
 		this.types = types;
 		name = new Noun("tree types." + name() + ".name");
 	}

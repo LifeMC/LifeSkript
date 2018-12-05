@@ -56,9 +56,10 @@ public final class ScriptFunction<T> extends Function<T> {
 		}
 	}
 	
-	private boolean returnValueSet = false;
+	private boolean returnValueSet;
+	
 	@Nullable
-	private T[] returnValue = null;
+	private T[] returnValue;
 	
 	/**
 	 * Should only be called by {@link EffReturn}.

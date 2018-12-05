@@ -40,9 +40,10 @@ import ch.njol.util.StringUtils;
 public abstract class TriggerItem implements Debuggable {
 	
 	@Nullable
-	protected TriggerSection parent = null;
+	protected TriggerSection parent;
+	
 	@Nullable
-	private TriggerItem next = null;
+	private TriggerItem next;
 	
 	protected TriggerItem() {}
 	
@@ -109,7 +110,7 @@ public abstract class TriggerItem implements Debuggable {
 	private final static String indent = "  ";
 	
 	@Nullable
-	private String indentation = null;
+	private String indentation;
 	
 	public String getIndentation() {
 		String ind = indentation;

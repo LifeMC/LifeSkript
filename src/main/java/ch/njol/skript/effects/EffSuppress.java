@@ -26,7 +26,6 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.NoDoc;
-import ch.njol.skript.doc.Notes;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -38,13 +37,13 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Suppress Warnings / Errors")
-@Description("Suppress warnings or errors.")
+@Description({"Suppress warnings or errors.",
+	"Note: Don't forgot the stop suppressing!",
+	"If you forgot, all warnings after effect are suppressed!"})
 @Examples({"on load:",
 		"\tstart suppressing warnings",
 		"\tthrow new warning \"never™\"",
 		"\tstop suppressing warnings"})
-@Notes({"Don't forgot the stop suppressing!",
-		"If you forgot, all warnings after effect are suppressed!"})
 @Since("2.2-Fixes-V11")
 public class EffSuppress extends Effect  {
 	static {

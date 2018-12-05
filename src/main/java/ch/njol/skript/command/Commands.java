@@ -100,9 +100,11 @@ public final class Commands { //NOSONAR
 	private final static Map<String, ScriptCommand> commands = new HashMap<String, ScriptCommand>();
 	
 	@Nullable
-	private static SimpleCommandMap commandMap = null;
+	private static SimpleCommandMap commandMap;
+	
 	@Nullable
 	private static Map<String, Command> cmKnownCommands;
+	
 	@Nullable
 	private static Set<String> cmAliases;
 	
@@ -151,7 +153,7 @@ public final class Commands { //NOSONAR
 			.addSection("trigger", false);
 	
 	@Nullable
-	public static List<Argument<?>> currentArguments = null;
+	public static List<Argument<?>> currentArguments;
 	
 	@SuppressWarnings("null")
 	private final static Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
@@ -193,7 +195,7 @@ public final class Commands { //NOSONAR
 		}
 	};
 	
-	public static boolean suppressUnknownCommandMessage = false;
+	public static boolean suppressUnknownCommandMessage;
 	static {
 		BukkitLoggerFilter.addFilter(new Filter() {
 			@Override
@@ -563,7 +565,7 @@ public final class Commands { //NOSONAR
 		return numCommands;
 	}
 	
-	private static boolean registeredListeners = false;
+	private static boolean registeredListeners;
 	
 	public final static void registerListeners() {
 		if (!registeredListeners) {

@@ -66,8 +66,8 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 	}
 	
 	@Nullable
-	Expression<ItemType> types = null;
-	private boolean blocks = false;
+	Expression<ItemType> types;
+	private boolean blocks;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -83,7 +83,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 	}
 	
 	@Nullable
-	private ItemStack[] buffer = null;
+	private ItemStack[] buffer;
 	
 	@SuppressWarnings("null")
 	@Override

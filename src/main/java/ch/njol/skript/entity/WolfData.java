@@ -37,9 +37,9 @@ public class WolfData extends EntityData<Wolf> {
 				"wild wolf", "tamed wolf");
 	}
 	
-	private int angry = 0;
-//	private String owner = null;
-	private int tamed = 0;
+	private int angry;
+//	private String owner;
+	private int tamed;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

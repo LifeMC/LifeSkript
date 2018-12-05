@@ -37,7 +37,7 @@ public final class PlayerData extends EntityData<Player> {
 	}
 	
 	// used by EntityData.getAll to efficiently get all players
-	int op = 0;
+	int op;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

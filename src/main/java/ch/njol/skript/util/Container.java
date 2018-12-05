@@ -50,6 +50,6 @@ public interface Container<T> {
 	/**
 	 * @return All element within this container in no particular order
 	 */
-	public Iterator<T> containerIterator();
+	Iterator<T> containerIterator();
 	
 }

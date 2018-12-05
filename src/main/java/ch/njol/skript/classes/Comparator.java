@@ -38,7 +38,7 @@ public interface Comparator<T1, T2> {
 	/**
 	 * represents a relation between two objects.
 	 */
-	public static enum Relation {
+	public enum Relation {
 		EQUAL, NOT_EQUAL, GREATER, GREATER_OR_EQUAL, SMALLER, SMALLER_OR_EQUAL;
 		
 		/**
@@ -234,11 +234,11 @@ public interface Comparator<T1, T2> {
 	 * @param o2 Non-null object
 	 * @return the relation of the objects. Should neither return GREATER_OR_EQUAL nor SMALLER_OR_EQUAL.
 	 */
-	public Relation compare(T1 o1, T2 o2);
+	Relation compare(final T1 o1, final T2 o2);
 	
 	/**
 	 * @return whether this comparator supports ordering of elements or not.
 	 */
-	public boolean supportsOrdering();
+	boolean supportsOrdering();
 	
 }

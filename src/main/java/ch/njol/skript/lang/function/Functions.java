@@ -66,7 +66,7 @@ public final class Functions {
 	}
 	
 	@Nullable
-	public static ScriptFunction<?> currentFunction = null;
+	public static ScriptFunction<?> currentFunction;
 	
 	final static Map<String, JavaFunction<?>> javaFunctions = new HashMap<String, JavaFunction<?>>();
 	final static Map<String, FunctionData> functions = new HashMap<String, FunctionData>();

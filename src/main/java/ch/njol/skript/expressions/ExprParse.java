@@ -80,7 +80,7 @@ public final class ExprParse extends SimpleExpression<Object> {
 	}
 	
 	@Nullable
-	static String lastError = null;
+	static String lastError;
 	
 	@SuppressWarnings("null")
 	private Expression<String> text;

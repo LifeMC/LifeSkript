@@ -30,7 +30,7 @@ import org.bukkit.event.HandlerList;
 public final class ScriptCommandEvent extends CommandEvent {
 	
 	private final ScriptCommand skriptCommand;
-	private boolean cooldownCancelled = false;
+	private boolean cooldownCancelled;
 
 	public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
 		super(sender, command.getLabel(), null);

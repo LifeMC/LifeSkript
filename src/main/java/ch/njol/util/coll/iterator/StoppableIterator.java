@@ -38,8 +38,8 @@ public class StoppableIterator<T> implements Iterator<T> {
 	@Nullable
 	private T current;
 	
-	private boolean stopped = false;
-	private boolean calledNext = false;
+	private boolean stopped;
+	private boolean calledNext;
 	
 	/**
 	 * @param iter

@@ -49,8 +49,9 @@ public final class SectionValidator implements NodeValidator {
 	}
 	
 	private final HashMap<String, NodeInfo> nodes = new HashMap<String, NodeInfo>();
-	private boolean allowUndefinedSections = false;
-	private boolean allowUndefinedEntries = false;
+	
+	private boolean allowUndefinedSections;
+	private boolean allowUndefinedEntries;
 	
 	public SectionValidator() {}
 	

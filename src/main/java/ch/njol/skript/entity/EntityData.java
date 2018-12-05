@@ -255,7 +255,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	}
 	
 	transient EntityDataInfo<?> info;
-	protected int matchedPattern = 0;
+	protected int matchedPattern;
 	private Kleenean plural = Kleenean.UNKNOWN;
 	private Kleenean baby = Kleenean.UNKNOWN;
 	

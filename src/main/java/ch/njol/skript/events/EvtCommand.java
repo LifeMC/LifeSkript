@@ -46,7 +46,7 @@ public final class EvtCommand extends SkriptEvent { // TODO condition to check w
 	}
 	
 	@Nullable
-	private String command = null;
+	private String command;
 	
 	@SuppressWarnings("null")
 	@Override

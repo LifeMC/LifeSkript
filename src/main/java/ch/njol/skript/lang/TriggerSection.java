@@ -39,9 +39,10 @@ import ch.njol.skript.config.SectionNode;
 public abstract class TriggerSection extends TriggerItem {
 	
 	@Nullable
-	private TriggerItem first = null;
+	private TriggerItem first;
+	
 	@Nullable
-	protected TriggerItem last = null;
+	protected TriggerItem last;
 	
 	/**
 	 * Reserved for new Trigger(...)

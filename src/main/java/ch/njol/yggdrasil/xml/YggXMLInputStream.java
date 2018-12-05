@@ -172,7 +172,7 @@ public final class YggXMLInputStream extends YggdrasilInputStream {
 	
 	@Nullable
 	String primitiveData = null;
-	int primitiveDataIndex = 0;
+	int primitiveDataIndex;
 	
 	@Override
 	protected Object readPrimitive_(final Tag type) throws IOException {

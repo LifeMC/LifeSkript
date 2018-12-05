@@ -63,12 +63,12 @@ public class ExprClicked extends SimpleExpression<Object> {
 	}
 	
 	@Nullable
-	private EntityData<?> entityType = null;
+	private EntityData<?> entityType;
 	/**
 	 * null for any block
 	 */
 	@Nullable
-	private ItemType itemType = null;
+	private ItemType itemType;
 	
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {

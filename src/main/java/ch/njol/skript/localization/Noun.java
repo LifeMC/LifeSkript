@@ -48,7 +48,7 @@ public class Noun extends Message {
 	
 	@Nullable
 	private String singular, plural;
-	private int gender = 0;
+	private int gender;
 	
 	public Noun(final String key) {
 		super(key);

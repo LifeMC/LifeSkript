@@ -158,7 +158,7 @@ public final class SkriptAddon {
 	}
 	
 	@Nullable
-	private String languageFileDirectory = null;
+	private String languageFileDirectory;
 	
 	/**
 	 * Makes Skript load language files from the specified directory, e.g. "lang" or "skript lang" if you have a lang folder yourself. Localised files will be read from the
@@ -184,7 +184,7 @@ public final class SkriptAddon {
 	}
 	
 	@Nullable
-	private File file = null;
+	private File file;
 	
 	/**
 	 * @return The jar file of the plugin. The first invocation of this method uses reflection to invoke the protected method {@link JavaPlugin#getFile()} to get the plugin's jar

@@ -51,7 +51,7 @@ import ch.njol.util.coll.iterator.ArrayIterator;
  */
 public abstract class SimpleExpression<T> implements Expression<T> {
 	
-	private int time = 0;
+	private int time;
 	
 	@SuppressWarnings("null")
 	protected SimpleExpression() {}

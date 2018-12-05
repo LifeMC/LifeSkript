@@ -68,7 +68,7 @@ public class ExprVersion extends SimpleExpression<String> {
 		
 		private final String name;
 		
-		private VersionType(final String name) {
+		VersionType(final String name) {
 			this.name = name;
 		}
 		

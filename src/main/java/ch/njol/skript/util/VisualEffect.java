@@ -80,11 +80,11 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 		
 		final Object effect;
 		
-		private Type(final Effect effect) {
+		Type(final Effect effect) {
 			this.effect = effect;
 		}
 		
-		private Type(final EntityEffect effect) {
+		Type(final EntityEffect effect) {
 			this.effect = effect;
 		}
 		

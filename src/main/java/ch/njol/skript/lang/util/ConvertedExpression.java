@@ -215,7 +215,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
 			return null;
 		return new Iterator<T>() {
 			@Nullable
-			T next = null;
+			T next;
 			
 			@Override
 			public boolean hasNext() {

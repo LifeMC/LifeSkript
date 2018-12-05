@@ -40,9 +40,9 @@ import ch.njol.skript.Skript;
 public class RetainingLogHandler extends LogHandler {
 	
 	private final Deque<LogEntry> log = new LinkedList<LogEntry>();
-	private int numErrors = 0;
+	private int numErrors;
 	
-	boolean printedErrorOrLog = false;
+	boolean printedErrorOrLog;
 	
 	@Override
 	public LogResult log(final LogEntry entry) {
