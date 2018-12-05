@@ -45,7 +45,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 				.since("");
 	}
 	
-	private static enum ChangeEvent {
+	private enum ChangeEvent {
 		ENDERMAN_PLACE("enderman place", new Checker<EntityChangeBlockEvent>() {
 			@Override
 			public boolean check(final EntityChangeBlockEvent e) {

@@ -149,7 +149,7 @@ public class ExprBlocks extends SimpleExpression<Block> {
 				return new BlockLineIterator(b, b2);
 			}
 		} catch (final IllegalStateException ex) {
-			if (ex.getMessage().equals("Start block missed in BlockIterator"))
+			if ("Start block missed in BlockIterator".equals(ex.getMessage()))
 				return null;
 			throw ex;
 		}

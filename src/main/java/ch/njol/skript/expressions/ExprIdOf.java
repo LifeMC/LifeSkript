@@ -206,7 +206,7 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return s.equalsIgnoreCase("id");
+		return "id".equalsIgnoreCase(s);
 	}
 	
 }

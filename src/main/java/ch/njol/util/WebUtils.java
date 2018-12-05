@@ -115,11 +115,11 @@ public final class WebUtils {
 		    
 		    if (encoding != null) {
 		    	
-		    	if (encoding.equalsIgnoreCase("gzip")) {
+		    	if ("gzip".equalsIgnoreCase(encoding)) {
 		    	  
 		          in = new BufferedInputStream(new GZIPInputStream(in));
 		          
-		        } else if (encoding.equalsIgnoreCase("deflate")) {
+		        } else if ("deflate".equalsIgnoreCase(encoding)) {
 		          
 		          in = new BufferedInputStream(new InflaterInputStream(in, new Inflater(true)));
 		          

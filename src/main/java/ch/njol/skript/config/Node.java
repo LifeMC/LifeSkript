@@ -77,7 +77,7 @@ public abstract class Node {
 		this.key = key;
 		assert comment.isEmpty() || comment.startsWith("#") : comment;
 		this.comment = comment;
-		debug = comment.equals("#DEBUG#");
+		debug = "#DEBUG#".equals(comment);
 		this.lineNum = lineNum;
 		this.parent = parent;
 		config = parent.getConfig();

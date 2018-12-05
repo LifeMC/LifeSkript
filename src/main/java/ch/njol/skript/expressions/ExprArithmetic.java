@@ -52,7 +52,7 @@ import ch.njol.util.Kleenean;
 @Since("1.4.2")
 public class ExprArithmetic extends SimpleExpression<Number> {
 	
-	private static enum Operator {
+	private enum Operator {
 		PLUS('+') {
 			@SuppressWarnings("null")
 			@Override

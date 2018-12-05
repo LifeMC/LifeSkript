@@ -127,7 +127,7 @@ public class ExprItemsIn extends SimpleExpression<Slot> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return s.equalsIgnoreCase("item");
+		return "item".equalsIgnoreCase(s);
 	}
 	
 	@Override

@@ -36,7 +36,7 @@ import ch.njol.skript.registrations.Classes;
  */
 public class EquipmentSlot extends Slot {
 	
-	public static enum EquipSlot {
+	public enum EquipSlot {
 		TOOL {
 			@Override
 			@Nullable

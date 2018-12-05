@@ -375,7 +375,7 @@ final public class ScriptLoader {
 					if (event == null)
 						continue;
 					
-					if (event.equalsIgnoreCase("aliases")) {
+					if ("aliases".equalsIgnoreCase(event)) {
 						node.convertToEntries(0, "=");
 						for (final Node n : node) {
 							if (!(n instanceof EntryNode)) {
@@ -388,7 +388,7 @@ final public class ScriptLoader {
 							currentAliases.put(((EntryNode) n).getKey().toLowerCase(), t);
 						}
 						continue;
-					} else if (event.equalsIgnoreCase("options")) {
+					} else if ("options".equalsIgnoreCase(event)) {
 						node.convertToEntries(0);
 						for (final Node n : node) {
 							if (!(n instanceof EntryNode)) {
@@ -398,7 +398,7 @@ final public class ScriptLoader {
 							currentOptions.put(((EntryNode) n).getKey(), ((EntryNode) n).getValue());
 						}
 						continue;
-					} else if (event.equalsIgnoreCase("variables")) {
+					} else if ("variables".equalsIgnoreCase(event)) {
 						node.convertToEntries(0, "=");
 						for (final Node n : node) {
 							if (!(n instanceof EntryNode)) {

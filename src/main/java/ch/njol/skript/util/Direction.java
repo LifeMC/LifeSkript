@@ -472,7 +472,7 @@ public final class Direction implements YggdrasilRobustSerializable {
 	
 	@Override
 	public boolean excessiveField(@NonNull final FieldContext field) throws StreamCorruptedException {
-		if (field.getID().equals("mod")) {
+		if ("mod".equals(field.getID())) {
 			final double[] mod = field.getObject(double[].class);
 			if (mod == null)
 				return true;
@@ -482,13 +482,13 @@ public final class Direction implements YggdrasilRobustSerializable {
 			set("yawOrY", mod[1]);
 			set("lengthOrZ", mod[1]);
 			return true;
-		} else if (field.getID().equals("pitch")) {
+		} else if ("pitch".equals(field.getID())) {
 			set("pitchOrX", field.getPrimitive(double.class));
 			return true;
-		} else if (field.getID().equals("yaw")) {
+		} else if ("yaw".equals(field.getID())) {
 			set("yawOrY", field.getPrimitive(double.class));
 			return true;
-		} else if (field.getID().equals("length")) {
+		} else if ("length".equals(field.getID())) {
 			set("lengthOrZ", field.getPrimitive(double.class));
 			return true;
 		} else {
@@ -498,7 +498,7 @@ public final class Direction implements YggdrasilRobustSerializable {
 	
 	@Override
 	public boolean missingField(@NonNull final Field field) throws StreamCorruptedException {
-		return !field.getName().equals("relative");
+		return !"relative".equals(field.getName());
 	}
 	
 }

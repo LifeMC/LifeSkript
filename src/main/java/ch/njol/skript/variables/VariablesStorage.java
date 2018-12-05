@@ -118,7 +118,7 @@ public abstract class VariablesStorage implements Closeable {
 		if (pattern == null)
 			return false;
 		try {
-			variablePattern = pattern.equals(".*") || pattern.equals(".+") ? null : Pattern.compile(pattern);
+			variablePattern = ".*".equals(pattern) || ".+".equals(pattern) ? null : Pattern.compile(pattern);
 		} catch (final PatternSyntaxException e) {
 			Skript.error("Invalid pattern '" + pattern + "': " + e.getLocalizedMessage());
 			return false;
@@ -208,7 +208,7 @@ public abstract class VariablesStorage implements Closeable {
 	protected abstract void disconnect();
 	
 	@Nullable
-	protected Task backupTask = null;
+	protected Task backupTask;
 	
 	public final void startBackupTask(final Timespan t) {
 		final File file = this.file;

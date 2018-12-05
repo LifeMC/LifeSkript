@@ -184,7 +184,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return blocks && s.equalsIgnoreCase("block") || !blocks && s.equalsIgnoreCase("item");
+		return blocks && "block".equalsIgnoreCase(s) || !blocks && "item".equalsIgnoreCase(s);
 	}
 	
 }

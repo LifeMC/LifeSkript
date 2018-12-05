@@ -60,7 +60,7 @@ public final class YggXMLInputStream extends YggdrasilInputStream {
 		try {
 			this.in = XMLInputFactory.newFactory().createXMLStreamReader(in);
 			while (this.in.next() != XMLStreamConstants.START_ELEMENT) {}
-			if (!this.in.getLocalName().equals("yggdrasil"))
+			if (!"yggdrasil".equals(this.in.getLocalName()))
 				throw new StreamCorruptedException("Not an Yggdrasil stream");
 			final String v = getAttribute("version");
 			short ver = 0;
@@ -111,7 +111,7 @@ public final class YggXMLInputStream extends YggdrasilInputStream {
 	// Tag
 	
 	@Nullable
-	private Tag nextTag = null;
+	private Tag nextTag;
 	
 	@Override
 	protected Tag readTag() throws IOException {
@@ -171,7 +171,7 @@ public final class YggXMLInputStream extends YggdrasilInputStream {
 	}
 	
 	@Nullable
-	String primitiveData = null;
+	String primitiveData;
 	int primitiveDataIndex;
 	
 	@Override

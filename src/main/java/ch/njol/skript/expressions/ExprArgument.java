@@ -178,7 +178,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return s.equalsIgnoreCase("argument");
+		return "argument".equalsIgnoreCase(s);
 	}
 	
 }

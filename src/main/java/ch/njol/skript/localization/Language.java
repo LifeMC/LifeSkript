@@ -210,7 +210,7 @@ public class Language {
 	
 	public static boolean load(String name) {
 		name = "" + name.toLowerCase();
-		if (name.equals("english"))
+		if ("english".equals(name))
 			return true;
 		localized = new HashMap<String, String>();
 		boolean exists = load(Skript.getAddonInstance(), name);
@@ -311,7 +311,7 @@ public class Language {
 	
 	private final static List<LanguageChangeListener> listeners = new ArrayList<LanguageChangeListener>();
 	
-	public static enum LanguageListenerPriority {
+	public enum LanguageListenerPriority {
 		EARLIEST, NORMAL, LATEST;
 	}
 	

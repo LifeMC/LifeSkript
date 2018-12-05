@@ -355,15 +355,15 @@ public class Documentation {
 			if (s[0].isEmpty())
 				s[0] = "../" + baseURL + "/";
 			if (s[0].startsWith("../") && s[0].endsWith("/")) {
-				if (s[0].equals("../classes/")) {
+				if ("../classes/".equals(s[0])) {
 					if (Classes.getClassInfoNoError(s[1]) != null)
 						continue;
-				} else if (s[0].equals("../events/")) {
+				} else if ("../events/".equals(s[0])) {
 					for (final SkriptEventInfo<?> i : Skript.getEvents()) {
 						if (s[1].equals(i.getId()))
 							continue linkLoop;
 					}
-				} else if (s[0].equals("../functions/")) {
+				} else if ("../functions/".equals(s[0])) {
 					if (Functions.getFunction("" + s[1]) != null)
 						continue;
 				} else {

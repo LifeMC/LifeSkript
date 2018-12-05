@@ -46,7 +46,7 @@ import ch.njol.util.Kleenean;
 @Since("2.0")
 public class ExprVersion extends SimpleExpression<String> {
 	
-	private static enum VersionType {
+	private enum VersionType {
 		BUKKIT("Bukkit") {
 			@Override
 			public String get() {

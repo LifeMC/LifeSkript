@@ -481,11 +481,11 @@ public final class SkriptParser {
 						ts.add(t);
 						if (b != 0) {
 							final String d = expr.substring(pieces.get(b - 1)[1], x).trim();
-							if (!d.equals(",")) {
+							if (!",".equals(d)) {
 								if (and.isUnknown()) {
-									and = Kleenean.get(!d.equalsIgnoreCase("or")); // nor is and
+									and = Kleenean.get(!"or".equalsIgnoreCase(d)); // nor is and
 								} else {
-									if (and != Kleenean.get(!d.equalsIgnoreCase("or"))) {
+									if (and != Kleenean.get(!"or".equalsIgnoreCase(d))) {
 										Skript.warning(MULTIPLE_AND_OR + " List: " + expr);
 										and = Kleenean.TRUE;
 									}

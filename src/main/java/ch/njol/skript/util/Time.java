@@ -129,7 +129,7 @@ public final class Time implements YggdrasilSerializable {
 					Skript.error("" + m_error_60_minutes);
 					return null;
 				}
-				if (m.group(4).equalsIgnoreCase("pm"))
+				if ("pm".equalsIgnoreCase(m.group(4)))
 					hours += 12;
 				return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
 			}

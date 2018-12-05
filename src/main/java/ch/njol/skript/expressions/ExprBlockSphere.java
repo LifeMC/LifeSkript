@@ -103,7 +103,7 @@ public class ExprBlockSphere extends SimpleExpression<Block> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return s.equalsIgnoreCase("block");
+		return "block".equalsIgnoreCase(s);
 	}
 	
 	@Override

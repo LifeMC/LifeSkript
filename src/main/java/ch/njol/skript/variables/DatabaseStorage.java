@@ -66,7 +66,7 @@ public final class DatabaseStorage extends VariablesStorage {
 	
 	private final static String SELECT_ORDER = "name, type, value, rowid";
 	
-	public static enum Type {
+	public enum Type {
 		MYSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
 				"rowid        BIGINT  NOT NULL  AUTO_INCREMENT  PRIMARY KEY," +
 				"name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  UNIQUE," +

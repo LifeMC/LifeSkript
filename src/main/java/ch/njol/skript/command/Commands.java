@@ -458,9 +458,9 @@ public final class Commands { //NOSONAR
 		final String[] by = ScriptLoader.replaceOptions(node.get("executable by", "console,players")).split("\\s*,\\s*|\\s+(and|or)\\s+");
 		int executableBy = 0;
 		for (final String b : by) {
-			if (b.equalsIgnoreCase("console") || b.equalsIgnoreCase("the console")) {
+			if ("console".equalsIgnoreCase(b) || "the console".equalsIgnoreCase(b)) {
 				executableBy |= ScriptCommand.CONSOLE;
-			} else if (b.equalsIgnoreCase("players") || b.equalsIgnoreCase("player")) {
+			} else if ("players".equalsIgnoreCase(b) || "player".equalsIgnoreCase(b)) {
 				executableBy |= ScriptCommand.PLAYERS;
 			} else {
 				Skript.warning("'executable by' should be either be 'players', 'console', or both, but found '" + b + "'");

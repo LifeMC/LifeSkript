@@ -339,7 +339,7 @@ public final class Updater {
 				XMLEvent e = reader.nextEvent();
 				if (e.isStartElement()) {
 					final String element = e.asStartElement().getName().getLocalPart();
-					if (element.equalsIgnoreCase("title")) {
+					if ("title".equalsIgnoreCase(element)) {
 						final String name = reader.nextEvent().asCharacters().getData().trim();
 						for (final VersionInfo i : infos) {
 							if (name.equals(i.name)) {
@@ -348,14 +348,14 @@ public final class Updater {
 							}
 						}
 						current = null;
-					} else if (element.equalsIgnoreCase("description")) {
+					} else if ("description".equalsIgnoreCase(element)) {
 						if (current == null)
 							continue;
 						final StringBuilder cl = new StringBuilder();
 						while ((e = reader.nextEvent()).isCharacters())
 							cl.append(e.asCharacters().getData());
 						current.changelog = "- " + StringEscapeUtils.unescapeHtml("" + cl).replace("<br>", "").replace("<p>", "").replace("</p>", "").replaceAll("\n(?!\n)", "\n- ");
-					} else if (element.equalsIgnoreCase("pubDate")) {
+					} else if ("pubDate".equalsIgnoreCase(element)) {
 						if (current == null)
 							continue;
 						synchronized (RFC2822) { // to make FindBugs shut up

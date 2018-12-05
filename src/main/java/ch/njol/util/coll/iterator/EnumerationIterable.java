@@ -54,7 +54,7 @@ public class EnumerationIterable<T> implements Iterable<T> {
 			
 			@Override
 			@Nullable
-			public T next() throws NoSuchElementException {
+			public T next() throws NoSuchElementException { //NOSONAR
 				return e.nextElement();
 			}
 			

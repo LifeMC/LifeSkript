@@ -152,7 +152,7 @@ public class ExprNumbers extends SimpleExpression<Number> {
 	
 	@Override
 	public boolean isLoopOf(final String s) {
-		return integer && (s.equalsIgnoreCase("integer") || s.equalsIgnoreCase("int"));
+		return integer && ("integer".equalsIgnoreCase(s) || "int".equalsIgnoreCase(s));
 	}
 	
 	@Override

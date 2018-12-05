@@ -284,9 +284,9 @@ public final class SkriptClasses {
 						final ItemType t = new ItemType();
 						try {
 							t.setAmount(Integer.parseInt(split[0]));
-							if (split[1].equals("true"))
+							if ("true".equals(split[1]))
 								t.setAll(true);
-							else if (split[1].equals("false"))
+							else if ("false".equals(split[1]))
 								t.setAll(false);
 							else
 								return null;
@@ -463,13 +463,13 @@ public final class SkriptClasses {
 					@Override
 					@Nullable
 					public Timeperiod parse(final String s, final ParseContext context) {
-						if (s.equalsIgnoreCase("day")) {
+						if ("day".equalsIgnoreCase(s)) {
 							return new Timeperiod(0, 11999);
-						} else if (s.equalsIgnoreCase("dusk")) {
+						} else if ("dusk".equalsIgnoreCase(s)) {
 							return new Timeperiod(12000, 13799);
-						} else if (s.equalsIgnoreCase("night")) {
+						} else if ("night".equalsIgnoreCase(s)) {
 							return new Timeperiod(13800, 22199);
-						} else if (s.equalsIgnoreCase("dawn")) {
+						} else if ("dawn".equalsIgnoreCase(s)) {
 							return new Timeperiod(22200, 23999);
 						}
 						final int c = s.indexOf('-');

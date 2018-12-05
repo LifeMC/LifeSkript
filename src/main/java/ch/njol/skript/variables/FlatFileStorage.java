@@ -129,7 +129,7 @@ public final class FlatFileStorage extends VariablesStorage {
 					unsuccessful++;
 					continue;
 				}
-				if (split[1].equals("null")) {
+				if ("null".equals(split[1])) {
 					Variables.variableLoaded("" + split[0], null, this);
 				} else {
 					Object d;

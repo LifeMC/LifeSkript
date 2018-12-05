@@ -88,7 +88,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	
 	// TODO empty == unenchanted, add expression "unenchanted <item>"
 	@Nullable
-	transient Map<Enchantment, Integer> enchantments = null;
+	transient Map<Enchantment, Integer> enchantments;
 	
 	/**
 	 * Guaranteed to be of type ItemMeta.

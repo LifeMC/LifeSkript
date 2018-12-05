@@ -74,7 +74,7 @@ import ch.njol.util.coll.CollectionUtils;
 public class ExprMessage extends SimpleExpression<String> {
 	
 	@SuppressWarnings("unchecked")
-	private static enum MessageType {
+	private enum MessageType {
 		CHAT("chat", "[chat( |-)]message", PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class) {
 			@Override
 			@Nullable

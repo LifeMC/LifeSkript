@@ -96,7 +96,7 @@ public final class EffLog extends AsyncEffect {
 					s = s.toLowerCase();
 					if (!s.endsWith(".log"))
 						s += ".log";
-					if (s.equals("server.log")) {
+					if ("server.log".equals(s)) {
 						SkriptLogger.LOGGER.log(Level.INFO, message);
 						continue;
 					}

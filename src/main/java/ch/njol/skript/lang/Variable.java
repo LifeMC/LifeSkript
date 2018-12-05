@@ -272,7 +272,7 @@ public final class Variable<T> implements Expression<T> {
 			@Nullable
 			private String key;
 			@Nullable
-			private Object next = null;
+			private Object next;
 			
 			@Override
 			public boolean hasNext() {
@@ -322,7 +322,7 @@ public final class Variable<T> implements Expression<T> {
 			@Nullable
 			private String key;
 			@Nullable
-			private T next = null;
+			private T next;
 			
 			@SuppressWarnings({"unchecked"})
 			@Override

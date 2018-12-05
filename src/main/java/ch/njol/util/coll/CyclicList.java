@@ -21,6 +21,7 @@ package ch.njol.util.coll;
 
 import java.lang.reflect.Array;
 import java.util.AbstractList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -184,6 +185,37 @@ public final class CyclicList<E> extends AbstractList<E> {
 		if (array.length > items.length)
 			array[items.length] = null;
 		return array;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Arrays.deepHashCode(this.items);
+		result = prime * result + this.start;
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(@Nullable Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof CyclicList))
+			return false;
+		CyclicList<?> other = (CyclicList<?>) obj;
+		if (!Arrays.deepEquals(this.items, other.items))
+			return false;
+		if (this.start != other.start)
+			return false;
+		return true;
 	}
 	
 }

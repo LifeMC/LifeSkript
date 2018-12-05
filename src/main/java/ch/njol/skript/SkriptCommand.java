@@ -124,20 +124,20 @@ public final class SkriptCommand implements CommandExecutor {
 			return true;
 		final RedirectingLogHandler r = SkriptLogger.startLogHandler(new RedirectingLogHandler(sender, ""));
 		try {
-			if (args[0].equalsIgnoreCase("reload")) {
-				if (args[1].equalsIgnoreCase("all")) {
+			if ("reload".equalsIgnoreCase(args[0])) {
+				if ("all".equalsIgnoreCase(args[1])) {
 					reloading(sender, "config and scripts");
 					Skript.reload();
 					reloaded(sender, r, "config and scripts");
-				} else if (args[1].equalsIgnoreCase("scripts")) {
+				} else if ("scripts".equalsIgnoreCase(args[1])) {
 					reloading(sender, "scripts");
 					Skript.reloadScripts();
 					reloaded(sender, r, "scripts");
-				} else if (args[1].equalsIgnoreCase("config")) {
+				} else if ("config".equalsIgnoreCase(args[1])) {
 					reloading(sender, "main config");
 					Skript.reloadMainConfig();
 					reloaded(sender, r, "main config");
-				} else if (args[1].equalsIgnoreCase("aliases")) {
+				} else if ("aliases".equalsIgnoreCase(args[1])) {
 					reloading(sender, "aliases");
 					Skript.reloadAliases();
 					reloaded(sender, r, "aliases");
@@ -164,8 +164,8 @@ public final class SkriptCommand implements CommandExecutor {
 							reloaded(sender, r, "x scripts in folder", f.getName(), Math.max(disabled, enabled));
 					}
 				}
-			} else if (args[0].equalsIgnoreCase("enable")) {
-				if (args[1].equals("all")) {
+			} else if ("enable".equalsIgnoreCase(args[0])) {
+				if ("all".equals(args[1])) {
 					try {
 						info(sender, "enable.all.enabling");
 						final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EMPTY_FILE_ARRAY);
@@ -229,8 +229,8 @@ public final class SkriptCommand implements CommandExecutor {
 						return true;
 					}
 				}
-			} else if (args[0].equalsIgnoreCase("disable")) {
-				if (args[1].equals("all")) {
+			} else if ("disable".equalsIgnoreCase(args[0])) {
+				if ("all".equals(args[1])) {
 					Skript.disableScripts();
 					try {
 						toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), false);
@@ -278,20 +278,20 @@ public final class SkriptCommand implements CommandExecutor {
 						return true;
 					}
 				}
-			} else if (args[0].equalsIgnoreCase("update")) {
+			} else if ("update".equalsIgnoreCase(args[0])) {
 				Updater.stateLock.writeLock().lock();
 				try {
-					if (args[1].equals("check")) {
+					if ("check".equals(args[1])) {
 						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
-					} else if (args[1].equalsIgnoreCase("changes")) {
+					} else if ("changes".equalsIgnoreCase(args[1])) {
 						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
-					} else if (args[1].equalsIgnoreCase("download")) {
+					} else if ("download".equalsIgnoreCase(args[1])) {
 						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
 					}
 				} finally {
 					Updater.stateLock.writeLock().unlock();
 				}
-			} else if (args[0].equalsIgnoreCase("help")) {
+			} else if ("help".equalsIgnoreCase(args[0])) {
 				skriptCommandHelp.showHelp(sender);
 			}
 		} catch (final Exception e) {

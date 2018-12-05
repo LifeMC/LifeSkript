@@ -106,7 +106,7 @@ public final class SkriptConfig {
 		@Nullable
 		public DateFormat convert(final String s) {
 			try {
-				if (s.equalsIgnoreCase("default"))
+				if ("default".equalsIgnoreCase(s))
 					return null;
 				return new SimpleDateFormat(s);
 			} catch (final IllegalArgumentException e) {

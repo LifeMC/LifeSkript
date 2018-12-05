@@ -239,7 +239,7 @@ public final class Skript extends JavaPlugin implements Listener {
 						if (e.getName().startsWith(SCRIPTSFOLDER + "/")) {
 							final String fileName = e.getName().substring(e.getName().lastIndexOf('/') + 1);
 							saveTo = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
-						} else if (e.getName().equals("config.sk")) {
+						} else if ("config.sk".equals(e.getName())) {
 							final File cf = new File(getDataFolder(), e.getName());
 							if (!cf.exists())
 								saveTo = cf;

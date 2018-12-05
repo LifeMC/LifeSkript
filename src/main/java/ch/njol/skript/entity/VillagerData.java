@@ -45,7 +45,7 @@ public class VillagerData extends EntityData<Villager> {
 	}
 	
 	@Nullable
-	private Profession profession = null;
+	private Profession profession;
 	
 	@Override
 	protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {

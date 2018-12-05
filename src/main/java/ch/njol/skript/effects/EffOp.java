@@ -57,7 +57,7 @@ public class EffOp extends Effect {
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		players = (Expression<OfflinePlayer>) exprs[0];
-		op = !parseResult.expr.substring(0, 2).equalsIgnoreCase("de");
+		op = !"de".equalsIgnoreCase(parseResult.expr.substring(0, 2));
 		return true;
 	}
 	

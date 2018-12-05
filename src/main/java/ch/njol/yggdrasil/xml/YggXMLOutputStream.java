@@ -294,7 +294,7 @@ public final class YggXMLOutputStream extends YggdrasilOutputStream {
 	
 	// name of the next field
 	@Nullable
-	private String id = null;
+	private String id;
 	
 	private final void writeID() throws IOException {
 		if (id != null) {

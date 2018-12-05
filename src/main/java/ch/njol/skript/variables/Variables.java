@@ -165,14 +165,14 @@ public final class Variables {
 					final String name = n.getKey();
 					assert name != null;
 					final VariablesStorage s;
-					if (type.equalsIgnoreCase("csv") || type.equalsIgnoreCase("file") || type.equalsIgnoreCase("flatfile")) {
+					if ("csv".equalsIgnoreCase(type) || "file".equalsIgnoreCase(type) || "flatfile".equalsIgnoreCase(type)) {
 						s = new FlatFileStorage(name);
-					} else if (type.equalsIgnoreCase("mysql")) {
+					} else if ("mysql".equalsIgnoreCase(type)) {
 						s = new DatabaseStorage(name, Type.MYSQL);
-					} else if (type.equalsIgnoreCase("sqlite")) {
+					} else if ("sqlite".equalsIgnoreCase(type)) {
 						s = new DatabaseStorage(name, Type.SQLITE);
 					} else {
-						if (!type.equalsIgnoreCase("disabled") && !type.equalsIgnoreCase("none")) {
+						if (!"disabled".equalsIgnoreCase(type) && !"none".equalsIgnoreCase(type)) {
 							Skript.error("Invalid database type '" + type + "'");
 							successful = false;
 						}

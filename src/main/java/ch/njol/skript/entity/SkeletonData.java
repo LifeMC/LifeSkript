@@ -69,9 +69,9 @@ public class SkeletonData extends EntityData<Skeleton> {
 //		return wither ? "1" : "0";
 	@Override
 	protected boolean deserialize(final String s) {
-		if (s.equals("1"))
+		if ("1".equals(s))
 			wither = true;
-		else if (s.equals("0"))
+		else if ("0".equals(s))
 			wither = false;
 		else
 			return false;

@@ -40,7 +40,7 @@ public class EquipmentSlot extends Slot {
 //	public final static Version EQUIPMENT_VERSION = new Version(1,4,5);
 //	public final static boolean SUPPORTS_EQUIPMENT = Skript.isRunningMinecraft(EQUIPMENT_VERSION);
 	
-	public static enum EquipSlot {
+	public enum EquipSlot {
 		TOOL {
 			@Override
 			@Nullable

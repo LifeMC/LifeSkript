@@ -192,9 +192,9 @@ public final class Config {
 	 * @return A separator string useful for saving, e.g. ": " or " = ".
 	 */
 	public String getSaveSeparator() {
-		if (separator.equals(":"))
+		if (":".equals(separator))
 			return ": ";
-		if (separator.equals("="))
+		if ("=".equals(separator))
 			return " = ";
 		return " " + separator + " ";
 	}
