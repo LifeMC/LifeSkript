@@ -235,7 +235,7 @@
 					<target>1.6</target>
 					<optimize>true</optimize>
 					<compilerId>eclipse</compilerId>
-					<compilerVersion>1.7</compilerVersion>
+					<compilerVersion>1.8</compilerVersion>
         			<compilerArgs>${compilerArgument}</compilerArgs>
 				</configuration>
 				<dependencies>
