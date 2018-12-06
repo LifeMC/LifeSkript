@@ -106,7 +106,6 @@ public final class BlockUtils { //NOSONAR
 	 * @return Whether the block could be set successfully
 	 */
 	public static boolean set(final Block b, final int type, byte dataMin, byte dataMax, final boolean applyPhysics) {
-		final boolean any = dataMin == -1 && dataMax == -1;
 		if (dataMin == -1)
 			dataMin = 0;
 		if (dataMax == -1)
@@ -258,7 +257,7 @@ public final class BlockUtils { //NOSONAR
 		// REMIND rails?
 		
 		// DEFAULT
-		b.setTypeIdAndData(type, any ? 0 : (byte) Utils.random(dataMin, dataMax + 1), applyPhysics);
+		b.setTypeIdAndData(type, dataMin == -1 && dataMax == -1 ? 0 : (byte) Utils.random(dataMin, dataMax + 1), applyPhysics);
 		return true;
 	}
 	

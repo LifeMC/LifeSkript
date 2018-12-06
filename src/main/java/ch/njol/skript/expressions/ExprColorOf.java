@@ -103,10 +103,11 @@ public class ExprColorOf extends SimplePropertyExpression<Object, Color> {
 		assert mode == ChangeMode.SET;
 		assert delta != null;
 		
-		final Color c = (Color) delta[0];
 		final Object[] os = getExpr().getArray(e);
 		if (os.length == 0)
 			return;
+
+		final Color c = (Color) delta[0];
 		
 		for (final Object o : os) {
 			if (o instanceof ItemStack || o instanceof Item) {

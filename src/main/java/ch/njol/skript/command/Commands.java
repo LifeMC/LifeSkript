@@ -485,8 +485,6 @@ public final class Commands { //NOSONAR
 		if (usingCooldownMessage) {
 			cooldownMessage = VariableString.newInstance(cooldownMessageString);
 		}
-
-		final String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
 		
 		if (usingCooldownMessage && cooldownString.isEmpty()) {
 			Skript.warning("command /" + command + " has a cooldown message set, but not a cooldown");
@@ -511,8 +509,11 @@ public final class Commands { //NOSONAR
 			return null;
 		}
 		
+		final String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
+		
 		Commands.currentArguments = currentArguments;
 		final ScriptCommand c;
+		
 		try {
 			c = new ScriptCommand(config, command, "" + pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, executableBy, ScriptLoader.loadItems(trigger));
 		} finally {

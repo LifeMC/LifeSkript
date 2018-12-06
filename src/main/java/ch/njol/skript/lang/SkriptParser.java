@@ -421,11 +421,7 @@ public final class SkriptParser {
 				return r;
 			}
 			log.clear();
- 			
-			final List<Expression<? extends T>> ts = new ArrayList<Expression<? extends T>>();
-			Kleenean and = Kleenean.UNKNOWN;
-			boolean isLiteralList = true;
-			
+ 									
 			final List<int[]> pieces = new ArrayList<int[]>();
 			{
 				final Matcher m = listSplitPattern.matcher(expr);
@@ -461,6 +457,11 @@ public final class SkriptParser {
 				log.printError();
 				return null;
 			}
+			
+			Kleenean and = Kleenean.UNKNOWN;
+			boolean isLiteralList = true;
+			
+			final List<Expression<? extends T>> ts = new ArrayList<Expression<? extends T>>();
 			
 			outer: for (int b = 0; b < pieces.size();) {
 				for (int a = pieces.size() - b; a >= 1; a--) {
@@ -1113,7 +1114,6 @@ public final class SkriptParser {
 					if (end == -1)
 						throw new MalformedPatternException(pattern, "Odd number of '%'");
 					final String name = "" + pattern.substring(j + 1, end);
-					final ExprInfo vi = getExprInfo(name);
 					if (end == pattern.length() - 1) {
 						i2 = expr.length();
 					} else {
@@ -1122,6 +1122,7 @@ public final class SkriptParser {
 							return null;
 					}
 					final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+					final ExprInfo vi = getExprInfo(name);
 					try {
 						for (; i2 != -1; i2 = next(expr, i2, context)) {
 							log.clear();

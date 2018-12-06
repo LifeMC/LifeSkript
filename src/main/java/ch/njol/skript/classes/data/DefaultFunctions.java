@@ -119,11 +119,11 @@ public final class DefaultFunctions {
 		Functions.registerFunction(new JavaFunction<Number>("mod", new Parameter[] {new Parameter<Number>("d", numberClass, true, null), new Parameter<Number>("m", numberClass, true, null)}, numberClass, true) {
 			@Override
 			public Number[] execute(final FunctionEvent e, final Object[][] params) {
-				final Number d = (Number) params[0][0];
 				final Number m = (Number) params[1][0];
 				final double mm = m.doubleValue();
 				if (mm == 0)
 					return new Double[] {Double.NaN};
+				final Number d = (Number) params[0][0];
 				return new Double[] {Math2.mod(d.doubleValue(), mm)};
 			}
 		}.description("Returns the modulo of the given arguments, i.e. the remainder of the division <code>d/m</code>, where d and m are the arguments of this function.",
