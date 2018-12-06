@@ -203,14 +203,14 @@ public final class CyclicList<E> extends AbstractList<E> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(@Nullable Object obj) {
+	public boolean equals(@Nullable final Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
 			return false;
 		if (!(obj instanceof CyclicList))
 			return false;
-		CyclicList<?> other = (CyclicList<?>) obj;
+		final CyclicList<?> other = (CyclicList<?>) obj;
 		if (!Arrays.deepEquals(this.items, other.items))
 			return false;
 		if (this.start != other.start)
