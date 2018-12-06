@@ -226,20 +226,20 @@ public final class SkriptParser {
 									final String name = pattern.substring(x + 1, x2);
 									if (!name.startsWith("-")) {
 										final ExprInfo vi = getExprInfo(name);
-										final DefaultExpression<?> expr = vi.classes[0].getDefaultExpression();
-										if (expr == null)
+										final DefaultExpression<?> expression = vi.classes[0].getDefaultExpression();
+										if (expression == null)
 											throw new SkriptAPIException("The class '" + vi.classes[0].getCodeName() + "' does not provide a default expression. Either allow null (with %-" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + "]");
-										if (!(expr instanceof Literal) && (vi.flagMask & PARSE_EXPRESSIONS) == 0)
+										if (!(expression instanceof Literal) && (vi.flagMask & PARSE_EXPRESSIONS) == 0)
 											throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is not a literal. Either allow null (with %-*" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + "]");
-										if (expr instanceof Literal && (vi.flagMask & PARSE_LITERALS) == 0)
+										if (expression instanceof Literal && (vi.flagMask & PARSE_LITERALS) == 0)
 											throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is a literal. Either allow null (with %-~" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + "]");
-										if (!vi.isPlural[0] && !expr.isSingle())
+										if (!vi.isPlural[0] && !expression.isSingle())
 											throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is not a single-element expression. Change your pattern to allow multiple elements or make the expression mandatory [pattern: " + info.patterns[i] + "]");
-										if (vi.time != 0 && !expr.setTime(vi.time))
+										if (vi.time != 0 && !expression.setTime(vi.time))
 											throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' does not have distinct time states. [pattern: " + info.patterns[i] + "]");
-										if (!expr.init())
+										if (!expression.init())
 											continue patternsLoop;
-										res.exprs[j] = expr;
+										res.exprs[j] = expression;
 									}
 								}
 								x = x2;
@@ -399,19 +399,17 @@ public final class SkriptParser {
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
 		try {
 			//Mirre
-			if (isObject){
-				if ((flags & PARSE_LITERALS) != 0) {
-					// Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
-					final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
-					p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings; // If we suppress warnings here, we suppress them in parser what we created too
-					for (final Class<?> c : new Class[] {Number.class, Time.class, ItemType.class, ItemStack.class}) {
-						final Expression<?> e = p.parseExpression(c);
-						if (e != null) {
-							log.printLog();
-							return (Expression<? extends T>) e;
-						}
-						log.clear();
+			if (isObject && (flags & PARSE_LITERALS) != 0){
+				// Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
+				final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
+				p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings; // If we suppress warnings here, we suppress them in parser what we created too
+				for (final Class<?> c : new Class[] {Number.class, Time.class, ItemType.class, ItemStack.class}) {
+					final Expression<?> e = p.parseExpression(c);
+					if (e != null) {
+						log.printLog();
+						return (Expression<? extends T>) e;
 					}
+					log.clear();
 				}
 			}
 			//Mirre
@@ -1113,7 +1111,6 @@ public final class SkriptParser {
 					end = pattern.indexOf('%', j + 1);
 					if (end == -1)
 						throw new MalformedPatternException(pattern, "Odd number of '%'");
-					final String name = "" + pattern.substring(j + 1, end);
 					if (end == pattern.length() - 1) {
 						i2 = expr.length();
 					} else {
@@ -1122,6 +1119,7 @@ public final class SkriptParser {
 							return null;
 					}
 					final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+					final String name = "" + pattern.substring(j + 1, end);
 					final ExprInfo vi = getExprInfo(name);
 					try {
 						for (; i2 != -1; i2 = next(expr, i2, context)) {

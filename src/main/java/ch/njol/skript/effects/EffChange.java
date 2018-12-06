@@ -106,9 +106,7 @@ public class EffChange extends Effect {
 	
 	@SuppressWarnings("null")
 	private ChangeMode mode;
-	
-	private boolean single;
-	
+		
 //	private Changer<?, ?> c = null;
 	
 	@SuppressWarnings({"unchecked", "null"})
@@ -237,6 +235,7 @@ public class EffChange extends Effect {
 			}
 			
 			Class<?> x = Utils.getSuperType(rs2);
+			boolean single;
 			single = allSingle;
 			for (int i = 0; i < rs.length; i++) {
 				if (rs2[i].isAssignableFrom(v.getReturnType())) {
