@@ -22,6 +22,9 @@
 package ch.njol.skript.expressions;
 
 import org.bukkit.event.Event;
+
+import java.io.Serializable;
+
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
@@ -92,7 +95,7 @@ public class ExprLastExecuteInfo extends SimpleExpression<Object> {
     }
     
     @Override
-    public Class<?> getReturnType() {
+    public Class<? extends Serializable> getReturnType() {
         return mark == 0 ? Boolean.class : String.class;
     }
 

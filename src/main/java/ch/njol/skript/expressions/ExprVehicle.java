@@ -76,7 +76,7 @@ public class ExprVehicle extends SimplePropertyExpression<Entity, Entity> {
 	}
 	
 	@Override
-	public Class<? extends Entity> getReturnType() {
+	public Class<Entity> getReturnType() {
 		return Entity.class;
 	}
 	

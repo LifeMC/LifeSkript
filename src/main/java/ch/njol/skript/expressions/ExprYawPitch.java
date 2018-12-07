@@ -65,7 +65,7 @@ public class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 	}
 	
 	@Override
-	public Class<? extends Number> getReturnType() {
+	public Class<Number> getReturnType() {
 		return Number.class;
 	}
 	

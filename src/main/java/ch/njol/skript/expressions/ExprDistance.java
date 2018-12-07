@@ -80,7 +80,7 @@ public class ExprDistance extends SimpleExpression<Double> {
 	}
 	
 	@Override
-	public Class<? extends Double> getReturnType() {
+	public Class<Double> getReturnType() {
 		return Double.class;
 	}
 	

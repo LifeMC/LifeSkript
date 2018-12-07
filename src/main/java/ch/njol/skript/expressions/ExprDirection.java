@@ -200,7 +200,7 @@ public class ExprDirection extends SimpleExpression<Direction> {
 	}
 	
 	@Override
-	public Class<? extends Direction> getReturnType() {
+	public Class<Direction> getReturnType() {
 		return Direction.class;
 	}
 	

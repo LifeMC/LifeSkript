@@ -114,7 +114,7 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 	}
 
 	@Override
-	public Class<? extends T> getReturnType() {
+	public Class<T> getReturnType() {
 		return superType;
 	}
 

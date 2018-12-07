@@ -41,9 +41,7 @@ import ch.njol.util.coll.CollectionUtils;
 
 /**
 * @author Mirreducki, Eugenio GuzmÃ¡n
-* 
 */
-
 public class ExprChatRecipients extends SimpleExpression<Player> {
 
 	static {
@@ -56,7 +54,7 @@ public class ExprChatRecipients extends SimpleExpression<Player> {
 	}
 
 	@Override
-	public Class<? extends Player> getReturnType() {
+	public Class<Player> getReturnType() {
 		return Player.class;
 	}
 

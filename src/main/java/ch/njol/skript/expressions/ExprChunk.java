@@ -82,7 +82,7 @@ public class ExprChunk extends PropertyExpression<Location, Chunk> {
 	}
 	
 	@Override
-	public Class<? extends Chunk> getReturnType() {
+	public Class<Chunk> getReturnType() {
 		return Chunk.class;
 	}
 	

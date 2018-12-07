@@ -84,7 +84,7 @@ public final class ExprLocationAt extends SimpleExpression<Location> {
 	}
 	
 	@Override
-	public Class<? extends Location> getReturnType() {
+	public Class<Location> getReturnType() {
 		return Location.class;
 	}
 	

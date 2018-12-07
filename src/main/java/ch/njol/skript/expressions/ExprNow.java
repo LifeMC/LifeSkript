@@ -65,7 +65,7 @@ public class ExprNow extends SimpleExpression<Date> {
 	}
 	
 	@Override
-	public Class<? extends Date> getReturnType() {
+	public Class<Date> getReturnType() {
 		return Date.class;
 	}
 	

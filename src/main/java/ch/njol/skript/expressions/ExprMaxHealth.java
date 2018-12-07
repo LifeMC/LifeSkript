@@ -58,7 +58,7 @@ public class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, Double
 	}
 	
 	@Override
-	public Class<? extends Double> getReturnType() {
+	public Class<Double> getReturnType() {
 		return Double.class;
 	}
 	

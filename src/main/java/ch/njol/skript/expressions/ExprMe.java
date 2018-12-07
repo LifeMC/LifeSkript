@@ -72,7 +72,7 @@ public class ExprMe extends SimpleExpression<CommandSender> {
 	}
 	
 	@Override
-	public Class<? extends CommandSender> getReturnType() {
+	public Class<CommandSender> getReturnType() {
 		return CommandSender.class;
 	}
 	

@@ -167,7 +167,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 	}
 	
 	@Override
-	public Class<? extends ItemStack> getReturnType() {
+	public Class<ItemStack> getReturnType() {
 		return ItemStack.class;
 	}
 	

@@ -88,7 +88,7 @@ public class ExprNamed extends PropertyExpression<ItemType, ItemType> {
 	}
 	
 	@Override
-	public Class<? extends ItemType> getReturnType() {
+	public Class<ItemType> getReturnType() {
 		return ItemType.class;
 	}
 	

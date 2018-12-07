@@ -81,7 +81,7 @@ public final class ExprRound extends PropertyExpression<Number, Long> {
 	}
 	
 	@Override
-	public Class<? extends Long> getReturnType() {
+	public Class<Long> getReturnType() {
 		return Long.class;
 	}
 	

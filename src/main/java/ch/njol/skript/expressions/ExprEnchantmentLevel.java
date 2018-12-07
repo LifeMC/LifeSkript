@@ -85,7 +85,7 @@ public class ExprEnchantmentLevel extends PropertyExpression<ItemType, Integer> 
 	}
 	
 	@Override
-	public Class<? extends Integer> getReturnType() {
+	public Class<Integer> getReturnType() {
 		return Integer.class;
 	}
 	

@@ -42,7 +42,7 @@ public class ExprMaxStack extends SimplePropertyExpression<ItemStack, Integer> {
 	}
 	
 	@Override
-	public Class<? extends Integer> getReturnType() {
+	public Class<Integer> getReturnType() {
 		return Integer.class;
 	}
 	

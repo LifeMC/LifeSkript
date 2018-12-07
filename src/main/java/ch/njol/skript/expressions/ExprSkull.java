@@ -99,7 +99,7 @@ public class ExprSkull extends SimplePropertyExpression<Object, ItemType> {
 	}
 	
 	@Override
-	public Class<? extends ItemType> getReturnType() {
+	public Class<ItemType> getReturnType() {
 		return ItemType.class;
 	}
 	

@@ -123,7 +123,7 @@ public class ExprExperience extends SimpleExpression<Experience> {
 	}
 	
 	@Override
-	public Class<? extends Experience> getReturnType() {
+	public Class<Experience> getReturnType() {
 		return Experience.class;
 	}
 	

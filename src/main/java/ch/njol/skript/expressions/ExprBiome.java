@@ -94,7 +94,7 @@ public class ExprBiome extends PropertyExpression<Location, Biome> {
 	}
 	
 	@Override
-	public Class<? extends Biome> getReturnType() {
+	public Class<Biome> getReturnType() {
 		return Biome.class;
 	}
 	

@@ -82,7 +82,7 @@ public class ExprBed extends SimplePropertyExpression<Player, Location> {
 	}
 	
 	@Override
-	public Class<? extends Location> getReturnType() {
+	public Class<Location> getReturnType() {
 		return Location.class;
 	}
 	

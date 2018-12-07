@@ -106,7 +106,7 @@ public class ExprLevelProgress extends SimplePropertyExpression<Player, Float> {
 	}
 	
 	@Override
-	public Class<? extends Float> getReturnType() {
+	public Class<Float> getReturnType() {
 		return Float.class;
 	}
 	

@@ -50,7 +50,7 @@ public class ExprEnderChest extends SimplePropertyExpression<Player, Inventory> 
 	}
 	
 	@Override
-	public Class<? extends Inventory> getReturnType() {
+	public Class<Inventory> getReturnType() {
 		return Inventory.class;
 	}
 	

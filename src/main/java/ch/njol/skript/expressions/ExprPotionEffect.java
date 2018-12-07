@@ -56,7 +56,7 @@ public class ExprPotionEffect extends SimpleExpression<PotionEffect> {
 	}
 	
 	@Override
-	public Class<? extends PotionEffect> getReturnType() {
+	public Class<PotionEffect> getReturnType() {
 		return PotionEffect.class;
 	}
 	

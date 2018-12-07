@@ -60,7 +60,7 @@ public class ExprCmdCooldown extends SimpleExpression<Timespan> {
        return true;
    }
     @Override
-   public Class<? extends Timespan> getReturnType() {
+   public Class<Timespan> getReturnType() {
        return Timespan.class;
    }
     @Override

@@ -53,7 +53,7 @@ public final class ExprNone extends SimpleExpression<Object> {
     }
     
     @Nullable
-    private Expression<?> noneType;
+    private Expression<? extends Object> noneType;
     
 	@Override
     @SuppressWarnings("null")

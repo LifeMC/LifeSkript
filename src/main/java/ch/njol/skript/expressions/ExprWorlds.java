@@ -65,7 +65,7 @@ public final class ExprWorlds extends SimpleExpression<World> {
 	}
 	
 	@Override
-	public Class<? extends World> getReturnType() {
+	public Class<World> getReturnType() {
 		return World.class;
 	}
 	

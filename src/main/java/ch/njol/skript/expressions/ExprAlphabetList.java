@@ -44,7 +44,7 @@ import ch.njol.util.Kleenean;
 @Description("Sorts given strings in alphabetical order.")
 @Examples({"set {list::*} to alphabetically sorted {list::*}"})
 @Since("2.2-Fixes-V9c")
-public class ExprAlphabetList extends SimpleExpression<String>{
+public class ExprAlphabetList extends SimpleExpression<String> {
 	
 	static{
 		Skript.registerExpression(ExprAlphabetList.class, String.class, ExpressionType.COMBINED, "alphabetically sorted %strings%");
@@ -69,7 +69,7 @@ public class ExprAlphabetList extends SimpleExpression<String>{
 	}
 	
 	@Override
-	public Class<? extends String> getReturnType() {
+	public Class<String> getReturnType() {
 		return String.class;
 	}
 	

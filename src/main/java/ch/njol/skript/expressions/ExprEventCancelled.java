@@ -69,7 +69,7 @@ public class ExprEventCancelled extends SimpleExpression<Boolean> {
 	}
 	
 	@Override
-	public Class<? extends Boolean> getReturnType() {
+	public Class<Boolean> getReturnType() {
 		return Boolean.class;
 	}
 	

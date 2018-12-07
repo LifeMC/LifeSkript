@@ -92,7 +92,7 @@ public class ExprBlockSphere extends SimpleExpression<Block> {
 	}
 	
 	@Override
-	public Class<? extends Block> getReturnType() {
+	public Class<Block> getReturnType() {
 		return Block.class;
 	}
 	
