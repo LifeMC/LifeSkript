@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @ThreadSafe
-public final class PseudoEnum<T extends PseudoEnum<T>> {
+public class PseudoEnum<T extends PseudoEnum<T>> {
 	
 	private final String name;
 	private final int ordinal;
