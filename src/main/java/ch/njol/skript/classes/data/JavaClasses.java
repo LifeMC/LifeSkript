@@ -44,7 +44,10 @@ import ch.njol.yggdrasil.Fields;
  * @author Peter Güttinger
  */
 public final class JavaClasses {
-	public JavaClasses() {}
+	
+	public JavaClasses() {
+		super();
+	}
 	
 	public final static int VARIABLENAME_NUMBERACCURACY = 8;
 	

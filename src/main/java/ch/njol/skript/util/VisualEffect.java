@@ -137,6 +137,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 	}
 	
 	private Type type;
+	
 	@Nullable
 	private Object data;
 	
@@ -144,7 +145,9 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 	 * For parsing & deserialisation
 	 */
 	@SuppressWarnings("null")
-	public VisualEffect() {}
+	public VisualEffect() {
+		super();
+	}
 	
 	@SuppressWarnings("null")
 	@Override

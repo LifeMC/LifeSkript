@@ -59,7 +59,9 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 	private final static int CHECKPERIOD = 10;
 	
 	private final static class EvtAtInfo {
-		public EvtAtInfo() {}
+		public EvtAtInfo() {
+			super();
+		}
 		
 		int lastTick; // as Bukkit's scheduler is inconsistent this saves the exact tick when the events were last checked
 		int currentIndex;
@@ -74,11 +76,6 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 	
 	@SuppressWarnings("null")
 	private transient World[] worlds;
-	/**
-	 * null if all worlds
-	 */
-	@Nullable
-	private String[] worldNames;
 	
 	public final static World[] EMPTY_WORLD_ARRAY = new World[0];
 	
@@ -87,11 +84,6 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
 		tick = ((Literal<Time>) args[0]).getSingle().getTicks();
 		worlds = args[1] == null ? Bukkit.getWorlds().toArray(EMPTY_WORLD_ARRAY) : ((Literal<World>) args[1]).getAll();
-		if (args[1] != null) {
-			worldNames = new String[worlds.length];
-			for (int i = 0; i < worlds.length; i++)
-				worldNames[i] = worlds[i].getName();
-		}
 		return true;
 	}
 	

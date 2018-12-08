@@ -73,7 +73,9 @@ import org.bukkit.inventory.ItemStack;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultComparators {
 	
-	public DefaultComparators() {}
+	public DefaultComparators() {
+		super();
+	}
 	
 	static {
 		

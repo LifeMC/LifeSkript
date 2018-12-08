@@ -244,7 +244,9 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
 		final ReadWriteLock lock = new ReentrantReadWriteLock(true);
 		final Lock readLock = lock.readLock(), writeLock = lock.writeLock();
 		
-		public Info() {}
+		public Info() {
+			super();
+		}
 	}
 	
 	/**

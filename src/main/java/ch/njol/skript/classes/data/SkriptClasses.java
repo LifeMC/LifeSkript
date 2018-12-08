@@ -70,7 +70,10 @@ import ch.njol.yggdrasil.Fields;
  */
 @SuppressWarnings("rawtypes")
 public final class SkriptClasses {
-	public SkriptClasses() {}
+	
+	public SkriptClasses() {
+		super();
+	}
 	
 	static {
 		Classes.registerClass(new ClassInfo<ClassInfo>(ClassInfo.class, "classinfo")

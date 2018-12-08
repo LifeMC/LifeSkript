@@ -92,8 +92,8 @@ public class PlayerCommand implements CommandExecutor {
 				for (final Pair<String, String> p : co) {
 					ok = false;
 					
-					if (p.first.equals("c") || p.first.equals("config")) {
-						if (p.second.isEmpty() || p.second.equals("main")) {
+					if ("c".equals(p.first) || "config".equals(p.first)) {
+						if (p.second.isEmpty() || "main".equals(p.second)) {
 							config = Skript.mainConfig;
 							node = Skript.mainConfig.getMainNode();
 							sender.sendMessage("selectend main config");
@@ -142,15 +142,15 @@ public class PlayerCommand implements CommandExecutor {
 								}
 							}
 						}
-					} else if (p.first.equals("s") || p.first.equals("select")) {
+					} else if ("s".equals(p.first) || "select".equals(p.first)) {
 						final Node n = node.getNode(p.second);
 						if (n == null)
 							sender.sendMessage("invalid node in '" + p.second + "'");
 						else
 							node = n;
-					} else if (p.first.equals("save")) {
+					} else if ("save".equals(p.first)) {
 						save = true;
-					} else if (p.first.equals("a") || p.first.equals("accept")) {
+					} else if ("a".equals(p.first) || "accept".equals(p.first)) {
 						answered = true;
 						answer = true;
 						continue;
@@ -164,8 +164,8 @@ public class PlayerCommand implements CommandExecutor {
 				// --- ACTIONS ---
 				
 				if (action != null) {
-					if (action.equals("e") || action.equals("enable")
-							|| action.equals("d") || action.equals("disable")) {
+					if ("e".equals(action) || "enable".equals(action)
+							|| "d".equals(action) || "disable".equals(action)) {
 						final boolean enable = action.startsWith("e");
 						final String prefix = (enable ? "en" : "dis");
 						if (node.getParent() == null) {
@@ -192,10 +192,10 @@ public class PlayerCommand implements CommandExecutor {
 								sender.sendMessage("node " + prefix + "abled");
 							}
 						}
-					} else if (action.equals("s") || action.equals("save")) {
+					} else if ("s".equals(action) || "save".equals(action)) {
 						save = true;
-					} else if (action.equals("a") || action.equals("add")
-							|| action.equals("n") || action.equals("new")) {
+					} else if ("a".equals(action) || "add".equals(action)
+							|| "n".equals(action) || "new".equals(action)) {
 						final String[] params = actionParams.split(":", 2);
 						if (params.length < 2) {
 							sender.sendMessage("usage: /s n key:value|group:");
@@ -211,7 +211,7 @@ public class PlayerCommand implements CommandExecutor {
 							((SectionNode) node).getNodeList().add(node = new EntryNode(params[0], params[1], (SectionNode) node));
 						}
 						sender.sendMessage("created & selected " + params[0]);
-					} else if (action.equals("r") || action.equals("rename")) {
+					} else if ("r".equals(action) || "rename".equals(action)) {
 						if (actionParams.isEmpty()) {
 							sender.sendMessage("usage: /s r new name");
 							return;
@@ -219,13 +219,13 @@ public class PlayerCommand implements CommandExecutor {
 						final String oldname = node.getName();
 						node.rename(actionParams);
 						sender.sendMessage("renamed " + oldname + " to " + node.getName());
-					} else if (action.equals("d") || action.equals("delete")) {
+					} else if ("d".equals(action) || "delete".equals(action)) {
 						if (!answered)
 							sender.sendMessage("do you really want to delete this node?");
 						if (waitForAnswer()) {
 							node.delete();
 						}
-					} else if (action.equals("m") || action.equals("move")) {
+					} else if ("m".equals(action) || "move".equals(action)) {
 						if (actionParams.isEmpty()) {
 							sender.sendMessage("usage: /s m +move down|-move up|index to insert after|parent node");
 						}
@@ -248,7 +248,7 @@ public class PlayerCommand implements CommandExecutor {
 								node.move(n.getParent().getNodeList().indexOf(n) + 1);
 							}
 						}
-					} else if (action.equals("l") || action.equals("list")) {
+					} else if ("l".equals(action) || "list".equals(action)) {
 						if (!(node instanceof SectionNode)) {
 							sender.sendMessage("selected node is not a section, switching to parent node");
 							node = node.getParent();

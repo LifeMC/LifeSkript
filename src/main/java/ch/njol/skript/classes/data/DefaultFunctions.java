@@ -47,7 +47,10 @@ import ch.njol.util.StringUtils;
  */
 @SuppressWarnings("null")
 public final class DefaultFunctions {
-	public DefaultFunctions() {}
+	
+	public DefaultFunctions() {
+		super();
+	}
 	
 	private static String s(final double n) {
 		return StringUtils.toString(n, 4);

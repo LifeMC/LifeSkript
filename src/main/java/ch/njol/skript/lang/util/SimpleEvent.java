@@ -36,7 +36,9 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
  */
 public class SimpleEvent extends SkriptEvent {
 	
-	public SimpleEvent() {}
+	public SimpleEvent() {
+		super();
+	}
 	
 	@Override
 	public boolean check(final Event e) {

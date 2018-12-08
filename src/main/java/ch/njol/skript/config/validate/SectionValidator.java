@@ -53,7 +53,9 @@ public final class SectionValidator implements NodeValidator {
 	private boolean allowUndefinedSections;
 	private boolean allowUndefinedEntries;
 	
-	public SectionValidator() {}
+	public SectionValidator() {
+		super();
+	}
 	
 	public SectionValidator addNode(final String name, final NodeValidator v, final boolean optional) {
 		assert name != null;

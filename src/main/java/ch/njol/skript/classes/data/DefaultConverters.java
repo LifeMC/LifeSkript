@@ -54,7 +54,9 @@ import ch.njol.skript.util.Slot;
 @SuppressWarnings("rawtypes")
 public final class DefaultConverters {
 	
-	public DefaultConverters() {}
+	public DefaultConverters() {
+		super();
+	}
 	
 	static {
 		

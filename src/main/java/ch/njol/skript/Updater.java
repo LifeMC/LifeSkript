@@ -187,7 +187,6 @@ public final class Updater {
 	static Task checkerTask;
 	
 	static void start() {
-		return;
 		/*
 		checkerTask = new Task(Skript.getInstance(), 0, true) {
 			@SuppressWarnings("null")

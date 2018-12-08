@@ -217,7 +217,6 @@ public class ExprLore extends SimpleExpression<String> {
 		} else {
 			item.change(e, i instanceof ItemStack ? new ItemType[] {new ItemType((ItemStack) i)} : new ItemStack[] {((ItemType) i).getRandom()}, ChangeMode.SET);
 		}
-		return;
 	}
 	
 	@Override

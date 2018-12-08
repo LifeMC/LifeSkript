@@ -71,7 +71,7 @@ import ch.njol.util.coll.CollectionUtils;
 		"	set the death message to \"%player% died!\""})
 @Since("1.4.6 (chat message), 1.4.9 (join & quit messages), 2.0 (death message)")
 @Events({"chat", "join", "quit", "death"})
-public class ExprMessage extends SimpleExpression<String> {
+public final class ExprMessage extends SimpleExpression<String> {
 	
 	@SuppressWarnings("unchecked")
 	private enum MessageType {

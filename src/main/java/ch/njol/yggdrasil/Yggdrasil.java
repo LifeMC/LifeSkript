@@ -356,10 +356,4 @@ public final class Yggdrasil {
 		}
 	}
 	
-	// TODO command line, e.g. convert to XML
-	public static void main(final String[] args) {
-		System.err.println("Command line not supported yet");
-		System.exit(1);
-	}
-	
 }
