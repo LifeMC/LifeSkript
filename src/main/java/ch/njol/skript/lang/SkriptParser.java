@@ -326,11 +326,16 @@ public final class SkriptParser {
 							return (Expression<? extends T>) e;
 						}
 					}
-					for (final Class<? extends T> t : types) {
-						final Expression<? extends T> r = e.getConvertedExpression(t);
-						if (r != null) {
-							log.printLog();
-							return r;
+					if (e instanceof Variable) {
+						final Class<T>[] objTypes = (Class<T>[]) types;
+						return e.getConvertedExpression(objTypes);
+					} else {
+						for (final Class<? extends T> t : types) {
+							final Expression<? extends T> r = e.getConvertedExpression(t);
+							if (r != null) {
+								log.printLog();
+								return r;
+ 							}
 						}
 					}
 					log.printError(e.toString(null, false) + " " + Language.get("is") + " " + notOfType(types), ErrorQuality.NOT_AN_EXPRESSION);
@@ -1296,7 +1301,7 @@ public final class SkriptParser {
 				try {
 					Pattern.compile(pattern.substring(i + 1, j));
 				} catch (final PatternSyntaxException e) {
-					return error("Invalid Regular Expression '" + pattern.substring(i + 1, j) + "': " + e.getLocalizedMessage());
+					return error("Invalid regular expression '" + pattern.substring(i + 1, j) + "': " + e.getLocalizedMessage());
 				}
 				i = j;
 			} else if (c == '>') {

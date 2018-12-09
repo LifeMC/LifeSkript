@@ -64,18 +64,12 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 	@Nullable
 	private transient World[] worlds;
 	
-//	@Nullable
-//	private String[] worldNames;
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
 		period = ((Literal<Timespan>) args[0]).getSingle();
 		if (args.length > 1 && args[1] != null) {
 			worlds = ((Literal<World>) args[1]).getArray();
-//			worldNames = new String[worlds.length];
-//			for (int i = 0; i < worlds.length; i++)
-//				worldNames[i] = worlds[i].getName();
 		}
 		return true;
 	}
@@ -102,7 +96,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 		if (worlds == null) {
 			taskIDs = new int[] {Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), new Runnable() {
 				@Override
-				public void run() {
+				public final void run() {
 					execute(null);
 				}
 			}, period.getTicks_i(), period.getTicks_i())};
@@ -112,7 +106,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 				final World w = worlds[i];
 				taskIDs[i] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), new Runnable() {
 					@Override
-					public void run() {
+					public final void run() {
 						execute(w);
 					}
 				}, period.getTicks_i() - w.getFullTime() % period.getTicks_i(), period.getTicks_i());

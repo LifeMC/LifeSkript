@@ -91,7 +91,7 @@ public final class Delay extends Effect {
 				@Override
 				public final void run() {
 					if (Skript.debug())
-						Skript.info(getIndentation() + "... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
+						Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
 					TriggerItem.walk(next, e);
 				}
 			}, d.getTicks_i());
