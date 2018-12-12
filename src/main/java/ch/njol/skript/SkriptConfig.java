@@ -154,6 +154,7 @@ public final class SkriptConfig {
 	public final static Option<Integer> maxTargetBlockDistance = new Option<Integer>("maximum target block distance", 100);
 	
 	public final static Option<Boolean> caseSensitive = new Option<Boolean>("case sensitive", false);
+	public final static Option<Boolean> disableDocumentationGeneration = new Option<Boolean>("disable documentation generation", false);
 	
 	// Disable warnings options
 	

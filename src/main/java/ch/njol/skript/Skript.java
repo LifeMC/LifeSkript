@@ -362,11 +362,12 @@ public final class Skript extends JavaPlugin implements Listener {
 					
 					stopAcceptingRegistrations();
 					
-					
-					Documentation.generate(); // TODO move to test classes?
+					if (!SkriptConfig.disableDocumentationGeneration.value())
+						Documentation.generate();
 					
 					if (logNormal())
 						info("Loading variables...");
+					
 					final long vls = System.currentTimeMillis();
 					
 					final LogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler() {
@@ -429,7 +430,7 @@ public final class Skript extends JavaPlugin implements Listener {
 					final Filter f = new Filter() {
 						@Override
 						public boolean isLoggable(final @Nullable LogRecord record) {
-							return record != null && (record.getMessage() != null && !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase()));
+							return record != null && record.getMessage() != null && !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase());
 						}
 					};
 					BukkitLoggerFilter.addFilter(f);
