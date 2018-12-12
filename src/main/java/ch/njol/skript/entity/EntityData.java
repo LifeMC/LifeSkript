@@ -370,7 +370,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 		return equals_i(other);
 	}
 	
-	public final static EntityDataInfo<?> getInfo(final Class<? extends EntityData<?>> c) {
+	public static EntityDataInfo<?> getInfo(final Class<? extends EntityData<?>> c) {
 		for (final EntityDataInfo<?> i : infos) {
 			if (i.c == c)
 				return i;
@@ -379,7 +379,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	}
 	
 	@Nullable
-	public final static EntityDataInfo<?> getInfo(final String codeName) {
+	public static EntityDataInfo<?> getInfo(final String codeName) {
 		for (final EntityDataInfo<?> i : infos) {
 			if (i.codeName.equals(codeName))
 				return i;
@@ -395,7 +395,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	 */
 	@SuppressWarnings("null")
 	@Nullable
-	public final static EntityData<?> parse(final String s) {
+	public static EntityData<?> parse(final String s) {
 		return SkriptParser.<EntityData<?>>parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
 	}
 	
@@ -407,7 +407,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	 */
 	@SuppressWarnings("null")
 	@Nullable
-	public final static EntityData<?> parseWithoutIndefiniteArticle(final String s) {
+	public static EntityData<?> parseWithoutIndefiniteArticle(final String s) {
 		return SkriptParser.<EntityData<?>>parseStatic(s, infos.iterator(), null); // fix for Java 9/10
 	}
 	
@@ -463,7 +463,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	 * @return All entities of this type in the given worlds
 	 */
 	@SuppressWarnings({"null", "unchecked"})
-	public final static <E extends Entity> E[] getAll(final EntityData<?>[] types, final Class<E> type, @Nullable World[] worlds) {
+	public static <E extends Entity> E[] getAll(final EntityData<?>[] types, final Class<E> type, @Nullable World[] worlds) {
 		assert types.length > 0;
 		if (type == Player.class) {
 			if (worlds == null && types.length == 1 && types[0] instanceof PlayerData && ((PlayerData) types[0]).op == 0)
@@ -479,7 +479,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 					}
 				}
 			}
-			return (E[]) list.toArray(new Player[list.size()]);
+			return (E[]) list.toArray(new Player[0]);
 		}
 		final List<E> list = new ArrayList<E>();
 		if (worlds == null)
@@ -528,19 +528,19 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 		return getData(null, e);
 	}
 	
-	public final static String toString(final Entity e) {
+	public static String toString(final Entity e) {
 		return fromEntity(e).getSuperType().toString();
 	}
 	
-	public final static String toString(final Class<? extends Entity> c) {
+	public static String toString(final Class<? extends Entity> c) {
 		return fromClass(c).getSuperType().toString();
 	}
 	
-	public final static String toString(final Entity e, final int flags) {
+	public static String toString(final Entity e, final int flags) {
 		return fromEntity(e).getSuperType().toString(flags);
 	}
 	
-	public final static String toString(final Class<? extends Entity> c, final int flags) {
+	public static String toString(final Class<? extends Entity> c, final int flags) {
 		return fromClass(c).getSuperType().toString(flags);
 	}
 	

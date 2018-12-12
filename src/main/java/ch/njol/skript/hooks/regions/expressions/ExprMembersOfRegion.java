@@ -74,7 +74,7 @@ public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
 		for (final Region region : regions.getArray(e)) {
 			r.addAll(owners ? region.getOwners() : region.getMembers());
 		}
-		return r.toArray(new OfflinePlayer[r.size()]);
+		return r.toArray(new OfflinePlayer[0]);
 	}
 	
 	@Override

@@ -116,7 +116,7 @@ public class ExprBlocks extends SimpleExpression<Block> {
 			return new Block[0];
 		for (final Block b : new IteratorIterable<Block>(iter))
 			r.add(b);
-		return r.toArray(new Block[r.size()]);
+		return r.toArray(new Block[0]);
 	}
 	
 	@Override

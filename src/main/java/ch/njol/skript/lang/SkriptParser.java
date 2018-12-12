@@ -265,7 +265,7 @@ public final class SkriptParser {
 	}
 	
 	@SuppressWarnings("null")
-	private final static Pattern varPattern = Pattern.compile("((the )?var(iable)? )?\\{([^{}]|%\\{|\\}%)+\\}", Pattern.CASE_INSENSITIVE);
+	private final static Pattern varPattern = Pattern.compile("((the )?var(iable)? )?\\{([^{}]|%\\{|}%)+}", Pattern.CASE_INSENSITIVE);
 	
 	/**
 	 * Prints errors
@@ -565,11 +565,11 @@ public final class SkriptParser {
 				exprRetTypes[i] = ts.get(i).getReturnType();
 			
 			if (isLiteralList) {
-				final Literal<T>[] ls = ts.toArray(new Literal[ts.size()]);
+				final Literal<T>[] ls = ts.toArray(new Literal[0]);
 				assert ls != null;
 				return new LiteralList<T>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
 			} else {
-				final Expression<T>[] es = ts.toArray(new Expression[ts.size()]);
+				final Expression<T>[] es = ts.toArray(new Expression[0]);
 				assert es != null;
 				return new ExpressionList<T>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
 			}
@@ -865,7 +865,6 @@ public final class SkriptParser {
 		for (int i = start; i < pattern.length(); i++) {
 			if (pattern.charAt(i) == '\\') {
 				i++;
-				continue;
 			} else if (pattern.charAt(i) == closingBracket) {
 				if (n == 0) {
 					if (!isGroup)
@@ -960,7 +959,7 @@ public final class SkriptParser {
 					if (k != cs.length - 1)
 						b.append(", ");
 					else
-						b.append(" " + Language.get("nor") + " ");
+						b.append(" ").append(Language.get("nor")).append(" ");
 				}
 				final Class<?> c = cs[k];
 				assert c != null;
@@ -980,7 +979,7 @@ public final class SkriptParser {
 					if (k != cs.length - 1)
 						b.append(", ");
 					else
-						b.append(" " + Language.get("nor") + " ");
+						b.append(" ").append(Language.get("nor")).append(" ");
 				}
 				b.append(cs[k].getName().withIndefiniteArticle());
 			}

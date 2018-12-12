@@ -23,6 +23,7 @@ package ch.njol.skript.expressions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,7 +71,7 @@ public class ExprLore extends SimpleExpression<String> {
 					"[the] line %number% of [the] lore of %itemstack/itemtype%", "[the] line %number% of %itemstack/itemtype%'[s] lore",
 					"[the] %number%(st|nd|rd|th) line of [the] lore of %itemstack/itemtype%", "[the] %number%(st|nd|rd|th) line of %itemstack/itemtype%'[s] lore");
 			
-		} catch (final NoClassDefFoundError e) {}
+		} catch (final NoClassDefFoundError ignored) {}
 	}
 	
 	@Nullable
@@ -153,7 +154,7 @@ public class ExprLore extends SimpleExpression<String> {
 			switch (mode) {
 				case SET:
 					assert delta != null;
-					lore = Arrays.asList((String) delta[0]);
+					lore = Collections.singletonList((String) delta[0]);
 					break;
 				case ADD:
 					assert delta != null;

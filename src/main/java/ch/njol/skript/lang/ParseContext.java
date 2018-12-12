@@ -46,5 +46,5 @@ public enum ParseContext {
 	/**
 	 * Used for parsing variables in a script's variables section
 	 */
-	SCRIPT;
+	SCRIPT
 }

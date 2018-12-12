@@ -182,7 +182,7 @@ public final class ExprParse extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return c != null ? c.getC() : Object[].class;
 	}
 	

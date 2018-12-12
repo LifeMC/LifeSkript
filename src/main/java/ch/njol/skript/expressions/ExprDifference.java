@@ -125,7 +125,7 @@ public class ExprDifference extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return relativeType;
 	}
 	

@@ -263,13 +263,13 @@ public final class Skript extends JavaPlugin implements Listener {
 						}
 					}
 					info("Successfully generated the config, the example scripts and the aliases files.");
-				} catch (final ZipException e) {} catch (final IOException e) {
+				} catch (final ZipException ignored) {} catch (final IOException e) {
 					error("Error generating the default files: " + ExceptionUtils.toString(e));
 				} finally {
 					if (f != null) {
 						try {
 							f.close();
-						} catch (final IOException e) {}
+						} catch (final IOException ignored) {}
 					}
 				}
 			}
@@ -345,13 +345,12 @@ public final class Skript extends JavaPlugin implements Listener {
 									} catch (final ExceptionInInitializerError err) {
 										Skript.exception(err.getCause(), "Class " + c + " generated an exception while loading");
 									}
-									continue;
 								}
 							}
 						} finally {
 							try {
 								jar.close();
-							} catch (final IOException e) {}
+							} catch (final IOException ignored) {}
 						}
 					} catch (final Throwable tw) {
 						error("Error while loading plugin hooks" + (tw.getLocalizedMessage() == null ? "" : ": " + tw.getLocalizedMessage()));
@@ -430,7 +429,7 @@ public final class Skript extends JavaPlugin implements Listener {
 					final Filter f = new Filter() {
 						@Override
 						public boolean isLoggable(final @Nullable LogRecord record) {
-							return record == null ? false : record.getMessage() == null ? false : !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase());
+							return record != null && (record.getMessage() != null && !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase()));
 						}
 					};
 					BukkitLoggerFilter.addFilter(f);
@@ -841,7 +840,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			public void run() {
 				try {
 					Thread.sleep(10000);
-				} catch (final InterruptedException e) {}
+				} catch (final InterruptedException ignored) {}
 				try {
 					final Field modifiers = Field.class.getDeclaredField("modifiers");
 					modifiers.setAccessible(true);

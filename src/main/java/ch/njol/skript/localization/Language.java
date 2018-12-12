@@ -84,7 +84,7 @@ public class Language {
 	}
 	
 	@Nullable
-	private final static String get_i(final String key) {
+	private static String get_i(final String key) {
 		if (useLocal && localized != null) {
 			final String s = localized.get(key);
 			if (s != null)
@@ -119,7 +119,7 @@ public class Language {
 		return get_i("" + key.toLowerCase(Locale.ENGLISH));
 	}
 	
-	public final static void missingEntryError(final String key) {
+	public static void missingEntryError(final String key) {
 		if(!Skript.debug() || !Skript.testing())
 			return;
 		Skript.warning("Missing entry '" + key.toLowerCase(Locale.ENGLISH) + "' in the default english language file");
@@ -198,7 +198,7 @@ public class Language {
 		} finally {
 			try {
 				din.close();
-			} catch (final IOException e) {}
+			} catch (final IOException ignored) {}
 		}
 		final String v = en.get("version");
 		if (v == null)
@@ -281,7 +281,7 @@ public class Language {
 		} finally {
 			try {
 				in.close();
-			} catch (final IOException e) {}
+			} catch (final IOException ignored) {}
 		}
 	}
 	
@@ -303,7 +303,7 @@ public class Language {
 			Skript.warning("The localized language file(s) has/ve superfluous entries: " + StringUtils.join(s, ", "));
 	}
 	
-	private final static void removeIgnored(final Set<String> keys) {
+	private static void removeIgnored(final Set<String> keys) {
 		final Iterator<String> i = keys.iterator();
 		while (i.hasNext()) {
 			if (i.next().startsWith(Noun.GENDERS_SECTION))
@@ -314,7 +314,7 @@ public class Language {
 	private final static List<LanguageChangeListener> listeners = new ArrayList<LanguageChangeListener>();
 	
 	public enum LanguageListenerPriority {
-		EARLIEST, NORMAL, LATEST;
+		EARLIEST, NORMAL, LATEST
 	}
 	
 	private final static int[] priorityStartIndices = new int[LanguageListenerPriority.values().length];

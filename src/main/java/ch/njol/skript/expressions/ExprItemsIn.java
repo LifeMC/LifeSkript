@@ -82,7 +82,7 @@ public class ExprItemsIn extends SimpleExpression<Slot> {
 					r.add(new InventorySlot(invi, i));
 			}
 		}
-		return r.toArray(new Slot[r.size()]);
+		return r.toArray(new Slot[0]);
 	}
 	
 	@Override

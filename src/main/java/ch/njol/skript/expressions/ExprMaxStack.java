@@ -54,6 +54,6 @@ public class ExprMaxStack extends SimplePropertyExpression<ItemStack, Integer> {
 	@SuppressWarnings("null")
 	@Override
 	public Integer convert(final ItemStack i) {
-		return Integer.valueOf(i.getMaxStackSize());
+		return i.getMaxStackSize();
 	}
 }

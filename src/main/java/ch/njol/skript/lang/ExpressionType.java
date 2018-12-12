@@ -53,5 +53,5 @@ public enum ExpressionType {
 	/**
 	 * Expressions whose pattern matches (almost) everything, e.g. "[the] [event-]<.+>"
 	 */
-	PATTERN_MATCHES_EVERYTHING;
+	PATTERN_MATCHES_EVERYTHING
 }

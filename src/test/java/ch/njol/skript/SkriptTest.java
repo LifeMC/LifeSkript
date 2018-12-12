@@ -57,7 +57,7 @@ public class SkriptTest {
 		while (Bukkit.getServer() == null) {
 			try {
 				Thread.sleep(10);
-			} catch (final InterruptedException e) {}
+			} catch (final InterruptedException ignored) {}
 		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
 			@Override
@@ -68,7 +68,7 @@ public class SkriptTest {
 		}, 2);
 	}
 	
-	final static void test() {
+	static void test() {
 		
 		final Trigger t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player"));
 		assert t != null;
@@ -77,7 +77,7 @@ public class SkriptTest {
 	}
 	
 	@SuppressWarnings("null")
-	private final static SectionNode nodeFromString(final String s) {
+	private static SectionNode nodeFromString(final String s) {
 		try {
 			return new Config(s, "test.sk", true, false, ":").getMainNode();//.getNode(0);
 		} catch (final IOException e) {

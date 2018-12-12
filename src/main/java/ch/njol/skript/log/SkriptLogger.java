@@ -185,7 +185,6 @@ public final class SkriptLogger {
 					entry.discarded("denied by " + h);
 					return;
 				case LOG:
-					continue;
 			}
 		}
 		if(suppressing && suppressed != null) {

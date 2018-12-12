@@ -77,7 +77,7 @@ public final class ExprRandom extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return expr.getReturnType();
 	}
 	

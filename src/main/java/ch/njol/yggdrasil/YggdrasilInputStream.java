@@ -62,7 +62,7 @@ public abstract class YggdrasilInputStream implements Closeable {
 	
 	protected abstract int readArrayLength() throws IOException;
 	
-	private final void readArrayContents(final Object array) throws IOException {
+	private void readArrayContents(final Object array) throws IOException {
 		if (array.getClass().getComponentType().isPrimitive()) {
 			final int length = Array.getLength(array);
 			final Tag type = getType(array.getClass().getComponentType());
@@ -83,7 +83,7 @@ public abstract class YggdrasilInputStream implements Closeable {
 	protected abstract String readEnumID() throws IOException;
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private final Object readEnum() throws IOException {
+	private Object readEnum() throws IOException {
 		final Class<?> c = readEnumType();
 		final String id = readEnumID();
 		if (Enum.class.isAssignableFrom(c)) {
@@ -117,7 +117,7 @@ public abstract class YggdrasilInputStream implements Closeable {
 	
 	protected abstract String readFieldID() throws IOException;
 	
-	private final Fields readFields() throws IOException {
+	private Fields readFields() throws IOException {
 		final Fields fields = new Fields(yggdrasil);
 		final short numFields = readNumFields();
 		for (int i = 0; i < numFields; i++) {
@@ -153,7 +153,7 @@ public abstract class YggdrasilInputStream implements Closeable {
 	
 	@SuppressWarnings({"rawtypes", "unchecked", "null", "unused"})
 	@Nullable
-	private final Object readObject(final Tag t) throws IOException {
+	private Object readObject(final Tag t) throws IOException {
 		if (t == T_NULL)
 			return null;
 		if (t == T_REFERENCE) {

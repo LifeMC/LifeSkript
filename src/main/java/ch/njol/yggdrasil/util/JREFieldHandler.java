@@ -24,8 +24,8 @@ package ch.njol.yggdrasil.util;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import ch.njol.yggdrasil.FieldHandler;
@@ -65,7 +65,7 @@ public final class JREFieldHandler implements FieldHandler {
 	public boolean incompatibleField(final Object o, final Field f, final FieldContext field) throws StreamCorruptedException {
 		Object value = field.getObject();
 		if (value instanceof Object[])
-			value = Arrays.asList(value);
+			value = Collections.singletonList(value);
 		if (value instanceof Collection) {
 			final Collection v = (Collection) value;
 			try {

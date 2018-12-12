@@ -77,7 +77,7 @@ public class ExprEnchantmentLevel extends PropertyExpression<ItemType, Integer> 
 			public Integer convert(final ItemType i) {
 				final Map<Enchantment, Integer> enchs = i.getEnchantments();
 				if (enchs == null)
-					return Integer.valueOf(0);
+					return 0;
 				final Integer l = enchs.get(ench);
 				return l == null ? Integer.valueOf(0) : l;
 			}

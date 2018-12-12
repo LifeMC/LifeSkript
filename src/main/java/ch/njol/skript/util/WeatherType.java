@@ -68,7 +68,7 @@ public enum WeatherType {
 	}
 	
 	@Nullable
-	public final static WeatherType parse(final String s) {
+	public static WeatherType parse(final String s) {
 		return byName.get(s);
 	}
 	
@@ -145,7 +145,7 @@ public enum WeatherType {
 	public void setWeather(final World w) {
 		if (w.isThundering() != (this == THUNDER))
 			w.setThundering(this == THUNDER);
-		if (w.hasStorm() != (this != CLEAR))
+		if (w.hasStorm() == (this == CLEAR))
 			w.setStorm(this != CLEAR);
 	}
 	

@@ -105,7 +105,7 @@ public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
     }
 
     @Override
-    public Class<? extends Object> getReturnType() {
+    public Class<?> getReturnType() {
         return mark <= 2 ? Timespan.class : String.class;
     }
 

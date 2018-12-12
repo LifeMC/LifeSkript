@@ -42,7 +42,7 @@ public class ExprLength extends SimplePropertyExpression<String, Integer> {
 	@SuppressWarnings("null")
 	@Override
 	public Integer convert(final String s) {
-		return Integer.valueOf(s.length());
+		return s.length();
 	}
 	
 	@Override

@@ -83,7 +83,7 @@ public final class Variables {
 				init(); // separate method for the annotation
 			}
  			@SuppressWarnings({"unchecked", "null", "cast"})
-			private final void init() {
+			private void init() {
 				// used by asserts
  				info = (ClassInfo<? extends ConfigurationSerializable>) (ClassInfo<?>) Classes.getExactClassInfo(Object.class);
  			}
@@ -137,7 +137,7 @@ public final class Variables {
 				while (true) {
 					try {
 						Thread.sleep(Skript.logNormal() ? 1000 : 5000); // low verbosity won't disable these messages, but makes them more rare
-					} catch (final InterruptedException e) {}
+					} catch (final InterruptedException ignored) {}
 					synchronized (tempVars) {
 						final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();
 						if (tvs != null)
@@ -459,7 +459,7 @@ public final class Variables {
 							break;
 						}
 					}
-				} catch (final InterruptedException e) {}
+				} catch (final InterruptedException ignored) {}
 			}
 		}
 	}, "Skript variable save thread");
@@ -468,7 +468,7 @@ public final class Variables {
 		while (!queue.isEmpty()) {
 			try {
 				Thread.sleep(10);
-			} catch (final InterruptedException e) {}
+			} catch (final InterruptedException ignored) {}
 		}
 		closed = true;
 		saveThread.interrupt();

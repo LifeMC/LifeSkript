@@ -106,9 +106,9 @@ public class ExprNumbers extends SimpleExpression<Number> {
 		final double low = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
 		for (int i = 0; i < array.length; i++) {
 			if (integer)
-				array[i] = Long.valueOf((long) low + i);
+				array[i] = (long) low + i;
 			else
-				array[i] = Double.valueOf(low + i);
+				array[i] = low + i;
 		}
 		return array;
 	}
@@ -133,9 +133,9 @@ public class ExprNumbers extends SimpleExpression<Number> {
 				if (!hasNext())
 					throw new NoSuchElementException();
 				if (integer)
-					return Long.valueOf((long) i++);
+					return (long) i++;
 				else
-					return Double.valueOf(i++);
+					return i++;
 			}
 			
 			@Override

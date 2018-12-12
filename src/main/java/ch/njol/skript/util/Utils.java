@@ -139,7 +139,7 @@ public final class Utils {
 		} else if (s.matches("an? .+")) {
 			return new Pair<String, Integer>(s.split(" ", 2)[1], 1);
 		}
-		return new Pair<String, Integer>(s, Integer.valueOf(-1));
+		return new Pair<String, Integer>(s, -1);
 	}
 	
 //	public final static class AmountResponse {

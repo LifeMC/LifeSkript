@@ -77,7 +77,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 			public void close() {
 				try {
 					resolverThread.interrupt();					
-				} catch(final Throwable tw) {}
+				} catch(final Throwable ignored) {}
 			}
 		});
 	}

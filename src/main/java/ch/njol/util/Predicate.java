@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * @author Peter Güttinger
  *
  */
-public abstract interface Predicate<T> {
+public interface Predicate<T> {
   
   boolean test(final @Nullable T paramT);
   

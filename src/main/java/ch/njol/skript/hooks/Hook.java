@@ -57,7 +57,6 @@ public abstract class Hook<P extends Plugin> {
 		loadClasses();
 		if (Skript.logHigh())
 			Skript.info(m_hooked.toString(p.getName()));
-		return;
 	}
 	
 	protected void loadClasses() throws IOException {

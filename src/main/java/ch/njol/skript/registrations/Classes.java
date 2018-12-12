@@ -192,7 +192,7 @@ public final class Classes {
 			}
 		}
 		
-		Classes.classInfos = classInfos.toArray(new ClassInfo[classInfos.size()]);
+		Classes.classInfos = classInfos.toArray(new ClassInfo[0]);
 		
 		// check for circular dependencies
 		if (!tempClassInfos.isEmpty()) {
@@ -200,7 +200,7 @@ public final class Classes {
 			for (final ClassInfo<?> c : tempClassInfos) {
 				if (b.length() != 0)
 					b.append(", ");
-				b.append(c.getCodeName() + " (after: " + StringUtils.join(c.after(), ", ") + ")");
+				b.append(c.getCodeName()).append(" (after: ").append(StringUtils.join(c.after(), ", ")).append(")");
 			}
 			throw new IllegalStateException("ClassInfos with circular dependencies detected: " + b.toString());
 		}
@@ -680,7 +680,7 @@ public final class Classes {
 		if (s == null) // value cannot be saved
 			return null;
 		
-		assert s.mustSyncDeserialization() ? Bukkit.isPrimaryThread() : true;
+		assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
 		
 		try {
 			final ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -731,7 +731,7 @@ public final class Classes {
 	@Nullable
 	public static Object deserialize(final ClassInfo<?> type, InputStream value) {
 		Serializer<?> s;
-		assert (s = type.getSerializer()) != null && (s.mustSyncDeserialization() ? Bukkit.isPrimaryThread() : true) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
+		assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
 		YggdrasilInputStream in = null;
 		try {
 			value = new SequenceInputStream(new ByteArrayInputStream(getYggdrasilStart(type)), value);
@@ -745,11 +745,11 @@ public final class Classes {
 			if (in != null) {
 				try {
 					in.close();
-				} catch (final IOException e) {}
+				} catch (final IOException ignored) {}
 			}
 			try {
 				value.close();
-			} catch (final IOException e) {}
+			} catch (final IOException ignored) {}
 		}
 	}
 	

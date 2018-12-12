@@ -27,7 +27,7 @@ package ch.njol.skript.log;
 public abstract class LogHandler {
 	
 	public enum LogResult {
-		LOG, CACHED, DO_NOT_LOG;
+		LOG, CACHED, DO_NOT_LOG
 	}
 	
 	/**

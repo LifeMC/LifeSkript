@@ -343,7 +343,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 //			}
 			
 			if (value.endsWith(":") && (config.simple
-					|| value.indexOf(config.separator) == -1
+					|| !value.contains(config.separator)
 					|| config.separator.endsWith(":") && value.indexOf(config.separator) == value.length() - config.separator.length()
 					) && !fullLine.matches("([^#]|##)*#-#(\\s.*)?")) {
 				nodes.add(SectionNode.load("" + value.substring(0, value.length() - 1), comment, this, r));

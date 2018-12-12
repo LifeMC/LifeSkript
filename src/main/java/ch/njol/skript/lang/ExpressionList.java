@@ -212,9 +212,8 @@ public class ExpressionList<T> implements Expression<T> {
 	 * @return The old 'and' value
 	 */
 	public boolean setAnd(final boolean and) {
-		final boolean r = and;
 		this.and = and;
-		return r;
+		return and;
 	}
 	
 	/**
@@ -239,7 +238,7 @@ public class ExpressionList<T> implements Expression<T> {
 			if (r.isEmpty())
 				return null;
 		}
-		return r.toArray(new Class[r.size()]);
+		return r.toArray(new Class[0]);
 	}
 	
 	@Override

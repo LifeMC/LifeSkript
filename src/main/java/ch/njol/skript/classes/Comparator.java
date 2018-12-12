@@ -38,7 +38,7 @@ public interface Comparator<T1, T2> {
 	/**
 	 * represents a relation between two objects.
 	 */
-	public enum Relation {
+	enum Relation {
 		EQUAL, NOT_EQUAL, GREATER, GREATER_OR_EQUAL, SMALLER, SMALLER_OR_EQUAL;
 		
 		/**
@@ -197,7 +197,7 @@ public interface Comparator<T1, T2> {
 	 * @param <T1> see {@link Comparator}
 	 * @param <T2> dito
 	 */
-	public static class ComparatorInfo<T1, T2> {
+	class ComparatorInfo<T1, T2> {
 		
 		public Class<T1> c1;
 		public Class<T2> c2;

@@ -156,7 +156,7 @@ public final class Updater {
 	private final static DateFormat RFC2822 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 	
 	public enum UpdateState {
-		NOT_STARTED, CHECK_IN_PROGRESS, CHECK_ERROR, CHECKED_FOR_UPDATE, DOWNLOAD_IN_PROGRESS, DOWNLOAD_ERROR, DOWNLOADED;
+		NOT_STARTED, CHECK_IN_PROGRESS, CHECK_ERROR, CHECKED_FOR_UPDATE, DOWNLOAD_IN_PROGRESS, DOWNLOAD_ERROR, DOWNLOADED
 	}
 	
 	public final static ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
@@ -309,7 +309,7 @@ public final class Updater {
 					if (in != null) {
 						try {
 							in.close();
-						} catch (final IOException e) {}
+						} catch (final IOException ignored) {}
 					}
 				}
 			}
@@ -386,12 +386,12 @@ public final class Updater {
 			if (in != null) {
 				try {
 					in.close();
-				} catch (final IOException e) {}
+				} catch (final IOException ignored) {}
 			}
 			if (r != null) {
 				try {
 					r.close();
-				} catch (final IOException e) {}
+				} catch (final IOException ignored) {}
 			}
 		}
 	}
@@ -469,7 +469,7 @@ public final class Updater {
 			if (in != null) {
 				try {
 					in.close();
-				} catch (final IOException e) {}
+				} catch (final IOException ignored) {}
 			}
 		}
 	}

@@ -43,7 +43,7 @@ public interface YggdrasilSerializable {
 	 * 
 	 * @author Peter Güttinger
 	 */
-	public static interface YggdrasilRobustSerializable extends YggdrasilSerializable {
+	interface YggdrasilRobustSerializable extends YggdrasilSerializable {
 		
 		/**
 		 * Called if a field that was read from stream is of an incompatible type to the existing field in this class.
@@ -82,7 +82,7 @@ public interface YggdrasilSerializable {
 	 * 
 	 * @author Peter Güttinger
 	 */
-	public static interface YggdrasilRobustEnum {
+	interface YggdrasilRobustEnum {
 		
 		/**
 		 * Called when an enum constant is read from stream that does not exist in this enum.
@@ -105,7 +105,7 @@ public interface YggdrasilSerializable {
 	 * 
 	 * @author Peter Güttinger
 	 */
-	public static interface YggdrasilExtendedSerializable extends YggdrasilSerializable {
+	interface YggdrasilExtendedSerializable extends YggdrasilSerializable {
 		
 		/**
 		 * Serialises this object. Only fields contained in the returned Fields object will be written to stream.

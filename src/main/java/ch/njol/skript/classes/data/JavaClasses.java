@@ -77,7 +77,7 @@ public final class JavaClasses {
 					public Number parse(final String s, final ParseContext context) {
 						try {
 							return Long.valueOf(s);
-						} catch (final NumberFormatException e) {}
+						} catch (final NumberFormatException ignored) {}
 						try {
 							return s.endsWith("%") ? Double.parseDouble(s.substring(0, s.length() - 1)) / 100 : Double.parseDouble(s);
 						} catch (final NumberFormatException e) {
@@ -121,7 +121,7 @@ public final class JavaClasses {
 					public Number deserialize(final String s) {
 						try {
 							return Integer.valueOf(s);
-						} catch (final NumberFormatException e) {}
+						} catch (final NumberFormatException ignored) {}
 						try {
 							return Double.valueOf(s);
 						} catch (final NumberFormatException e) {
@@ -282,7 +282,7 @@ public final class JavaClasses {
 					
 					@Override
 					public String toVariableNameString(final Double d) {
-						return StringUtils.toString(d.doubleValue(), VARIABLENAME_NUMBERACCURACY);
+						return StringUtils.toString(d, VARIABLENAME_NUMBERACCURACY);
 					}
 					
 					@Override

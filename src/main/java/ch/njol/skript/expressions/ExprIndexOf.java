@@ -70,7 +70,7 @@ public class ExprIndexOf extends SimpleExpression<Integer> {
 		if (h == null || n == null)
 			return new Integer[0];
 		final int i = first ? h.indexOf(n) : h.lastIndexOf(n);
-		return new Integer[] {Integer.valueOf(i == -1 ? -1 : i + 1)};
+		return new Integer[] {i == -1 ? -1 : i + 1};
 	}
 	
 	@Override

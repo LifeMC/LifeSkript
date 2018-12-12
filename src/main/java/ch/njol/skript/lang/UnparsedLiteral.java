@@ -76,7 +76,7 @@ public class UnparsedLiteral implements Literal<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return Object.class;
 	}
 	
@@ -267,11 +267,11 @@ public class UnparsedLiteral implements Literal<Object> {
 	}
 	
 	@Override
-	public Expression<? extends Object> simplify() {
+	public Expression<?> simplify() {
 		return this;
 	}
 	
-	private final static SkriptAPIException invalidAccessException() {
+	private static SkriptAPIException invalidAccessException() {
 		return new SkriptAPIException("UnparsedLiterals must be converted before use");
 	}
 	

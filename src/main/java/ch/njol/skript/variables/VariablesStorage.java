@@ -82,7 +82,7 @@ public abstract class VariablesStorage implements Closeable {
 							save(var.name, d.type, d.data);
 						else
 							save(var.name, null, null);
-					} catch (final InterruptedException e) {}
+					} catch (final InterruptedException ignored) {}
 				}
 			}
 		}, "Skript variable save thread for database '" + name + "'");
@@ -231,10 +231,11 @@ public abstract class VariablesStorage implements Closeable {
 		};
 	}
 	
+	@SuppressWarnings("null")
 	boolean accept(final @Nullable String var) {
 		if (var == null)
 			return false;
-		return variablePattern != null ? variablePattern.matcher(var).matches() : true;
+		return variablePattern == null || variablePattern.matcher(var).matches();
 	}
 	
 	private long lastWarning = Long.MIN_VALUE;
@@ -260,7 +261,7 @@ public abstract class VariablesStorage implements Closeable {
 					// REMIND add repetitive error and/or stop saving variables altogether?
 					changesQueue.put(var);
 					break;
-				} catch (final InterruptedException e) {}
+				} catch (final InterruptedException ignored) {}
 			}
 		}
 	}
@@ -274,7 +275,7 @@ public abstract class VariablesStorage implements Closeable {
 		while (!changesQueue.isEmpty()) {
 			try {
 				Thread.sleep(10);
-			} catch (final InterruptedException e) {}
+			} catch (final InterruptedException ignored) {}
 		}
 		closed = true;
 		writeThread.interrupt();

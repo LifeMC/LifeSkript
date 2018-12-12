@@ -60,7 +60,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings("ES_COMPARING_STRINGS_WITH_EQ")
 public class Documentation {
 	
-	public final static void generate() {
+	public static void generate() {
 		if (!generate)
 			return;
 		try {
@@ -70,16 +70,14 @@ public class Documentation {
 			pw.close();
 		} catch (final FileNotFoundException e) {
 			e.printStackTrace();
-			return;
 		} catch (final UnsupportedEncodingException e) {
 			e.printStackTrace();
-			return;
 		}
 	}
 	
 	public final static boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
 	
-	private final static void asSql(final PrintWriter pw) {
+	private static void asSql(final PrintWriter pw) {
 		pw.println("-- syntax elements");
 //		pw.println("DROP TABLE IF EXISTS syntax_elements;");
 		pw.println("CREATE TABLE IF NOT EXISTS syntax_elements (" +
@@ -153,7 +151,7 @@ public class Documentation {
 		}
 	}
 	
-	private final static String convertRegex(final String regex) {
+	private static String convertRegex(final String regex) {
 		if (StringUtils.containsAny(regex, ".[]\\*+"))
 			Skript.error("Regex '" + regex + "' contains unconverted Regex syntax");
 		return escapeHTML("" + regex
@@ -161,10 +159,10 @@ public class Documentation {
 				.replaceAll("(.)\\?", "[$1]"));
 	}
 	
-	private final static String cleanPatterns(final String patterns) {
+	private static String cleanPatterns(final String patterns) {
 		final String s = StringUtils.replaceAll("" +
 				escapeHTML(patterns) // escape HTML
-				.replaceAll("(?<=[\\(\\|])[-0-9]+?¦", "") // remove marks
+				.replaceAll("(?<=[(|])[-0-9]+?¦", "") // remove marks
 				.replace("()", "") // remove empty mark setting groups (mark¦)
 				.replaceAll("\\(([^|]+?)\\|\\)", "[$1]") // replace (mark¦x|) groups with [x]
 				.replaceAll("\\(\\|([^|]+?)\\)", "[$1]") // dito
@@ -209,7 +207,7 @@ public class Documentation {
 		return s;
 	}
 	
-	private final static void insertSyntaxElement(final PrintWriter pw, final SyntaxElementInfo<?> info, final String type) {
+	private static void insertSyntaxElement(final PrintWriter pw, final SyntaxElementInfo<?> info, final String type) {
 		if (info.c.getAnnotation(NoDoc.class) != null)
 			return;
 		if (info.c.getAnnotation(Name.class) == null || info.c.getAnnotation(Description.class) == null || info.c.getAnnotation(Examples.class) == null || info.c.getAnnotation(Since.class) == null) {
@@ -235,7 +233,7 @@ public class Documentation {
 				since);
 	}
 	
-	private final static void insertEvent(final PrintWriter pw, final SkriptEventInfo<?> info) {
+	private static void insertEvent(final PrintWriter pw, final SkriptEventInfo<?> info) {
 		if (info.getDescription() == SkriptEventInfo.NO_DOC)
 			return;
 		if (info.getDescription() == null || info.getExamples() == null || info.getSince() == null) {
@@ -267,7 +265,7 @@ public class Documentation {
 				since);
 	}
 	
-	private final static void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
+	private static void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
 		if (info.getDocName() == ClassInfo.NO_DOC)
 			return;
 		if (info.getDocName() == null || info.getDescription() == null || info.getUsage() == null || info.getExamples() == null || info.getSince() == null) {
@@ -294,7 +292,7 @@ public class Documentation {
 				since);
 	}
 	
-	private final static void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
+	private static void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
 		final StringBuilder params = new StringBuilder();
 		for (final Parameter<?> p : func.getParameters()) {
 			if (params.length() != 0)
@@ -315,13 +313,13 @@ public class Documentation {
 				since);
 	}
 	
-	private final static void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
+	private static void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
 		for (int i = 0; i < values.length; i++)
 			values[i] = escapeSQL("" + values[i]);
 		pw.println("INSERT INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "') ON DUPLICATE KEY UPDATE " + update + ";");
 	}
 	
-	private final static void replaceInto(final PrintWriter pw, final String table, final String fields, final String... values) {
+	private static void replaceInto(final PrintWriter pw, final String table, final String fields, final String... values) {
 		for (int i = 0; i < values.length; i++)
 			values[i] = escapeSQL("" + values[i]);
 		pw.println("REPLACE INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "');");
@@ -336,7 +334,7 @@ public class Documentation {
 	private final static String[] urls = {"expressions", "effects", "conditions"};
 	
 	@Nullable
-	private final static String validateHTML(@Nullable String html, final String baseURL) {
+	private static String validateHTML(@Nullable String html, final String baseURL) {
 		if (html == null) {
 			assert false;
 			return null;
@@ -372,7 +370,7 @@ public class Documentation {
 						try {
 							Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
 							continue;
-						} catch (final ClassNotFoundException e) {}
+						} catch (final ClassNotFoundException ignored) {}
 					}
 				}
 			}
@@ -381,11 +379,11 @@ public class Documentation {
 		return html;
 	}
 	
-	private final static String escapeSQL(final String s) {
+	private static String escapeSQL(final String s) {
 		return "" + s.replace("'", "\\'").replace("\"", "\\\"");
 	}
 	
-	public final static String escapeHTML(final @Nullable String s) {
+	public static String escapeHTML(final @Nullable String s) {
 		if (s == null) {
 			assert false;
 			return "";

@@ -50,7 +50,7 @@ public final class DefaultChangers { //NOSONAR
 		@SuppressWarnings("unchecked")
 		@Override
 		@Nullable
-		public Class<? extends Object>[] acceptChange(final ChangeMode mode) {
+		public Class<?>[] acceptChange(final ChangeMode mode) {
 			switch (mode) {
 				case ADD:
 					return CollectionUtils.array(ItemType[].class, Inventory.class, Experience[].class);
@@ -122,7 +122,7 @@ public final class DefaultChangers { //NOSONAR
 	public final static Changer<Player> playerChanger = new Changer<Player>() {
 		@Override
 		@Nullable
-		public Class<? extends Object>[] acceptChange(final ChangeMode mode) {
+		public Class<?>[] acceptChange(final ChangeMode mode) {
 			if (mode == ChangeMode.DELETE)
 				return null;
 			return entityChanger.acceptChange(mode);
@@ -181,7 +181,7 @@ public final class DefaultChangers { //NOSONAR
 		@SuppressWarnings("unchecked")
 		@Override
 		@Nullable
-		public Class<? extends Object>[] acceptChange(final ChangeMode mode) {
+		public Class<?>[] acceptChange(final ChangeMode mode) {
 			if (mode == ChangeMode.RESET)
 				return null;
 			if (mode == ChangeMode.REMOVE_ALL)

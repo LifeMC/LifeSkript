@@ -62,7 +62,7 @@ public class SkeletonData extends EntityData<Skeleton> {
 	
 	@Override
 	protected boolean init(final @Nullable Class<? extends Skeleton> c, final @Nullable Skeleton e) {
-		wither = e == null || !hasWither ? false : e.getSkeletonType() == SkeletonType.WITHER;
+		wither = e != null && hasWither && e.getSkeletonType() == SkeletonType.WITHER;
 		return true;
 	}
 	
@@ -86,7 +86,7 @@ public class SkeletonData extends EntityData<Skeleton> {
 	
 	@Override
 	protected boolean match(final Skeleton entity) {
-		return hasWither ? entity.getSkeletonType() == SkeletonType.WITHER == wither : true;
+		return !hasWither || entity.getSkeletonType() == SkeletonType.WITHER == wither;
 	}
 	
 	@Override

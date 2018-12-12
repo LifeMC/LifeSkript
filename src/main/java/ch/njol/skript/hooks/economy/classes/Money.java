@@ -121,7 +121,7 @@ public final class Money {
 			@SuppressWarnings("null")
 			@Override
 			public Double convert(final Money m) {
-				return Double.valueOf(m.getAmount());
+				return m.getAmount();
 			}
 		});
 	}
@@ -149,12 +149,12 @@ public final class Money {
 				try {
 					final double d = Double.parseDouble(s.substring(0, s.length() - plural.length()).trim());
 					return new Money(d);
-				} catch (final NumberFormatException e) {}
+				} catch (final NumberFormatException ignored) {}
 			} else if (StringUtils.startsWithIgnoreCase(s, plural)) {
 				try {
 					final double d = Double.parseDouble(s.substring(plural.length()).trim());
 					return new Money(d);
-				} catch (final NumberFormatException e) {}
+				} catch (final NumberFormatException ignored) {}
 			}
 		}
 		if (!singular.isEmpty()) {
@@ -162,12 +162,12 @@ public final class Money {
 				try {
 					final double d = Double.parseDouble(s.substring(0, s.length() - singular.length()).trim());
 					return new Money(d);
-				} catch (final NumberFormatException e) {}
+				} catch (final NumberFormatException ignored) {}
 			} else if (StringUtils.startsWithIgnoreCase(s, singular)) {
 				try {
 					final double d = Double.parseDouble(s.substring(singular.length()).trim());
 					return new Money(d);
-				} catch (final NumberFormatException e) {}
+				} catch (final NumberFormatException ignored) {}
 			}
 		}
 //		try {

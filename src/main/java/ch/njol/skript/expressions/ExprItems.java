@@ -94,8 +94,8 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 		for (final ItemStack is : new IteratorIterable<ItemStack>(iterator(e)))
 			r.add(is);
 		if (types instanceof Literal)
-			return buffer = r.toArray(new ItemStack[r.size()]);
-		return r.toArray(new ItemStack[r.size()]);
+			return buffer = r.toArray(new ItemStack[0]);
+		return r.toArray(new ItemStack[0]);
 	}
 	
 	@Override

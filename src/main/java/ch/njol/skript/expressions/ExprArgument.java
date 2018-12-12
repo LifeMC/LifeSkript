@@ -160,7 +160,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return arg.getType();
 	}
 	

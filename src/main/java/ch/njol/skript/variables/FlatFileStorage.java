@@ -116,7 +116,7 @@ public final class FlatFileStorage extends VariablesStorage {
 							varVersion = new Version("" + line.substring("# version:".length()).trim());
 							update2_0_beta3 = varVersion.isSmallerThan(v2_0_beta3);
 							update2_1 = varVersion.isSmallerThan(v2_1);
-						} catch (final IllegalArgumentException e) {}
+						} catch (final IllegalArgumentException ignored) {}
 					}
 					continue;
 				}
@@ -157,7 +157,7 @@ public final class FlatFileStorage extends VariablesStorage {
 			if (r != null) {
 				try {
 					r.close();
-				} catch (final IOException e) {}
+				} catch (final IOException ignored) {}
 			}
 		}
 		
@@ -265,7 +265,7 @@ public final class FlatFileStorage extends VariablesStorage {
 		}
 		if (lastEnd != line.length())
 			return null;
-		return r.toArray(new String[r.size()]);
+		return r.toArray(new String[0]);
 	}
 	
 	@SuppressWarnings({"resource", "unused", "null"})

@@ -272,11 +272,11 @@ public final class DatabaseStorage extends VariablesStorage {
 								final Database db = DatabaseStorage.this.db.get();
 								if (db != null)
 									db.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
-							} catch (final SQLException e) {}
+							} catch (final SQLException ignored) {}
 						}
 						try {
 							Thread.sleep(1000 * 10);
-						} catch (final InterruptedException e) {}
+						} catch (final InterruptedException ignored) {}
 					}
 				}
 			}, "Skript database '" + databaseName + "' connection keep-alive thread").start();
@@ -308,7 +308,7 @@ public final class DatabaseStorage extends VariablesStorage {
 					}
 					try {
 						Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
-					} catch (final InterruptedException e) {}
+					} catch (final InterruptedException ignored) {}
 				}
 			}
 		}, "Skript database '" + databaseName + "' transaction committing thread").start();
@@ -319,7 +319,7 @@ public final class DatabaseStorage extends VariablesStorage {
 				public void run() {
 					try { // variables were just downloaded, not need to check for modifications straight away
 						Thread.sleep(monitor_interval);
-					} catch (final InterruptedException e1) {}
+					} catch (final InterruptedException ignored) {}
 					
 					long lastWarning = Long.MIN_VALUE;
 					final int WARING_INTERVAL = 10;
@@ -338,7 +338,7 @@ public final class DatabaseStorage extends VariablesStorage {
 						while (System.currentTimeMillis() < next) {
 							try {
 								Thread.sleep(next - System.currentTimeMillis());
-							} catch (final InterruptedException e) {}
+							} catch (final InterruptedException ignored) {}
 						}
 					}
 				}
@@ -401,24 +401,24 @@ public final class DatabaseStorage extends VariablesStorage {
 				try {
 					if (writeQuery != null)
 						writeQuery.close();
-				} catch (final SQLException e) {}
+				} catch (final SQLException ignored) {}
 				writeQuery = db.prepare("REPLACE INTO " + TABLE_NAME + " (name, type, value, update_guid) VALUES (?, ?, ?, ?)");
 				
 				try {
 					if (deleteQuery != null)
 						deleteQuery.close();
-				} catch (final SQLException e) {}
+				} catch (final SQLException ignored) {}
 				deleteQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE name = ?");
 				
 				try {
 					if (monitorQuery != null)
 						monitorQuery.close();
-				} catch (final SQLException e) {}
+				} catch (final SQLException ignored) {}
 				monitorQuery = db.prepare("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME + " WHERE rowid > ? AND update_guid != ?");
 				try {
 					if (monitorCleanUpQuery != null)
 						monitorCleanUpQuery.close();
-				} catch (final SQLException e) {}
+				} catch (final SQLException ignored) {}
 				monitorCleanUpQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE value IS NULL AND rowid < ?");
 			} catch (final SQLException e) {
 				Skript.exception(e, "Could not prepare queries for the database '" + databaseName + "': " + e.getLocalizedMessage());

@@ -44,7 +44,7 @@ final class MaterialName {
 //		if (names == null)
 //			return p ? plural : singular;
 		@SuppressWarnings("null")
-		NonNullPair<String, String> s = names.get(new NonNullPair<Short, Short>(Short.valueOf(dataMin), Short.valueOf(dataMax)));
+		NonNullPair<String, String> s = names.get(new NonNullPair<Short, Short>(dataMin, dataMax));
 		if (s != null)
 			return p ? s.getSecond() : s.getFirst();
 		if (dataMin == -1 && dataMax == -1 || dataMin == 0 && dataMax == 0)
@@ -59,7 +59,7 @@ final class MaterialName {
 //		if (names == null)
 //			return p ? plural : singular;
 		@SuppressWarnings("null")
-		final NonNullPair<String, String> s = names.get(new NonNullPair<Short, Short>(Short.valueOf(dataMin), Short.valueOf(dataMax)));
+		final NonNullPair<String, String> s = names.get(new NonNullPair<Short, Short>(dataMin, dataMax));
 		if (s != null)
 			return p ? s.getSecond() : s.getFirst();
 		if (dataMin == -1 && dataMax == -1 || dataMin == 0 && dataMax == 0)

@@ -26,7 +26,6 @@ import java.io.StreamCorruptedException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -75,13 +74,13 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 			getClaim.setAccessible(true);
 			if (!Claim.class.isAssignableFrom(getClaim.getReturnType()))
 				getClaim = null;
-		} catch (final NoSuchMethodException e) {} catch (final SecurityException e) {}
+		} catch (final NoSuchMethodException ignored) {} catch (final SecurityException ignored) {}
 		try {
 			claimsField = DataStore.class.getDeclaredField("claims");
 			claimsField.setAccessible(true);
 			if (!List.class.isAssignableFrom(claimsField.getType()))
 				claimsField = null;
-		} catch (final NoSuchFieldException e) {} catch (final SecurityException e) {}
+		} catch (final NoSuchFieldException ignored) {} catch (final SecurityException ignored) {}
 		if (getClaim == null && claimsField == null) {
 			Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "."
 					+ " Please report this at " + Skript.ISSUES_LINK  + " if this error occurred after you updated GriefPrevention.");
@@ -171,9 +170,9 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 		@Override
 		public Collection<OfflinePlayer> getOwners() {
 			if (supportsUUIDs)
-				return Arrays.asList(Bukkit.getOfflinePlayer(claim.ownerID));
+				return Collections.singletonList(Bukkit.getOfflinePlayer(claim.ownerID));
 			else
-				return Arrays.asList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
+				return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
 		}
 		
 		@Override
@@ -237,7 +236,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 	public Collection<? extends Region> getRegionsAt_i(final Location l) {
 		final Claim c = plugin.dataStore.getClaimAt(l, false, null);
 		if (c != null)
-			return Arrays.asList(new GriefPreventionRegion(c));
+			return Collections.singletonList(new GriefPreventionRegion(c));
 		return Collections.emptySet();
 	}
 	

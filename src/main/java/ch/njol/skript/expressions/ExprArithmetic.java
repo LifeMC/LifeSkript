@@ -58,8 +58,8 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 			@Override
 			public Number calculate(final Number n1, final Number n2, final boolean integer) {
 				if (integer)
-					return Long.valueOf(n1.longValue() + n2.longValue());
-				return Double.valueOf(n1.doubleValue() + n2.doubleValue());
+					return n1.longValue() + n2.longValue();
+				return n1.doubleValue() + n2.doubleValue();
 			}
 		},
 		MINUS('-') {
@@ -67,8 +67,8 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 			@Override
 			public Number calculate(final Number n1, final Number n2, final boolean integer) {
 				if (integer)
-					return Long.valueOf(n1.longValue() - n2.longValue());
-				return Double.valueOf(n1.doubleValue() - n2.doubleValue());
+					return n1.longValue() - n2.longValue();
+				return n1.doubleValue() - n2.doubleValue();
 			}
 		},
 		MULT('*') {
@@ -76,8 +76,8 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 			@Override
 			public Number calculate(final Number n1, final Number n2, final boolean integer) {
 				if (integer)
-					return Long.valueOf(n1.longValue() * n2.longValue());
-				return Double.valueOf(n1.doubleValue() * n2.doubleValue());
+					return n1.longValue() * n2.longValue();
+				return n1.doubleValue() * n2.doubleValue();
 			}
 		},
 		DIV('/') {
@@ -88,9 +88,9 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 					final long div = n2.longValue();
 					if (div == 0)
 						return Long.MAX_VALUE;
-					return Long.valueOf(n1.longValue() / div);
+					return n1.longValue() / div;
 				}
-				return Double.valueOf(n1.doubleValue() / n2.doubleValue());
+				return n1.doubleValue() / n2.doubleValue();
 			}
 		},
 		EXP('^') {
@@ -98,8 +98,8 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 			@Override
 			public Number calculate(final Number n1, final Number n2, final boolean integer) {
 				if (integer)
-					return Long.valueOf((long) Math.pow(n1.longValue(), n2.longValue()));
-				return Double.valueOf(Math.pow(n1.doubleValue(), n2.doubleValue()));
+					return (long) Math.pow(n1.longValue(), n2.longValue());
+				return Math.pow(n1.doubleValue(), n2.doubleValue());
 			}
 		};
 		
@@ -173,9 +173,9 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 		final Number[] one = (Number[]) Array.newInstance(returnType, 1);
 		Number n1 = first.getSingle(e), n2 = second.getSingle(e);
 		if (n1 == null)
-			n1 = Integer.valueOf(0);
+			n1 = 0;
 		if (n2 == null)
-			n2 = Integer.valueOf(0);
+			n2 = 0;
 		one[0] = op.calculate(n1, n2, integer);
 		return one;
 	}

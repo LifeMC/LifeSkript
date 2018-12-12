@@ -231,18 +231,18 @@ public final class SkriptClasses {
 					public String toVariableNameString(final ItemType t) {
 						final StringBuilder b = new StringBuilder("itemtype:");
 						b.append(t.getInternalAmount());
-						b.append("," + t.isAll());
+						b.append(",").append(t.isAll());
 						for (final ItemData d : t.getTypes()) {
-							b.append("," + d.getId());
-							b.append(":" + d.dataMin);
-							b.append("/" + d.dataMax);
+							b.append(",").append(d.getId());
+							b.append(":").append(d.dataMin);
+							b.append("/").append(d.dataMax);
 						}
 						final Map<Enchantment, Integer> enchs = t.getEnchantments();
 						if (enchs != null && !enchs.isEmpty()) {
 							b.append("|");
 							for (final Entry<Enchantment, Integer> e : enchs.entrySet()) {
-								b.append("#" + e.getKey().getId());
-								b.append(":" + e.getValue());
+								b.append("#").append(e.getKey().getId());
+								b.append(":").append(e.getValue());
 							}
 						}
 						return "" + b.toString();

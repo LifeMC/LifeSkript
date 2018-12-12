@@ -387,14 +387,13 @@ public final class Direction implements YggdrasilRobustSerializable {
 			protected Location[] get(final Event e) {
 				final Direction[] ds = dirs.getArray(e);
 				final Location[] ls = locs.getArray(e);
-				final Location[] r = ls; //ds.length == 1 ? ls : new Location[ds.length * ls.length];
 				for (final Direction element : ds) {
 					for (int j = 0; j < ls.length; j++) {
 //						r[i + j * ds.length] = ds[i].getRelative(ls[j]);
-						r[j] = element.getRelative(r[j]);
+						ls[j] = element.getRelative(ls[j]);
 					}
 				}
-				return r;
+				return ls;
 			}
 			
 			@SuppressWarnings("null")
@@ -402,14 +401,13 @@ public final class Direction implements YggdrasilRobustSerializable {
 			public Location[] getAll(final Event e) {
 				final Direction[] ds = dirs.getAll(e);
 				final Location[] ls = locs.getAll(e);
-				final Location[] r = ls; //ds.length == 1 ? ls : new Location[ds.length * ls.length];
 				for (final Direction element : ds) {
 					for (int j = 0; j < ls.length; j++) {
 //						r[i + j * ds.length] = ds[i].getRelative(ls[j]);
-						r[j] = element.getRelative(r[j]);
+						ls[j] = element.getRelative(ls[j]);
 					}
 				}
-				return r;
+				return ls;
 			}
 			
 			@Override

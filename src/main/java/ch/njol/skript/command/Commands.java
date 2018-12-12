@@ -129,7 +129,7 @@ public final class Commands { //NOSONAR
 					final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
 					aliasesField.setAccessible(true);
 					cmAliases = (Set<String>) aliasesField.get(commandMap);
-				} catch (final NoSuchFieldException e) {}
+				} catch (final NoSuchFieldException ignored) {}
 			}
 		} catch (final SecurityException e) {
 			Skript.error("Please disable the security manager");
@@ -247,7 +247,7 @@ public final class Commands { //NOSONAR
 							if (f.get())
 								e.setCancelled(true);
 							break;
-						} catch (final InterruptedException e1) {}
+						} catch (final InterruptedException ignored) {}
 					}
 				} catch (final ExecutionException e1) {
 					Skript.exception(e1);
@@ -405,7 +405,7 @@ public final class Commands { //NOSONAR
 				pattern.append('[');
 				optionals++;
 			}
-			pattern.append("%" + (arg.isOptional() ? "-" : "") + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) + "%");
+			pattern.append("%").append(arg.isOptional() ? "-" : "").append(Utils.toEnglishPlural(c.getCodeName(), p.getSecond())).append("%");
 		}
 		
 		pattern.append(escape("" + arguments.substring(lastEnd)));

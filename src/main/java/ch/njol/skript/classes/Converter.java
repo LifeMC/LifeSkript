@@ -49,8 +49,7 @@ public interface Converter<F, T> {
 	 * @param <T> dito
 	 */
 	@SuppressWarnings("null")
-	@NonNullByDefault
-	public final static class ConverterInfo<F, T> {
+	@NonNullByDefault final class ConverterInfo<F, T> {
 		
 		public final Class<F> from;
 		public final Class<T> to;
@@ -75,7 +74,7 @@ public interface Converter<F, T> {
 	@Nullable
 	T convert(final F f);
 	
-	public final static class ConverterUtils { //NOSONAR
+	final class ConverterUtils { //NOSONAR
 		
 		public static <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
 			return createInstanceofConverter(conv.from, conv.converter);

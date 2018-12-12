@@ -65,7 +65,7 @@ public class ExprXOf extends PropertyExpression<Object, Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return getExpr().getReturnType();
 	}
 	

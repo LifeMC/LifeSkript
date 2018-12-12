@@ -23,7 +23,7 @@ package ch.njol.skript.lang;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -246,7 +246,7 @@ public final class Variable<T> implements Expression<T> {
 	 */
 	@SuppressWarnings({"deprecation"})
 	@Nullable Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t){
-		if(SkriptConfig.enablePlayerVariableFix.value() && t != null && t instanceof Player){
+		if(SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player){
 			final Player p = (Player) t;
 			if(!p.isValid() && p.isOnline()){
 				final Player player = uuidSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
@@ -425,7 +425,7 @@ public final class Variable<T> implements Expression<T> {
 				final Object x = getRaw(e);
 				if (x == null)
 					return;
-				for (final Object o : x instanceof Map ? ((Map<?, ?>) x).values() : Arrays.asList(x)) {
+				for (final Object o : x instanceof Map ? ((Map<?, ?>) x).values() : Collections.singletonList(x)) {
 					final Class<?> c = o.getClass();
 					assert c != null;
 					final ClassInfo<?> ci = Classes.getSuperClassInfo(c);

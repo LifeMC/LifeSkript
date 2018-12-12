@@ -174,7 +174,7 @@ public final class Functions {
 			Skript.debug("function " + name + "(" + StringUtils.join(params, ", ") + ")" + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ":");
 		
 		@SuppressWarnings("null")
-		final Function<?> f = new ScriptFunction<Object>(name, params.toArray(new Parameter[params.size()]), node, (ClassInfo<Object>) c, p == null ? false : !p.getSecond());
+		final Function<?> f = new ScriptFunction<Object>(name, params.toArray(new Parameter[0]), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
 //		functions.put(name, new FunctionData(f)); // in constructor
 		return f;
 	}

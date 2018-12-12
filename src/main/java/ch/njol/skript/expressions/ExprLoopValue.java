@@ -105,7 +105,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 		@SuppressWarnings("null")
 		final boolean b = ScriptOptions.getInstance().usesNewLoops(ScriptLoader.currentScript.getFile());
 		for (final Loop l : ScriptLoader.currentLoops) {
-			if (c != null && c.isAssignableFrom(l.getLoopedExpression().getReturnType()) || (b ? "value".equals(s) : false) || l.getLoopedExpression().isLoopOf(s)) {
+			if (c != null && c.isAssignableFrom(l.getLoopedExpression().getReturnType()) || (b && "value".equals(s)) || l.getLoopedExpression().isLoopOf(s)) {
 				if (j < i) {
 					j++;
 					continue;
@@ -155,7 +155,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		if (isIndex)
 			return String.class;
 		return loop.getLoopedExpression().getReturnType();

@@ -34,6 +34,9 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+/**
+ * @author Peter Güttinger
+ */
 @Name("Event Cancelled")
 @Description("Checks whether or not the event is cancelled")
 @Examples({"on click:",
@@ -41,9 +44,6 @@ import org.eclipse.jdt.annotation.Nullable;
 		"\t\tbroadcast \"no clicks allowed!\""
 })
 @Since("2.2-Fixes-V9c")
-/**
- * @author Peter Güttinger
- */
 public final class CondCancelled extends Condition {
 
 	static {

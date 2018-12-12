@@ -64,7 +64,7 @@ public class ExprTypeOf extends SimplePropertyExpression<Object, Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return EntityData.class.isAssignableFrom(getExpr().getReturnType()) ? EntityData.class
 				: ItemStack.class.isAssignableFrom(getExpr().getReturnType()) ? ItemStack.class : Object.class;
 	}

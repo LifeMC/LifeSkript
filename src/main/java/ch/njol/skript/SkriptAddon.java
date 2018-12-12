@@ -145,14 +145,13 @@ public final class SkriptAddon {
 							}
 							unloadableClasses.incrementAndGet();
 						}
-						continue;
 					}
 				}
 			}
 		} finally {
 			try {
 				jar.close();
-			} catch (final IOException e) {}
+			} catch (final IOException ignored) {}
 		}
 		return this;
 	}

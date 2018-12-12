@@ -80,12 +80,12 @@ public class RegexMessage extends Message {
 	
 	public boolean matches(final String s) {
 		final Pattern p = getPattern();
-		return p == null ? false : p.matcher(s).matches();
+		return p != null && p.matcher(s).matches();
 	}
 	
 	public boolean find(final String s) {
 		final Pattern p = getPattern();
-		return p == null ? false : p.matcher(s).find();
+		return p != null && p.matcher(s).find();
 	}
 	
 	@Override

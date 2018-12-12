@@ -85,7 +85,7 @@ public class ExprChatRecipients extends SimpleExpression<Player> {
 	protected Player[] get(final Event e) {
 		final AsyncPlayerChatEvent ae = (AsyncPlayerChatEvent) e;
 		final Set<Player> playerSet = ae.getRecipients();
-		return playerSet.toArray(new Player[playerSet.size()]);
+		return playerSet.toArray(new Player[0]);
 	}
 
 	@SuppressWarnings({ "incomplete-switch", "null" })

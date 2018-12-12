@@ -141,7 +141,6 @@ public final class Aliases { //NOSONAR
 		for (int i = start + 1; i < s.length(); i++) {
 			if (s.charAt(i) == '\\') {
 				i++;
-				continue;
 			} else if (s.charAt(i) == closingBracket) {
 				if (n == 0)
 					return i;
@@ -172,7 +171,7 @@ public final class Aliases { //NOSONAR
 			}
 			final char c = part.charAt(0);
 			if (Character.isUpperCase(c) && b.charAt(b.length() - 1) != ' ') {
-				b.append(Character.toLowerCase(c) + part.substring(1));
+				b.append(Character.toLowerCase(c)).append(part.substring(1));
 			} else {
 				b.append(part);
 			}
@@ -399,7 +398,7 @@ public final class Aliases { //NOSONAR
 			
 			if (alias.getTypes().size() == 1) {
 				final ItemData d = alias.getTypes().get(0);
-				MaterialName n = materialNames.get(Integer.valueOf(d.getId()));
+				MaterialName n = materialNames.get(d.getId());
 				if (d.dataMin == -1 && d.dataMax == -1) {
 					if (n != null) {
 						if (n.singular.equals("" + d.getId()) && n.singular.equals(n.plural)) {
@@ -407,13 +406,13 @@ public final class Aliases { //NOSONAR
 							n.plural = p.getSecond();
 						}
 					} else {
-						materialNames.put(Integer.valueOf(d.getId()), new MaterialName(d.getId(), p.getFirst(), p.getSecond(), g.getSecond()));
+						materialNames.put(d.getId(), new MaterialName(d.getId(), p.getFirst(), p.getSecond(), g.getSecond()));
 					}
 				} else {
 					if (n == null)
-						materialNames.put(Integer.valueOf(d.getId()), n = new MaterialName(d.getId(), "" + d.getId(), "" + d.getId(), g.getSecond()));
+						materialNames.put(d.getId(), n = new MaterialName(d.getId(), "" + d.getId(), "" + d.getId(), g.getSecond()));
 					@SuppressWarnings("null")
-					final NonNullPair<Short, Short> data = new NonNullPair<Short, Short>(Short.valueOf(d.dataMin), Short.valueOf(d.dataMax));
+					final NonNullPair<Short, Short> data = new NonNullPair<Short, Short>(d.dataMin, d.dataMax);
 					n.names.put(data, p);
 				}
 			}
@@ -437,7 +436,7 @@ public final class Aliases { //NOSONAR
 	}
 	
 	public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
-		final MaterialName n = getMaterialNames().get(Integer.valueOf(id));
+		final MaterialName n = getMaterialNames().get(id);
 		if (n == null) {
 			return "" + id;
 		}
@@ -445,7 +444,7 @@ public final class Aliases { //NOSONAR
 	}
 	
 	public static String getDebugMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
-		final MaterialName n = getMaterialNames().get(Integer.valueOf(id));
+		final MaterialName n = getMaterialNames().get(id);
 		if (n == null) {
 			return "" + id + ":" + dataMin + (dataMax == dataMin ? "" : "-" + dataMax);
 		}
@@ -456,7 +455,7 @@ public final class Aliases { //NOSONAR
 	 * @return The ietm's gender or -1 if no name is found
 	 */
 	public static int getGender(final int id, final short dataMin, final short dataMax) {
-		final MaterialName n = getMaterialNames().get(Integer.valueOf(id));
+		final MaterialName n = getMaterialNames().get(id);
 		if (n != null)
 			return n.gender;
 		return -1;
@@ -470,15 +469,15 @@ public final class Aliases { //NOSONAR
 		int r = 0;
 		final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
 		for (final Material m : Material.values()) {
-			if (materialNames.get(Integer.valueOf(m.getId())) == null) {
-				materialNames.put(Integer.valueOf(m.getId()), new MaterialName(m.getId(), "" + m.toString().toLowerCase().replace('_', ' '), "" + m.toString().toLowerCase().replace('_', ' '), 0));
-				missing.append(m.getId() + ", ");
+			if (materialNames.get(m.getId()) == null) {
+				materialNames.put(m.getId(), new MaterialName(m.getId(), "" + m.toString().toLowerCase().replace('_', ' '), "" + m.toString().toLowerCase().replace('_', ' '), 0));
+				missing.append(m.getId()).append(", ");
 				r++;
 			}
 		}
-		final MaterialName m = materialNames.get(Integer.valueOf(-1));
+		final MaterialName m = materialNames.get(-1);
 		if (m == null) {
-			materialNames.put(Integer.valueOf(-1), new MaterialName(-1, Language.get("aliases.anything"), Language.get("aliases.anything"), 0));
+			materialNames.put(-1, new MaterialName(-1, Language.get("aliases.anything"), Language.get("aliases.anything"), 0));
 			missing.append("<any>, ");
 			r++;
 		}

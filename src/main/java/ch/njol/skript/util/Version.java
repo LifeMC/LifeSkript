@@ -44,8 +44,8 @@ public final class Version implements Serializable, Comparable<Version> {
 	public Version(final int... version) {
 		if (version.length < 1 || version.length > 3)
 			throw new IllegalArgumentException("Versions must have a minimum of 2 and a maximum of 3 numbers (" + version.length + " numbers given)");
-		for (int i = 0; i < version.length; i++)
-			this.version[i] = version[i];
+		if (version.length >= 0)
+			System.arraycopy(version, 0, this.version, 0, version.length);
 		postfix = null;
 	}
 	

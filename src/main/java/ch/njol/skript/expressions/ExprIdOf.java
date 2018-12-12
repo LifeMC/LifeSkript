@@ -87,10 +87,10 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
 		final ArrayList<Integer> r = new ArrayList<Integer>();
 		for (final ItemType t : source) {
 			for (final ItemData d : t) {
-				r.add(Integer.valueOf(d.getId()));
+				r.add(d.getId());
 			}
 		}
-		return r.toArray(new Integer[r.size()]);
+		return r.toArray(new Integer[0]);
 	}
 	
 	@Override

@@ -285,7 +285,7 @@ public final class VariableString implements Expression<String> {
 					for (final ClassInfo<?> ci : Classes.getClassInfos()) {
 						final Parser<?> parser = ci.getParser();
 						if (parser != null && ci.getC().isAssignableFrom(((Expression<?>) o).getReturnType())) {
-							p.append("(?!%)" + parser.getVariableNamePattern() + "(?<!%)");
+							p.append("(?!%)").append(parser.getVariableNamePattern()).append("(?<!%)");
 							continue stringLoop;
 						}
 					}
@@ -451,7 +451,7 @@ public final class VariableString implements Expression<String> {
 		final StringBuilder b = new StringBuilder();
 		for (final Object o : string) {
 			if (o instanceof Expression) {
-				b.append("<" + Classes.getSuperClassInfo(((Expression<?>) o).getReturnType()).getCodeName() + ">");
+				b.append("<").append(Classes.getSuperClassInfo(((Expression<?>) o).getReturnType()).getCodeName()).append(">");
 			} else {
 				b.append(o);
 			}

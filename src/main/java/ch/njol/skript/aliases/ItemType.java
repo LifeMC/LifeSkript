@@ -1032,7 +1032,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 //		}
 		final boolean plural = amount != 1 && amount != -1 || (flags & Language.F_PLURAL) != 0;
 		if (amount != -1 && amount != 1) {
-			b.append(amount + " ");
+			b.append(amount).append(" ");
 		} else {
 			b.append(Noun.getArticleWithSpace(types.get(0).getGender(), flags));
 		}
@@ -1041,7 +1041,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 		for (int i = 0; i < types.size(); i++) {
 			if (i != 0) {// this belongs here as size-1 can be 0
 				if (i == types.size() - 1)
-					b.append(" " + (isAll() ? GeneralWords.and : GeneralWords.or) + " ");
+					b.append(" ").append(isAll() ? GeneralWords.and : GeneralWords.or).append(" ");
 				else
 					b.append(", ");
 			}
@@ -1057,7 +1057,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 				if (i != enchs.size() - 1)
 					b.append(", ");
 				else
-					b.append(" " + GeneralWords.and + " ");
+					b.append(" ").append(GeneralWords.and).append(" ");
 			}
 			final Enchantment ench = e.getKey();
 			if (ench == null)
@@ -1070,8 +1070,8 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 		if (meta != null) {
 			final ItemMeta m = (ItemMeta) meta;
 			if (m.hasDisplayName()) {
-				b.append(" " + m_named.toString() + " ");
-				b.append("\"" + m.getDisplayName() + "\"");
+				b.append(" ").append(m_named.toString()).append(" ");
+				b.append("\"").append(m.getDisplayName()).append("\"");
 			}
 			if (debug)
 				b.append(" meta=[").append(meta).append("]");

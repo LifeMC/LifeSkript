@@ -126,12 +126,12 @@ public final class FileUtils {
 				if (in != null) {
 					try {
 						in.close();
-					} catch (final IOException e) {}
+					} catch (final IOException ignored) {}
 				}
 				if (out != null) {
 					try {
 						out.close();
-					} catch (final IOException e) {}
+					} catch (final IOException ignored) {}
 				}
 			}
 		}

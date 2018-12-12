@@ -76,7 +76,7 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
 		final ArrayList<Block> r = new ArrayList<Block>();
 		while (iter.hasNext())
 			r.add(iter.next());
-		return r.toArray(new Block[r.size()]);
+		return r.toArray(new Block[0]);
 	}
 	
 	@Override

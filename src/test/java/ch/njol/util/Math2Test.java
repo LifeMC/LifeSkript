@@ -116,7 +116,7 @@ public class Math2Test {
 		
 	}
 	
-	private final static int[] a(final int... is) {
+	private static int[] a(final int... is) {
 		final Random rand = new Random();
 		final int[] r = Arrays.copyOf(is, is.length + RANDOM_NUMBERS);
 		for (int i = is.length; i < r.length; i++)
@@ -124,7 +124,7 @@ public class Math2Test {
 		return r;
 	}
 	
-	private final static long[] a(final long... ls) {
+	private static long[] a(final long... ls) {
 		final Random rand = new Random();
 		final long[] r = Arrays.copyOf(ls, ls.length + RANDOM_NUMBERS);
 		for (int i = ls.length; i < r.length; i++)
@@ -132,7 +132,7 @@ public class Math2Test {
 		return r;
 	}
 	
-	private final static float[] a(final float... fs) {
+	private static float[] a(final float... fs) {
 		final Random rand = new Random();
 		final float[] r = new float[fs.length * 2 + RANDOM_NUMBERS];
 		for (int i = 0; i < fs.length; i++) {
@@ -144,7 +144,7 @@ public class Math2Test {
 		return r;
 	}
 	
-	private final static double[] a(final double... ds) {
+	private static double[] a(final double... ds) {
 		final Random rand = new Random();
 		final double[] r = new double[ds.length * 2 + RANDOM_NUMBERS];
 		for (int i = 0; i < ds.length; i++) {

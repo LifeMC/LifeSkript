@@ -77,15 +77,15 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
 			f.putObject("keys", m.keySet().toArray());
 			f.putObject("values", m.values().toArray());
 		} else if (o instanceof UUID) {
-			f.putPrimitive("mostSigBits", Long.valueOf(((UUID)o).getMostSignificantBits()));
-			f.putPrimitive("leastSigBits", Long.valueOf(((UUID)o).getLeastSignificantBits()));
+			f.putPrimitive("mostSigBits", ((UUID) o).getMostSignificantBits());
+			f.putPrimitive("leastSigBits", ((UUID) o).getLeastSignificantBits());
 		}
 		assert f.size() > 0 : o;
 		return f;
 	}
 	
 	@Override
-	public boolean canBeInstantiated(final Class<? extends Object> c){
+	public boolean canBeInstantiated(final Class<?> c){
 		return c != UUID.class;
 	}
 	
@@ -135,7 +135,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
 	@Override
 	public <E> E deserialize(final Class<E> c, final Fields fields) throws StreamCorruptedException, NotSerializableException {
 		if (c == UUID.class) {
-			return (E) new UUID(((Long)fields.getPrimitive("mostSigBits", Long.TYPE)).longValue(), ((Long)fields.getPrimitive("leastSigBits", Long.TYPE)).longValue());
+			return (E) new UUID((Long) fields.getPrimitive("mostSigBits", Long.TYPE), (Long) fields.getPrimitive("leastSigBits", Long.TYPE));
 		}
 		throw new StreamCorruptedException();
 	}

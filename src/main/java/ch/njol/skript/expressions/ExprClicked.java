@@ -95,7 +95,7 @@ public class ExprClicked extends SimpleExpression<Object> {
 	}
 	
 	@Override
-	public Class<? extends Object> getReturnType() {
+	public Class<?> getReturnType() {
 		return entityType != null ? entityType.getType() : Block.class;
 	}
 	

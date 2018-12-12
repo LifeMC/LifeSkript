@@ -129,7 +129,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 					if (names[i] == null)
 						names[i] = new Noun(node + ".name");
 				}
-				final String[] ps = patterns.toArray(new String[patterns.size()]);
+				final String[] ps = patterns.toArray(new String[0]);
 				assert ps != null;
 				info = new SyntaxElementInfo<VisualEffect>(ps, VisualEffect.class);
 			}

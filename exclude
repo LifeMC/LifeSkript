@@ -1,0 +1,8 @@
+# Compiled class files
+*.class
+
+# Output folders
+/target
+/dep
+/.apt_generated/
+/.apt_generated_tests/

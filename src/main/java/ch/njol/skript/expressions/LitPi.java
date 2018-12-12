@@ -49,7 +49,7 @@ public final class LitPi extends SimpleLiteral<Double> {
 	
 	@SuppressWarnings("null")
 	public LitPi() {
-		super(Double.valueOf(Math.PI), false);
+		super(Math.PI, false);
 	}
 	
 	@Override

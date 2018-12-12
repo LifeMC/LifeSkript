@@ -789,11 +789,11 @@ public final class BukkitClasses {
 					public String toVariableNameString(final ItemStack i) {
 						final StringBuilder b = new StringBuilder("item:");
 						b.append(i.getType().name());
-						b.append(":" + i.getDurability());
-						b.append("*" + i.getAmount());
+						b.append(":").append(i.getDurability());
+						b.append("*").append(i.getAmount());
 						for (final Entry<Enchantment, Integer> e : i.getEnchantments().entrySet()) {
-							b.append("#" + e.getKey().getId());
-							b.append(":" + e.getValue());
+							b.append("#").append(e.getKey().getId());
+							b.append(":").append(e.getValue());
 						}
 						return "" + b.toString();
 					}
