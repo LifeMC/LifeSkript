@@ -125,7 +125,6 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
 	@Override
 	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
 		assert delta != null;
-		final int i = ((Number) delta[0]).intValue();
 		final ItemType it = getExpr().getSingle(e);
 		if (it == null)
 			return;
@@ -133,6 +132,7 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
 		if (is == null)
 			return;
 		int type = is.getTypeId();
+		final int i = ((Number) delta[0]).intValue();
 		switch (mode) {
 			case ADD:
 				type += i;

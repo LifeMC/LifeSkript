@@ -108,9 +108,7 @@ public final class Functions {
 		final Matcher m = functionPattern.matcher(definition);
 		if (!m.matches())
 			return error("Invalid function definition. Please check for typos and that the function's name only contains letters and underscores. Refer to the documentation for more information.");
-		final String name = "" + m.group(1);
 		final String args = m.group(2);
-		final String returnType = m.group(3);
 		final List<Parameter<?>> params = new ArrayList<Parameter<?>>();
 		int j = 0;
 		for (int i = 0; i <= args.length(); i = SkriptParser.next(args, i, ParseContext.DEFAULT)) {
@@ -156,6 +154,7 @@ public final class Functions {
 		}
 		ClassInfo<?> c;
 		final NonNullPair<String, Boolean> p;
+		final String returnType = m.group(3);
 		if (returnType == null) {
 			c = null;
 			p = null;
@@ -170,6 +169,7 @@ public final class Functions {
 			}
 		}
 		
+		final String name = "" + m.group(1);
 		if (Skript.debug() || node.debug())
 			Skript.debug("function " + name + "(" + StringUtils.join(params, ", ") + ")" + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ":");
 		

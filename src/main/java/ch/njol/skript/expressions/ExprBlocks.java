@@ -110,10 +110,10 @@ public class ExprBlocks extends SimpleExpression<Block> {
 			}
 			return bs;
 		}
-		final ArrayList<Block> r = new ArrayList<Block>();
 		final Iterator<Block> iter = iterator(e);
 		if (iter == null)
 			return new Block[0];
+		final ArrayList<Block> r = new ArrayList<Block>();
 		for (final Block b : new IteratorIterable<Block>(iter))
 			r.add(b);
 		return r.toArray(new Block[0]);
@@ -131,10 +131,10 @@ public class ExprBlocks extends SimpleExpression<Block> {
 				final Object o = from.getSingle(e);
 				if (o == null)
 					return null;
-				final Location l = o instanceof Location ? (Location) o : ((Block) o).getLocation().add(0.5, 0.5, 0.5);
 				final Direction d = direction.getSingle(e);
 				if (d == null)
 					return null;
+				final Location l = o instanceof Location ? (Location) o : ((Block) o).getLocation().add(0.5, 0.5, 0.5);
 				if (l.getBlock() == null)
 					return null;
 				return new BlockLineIterator(l, o != l ? d.getDirection((Block) o) : d.getDirection(l), SkriptConfig.maxTargetBlockDistance.value());

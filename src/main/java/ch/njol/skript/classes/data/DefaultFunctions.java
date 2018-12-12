@@ -355,13 +355,13 @@ public final class DefaultFunctions {
 				c.setLenient(true);
 				double carry = 0;
 				for (int i = 0; i < fields.length; i++) {
-					final int field = fields[i];
 					final Number n = (Number) params[i][0];
 					if (n == null)
 						return null;
 					final double value = n.doubleValue() * scale[i] + offsets[i] + carry;
 					final int v = Math2.floorI(value);
 					carry = (value - v) * relations[i];
+					final int field = fields[i];
 					if (field != Calendar.ZONE_OFFSET || field != Calendar.DST_OFFSET || !Double.isNaN(v))
 						c.set(field, v);
 				}

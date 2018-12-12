@@ -80,12 +80,12 @@ public class ExprItem extends EventValueExpression<ItemStack> {
 	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
 		assert mode != ChangeMode.RESET;
 		
-		final ItemType t = delta == null ? null : (ItemType) delta[0];
 		final Item i = item != null ? item.getSingle(e) : null;
 		final Slot s = slot != null ? slot.getSingle(e) : null;
 		if (i == null && s == null)
 			return;
 		ItemStack is = i != null ? i.getItemStack() : s != null ? s.getItem() : null;
+		final ItemType t = delta == null ? null : (ItemType) delta[0];
 		switch (mode) {
 			case SET:
 				assert t != null;

@@ -110,17 +110,17 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
 	public void deserialize(final Object o, final Fields fields) throws StreamCorruptedException {
 		try {
 			if (o instanceof Collection) {
-				final Collection<?> c = (Collection<?>) o;
 				final Object[] values = fields.getObject("values", Object[].class);
 				if (values == null)
 					throw new StreamCorruptedException();
+				final Collection<?> c = (Collection<?>) o;
 				c.addAll((Collection) Arrays.asList(values));
 				return;
 			} else if (o instanceof Map) {
-				final Map<?, ?> m = (Map<?, ?>) o;
 				final Object[] keys = fields.getObject("keys", Object[].class), values = fields.getObject("values", Object[].class);
 				if (keys == null || values == null || keys.length != values.length)
 					throw new StreamCorruptedException();
+				final Map<?, ?> m = (Map<?, ?>) o;
 				for (int i = 0; i < keys.length; i++)
 					((Map) m).put(keys[i], values[i]);
 				return;

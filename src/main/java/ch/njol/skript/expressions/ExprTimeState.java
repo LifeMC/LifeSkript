@@ -62,11 +62,11 @@ public class ExprTimeState extends WrapperExpression<Object> {
 	
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		final Expression<?> expr = exprs[0];
 		if (isDelayed == Kleenean.TRUE) {
 			Skript.error("Cannot use time states after the event has already passed", ErrorQuality.SEMANTIC_ERROR);
 			return false;
 		}
+		final Expression<?> expr = exprs[0];
 		if (!expr.setTime(matchedPattern >= 2 ? 1 : -1)) {
 			Skript.error(expr + " does not have a " + (matchedPattern >= 2 ? "future" : "past") + " state", ErrorQuality.SEMANTIC_ERROR);
 			return false;

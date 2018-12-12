@@ -58,10 +58,10 @@ public class StoppableIterator<T> implements Iterator<T> {
 	
 	@Override
 	public boolean hasNext() {
-		final boolean cn = calledNext;
-		calledNext = false;
 		if (stopped || !iter.hasNext())
 			return false;
+		final boolean cn = calledNext;
+		calledNext = false;
 		if (cn && !returnLast) {
 			current = iter.next();
 			if (stopper.check(current)) {

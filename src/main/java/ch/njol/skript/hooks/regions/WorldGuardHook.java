@@ -243,12 +243,12 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
 	@SuppressWarnings({"null", "unused"})
 	@Override
 	public Collection<? extends Region> getRegionsAt_i(final Location l) {
-		final ArrayList<Region> r = new ArrayList<Region>();
 		if (l == null)
 			return Collections.emptyList();
 		if (l.getWorld() == null)
 			return Collections.emptyList();
 		final RegionManager manager = plugin.getRegionManager(l.getWorld());
+		final ArrayList<Region> r = new ArrayList<Region>();
 		if (manager == null)
 			return r;
 		final ApplicableRegionSet applicable = manager.getApplicableRegions(l);

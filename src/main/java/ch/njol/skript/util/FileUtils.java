@@ -65,12 +65,12 @@ public final class FileUtils {
 	public static File backup(final File f) throws IOException {
 		String name = f.getName();
 		final int c = name.lastIndexOf('.');
-		final String ext = c == -1 ? null : name.substring(c + 1);
 		if (c != -1)
 			name = name.substring(0, c);
 		final File backupFolder = new File(f.getParentFile(), "backups" + File.separator);
 		if (!backupFolder.exists() && !backupFolder.mkdirs())
 			throw new IOException("Cannot create backups folder");
+		final String ext = c == -1 ? null : name.substring(c + 1);
 		final File backup = new File(backupFolder, name + "_" + getBackupSuffix() + (ext == null ? "" : "." + ext));
 		if (backup.exists())
 			throw new IOException("Backup file " + backup.getName() + " does already exist");

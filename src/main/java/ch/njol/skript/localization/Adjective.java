@@ -51,9 +51,10 @@ public final class Adjective extends Message {
 		def = v;
 		if (v == null)
 			return;
-		final int s = v.indexOf('@'), e = v.lastIndexOf('@');
+		final int s = v.indexOf('@');
 		if (s == -1)
 			return;
+		final int e = v.lastIndexOf('@');
 		if (s == e) {
 			Skript.error("Invalid use of '@' in the adjective '" + key + "' in the " + Language.getName() + " language file: " + v);
 			return;

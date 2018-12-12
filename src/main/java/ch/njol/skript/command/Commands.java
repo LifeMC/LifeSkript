@@ -437,14 +437,11 @@ public final class Commands { //NOSONAR
 		if (!(node.get("trigger") instanceof SectionNode))
 			return null;
 		
-		final String usage = ScriptLoader.replaceOptions(node.get("usage", desc));
-		final String description = ScriptLoader.replaceOptions(node.get("description", ""));
 		ArrayList<String> aliases = new ArrayList<String>(Arrays.asList(ScriptLoader.replaceOptions(node.get("aliases", "")).split("\\s*,\\s*/?")));
 		if (aliases.get(0).startsWith("/"))
 			aliases.set(0, aliases.get(0).substring(1));
 		else if (aliases.get(0).isEmpty())
 			aliases = new ArrayList<String>(0);
-		final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
 		
 		final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
  		Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ?
@@ -496,6 +493,7 @@ public final class Commands { //NOSONAR
 			cooldownStorage = VariableString.newInstance(cooldownStorageString, StringMode.VARIABLE_NAME);
 		}
 		
+		final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
 		if (permissionMessage != null && permission.isEmpty()) {
 			Skript.warning("command /" + command + " has a permission message set, but not a permission");
 		}
@@ -510,6 +508,8 @@ public final class Commands { //NOSONAR
 		}
 		
 		final String cooldownBypass = ScriptLoader.replaceOptions(node.get("cooldown bypass", ""));
+		final String description = ScriptLoader.replaceOptions(node.get("description", ""));
+		final String usage = ScriptLoader.replaceOptions(node.get("usage", desc));
 		
 		Commands.currentArguments = currentArguments;
 		final ScriptCommand c;

@@ -177,9 +177,6 @@ public final class DatabaseStorage extends VariablesStorage {
 				return false;
 			
 			try {
-				final boolean hasOldTable = db.isTable(OLD_TABLE_NAME);
-				final boolean hadNewTable = db.isTable(TABLE_NAME);
-				
 				try {
 					db.query(type.createQuery);
 				} catch (final SQLException e) {
@@ -193,6 +190,8 @@ public final class DatabaseStorage extends VariablesStorage {
 				}
 				
 				// old
+				final boolean hasOldTable = db.isTable(OLD_TABLE_NAME);
+				final boolean hadNewTable = db.isTable(TABLE_NAME);
 				if (hasOldTable) {
 					final ResultSet r1 = db.query("SELECT " + SELECT_ORDER + " FROM " + OLD_TABLE_NAME);
 					assert r1 != null;

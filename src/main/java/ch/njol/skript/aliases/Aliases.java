@@ -597,12 +597,11 @@ public final class Aliases { //NOSONAR
 	 */
 	@Nullable
 	private static ItemType parseType(final String s, final ItemType t, final boolean isAlias) {
-		ItemType i;
 		int c = s.indexOf(':');
 		if (c == -1)
 			c = s.length();
-		final String type = s.substring(0, c);
 		ItemData data = null;
+		ItemType i;
 		if (c != s.length()) {
 			data = parseData("" + s.substring(c + 1));
 			if (data == null) {
@@ -610,6 +609,7 @@ public final class Aliases { //NOSONAR
 				return null;
 			}
 		}
+		final String type = s.substring(0, c);
 		if (type.isEmpty()) {
 			t.add(data == null ? new ItemData() : data);
 			return t;

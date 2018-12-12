@@ -96,10 +96,10 @@ public class ExprLore extends SimpleExpression<String> {
 	@Override
 	@Nullable
 	protected String[] get(final Event e) {
-		final Object i = item.getSingle(e);
 		final Number n = line != null ? line.getSingle(e) : null;
 		if (n == null && line != null)
 			return null;
+		final Object i = item.getSingle(e);
 		if (i == null || i instanceof ItemStack && ((ItemStack) i).getType() == Material.AIR)
 			return new String[0];
 		final ItemMeta meta = i instanceof ItemStack ? ((ItemStack) i).getItemMeta() : (ItemMeta) ((ItemType) i).getItemMeta();

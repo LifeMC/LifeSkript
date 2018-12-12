@@ -125,7 +125,6 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
 	@SuppressWarnings("null")
 	@Override
 	public boolean init() {
-		boolean hasValue = false;
 		final Class<? extends Event>[] es = ScriptLoader.getCurrentEvents();
 		if (es == null) {
 			//assert false;
@@ -133,6 +132,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
 		}
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
 		try {
+			boolean hasValue = false;
 			for (final Class<? extends Event> e : es) {
 				if (getters.containsKey(e)) {
 					hasValue = getters.get(e) != null;

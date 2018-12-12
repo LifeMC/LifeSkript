@@ -405,7 +405,7 @@ public class YggdrasilTest {
 		}
 	}
 	
-	private String toString(final @Nullable Object o) {
+	private static String toString(final @Nullable Object o) {
 		if (o == null)
 			return "null";
 		if (o.getClass().isArray()) {

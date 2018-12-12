@@ -188,12 +188,12 @@ public abstract class YggdrasilInputStream implements Closeable {
 				final Class<?> c = readObjectType();
 				final YggdrasilSerializer s = yggdrasil.getSerializer(c);
 				if (s != null && !s.canBeInstantiated(c)) {
-					final int ref = readObjects.size();
 					readObjects.add(null);
 					final Fields fields = readFields();
 					o = s.deserialize(c, fields);
 					if (o == null)
 						throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from deserialize(" + c + "," + fields + ")");
+					final int ref = readObjects.size();
 					readObjects.set(ref, o);
 				} else {
 					o = yggdrasil.newInstance(c);
