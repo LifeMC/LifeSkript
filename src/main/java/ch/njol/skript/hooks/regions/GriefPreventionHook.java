@@ -83,8 +83,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 				claimsField = null;
 		} catch (final NoSuchFieldException ignored) {} catch (final SecurityException ignored) {}
 		if (getClaim == null && claimsField == null) {
-			Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "."
-					+ " Please report this at " + Skript.ISSUES_LINK  + " if this error occurred after you updated GriefPrevention.");
+			Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "." + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");
 			return false;
 		}
 		return super.init();

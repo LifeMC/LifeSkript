@@ -41,8 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("op/deop")
 @Description("Grant/revoke a user operator status.")
-@Examples({"op the player",
-		"deop all players"})
+@Examples({"op the player", "deop all players"})
 @Since("1.0")
 public class EffOp extends Effect {
 	

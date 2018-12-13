@@ -35,22 +35,22 @@ public final class ScriptOptions {
 	@SuppressWarnings("null")
 	private static ScriptOptions instance;
 	
-	private ScriptOptions(){
+	private ScriptOptions() {
 		ScriptOptions.instance = this;
 	}
 	
 	@SuppressWarnings("null")
-	public static ScriptOptions getInstance(){
+	public static ScriptOptions getInstance() {
 		return instance != null ? instance : new ScriptOptions();
 	}
 	
-	public boolean usesNewLoops(final File file){
-		if(usesNewLoops.containsKey(file))
+	public boolean usesNewLoops(final File file) {
+		if (usesNewLoops.containsKey(file))
 			return usesNewLoops.get(file);
 		return true;
 	}
 	
-	public void setUsesNewLoops(final File file, final boolean b){
+	public void setUsesNewLoops(final File file, final boolean b) {
 		usesNewLoops.put(file, b);
 	}
 }

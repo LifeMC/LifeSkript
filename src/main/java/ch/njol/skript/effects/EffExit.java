@@ -47,21 +47,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Exit")
 @Description("Exits a given amount of loops and conditionals, or the entire trigger.")
-@Examples({"if player has any ore:",
-		"	stop",
-		"message \"%player% has no ores!\"",
-		"loop blocks above the player:",
-		"	loop-block is not air:",
-		"		exit 2 sections",
-		"	set loop-block to water"})
+@Examples({"if player has any ore:", "	stop", "message \"%player% has no ores!\"", "loop blocks above the player:", "	loop-block is not air:", "		exit 2 sections", "	set loop-block to water"})
 @Since("1.0")
 public final class EffExit extends Effect { // TODO [code style] warn user about code after a stop effect
 	static {
-		Skript.registerEffect(EffExit.class,
-				"(exit|stop) [trigger]",
-				"(exit|stop) [(1|a|the|this)] (0¦section|1¦loop|2¦conditional)",
-				"(exit|stop) <\\d+> (0¦section|1¦loop|2¦conditional)s",
-				"(exit|stop) all (0¦section|1¦loop|2¦conditional)s");
+		Skript.registerEffect(EffExit.class, "(exit|stop) [trigger]", "(exit|stop) [(1|a|the|this)] (0¦section|1¦loop|2¦conditional)", "(exit|stop) <\\d+> (0¦section|1¦loop|2¦conditional)s", "(exit|stop) all (0¦section|1¦loop|2¦conditional)s");
 	}
 	
 	private int breakLevels;

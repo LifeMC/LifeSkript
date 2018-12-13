@@ -341,7 +341,7 @@ public final class Fields implements Iterable<FieldContext> {
 	}
 	
 	public boolean hasField(final String fieldID) {
-	    return fields.containsKey(fieldID);
+		return fields.containsKey(fieldID);
 	}
 	
 	@Nullable

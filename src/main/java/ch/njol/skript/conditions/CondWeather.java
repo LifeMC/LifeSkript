@@ -44,10 +44,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Weather")
-@Description({"Checks whether the weather in a world is of a specific type.",
-		"<i>I welcome any ideas how to write this condition differently.</i>"})
-@Examples({"is thundering",
-		"is raining in \"world\" or \"world2\""})
+@Description({"Checks whether the weather in a world is of a specific type.", "<i>I welcome any ideas how to write this condition differently.</i>"})
+@Examples({"is thundering", "is raining in \"world\" or \"world2\""})
 @Since("1.0")
 public class CondWeather extends Condition {
 	static {

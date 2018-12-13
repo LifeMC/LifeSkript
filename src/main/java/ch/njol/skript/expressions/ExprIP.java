@@ -38,9 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("IP")
 @Description("The IP address of a player.")
-@Examples({"IP-ban the player # is equal to the next line",
-		"ban the IP-address of the player",
-		"broadcast \"Banned the IP %IP of player%\""})
+@Examples({"IP-ban the player # is equal to the next line", "ban the IP-address of the player", "broadcast \"Banned the IP %IP of player%\""})
 @Since("1.4")
 public final class ExprIP extends SimplePropertyExpression<Player, String> {
 	static {

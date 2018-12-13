@@ -255,7 +255,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 			case T_OBJECT:
 				writeGenericObject(o, ref);
 				return;
-				//$CASES-OMITTED$
+			//$CASES-OMITTED$
 			default:
 				throw new YggdrasilException("unhandled type " + type);
 		}

@@ -43,19 +43,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Time")
 @Description("Tests whether a given <a href='../classes/#date'>real time</a> was more or less than some <a href='../classes/#timespan'>time span</a> ago.")
-@Examples({"command /command_with_cooldown:",
-		"	trigger:",
-		"		{command.%player%.lastused} was less than a minute ago:",
-		"			message \"Please wait a minute between uses of this command.\"",
-		"			stop",
-		"		set {command.%player%.lastused} to now",
-		"		# ... actual command trigger here ..."})
+@Examples({"command /command_with_cooldown:", "	trigger:", "		{command.%player%.lastused} was less than a minute ago:", "			message \"Please wait a minute between uses of this command.\"", "			stop", "		set {command.%player%.lastused} to now", "		# ... actual command trigger here ..."})
 @Since("2.0")
 public final class CondDate extends Condition {
 	static {
-		Skript.registerCondition(CondDate.class,
-				"%date% (was|were)( more|(n't| not) less) than %timespan% [ago]",
-				"%date% (was|were)((n't| not) more| less) than %timespan% [ago]");
+		Skript.registerCondition(CondDate.class, "%date% (was|were)( more|(n't| not) less) than %timespan% [ago]", "%date% (was|were)((n't| not) more| less) than %timespan% [ago]");
 	}
 	
 	@SuppressWarnings("null")

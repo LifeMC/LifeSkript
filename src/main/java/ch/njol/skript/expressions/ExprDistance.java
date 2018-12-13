@@ -42,8 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Distance")
 @Description("The distance between two points.")
-@Examples({"distance between the player and {%player%.home} is smaller than 20:",
-		"	message \"You're very close to your home!\""})
+@Examples({"distance between the player and {%player%.home} is smaller than 20:", "	message \"You're very close to your home!\""})
 @Since("1.0")
 public class ExprDistance extends SimpleExpression<Double> {
 	static {

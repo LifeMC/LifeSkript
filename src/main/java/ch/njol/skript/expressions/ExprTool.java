@@ -56,9 +56,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Tool")
 @Description("The item a player is holding.")
-@Examples({"player is holding a pickaxe",
-		"# is the same as",
-		"player's tool is a pickaxe"})
+@Examples({"player is holding a pickaxe", "# is the same as", "player's tool is a pickaxe"})
 @Since("1.0")
 public class ExprTool extends PropertyExpression<LivingEntity, Slot> {
 	static {

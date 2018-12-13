@@ -42,15 +42,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Has Permission")
 @Description("Test whether a player has a certain permission.")
-@Examples({"player has permission \"skript.tree\"",
-		"victim has the permission \"admin\":",
-		"	send \"You're attacking an admin!\" to attacker"})
+@Examples({"player has permission \"skript.tree\"", "victim has the permission \"admin\":", "	send \"You're attacking an admin!\" to attacker"})
 @Since("1.0")
 public final class CondPermission extends Condition {
 	static {
-		Skript.registerCondition(CondPermission.class,
-				"[%commandsenders%] (do[es]n't|don't|do[es] not) have [the] permission[s] %strings%",
-				"[%commandsenders%] ha(s|ve) [the] permission[s] %strings%");
+		Skript.registerCondition(CondPermission.class, "[%commandsenders%] (do[es]n't|don't|do[es] not) have [the] permission[s] %strings%", "[%commandsenders%] ha(s|ve) [the] permission[s] %strings%");
 	}
 	
 	@SuppressWarnings("null")

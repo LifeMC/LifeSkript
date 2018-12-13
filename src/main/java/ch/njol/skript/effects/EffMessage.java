@@ -41,11 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Message")
 @Description("Sends a message to the given player.")
-@Examples({"message \"A wild %player% appeared!\"",
-		"message \"This message is a distraction. Mwahaha!\"",
-		"send \"Your kill streak is %{kill streak.%player%}%.\" to player",
-		"if the targeted entity exists:",
-		"	message \"You're currently looking at a %type of the targeted entity%!\""})
+@Examples({"message \"A wild %player% appeared!\"", "message \"This message is a distraction. Mwahaha!\"", "send \"Your kill streak is %{kill streak.%player%}%.\" to player", "if the targeted entity exists:", "	message \"You're currently looking at a %type of the targeted entity%!\""})
 @Since("1.0")
 public final class EffMessage extends Effect {
 	static {

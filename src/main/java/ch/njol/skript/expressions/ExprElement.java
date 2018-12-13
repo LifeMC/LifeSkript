@@ -45,8 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Element of")
-@Description({"The first, last or a random element of a set, e.g. a list variable.",
-		"See also: <a href='#ExprRandom'>random</a>"})
+@Description({"The first, last or a random element of a set, e.g. a list variable.", "See also: <a href='#ExprRandom'>random</a>"})
 @Examples("give a random element out of {free items::*} to the player")
 @Since("2.0")
 public class ExprElement extends SimpleExpression<Object> {
@@ -59,7 +58,7 @@ public class ExprElement extends SimpleExpression<Object> {
 	
 	@SuppressWarnings("null")
 	private Expression<?> expr;
-
+	
 	@Nullable
 	private Expression<Number> number;
 	

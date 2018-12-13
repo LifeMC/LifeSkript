@@ -43,9 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Is in World")
 @Description("Checks whether an entity is in a specific world")
-@Examples({"player is in \"world\"",
-		"argument isn't in world \"world_nether\"",
-		"the player is in the world of the victim"})
+@Examples({"player is in \"world\"", "argument isn't in world \"world_nether\"", "the player is in the world of the victim"})
 @Since("1.4")
 public final class CondIsInWorld extends Condition {
 	static {

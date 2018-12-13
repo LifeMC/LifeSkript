@@ -40,9 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Money")
 @Description("How much virtual money a player has (can be changed). This expression requires Vault and a compatible economy plugin to be installed.")
-@Examples({"message \"You have %player's money%\" # the currency name will be added automatically",
-		"remove 20$ from the player's balance # replace '$' by whatever currency you use",
-		"add 200 to the player's account # or omit the currency alltogether"})
+@Examples({"message \"You have %player's money%\" # the currency name will be added automatically", "remove 20$ from the player's balance # replace '$' by whatever currency you use", "add 200 to the player's account # or omit the currency alltogether"})
 @Since("2.0")
 public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, Money> {
 	static {
@@ -54,7 +52,7 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
 	public Money convert(final OfflinePlayer p) {
 		try {
 			return new Money(VaultHook.economy.getBalance(p));
-		}catch(final Exception e){
+		} catch (final Exception e) {
 			return new Money(VaultHook.economy.getBalance(p.getName()));
 		}
 	}

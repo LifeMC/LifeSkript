@@ -188,9 +188,9 @@ public final class DefaultComparators {
 		entityMaterials.put(EnderPearl.class, Material.ENDER_PEARL);
 		entityMaterials.put(Snowball.class, Material.SNOW_BALL);
 		entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);
-		if(Skript.classExists("org.bukkit.entity.FishHook")) {
+		if (Skript.classExists("org.bukkit.entity.FishHook")) {
 			entityMaterials.put(org.bukkit.entity.FishHook.class, Material.FISHING_ROD);
-		} else if(Skript.classExists("org.bukkit.entity.Fish")) {
+		} else if (Skript.classExists("org.bukkit.entity.Fish")) {
 			entityMaterials.put(org.bukkit.entity.Fish.class, Material.FISHING_ROD);
 		}
 		entityMaterials.put(TNTPrimed.class, Material.TNT);
@@ -272,7 +272,7 @@ public final class DefaultComparators {
 			public Relation compare(final OfflinePlayer p, final String name) {
 				/* patch from bensku */
 				final String offlineName = p.getName();
- 				return offlineName == null ? Relation.NOT_EQUAL : Relation.get(offlineName.equalsIgnoreCase(name));
+				return offlineName == null ? Relation.NOT_EQUAL : Relation.get(offlineName.equalsIgnoreCase(name));
 			}
 			
 			@Override
@@ -396,7 +396,7 @@ public final class DefaultComparators {
 						return Relation.get(t.isOfType(Material.LAVA.getId(), (short) -1) && t.isOfType(Material.STATIONARY_LAVA.getId(), (short) -1));
 					case MAGIC:
 						return Relation.get(t.isOfType(Material.POTION.getId(), (short) -1));
-						//$CASES-OMITTED$
+					//$CASES-OMITTED$
 					default:
 						return Relation.NOT_EQUAL;
 				}
@@ -420,7 +420,7 @@ public final class DefaultComparators {
 						return Relation.get(e.isSupertypeOf(EntityData.fromClass(Wither.class)));
 					case FALLING_BLOCK:
 						return Relation.get(e.isSupertypeOf(EntityData.fromClass(FallingBlock.class)));
-						//$CASES-OMITTED$
+					//$CASES-OMITTED$
 					default:
 						return Relation.NOT_EQUAL;
 				}

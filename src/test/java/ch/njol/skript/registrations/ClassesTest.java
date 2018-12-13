@@ -112,7 +112,7 @@ public class ClassesTest {
 		
 		final PluginDescriptionFile pdf = new PluginDescriptionFile(new FileInputStream(new File(dataDir, "plugin.yml")));
 		
-//	    final void init(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
+	//	    final void init(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
 		final Method init = JavaPlugin.class.getDeclaredMethod("init", PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
 		init.setAccessible(true);
 		init.invoke(skript, new JavaPluginLoader(s), s, pdf, dataDir, jar, getClass().getClassLoader());

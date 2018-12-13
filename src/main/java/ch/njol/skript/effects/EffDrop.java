@@ -48,8 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Drop")
 @Description("Drops one or more items.")
-@Examples({"on death of creeper:",
-		"	drop 1 TNT"})
+@Examples({"on death of creeper:", "	drop 1 TNT"})
 @Since("1.0")
 public class EffDrop extends Effect {
 	static {

@@ -92,7 +92,7 @@ public final class Updater {
 		public int compareTo(final @Nullable VersionInfo o) {
 			return version.compareTo(o == null ? null : o.version);
 		}
-
+		
 		@Override
 		@SuppressWarnings("null")
 		public int hashCode() {
@@ -105,7 +105,7 @@ public final class Updater {
 			result = prime * result + (version == null ? 0 : version.hashCode());
 			return result;
 		}
-
+		
 		@Override
 		@SuppressWarnings({"null", "unused"})
 		public boolean equals(@Nullable final Object obj) {
@@ -222,6 +222,7 @@ public final class Updater {
 		if (!isAutomatic || Skript.logNormal())
 			Skript.info(sender, "" + m_checking);
 		Skript.newThread(new Runnable() {
+			@SuppressWarnings("null")
 			@Override
 			public void run() {
 				infos.clear();

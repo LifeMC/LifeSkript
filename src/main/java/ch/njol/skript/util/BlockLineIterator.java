@@ -45,19 +45,18 @@ public class BlockLineIterator extends StoppableIterator<Block> {
 	 */
 	@SuppressWarnings("null")
 	public BlockLineIterator(final Block start, final Block end) throws IllegalStateException {
-		super(new BlockIterator(start.getWorld(), fitInWorld(start.getLocation().add(0.5, 0.5, 0.5), end.getLocation().subtract(start.getLocation()).toVector()),
-				end.equals(start) ? new Vector(1, 0, 0) : end.getLocation().subtract(start.getLocation()).toVector(), 0, 0), // should prevent an error if start = end
-		new NullableChecker<Block>() {
-			private final double overshotSq = Math.pow(start.getLocation().distance(end.getLocation()) + 2, 2);
-			
-			@Override
-			public boolean check(final @Nullable Block b) {
-				assert b != null;
-				if (b.getLocation().distanceSquared(start.getLocation()) > overshotSq)
-					throw new IllegalStateException("BlockLineIterator missed the end block!");
-				return b.equals(end);
-			}
-		}, true);
+		super(new BlockIterator(start.getWorld(), fitInWorld(start.getLocation().add(0.5, 0.5, 0.5), end.getLocation().subtract(start.getLocation()).toVector()), end.equals(start) ? new Vector(1, 0, 0) : end.getLocation().subtract(start.getLocation()).toVector(), 0, 0), // should prevent an error if start = end
+				new NullableChecker<Block>() {
+					private final double overshotSq = Math.pow(start.getLocation().distance(end.getLocation()) + 2, 2);
+					
+					@Override
+					public boolean check(final @Nullable Block b) {
+						assert b != null;
+						if (b.getLocation().distanceSquared(start.getLocation()) > overshotSq)
+							throw new IllegalStateException("BlockLineIterator missed the end block!");
+						return b.equals(end);
+					}
+				}, true);
 	}
 	
 	/**

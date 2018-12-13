@@ -52,10 +52,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Log")
-@Description({"Writes text into a .log file. Skript will write these files to /plugins/Skript/logs.",
-		"NB: Using 'server.log' as the log file will write to the default server log. Omitting the log file altogether will log the message as '[Skript] [&lt;script&gt;.sk] &lt;message&gt;' in the server log."})
-@Examples({"on place of TNT:",
-		"	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
+@Description({"Writes text into a .log file. Skript will write these files to /plugins/Skript/logs.", "NB: Using 'server.log' as the log file will write to the default server log. Omitting the log file altogether will log the message as '[Skript] [&lt;script&gt;.sk] &lt;message&gt;' in the server log."})
+@Examples({"on place of TNT:", "	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
 	static {

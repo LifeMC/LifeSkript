@@ -44,8 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Broadcast")
 @Description("Broadcasts a message to the server.")
-@Examples({"broadcast \"Welcome %player% to the server!\"",
-		"broadcast \"Woah! It's a message!\""})
+@Examples({"broadcast \"Welcome %player% to the server!\"", "broadcast \"Woah! It's a message!\""})
 @Since("1.0")
 public final class EffBroadcast extends Effect {
 	static {

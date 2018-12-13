@@ -82,12 +82,12 @@ public class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 			return CollectionUtils.array(Number.class);
 		return null;
 	}
-
+	
 	@SuppressWarnings({"incomplete-switch", "null"})
 	@Override
 	public void change(final Event e, final @NonNull Object[] delta, final ChangeMode mode) {
 		final Location l = getExpr().getSingle(e);
-		if(delta[0] == null || l == null)
+		if (delta[0] == null || l == null)
 			return;
 		final float f = ((Number) delta[0]).floatValue();
 		switch (mode) {
@@ -109,12 +109,11 @@ public class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 				else
 					l.setPitch(l.getPitch() - f);
 				break;
-		default:
-			break;
+			default:
+				break;
 		}
 	}
-
-
+	
 	//Some random method decided to use for converting to positive values.
 	public float convertToPositive(final float f) {
 		if (f * -1 == Math.abs(f))

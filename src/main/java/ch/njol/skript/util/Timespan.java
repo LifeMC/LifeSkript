@@ -38,7 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
-
+	
 	private final static Noun m_tick = new Noun("time.tick");
 	private final static Noun m_second = new Noun("time.second");
 	private final static Noun m_minute = new Noun("time.minute");
@@ -144,7 +144,7 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 	
 	/**
 	 * @deprecated Use fromTicks_i(long ticks) instead. Since this method limits timespan to 50 * Integer.MAX_VALUE.
-	 * I only keep this to allow for older addons to still work. / Mirre
+	 *             I only keep this to allow for older addons to still work. / Mirre
 	 */
 	@Deprecated
 	public static Timespan fromTicks(final int ticks) {
@@ -183,11 +183,7 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	final static NonNullPair<Noun, Long>[] simpleValues = new NonNullPair[] {
-			new NonNullPair<Noun, Long>(m_day,  1000L * 60 * 60 * 24),
-			new NonNullPair<Noun, Long>(m_hour, 1000L * 60 * 60),
-			new NonNullPair<Noun, Long>(m_minute, 1000L * 60),
-			new NonNullPair<Noun, Long>(m_second, 1000L)
+	final static NonNullPair<Noun, Long>[] simpleValues = new NonNullPair[] {new NonNullPair<Noun, Long>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<Noun, Long>(m_hour, 1000L * 60 * 60), new NonNullPair<Noun, Long>(m_minute, 1000L * 60), new NonNullPair<Noun, Long>(m_second, 1000L)
 	};
 	
 	public static String toString(final long millis) {
@@ -223,7 +219,7 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (millis/Integer.MAX_VALUE);
+		result = prime * result + (int) (millis / Integer.MAX_VALUE);
 		return result;
 	}
 	

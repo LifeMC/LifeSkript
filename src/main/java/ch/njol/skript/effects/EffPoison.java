@@ -44,15 +44,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Poison/Cure")
 @Description("Poison or cure a creature.")
-@Examples({"poison the player",
-		"poison the victim for 20 seconds",
-		"cure the player from poison"})
+@Examples({"poison the player", "poison the victim for 20 seconds", "cure the player from poison"})
 @Since("1.3.2")
 public class EffPoison extends Effect {
 	static {
-		Skript.registerEffect(EffPoison.class,
-				"poison %livingentities% [for %-timespan%]",
-				"(cure|unpoison) %livingentities% [(from|of) poison]");
+		Skript.registerEffect(EffPoison.class, "poison %livingentities% [for %-timespan%]", "(cure|unpoison) %livingentities% [(from|of) poison]");
 	}
 	
 	private final static int DEFAULT_DURATION = 15 * 20; // 15 seconds on hard difficulty, same as EffPotion
@@ -84,8 +80,7 @@ public class EffPoison extends Effect {
 		for (final LivingEntity le : entites.getArray(e)) {
 			if (!cure) {
 				Timespan dur;
-				int d = (int) (duration != null && (dur = duration.getSingle(e)) != null ?
-						dur.getTicks_i() >= Integer.MAX_VALUE ? Integer.MAX_VALUE : dur.getTicks_i() : DEFAULT_DURATION);
+				int d = (int) (duration != null && (dur = duration.getSingle(e)) != null ? dur.getTicks_i() >= Integer.MAX_VALUE ? Integer.MAX_VALUE : dur.getTicks_i() : DEFAULT_DURATION);
 				if (le.hasPotionEffect(PotionEffectType.POISON)) {
 					for (final PotionEffect pe : le.getActivePotionEffects()) {
 						if (pe.getType() != PotionEffectType.POISON)

@@ -41,60 +41,52 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EntityType implements Cloneable, YggdrasilSerializable {
 	
 	static {
-		Classes.registerClass(new ClassInfo<EntityType>(EntityType.class, "entitytype")
-				.name("Entity Type with Amount")
-				.description("An <a href='#entitydata'>entity type</a> with an amount, e.g. '2 zombies'. I might remove this type in the future and make a more general 'type' type, i.e. a type that has a number and a type.")
-				.usage("&lt;<a href='#number'>number</a>&gt; &lt;entity type&gt;")
-				.examples("spawn 5 creepers behind the player")
-				.since("1.3")
-				.defaultExpression(new SimpleLiteral<EntityType>(new EntityType(Entity.class, 1), true))
-				.parser(new Parser<EntityType>() {
-					@Override
-					@Nullable
-					public EntityType parse(final String s, final ParseContext context) {
-						return EntityType.parse(s);
-					}
-					
-					@Override
-					public String toString(final EntityType t, final int flags) {
-						return t.toString(flags);
-					}
-					
-					@Override
-					public String toVariableNameString(final EntityType t) {
-						return "entitytype:" + t.toString();
-					}
-					
-					@Override
-					public String getVariableNamePattern() {
-						return "entitytype:.+";
-					}
-				})
-				.serializer(new YggdrasilSerializer<EntityType>() {
+		Classes.registerClass(new ClassInfo<EntityType>(EntityType.class, "entitytype").name("Entity Type with Amount").description("An <a href='#entitydata'>entity type</a> with an amount, e.g. '2 zombies'. I might remove this type in the future and make a more general 'type' type, i.e. a type that has a number and a type.").usage("&lt;<a href='#number'>number</a>&gt; &lt;entity type&gt;").examples("spawn 5 creepers behind the player").since("1.3").defaultExpression(new SimpleLiteral<EntityType>(new EntityType(Entity.class, 1), true)).parser(new Parser<EntityType>() {
+			@Override
+			@Nullable
+			public EntityType parse(final String s, final ParseContext context) {
+				return EntityType.parse(s);
+			}
+			
+			@Override
+			public String toString(final EntityType t, final int flags) {
+				return t.toString(flags);
+			}
+			
+			@Override
+			public String toVariableNameString(final EntityType t) {
+				return "entitytype:" + t.toString();
+			}
+			
+			@Override
+			public String getVariableNamePattern() {
+				return "entitytype:.+";
+			}
+		}).serializer(new YggdrasilSerializer<EntityType>() {
 //						return t.amount + "*" + EntityData.serializer.serialize(t.data);
-					@Override
-					@Deprecated
-					@Nullable
-					public EntityType deserialize(final String s) {
-						final String[] split = s.split("\\*", 2);
-						if (split.length != 2)
-							return null;
-						@SuppressWarnings("null")
-						final EntityData<?> d = EntityData.serializer.deserialize(split[1]);
-						if (d == null)
-							return null;
-						try {
-							return new EntityType(d, Integer.parseInt(split[0]));
-						} catch (final NumberFormatException e) {
-							return null;
-						}
-					}
-					
-					@Override
-					public boolean mustSyncDeserialization() {
-						return false;
-					}
-				}));
+			@Override
+			@Deprecated
+			@Nullable
+			public EntityType deserialize(final String s) {
+				final String[] split = s.split("\\*", 2);
+				if (split.length != 2)
+					return null;
+				@SuppressWarnings("null")
+				final EntityData<?> d = EntityData.serializer.deserialize(split[1]);
+				if (d == null)
+					return null;
+				try {
+					return new EntityType(d, Integer.parseInt(split[0]));
+				} catch (final NumberFormatException e) {
+					return null;
+				}
+			}
+			
+			@Override
+			public boolean mustSyncDeserialization() {
+				return false;
+			}
+		}));
 	}
 	
 	public int amount = -1;

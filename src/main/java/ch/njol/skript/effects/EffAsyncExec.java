@@ -45,12 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Async Execute")
 @Description("Execute a effect dynamically and asynchronously in runtime")
-@Examples({"command /eval <text>:",
-		"\tdescription: Evaluates the given effect.",
-		"\tusage: /eval <effect>",
-		"\texecutable by: players",
-		"\ttrigger:",
-		"\t\texecute arg-1 async if the player has permission \"skript.eval\""})
+@Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 async if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
 public class EffAsyncExec extends AsyncEffect {
 	static {
@@ -80,11 +75,11 @@ public class EffAsyncExec extends AsyncEffect {
 			return;
 		}
 		final List<LogEntry> entryList = SkriptLogger.stopSuppressing();
-		if(eff != null) {
+		if (eff != null) {
 			eff.run(e);
 		} else {
 			final StringBuilder errorBuilder = new StringBuilder();
-			for(final LogEntry entry : entryList) {
+			for (final LogEntry entry : entryList) {
 				errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
 			}
 			assert errorBuilder != null;

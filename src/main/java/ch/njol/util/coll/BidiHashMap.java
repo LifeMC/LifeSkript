@@ -151,7 +151,7 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 	public BidiHashMap<T1, T2> clone() {
 		return new BidiHashMap<T1, T2>(this);
 	}
-
+	
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -163,7 +163,7 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
 		result = prime * result + (this.other == null ? 0 : this.other.hashCode());
 		return result;
 	}
-
+	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

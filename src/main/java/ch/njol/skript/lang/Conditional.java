@@ -87,9 +87,7 @@ public final class Conditional extends TriggerSection {
 			public String toString(final @Nullable Event e, final boolean debug) {
 				return "else";
 			}
-		}
-				.setParent(getParent())
-				.setNext(getNext());
+		}.setParent(getParent()).setNext(getNext());
 	}
 	
 	public void loadElseIf(final Condition cond, final SectionNode n) {
@@ -98,9 +96,7 @@ public final class Conditional extends TriggerSection {
 			((Conditional) elseClause).loadElseIf(cond, n);
 			return;
 		}
-		elseClause = new Conditional(cond, n)
-				.setParent(getParent())
-				.setNext(getNext());
+		elseClause = new Conditional(cond, n).setParent(getParent()).setNext(getNext());
 	}
 	
 	public boolean hasElseClause() {

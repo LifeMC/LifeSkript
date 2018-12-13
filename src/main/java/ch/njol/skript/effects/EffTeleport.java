@@ -48,8 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Teleport")
 @Description("Teleport an entity to a specific location.")
-@Examples({"teleport the player to {homes.%player%}",
-		"teleport the attacker to the victim"})
+@Examples({"teleport the player to {homes.%player%}", "teleport the attacker to the victim"})
 @Since("1.0")
 public class EffTeleport extends Effect {
 	static {
@@ -106,8 +105,7 @@ public class EffTeleport extends Effect {
 	 * @return Whether the given pitch and yaw represent a cartesian coordinate direction
 	 */
 	private static boolean ignoreDirection(final float yaw, final float pitch) {
-		return (pitch == 0 || Math.abs(pitch - 90) < Skript.EPSILON || Math.abs(pitch + 90) < Skript.EPSILON)
-				&& (yaw == 0 || Math.abs(Math.sin(Math.toRadians(yaw))) < Skript.EPSILON || Math.abs(Math.cos(Math.toRadians(yaw))) < Skript.EPSILON);
+		return (pitch == 0 || Math.abs(pitch - 90) < Skript.EPSILON || Math.abs(pitch + 90) < Skript.EPSILON) && (yaw == 0 || Math.abs(Math.sin(Math.toRadians(yaw))) < Skript.EPSILON || Math.abs(Math.cos(Math.toRadians(yaw))) < Skript.EPSILON);
 	}
 	
 	@Override

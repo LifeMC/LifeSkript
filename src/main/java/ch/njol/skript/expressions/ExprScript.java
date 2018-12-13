@@ -44,10 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Script Name")
 @Description("Holds the current script's name (the file name without '.sk').")
-@Examples({"on script load:",
-		"	set {running.%script%} to true",
-		"on script unload:",
-		"	set {running.%script%} to false"})
+@Examples({"on script load:", "	set {running.%script%} to true", "on script unload:", "	set {running.%script%} to false"})
 @Since("2.0")
 @Events("Script Load/Unload")
 public class ExprScript extends SimpleExpression<String> {

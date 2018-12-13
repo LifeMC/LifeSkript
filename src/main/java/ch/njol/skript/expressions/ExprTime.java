@@ -48,8 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Time")
 @Description("The <a href='../classes/#time'>time</a> of a world.")
-@Examples({"time in world is between 18:00 and 6:00:",
-		"	broadcast \"It's night-time, watch out for monsters!\""})
+@Examples({"time in world is between 18:00 and 6:00:", "	broadcast \"It's night-time, watch out for monsters!\""})
 @Since("1.0")
 public final class ExprTime extends PropertyExpression<World, Time> {
 	static {

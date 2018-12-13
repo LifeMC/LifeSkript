@@ -344,7 +344,9 @@ public final class CollectionUtils {
 	 * @param array Some objects
 	 * @return The passed array
 	 */
-	public static <T> T[] array(final T... array) {
+	@SuppressWarnings("null")
+	@NonNull
+	public static <T> T[] array(final @Nullable T... array) {
 		return array;
 	}
 	

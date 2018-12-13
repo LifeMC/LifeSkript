@@ -84,11 +84,9 @@ public final class Converters {
 			final ConverterInfo<?, ?> info = converters.get(i);
 			for (int j = 0; j < converters.size(); j++) {// not from j = i+1 since new converters get added during the loops
 				final ConverterInfo<?, ?> info2 = converters.get(j);
-				if ((info.options & Converter.NO_RIGHT_CHAINING) == 0 && (info2.options & Converter.NO_LEFT_CHAINING) == 0
-						&& info2.from.isAssignableFrom(info.to) && !converterExistsSlow(info.from, info2.to)) {
+				if ((info.options & Converter.NO_RIGHT_CHAINING) == 0 && (info2.options & Converter.NO_LEFT_CHAINING) == 0 && info2.from.isAssignableFrom(info.to) && !converterExistsSlow(info.from, info2.to)) {
 					converters.add(createChainedConverter(info, info2));
-				} else if ((info.options & Converter.NO_LEFT_CHAINING) == 0 && (info2.options & Converter.NO_RIGHT_CHAINING) == 0
-						&& info.from.isAssignableFrom(info2.to) && !converterExistsSlow(info2.from, info.to)) {
+				} else if ((info.options & Converter.NO_LEFT_CHAINING) == 0 && (info2.options & Converter.NO_RIGHT_CHAINING) == 0 && info.from.isAssignableFrom(info2.to) && !converterExistsSlow(info2.from, info.to)) {
 					converters.add(createChainedConverter(info2, info));
 				}
 			}
@@ -216,10 +214,10 @@ public final class Converters {
 	 * Uses registered {@link ch.njol.skript.registrations.Converters} to convert.
 	 *
 	 * @param original The array to convert
-	 * @param to       What to convert {@code original} to
+	 * @param to What to convert {@code original} to
 	 * @return {@code original} converted to an array of {@code to}
 	 * @throws ClassCastException if one of {@code original}'s
-	 * elements cannot be converted to a {@code to}
+	 *             elements cannot be converted to a {@code to}
 	 */
 	@SuppressWarnings({"unchecked", "null"})
 	public static <T> T[] convertStrictly(final Object[] original, final Class<T> to) throws ClassCastException {
@@ -233,7 +231,7 @@ public final class Converters {
 		}
 		return end;
 	}
-
+	
 	/**
 	 * Strictly converts an object to the specified class
 	 *

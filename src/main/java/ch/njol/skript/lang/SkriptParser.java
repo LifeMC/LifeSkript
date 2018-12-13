@@ -336,7 +336,7 @@ public final class SkriptParser {
 							if (r != null) {
 								log.printLog();
 								return r;
- 							}
+							}
 						}
 					}
 					log.printError(e.toString(null, false) + " " + Language.get("is") + " " + notOfType(types), ErrorQuality.NOT_AN_EXPRESSION);
@@ -405,7 +405,7 @@ public final class SkriptParser {
 		final ParseLogHandler log = SkriptLogger.startParseLogHandler();
 		try {
 			//Mirre
-			if (isObject && (flags & PARSE_LITERALS) != 0){
+			if (isObject && (flags & PARSE_LITERALS) != 0) {
 				// Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
 				final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
 				p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings; // If we suppress warnings here, we suppress them in parser what we created too
@@ -425,7 +425,7 @@ public final class SkriptParser {
 				return r;
 			}
 			log.clear();
- 									
+			
 			final List<int[]> pieces = new ArrayList<int[]>();
 			{
 				final Matcher m = listSplitPattern.matcher(expr);
@@ -725,8 +725,7 @@ public final class SkriptParser {
 				}
 				if (ps instanceof ExpressionList) {
 					if (!ps.getAnd()) {
-						Skript.error("Function arguments must be separated by commas and optionally an 'and', but not an 'or'."
-								+ " Put the 'or' into a second set of parentheses if you want to make it a single parameter, e.g. 'give(player, (sword or axe))'");
+						Skript.error("Function arguments must be separated by commas and optionally an 'and', but not an 'or'." + " Put the 'or' into a second set of parentheses if you want to make it a single parameter, e.g. 'give(player, (sword or axe))'");
 						log.printError();
 						return null;
 					}
@@ -1368,7 +1367,7 @@ public final class SkriptParser {
 		int time;
 	}
 	
-	private static final HashMap<String,ExprInfo> exprInfoCache = new HashMap<String,ExprInfo>();
+	private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<String, ExprInfo>();
 	
 	private static ExprInfo getExprInfo(final String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
 		ExprInfo r = exprInfoCache.get(s);

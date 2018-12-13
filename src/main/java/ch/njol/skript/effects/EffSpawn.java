@@ -46,14 +46,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @Name("Spawn")
 @Description("Spawn a creature.")
-@Examples({"spawn 3 creepers at the targeted block",
-		"spawn a ghast 5 meters above the player"})
+@Examples({"spawn 3 creepers at the targeted block", "spawn a ghast 5 meters above the player"})
 @Since("1.0")
 public final class EffSpawn extends Effect {
 	static {
-		Skript.registerEffect(EffSpawn.class,
-				"spawn %entitytypes% [%directions% %locations%]",
-				"spawn %number% of %entitytypes% [%directions% %locations%]");
+		Skript.registerEffect(EffSpawn.class, "spawn %entitytypes% [%directions% %locations%]", "spawn %number% of %entitytypes% [%directions% %locations%]");
 	}
 	
 	@SuppressWarnings("null")

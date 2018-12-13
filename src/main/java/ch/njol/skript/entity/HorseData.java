@@ -81,9 +81,7 @@ public class HorseData extends EntityData<Horse> {
 	
 	@Override
 	protected boolean match(final Horse entity) {
-		return (variant == null || variant == entity.getVariant())
-				&& (color == null || color == entity.getColor())
-				&& (style == null || style == entity.getStyle());
+		return (variant == null || variant == entity.getVariant()) && (color == null || color == entity.getColor()) && (style == null || style == entity.getStyle());
 	}
 	
 	@Override
@@ -106,9 +104,7 @@ public class HorseData extends EntityData<Horse> {
 		if (!(e instanceof HorseData))
 			return false;
 		final HorseData d = (HorseData) e;
-		return (variant == null || variant == d.variant)
-				&& (color == null || color == d.color)
-				&& (style == null || style == d.style);
+		return (variant == null || variant == d.variant) && (color == null || color == d.color) && (style == null || style == d.style);
 	}
 	
 	@Override

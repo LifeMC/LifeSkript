@@ -55,14 +55,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 	static {
-		Skript.registerEvent("Region Enter/Leave", EvtRegionBorder.class, RegionBorderEvent.class,
-				"(0¦enter[ing]|1¦leav(e|ing)|1¦exit[ing]) [of] ([a] region|[[the] region] %-regions%)",
-				"region (0¦enter[ing]|1¦leav(e|ing)|1¦exit[ing])")
-				.description("Called when a player enters or leaves a <a href='../classes/#region'>region</a>.",
-						"This event requires a supported regions plugin to be installed.")
-				.examples("on region exit:",
-						"	message \"Leaving %region%.\"")
-				.since("2.1");
+		Skript.registerEvent("Region Enter/Leave", EvtRegionBorder.class, RegionBorderEvent.class, "(0¦enter[ing]|1¦leav(e|ing)|1¦exit[ing]) [of] ([a] region|[[the] region] %-regions%)", "region (0¦enter[ing]|1¦leav(e|ing)|1¦exit[ing])").description("Called when a player enters or leaves a <a href='../classes/#region'>region</a>.", "This event requires a supported regions plugin to be installed.").examples("on region exit:", "	message \"Leaving %region%.\"").since("2.1");
 		EventValues.registerEventValue(RegionBorderEvent.class, Region.class, new Getter<Region, RegionBorderEvent>() {
 			@Override
 			public Region get(final RegionBorderEvent e) {

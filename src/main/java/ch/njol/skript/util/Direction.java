@@ -309,10 +309,7 @@ public final class Direction implements YggdrasilRobustSerializable {
 		for (int i = 0; i < rd.length; i++) {
 			relativeDirections[i] = new Message("directions." + rd[i]);
 		}
-		final String[] ad = {
-				BF_X.name().toLowerCase(Locale.ENGLISH), BF_X.getOppositeFace().name().toLowerCase(Locale.ENGLISH),
-				BF_Y.name().toLowerCase(Locale.ENGLISH), BF_Y.getOppositeFace().name().toLowerCase(Locale.ENGLISH),
-				BF_Z.name().toLowerCase(Locale.ENGLISH), BF_Z.getOppositeFace().name().toLowerCase(Locale.ENGLISH)};
+		final String[] ad = {BF_X.name().toLowerCase(Locale.ENGLISH), BF_X.getOppositeFace().name().toLowerCase(Locale.ENGLISH), BF_Y.name().toLowerCase(Locale.ENGLISH), BF_Y.getOppositeFace().name().toLowerCase(Locale.ENGLISH), BF_Z.name().toLowerCase(Locale.ENGLISH), BF_Z.getOppositeFace().name().toLowerCase(Locale.ENGLISH)};
 		for (int i = 0; i < ad.length; i++) {
 			absoluteDirections[i] = new Message("directions." + ad[i]);
 		}

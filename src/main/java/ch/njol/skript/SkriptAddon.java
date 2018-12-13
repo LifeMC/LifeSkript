@@ -124,11 +124,11 @@ public final class SkriptAddon {
 							loadedClasses.incrementAndGet(); // successfully loaded
 						} catch (final NoClassDefFoundError ncdfe) {
 							// not supported or not available on this version, skip it.
-							if(Skript.logHigh()) {
-								if(!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from a addon)
+							if (Skript.logHigh()) {
+								if (!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from a addon)
 									Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
 								} else {
-									if(Skript.debug()) {
+									if (Skript.debug()) {
 										Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
 									}
 								}
@@ -141,7 +141,7 @@ public final class SkriptAddon {
 							Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
 							unloadableClasses.incrementAndGet();
 						} catch (final LinkageError le) {
-							if(Skript.debug()) {
+							if (Skript.debug()) {
 								Skript.exception(le, "Cannot load class " + c + " from " + this);
 							}
 							unloadableClasses.incrementAndGet();

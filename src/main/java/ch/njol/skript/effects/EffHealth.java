@@ -46,17 +46,12 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Damage/Heal/Repair")
 @Description("Damage/Heal/Repair an entity, or item stack.")
-@Examples({"damage player by 5 hearts",
-		"heal the player",
-		"repair tool of player"})
+@Examples({"damage player by 5 hearts", "heal the player", "repair tool of player"})
 @Since("1.0")
 public class EffHealth extends Effect {
 	
 	static {
-		Skript.registerEffect(EffHealth.class,
-				"damage %slots/livingentities/itemstack% by %number% [heart[s]]",
-				"heal %livingentities% [by %-number% [heart[s]]]",
-				"repair %slots/itemstack% [by %-number%]");
+		Skript.registerEffect(EffHealth.class, "damage %slots/livingentities/itemstack% by %number% [heart[s]]", "heal %livingentities% [by %-number% [heart[s]]]", "repair %slots/itemstack% [by %-number%]");
 	}
 	
 	@SuppressWarnings("null")

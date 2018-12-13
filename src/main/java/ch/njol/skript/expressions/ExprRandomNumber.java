@@ -43,15 +43,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Random Number")
-@Description({"A random number or integer between two given numbers. Use 'number' if you want any number with decimal parts, or use use 'integer' if you only want whole numbers.",
-		"Please note that the order of the numbers doesn't matter, i.e. <code>random number between 2 and 1</code> will work as well as <code>random number between 1 and 2</code>."})
-@Examples({"set the player's health to a random number between 5 and 10",
-		"send \"You rolled a %random integer from 1 to 6%!\" to the player"})
+@Description({"A random number or integer between two given numbers. Use 'number' if you want any number with decimal parts, or use use 'integer' if you only want whole numbers.", "Please note that the order of the numbers doesn't matter, i.e. <code>random number between 2 and 1</code> will work as well as <code>random number between 1 and 2</code>."})
+@Examples({"set the player's health to a random number between 5 and 10", "send \"You rolled a %random integer from 1 to 6%!\" to the player"})
 @Since("1.4")
 public final class ExprRandomNumber extends SimpleExpression<Number> {
 	static {
-		Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED,
-				"[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");
+		Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED, "[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");
 	}
 	
 	@SuppressWarnings("null")

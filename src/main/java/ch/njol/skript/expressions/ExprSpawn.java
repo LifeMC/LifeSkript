@@ -48,8 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Spawn")
 @Description("The spawnpoint of a world.")
-@Examples({"teleport all players to spawn",
-		"set the spawn point of \"world\" to the player's location"})
+@Examples({"teleport all players to spawn", "set the spawn point of \"world\" to the player's location"})
 @Since("1.4.2")
 public class ExprSpawn extends PropertyExpression<World, Location> {
 	static {

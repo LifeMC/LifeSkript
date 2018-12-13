@@ -40,10 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtEntityBlockChange extends SkriptEvent {
 	static {
-		Skript.registerEvent("Enderman/Sheep", EvtEntityBlockChange.class, EntityChangeBlockEvent.class, ChangeEvent.patterns)
-				.description("Called when an enderman places or picks up a block, or a sheep eats grass respectively.")
-				.examples("")
-				.since("");
+		Skript.registerEvent("Enderman/Sheep", EvtEntityBlockChange.class, EntityChangeBlockEvent.class, ChangeEvent.patterns).description("Called when an enderman places or picks up a block, or a sheep eats grass respectively.").examples("").since("");
 	}
 	
 	private enum ChangeEvent {
@@ -52,14 +49,12 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 			public boolean check(final EntityChangeBlockEvent e) {
 				return e.getEntity() instanceof Enderman && e.getTo() != Material.AIR;
 			}
-		}),
-		ENDERMAN_PICKUP("enderman pickup", new Checker<EntityChangeBlockEvent>() {
+		}), ENDERMAN_PICKUP("enderman pickup", new Checker<EntityChangeBlockEvent>() {
 			@Override
 			public boolean check(final EntityChangeBlockEvent e) {
 				return e.getEntity() instanceof Enderman && e.getTo() == Material.AIR;
 			}
-		}),
-		SHEEP_EAT("sheep eat", new Checker<EntityChangeBlockEvent>() {
+		}), SHEEP_EAT("sheep eat", new Checker<EntityChangeBlockEvent>() {
 			@Override
 			public boolean check(final EntityChangeBlockEvent e) {
 				return e.getEntity() instanceof Sheep;

@@ -163,9 +163,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
 		if (other.dataMin != -1 && dataMin != -1 && (other.dataMax < dataMin || dataMax < other.dataMin) || other.typeid != -1 && typeid != -1 && other.typeid != typeid)
 			return null;
 		
-		return new ItemData(typeid == -1 ? other.typeid : typeid,
-				(short) Math.max(dataMin, other.dataMin),
-				dataMax == -1 ? other.dataMax : other.dataMax == -1 ? dataMax : (short) Math.min(dataMax, other.dataMax));
+		return new ItemData(typeid == -1 ? other.typeid : typeid, (short) Math.max(dataMin, other.dataMin), dataMax == -1 ? other.dataMax : other.dataMax == -1 ? dataMax : (short) Math.min(dataMax, other.dataMax));
 	}
 	
 	public ItemStack getRandom() {

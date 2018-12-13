@@ -96,8 +96,7 @@ public final class Utils {
 	public static boolean itemStacksEqual(final @Nullable ItemStack is1, final @Nullable ItemStack is2) {
 		if (is1 == null || is2 == null)
 			return is1 == is2;
-		return is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability()
-				&& (ItemType.itemMetaSupported ? is1.getItemMeta().equals(is2.getItemMeta()) : is1.getEnchantments().equals(is2.getEnchantments()));
+		return is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability() && (ItemType.itemMetaSupported ? is1.getItemMeta().equals(is2.getItemMeta()) : is1.getEnchantments().equals(is2.getEnchantments()));
 	}
 	
 	/**
@@ -192,17 +191,9 @@ public final class Utils {
 			
 			{"fe", "ves"},// most -f words' plurals can end in -fs as well as -ves
 			
-			{"axe", "axes"},
-			{"x", "xes"},
+			{"axe", "axes"}, {"x", "xes"},
 			
-			{"ay", "ays"},
-			{"ey", "eys"},
-			{"iy", "iys"},
-			{"oy", "oys"},
-			{"uy", "uys"},
-			{"kie", "kies"},
-			{"zombie", "zombies"},
-			{"y", "ies"},
+			{"ay", "ays"}, {"ey", "eys"}, {"iy", "iys"}, {"oy", "oys"}, {"uy", "uys"}, {"kie", "kies"}, {"zombie", "zombies"}, {"y", "ies"},
 			
 			{"h", "hes"},
 			
@@ -210,12 +201,9 @@ public final class Utils {
 			
 			{"us", "i"},
 			
-			{"hoe", "hoes"},
-			{"toe", "toes"},
-			{"o", "oes"},
+			{"hoe", "hoes"}, {"toe", "toes"}, {"o", "oes"},
 			
-			{"alias", "aliases"},
-			{"gas", "gases"},
+			{"alias", "aliases"}, {"gas", "gases"},
 			
 			{"child", "children"},
 			
@@ -415,7 +403,8 @@ public final class Utils {
 			return message;
 		String m = StringUtils.replaceAll("" + message.replace("<<none>>", ""), stylePattern, new Callback<String, Matcher>() {
 			@Override
-			public String run(final Matcher m) {
+			public String run(final @Nullable Matcher m) {
+				@SuppressWarnings("null")
 				final Color c = Color.byName("" + m.group(1));
 				if (c != null)
 					return c.getChat();
@@ -442,7 +431,8 @@ public final class Utils {
 			return message;
 		String m = StringUtils.replaceAll(message, stylePattern, new Callback<String, Matcher>() {
 			@Override
-			public String run(final Matcher m) {
+			public String run(final @Nullable Matcher m) {
+				@SuppressWarnings("null")
 				final Color c = Color.byEnglishName("" + m.group(1));
 				if (c != null)
 					return c.getChat();

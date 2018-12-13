@@ -38,20 +38,13 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Suppress Warnings / Errors")
-@Description({"Suppress warnings or errors.",
-	"Note: Don't forgot the stop suppressing!",
-	"If you forgot, all warnings after effect are suppressed!"})
-@Examples({"on load:",
-		"\tstart suppressing warnings",
-		"\tthrow new warning \"never™\"",
-		"\tstop suppressing warnings"})
+@Description({"Suppress warnings or errors.", "Note: Don't forgot the stop suppressing!", "If you forgot, all warnings after effect are suppressed!"})
+@Examples({"on load:", "\tstart suppressing warnings", "\tthrow new warning \"never™\"", "\tstop suppressing warnings"})
 @Since("2.2-Fixes-V11")
-public class EffSuppress extends Effect  {
+public class EffSuppress extends Effect {
 	static {
-		Skript.registerEffect(EffSuppress.class,
-				"start [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
-		Skript.registerEffect(EffStopSuppress.class,
-				"stop [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
+		Skript.registerEffect(EffSuppress.class, "start [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
+		Skript.registerEffect(EffStopSuppress.class, "stop [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
 		// the latest optional string part is for the justification, e.g:
 		// start suppressing warnings because "It is false positive"
 	}
@@ -62,7 +55,7 @@ public class EffSuppress extends Effect  {
 	@SuppressWarnings("null")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
 		mark = parseResult.mark;
-		if(mark > 0) {
+		if (mark > 0) {
 			SkriptLogger.suppressErrors(true);
 		} else {
 			SkriptLogger.suppressWarnings(true);
@@ -77,7 +70,7 @@ public class EffSuppress extends Effect  {
 	@Override
 	@SuppressWarnings("null")
 	protected void execute(final Event e) {
-		if(mark > 0) {
+		if (mark > 0) {
 			SkriptLogger.suppressErrors(true);
 		} else {
 			SkriptLogger.suppressWarnings(true);
@@ -108,7 +101,7 @@ public class EffSuppress extends Effect  {
 		@Override
 		@SuppressWarnings("null")
 		protected void execute(final Event e) {
-			if(mark > 0) {
+			if (mark > 0) {
 				SkriptLogger.suppressErrors(false);
 			} else {
 				SkriptLogger.suppressWarnings(false);

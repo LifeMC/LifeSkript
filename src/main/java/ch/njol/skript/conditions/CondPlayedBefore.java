@@ -42,15 +42,12 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Has Played Before")
 @Description("Checks whether a player has played on this server before. You can also use <a href='../events/#first_join'>on first join</a> if you want to make triggers for new players.")
-@Examples({"player has played on this server before",
-		"player hasn't played before"})
+@Examples({"player has played on this server before", "player hasn't played before"})
 @Since("1.4")
 public class CondPlayedBefore extends Condition {
 	
 	static {
-		Skript.registerCondition(CondPlayedBefore.class,
-				"%offlineplayer% [(has|did)] [already] play[ed] [on (this|the) server] (before|already)",
-				"%offlineplayer% (has not|hasn't|did not|didn't) [(already|yet)] play[ed] [on (this|the) server] (before|already|yet)");
+		Skript.registerCondition(CondPlayedBefore.class, "%offlineplayer% [(has|did)] [already] play[ed] [on (this|the) server] (before|already)", "%offlineplayer% (has not|hasn't|did not|didn't) [(already|yet)] play[ed] [on (this|the) server] (before|already|yet)");
 	}
 	
 	@SuppressWarnings("null")

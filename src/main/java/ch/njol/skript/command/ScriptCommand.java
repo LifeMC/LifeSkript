@@ -91,7 +91,7 @@ public class ScriptCommand implements CommandExecutor {
 	private final List<String> aliases;
 	private List<String> activeAliases;
 	private final String permission;
- 	private final Expression<String> permissionMessage;
+	private final Expression<String> permissionMessage;
 	private final String description;
 	@Nullable
 	private final Timespan cooldown;
@@ -111,7 +111,7 @@ public class ScriptCommand implements CommandExecutor {
 	
 	private transient PluginCommand bukkitCommand;
 	
-	private final Map<UUID,Date> lastUsageMap = new HashMap<UUID, Date>();
+	private final Map<UUID, Date> lastUsageMap = new HashMap<UUID, Date>();
 	
 	/**
 	 * Creates a new SkriptCommand.
@@ -126,21 +126,15 @@ public class ScriptCommand implements CommandExecutor {
 	 * @param permissionMessage message to display if the player doesn't have the given permission
 	 * @param items trigger to execute
 	 */
-	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown,
-			 @Nullable final VariableString cooldownMessage, final String cooldownBypass,
-			 @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
+	public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
 		Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
 		this.name = name;
 		label = "" + name.toLowerCase();
 		this.permission = permission;
-		this.permissionMessage = permissionMessage == null ?
-				new SimpleLiteral<String>(Language.get("commands.no permission message"), false)
- 				: permissionMessage;
-				
+		this.permissionMessage = permissionMessage == null ? new SimpleLiteral<String>(Language.get("commands.no permission message"), false) : permissionMessage;
+		
 		this.cooldown = cooldown;
-		this.cooldownMessage = cooldownMessage == null
-				? new SimpleLiteral<String>(Language.get("commands.cooldown message"),false)
-				: cooldownMessage;
+		this.cooldownMessage = cooldownMessage == null ? new SimpleLiteral<String>(Language.get("commands.cooldown message"), false) : cooldownMessage;
 		this.cooldownBypass = cooldownBypass;
 		this.cooldownStorage = cooldownStorage;
 		
@@ -176,7 +170,7 @@ public class ScriptCommand implements CommandExecutor {
 			bukkitCommand.setPermission(permission);
 			// We can only set the message if it's available at parse time (aka a literal)
 			if (permissionMessage instanceof Literal)
- 				bukkitCommand.setPermissionMessage(((Literal<String>) permissionMessage).getSingle());
+				bukkitCommand.setPermissionMessage(((Literal<String>) permissionMessage).getSingle());
 			bukkitCommand.setUsage(usage);
 			bukkitCommand.setExecutor(this);
 			return bukkitCommand;
@@ -215,20 +209,20 @@ public class ScriptCommand implements CommandExecutor {
 			return false;
 		}
 		
-		cooldownCheck : {
+		cooldownCheck: {
 			if (sender instanceof Player && cooldown != null) {
 				final Player player = (Player) sender;
 				final UUID uuid = player.getUniqueId();
-
+				
 				// Cooldown bypass
 				if (!cooldownBypass.isEmpty() && player.hasPermission(cooldownBypass)) {
 					setLastUsage(uuid, event, null);
 					break cooldownCheck;
 				}
-
+				
 				if (getLastUsage(uuid, event) != null) {
 					if (getRemainingMilliseconds(uuid, event) <= 0) {
-                    	setLastUsage(uuid, event, null);
+						setLastUsage(uuid, event, null);
 					} else {
 						sender.sendMessage(cooldownMessage.getSingle(event));
 						return false;
@@ -241,7 +235,7 @@ public class ScriptCommand implements CommandExecutor {
 			execute2(event, sender, commandLabel, rest);
 			if (sender instanceof Player && !event.isCooldownCancelled()) {
 				setLastUsage(((Player) sender).getUniqueId(), event, new Date());
- 			}
+			}
 		} else {
 			// must not wait for the command to complete as some plugins call commands in such a way that the server will deadlock
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
@@ -250,7 +244,7 @@ public class ScriptCommand implements CommandExecutor {
 					execute2(event, sender, commandLabel, rest);
 					if (sender instanceof Player && !event.isCooldownCancelled()) {
 						setLastUsage(((Player) sender).getUniqueId(), event, new Date());
- 					}
+					}
 				}
 			});
 		}
@@ -418,7 +412,7 @@ public class ScriptCommand implements CommandExecutor {
 	public Timespan getCooldown() {
 		return cooldown;
 	}
-
+	
 	@Nullable
 	private String getStorageVariableName(final Event event) {
 		assert cooldownStorage != null;
@@ -434,7 +428,7 @@ public class ScriptCommand implements CommandExecutor {
 		}
 		return variableString;
 	}
-
+	
 	@Nullable
 	public Date getLastUsage(final UUID uuid, final Event event) {
 		if (cooldownStorage == null) {
@@ -445,7 +439,7 @@ public class ScriptCommand implements CommandExecutor {
 			return (Date) Variables.getVariable(name, null, false);
 		}
 	}
-
+	
 	public void setLastUsage(final UUID uuid, final Event event, @Nullable final Date date) {
 		if (cooldownStorage != null) {
 			// Using a variable
@@ -455,13 +449,13 @@ public class ScriptCommand implements CommandExecutor {
 		} else {
 			// Use the map
 			if (date == null) {
-                lastUsageMap.remove(uuid);
-            } else {
-                lastUsageMap.put(uuid, date);
-            }
+				lastUsageMap.remove(uuid);
+			} else {
+				lastUsageMap.put(uuid, date);
+			}
 		}
 	}
-
+	
 	public long getRemainingMilliseconds(final UUID uuid, final Event event) {
 		final Date lastUsage = getLastUsage(uuid, event);
 		if (lastUsage == null) {
@@ -475,7 +469,7 @@ public class ScriptCommand implements CommandExecutor {
 		}
 		return remaining;
 	}
-
+	
 	public void setRemainingMilliseconds(final UUID uuid, final Event event, final long milliseconds) {
 		final Timespan cooldown = this.cooldown;
 		assert cooldown != null;
@@ -485,18 +479,18 @@ public class ScriptCommand implements CommandExecutor {
 		}
 		setElapsedMilliSeconds(uuid, event, cooldownMs - milliseconds);
 	}
-
+	
 	public long getElapsedMilliseconds(final UUID uuid, final Event event) {
 		final Date lastUsage = getLastUsage(uuid, event);
 		return lastUsage == null ? 0 : new Date().getTimestamp() - lastUsage.getTimestamp();
 	}
-
+	
 	public void setElapsedMilliSeconds(final UUID uuid, final Event event, final long milliseconds) {
 		final Date date = new Date();
 		date.subtract(new Timespan(milliseconds));
 		setLastUsage(uuid, event, date);
 	}
-
+	
 	public String getCooldownBypass() {
 		return cooldownBypass;
 	}

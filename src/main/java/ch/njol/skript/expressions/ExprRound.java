@@ -43,17 +43,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Rounding")
 @Description("Rounds numbers normally, up (ceiling) or down (floor) respectively")
-@Examples({"set {var} to rounded health of player",
-		"set line 1 of the block to round(1.5 * player's level)",
-		"set {_x} to floor({_y}) - ceil({_x})",
-		"add rounded down argument to the player's health"})
+@Examples({"set {var} to rounded health of player", "set line 1 of the block to round(1.5 * player's level)", "set {_x} to floor({_y}) - ceil({_x})", "add rounded down argument to the player's health"})
 @Since("2.0")
 public final class ExprRound extends PropertyExpression<Number, Long> {
 	static {
-		Skript.registerExpression(ExprRound.class, Long.class, ExpressionType.PROPERTY,
-				"(a|the|) round[ed] down %number%",
-				"(a|the|) round[ed] %number%",
-				"(a|the|) round[ed] up %number%");
+		Skript.registerExpression(ExprRound.class, Long.class, ExpressionType.PROPERTY, "(a|the|) round[ed] down %number%", "(a|the|) round[ed] %number%", "(a|the|) round[ed] up %number%");
 	}
 	
 	int action;

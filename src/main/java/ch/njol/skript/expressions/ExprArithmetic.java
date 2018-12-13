@@ -46,10 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Arithmetic")
 @Description("Arithmetic expressions, e.g. 1+2, (2 - health of player)/3, etc.")
-@Examples({"set the player's health to 10 - the player's health",
-		"loop (argument + 2)/5 times:",
-		"	message \"Two useless numbers: %loop-num*2 - 5%, %2^loop-num - 1%\"",
-		"message \"You have %health of player * 2% half hearts of HP!\""})
+@Examples({"set the player's health to 10 - the player's health", "loop (argument + 2)/5 times:", "	message \"Two useless numbers: %loop-num*2 - 5%, %2^loop-num - 1%\"", "message \"You have %health of player * 2% half hearts of HP!\""})
 @Since("1.4.2")
 public class ExprArithmetic extends SimpleExpression<Number> {
 	
@@ -120,11 +117,9 @@ public class ExprArithmetic extends SimpleExpression<Number> {
 	
 	private final static Patterns<Operator> patterns = new Patterns<Operator>(new Object[][] {
 			
-			{"%number%[ ]+[ ]%number%", Operator.PLUS},
-			{"%number%[ ]-[ ]%number%", Operator.MINUS},
+			{"%number%[ ]+[ ]%number%", Operator.PLUS}, {"%number%[ ]-[ ]%number%", Operator.MINUS},
 			
-			{"%number%[ ]*[ ]%number%", Operator.MULT},
-			{"%number%[ ]/[ ]%number%", Operator.DIV},
+			{"%number%[ ]*[ ]%number%", Operator.MULT}, {"%number%[ ]/[ ]%number%", Operator.DIV},
 			
 			{"%number%[ ]^[ ]%number%", Operator.EXP},
 	

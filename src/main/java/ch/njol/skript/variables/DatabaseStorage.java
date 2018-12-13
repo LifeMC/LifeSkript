@@ -68,13 +68,7 @@ public final class DatabaseStorage extends VariablesStorage {
 	private final static String SELECT_ORDER = "name, type, value, rowid";
 	
 	public enum Type {
-		MYSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-				"rowid        BIGINT  NOT NULL  AUTO_INCREMENT  PRIMARY KEY," +
-				"name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  UNIQUE," +
-				"type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," +
-				"value        BLOB(" + MAX_VALUE_SIZE + ")," +
-				"update_guid  CHAR(36)  NOT NULL" +
-				") CHARACTER SET ucs2 COLLATE ucs2_bin") {// MySQL treats UTF16 as 4 byte charset, resulting in a short max name length. UCS2 uses 2 bytes.
+		MYSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "rowid        BIGINT  NOT NULL  AUTO_INCREMENT  PRIMARY KEY," + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  UNIQUE," + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ") CHARACTER SET ucs2 COLLATE ucs2_bin") {// MySQL treats UTF16 as 4 byte charset, resulting in a short max name length. UCS2 uses 2 bytes.
 			@Override
 			@Nullable
 			protected Object initialise(final DatabaseStorage s, final SectionNode n) {
@@ -88,12 +82,7 @@ public final class DatabaseStorage extends VariablesStorage {
 				return new MySQL(SkriptLogger.LOGGER, "[Skript]", host, port, database, user, password);
 			}
 		},
-		SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
-				"name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY," +
-				"type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," +
-				"value        BLOB(" + MAX_VALUE_SIZE + ")," +
-				"update_guid  CHAR(36)  NOT NULL" +
-				")") {// SQLite uses Unicode exclusively
+		SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY," + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ")") {// SQLite uses Unicode exclusively
 			@SuppressWarnings({"null", "unused"})
 			@Override
 			@Nullable
@@ -181,8 +170,7 @@ public final class DatabaseStorage extends VariablesStorage {
 				try {
 					db.query(type.createQuery);
 				} catch (final SQLException e) {
-					Skript.error("Could not create the variables table in the database '" + databaseName + "': " + e.getLocalizedMessage() + ". "
-							+ "Please create the table yourself using the following query: " + type.createQuery.replace(",", ", ").replaceAll("\\s+", " "));
+					Skript.error("Could not create the variables table in the database '" + databaseName + "': " + e.getLocalizedMessage() + ". " + "Please create the table yourself using the following query: " + type.createQuery.replace(",", ", ").replaceAll("\\s+", " "));
 					return false;
 				}
 				
@@ -235,9 +223,7 @@ public final class DatabaseStorage extends VariablesStorage {
 					final ResultSet r = db.query("SELECT * FROM " + OLD_TABLE_NAME + " LIMIT 1");
 					try {
 						if (r.next()) {// i.e. the old table is not empty
-							Skript.error("Could not successfully convert & transfer all variables to the new table in the database '" + databaseName + "'. "
-									+ "Variables that could not be transferred are left in the old table and Skript will reattempt to transfer them whenever it starts until the old table is empty or is manually deleted. "
-									+ "Please note that variables recreated by scripts will count as converted and will be removed from the old table on the next restart.");
+							Skript.error("Could not successfully convert & transfer all variables to the new table in the database '" + databaseName + "'. " + "Variables that could not be transferred are left in the old table and Skript will reattempt to transfer them whenever it starts until the old table is empty or is manually deleted. " + "Please note that variables recreated by scripts will count as converted and will be removed from the old table on the next restart.");
 						} else {
 							boolean error = false;
 							try {
@@ -330,9 +316,7 @@ public final class DatabaseStorage extends VariablesStorage {
 						final long now = System.currentTimeMillis();
 						if (next < now && lastWarning + WARING_INTERVAL * 1000 < now) {
 							// TODO don't print this message when Skript loads (because scripts are loaded after variables and take some time)
-							Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitor_interval) / 1000. + "s, monitor interval = " + monitor_interval / 1000. + "s). " +
-									"Please increase your monitor interval or reduce usage of variables. " +
-									"(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
+							Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitor_interval) / 1000. + "s, monitor interval = " + monitor_interval / 1000. + "s). " + "Please increase your monitor interval or reduce usage of variables. " + "(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
 							lastWarning = now;
 						}
 						while (System.currentTimeMillis() < next) {

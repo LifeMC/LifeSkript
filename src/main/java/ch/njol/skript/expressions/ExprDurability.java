@@ -41,9 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Data Value")
-@Description({"The data value of an item.",
-		"You usually don't need this expression as you can check and set items with aliases easily, " +
-				"but this expression can e.g. be used to \"add 1 to data of &lt;item&gt;\", e.g. for cycling through all wool colours."})
+@Description({"The data value of an item.", "You usually don't need this expression as you can check and set items with aliases easily, " + "but this expression can e.g. be used to \"add 1 to data of &lt;item&gt;\", e.g. for cycling through all wool colours."})
 @Examples({"add 1 to the data value of the clicked block"})
 @Since("1.2")
 public class ExprDurability extends SimplePropertyExpression<Object, Short> {

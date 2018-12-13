@@ -43,19 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Damage Cause")
 @Description("Tests what kind of damage caused a <a href='../events/#damage'>damage event</a>. Refer to the <a href='../classes/#damagecause'>Damage Cause</a> type for a list of all possible causes.")
-@Examples({"# make players use their potions of fire resistance whenever they take any kind of fire damage",
-		"on damage:",
-		"	damage was caused by lava, fire or burning",
-		"	victim is a player",
-		"	victim has a potion of fire resistance",
-		"	cancel event",
-		"	apply fire resistance to the victim for 30 seconds",
-		"	remove 1 potion of fire resistance from the victim",
-		"# prevent mobs from dropping items under certain circumstances",
-		"on death;",
-		"	entity is not a player",
-		"	damage wasn't caused by a block explosion, an attack, a projectile, a potion, fire, burning, thorns or poison",
-		"	clear drops"})
+@Examples({"# make players use their potions of fire resistance whenever they take any kind of fire damage", "on damage:", "	damage was caused by lava, fire or burning", "	victim is a player", "	victim has a potion of fire resistance", "	cancel event", "	apply fire resistance to the victim for 30 seconds", "	remove 1 potion of fire resistance from the victim", "# prevent mobs from dropping items under certain circumstances", "on death;", "	entity is not a player", "	damage wasn't caused by a block explosion, an attack, a projectile, a potion, fire, burning, thorns or poison", "	clear drops"})
 @Since("2.0")
 public final class CondDamageCause extends Condition {
 	static {

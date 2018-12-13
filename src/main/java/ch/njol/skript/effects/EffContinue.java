@@ -45,37 +45,34 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Continue")
 @Description("Skips the value currently being looped, moving on to the next value if it exists.")
-@Examples("loop all players:\n" +
-		"\tif loop-value does not have permission \"moderator\":\n" +
-		"\t\tcontinue # filter out non moderators\n" +
-		"\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
+@Examples("loop all players:\n" + "\tif loop-value does not have permission \"moderator\":\n" + "\t\tcontinue # filter out non moderators\n" + "\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
 @Since("2.2-Fixes-V10")
 public final class EffContinue extends Effect {
-
+	
 	static {
 		Skript.registerEffect(EffContinue.class, "continue [loop]");
 	}
-
+	
 	@SuppressWarnings("null")
 	private Loop loop;
-
+	
 	@Override
 	protected void execute(final Event e) {
 		throw new UnsupportedOperationException();
 	}
-
+	
 	@Nullable
 	@Override
 	protected TriggerItem walk(final Event e) {
 		TriggerItem.walk(loop, e);
 		return null;
 	}
-
+	
 	@Override
 	public String toString(@Nullable final Event e, final boolean debug) {
 		return "continue";
 	}
-
+	
 	@Override
 	@SuppressWarnings("null")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
@@ -87,5 +84,5 @@ public final class EffContinue extends Effect {
 		loop = loops.get(loops.size() - 1); // the most recent loop
 		return true;
 	}
-
+	
 }

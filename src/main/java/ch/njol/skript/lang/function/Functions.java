@@ -103,7 +103,7 @@ public final class Functions {
 	public static Function<?> loadFunction(final SectionNode node) {
 		SkriptLogger.setNode(node);
 		final String key = node.getKey();
- 		final String definition = ScriptLoader.replaceOptions(key == null ? "" : key);
+		final String definition = ScriptLoader.replaceOptions(key == null ? "" : key);
 		assert definition != null;
 		final Matcher m = functionPattern.matcher(definition);
 		if (!m.matches())
@@ -120,7 +120,7 @@ public final class Functions {
 				if (arg.isEmpty()) // Zero-argument function
 					break;
 				
- 				// One ore more arguments, indeed
+				// One ore more arguments, indeed
 				final Matcher n = paramPattern.matcher(arg);
 				if (!n.matches())
 					return error("The " + StringUtils.fancyOrderNumber(params.size() + 1) + " argument's definition is invalid. It should look like 'name: type' or 'name: type = default value'.");
@@ -134,7 +134,7 @@ public final class Functions {
 				if (argType.endsWith("?")) {
 					nullable = true;
 					argType = argType.substring(0, argType.length() - 1);
- 				}
+				}
 				ClassInfo<?> c;
 				c = Classes.getClassInfoFromUserInput("" + argType);
 				final NonNullPair<String, Boolean> pl = Utils.getEnglishPlural("" + argType);

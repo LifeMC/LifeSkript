@@ -40,48 +40,36 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Cancel Command Cooldown")
 @Description({"Only usable in command events. Makes it so the current command usage isn't counted towards the cooldown."})
-@Examples({
-        "command /nick <text>:",
-        "\texecutable by: players",
-        "\tcooldown: 10 seconds",
-        "\ttrigger:",
-        "\t\tif length of arg-1 is more than 16:",
-        "\t\t\t# Makes it so that invalid arguments don't make you wait for the cooldown again",
-        "\t\t\tcancel the cooldown",
-        "\t\t\tsend \"Your nickname may be at most 16 characters.\"",
-        "\t\t\tstop",
-        "\t\tset the player's display name to arg-1"
+@Examples({"command /nick <text>:", "\texecutable by: players", "\tcooldown: 10 seconds", "\ttrigger:", "\t\tif length of arg-1 is more than 16:", "\t\t\t# Makes it so that invalid arguments don't make you wait for the cooldown again", "\t\t\tcancel the cooldown", "\t\t\tsend \"Your nickname may be at most 16 characters.\"", "\t\t\tstop", "\t\tset the player's display name to arg-1"
 })
 @Since("2.2-Fixes-V10b")
 public class EffCancelCooldown extends Effect {
-    static {
-        Skript.registerEffect(EffCancelCooldown.class,
-                "(cancel|ignore) [the] [current] [command] cooldown",
-                "un(cancel|ignore) [the] [current] [command] cooldown");
-    }
-
-    private boolean cancel;
-
-    @Override
-    protected void execute(final Event e) {
-        if (!(e instanceof ScriptCommandEvent)) {
-            return;
-        }
-        ((ScriptCommandEvent) e).setCooldownCancelled(cancel);
-    }
-
-    @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        return (cancel ? "" : "un") + "cancel the command cooldown";
-    }
-
-    @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
-            Skript.error("The cancel cooldown effect may only be used in a command.", ErrorQuality.SEMANTIC_ERROR);
-            return false;
-        }
-        cancel = matchedPattern == 0;
-        return true;
-    }
+	static {
+		Skript.registerEffect(EffCancelCooldown.class, "(cancel|ignore) [the] [current] [command] cooldown", "un(cancel|ignore) [the] [current] [command] cooldown");
+	}
+	
+	private boolean cancel;
+	
+	@Override
+	protected void execute(final Event e) {
+		if (!(e instanceof ScriptCommandEvent)) {
+			return;
+		}
+		((ScriptCommandEvent) e).setCooldownCancelled(cancel);
+	}
+	
+	@Override
+	public String toString(@Nullable final Event e, final boolean debug) {
+		return (cancel ? "" : "un") + "cancel the command cooldown";
+	}
+	
+	@Override
+	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+		if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
+			Skript.error("The cancel cooldown effect may only be used in a command.", ErrorQuality.SEMANTIC_ERROR);
+			return false;
+		}
+		cancel = matchedPattern == 0;
+		return true;
+	}
 }

@@ -282,7 +282,7 @@ public final class Classes {
 	@SuppressWarnings({"unchecked", "null"})
 	public static <T> ClassInfo<? super T> getSuperClassInfo(final @Nullable Class<T> c) {
 		// Check null status
-		if(c == null)
+		if (c == null)
 			return null;
 		checkAllowClassInfoInteraction();
 		final ClassInfo<?> i = superClassInfos.get(c);
@@ -584,9 +584,7 @@ public final class Classes {
 			final Parser<?> parser = ci.getParser();
 			if (parser != null && ci.getC().isInstance(o)) {
 				@SuppressWarnings("unchecked")
-				final String s = mode == StringMode.MESSAGE ? ((Parser<T>) parser).toString(o, flags)
-						: mode == StringMode.DEBUG ? "[" + ci.getCodeName() + ":" + ((Parser<T>) parser).toString(o, mode) + "]"
-								: ((Parser<T>) parser).toString(o, mode);
+				final String s = mode == StringMode.MESSAGE ? ((Parser<T>) parser).toString(o, flags) : mode == StringMode.DEBUG ? "[" + ci.getCodeName() + ":" + ((Parser<T>) parser).toString(o, mode) + "]" : ((Parser<T>) parser).toString(o, mode);
 				return s;
 			}
 		}

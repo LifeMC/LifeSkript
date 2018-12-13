@@ -43,7 +43,7 @@ public abstract class JavaFunction<T> extends Function<T> {
 	
 	@Nullable
 	private String[] examples;
-
+	
 	@Nullable
 	private String since;
 	

@@ -53,9 +53,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public class ExprBlockSphere extends SimpleExpression<Block> {
 	static {
-		Skript.registerExpression(ExprBlockSphere.class, Block.class, ExpressionType.COMBINED,
-				"(all|the|) blocks in radius %number% [(of|around) %location%]",
-				"(all|the|) blocks around %location% in radius %number%");
+		Skript.registerExpression(ExprBlockSphere.class, Block.class, ExpressionType.COMBINED, "(all|the|) blocks in radius %number% [(of|around) %location%]", "(all|the|) blocks around %location% in radius %number%");
 	}
 	
 	@SuppressWarnings("null")

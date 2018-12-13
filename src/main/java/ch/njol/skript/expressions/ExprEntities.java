@@ -63,18 +63,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Entities")
 @Description("all entities in all world, in a specific world or in a radius around a certain location, e.g. 'all players', 'all creepers in the player's world', or 'players in radius 100 of the player'.")
-@Examples({"kill all creepers in the player's world",
-		"send \"Psst!\" to all players witin 100 meters of the player",
-		"give a diamond to all ops",
-		"heal all tamed wolves in radius 2000 around {town center}"})
+@Examples({"kill all creepers in the player's world", "send \"Psst!\" to all players witin 100 meters of the player", "give a diamond to all ops", "heal all tamed wolves in radius 2000 around {town center}"})
 @Since("1.2.1")
 public class ExprEntities extends SimpleExpression<Entity> {
 	static {
-		Skript.registerExpression(ExprEntities.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING,
-				"[all] %*entitydatas% [(in|of) [world[s]] %-worlds%]",
-				"[all] entities of type[s] %entitydatas% [(in|of) [world[s]] %-worlds%]",
-				"[all] %*entitydatas% (within|[with]in radius) %number% [(block[s]|met(er|re)[s])] (of|around) %location%",
-				"[all] entities of type[s] %entitydatas% in radius %number% (of|around) %location%");
+		Skript.registerExpression(ExprEntities.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[all] %*entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] entities of type[s] %entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] %*entitydatas% (within|[with]in radius) %number% [(block[s]|met(er|re)[s])] (of|around) %location%", "[all] entities of type[s] %entitydatas% in radius %number% (of|around) %location%");
 	}
 	
 	@SuppressWarnings("null")
@@ -185,16 +178,15 @@ public class ExprEntities extends SimpleExpression<Entity> {
 	 * @param x The x value.
 	 * @param y The y value.
 	 * @param z The z value.
-	 * 
 	 * @return The collection of entities nearby the given arguments.
 	 */
 	@Nullable
 	public static Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
-		if(getNearbyEntities) {
+		if (getNearbyEntities) {
 			return l.getWorld().getNearbyEntities(l, x, y, z);
 		} else {
 			// Don't try it, known to be not exist
-			if(hardFail) {
+			if (hardFail) {
 				
 				// Return empty collection. The warning should be already printed in first hard fail.
 				return Collections.emptyList();
@@ -208,9 +200,9 @@ public class ExprEntities extends SimpleExpression<Entity> {
 				hardFail = false;
 				return col;
 				
-			} catch(final NoSuchMethodError e) { // Method not exists
+			} catch (final NoSuchMethodError e) { // Method not exists
 				
-				if(!hardFail) { // Give the warning only in first use
+				if (!hardFail) { // Give the warning only in first use
 					Skript.warning("This server version not supports getNearbyEntities method. This method is only available on minecraft 1.8 and above. The LifeSpigot adds this method to lower versions. Look it LifeSpigot if you want to fix this issue, or just don't use the entities expression.");
 				}
 				
@@ -297,9 +289,7 @@ public class ExprEntities extends SimpleExpression<Entity> {
 	@SuppressWarnings("null")
 	@Override
 	public String toString(final @Nullable Event e, final boolean debug) {
-		return "all entities of types " + types.toString(e, debug) +
-				(worlds != null ? " in " + worlds.toString(e, debug) :
-						radius != null && center != null ? " in radius " + radius.toString(e, debug) + " around " + center.toString(e, debug) : "");
+		return "all entities of types " + types.toString(e, debug) + (worlds != null ? " in " + worlds.toString(e, debug) : radius != null && center != null ? " in radius " + radius.toString(e, debug) + " around " + center.toString(e, debug) : "");
 	}
 	
 }

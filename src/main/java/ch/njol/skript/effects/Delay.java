@@ -51,9 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Delay")
 @Description("Delays the script's execution by a given timespan. Please note that delays are not persistent, e.g. trying to create a tempban script with <code>ban player → wait 7 days → unban player</code> will not work if you restart your server anytime within these 7 days. You also have to be careful even when using small delays!")
-@Examples({"wait 2 minutes",
-		"halt for 5 minecraft hours",
-		"wait a tick"})
+@Examples({"wait 2 minutes", "halt for 5 minecraft hours", "wait a tick"})
 @Since("1.4")
 public final class Delay extends Effect {
 	static {
@@ -107,7 +105,7 @@ public final class Delay extends Effect {
 		return delayed.contains(e);
 	}
 	
-	public static void addDelayedEvent(final Event event){
+	public static void addDelayedEvent(final Event event) {
 		delayed.add(event);
 	}
 	

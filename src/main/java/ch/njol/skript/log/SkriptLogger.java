@@ -164,8 +164,9 @@ public final class SkriptLogger {
 	public static void log(final Level level, final String message) {
 		log(new LogEntry(level, message, node));
 	}
-		
-	@Nullable private static List<LogEntry> suppressed;
+	
+	@Nullable
+	private static List<LogEntry> suppressed;
 	private static volatile boolean suppressing;
 	
 	private static volatile boolean suppressWarnings;
@@ -187,24 +188,24 @@ public final class SkriptLogger {
 				case LOG:
 			}
 		}
-		if(suppressing && suppressed != null) {
+		if (suppressing && suppressed != null) {
 			suppressed.add(entry);
 			return;
 		}
-		if(suppressWarnings && entry.getLevel() == Level.WARNING) {
+		if (suppressWarnings && entry.getLevel() == Level.WARNING) {
 			return;
 		}
-		if(suppressErrors && entry.getLevel() == Level.SEVERE) {
+		if (suppressErrors && entry.getLevel() == Level.SEVERE) {
 			return;
 		}
 		entry.logged();
 		LOGGER.log(entry.getLevel(), format(entry));
 	}
-		
+	
 	public static void suppressWarnings(final boolean suppressWarnings) {
 		SkriptLogger.suppressWarnings = suppressWarnings;
 	}
-		
+	
 	public static void suppressErrors(final boolean suppressErrors) {
 		SkriptLogger.suppressErrors = suppressErrors;
 	}
@@ -216,7 +217,7 @@ public final class SkriptLogger {
 	
 	@SuppressWarnings("null")
 	public static List<LogEntry> stopSuppressing() {
-		if(suppressed == null) {
+		if (suppressed == null) {
 			return new ArrayList<LogEntry>();
 		}
 		return suppressed;

@@ -41,27 +41,22 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("None")
 @Description({"Represents the none (null) value."})
-@Examples({"function send(msg: text, p: player = none value of player):",
-	"if {_p} is set:",
-		"send {_msg} to {_p}",
-	"else:",
-		"broadcast {_msg}"})
+@Examples({"function send(msg: text, p: player = none value of player):", "if {_p} is set:", "send {_msg} to {_p}", "else:", "broadcast {_msg}"})
 @Since("2.2-Fixes-V10c")
 public final class ExprNone extends SimpleExpression<Object> {
-    static {
-        Skript.registerExpression(ExprNone.class, Object.class, ExpressionType.SIMPLE,
-                "[the] (none|null) value of [the] [type] %*classinfo%");
-    }
-    
-    @Nullable
-    private Expression<?> noneType;
-    
+	static {
+		Skript.registerExpression(ExprNone.class, Object.class, ExpressionType.SIMPLE, "[the] (none|null) value of [the] [type] %*classinfo%");
+	}
+	
+	@Nullable
+	private Expression<?> noneType;
+	
 	@Override
-    @SuppressWarnings("null")
+	@SuppressWarnings("null")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		noneType = exprs[0];
-        return true;
-    }
+		return true;
+	}
 	
 	@Override
 	@Nullable
@@ -69,16 +64,16 @@ public final class ExprNone extends SimpleExpression<Object> {
 		return null;
 	}
 	
-    @Override
-    public boolean isSingle() {
-        return true;
-    }
-    
 	@Override
-    @SuppressWarnings("null")
+	public boolean isSingle() {
+		return true;
+	}
+	
+	@Override
+	@SuppressWarnings("null")
 	public Class<?> getReturnType() {
-        return noneType.getReturnType();
-    }
+		return noneType.getReturnType();
+	}
 	
 	@SuppressWarnings("null")
 	public String toString(final @Nullable Event e, final boolean debug) {

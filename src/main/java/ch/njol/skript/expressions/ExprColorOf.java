@@ -46,9 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Colour of")
 @Description("The <a href='../classes/#color'>colour</a> of an item, can also be used to colour chat messages with \"&lt;%colour of ...%&gt;this text is coloured!\".")
-@Examples({"on click on wool:",
-		"	message \"This wool block is <%colour of block%>%colour of block%<reset>!\"",
-		"	set the colour of the block to black"})
+@Examples({"on click on wool:", "	message \"This wool block is <%colour of block%>%colour of block%<reset>!\"", "	set the colour of the block to black"})
 @Since("1.2")
 public class ExprColorOf extends SimplePropertyExpression<Object, Color> {
 	static {
@@ -107,7 +105,7 @@ public class ExprColorOf extends SimplePropertyExpression<Object, Color> {
 		final Object[] os = getExpr().getArray(e);
 		if (os.length == 0)
 			return;
-
+		
 		final Color c = (Color) delta[0];
 		
 		for (final Object o : os) {

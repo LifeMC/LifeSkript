@@ -45,26 +45,21 @@ import org.eclipse.jdt.annotation.Nullable;
 public class MinecartData extends EntityData<Minecart> {
 	
 	@Nullable
-	static final Class<? extends Minecart> storageMinecart =
-			Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart");
-			
+	static final Class<? extends Minecart> storageMinecart = Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart");
+	
 	@Nullable
-	static final Class<? extends Minecart> poweredMinecart =
-			Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart");
-			
+	static final Class<? extends Minecart> poweredMinecart = Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart");
+	
 	@SuppressWarnings("null")
 	private enum MinecartType {
 		
 		ANY(Minecart.class, "minecart"),
-
+		
 		NORMAL(Skript.classExists("org.bukkit.entity.minecart.RideableMinecart") ? RideableMinecart.class : Minecart.class, "regular minecart"),
 		
-		STORAGE((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart"), "storage minecart"),
-		POWERED((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart"), "powered minecart"),
+		STORAGE((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart"), "storage minecart"), POWERED((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart"), "powered minecart"),
 		
-		HOPPER(Skript.classExists("org.bukkit.entity.minecart.HopperMinecart") ? HopperMinecart.class : null, "hopper minecart"),
-		EXPLOSIVE(Skript.classExists("org.bukkit.entity.minecart.ExplosiveMinecart") ? ExplosiveMinecart.class : null, "explosive minecart"),
-		SPAWNER(Skript.classExists("org.bukkit.entity.minecart.SpawnerMinecart") ? SpawnerMinecart.class : null, "spawner minecart");
+		HOPPER(Skript.classExists("org.bukkit.entity.minecart.HopperMinecart") ? HopperMinecart.class : null, "hopper minecart"), EXPLOSIVE(Skript.classExists("org.bukkit.entity.minecart.ExplosiveMinecart") ? ExplosiveMinecart.class : null, "explosive minecart"), SPAWNER(Skript.classExists("org.bukkit.entity.minecart.SpawnerMinecart") ? SpawnerMinecart.class : null, "spawner minecart");
 		
 		@Nullable
 		final Class<? extends Minecart> c;

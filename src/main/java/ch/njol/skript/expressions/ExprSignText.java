@@ -48,15 +48,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Sign Text")
 @Description("A line of text on a sign. Can be changed, but remember that there is a 16 character limit per line (including colour codes that use 2 characters each).")
-@Examples({"on rightclick on sign:",
-		"	line 2 of the clicked block is \"[Heal]\":",
-		"		heal the player",
-		"	set line 3 to \"%player%\""})
+@Examples({"on rightclick on sign:", "	line 2 of the clicked block is \"[Heal]\":", "		heal the player", "	set line 3 to \"%player%\""})
 @Since("1.3")
 public class ExprSignText extends SimpleExpression<String> {
 	static {
-		Skript.registerExpression(ExprSignText.class, String.class, ExpressionType.PROPERTY,
-				"[the] line %number% [of %block%]", "[the] (1¦1st|1¦first|2¦2nd|2¦second|3¦3rd|3¦third|4¦4th|4¦fourth) line [of %block%]");
+		Skript.registerExpression(ExprSignText.class, String.class, ExpressionType.PROPERTY, "[the] line %number% [of %block%]", "[the] (1¦1st|1¦first|2¦2nd|2¦second|3¦3rd|3¦third|4¦4th|4¦fourth) line [of %block%]");
 	}
 	
 	@SuppressWarnings("null")

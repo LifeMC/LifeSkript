@@ -51,22 +51,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Argument")
-@Description({"Only usable in command events. Holds the value of the nth argument given to the command, " +
-		"e.g. if the command \"/tell &lt;player&gt; &lt;text&gt;\" is used like \"/tell Njol Hello Njol!\" argument 1 is the player named \"Njol\" and argument 2 is \"Hello Njol!\".",
-		"One can also use the type of the argument instead of its index to address the argument, e.g. in the above example 'player-argument' is the same as 'argument 1'."})
-@Examples({"give the item-argument to the player-argument",
-		"damage the player-argument by the number-argument",
-		"give a diamond pickaxe to the argument",
-		"add argument 1 to argument 2",
-		"heal the last argument"})
+@Description({"Only usable in command events. Holds the value of the nth argument given to the command, " + "e.g. if the command \"/tell &lt;player&gt; &lt;text&gt;\" is used like \"/tell Njol Hello Njol!\" argument 1 is the player named \"Njol\" and argument 2 is \"Hello Njol!\".", "One can also use the type of the argument instead of its index to address the argument, e.g. in the above example 'player-argument' is the same as 'argument 1'."})
+@Examples({"give the item-argument to the player-argument", "damage the player-argument by the number-argument", "give a diamond pickaxe to the argument", "add argument 1 to argument 2", "heal the last argument"})
 @Since("1.0")
 public class ExprArgument extends SimpleExpression<Object> {
 	static {
-		Skript.registerExpression(ExprArgument.class, Object.class, ExpressionType.SIMPLE,
-				"[the] last arg[ument][s]",
-				"[the] arg[ument][s](-| )<(\\d+)>", "[the] <(\\d*1)st|(\\d*2)nd|(\\d*3)rd|(\\d*[4-90])th> arg[ument][s]",
-				"[the] arg[ument][s]",
-				"[the] %*classinfo%( |-)arg[ument][( |-)<\\d+>]", "[the] arg[ument]( |-)%*classinfo%[( |-)<\\d+>]");
+		Skript.registerExpression(ExprArgument.class, Object.class, ExpressionType.SIMPLE, "[the] last arg[ument][s]", "[the] arg[ument][s](-| )<(\\d+)>", "[the] <(\\d*1)st|(\\d*2)nd|(\\d*3)rd|(\\d*[4-90])th> arg[ument][s]", "[the] arg[ument][s]", "[the] %*classinfo%( |-)arg[ument][( |-)<\\d+>]", "[the] arg[ument]( |-)%*classinfo%[( |-)<\\d+>]");
 	}
 	
 	@SuppressWarnings("null")
@@ -98,7 +88,7 @@ public class ExprArgument extends SimpleExpression<Object> {
 					return false;
 				} else if (i < 1) {
 					Skript.error("Command arguments start from one; argument number " + i + " is invalid", ErrorQuality.SEMANTIC_ERROR);
- 					return false;
+					return false;
 				}
 				arg = currentArguments.get(i - 1);
 				break;

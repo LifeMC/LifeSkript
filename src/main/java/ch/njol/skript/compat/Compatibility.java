@@ -30,7 +30,6 @@ import org.eclipse.jdt.annotation.Nullable;
  * A class about compatibility.
  * 
  * @author TheDGOfficial
- * 
  * @since 2.2-Fixes-V10
  */
 public final class Compatibility {
@@ -48,30 +47,30 @@ public final class Compatibility {
 	 * @param oldClass - The old, deprecated or moved class.
 	 * @param newClass - The new class.
 	 * @param superClass - The superclass of the two classes entered.
-	 * 
 	 * @return The most compatible class as super class.
-	 * If you must do operations specific to old or new one,
-	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
+	 *         If you must do operations specific to old or new one,
+	 *         check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@NonNull @SuppressWarnings("null")
+	@NonNull
+	@SuppressWarnings("null")
 	public static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
 		
-		if(Skript.classExists(newClass)) {
+		if (Skript.classExists(newClass)) {
 			
 			final Class<?> clazz = Skript.classForName(newClass);
 			
 			// Should be never happen.
-			if(clazz == null)
+			if (clazz == null)
 				return superClass;
 			
 			return (Class<? extends Superclass>) clazz;
 			
-		} else if(Skript.classExists(oldClass)) {
+		} else if (Skript.classExists(oldClass)) {
 			
 			final Class<?> clazz = Skript.classForName(oldClass);
 			
 			// Should be never happen.
-			if(clazz == null)
+			if (clazz == null)
 				return superClass;
 			
 			return (Class<? extends Superclass>) clazz;
@@ -79,7 +78,7 @@ public final class Compatibility {
 		} else {
 			
 			// Should be never happen
-			if(Skript.logHigh())
+			if (Skript.logHigh())
 				Skript.warning("The class " + newClass + " (also known as " + oldClass + ") is not available on this server.");
 			return superClass;
 			
@@ -92,12 +91,12 @@ public final class Compatibility {
 	 * 
 	 * @param oldClass - The old, deprecated or moved class.
 	 * @param newClass - The new class.
-	 * 
 	 * @return The most compatible class as super class.
-	 * If you must do operations specific to old or new one,
-	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
+	 *         If you must do operations specific to old or new one,
+	 *         check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@Nullable @SuppressWarnings("null")
+	@Nullable
+	@SuppressWarnings("null")
 	public static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return Compatibility.<Superclass>getClass(oldClass, newClass, null);
@@ -109,12 +108,12 @@ public final class Compatibility {
 	 * 
 	 * @param oldClass - The old, deprecated or moved class.
 	 * @param newClass - The new class.
-	 * 
 	 * @return The most compatible class as generic class.
-	 * If you must do operations specific to old or new one,
-	 * check via {@link Class#isAssignableFrom(Class)} and cast it.
+	 *         If you must do operations specific to old or new one,
+	 *         check via {@link Class#isAssignableFrom(Class)} and cast it.
 	 */
-	@Nullable @SuppressWarnings("null")
+	@Nullable
+	@SuppressWarnings("null")
 	public static Class<?> getClassNoSuper(@NonNull final String oldClass, @NonNull final String newClass) {
 		
 		return getClass(oldClass, newClass, null);

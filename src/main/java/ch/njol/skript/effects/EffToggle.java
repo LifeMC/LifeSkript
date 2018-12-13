@@ -44,10 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("deprecation")
 @Name("Toggle")
 @Description("Toggle the state of a block.")
-@Examples({"# use arrows to toggle switches, doors, etc.",
-		"on projectile hit:",
-		"    projectile is arrow",
-		"    toggle the block at the arrow"})
+@Examples({"# use arrows to toggle switches, doors, etc.", "on projectile hit:", "    projectile is arrow", "    toggle the block at the arrow"})
 @Since("1.4")
 public final class EffToggle extends Effect {
 	static {

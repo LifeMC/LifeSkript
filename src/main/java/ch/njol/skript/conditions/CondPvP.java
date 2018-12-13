@@ -42,8 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("PvP")
 @Description("Checks the PvP status of a world.")
-@Examples({"PvP is enabled",
-		"PvP is disabled in \"world\""})
+@Examples({"PvP is enabled", "PvP is disabled in \"world\""})
 @Since("1.3.4")
 public class CondPvP extends Condition {
 	

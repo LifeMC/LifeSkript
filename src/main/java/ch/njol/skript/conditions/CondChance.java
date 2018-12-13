@@ -39,12 +39,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Chance")
-@Description({"A condition that randomly succeeds or fails.",
-		"Valid values are between 0% and 100%, or if the percent sign is omitted between 0 and 1."})
-@Examples({"chance of 50%:",
-		"	drop a diamond",
-		"chance of {var}% # {var} between 0 and 100",
-		"chance of {var} # {var} between 0 and 1"})
+@Description({"A condition that randomly succeeds or fails.", "Valid values are between 0% and 100%, or if the percent sign is omitted between 0 and 1."})
+@Examples({"chance of 50%:", "	drop a diamond", "chance of {var}% # {var} between 0 and 100", "chance of {var} # {var} between 0 and 1"})
 @Since("1.0")
 public final class CondChance extends Condition {
 	static {

@@ -136,6 +136,7 @@ public class CommandHelp {
 		return true;
 	}
 	
+	@SuppressWarnings("null")
 	public void showHelp(final CommandSender sender) {
 		showHelp(sender, m_usage.toString());
 	}

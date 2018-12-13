@@ -45,12 +45,13 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("\"oops!\" in upper case # OOPS!")
 @Since("2.2-Fixes-V9c")
 public final class ExprStringCase extends SimpleExpression<String> {
-
+	
 	private final static int UPPER = 0, LOWER = 1;
 	
 	/**
 	 * Helper function which takes nullable string and
 	 * uses given mode to it.
+	 * 
 	 * @param str Original string.
 	 * @param mode See above, UPPER or LOWER.
 	 * @return Changed string.
@@ -68,8 +69,7 @@ public final class ExprStringCase extends SimpleExpression<String> {
 	}
 	
 	static {
-		Skript.registerExpression(ExprStringCase.class, String.class, ExpressionType.SIMPLE,
-				"%string% in (0¦upper|1¦lower) case", "capitalized %string%");
+		Skript.registerExpression(ExprStringCase.class, String.class, ExpressionType.SIMPLE, "%string% in (0¦upper|1¦lower) case", "capitalized %string%");
 	}
 	
 	@Nullable
@@ -111,12 +111,12 @@ public final class ExprStringCase extends SimpleExpression<String> {
 	public boolean isSingle() {
 		return true;
 	}
-
+	
 	@Override
 	public Class<String> getReturnType() {
 		return String.class;
 	}
-
+	
 	@Override
 	public String toString(@Nullable final Event e, final boolean debug) {
 		if (literal != null)

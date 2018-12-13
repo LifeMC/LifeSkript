@@ -186,7 +186,7 @@ public final class CyclicList<E> extends AbstractList<E> {
 			array[items.length] = null;
 		return array;
 	}
-
+	
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -198,7 +198,7 @@ public final class CyclicList<E> extends AbstractList<E> {
 		result = prime * result + this.start;
 		return result;
 	}
-
+	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

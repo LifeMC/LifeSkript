@@ -342,9 +342,10 @@ final public class ScriptLoader {
 //		}
 		try {
 			
-			@Nullable Date startDate = null;
+			@Nullable
+			Date startDate = null;
 			
-			if(Skript.logHigh())
+			if (Skript.logHigh())
 				startDate = new Date();
 			
 			final Config config = new Config(f, true, false, ":");
@@ -520,7 +521,7 @@ final public class ScriptLoader {
 					try {
 						trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
 						trigger.setLineNumber(node.getLine());
- 						trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
+						trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
 					} finally {
 						deleteCurrentEvent();
 					}
@@ -636,7 +637,7 @@ final public class ScriptLoader {
 	 * 
 	 * @param s The string to replace options.
 	 * @return The replaced string. May return null, but only if the input is null.
- 	 */
+	 */
 	public static String replaceOptions(final String s) {
 		final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
 			@Override

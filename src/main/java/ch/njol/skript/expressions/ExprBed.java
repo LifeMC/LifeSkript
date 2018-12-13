@@ -39,10 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Bed")
 @Description("The bed location of a player, i.e. the spawn point of a player if he ever slept in a bed and the bed still exists and is unobstructed.")
-@Examples({"bed of player exists:",
-		"	teleport player the the player's bed",
-		"else:",
-		"	teleport the player to the world's spawn point"})
+@Examples({"bed of player exists:", "	teleport player the the player's bed", "else:", "	teleport the player to the world's spawn point"})
 @Since("2.0")
 public class ExprBed extends SimplePropertyExpression<Player, Location> {
 	static {

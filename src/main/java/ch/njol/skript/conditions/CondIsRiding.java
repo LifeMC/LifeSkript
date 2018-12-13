@@ -47,9 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 public class CondIsRiding extends Condition {
 	static {
-		Skript.registerCondition(CondIsRiding.class,
-				"%entities% (is|are) riding [%entitydatas%]",
-				"%entities% (isn't|is not|aren't|are not) riding [%entitydatas%]");
+		Skript.registerCondition(CondIsRiding.class, "%entities% (is|are) riding [%entitydatas%]", "%entities% (isn't|is not|aren't|are not) riding [%entitydatas%]");
 	}
 	
 	@SuppressWarnings("null")

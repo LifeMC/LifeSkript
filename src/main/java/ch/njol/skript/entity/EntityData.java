@@ -71,7 +71,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @SuppressWarnings("rawtypes")
 public abstract class EntityData<E extends Entity> implements SyntaxElement, YggdrasilExtendedSerializable {// TODO extended horse support, zombie villagers // REMIND unit
-
+	
 	public final static String LANGUAGE_NODE = "entities";
 	
 	public final static Message m_age_pattern = new Message(LANGUAGE_NODE + ".age pattern");
@@ -118,7 +118,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 			}
 			throw new StreamCorruptedException();
 		}
-		
+	
 //		return getInfo((Class<? extends EntityData<?>>) d.getClass()).codeName + ":" + d.serialize();
 		@SuppressWarnings("null")
 		@Override
@@ -150,38 +150,28 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	};
 	
 	static {
-		Classes.registerClass(new ClassInfo<EntityData>(EntityData.class, "entitydata")
-				.user("entity ?types?")
-				.name("Entity Type")
-				.description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.")
-				.usage("<i>Detailed usage will be added eventually</i>")
-				.examples("victim is a cow",
-						"spawn a creeper")
-				.since("1.3")
-				.defaultExpression(new SimpleLiteral<EntityData>(new SimpleEntityData(Entity.class), true))
-				.before("entitytype")
-				.parser(new Parser<EntityData>() {
-					@Override
-					public String toString(final EntityData d, final int flags) {
-						return d.toString(flags);
-					}
-					
-					@Override
-					@Nullable
-					public EntityData parse(final String s, final ParseContext context) {
-						return EntityData.parse(s);
-					}
-					
-					@Override
-					public String toVariableNameString(final EntityData o) {
-						return "entitydata:" + o.toString();
-					}
-					
-					@Override
-					public String getVariableNamePattern() {
-						return "entitydata:.+";
-					}
-				}).serializer(serializer));
+		Classes.registerClass(new ClassInfo<EntityData>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<EntityData>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
+			@Override
+			public String toString(final EntityData d, final int flags) {
+				return d.toString(flags);
+			}
+			
+			@Override
+			@Nullable
+			public EntityData parse(final String s, final ParseContext context) {
+				return EntityData.parse(s);
+			}
+			
+			@Override
+			public String toVariableNameString(final EntityData o) {
+				return "entitydata:" + o.toString();
+			}
+			
+			@Override
+			public String getVariableNamePattern() {
+				return "entitydata:.+";
+			}
+		}).serializer(serializer));
 	}
 	
 	private final static class EntityDataInfo<T extends EntityData<?>> extends SyntaxElementInfo<T> implements LanguageChangeListener {
@@ -419,19 +409,19 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 			final E e = loc.getWorld().spawn(loc, getType());
 			if (e == null)
 				throw new IllegalArgumentException();
-			if (baby.isTrue()){
-				if(e instanceof Ageable)
+			if (baby.isTrue()) {
+				if (e instanceof Ageable)
 					((Ageable) e).setBaby();
-				else if(e instanceof Zombie)
+				else if (e instanceof Zombie)
 					((Zombie) e).setBaby(true);
-				else if(e instanceof PigZombie)
+				else if (e instanceof PigZombie)
 					((PigZombie) e).setBaby(true);
-			}else if(baby.isFalse()){
-				if(e instanceof Ageable)
+			} else if (baby.isFalse()) {
+				if (e instanceof Ageable)
 					((Ageable) e).setAdult();
-				else if(e instanceof Zombie)
+				else if (e instanceof Zombie)
 					((Zombie) e).setBaby(false);
-				else if(e instanceof PigZombie)
+				else if (e instanceof PigZombie)
 					((PigZombie) e).setBaby(false);
 			}
 			set(e);

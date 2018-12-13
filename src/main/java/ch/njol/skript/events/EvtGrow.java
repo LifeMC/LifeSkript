@@ -38,10 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtGrow extends SkriptEvent {
 	static {
-		Skript.registerEvent("Grow", EvtGrow.class, StructureGrowEvent.class, "grow [of %-structuretype%]")
-				.description("Called when a tree or giant mushroom grows to full size.")
-				.examples("on grow", "on grow of a tree", "on grow of a huge jungle tree")
-				.since("1.0");
+		Skript.registerEvent("Grow", EvtGrow.class, StructureGrowEvent.class, "grow [of %-structuretype%]").description("Called when a tree or giant mushroom grows to full size.").examples("on grow", "on grow of a tree", "on grow of a huge jungle tree").since("1.0");
 	}
 	
 	@Nullable

@@ -45,8 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Armour Slot")
 @Description("A part of a player's armour, i.e. the boots, leggings, chestplate or helmet.")
-@Examples({"set chestplate of the player to a diamond chestplate",
-		"helmet of player is neither a helmet nor air # player is wearing a block, e.g. from another plugin"})
+@Examples({"set chestplate of the player to a diamond chestplate", "helmet of player is neither a helmet nor air # player is wearing a block, e.g. from another plugin"})
 @Since("1.0")
 public class ExprArmorSlot extends SimplePropertyExpression<LivingEntity, Slot> {
 	static {

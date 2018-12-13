@@ -24,29 +24,25 @@ import javax.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public final class SynchronizedReference<V>
-{
-  @Nullable
-  private volatile V value;
-  
-  public SynchronizedReference(@Nullable final V initialValue)
-  {
-    this.value = initialValue;
-  }
-  
-  @SuppressWarnings("null")
-  public SynchronizedReference() {}
-  
-  @Nullable
-  public V get()
-  {
-    assert Thread.holdsLock(this);
-    return this.value;
-  }
-  
-  public void set(@Nullable final V newValue)
-  {
-    assert Thread.holdsLock(this);
-    this.value = newValue;
-  }
+public final class SynchronizedReference<V> {
+	@Nullable
+	private volatile V value;
+	
+	public SynchronizedReference(@Nullable final V initialValue) {
+		this.value = initialValue;
+	}
+	
+	@SuppressWarnings("null")
+	public SynchronizedReference() {}
+	
+	@Nullable
+	public V get() {
+		assert Thread.holdsLock(this);
+		return this.value;
+	}
+	
+	public void set(@Nullable final V newValue) {
+		assert Thread.holdsLock(this);
+		this.value = newValue;
+	}
 }

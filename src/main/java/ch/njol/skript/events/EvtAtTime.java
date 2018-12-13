@@ -52,10 +52,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings("EQ_COMPARETO_USE_OBJECT_EQUALS")
 public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<EvtAtTime> {
 	static {
-		Skript.registerEvent("*At Time", EvtAtTime.class, ScheduledEvent.class, "at %time% [in %worlds%]")
-				.description("An event that occurs at a given <a href='../classes/#time'>minecraft time</a> in every world or only in specific worlds.")
-				.examples("at 18:00", "at 7am in \"world\"")
-				.since("1.3.4");
+		Skript.registerEvent("*At Time", EvtAtTime.class, ScheduledEvent.class, "at %time% [in %worlds%]").description("An event that occurs at a given <a href='../classes/#time'>minecraft time</a> in every world or only in specific worlds.").examples("at 18:00", "at 7am in \"world\"").since("1.3.4");
 	}
 	
 	private final static int CHECKPERIOD = 10;
@@ -194,7 +191,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 	public int compareTo(final @Nullable EvtAtTime e) {
 		return e == null ? tick : tick - e.tick;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -202,7 +199,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 		result = prime * result + tick;
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(@Nullable final Object obj) {
 		if (this == obj)

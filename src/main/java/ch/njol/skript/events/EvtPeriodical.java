@@ -43,15 +43,8 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 	static {
-		Skript.registerEvent("*Periodical", EvtPeriodical.class, ScheduledNoWorldEvent.class, "every %timespan%")
-				.description(SkriptEventInfo.NO_DOC);
-		Skript.registerEvent("*Periodical", EvtPeriodical.class, ScheduledEvent.class, "every %timespan% in [world[s]] %worlds%")
-				.description("An event that is called periodically. The event is used like 'every &lt;<a href='../classes/#timespan'>timespan</a>&gt;', e.g. 'every second' or 'every 5 minutes'.")
-				.examples("every second",
-						"every minecraft hour",
-						"every tick # warning: lag!",
-						"every minecraft day in \"world\"")
-				.since("1.0");
+		Skript.registerEvent("*Periodical", EvtPeriodical.class, ScheduledNoWorldEvent.class, "every %timespan%").description(SkriptEventInfo.NO_DOC);
+		Skript.registerEvent("*Periodical", EvtPeriodical.class, ScheduledEvent.class, "every %timespan% in [world[s]] %worlds%").description("An event that is called periodically. The event is used like 'every &lt;<a href='../classes/#timespan'>timespan</a>&gt;', e.g. 'every second' or 'every 5 minutes'.").examples("every second", "every minecraft hour", "every tick # warning: lag!", "every minecraft day in \"world\"").since("1.0");
 	}
 	
 	@SuppressWarnings("null")

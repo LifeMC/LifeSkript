@@ -45,36 +45,40 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"send \"The cooldown of this command is: %cooldown%\""})
 @Since("2.2-Fixes-V10b")
 public class ExprCmdCooldown extends SimpleExpression<Timespan> {
-    static {
-       Skript.registerExpression(ExprCmdCooldown.class, Timespan.class, ExpressionType.SIMPLE,
-               "[the] cooldown [(of [the] command)]");
-   }
-    @Nullable
-   @Override
-   protected Timespan[] get(final Event e) {
-       if (!(e instanceof ScriptCommandEvent)) {
-           return null;
-       }
-       return new Timespan[]{((ScriptCommandEvent) e).getSkriptCommand().getCooldown()};
-   }
-    @Override
-   public boolean isSingle() {
-       return true;
-   }
-    @Override
-   public Class<Timespan> getReturnType() {
-       return Timespan.class;
-   }
-    @Override
-   public String toString(@Nullable final Event e, final boolean debug) {
-       return "the cooldown of the command";
-   }
-    @Override
-   public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-       if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
-           Skript.error("The expression 'cooldown' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
-           return false;
-       }
-       return true;
-   }
+	static {
+		Skript.registerExpression(ExprCmdCooldown.class, Timespan.class, ExpressionType.SIMPLE, "[the] cooldown [(of [the] command)]");
+	}
+	
+	@Nullable
+	@Override
+	protected Timespan[] get(final Event e) {
+		if (!(e instanceof ScriptCommandEvent)) {
+			return null;
+		}
+		return new Timespan[] {((ScriptCommandEvent) e).getSkriptCommand().getCooldown()};
+	}
+	
+	@Override
+	public boolean isSingle() {
+		return true;
+	}
+	
+	@Override
+	public Class<Timespan> getReturnType() {
+		return Timespan.class;
+	}
+	
+	@Override
+	public String toString(@Nullable final Event e, final boolean debug) {
+		return "the cooldown of the command";
+	}
+	
+	@Override
+	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+		if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
+			Skript.error("The expression 'cooldown' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
+			return false;
+		}
+		return true;
+	}
 }

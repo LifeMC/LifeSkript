@@ -50,14 +50,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Equip")
 @Description("Equips a player with some given armor. This will replace any armor that the player is wearing.")
-@Examples({"equip player with diamond helmet",
-		"equip player with all diamond armor"})
+@Examples({"equip player with diamond helmet", "equip player with all diamond armor"})
 @Since("1.0")
 public class EffEquip extends Effect implements Testable {
 	static {
-		Skript.registerEffect(EffEquip.class,
-				"equip [%livingentity%] with %itemtypes%",
-				"make %livingentity% wear %itemtypes%");
+		Skript.registerEffect(EffEquip.class, "equip [%livingentity%] with %itemtypes%", "make %livingentity% wear %itemtypes%");
 	}
 	
 	@SuppressWarnings("null")

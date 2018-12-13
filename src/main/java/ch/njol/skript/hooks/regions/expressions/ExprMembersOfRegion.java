@@ -45,15 +45,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Region Members & Owners")
-@Description({"A list of members or owners of a <a href='../classes/#region'>region</a>.",
-		"This expression requires a supported regions plugin to be installed."})
-@Examples({"on entering of a region:",
-		"	message \"You're entering %region% whose owners are %owners of region%\"."})
+@Description({"A list of members or owners of a <a href='../classes/#region'>region</a>.", "This expression requires a supported regions plugin to be installed."})
+@Examples({"on entering of a region:", "	message \"You're entering %region% whose owners are %owners of region%\"."})
 @Since("2.1")
 public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
 	static {
-		Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY,
-				"(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
+		Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
 	}
 	
 	private boolean owners;

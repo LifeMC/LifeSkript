@@ -36,10 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtEntityTarget extends SkriptEvent {
 	static {
-		Skript.registerEvent("Target", EvtEntityTarget.class, EntityTargetEvent.class, "[entity] target", "[entity] un[-]target")
-				.description("Called when a mob starts/stops following/attacking another entity, usually a player.")
-				.examples("")
-				.since("1.0");
+		Skript.registerEvent("Target", EvtEntityTarget.class, EntityTargetEvent.class, "[entity] target", "[entity] un[-]target").description("Called when a mob starts/stops following/attacking another entity, usually a player.").examples("").since("1.0");
 	}
 	
 	private boolean target;

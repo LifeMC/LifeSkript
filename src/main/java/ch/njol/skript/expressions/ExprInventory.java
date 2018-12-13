@@ -37,9 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Inventory")
 @Description("The inventory of a block or player. You can usually omit this expression and can directly add or remove items to/from blocks or players.")
-@Examples({"add a plank to the player's inventory",
-		"clear the player's inventory",
-		"remove 5 wool from the inventory of the clicked block"})
+@Examples({"add a plank to the player's inventory", "clear the player's inventory", "remove 5 wool from the inventory of the clicked block"})
 @Since("1.0")
 public class ExprInventory extends SimplePropertyExpression<InventoryHolder, Inventory> {
 	static {

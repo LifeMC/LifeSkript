@@ -33,9 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class WolfData extends EntityData<Wolf> {
 	static {
-		EntityData.register(WolfData.class, "wolf", Wolf.class, 1,
-				"angry wolf", "wolf", "peaceful wolf",
-				"wild wolf", "tamed wolf");
+		EntityData.register(WolfData.class, "wolf", Wolf.class, 1, "angry wolf", "wolf", "peaceful wolf", "wild wolf", "tamed wolf");
 	}
 	
 	private int angry;

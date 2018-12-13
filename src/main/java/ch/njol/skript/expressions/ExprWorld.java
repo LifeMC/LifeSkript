@@ -48,9 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("World")
 @Description("The world the event occurred in.")
-@Examples({"world is \"world_nether\"",
-		"teleport the player to the world's spawn",
-		"set the weather in the player's world to rain"})
+@Examples({"world is \"world_nether\"", "teleport the player to the world's spawn", "set the weather in the player's world to rain"})
 @Since("1.0")
 public final class ExprWorld extends PropertyExpression<Object, World> {
 	static {

@@ -46,16 +46,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Block")
-@Description({"The block involved in the event, e.g. the clicked block or the placed block.",
-		"Can optionally include a direction as well, e.g. 'block above' or 'block in front of the player'."})
-@Examples({"block is ore",
-		"set block below to air",
-		"spawn a creeper above the block",
-		"loop blocks in radius 4:",
-		"	loop-block is obsidian",
-		"	set loop-block to water",
-		"block is a chest:",
-		"	clear the inventory of the block"})
+@Description({"The block involved in the event, e.g. the clicked block or the placed block.", "Can optionally include a direction as well, e.g. 'block above' or 'block in front of the player'."})
+@Examples({"block is ore", "set block below to air", "spawn a creeper above the block", "loop blocks in radius 4:", "	loop-block is obsidian", "	set loop-block to water", "block is a chest:", "	clear the inventory of the block"})
 @Since("1.0")
 public class ExprBlock extends WrapperExpression<Block> {
 	static {

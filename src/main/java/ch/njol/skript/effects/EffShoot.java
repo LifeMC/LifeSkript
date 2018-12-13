@@ -49,15 +49,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Shoot")
 @Description("Shoots a projectile (or any other entity) from a given entity.")
-@Examples({"shoot an arrow",
-		"make the player shoot a creeper at speed 10",
-		"shoot a pig from the creeper"})
+@Examples({"shoot an arrow", "make the player shoot a creeper at speed 10", "shoot a pig from the creeper"})
 @Since("1.4")
 public final class EffShoot extends Effect {
 	static {
-		Skript.registerEffect(EffShoot.class,
-				"shoot %entitydatas% [from %livingentities/locations%] [(at|with) (speed|velocity) %-number%] [%-direction%]",
-				"(make|let) %livingentities/locations% shoot %entitydatas% [(at|with) (speed|velocity) %-number%] [%-direction%]");
+		Skript.registerEffect(EffShoot.class, "shoot %entitydatas% [from %livingentities/locations%] [(at|with) (speed|velocity) %-number%] [%-direction%]", "(make|let) %livingentities/locations% shoot %entitydatas% [(at|with) (speed|velocity) %-number%] [%-direction%]");
 	}
 	
 	private final static Double DEFAULT_SPEED = 5.;

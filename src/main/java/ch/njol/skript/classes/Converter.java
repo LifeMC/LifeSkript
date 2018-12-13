@@ -49,7 +49,8 @@ public interface Converter<F, T> {
 	 * @param <T> dito
 	 */
 	@SuppressWarnings("null")
-	@NonNullByDefault final class ConverterInfo<F, T> {
+	@NonNullByDefault
+	final class ConverterInfo<F, T> {
 		
 		public final Class<F> from;
 		public final Class<T> to;

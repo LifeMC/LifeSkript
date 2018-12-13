@@ -73,19 +73,7 @@ public class AliasesTest {
 		varL.put("Birken", t);
 		v.put("varL", varL);
 		
-		final String[][] tests = {
-				{"a", "a"},
-				{"a[b]c", "abc", "ac"},
-				{"a [b] c", "a b c", "a c"},
-				{"a(b|c)d", "abd", "acd"},
-				{"a(b|)c", "abc", "ac"},
-				{"a {var1}", "a", "a v1.1", "a v1.2"},
-				{"a {var2} @an", "a v2.1@a", "a v2.2 @an", "a @an"},
-				{"a {var3}", "a v3.1¦¦s¦", "a v3.2¦a¦b¦", "a"},
-				{"<any> a @an", "aliases.any-skp a @-"},
-				{"a <item>", "a ¦item¦items¦"},
-				{"[Holz]Block", "Holzblock", "Block"},
-				{"{varL}Holz", "Holz", "normales Holz", "Birkenholz"}
+		final String[][] tests = {{"a", "a"}, {"a[b]c", "abc", "ac"}, {"a [b] c", "a b c", "a c"}, {"a(b|c)d", "abd", "acd"}, {"a(b|)c", "abc", "ac"}, {"a {var1}", "a", "a v1.1", "a v1.2"}, {"a {var2} @an", "a v2.1@a", "a v2.2 @an", "a @an"}, {"a {var3}", "a v3.1¦¦s¦", "a v3.2¦a¦b¦", "a"}, {"<any> a @an", "aliases.any-skp a @-"}, {"a <item>", "a ¦item¦items¦"}, {"[Holz]Block", "Holzblock", "Block"}, {"{varL}Holz", "Holz", "normales Holz", "Birkenholz"}
 		};
 		
 		for (final String[] test : tests) {

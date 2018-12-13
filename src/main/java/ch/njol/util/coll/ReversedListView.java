@@ -80,7 +80,7 @@ public class ReversedListView<T> implements List<T> {
 		return r;
 	}
 	
-	@SuppressWarnings({ "unchecked", "null" })
+	@SuppressWarnings({"unchecked", "null"})
 	@Override
 	public <R> R[] toArray(final R[] a) {
 		final R[] t = a.length >= size() ? a : (R[]) Array.newInstance(a.getClass().getComponentType(), size());

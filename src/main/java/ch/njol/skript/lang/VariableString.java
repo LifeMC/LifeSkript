@@ -255,11 +255,9 @@ public final class VariableString implements Expression<String> {
 			return new VariableString("" + string.get(0));
 		final Object[] sa = string.toArray();
 		assert sa != null;
-		if (string.size() == 1 && string.get(0) instanceof ExpressionInfo &&
-				((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class &&
-				((ExpressionInfo) string.get(0)).expr.isSingle()) {
+		if (string.size() == 1 && string.get(0) instanceof ExpressionInfo && ((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class && ((ExpressionInfo) string.get(0)).expr.isSingle()) {
 			final String expr = ((ExpressionInfo) string.get(0)).expr.toString(null, false);
-			if(!SkriptConfig.disableExpressionAlreadyTextWarnings.value())
+			if (!SkriptConfig.disableExpressionAlreadyTextWarnings.value())
 				Skript.warning(expr + " is already a text, so you should not put it in one (e.g. " + expr + " instead of " + "\"%" + expr.replace("\"", "\"\"") + "%\")");
 		}
 		return new VariableString(orig, sa, mode);
@@ -272,7 +270,7 @@ public final class VariableString implements Expression<String> {
 		if (name.startsWith("%")) {// inside the if to only print this message once per variable
 			final Config script = ScriptLoader.currentScript;
 			if (script != null) {
-				if(!SkriptConfig.disableStartingWithExpressionWarnings.value()) {
+				if (!SkriptConfig.disableStartingWithExpressionWarnings.value()) {
 					Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "." + name + "}");
 				}
 			}

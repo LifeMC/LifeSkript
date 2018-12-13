@@ -48,9 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Facing")
 @Description("The facing of an entity or block, i.e. exactly north, south, east, west, up or down (unlike <a href='#ExprDirection'>direction</a> which is the exact direction, e.g. '0.5 south and 0.7 east')")
-@Examples({"# makes a bridge",
-		"loop blocks from the block below the player in the horizontal facing of the player:",
-		"	set block to cobblestone"})
+@Examples({"# makes a bridge", "loop blocks from the block below the player in the horizontal facing of the player:", "	set block to cobblestone"})
 @Since("1.4")
 public class ExprFacing extends SimplePropertyExpression<Object, Direction> {
 	static {

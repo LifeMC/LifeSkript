@@ -49,15 +49,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Blocks in Region")
-@Description({"All blocks in a <a href='../classes/#region'>region</a>.",
-		"This expression requires a supported regions plugin to be installed."})
-@Examples({"loop all blocks in the region {arena.%{faction.%player%}%}:",
-		"	clear the loop-block"})
+@Description({"All blocks in a <a href='../classes/#region'>region</a>.", "This expression requires a supported regions plugin to be installed."})
+@Examples({"loop all blocks in the region {arena.%{faction.%player%}%}:", "	clear the loop-block"})
 @Since("2.1")
 public final class ExprBlocksInRegion extends SimpleExpression<Block> {
 	static {
-		Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED,
-				"[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
+		Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
 	}
 	
 	@SuppressWarnings("null")

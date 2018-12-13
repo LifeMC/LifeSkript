@@ -54,30 +54,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Parse")
-@Description({"Parses text as a given type, or as a given pattern.",
-		"This expression can be used in two different ways: One which parses the entire text as a single instance of a type, e.g. as a number, " +
-				"and one that parses the text according to a pattern.",
-		"If the given text could not be parsed, this expression will return nothing and the <a href='#ExprParseError'>parse error</a> will be set if some information is available.",
-		"Some notes about parsing with a pattern:",
-		"- The pattern must be a <a href='../patterns/'>Skript pattern</a>, " +
-				"e.g. percent signs are used to define where to parse which types, e.g. put a %number% or %items% in the pattern if you expect a number or some items there.",
-		"- You <i>have to</i> save the expression's value in a list variable, e.g. <code>set {parsed::*} to message parsed as \"...\"</code>.",
-		"- The list variable will contain the parsed values from all %types% in the pattern in order. If a type was plural, e.g. %items%, the variable's value at the respective index will be a list variable," +
-				" e.g. the values will be stored in {parsed::1::*}, not {parsed::1}."})
-@Examples({"set {var} to line 1 parsed as number",
-		"on chat:",
-		"	set {var::*} to message parsed as \"buying %items% for %money%\"",
-		"	if parse error is set:",
-		"		message \"%parse error%\"",
-		"	else if {var::*} is set:",
-		"		cancel event",
-		"		remove {var::2} from the player's balance",
-		"		give {var::1::*} to the player"})
+@Description({"Parses text as a given type, or as a given pattern.", "This expression can be used in two different ways: One which parses the entire text as a single instance of a type, e.g. as a number, " + "and one that parses the text according to a pattern.", "If the given text could not be parsed, this expression will return nothing and the <a href='#ExprParseError'>parse error</a> will be set if some information is available.", "Some notes about parsing with a pattern:", "- The pattern must be a <a href='../patterns/'>Skript pattern</a>, " + "e.g. percent signs are used to define where to parse which types, e.g. put a %number% or %items% in the pattern if you expect a number or some items there.", "- You <i>have to</i> save the expression's value in a list variable, e.g. <code>set {parsed::*} to message parsed as \"...\"</code>.", "- The list variable will contain the parsed values from all %types% in the pattern in order. If a type was plural, e.g. %items%, the variable's value at the respective index will be a list variable," + " e.g. the values will be stored in {parsed::1::*}, not {parsed::1}."})
+@Examples({"set {var} to line 1 parsed as number", "on chat:", "	set {var::*} to message parsed as \"buying %items% for %money%\"", "	if parse error is set:", "		message \"%parse error%\"", "	else if {var::*} is set:", "		cancel event", "		remove {var::2} from the player's balance", "		give {var::1::*} to the player"})
 @Since("2.0")
 public final class ExprParse extends SimpleExpression<Object> {
 	static {
-		Skript.registerExpression(ExprParse.class, Object.class, ExpressionType.COMBINED,
-				"%string% parsed as (%-*classinfo%|\"<.*>\")");
+		Skript.registerExpression(ExprParse.class, Object.class, ExpressionType.COMBINED, "%string% parsed as (%-*classinfo%|\"<.*>\")");
 	}
 	
 	@Nullable

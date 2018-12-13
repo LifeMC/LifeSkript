@@ -137,8 +137,7 @@ public final class Variable<T> implements Expression<T> {
 			return false;
 		} else if (name.replace(SEPARATOR, "").contains(SINGLE_SEPARATOR_CHAR)) {
 			if (printErrors)
-				Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '"
-						+ SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");
+				Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '" + SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");
 		}
 		return true;
 	}
@@ -246,10 +245,11 @@ public final class Variable<T> implements Expression<T> {
 	 * as a new player object has been created by the server.
 	 */
 	@SuppressWarnings({"deprecation"})
-	@Nullable Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t){
-		if(SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player){
+	@Nullable
+	Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t) {
+		if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
 			final Player p = (Player) t;
-			if(!p.isValid() && p.isOnline()){
+			if (!p.isValid() && p.isOnline()) {
 				final Player player = uuidSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
 				Variables.setVariable(key, player, event, local);
 				return player;
@@ -413,9 +413,9 @@ public final class Variable<T> implements Expression<T> {
 					}
 				} else {
 					//Mirre Start, Location bug quickfix.
-					if(delta[0] instanceof Location){
-						set(e, ((Location)delta[0]).clone());
-					}else
+					if (delta[0] instanceof Location) {
+						set(e, ((Location) delta[0]).clone());
+					} else
 						set(e, delta[0]);
 					//Mirre End
 					
@@ -564,7 +564,7 @@ public final class Variable<T> implements Expression<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T[] getAll(final Event e) {
-		if(list)
+		if (list)
 			return getConvertedArray(e);
 		final T o = getConverted(e);
 		if (o == null) {

@@ -41,16 +41,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Exists/Is Set")
 @Description("Checks whether a given expression or variable is set.")
-@Examples({"{teamscript.%player%.preferred team} is not set",
-		"on damage:",
-		"	projectile exists",
-		"	broadcast \"%attacker% used a %projectile% to attack %victim%!\""})
+@Examples({"{teamscript.%player%.preferred team} is not set", "on damage:", "	projectile exists", "	broadcast \"%attacker% used a %projectile% to attack %victim%!\""})
 @Since("1.2")
 public final class CondIsSet extends Condition {
 	static {
-		Skript.registerCondition(CondIsSet.class,
-				"%~objects% (exist[s]|(is|are) set)",
-				"%~objects% (do[es](n't| not) exist|(is|are)(n't| not) set)");
+		Skript.registerCondition(CondIsSet.class, "%~objects% (exist[s]|(is|are) set)", "%~objects% (do[es](n't| not) exist|(is|are)(n't| not) set)");
 	}
 	
 	@SuppressWarnings("null")

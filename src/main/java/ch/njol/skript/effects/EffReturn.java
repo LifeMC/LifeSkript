@@ -47,8 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Return")
 @Description("Makes a function return a value")
-@Examples({"function double(i: number) :: number:",
-		"	return 2 * {_i}"})
+@Examples({"function double(i: number) :: number:", "	return 2 * {_i}"})
 @Since("2.2")
 public final class EffReturn extends Effect {
 	static {

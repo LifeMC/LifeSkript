@@ -38,11 +38,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Region")
-@Description({"The <a href='../classes/#region'>region</a> involved in an event.",
-		"This expression requires a supported regions plugin to be installed."})
-@Examples({"on region enter:",
-		"	region is {forbidden region}",
-		"	cancel the event"})
+@Description({"The <a href='../classes/#region'>region</a> involved in an event.", "This expression requires a supported regions plugin to be installed."})
+@Examples({"on region enter:", "	region is {forbidden region}", "	cancel the event"})
 @Since("2.1")
 public final class ExprRegion extends EventValueExpression<Region> {
 	static {

@@ -46,11 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Biome")
 @Description("The biome at a certain location. Please note that biomes are only defined for x/z-columns, i.e. the <a href='#ExprAltitude'>altitude</a> (y-coordinate) doesn't matter. ")
-@Examples({"# damage player in deserts constantly",
-		"every real minute:",
-		"	loop all players:",
-		"		biome at loop-player is desert",
-		"		damage the loop-player by 1"})
+@Examples({"# damage player in deserts constantly", "every real minute:", "	loop all players:", "		biome at loop-player is desert", "		damage the loop-player by 1"})
 @Since("1.4.4")
 public class ExprBiome extends PropertyExpression<Location, Biome> {
 	static {

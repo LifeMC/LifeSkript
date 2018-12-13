@@ -53,12 +53,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Furnace Slot")
-@Description({"A slot of a furnace, i.e. either the ore, fuel or result slot.",
-		"Remember to use '<a href='#ExprBlock'>block</a>' and not 'furnace', as 'furnace' is not an existing expression."})
-@Examples({"set the fuel slot of the clicked block to a lava bucket",
-		"set the block's ore slot to 64 iron ore",
-		"give the result of the block to the player",
-		"clear the result slot of the block"})
+@Description({"A slot of a furnace, i.e. either the ore, fuel or result slot.", "Remember to use '<a href='#ExprBlock'>block</a>' and not 'furnace', as 'furnace' is not an existing expression."})
+@Examples({"set the fuel slot of the clicked block to a lava bucket", "set the block's ore slot to 64 iron ore", "give the result of the block to the player", "clear the result slot of the block"})
 @Since("1.0")
 @Events({"smelt", "fuel burn"})
 public class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {

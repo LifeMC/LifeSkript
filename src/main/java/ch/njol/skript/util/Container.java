@@ -42,7 +42,8 @@ public interface Container<T> {
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
 	@Documented
-	@NonNullByDefault @interface ContainerType {
+	@NonNullByDefault
+	@interface ContainerType {
 		Class<?> value();
 	}
 	

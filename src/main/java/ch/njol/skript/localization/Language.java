@@ -120,7 +120,7 @@ public class Language {
 	}
 	
 	public static void missingEntryError(final String key) {
-		if(!Skript.debug() || !Skript.testing())
+		if (!Skript.debug() || !Skript.testing())
 			return;
 		Skript.warning("Missing entry '" + key.toLowerCase(Locale.ENGLISH) + "' in the default english language file");
 	}

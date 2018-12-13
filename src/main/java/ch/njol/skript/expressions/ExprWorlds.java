@@ -46,8 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Worlds")
 @Description("All worlds of the server, useful for looping.")
-@Examples({"loop all worlds:",
-		"	broadcast \"You're in %loop-world%\" to loop-world"})
+@Examples({"loop all worlds:", "	broadcast \"You're in %loop-world%\" to loop-world"})
 @Since("1.0")
 public final class ExprWorlds extends SimpleExpression<World> {
 	

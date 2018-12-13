@@ -43,40 +43,21 @@ public class Math2Test {
 	@Test
 	public void test() {
 		
-		final int[] ints = a(
-				Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1,
-				0, -1, 1);
-		final long[] longs = a(
-				Long.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1,
-				Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1,
-				0, -1, 1);
-		final double[] doubles = a(
-				Double.MIN_VALUE, Double.MIN_NORMAL, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN,
-				Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE,
-				0, -0, 1, 0.1, 0x1.fffffffffffffp-2, 0.5, 1.5, 100, 5726579381544559d, 5726579381544559.5d);
-		final float[] floats = a(
-				Float.MIN_VALUE, Float.MIN_NORMAL, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Float.NaN,
-				Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE,
-				0, -0, 1, 0.1f, 0x1.fffffep-2f, 0.5f, 1.5f, 100, 12954701, 12954701.5f);
+		final int[] ints = a(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);
+		final long[] longs = a(Long.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);
+		final double[] doubles = a(Double.MIN_VALUE, Double.MIN_NORMAL, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN, Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE, 0, -0, 1, 0.1, 0x1.fffffffffffffp-2, 0.5, 1.5, 100, 5726579381544559d, 5726579381544559.5d);
+		final float[] floats = a(Float.MIN_VALUE, Float.MIN_NORMAL, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Float.NaN, Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE, 0, -0, 1, 0.1f, 0x1.fffffep-2f, 0.5f, 1.5f, 100, 12954701, 12954701.5f);
 		
 		final Random rand = new Random();
 		
-		final int[][] modvs = {
-				{5, 4, 1}, {-3, 4, 1}, {4, 4, 0}, {-4, 4, 0}, {-100, 5, 0}, {-50, 100, 50}, {-1000, 4, 0}, {-10, 9, 8}
+		final int[][] modvs = {{5, 4, 1}, {-3, 4, 1}, {4, 4, 0}, {-4, 4, 0}, {-100, 5, 0}, {-50, 100, 50}, {-1000, 4, 0}, {-10, 9, 8}
 		};
 		for (final int[] v : modvs)
 			assertEquals("mod(" + v[0] + "," + v[1] + ")", v[2], Math2.mod(v[0], v[1]));
 		
-		final int[][] p2vsI = {
-				{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128},
-				{-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64},
-				{Integer.MAX_VALUE, Integer.MIN_VALUE}, {Integer.MIN_VALUE, Integer.MIN_VALUE}
+		final int[][] p2vsI = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, Integer.MIN_VALUE}, {Integer.MIN_VALUE, Integer.MIN_VALUE}
 		};
-		final long[][] p2vsL = {
-				{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128},
-				{-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64},
-				{Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1}, {Integer.MIN_VALUE, Integer.MIN_VALUE},
-				{Long.MAX_VALUE, Long.MIN_VALUE}, {Long.MIN_VALUE, Long.MIN_VALUE}
+		final long[][] p2vsL = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1}, {Integer.MIN_VALUE, Integer.MIN_VALUE}, {Long.MAX_VALUE, Long.MIN_VALUE}, {Long.MIN_VALUE, Long.MIN_VALUE}
 		};
 		for (final int[] v : p2vsI)
 			assertEquals("" + v[0], v[1], Math2.nextPowerOfTwo(v[0]));

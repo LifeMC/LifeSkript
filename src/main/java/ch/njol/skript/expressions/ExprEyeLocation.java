@@ -36,11 +36,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Head location")
-@Description({"The location of an entity's head, mostly useful for players and e.g. looping blocks in the player's line of sight.",
-		"Please note that this location is only accurate for entities whose head is exactly above their center, i.e. players, endermen, zombies, skeletons, etc., but not sheep, pigs or cows."})
-@Examples({"set the block at the player's head to air",
-		"set the block in front of the player's eyes to glass",
-		"loop blocks in front of the player's head:"})
+@Description({"The location of an entity's head, mostly useful for players and e.g. looping blocks in the player's line of sight.", "Please note that this location is only accurate for entities whose head is exactly above their center, i.e. players, endermen, zombies, skeletons, etc., but not sheep, pigs or cows."})
+@Examples({"set the block at the player's head to air", "set the block in front of the player's eyes to glass", "loop blocks in front of the player's head:"})
 @Since("2.0")
 public class ExprEyeLocation extends SimplePropertyExpression<LivingEntity, Location> {
 	static {

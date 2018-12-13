@@ -44,14 +44,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Light Level")
-@Description({"Gets the light level at a certain location which ranges from 0 to 15.",
-		"It can be separated into sunlight (15 = direct sunlight, 1-14 = indirect) and block light (torches, glowstone, etc.). The total light level of a block is the maximum of the two different light types."})
-@Examples({"# set vampire players standing in bright sunlight on fire",
-		"every 5 seconds:",
-		"	loop all players:",
-		"		{vampire.%loop-player%} is true",
-		"		sunlight level at the loop-player is greater than 10",
-		"		ignite the loop-player for 5 seconds"})
+@Description({"Gets the light level at a certain location which ranges from 0 to 15.", "It can be separated into sunlight (15 = direct sunlight, 1-14 = indirect) and block light (torches, glowstone, etc.). The total light level of a block is the maximum of the two different light types."})
+@Examples({"# set vampire players standing in bright sunlight on fire", "every 5 seconds:", "	loop all players:", "		{vampire.%loop-player%} is true", "		sunlight level at the loop-player is greater than 10", "		ignite the loop-player for 5 seconds"})
 @Since("1.3.4")
 public class ExprLightLevel extends PropertyExpression<Location, Byte> {
 	static {

@@ -54,6 +54,7 @@ public class Noun extends Message {
 		super(key);
 	}
 	
+	@SuppressWarnings("null")
 	@Override
 	protected void onValueChange() {
 		String value = getValue();

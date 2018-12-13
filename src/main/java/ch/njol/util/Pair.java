@@ -88,8 +88,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
 		final Entry<?, ?> other = (Entry<?, ?>) obj;
 		final T1 first = this.first;
 		final T2 second = this.second;
-		return (first == null ? other.getKey() == null : first.equals(other.getKey())) &&
-				(second == null ? other.getValue() == null : second.equals(other.getValue()));
+		return (first == null ? other.getKey() == null : first.equals(other.getKey())) && (second == null ? other.getValue() == null : second.equals(other.getValue()));
 	}
 	
 	/**

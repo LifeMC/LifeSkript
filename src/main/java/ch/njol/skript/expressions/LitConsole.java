@@ -43,8 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Console")
 @Description("Represents the server's console which can receive messages and execute commands")
-@Examples({"execute console command \"/stop\"",
-		"send \"message to console\" to the console"})
+@Examples({"execute console command \"/stop\"", "send \"message to console\" to the console"})
 @Since("1.3.1")
 public final class LitConsole extends SimpleLiteral<ConsoleCommandSender> {
 	static {

@@ -49,8 +49,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Game Mode")
 @Description("The gamemode of a player.")
-@Examples({"player's gamemode is survival",
-		"set the player's gamemode to creative"})
+@Examples({"player's gamemode is survival", "set the player's gamemode to creative"})
 @Since("1.0")
 public class ExprGameMode extends PropertyExpression<Player, GameMode> {
 	

@@ -7,4 +7,3 @@
 package ch.njol.skript.command;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
-

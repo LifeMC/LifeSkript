@@ -28,4 +28,3 @@
 package ch.njol.skript.bukkitutil;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
-

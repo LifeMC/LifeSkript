@@ -45,14 +45,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Enchant/Disenchant")
 @Description("Enchant or disenchant an existing item")
-@Examples({"enchant the player's tool with sharpness 5",
-		"disenchant the player's tool"})
+@Examples({"enchant the player's tool with sharpness 5", "disenchant the player's tool"})
 @Since("2.0")
 public class EffEnchant extends Effect {
 	static {
-		Skript.registerEffect(EffEnchant.class,
-				"enchant %~itemstack% with %enchantmenttypes%",
-				"disenchant %~itemstack%");
+		Skript.registerEffect(EffEnchant.class, "enchant %~itemstack% with %enchantmenttypes%", "disenchant %~itemstack%");
 	}
 	
 	@SuppressWarnings("null")

@@ -50,14 +50,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
 	static {
-		Skript.registerEvent("Experience Spawn", EvtExperienceSpawn.class, ExperienceSpawnEvent.class, "[e]xp[erience] [orb] spawn", "spawn of [a[n]] [e]xp[erience] [orb]")
-				.description("Called whenever experience is about to spawn. This is a helper event for easily being able to stop xp from spawning, as all you can currently do is cancel the event.",
-						"Please note that it's impossible to detect xp orbs spawned by plugins (including Skript) with Bukkit, thus make sure that you have no such plugins if you don't want any xp orbs to spawn. " +
-								"(Many plugins that only <i>change</i> the experience dropped by blocks or entities will be detected without problems though)")
-				.examples("on xp spawn:",
-						"	world is \"minigame_world\"",
-						"	cancel event")
-				.since("2.0");
+		Skript.registerEvent("Experience Spawn", EvtExperienceSpawn.class, ExperienceSpawnEvent.class, "[e]xp[erience] [orb] spawn", "spawn of [a[n]] [e]xp[erience] [orb]").description("Called whenever experience is about to spawn. This is a helper event for easily being able to stop xp from spawning, as all you can currently do is cancel the event.", "Please note that it's impossible to detect xp orbs spawned by plugins (including Skript) with Bukkit, thus make sure that you have no such plugins if you don't want any xp orbs to spawn. " + "(Many plugins that only <i>change</i> the experience dropped by blocks or entities will be detected without problems though)").examples("on xp spawn:", "	world is \"minigame_world\"", "	cancel event").since("2.0");
 	}
 	
 	@Override

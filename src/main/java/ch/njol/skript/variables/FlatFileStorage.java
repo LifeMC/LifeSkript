@@ -443,7 +443,7 @@ public final class FlatFileStorage extends VariablesStorage {
 							final SerializedVariable.Value value = Classes.serialize(val);
 							if (value != null)
 								writeCSV(pw, name, value.type, encode(value.data));
- 						}
+						}
 						continue outer;
 					}
 				}

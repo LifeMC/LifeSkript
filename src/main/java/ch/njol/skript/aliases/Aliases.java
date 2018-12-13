@@ -284,11 +284,7 @@ public final class Aliases { //NOSONAR
 					r.putAll(getAliases(s, value, variations));
 					return r;
 				} else {
-					final String[][] os = {
-							{"item", itemSingular, itemPlural, itemGender},
-							{"block", blockSingular, blockPlural, blockGender},
-							{"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender},
-							{"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
+					final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
 					};
 					for (final String[] o : os) {
 						if (x.equalsIgnoreCase(o[0])) {
@@ -628,10 +624,7 @@ public final class Aliases { //NOSONAR
 				d = d.intersection(data);
 			}
 			if (!isAlias && d != null) {
-				Skript.warning("Using an ID instead of an alias is discouraged and will likely not be supported in future versions of Skript anymore. " +
-						(d.toString().equals(type) ?
-								"Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." :
-								"Please replace '" + s + "' with e.g. '" + d.toString(true, false) + "'."));
+				Skript.warning("Using an ID instead of an alias is discouraged and will likely not be supported in future versions of Skript anymore. " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with e.g. '" + d.toString(true, false) + "'."));
 			}
 			t.add(d);
 			return t;
@@ -746,6 +739,7 @@ public final class Aliases { //NOSONAR
 		materialNames_localised.clear();
 	}
 	
+	@SuppressWarnings("null")
 	public static void load() {
 		
 		final boolean wasLocal = Language.isUsingLocal();
@@ -769,36 +763,31 @@ public final class Aliases { //NOSONAR
 				
 				final ArrayList<String> aliasNodes = new ArrayList<String>();
 				
-				aliasConfig.validate(
-						new SectionValidator()
-								.addEntry("aliases", new Setter<String>() {
-									@Override
-									public void set(final String s) {
-										for (final String n : s.split(","))
-											aliasNodes.add(n.trim());
-									}
-								}, false)
-								.addEntry("item", new Setter<String>() {
-									@Override
-									public void set(final String s) {
-										final NonNullPair<String, Integer> g = Noun.stripGender(s, "item");
-										itemGender = Noun.getGenderID(g.getSecond());
-										final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-										itemSingular = "" + p.getFirst().toLowerCase();
-										itemPlural = "" + p.getSecond().toLowerCase();
-									}
-								}, false)
-								.addEntry("block", new Setter<String>() {
-									@Override
-									public void set(final String s) {
-										final NonNullPair<String, Integer> g = Noun.stripGender(s, "block");
-										blockGender = Noun.getGenderID(g.getSecond());
-										final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-										blockSingular = "" + p.getFirst().toLowerCase();
-										blockPlural = "" + p.getSecond().toLowerCase();
-									}
-								}, false)
-								.setAllowUndefinedSections(true));
+				aliasConfig.validate(new SectionValidator().addEntry("aliases", new Setter<String>() {
+					@Override
+					public void set(final String s) {
+						for (final String n : s.split(","))
+							aliasNodes.add(n.trim());
+					}
+				}, false).addEntry("item", new Setter<String>() {
+					@Override
+					public void set(final String s) {
+						final NonNullPair<String, Integer> g = Noun.stripGender(s, "item");
+						itemGender = Noun.getGenderID(g.getSecond());
+						final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
+						itemSingular = "" + p.getFirst().toLowerCase();
+						itemPlural = "" + p.getSecond().toLowerCase();
+					}
+				}, false).addEntry("block", new Setter<String>() {
+					@Override
+					public void set(final String s) {
+						final NonNullPair<String, Integer> g = Noun.stripGender(s, "block");
+						blockGender = Noun.getGenderID(g.getSecond());
+						final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
+						blockSingular = "" + p.getFirst().toLowerCase();
+						blockPlural = "" + p.getSecond().toLowerCase();
+					}
+				}, false).setAllowUndefinedSections(true));
 				
 				for (final Node node : aliasConfig.getMainNode()) {
 					if (node instanceof SectionNode) {

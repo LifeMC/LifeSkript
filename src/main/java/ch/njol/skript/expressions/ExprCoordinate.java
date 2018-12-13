@@ -42,8 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Coordinate")
 @Description("Represents a given coordinate of a location. ")
-@Examples({"player's y-coordinate is smaller than 40:",
-		"	message \"Watch out for lava!\""})
+@Examples({"player's y-coordinate is smaller than 40:", "	message \"Watch out for lava!\""})
 @Since("1.4.3")
 public class ExprCoordinate extends SimplePropertyExpression<Location, Double> {
 	static {

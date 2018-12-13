@@ -60,7 +60,7 @@ public final class EnumUtils<E extends Enum<E>> {
 	/**
 	 * Updates the names if the language has changed or the enum was modified (using reflection).
 	 */
-	 void validate(final boolean force) {
+	void validate(final boolean force) {
 		boolean update = force;
 		
 		final int newL = c.getEnumConstants().length;

@@ -31,7 +31,7 @@ public final class ScriptCommandEvent extends CommandEvent {
 	
 	private final ScriptCommand skriptCommand;
 	private boolean cooldownCancelled;
-
+	
 	public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
 		super(sender, command.getLabel(), null);
 		skriptCommand = command;
@@ -45,15 +45,15 @@ public final class ScriptCommandEvent extends CommandEvent {
 	public String[] getArgs() {
 		throw new UnsupportedOperationException();
 	}
-
+	
 	public boolean isCooldownCancelled() {
 		return cooldownCancelled;
 	}
-
+	
 	public void setCooldownCancelled(final boolean cooldownCancelled) {
 		this.cooldownCancelled = cooldownCancelled;
 	}
-
+	
 	// Bukkit stuff
 	private final static HandlerList handlers = new HandlerList();
 	

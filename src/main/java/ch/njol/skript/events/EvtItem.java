@@ -45,37 +45,19 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EvtItem extends SkriptEvent {
 	private final static boolean hasConsumeEvent = Skript.classExists("org.bukkit.event.player.PlayerItemConsumeEvent");
 	static {
-		Skript.registerEvent("Dispense", EvtItem.class, BlockDispenseEvent.class, "dispens(e|ing) [[of] %itemtypes%]")
-				.description("Called when a dispenser dispenses an item.")
-				.examples("")
-				.since("");
-		Skript.registerEvent("Item Spawn", EvtItem.class, ItemSpawnEvent.class, "item spawn[ing] [[of] %itemtypes%]")
-				.description("Called whenever an item stack is spawned in a world, e.g. as drop of a block or mob, a player throwing items out of his inventory, or a dispenser dispensing an item (not shooting it).")
-				.examples("")
-				.since("");
-		Skript.registerEvent("Drop", EvtItem.class, PlayerDropItemEvent.class, "[player] drop[ing] [[of] %itemtypes%]")
-				.description("Called when a player drops an item from his inventory.")
-				.examples("")
-				.since("");
+		Skript.registerEvent("Dispense", EvtItem.class, BlockDispenseEvent.class, "dispens(e|ing) [[of] %itemtypes%]").description("Called when a dispenser dispenses an item.").examples("").since("");
+		Skript.registerEvent("Item Spawn", EvtItem.class, ItemSpawnEvent.class, "item spawn[ing] [[of] %itemtypes%]").description("Called whenever an item stack is spawned in a world, e.g. as drop of a block or mob, a player throwing items out of his inventory, or a dispenser dispensing an item (not shooting it).").examples("").since("");
+		Skript.registerEvent("Drop", EvtItem.class, PlayerDropItemEvent.class, "[player] drop[ing] [[of] %itemtypes%]").description("Called when a player drops an item from his inventory.").examples("").since("");
 		// TODO limit to InventoryAction.PICKUP_* and similar (e.g. COLLECT_TO_CURSOR)
-		Skript.registerEvent("Craft", EvtItem.class, CraftItemEvent.class, "[player] craft[ing] [[of] %itemtypes%]")
-				.description("Called when a player crafts an item.")
-				.examples("")
-				.since("");
-		Skript.registerEvent("Pick Up", EvtItem.class, PlayerPickupItemEvent.class, "[player] (pick[ ]up|picking up) [[of] %itemtypes%]")
-				.description("Called when a player picks up an item. Please note that the item is still on the ground when this event is called.")
-				.examples("")
-				.since("");
+		Skript.registerEvent("Craft", EvtItem.class, CraftItemEvent.class, "[player] craft[ing] [[of] %itemtypes%]").description("Called when a player crafts an item.").examples("").since("");
+		Skript.registerEvent("Pick Up", EvtItem.class, PlayerPickupItemEvent.class, "[player] (pick[ ]up|picking up) [[of] %itemtypes%]").description("Called when a player picks up an item. Please note that the item is still on the ground when this event is called.").examples("").since("");
 		// TODO brew event
 //		Skript.registerEvent("Brew", EvtItem.class, BrewEvent.class, "brew[ing] [[of] %itemtypes%]")
 //				.description("Called when a potion finished brewing.")
 //				.examples("")
 //				.since("2.0");
 		if (hasConsumeEvent) {
-			Skript.registerEvent("Consume", EvtItem.class, PlayerItemConsumeEvent.class, "[player] ((eat|drink)[ing]|consum(e|ing)) [[of] %itemtypes%]")
-					.description("Called when a player is done eating/drinking something, e.g. an apple, bread, meat, milk or a potion.")
-					.examples("")
-					.since("2.0");
+			Skript.registerEvent("Consume", EvtItem.class, PlayerItemConsumeEvent.class, "[player] ((eat|drink)[ing]|consum(e|ing)) [[of] %itemtypes%]").description("Called when a player is done eating/drinking something, e.g. an apple, bread, meat, milk or a potion.").examples("").since("2.0");
 		}
 	}
 	

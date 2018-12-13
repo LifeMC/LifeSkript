@@ -40,10 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("unchecked")
 public final class EvtCommand extends SkriptEvent { // TODO condition to check whether a given command exists, & a conditon to check whether it's a custom skript command
 	static {
-		Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), "command [%-string%]")
-				.description("Called when a player enters a command (not neccessarily a Skript command).")
-				.examples("on command", "on command \"/stop\"", "on command \"pm Njol \"")
-				.since("2.0");
+		Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), "command [%-string%]").description("Called when a player enters a command (not neccessarily a Skript command).").examples("on command", "on command \"/stop\"", "on command \"pm Njol \"").since("2.0");
 	}
 	
 	@Nullable
@@ -72,8 +69,7 @@ public final class EvtCommand extends SkriptEvent { // TODO condition to check w
 		} else {
 			message = ((ServerCommandEvent) e).getCommand();
 		}
-		return StringUtils.startsWithIgnoreCase(message, command)
-				&& (command.contains(" ") || message.length() == command.length() || Character.isWhitespace(message.charAt(command.length()))); // if only the command is given, match that command only
+		return StringUtils.startsWithIgnoreCase(message, command) && (command.contains(" ") || message.length() == command.length() || Character.isWhitespace(message.charAt(command.length()))); // if only the command is given, match that command only
 	}
 	
 	@Override

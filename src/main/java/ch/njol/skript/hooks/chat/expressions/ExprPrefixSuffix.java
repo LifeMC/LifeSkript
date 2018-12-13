@@ -42,10 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Prefix/Suffix")
 @Description("The prefix or suffix as defined in the server's chat plugin.")
-@Examples({"on chat:",
-		"	cancel event",
-		"	broadcast \"%player's prefix%%player's display name%%player's suffix%: %message%\" to the player's world",
-		"set the player's prefix to \"[<red>Admin<reset>] \""})
+@Examples({"on chat:", "	cancel event", "	broadcast \"%player's prefix%%player's display name%%player's suffix%: %message%\" to the player's world", "set the player's prefix to \"[<red>Admin<reset>] \""})
 @Since("2.0")
 public final class ExprPrefixSuffix extends SimplePropertyExpression<Player, String> {
 	static {

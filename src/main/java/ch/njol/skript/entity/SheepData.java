@@ -78,13 +78,12 @@ public class SheepData extends EntityData<Sheep> {
 	
 	@Override
 	public boolean match(final Sheep entity) {
-		return (sheared == 0 || entity.isSheared() == (sheared == 1))
-				&& (colors == null || SimpleExpression.check(colors, new Checker<Color>() {
-					@Override
-					public boolean check(final @Nullable Color c) {
-						return c != null && entity.getColor() == c.getWoolColor();
-					}
-				}, false, false));
+		return (sheared == 0 || entity.isSheared() == (sheared == 1)) && (colors == null || SimpleExpression.check(colors, new Checker<Color>() {
+			@Override
+			public boolean check(final @Nullable Color c) {
+				return c != null && entity.getColor() == c.getWoolColor();
+			}
+		}, false, false));
 	}
 	
 	@Override
@@ -108,8 +107,7 @@ public class SheepData extends EntityData<Sheep> {
 		}
 		final Noun name = getName();
 		final Adjective age = getAgeAdjective();
-		return name.getArticleWithSpace(flags) + (age == null ? "" : age.toString(name.getGender(), flags) + " ")
-				+ Adjective.toString(adjectives, name.getGender(), flags, false) + " " + name.toString(flags & Language.NO_ARTICLE_MASK);
+		return name.getArticleWithSpace(flags) + (age == null ? "" : age.toString(name.getGender(), flags) + " ") + Adjective.toString(adjectives, name.getGender(), flags, false) + " " + name.toString(flags & Language.NO_ARTICLE_MASK);
 	}
 	
 	@Override

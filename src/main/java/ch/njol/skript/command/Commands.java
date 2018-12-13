@@ -141,18 +141,7 @@ public final class Commands { //NOSONAR
 		}
 	}
 	
-	private final static SectionValidator commandStructure = new SectionValidator()
-			.addEntry("usage", true)
-			.addEntry("description", true)
-			.addEntry("permission", true)
-			.addEntry("permission message", true)
-			.addEntry("cooldown", true)
-			.addEntry("cooldown message", true)
-			.addEntry("cooldown bypass", true)
-			.addEntry("cooldown storage", true)
-			.addEntry("aliases", true)
-			.addEntry("executable by", true)
-			.addSection("trigger", false);
+	private final static SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
 	
 	@Nullable
 	public static List<Argument<?>> currentArguments;
@@ -445,13 +434,11 @@ public final class Commands { //NOSONAR
 			aliases = new ArrayList<String>(0);
 		
 		final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
- 		Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ?
-				null
-				: VariableString.newInstance(rawPermissionMessage);
- 		if (permissionMessage != null && ((VariableString) permissionMessage).isSimple()) {
+		Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
+		if (permissionMessage != null && ((VariableString) permissionMessage).isSimple()) {
 			permissionMessage = new SimpleLiteral<String>(rawPermissionMessage, false);
 		}
-
+		
 		final SectionNode trigger = (SectionNode) node.get("trigger");
 		if (trigger == null)
 			return null;
@@ -476,7 +463,7 @@ public final class Commands { //NOSONAR
 				Skript.warning("'" + cooldownString + "' is an invalid timespan for the cooldown");
 			}
 		}
-
+		
 		final String cooldownMessageString = ScriptLoader.replaceOptions(node.get("cooldown message", ""));
 		final boolean usingCooldownMessage = !cooldownMessageString.isEmpty();
 		VariableString cooldownMessage = null;
@@ -487,7 +474,7 @@ public final class Commands { //NOSONAR
 		if (usingCooldownMessage && cooldownString.isEmpty()) {
 			Skript.warning("command /" + command + " has a cooldown message set, but not a cooldown");
 		}
-
+		
 		final String cooldownStorageString = ScriptLoader.replaceOptions(node.get("cooldown storage", ""));
 		VariableString cooldownStorage = null;
 		if (!cooldownStorageString.isEmpty()) {

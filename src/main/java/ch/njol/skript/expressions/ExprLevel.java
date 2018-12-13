@@ -46,8 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Level")
 @Description("The level of a player.")
-@Examples({"reduce the victim's level by 1",
-		"set the player's level to 0"})
+@Examples({"reduce the victim's level by 1", "set the player's level to 0"})
 @Since("")
 @Events("level change")
 public class ExprLevel extends SimplePropertyExpression<Player, Integer> {
@@ -90,8 +89,7 @@ public class ExprLevel extends SimplePropertyExpression<Player, Integer> {
 			return null;
 		}
 		if (ScriptLoader.isCurrentEvent(PlayerDeathEvent.class) && getTime() == 0 && getExpr().isDefault() && !ScriptLoader.hasDelayBefore.isTrue()) {
-			Skript.warning("Changing the player's level in a death event will change the player's level before he dies. " +
-					"Use either 'past level of player' or 'new level of player' to clearly state whether to change the level before or after he dies.");
+			Skript.warning("Changing the player's level in a death event will change the player's level before he dies. " + "Use either 'past level of player' or 'new level of player' to clearly state whether to change the level before or after he dies.");
 		}
 		if (getTime() == -1 && !ScriptLoader.isCurrentEvent(PlayerDeathEvent.class))
 			return null;

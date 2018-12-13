@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-Fixes-V9c")
 public class ExprAlphabetList extends SimpleExpression<String> {
 	
-	static{
+	static {
 		Skript.registerExpression(ExprAlphabetList.class, String.class, ExpressionType.COMBINED, "alphabetically sorted %strings%");
 	}
 	
@@ -78,7 +78,7 @@ public class ExprAlphabetList extends SimpleExpression<String> {
 	public boolean isSingle() {
 		return false;
 	}
-
+	
 	@Override
 	public String toString(@Nullable final Event e, final boolean debug) {
 		return "alphabetically sorted strings: " + texts.toString(e, debug);

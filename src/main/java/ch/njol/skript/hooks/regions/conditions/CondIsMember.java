@@ -42,18 +42,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is Member/Owner of Region")
-@Description({"Checks whether a player is a member or owner of a particular region.",
-		"This condition requires a supported regions plugin to be installed."})
-@Examples({"on region enter:",
-		"	player is the owner of the region",
-		"	message \"Welcome back to %region%!\"",
-		"	send \"%player% just entered %region%!\" to all members of the region"})
+@Description({"Checks whether a player is a member or owner of a particular region.", "This condition requires a supported regions plugin to be installed."})
+@Examples({"on region enter:", "	player is the owner of the region", "	message \"Welcome back to %region%!\"", "	send \"%player% just entered %region%!\" to all members of the region"})
 @Since("2.1")
 public final class CondIsMember extends Condition {
 	static {
-		Skript.registerCondition(CondIsMember.class,
-				"%offlineplayers% (is|are) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%",
-				"%offlineplayers% (is|are)(n't| not) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%");
+		Skript.registerCondition(CondIsMember.class, "%offlineplayers% (is|are) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%", "%offlineplayers% (is|are)(n't| not) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%");
 	}
 	
 	@SuppressWarnings("null")

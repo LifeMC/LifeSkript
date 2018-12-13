@@ -47,18 +47,12 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Numbers")
-@Description({"All numbers between two given numbers, useful for looping.",
-		"Use 'numbers' if your start is not an integer and you want to keep the fractional part of the start number constant, or use 'integers' if you only want to loop integers.",
-		"An integer loop from 1 to a number x can also be written as 'loop x times'."})
-@Examples({"loop 5 times: # loops 1, 2, 3, 4, 5",
-		"loop numbers from 2.5 to 5.5: # loops 2.5, 3.5, 4.5, 5.5",
-		"loop integers from 2.9 to 5.1: # same as '3 to 5', i.e. loops 3, 4, 5"})
+@Description({"All numbers between two given numbers, useful for looping.", "Use 'numbers' if your start is not an integer and you want to keep the fractional part of the start number constant, or use 'integers' if you only want to loop integers.", "An integer loop from 1 to a number x can also be written as 'loop x times'."})
+@Examples({"loop 5 times: # loops 1, 2, 3, 4, 5", "loop numbers from 2.5 to 5.5: # loops 2.5, 3.5, 4.5, 5.5", "loop integers from 2.9 to 5.1: # same as '3 to 5', i.e. loops 3, 4, 5"})
 @Since("1.4.6")
 public class ExprNumbers extends SimpleExpression<Number> {
 	static {
-		Skript.registerExpression(ExprNumbers.class, Number.class, ExpressionType.COMBINED,
-				"[(all|the)] (numbers|1¦integers) (between|from) %number% (and|to) %number%",
-				"%number% times");
+		Skript.registerExpression(ExprNumbers.class, Number.class, ExpressionType.COMBINED, "[(all|the)] (numbers|1¦integers) (between|from) %number% (and|to) %number%", "%number% times");
 	}
 	
 	@SuppressWarnings("null")

@@ -44,11 +44,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Kill")
-@Description({"Kills an entity.",
-		"Note: This effect does not set the entitie's health to 0 (which causes issues), but damages the entity by 100 times its maximum health."})
-@Examples({"kill the player",
-		"kill all creepers in the player's world",
-		"kill all endermen, witches and bats"})
+@Description({"Kills an entity.", "Note: This effect does not set the entitie's health to 0 (which causes issues), but damages the entity by 100 times its maximum health."})
+@Examples({"kill the player", "kill all creepers in the player's world", "kill all endermen, witches and bats"})
 @Since("1.0")
 public final class EffKill extends Effect {
 	static {

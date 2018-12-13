@@ -46,8 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Random")
 @Description("Gets a random item out of a set, e.g. a random player out of all players online.")
-@Examples({"give a diamond to a random player out of all players",
-		"give a random item out of all items to the player"})
+@Examples({"give a diamond to a random player out of all players", "give a random item out of all items to the player"})
 @Since("1.4.9")
 public final class ExprRandom extends SimpleExpression<Object> {
 	static {

@@ -50,10 +50,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("deprecation")
 public final class EvtChat extends SelfRegisteringSkriptEvent {
 	static {
-		Skript.registerEvent("Chat", EvtChat.class, PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class, "chat")
-				.description("Called whenever a player chats.")
-				.examples("")
-				.since("1.4.1");
+		Skript.registerEvent("Chat", EvtChat.class, PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class, "chat").description("Called whenever a player chats.").examples("").since("1.4.1");
 	}
 	
 	final static Collection<Trigger> triggers = new ArrayList<Trigger>();

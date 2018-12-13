@@ -51,8 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Weather")
 @Description("The weather in the given or the current world.")
-@Examples({"set weather to clear",
-		"weather in \"world\" is rainy"})
+@Examples({"set weather to clear", "weather in \"world\" is rainy"})
 @Since("1.0")
 @Events("weather change")
 public class ExprWeather extends PropertyExpression<World, WeatherType> {

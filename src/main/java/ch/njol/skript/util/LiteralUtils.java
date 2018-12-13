@@ -33,62 +33,62 @@ import ch.njol.skript.lang.UnparsedLiteral;
  */
 public class LiteralUtils {
 	
-    /**
-     * Checks an {@link Expression} for {@link UnparsedLiteral} objects
-     * and converts them if found.
-     *
-     * @param expr The expression to check for {@link UnparsedLiteral} objects
-     * @param <T>  {@code expr}'s type
-     * @return {@code expr} without {@link UnparsedLiteral} objects
-     */
-    @SuppressWarnings({"unchecked", "null"})
-    public static <T> Expression<T> defendExpression(final Expression<?> expr) {
-        if (expr instanceof ExpressionList) {
+	/**
+	 * Checks an {@link Expression} for {@link UnparsedLiteral} objects
+	 * and converts them if found.
+	 *
+	 * @param expr The expression to check for {@link UnparsedLiteral} objects
+	 * @param <T> {@code expr}'s type
+	 * @return {@code expr} without {@link UnparsedLiteral} objects
+	 */
+	@SuppressWarnings({"unchecked", "null"})
+	public static <T> Expression<T> defendExpression(final Expression<?> expr) {
+		if (expr instanceof ExpressionList) {
 			final Expression<?>[] exprs = ((ExpressionList<?>) expr).getExpressions();
 			for (int i = 0; i < exprs.length; i++)
 				exprs[i] = defendExpression(exprs[i]);
-        } else if (expr instanceof UnparsedLiteral) {
-            final Literal<?> parsedLiteral = ((UnparsedLiteral) expr).getConvertedExpression(Object.class);
-            return (Expression<T>) (parsedLiteral == null ? expr : parsedLiteral);
-        }
-        return (Expression<T>) expr;
-    }
-    
-    /**
-     * Checks if an Expression contains {@link UnparsedLiteral}
-     * objects.
-     *
-     * @param expr The Expression to check for {@link UnparsedLiteral} objects
-     * @return Whether or not {@code expr} contains {@link UnparsedLiteral} objects
-     */
-    public static boolean hasUnparsedLiteral(final Expression<?> expr) {
-        if (expr instanceof UnparsedLiteral) {
-            return true;
-        } else if (expr instanceof ExpressionList) {
-        	for(final Expression<?> ex : ((ExpressionList<?>) expr).getExpressions()) {
-        		if(ex instanceof UnparsedLiteral) {
-        			return true;
-        		}
-        	}
-        }
-        return false;
-    }
-    
-    /**
-     * Checks if the passed Expressions are non-null
-     * and do not contain {@link UnparsedLiteral} objects.
-     *
-     * @param expressions The expressions to check for {@link UnparsedLiteral} objects
-     * @return Whether or not the passed expressions contain {@link UnparsedLiteral} objects
-     */
-    @SuppressWarnings("null")
+		} else if (expr instanceof UnparsedLiteral) {
+			final Literal<?> parsedLiteral = ((UnparsedLiteral) expr).getConvertedExpression(Object.class);
+			return (Expression<T>) (parsedLiteral == null ? expr : parsedLiteral);
+		}
+		return (Expression<T>) expr;
+	}
+	
+	/**
+	 * Checks if an Expression contains {@link UnparsedLiteral}
+	 * objects.
+	 *
+	 * @param expr The Expression to check for {@link UnparsedLiteral} objects
+	 * @return Whether or not {@code expr} contains {@link UnparsedLiteral} objects
+	 */
+	public static boolean hasUnparsedLiteral(final Expression<?> expr) {
+		if (expr instanceof UnparsedLiteral) {
+			return true;
+		} else if (expr instanceof ExpressionList) {
+			for (final Expression<?> ex : ((ExpressionList<?>) expr).getExpressions()) {
+				if (ex instanceof UnparsedLiteral) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the passed Expressions are non-null
+	 * and do not contain {@link UnparsedLiteral} objects.
+	 *
+	 * @param expressions The expressions to check for {@link UnparsedLiteral} objects
+	 * @return Whether or not the passed expressions contain {@link UnparsedLiteral} objects
+	 */
+	@SuppressWarnings("null")
 	public static boolean canInitSafely(final Expression<?>... expressions) {
-        for (final Expression<?> expression : expressions) {
-            if (expression == null || hasUnparsedLiteral(expression)) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
+		for (final Expression<?> expression : expressions) {
+			if (expression == null || hasUnparsedLiteral(expression)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }

@@ -41,58 +41,46 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class Money {
 	static {
-		Classes.registerClass(new ClassInfo<Money>(Money.class, "money")
-				.user("money")
-				.name("Money")
-				.description("A certain amount of money. Please note that this differs from <a href='#number'>numbers</a> as it includes a currency symbol or name, but usually the two are interchangeable, e.g. you can both <code>add 100$ to the player's balance</code> and <code>add 100 to the player's balance</code>.")
-				.usage("<code>&lt;number&gt; $</code> or <code>$ &lt;number&gt;</code>, where '$' is your server's currency, e.g. '10 rupees' or '£5.00'")
-				.examples("add 10£ to the player's account",
-						"remove Fr. 9.95 from the player's money",
-						"set the victim's money to 0",
-						"increase the attacker's balance by the level of the victim * 100")
-				.since("2.0")
-				.before("itemtype", "itemstack")
-				.parser(new Parser<Money>() {
-					@Override
-					@Nullable
-					public Money parse(final String s, final ParseContext context) {
-						return Money.parse(s);
-					}
-					
-					@Override
-					public String toString(final Money m, final int flags) {
-						return m.toString();
-					}
-					
-					@Override
-					public String toVariableNameString(final Money o) {
-						return "money:" + o.amount;
-					}
-					
-					@Override
-					public String getVariableNamePattern() {
-						return "money:-?\\d+(\\.\\d+)?";
-					}
-				})
-				.math(Money.class, new Arithmetic<Money, Money>() {
-					@Override
-					public Money difference(final Money first, final Money second) {
-						final double d = Math.abs(first.getAmount() - second.getAmount());
-						if (d < Skript.EPSILON)
-							return new Money(0);
-						return new Money(d);
-					}
-					
-					@Override
-					public Money add(final Money value, final Money difference) {
-						return new Money(value.amount + difference.amount);
-					}
-					
-					@Override
-					public Money subtract(final Money value, final Money difference) {
-						return new Money(value.amount - difference.amount);
-					}
-				}));
+		Classes.registerClass(new ClassInfo<Money>(Money.class, "money").user("money").name("Money").description("A certain amount of money. Please note that this differs from <a href='#number'>numbers</a> as it includes a currency symbol or name, but usually the two are interchangeable, e.g. you can both <code>add 100$ to the player's balance</code> and <code>add 100 to the player's balance</code>.").usage("<code>&lt;number&gt; $</code> or <code>$ &lt;number&gt;</code>, where '$' is your server's currency, e.g. '10 rupees' or '£5.00'").examples("add 10£ to the player's account", "remove Fr. 9.95 from the player's money", "set the victim's money to 0", "increase the attacker's balance by the level of the victim * 100").since("2.0").before("itemtype", "itemstack").parser(new Parser<Money>() {
+			@Override
+			@Nullable
+			public Money parse(final String s, final ParseContext context) {
+				return Money.parse(s);
+			}
+			
+			@Override
+			public String toString(final Money m, final int flags) {
+				return m.toString();
+			}
+			
+			@Override
+			public String toVariableNameString(final Money o) {
+				return "money:" + o.amount;
+			}
+			
+			@Override
+			public String getVariableNamePattern() {
+				return "money:-?\\d+(\\.\\d+)?";
+			}
+		}).math(Money.class, new Arithmetic<Money, Money>() {
+			@Override
+			public Money difference(final Money first, final Money second) {
+				final double d = Math.abs(first.getAmount() - second.getAmount());
+				if (d < Skript.EPSILON)
+					return new Money(0);
+				return new Money(d);
+			}
+			
+			@Override
+			public Money add(final Money value, final Money difference) {
+				return new Money(value.amount + difference.amount);
+			}
+			
+			@Override
+			public Money subtract(final Money value, final Money difference) {
+				return new Money(value.amount - difference.amount);
+			}
+		}));
 		
 		Comparators.registerComparator(Money.class, Money.class, new Comparator<Money, Money>() {
 			@Override

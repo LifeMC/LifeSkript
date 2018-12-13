@@ -37,11 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public final class JRESerializer extends YggdrasilSerializer<Object> {
 	
-	private final static Class<?>[] supportedClasses = {
-			ArrayList.class, LinkedList.class,
-			HashSet.class,
-			HashMap.class,
-			UUID.class
+	private final static Class<?>[] supportedClasses = {ArrayList.class, LinkedList.class, HashSet.class, HashMap.class, UUID.class
 	};
 	
 	private final static Set<Class<?>> set = new HashSet<Class<?>>(Arrays.asList(supportedClasses));
@@ -85,7 +81,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
 	}
 	
 	@Override
-	public boolean canBeInstantiated(final Class<?> c){
+	public boolean canBeInstantiated(final Class<?> c) {
 		return c != UUID.class;
 	}
 	

@@ -50,18 +50,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Name / Display Name")
-@Description({"Represents a player's minecraft account name, chat display name, or playerlist name, or the custom name of an item or <a href='../classes/#livingentity'>a living entity</a>.",
-		"The differences between the different names are:",
-		"<ul>",
-		"<li>name: Minecraft account name of a player (unmodifiable), or the custom name of an item or mob (modifiable).</li>",
-		"<li>display name: The name of a player as displayed in the chat and messages, e.g. when including %player% in a message. This name can be changed freely and can include colour codes, and is shared among all plugins (e.g. chat plugins will use a changed name).</li>",
-		"<li>tab list name: The name of a player used in the player lists that usually opens with the tab key. Please note that this is limited to 16 characters, including colour codes which are counted as 2 characters each, and that no two players can have the same tab list name at the same time.</li>",
-		"</ul>"})
-@Examples({"on join:",
-		"	player has permission \"name.red\"",
-		"	set the player's display name to \"<red>[admin]<gold>%name of player%\"",
-		"	set the player's tablist name to \"<green>%name of player%\"",
-		"set the name of the player's tool to \"Legendary Sword of Awesomeness\""})
+@Description({"Represents a player's minecraft account name, chat display name, or playerlist name, or the custom name of an item or <a href='../classes/#livingentity'>a living entity</a>.", "The differences between the different names are:", "<ul>", "<li>name: Minecraft account name of a player (unmodifiable), or the custom name of an item or mob (modifiable).</li>", "<li>display name: The name of a player as displayed in the chat and messages, e.g. when including %player% in a message. This name can be changed freely and can include colour codes, and is shared among all plugins (e.g. chat plugins will use a changed name).</li>", "<li>tab list name: The name of a player used in the player lists that usually opens with the tab key. Please note that this is limited to 16 characters, including colour codes which are counted as 2 characters each, and that no two players can have the same tab list name at the same time.</li>", "</ul>"})
+@Examples({"on join:", "	player has permission \"name.red\"", "	set the player's display name to \"<red>[admin]<gold>%name of player%\"", "	set the player's tablist name to \"<green>%name of player%\"", "set the name of the player's tool to \"Legendary Sword of Awesomeness\""})
 @Since("1.4.6 (players' name & display name), <i>unknown</i> (player list name), 2.0 (item name)")
 public class ExprName extends SimplePropertyExpression<Object, String> {
 	
@@ -213,7 +203,7 @@ public class ExprName extends SimplePropertyExpression<Object, String> {
 	}
 	
 	static {
-		for (final NameType n : NameType.values()){
+		for (final NameType n : NameType.values()) {
 			register(ExprName.class, String.class, n.pattern, n.getFrom());
 		}
 	}
@@ -225,7 +215,7 @@ public class ExprName extends SimplePropertyExpression<Object, String> {
 	@Override
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
 		type = NameType.values()[parseResult.mark];
-		if(exprs[0] instanceof Variable)
+		if (exprs[0] instanceof Variable)
 			setExpr(exprs[0].getConvertedExpression(Object.class));
 		else
 			setExpr(exprs[0]);

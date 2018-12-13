@@ -141,8 +141,7 @@ public final class Yggdrasil {
 	
 	public boolean isSerializable(final Class<?> c) {
 		try {
-			return c.isPrimitive() || c == Object.class || (Enum.class.isAssignableFrom(c) || PseudoEnum.class.isAssignableFrom(c)) && getIDNoError(c) != null ||
-					(YggdrasilSerializable.class.isAssignableFrom(c) || getSerializer(c) != null) && newInstance(c) != c;// whatever, just make true out if it (null is a valid return value)
+			return c.isPrimitive() || c == Object.class || (Enum.class.isAssignableFrom(c) || PseudoEnum.class.isAssignableFrom(c)) && getIDNoError(c) != null || (YggdrasilSerializable.class.isAssignableFrom(c) || getSerializer(c) != null) && newInstance(c) != c;// whatever, just make true out if it (null is a valid return value)
 		} catch (final StreamCorruptedException e) { // thrown by newInstance if the class does not provide a correct constructor or is abstract
 			return false;
 		} catch (final NotSerializableException e) {

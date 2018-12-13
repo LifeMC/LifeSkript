@@ -51,17 +51,12 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Blocks")
 @Description("Blocks relative to other blocks or between other blocks. Can be used to get blocks relative to other blocks or for looping.")
-@Examples({"loop blocks above the player:",
-		"loop blocks between the block below the player and the targeted block:",
-		"set the blocks below the player, the victim and the targeted block to air"})
+@Examples({"loop blocks above the player:", "loop blocks between the block below the player and the targeted block:", "set the blocks below the player, the victim and the targeted block to air"})
 @Since("1.0")
 public class ExprBlocks extends SimpleExpression<Block> {
 	static {
-		Skript.registerExpression(ExprBlocks.class, Block.class, ExpressionType.COMBINED,
-				"[the] blocks %direction% [%locations%]", // TODO doesn't loop all blocks?
-				"[the] blocks from %location% [on] %direction%",
-				"[the] blocks from %block% to %block%",
-				"[the] blocks between %block% and %block%");
+		Skript.registerExpression(ExprBlocks.class, Block.class, ExpressionType.COMBINED, "[the] blocks %direction% [%locations%]", // TODO doesn't loop all blocks?
+				"[the] blocks from %location% [on] %direction%", "[the] blocks from %block% to %block%", "[the] blocks between %block% and %block%");
 	}
 	
 	@SuppressWarnings("null")

@@ -115,7 +115,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 		for (final T t : all)
 			if (t != null)
 				numNonNull++;
-		
+			
 		if (!getAnd()) {
 			if (all.length == 1 && all[0] != null)
 				return all;
@@ -200,7 +200,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 		assert !CollectionUtils.containsSuperclass(to, getReturnType());
 		return ConvertedExpression.newInstance(this, to);
 	}
-
+	
 	/**
 	 * Usually, you want to override {@link SimpleExpression#getConvertedExpr(Class[])}.
 	 * However, it may be useful to override this method if you have an expression with a return

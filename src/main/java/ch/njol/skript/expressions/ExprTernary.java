@@ -48,12 +48,11 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-dev36")
 @SuppressWarnings({"null", "unchecked"})
 public class ExprTernary<T> extends SimpleExpression<T> {
-
+	
 	static {
-		Skript.registerExpression(ExprTernary.class, Object.class, ExpressionType.COMBINED,
-				"%objects% if <.+>[,] (otherwise|?[?]|[or ]else) %objects%");
+		Skript.registerExpression(ExprTernary.class, Object.class, ExpressionType.COMBINED, "%objects% if <.+>[,] (otherwise|?[?]|[or ]else) %objects%");
 	}
-
+	
 	private final ExprTernary<?> source;
 	private final Class<T> superType;
 	@Nullable
@@ -62,12 +61,12 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 	private Condition condition;
 	@Nullable
 	private Expression<Object> ifFalse;
-
+	
 	@SuppressWarnings("unchecked")
 	public ExprTernary() {
 		this(null, (Class<? extends T>) Object.class);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private ExprTernary(final ExprTernary<?> source, final Class<? extends T>... types) {
 		this.source = source;
@@ -78,7 +77,7 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 		}
 		this.superType = (Class<T>) Utils.getSuperType(types);
 	}
-
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
@@ -92,7 +91,7 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 		condition = Condition.parse(cond, "Can't understand this condition: " + cond);
 		return condition != null && LiteralUtils.canInitSafely(ifTrue, ifFalse);
 	}
-
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	protected T[] get(final Event e) {
@@ -103,30 +102,30 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 			return (T[]) Array.newInstance(superType, 0);
 		}
 	}
-
+	
 	@Override
 	public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
 		return new ExprTernary<R>(this, to);
 	}
-
+	
 	@Override
 	public Expression<?> getSource() {
 		return source == null ? this : source;
 	}
-
+	
 	@Override
 	public Class<T> getReturnType() {
 		return superType;
 	}
-
+	
 	@Override
 	public boolean isSingle() {
 		return ifTrue.isSingle() && ifFalse.isSingle();
 	}
-
+	
 	@Override
 	public String toString(final Event e, final boolean debug) {
 		return ifTrue.toString(e, debug) + " if " + condition + " otherwise " + ifFalse.toString(e, debug);
 	}
-
+	
 }

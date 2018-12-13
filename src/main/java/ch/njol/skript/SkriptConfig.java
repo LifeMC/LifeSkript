@@ -62,31 +62,27 @@ public final class SkriptConfig {
 	static Config mainConfig;
 	static Collection<Config> configs = new ArrayList<Config>();
 	
-	final static Option<String> version = new Option<String>("version", Skript.getVersion().toString())
-			.optional(true);
+	final static Option<String> version = new Option<String>("version", Skript.getVersion().toString()).optional(true);
 	
-	public final static Option<String> language = new Option<String>("language", "english")
-			.optional(true)
-			.setter(new Setter<String>() {
-				@Override
-				public void set(final String s) {
-					if (!Language.load(s)) {
-						Skript.error("No language file found for '" + s + "'!");
-					}
-				}
-			});
+	public final static Option<String> language = new Option<String>("language", "english").optional(true).setter(new Setter<String>() {
+		@Override
+		public void set(final String s) {
+			if (!Language.load(s)) {
+				Skript.error("No language file found for '" + s + "'!");
+			}
+		}
+	});
 	
 	final static Option<Boolean> checkForNewVersion = new Option<Boolean>("check for new version", false);
-	final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(0))
-			.setter(new Setter<Timespan>() {
-				@SuppressWarnings("null")
-				@Override
-				public void set(final Timespan t) {
-					final Task ct = Updater.checkerTask;
-					if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
-						ct.setNextExecution(t.getTicks_i());
-				}
-			});
+	final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(0)).setter(new Setter<Timespan>() {
+		@SuppressWarnings("null")
+		@Override
+		public void set(final Timespan t) {
+			final Task ct = Updater.checkerTask;
+			if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
+				ct.setNextExecution(t.getTicks_i());
+		}
+	});
 	final static Option<Boolean> automaticallyDownloadNewVersion = new Option<Boolean>("automatically download new version", false);
 	
 	public final static Option<Boolean> enableEffectCommands = new Option<Boolean>("enable effect commands", false);
@@ -98,7 +94,6 @@ public final class SkriptConfig {
 	
 	public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<Boolean>("use player UUIDs in variable names", false);
 	public final static Option<Boolean> enablePlayerVariableFix = new Option<Boolean>("player variable fix", true);
-
 	
 	@SuppressWarnings("null")
 	private final static DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
@@ -124,13 +119,12 @@ public final class SkriptConfig {
 		}
 	}
 	
-	private final static Option<Verbosity> verbosity = new Option<Verbosity>("verbosity", Verbosity.NORMAL, new EnumParser<Verbosity>(Verbosity.class, "verbosity"))
-			.setter(new Setter<Verbosity>() {
-				@Override
-				public void set(final Verbosity v) {
-					SkriptLogger.setVerbosity(v);
-				}
-			});
+	private final static Option<Verbosity> verbosity = new Option<Verbosity>("verbosity", Verbosity.NORMAL, new EnumParser<Verbosity>(Verbosity.class, "verbosity")).setter(new Setter<Verbosity>() {
+		@Override
+		public void set(final Verbosity v) {
+			SkriptLogger.setVerbosity(v);
+		}
+	});
 	
 	public final static Option<EventPriority> defaultEventPriority = new Option<EventPriority>("plugin priority", EventPriority.NORMAL, new Converter<String, EventPriority>() {
 		@Override
@@ -174,11 +168,9 @@ public final class SkriptConfig {
 	
 	// Disable warnings options
 	
-	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false)
-			.optional(true);
+	public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false).optional(true);
 	
-	public final static Option<Boolean> keepConfigsLoaded = new Option<Boolean>("keep configs loaded", false)
-			.optional(true);
+	public final static Option<Boolean> keepConfigsLoaded = new Option<Boolean>("keep configs loaded", false).optional(true);
 	
 	/**
 	 * This should only be used in special cases

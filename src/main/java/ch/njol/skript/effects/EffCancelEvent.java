@@ -51,10 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Cancel Event")
 @Description("Cancels the event (e.g. prevent blocks from being placed, or damage being taken).")
-@Examples({"on damage:",
-		"	victim is a player",
-		"	victim has the permission \"skript.god\"",
-		"	cancel the event"})
+@Examples({"on damage:", "	victim is a player", "	victim has the permission \"skript.god\"", "	cancel the event"})
 @Since("1.0")
 public final class EffCancelEvent extends Effect {
 	static {
@@ -97,7 +94,7 @@ public final class EffCancelEvent extends Effect {
 		if (e instanceof Cancellable) {
 			((Cancellable) e).setCancelled(cancel);
 		}
-		if(e instanceof InventoryInteractEvent) {
+		if (e instanceof InventoryInteractEvent) {
 			((InventoryInteractEvent) e).setResult(cancel ? Result.DENY : Result.DEFAULT);
 		}
 		if (e instanceof PlayerInteractEvent) {

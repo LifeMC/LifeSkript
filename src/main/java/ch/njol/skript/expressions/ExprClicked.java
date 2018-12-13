@@ -53,9 +53,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Clicked Block/Entity")
 @Description("The clicked block or entity - only useful in click events")
-@Examples({"message \"You clicked on a %type of clicked entity%!\"",
-		"clicked block is a chest:",
-		"	show the inventory of the clicked block to the player"})
+@Examples({"message \"You clicked on a %type of clicked entity%!\"", "clicked block is a chest:", "	show the inventory of the clicked block to the player"})
 @Since("1.0")
 @Events("click")
 public class ExprClicked extends SimpleExpression<Object> {

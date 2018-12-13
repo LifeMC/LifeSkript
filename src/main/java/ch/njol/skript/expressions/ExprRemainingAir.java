@@ -35,8 +35,7 @@ import org.bukkit.entity.LivingEntity;
  */
 @Name("Remaining Air")
 @Description("How much time a player has left underwater before starting to drown.")
-@Examples({"player's remaining air is less than 3 seconds:",
-		"	send \"hurry, get to the surface!\" to the player"})
+@Examples({"player's remaining air is less than 3 seconds:", "	send \"hurry, get to the surface!\" to the player"})
 @Since("")
 public class ExprRemainingAir extends SimplePropertyExpression<LivingEntity, Timespan> {
 	static {

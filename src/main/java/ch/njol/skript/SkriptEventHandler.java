@@ -139,9 +139,7 @@ public final class SkriptEventHandler {
 			logEventStart(e);
 		}
 		
-		if (e instanceof Cancellable && ((Cancellable) e).isCancelled() &&
-				!(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY)
-				|| e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
+		if (e instanceof Cancellable && ((Cancellable) e).isCancelled() && !(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY) || e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
 			if (Skript.logVeryHigh())
 				Skript.info(e.getClass().getSimpleName() + " was cancelled");
 			return;

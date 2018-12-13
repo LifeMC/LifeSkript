@@ -52,9 +52,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Attacked")
 @Description("The victim of a damage event, e.g. when a player attacks a zombie this expression represents the zombie.")
-@Examples({"on damage:",
-		"	victim is a creeper",
-		"	damage the attacked by 1 heart"})
+@Examples({"on damage:", "	victim is a creeper", "	damage the attacked by 1 heart"})
 @Since("1.3")
 @Events({"damage", "death"})
 public class ExprAttacked extends SimpleExpression<Entity> {

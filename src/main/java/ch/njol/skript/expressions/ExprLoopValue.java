@@ -60,14 +60,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Loop value")
 @Description("The currently looped value.")
-@Examples({"# countdown:",
-		"loop 10 times:",
-		"	message \"%11 - loop-number%\"",
-		"	wait a second",
-		"# generate a 10x10 floor made of randomly coloured wool below the player:",
-		"loop blocks from the block below the player to the block 10 east of the block below the player:",
-		"	loop blocks from the loop-block to the block 10 north of the loop-block:",
-		"		set loop-block-2 to any wool"})
+@Examples({"# countdown:", "loop 10 times:", "	message \"%11 - loop-number%\"", "	wait a second", "# generate a 10x10 floor made of randomly coloured wool below the player:", "loop blocks from the block below the player to the block 10 east of the block below the player:", "	loop blocks from the loop-block to the block 10 north of the loop-block:", "		set loop-block-2 to any wool"})
 @Since("1.0")
 public class ExprLoopValue extends SimpleExpression<Object> {
 	static {
@@ -86,8 +79,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 	boolean isIndex;
 	
 	@SuppressWarnings("null")
-	private static final Pattern pattern =
-			Pattern.compile("^(.+)-(\\d+)$");
+	private static final Pattern pattern = Pattern.compile("^(.+)-(\\d+)$");
 	
 	@Override
 	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
@@ -106,7 +98,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
 		@SuppressWarnings("null")
 		final boolean b = ScriptOptions.getInstance().usesNewLoops(ScriptLoader.currentScript.getFile());
 		for (final Loop l : ScriptLoader.currentLoops) {
-			if (c != null && c.isAssignableFrom(l.getLoopedExpression().getReturnType()) || (b && "value".equals(s)) || l.getLoopedExpression().isLoopOf(s)) {
+			if (c != null && c.isAssignableFrom(l.getLoopedExpression().getReturnType()) || b && "value".equals(s) || l.getLoopedExpression().isLoopOf(s)) {
 				if (j < i) {
 					j++;
 					continue;

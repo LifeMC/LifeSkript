@@ -41,12 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Parse Error")
 @Description("The error which caused the last <a href='#ExprParse'>parse operation</a> to fail, which might not be set if a pattern was used and the pattern didn't match the provided text at all.")
-@Examples({"set {var} to line 1 parsed as integer",
-		"if {var} is not set:",
-		"	parse error is set:",
-		"		message \"<red>Line 1 is invalid: %last parse error%\"",
-		"	else:",
-		"		message \"<red>Please put an integer on line 1!\""})
+@Examples({"set {var} to line 1 parsed as integer", "if {var} is not set:", "	parse error is set:", "		message \"<red>Line 1 is invalid: %last parse error%\"", "	else:", "		message \"<red>Please put an integer on line 1!\""})
 @Since("2.0")
 public class ExprParseError extends SimpleExpression<String> {
 	static {

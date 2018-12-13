@@ -55,17 +55,13 @@ public abstract class Task implements Runnable, Closeable {
 		assert !isAlive();
 		if (period == -1) {
 			if (async) {
-				taskID = Skript.isRunningMinecraft(1, 4, 6) ?
-						Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, delay).getTaskId() :
-						Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, this, delay);
+				taskID = Skript.isRunningMinecraft(1, 4, 6) ? Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, this, delay).getTaskId() : Bukkit.getScheduler().scheduleAsyncDelayedTask(plugin, this, delay);
 			} else {
 				taskID = Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, this, delay);
 			}
 		} else {
 			if (async) {
-				taskID = Skript.isRunningMinecraft(1, 4, 6) ?
-						Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, delay, period).getTaskId() :
-						Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, this, delay, period);
+				taskID = Skript.isRunningMinecraft(1, 4, 6) ? Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, delay, period).getTaskId() : Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, this, delay, period);
 			} else {
 				taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this, delay, period);
 			}

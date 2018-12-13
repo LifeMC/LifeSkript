@@ -39,22 +39,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Level Progress")
-@Description({"The progress a player has made until the next level. Remember that this value is between 0 and 1, not 0 and 100!",
-		"Changing this value can cause a player's level to change if the resulting level progess is negative or larger than 1, e.g." +
-				"<code>increase the player's level progress by 0.5</code> will make the player gain a level if his progress was more than 50%."})
-@Examples({"# use the exp bar as mana",
-		"on rightclick with a blaze rod:",
-		"	player's level progress is larger than 0.2",
-		"	shoot a fireball from the player",
-		"	reduce the player's level progress by 0.2",
-		"every 2 seconds:",
-		"	loop all players:",
-		"		level progress of loop-player is smaller than 0.9:",
-		"			increase level progress of the loop-player by 0.1",
-		"		else:",
-		"			set level progress of the loop-player to 0.99",
-		"on xp spawn:",
-		"	cancel event"})
+@Description({"The progress a player has made until the next level. Remember that this value is between 0 and 1, not 0 and 100!", "Changing this value can cause a player's level to change if the resulting level progess is negative or larger than 1, e.g." + "<code>increase the player's level progress by 0.5</code> will make the player gain a level if his progress was more than 50%."})
+@Examples({"# use the exp bar as mana", "on rightclick with a blaze rod:", "	player's level progress is larger than 0.2", "	shoot a fireball from the player", "	reduce the player's level progress by 0.2", "every 2 seconds:", "	loop all players:", "		level progress of loop-player is smaller than 0.9:", "			increase level progress of the loop-player by 0.1", "		else:", "			set level progress of the loop-player to 0.99", "on xp spawn:", "	cancel event"})
 @Since("2.0")
 @Events("level change")
 public class ExprLevelProgress extends SimplePropertyExpression<Player, Float> {

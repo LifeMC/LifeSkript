@@ -57,9 +57,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 	private final static String LANGUAGE_NODE = "visual effects";
 	
 	private enum Type implements YggdrasilSerializable {
-		ENDER_SIGNAL(Effect.ENDER_SIGNAL),
-		MOBSPAWNER_FLAMES(Effect.MOBSPAWNER_FLAMES),
-		POTION_BREAK(Effect.POTION_BREAK) {
+		ENDER_SIGNAL(Effect.ENDER_SIGNAL), MOBSPAWNER_FLAMES(Effect.MOBSPAWNER_FLAMES), POTION_BREAK(Effect.POTION_BREAK) {
 			@Override
 			public Object getData(final @Nullable Object raw, final Location l) {
 				return new PotionEffect(raw == null ? PotionEffectType.SPEED : (PotionEffectType) raw, 1, 0);
@@ -73,11 +71,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
 				return Direction.getFacing(((Direction) raw).getDirection(l), false); // TODO allow this to not be a literal
 			}
 		},
-		HURT(EntityEffect.HURT),
-		SHEEP_EAT(EntityEffect.SHEEP_EAT),
-		WOLF_HEARTS(EntityEffect.WOLF_HEARTS),
-		WOLF_SHAKE(EntityEffect.WOLF_SHAKE),
-		WOLF_SMOKE(EntityEffect.WOLF_SMOKE);
+		HURT(EntityEffect.HURT), SHEEP_EAT(EntityEffect.SHEEP_EAT), WOLF_HEARTS(EntityEffect.WOLF_HEARTS), WOLF_SHAKE(EntityEffect.WOLF_SHAKE), WOLF_SMOKE(EntityEffect.WOLF_SMOKE);
 		
 		final Object effect;
 		
