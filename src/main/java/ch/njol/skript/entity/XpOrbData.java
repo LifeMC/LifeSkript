@@ -21,13 +21,14 @@
 
 package ch.njol.skript.entity;
 
-import org.bukkit.Location;
-import org.bukkit.entity.ExperienceOrb;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.localization.ArgsMessage;
+
+import org.bukkit.Location;
+import org.bukkit.entity.ExperienceOrb;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

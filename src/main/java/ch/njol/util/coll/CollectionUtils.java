@@ -19,6 +19,8 @@
 
 package ch.njol.util.coll;
 
+import ch.njol.util.Pair;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,8 +33,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.util.Pair;
 
 /**
  * Utils for collections and arrays. All methods will not print any errors for <tt>null</tt> collections/arrays, but will return false/-1/etc.

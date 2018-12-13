@@ -24,7 +24,6 @@ package ch.njol.skript;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

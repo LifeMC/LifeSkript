@@ -21,6 +21,11 @@
 
 package ch.njol.yggdrasil;
 
+import ch.njol.yggdrasil.Fields.FieldContext;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustEnum;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,11 +43,6 @@ import java.util.List;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.yggdrasil.Fields.FieldContext;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustEnum;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable;
 
 /**
  * Yggdrasil is a simple data format to store object graphs.

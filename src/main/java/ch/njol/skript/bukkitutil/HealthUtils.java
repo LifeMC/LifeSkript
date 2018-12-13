@@ -21,15 +21,15 @@
 
 package ch.njol.skript.bukkitutil;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import ch.njol.skript.Skript;
+import ch.njol.util.Math2;
 
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import ch.njol.skript.Skript;
-import ch.njol.util.Math2;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author Peter Güttinger

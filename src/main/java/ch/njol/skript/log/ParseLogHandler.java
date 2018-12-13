@@ -21,13 +21,13 @@
 
 package ch.njol.skript.log;
 
+import ch.njol.skript.Skript;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
 
 /**
  * @author Peter Güttinger

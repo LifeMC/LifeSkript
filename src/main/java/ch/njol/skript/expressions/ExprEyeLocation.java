@@ -21,15 +21,16 @@
 
 package ch.njol.skript.expressions;
 
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

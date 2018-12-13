@@ -21,10 +21,11 @@
 
 package ch.njol.skript.log;
 
-import java.util.logging.Level;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+
+import java.util.logging.Level;
+
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

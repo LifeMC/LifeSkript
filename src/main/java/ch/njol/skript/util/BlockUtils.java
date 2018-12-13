@@ -21,17 +21,18 @@
 
 package ch.njol.skript.util;
 
-import java.util.Arrays;
+import ch.njol.skript.Skript;
+import ch.njol.util.coll.CollectionUtils;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.material.Directional;
-import org.eclipse.jdt.annotation.Nullable;
 
-import ch.njol.skript.Skript;
-import ch.njol.util.coll.CollectionUtils;
+import java.util.Arrays;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * TODO !Update with every version [blocks] - also update aliases-*.sk

@@ -21,11 +21,11 @@
 
 package ch.njol.skript.localization;
 
+import ch.njol.skript.Skript;
+
 import java.util.HashMap;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
 
 /**
  * @author Peter Güttinger

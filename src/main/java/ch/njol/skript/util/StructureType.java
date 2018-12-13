@@ -21,20 +21,21 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.localization.Language;
+import ch.njol.skript.localization.LanguageChangeListener;
+import ch.njol.skript.localization.Noun;
+import ch.njol.util.coll.CollectionUtils;
+
+import org.bukkit.Location;
+import org.bukkit.TreeType;
+import org.bukkit.block.Block;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.bukkit.Location;
-import org.bukkit.TreeType;
-import org.bukkit.block.Block;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
-import ch.njol.skript.localization.Noun;
-import ch.njol.util.coll.CollectionUtils;
 
 /**
  * @author Peter Güttinger

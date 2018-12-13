@@ -21,13 +21,13 @@
 
 package ch.njol.skript.hooks;
 
-import java.io.IOException;
+import ch.njol.skript.Skript;
+import ch.njol.skript.localization.ArgsMessage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.localization.ArgsMessage;
+import java.io.IOException;
 
 /**
  * @author Peter Güttinger

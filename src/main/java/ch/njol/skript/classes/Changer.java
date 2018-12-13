@@ -21,11 +21,10 @@
 
 package ch.njol.skript.classes;
 
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.classes.data.DefaultChangers;
 import ch.njol.skript.lang.Expression;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An interface to declare changeable values. All Expressions implement something similar like this by default, but refuse any change if {@link Expression#acceptChange(ChangeMode)}
@@ -78,7 +77,7 @@ public interface Changer<T> {
 		 * @param e The expression to test
 		 * @param mode The ChangeMode to use in the test
 		 * @param types The types to test for
-		 * @return Whether <tt>e.{@link Expression#change(Event, Object[], ChangeMode) change}(event, type[], mode)</tt> can be used or not.
+		 * @return Whether <tt>e.{@link Expression#change(org.bukkit.event.Event, Object[], ChangeMode) change}(event, type[], mode)</tt> can be used or not.
 		 */
 		public static boolean acceptsChange(final Expression<?> e, final ChangeMode mode, final Class<?>... types) {
 			final Class<?>[] cs = e.acceptChange(mode);

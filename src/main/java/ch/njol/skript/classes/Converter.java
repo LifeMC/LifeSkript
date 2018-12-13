@@ -21,10 +21,10 @@
 
 package ch.njol.skript.classes;
 
+import ch.njol.skript.registrations.Converters;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.registrations.Converters;
 
 /**
  * used to convert data from one type to another.

@@ -21,13 +21,13 @@
 
 package ch.njol.skript.localization;
 
+import ch.njol.skript.Skript;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
 
 /**
  * Basic class to get text from the language file(s).

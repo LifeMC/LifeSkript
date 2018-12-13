@@ -21,9 +21,9 @@
 
 package ch.njol.skript.classes;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.registrations.Converters;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Used to chain convertes to build a single converter. This is automatically created when a new converter is added.

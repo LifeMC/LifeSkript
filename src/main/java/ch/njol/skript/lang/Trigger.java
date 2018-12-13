@@ -21,10 +21,11 @@
 
 package ch.njol.skript.lang;
 
+import org.bukkit.event.Event;
+
 import java.io.File;
 import java.util.List;
 
-import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

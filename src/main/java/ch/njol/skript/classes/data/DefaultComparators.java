@@ -37,9 +37,6 @@ import ch.njol.skript.util.Timespan;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
 
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
-
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -66,6 +63,9 @@ import org.bukkit.entity.Wither;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 /**
  * @author Peter Güttinger

@@ -21,9 +21,9 @@
 
 package ch.njol.skript.localization;
 
-import java.util.IllegalFormatException;
-
 import ch.njol.skript.Skript;
+
+import java.util.IllegalFormatException;
 
 public final class ArgsMessage extends Message {
 	

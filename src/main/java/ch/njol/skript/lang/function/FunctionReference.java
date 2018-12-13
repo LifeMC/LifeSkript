@@ -21,13 +21,6 @@
 
 package ch.njol.skript.lang.function;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.config.Node;
@@ -37,6 +30,14 @@ import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
+
+import org.bukkit.event.Event;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

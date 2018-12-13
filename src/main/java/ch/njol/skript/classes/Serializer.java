@@ -21,21 +21,22 @@
 
 package ch.njol.skript.classes;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.util.Task;
+import ch.njol.yggdrasil.Fields;
+import ch.njol.yggdrasil.YggdrasilSerializer;
+
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.SkriptAPIException;
-import ch.njol.skript.util.Task;
-import ch.njol.yggdrasil.Fields;
-import ch.njol.yggdrasil.YggdrasilSerializer;
 
 /**
  * @author Peter Güttinger

@@ -21,8 +21,6 @@
 
 package ch.njol.skript.util;
 
-import static org.junit.Assert.*;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -37,6 +35,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Peter Güttinger

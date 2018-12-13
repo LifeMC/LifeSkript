@@ -21,14 +21,14 @@
 
 package ch.njol.skript.lang;
 
-import java.util.Iterator;
-
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.function.EffFunctionCall;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
+
+import java.util.Iterator;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Supertype of conditions and effects

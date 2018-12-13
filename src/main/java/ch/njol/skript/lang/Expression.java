@@ -21,11 +21,6 @@
 
 package ch.njol.skript.lang;
 
-import java.util.Iterator;
-
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
@@ -37,6 +32,12 @@ import ch.njol.skript.lang.util.ConvertedExpression;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Checker;
+
+import org.bukkit.event.Event;
+
+import java.util.Iterator;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents an expression. Expressions are used within conditions, effects and other expressions.

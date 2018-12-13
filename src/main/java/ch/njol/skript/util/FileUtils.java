@@ -21,6 +21,8 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.classes.Converter;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,8 +31,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import ch.njol.skript.classes.Converter;
 
 /**
  * @author Peter Güttinger

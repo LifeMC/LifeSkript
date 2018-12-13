@@ -21,10 +21,6 @@
 
 package ch.njol.skript.config.validate;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map.Entry;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.EntryNode;
@@ -32,6 +28,10 @@ import ch.njol.skript.config.Node;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Setter;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map.Entry;
 
 /**
  * @author Peter Güttinger

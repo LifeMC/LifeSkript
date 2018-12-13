@@ -21,9 +21,9 @@
 
 package ch.njol.skript.util;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.yggdrasil.YggdrasilSerializable;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

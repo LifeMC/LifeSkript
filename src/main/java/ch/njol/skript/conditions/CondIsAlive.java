@@ -21,8 +21,6 @@
 
 package ch.njol.skript.conditions;
 
-import org.bukkit.entity.LivingEntity;
-
 import ch.njol.skript.conditions.base.PropertyCondition;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -31,6 +29,8 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+
+import org.bukkit.entity.LivingEntity;
 
 /**
  * @author Peter Güttinger

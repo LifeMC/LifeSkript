@@ -21,13 +21,14 @@
 
 package ch.njol.skript.util;
 
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.util.NullableChecker;
 import ch.njol.util.coll.iterator.CheckedIterator;
+
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

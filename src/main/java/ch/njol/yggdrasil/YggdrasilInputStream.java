@@ -21,7 +21,11 @@
 
 package ch.njol.yggdrasil;
 
-import static ch.njol.yggdrasil.Tag.*;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
+
+import static ch.njol.yggdrasil.Tag.T_NULL;
+import static ch.njol.yggdrasil.Tag.T_REFERENCE;
+import static ch.njol.yggdrasil.Tag.getType;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -31,8 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 
 public abstract class YggdrasilInputStream implements Closeable {
 	

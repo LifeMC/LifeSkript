@@ -19,12 +19,12 @@
 
 package ch.njol.util.coll.iterator;
 
+import ch.njol.util.NullableChecker;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.util.NullableChecker;
 
 /**
  * @author Peter Güttinger

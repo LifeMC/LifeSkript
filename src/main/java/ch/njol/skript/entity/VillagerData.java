@@ -21,15 +21,16 @@
 
 package ch.njol.skript.entity;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Villager;
-import org.bukkit.entity.Villager.Profession;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.coll.CollectionUtils;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Villager;
+import org.bukkit.entity.Villager.Profession;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

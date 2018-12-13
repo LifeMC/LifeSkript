@@ -21,14 +21,6 @@
 
 package ch.njol.skript.variables;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.lang.ParseContext;
@@ -40,6 +32,14 @@ import ch.njol.skript.util.Task;
 import ch.njol.skript.util.Timespan;
 import ch.njol.skript.variables.SerializedVariable.Value;
 import ch.njol.util.Closeable;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 // FIXME ! large databases (>25 MB) cause the server to be unresponsive instead of loading slowly
 

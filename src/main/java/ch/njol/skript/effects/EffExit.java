@@ -21,9 +21,6 @@
 
 package ch.njol.skript.effects;
 
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
@@ -40,6 +37,10 @@ import ch.njol.skript.lang.TriggerSection;
 import ch.njol.skript.lang.While;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Kleenean;
+
+import org.bukkit.event.Event;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

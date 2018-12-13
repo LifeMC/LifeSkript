@@ -21,8 +21,7 @@
 
 package ch.njol.skript.util;
 
-import java.util.Collection;
-import java.util.List;
+import ch.njol.skript.Skript;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -37,10 +36,12 @@ import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Collection;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
 
 /**
  * A block that gets all data from the world, but either delays any changes by 1 tick of reflects them on a given BlockState depending on which constructor is used.

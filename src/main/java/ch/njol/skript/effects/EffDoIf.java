@@ -21,9 +21,6 @@
 
 package ch.njol.skript.effects;
 
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -34,6 +31,10 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+
+import org.bukkit.event.Event;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Do If")
 @Description("Execute an effect if a condition is true.")

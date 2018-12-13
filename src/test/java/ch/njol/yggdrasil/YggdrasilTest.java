@@ -21,7 +21,7 @@
 
 package ch.njol.yggdrasil;
 
-import static org.junit.Assert.*;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,10 +38,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
 
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
+import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("resource")
 public class YggdrasilTest {

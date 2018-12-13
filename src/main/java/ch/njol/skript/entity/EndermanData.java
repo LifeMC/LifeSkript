@@ -21,13 +21,6 @@
 
 package ch.njol.skript.entity;
 
-import java.util.Arrays;
-
-import org.bukkit.entity.Enderman;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -36,6 +29,14 @@ import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.Checker;
 import ch.njol.util.coll.CollectionUtils;
+
+import org.bukkit.entity.Enderman;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
+
+import java.util.Arrays;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

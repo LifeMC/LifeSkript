@@ -28,13 +28,14 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.StringUtils;
 
-import java.util.ArrayList;
-
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.entity.minecart.RideableMinecart;
 import org.bukkit.entity.minecart.SpawnerMinecart;
+
+import java.util.ArrayList;
+
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

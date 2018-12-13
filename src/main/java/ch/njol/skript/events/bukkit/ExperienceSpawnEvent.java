@@ -21,14 +21,14 @@
 
 package ch.njol.skript.events.bukkit;
 
+import ch.njol.skript.registrations.EventValues;
+import ch.njol.skript.util.Experience;
+import ch.njol.skript.util.Getter;
+
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-
-import ch.njol.skript.registrations.EventValues;
-import ch.njol.skript.util.Experience;
-import ch.njol.skript.util.Getter;
 
 /**
  * @author Peter Güttinger

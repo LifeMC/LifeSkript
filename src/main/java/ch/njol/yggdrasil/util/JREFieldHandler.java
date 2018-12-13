@@ -21,16 +21,16 @@
 
 package ch.njol.yggdrasil.util;
 
+import ch.njol.yggdrasil.FieldHandler;
+import ch.njol.yggdrasil.Fields.FieldContext;
+import ch.njol.yggdrasil.YggdrasilException;
+
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-
-import ch.njol.yggdrasil.FieldHandler;
-import ch.njol.yggdrasil.Fields.FieldContext;
-import ch.njol.yggdrasil.YggdrasilException;
 
 /**
  * Handles common JRE-related incompatible field types. This handler is not added by default and is merely a utility.

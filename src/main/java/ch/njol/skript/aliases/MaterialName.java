@@ -21,10 +21,10 @@
 
 package ch.njol.skript.aliases;
 
-import java.util.HashMap;
-
 import ch.njol.skript.Skript;
 import ch.njol.util.NonNullPair;
+
+import java.util.HashMap;
 
 final class MaterialName {
 	String singular;

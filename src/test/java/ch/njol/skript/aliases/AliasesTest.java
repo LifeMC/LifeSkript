@@ -21,7 +21,7 @@
 
 package ch.njol.skript.aliases;
 
-import static org.junit.Assert.*;
+import ch.njol.skript.log.BukkitLoggerFilter;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -31,7 +31,7 @@ import java.util.logging.LogRecord;
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
 
-import ch.njol.skript.log.BukkitLoggerFilter;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Peter Güttinger

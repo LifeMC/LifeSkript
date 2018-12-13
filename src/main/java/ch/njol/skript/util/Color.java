@@ -21,18 +21,19 @@
 
 package ch.njol.skript.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.localization.Adjective;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.yggdrasil.YggdrasilSerializable;
+
+import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

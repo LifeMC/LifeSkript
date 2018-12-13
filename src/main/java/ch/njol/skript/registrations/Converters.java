@@ -21,6 +21,13 @@
 
 package ch.njol.skript.registrations;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.classes.ChainedConverter;
+import ch.njol.skript.classes.Converter;
+import ch.njol.skript.classes.Converter.ConverterInfo;
+import ch.njol.skript.classes.Converter.ConverterUtils;
+import ch.njol.util.Pair;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,13 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.classes.ChainedConverter;
-import ch.njol.skript.classes.Converter;
-import ch.njol.skript.classes.Converter.ConverterInfo;
-import ch.njol.skript.classes.Converter.ConverterUtils;
-import ch.njol.util.Pair;
 
 /**
  * @author Peter Güttinger

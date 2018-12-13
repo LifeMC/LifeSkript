@@ -21,13 +21,13 @@
 
 package ch.njol.skript.localization;
 
+import ch.njol.skript.Skript;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.skript.Skript;
 
 /**
  * @author Peter Güttinger

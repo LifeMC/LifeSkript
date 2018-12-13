@@ -21,6 +21,17 @@
 
 package ch.njol.skript;
 
+import ch.njol.skript.localization.FormattedMessage;
+import ch.njol.skript.localization.Message;
+import ch.njol.skript.util.Date;
+import ch.njol.skript.util.ExceptionUtils;
+import ch.njol.skript.util.FileUtils;
+import ch.njol.skript.util.Task;
+import ch.njol.skript.util.Version;
+
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -42,20 +53,11 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.events.XMLEvent;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.eclipse.jdt.annotation.Nullable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import ch.njol.skript.localization.FormattedMessage;
-import ch.njol.skript.localization.Message;
-import ch.njol.skript.util.Date;
-import ch.njol.skript.util.ExceptionUtils;
-import ch.njol.skript.util.FileUtils;
-import ch.njol.skript.util.Task;
-import ch.njol.skript.util.Version;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

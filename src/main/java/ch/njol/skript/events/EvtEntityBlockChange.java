@@ -21,18 +21,19 @@
 
 package ch.njol.skript.events;
 
-import org.bukkit.Material;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Sheep;
-import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Checker;
+
+import org.bukkit.Material;
+import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Sheep;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

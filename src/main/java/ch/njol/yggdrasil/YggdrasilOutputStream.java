@@ -21,7 +21,17 @@
 
 package ch.njol.yggdrasil;
 
-import static ch.njol.yggdrasil.Tag.*;
+import ch.njol.yggdrasil.Fields.FieldContext;
+import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
+
+import static ch.njol.yggdrasil.Tag.T_ARRAY;
+import static ch.njol.yggdrasil.Tag.T_CLASS;
+import static ch.njol.yggdrasil.Tag.T_ENUM;
+import static ch.njol.yggdrasil.Tag.T_NULL;
+import static ch.njol.yggdrasil.Tag.T_OBJECT;
+import static ch.njol.yggdrasil.Tag.T_REFERENCE;
+import static ch.njol.yggdrasil.Tag.T_STRING;
+import static ch.njol.yggdrasil.Tag.getType;
 
 import java.io.Closeable;
 import java.io.Flushable;
@@ -31,9 +41,6 @@ import java.lang.reflect.Array;
 import java.util.IdentityHashMap;
 
 import org.eclipse.jdt.annotation.Nullable;
-
-import ch.njol.yggdrasil.Fields.FieldContext;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 
 public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 	

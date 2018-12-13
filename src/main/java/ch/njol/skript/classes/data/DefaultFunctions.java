@@ -21,13 +21,6 @@
 
 package ch.njol.skript.classes.data;
 
-import java.util.Calendar;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.eclipse.jdt.annotation.Nullable;
-
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.function.FunctionEvent;
@@ -39,6 +32,14 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Date;
 import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
+
+import java.util.Calendar;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * FIXME generate/write documentation
