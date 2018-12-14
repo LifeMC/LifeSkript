@@ -159,7 +159,6 @@ public enum Color implements YggdrasilSerializable {
 		return bukkit;
 	}
 	
-	// FIXME Oh.. The methodExists is not working properly in general, or only on enums?
 	public volatile static boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
 	
 	// We don't want a infinite method loop, java has a StackOverflowException, but just guarantee it.

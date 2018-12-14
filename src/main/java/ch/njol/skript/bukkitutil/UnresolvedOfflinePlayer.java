@@ -40,19 +40,16 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * Represents a {@link OfflinePlayer} but not resolved yet.
  * You should use this class for speeding up the UUID resolving process.
- * 
  * If a method requires the player to be resolved and method has return value, then the player is resolved in
  * caller thread (usually main thread) and the method is processed normally.
  * IF method has no return value, the method's action runs after the player is resolved.
  * 
  * @author Njol (idea and first version), TheDGOfficial (recode)
- * 
  * @since 2.2-Fixes-V12 (Njol never implemented this)
  */
 public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	
-	final static BlockingQueue<UnresolvedOfflinePlayer> toResolve =
-			new LinkedBlockingQueue<UnresolvedOfflinePlayer>();
+	final static BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<UnresolvedOfflinePlayer>();
 	
 	final BlockingQueue<Runnable> actionQueue = new LinkedBlockingQueue<Runnable>();
 	
@@ -62,7 +59,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 		@SuppressWarnings("deprecation")
 		@Override
 		public final void run() {
-			while(true) {
+			while (true) {
 				try {
 					final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 					
@@ -75,10 +72,10 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 					p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
 					
 					if (!p.actionQueue.isEmpty())
-						for(final Runnable action : p.actionQueue)
+						for (final Runnable action : p.actionQueue)
 							if (action != null)
 								action.run();
-				} catch(final InterruptedException e) {
+				} catch (final InterruptedException e) {
 					continue;
 				}
 			}
@@ -93,7 +90,6 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	/**
 	 * Creates a new un resolved offline player from a player name.
 	 * The player will be resolved in a async thread via {@link Bukkit#getOfflinePlayer(String)}.
-	 * 
 	 * If a method that requires player to be resolved runs before it resolved in async thread,
 	 * the player will be resolved in the caller thread.
 	 * 
@@ -108,7 +104,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 				public final void close() {
 					try {
 						resolverThread.interrupt();
-					} catch(final Throwable ignored) { /* ignored */ }
+					} catch (final Throwable ignored) { /* ignored */ }
 				}
 			});
 		}
@@ -123,182 +119,167 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	@SuppressWarnings("deprecation")
 	public boolean resolveNow() {
 		
-		if (this.bukkitOfflinePlayer != null)
+		if (bukkitOfflinePlayer != null)
 			return false; // Return false if already resolved.
-		
+			
 		toResolve.remove(this); // Remove method does nothing if the queue not contains the element.
 		
-		this.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(this.name); // Resolve now.
+		bukkitOfflinePlayer = Bukkit.getOfflinePlayer(name); // Resolve now.
 		// Javadoc says: "This method may involve a blocking web request to get the UUID for the given name."
 		// This the reason we should use this class for offline players :D
 		
 		return true;
 		
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.permissions.ServerOperator#isOp()
 	 */
 	@SuppressWarnings("null")
 	public boolean isOp() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.isOp();
+		return bukkitOfflinePlayer.isOp();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.permissions.ServerOperator#setOp(boolean)
 	 */
 	public void setOp(final boolean value) {
-		this.actionQueue.add(new Runnable() {
+		actionQueue.add(new Runnable() {
 			@SuppressWarnings("null")
 			public final void run() {
-				UnresolvedOfflinePlayer.this.bukkitOfflinePlayer.setOp(value);
+				bukkitOfflinePlayer.setOp(value);
 			}
 		});
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.configuration.serialization.ConfigurationSerializable#serialize()
 	 */
 	@SuppressWarnings("null")
 	public Map<String, Object> serialize() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.serialize();
+		return bukkitOfflinePlayer.serialize();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#isOnline()
 	 */
 	@SuppressWarnings("null")
 	public boolean isOnline() {
 		// Don't resolve just to check the online status. Try to get online player version.
-		return this.bukkitOfflinePlayer != null ? this.bukkitOfflinePlayer.isOnline() : getPlayer() != null;
+		return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.isOnline() : getPlayer() != null;
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getName()
 	 */
 	@SuppressWarnings("null")
 	public String getName() {
 		// We already know it's name, just to ensure, return from the real Bukkit offline player if available.
-		return this.bukkitOfflinePlayer != null ? this.bukkitOfflinePlayer.getName() : this.name;
+		return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getName() : name;
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getUniqueId()
 	 */
 	@SuppressWarnings("null")
 	public UUID getUniqueId() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.getUniqueId();
+		return bukkitOfflinePlayer.getUniqueId();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#isBanned()
 	 */
 	@SuppressWarnings("null")
 	public boolean isBanned() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.isBanned();
+		return bukkitOfflinePlayer.isBanned();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#setBanned(boolean)
 	 */
 	@Deprecated
 	public void setBanned(final boolean banned) {
-		this.actionQueue.add(new Runnable() {
+		actionQueue.add(new Runnable() {
 			@SuppressWarnings("null")
 			public final void run() {
-				UnresolvedOfflinePlayer.this.bukkitOfflinePlayer.setBanned(banned);
+				bukkitOfflinePlayer.setBanned(banned);
 			}
 		});
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#isWhitelisted()
 	 */
 	@SuppressWarnings({"null", "unused"})
 	public boolean isWhitelisted() {
-		if (this.bukkitOfflinePlayer != null)
-			return this.bukkitOfflinePlayer.isWhitelisted();
+		if (bukkitOfflinePlayer != null)
+			return bukkitOfflinePlayer.isWhitelisted();
 		else if (getPlayer() != null)
-			return this.getPlayer().isWhitelisted();
+			return getPlayer().isWhitelisted();
 		else {
 			resolveNow();
-			return this.bukkitOfflinePlayer.isWhitelisted();
+			return bukkitOfflinePlayer.isWhitelisted();
 		}
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#setWhitelisted(boolean)
 	 */
 	public void setWhitelisted(final boolean value) {
-		this.actionQueue.add(new Runnable() {
+		actionQueue.add(new Runnable() {
 			@SuppressWarnings("null")
 			public final void run() {
-				UnresolvedOfflinePlayer.this.bukkitOfflinePlayer.setWhitelisted(value);
+				bukkitOfflinePlayer.setWhitelisted(value);
 			}
 		});
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getPlayer()
 	 */
 	@SuppressWarnings({"null", "deprecation"})
 	public Player getPlayer() {
-		return this.bukkitOfflinePlayer != null ? this.bukkitOfflinePlayer.getPlayer() : Bukkit.getPlayerExact(name);
+		return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getPlayer() : Bukkit.getPlayerExact(name);
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getFirstPlayed()
 	 */
 	@SuppressWarnings("null")
 	public long getFirstPlayed() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.getFirstPlayed();
+		return bukkitOfflinePlayer.getFirstPlayed();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getLastPlayed()
 	 */
 	@SuppressWarnings("null")
 	public long getLastPlayed() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.getLastPlayed();
+		return bukkitOfflinePlayer.getLastPlayed();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#hasPlayedBefore()
 	 */
 	@SuppressWarnings("null")
 	public boolean hasPlayedBefore() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.hasPlayedBefore();
+		return bukkitOfflinePlayer.hasPlayedBefore();
 	}
-
+	
 	/**
-	 * 
 	 * @see org.bukkit.OfflinePlayer#getBedSpawnLocation()
 	 */
 	@SuppressWarnings("null")
 	public Location getBedSpawnLocation() {
 		resolveNow();
-		return this.bukkitOfflinePlayer.getBedSpawnLocation();
+		return bukkitOfflinePlayer.getBedSpawnLocation();
 	}
 	
 }
