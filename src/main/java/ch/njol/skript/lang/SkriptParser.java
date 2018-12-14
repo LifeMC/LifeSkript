@@ -81,8 +81,8 @@ public final class SkriptParser {
 	public final static int PARSE_EXPRESSIONS = 1;
 	public final static int PARSE_LITERALS = 2;
 	public final static int ALL_FLAGS = PARSE_EXPRESSIONS | PARSE_LITERALS;
-	private final int flags;
 	
+	private final int flags;
 	public final ParseContext context;
 	
 	public SkriptParser(final String expr) {
@@ -118,12 +118,15 @@ public final class SkriptParser {
 	public final static String stringMatcher = "\"[^\"]*?(?:\"\"[^\"]*)*?\"";
 	
 	public final static class ParseResult {
+		
 		public final Expression<?>[] exprs;
 		public final List<MatchResult> regexes = new ArrayList<MatchResult>(1);
+		
 		public final String expr;
+		
 		/**
-		 * Defaults to 0. Any marks encountered in the pattern will be XORed with the existing value, in particular if only one mark is encountered this value will be set to that
-		 * mark.
+		 * Defaults to 0. Any marks encountered in the pattern will be XORed with the existing value,
+		 * in particular if only one mark is encountered this value will be set to that mark.
 		 */
 		public int mark;
 		
@@ -131,9 +134,11 @@ public final class SkriptParser {
 			expr = parser.expr;
 			exprs = new Expression<?>[countUnescaped(pattern, '%') / 2];
 		}
+		
 	}
 	
 	private final static class MalformedPatternException extends RuntimeException {
+		
 		private static final long serialVersionUID = -5133477361763823946L;
 		
 		public MalformedPatternException(final String pattern, final String message) {
@@ -143,6 +148,7 @@ public final class SkriptParser {
 		public MalformedPatternException(final String pattern, final String message, final @Nullable Throwable cause) {
 			super(message + " [pattern: " + pattern + "]", cause);
 		}
+		
 	}
 	
 	/**

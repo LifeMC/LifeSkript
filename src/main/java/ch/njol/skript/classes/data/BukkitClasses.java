@@ -25,6 +25,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.bukkitutil.UnresolvedOfflinePlayer;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.ConfigurationSerializer;
 import ch.njol.skript.classes.EnumSerializer;
@@ -455,12 +456,11 @@ public final class BukkitClasses {
 			@Nullable
 			public OfflinePlayer parse(final String s, final ParseContext context) {
 				if (context == ParseContext.COMMAND) {
-					if (!s.matches("\\S+") || s.length() > 16)
+					if (!s.matches("\\S+") || s.length() > 16) {
+						Skript.error("The player name \"" + s + "\" is not a valid player name");
 						return null;
-					return Bukkit.getOfflinePlayer(s);
-					// TODO return an unresolved player and resolve it on a different thread after the command was parsed, and block the command until it is ready
-					// FIXME add note to changelog if not fixed in the next update
-//							return new UnresolvedOfflinePlayer(s);
+					}
+					return new UnresolvedOfflinePlayer(s);
 				}
 //						if (s.matches("\"\\S+\""))
 //							return Bukkit.getOfflinePlayer(s.substring(1, s.length() - 1));
