@@ -109,6 +109,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 			});
 		}
 		this.name = name;
+		toResolve.add(this); // Try to resolve on a background thread, if possible.
 	}
 	
 	/**
