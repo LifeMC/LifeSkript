@@ -21,6 +21,7 @@
 
 package ch.njol.skript.classes.data;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.aliases.ItemData;
 import ch.njol.skript.aliases.ItemType;
@@ -333,7 +334,12 @@ public final class SkriptClasses {
 			@Override
 			@Nullable
 			public Timespan parse(final String s, final ParseContext context) {
-				return Timespan.parse(s);
+				try {
+					return Timespan.parse(s);
+				} catch (final IllegalArgumentException e) {
+					Skript.error("'" + s + "' is not a valid timespan");
+					return null;
+				}
 			}
 			
 			@Override

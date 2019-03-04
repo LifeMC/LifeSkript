@@ -76,6 +76,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 							if (action != null)
 								action.run();
 				} catch (final InterruptedException e) {
+					Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
 					continue;
 				}
 			}
@@ -117,7 +118,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	 * 
 	 * @return Returns true if the player is not already resolved and resolved via this call.
 	 */
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({"deprecation", "null", "unused"})
 	public boolean resolveNow() {
 		
 		if (bukkitOfflinePlayer != null)
@@ -125,6 +126,11 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 			
 		toResolve.remove(this); // Remove method does nothing if the queue not contains the element.
 		
+		if (getPlayer() != null) {
+			bukkitOfflinePlayer = getPlayer();
+			return true; // Anyways, setted with this call.
+		}
+			
 		bukkitOfflinePlayer = Bukkit.getOfflinePlayer(name); // Resolve now.
 		// Javadoc says: "This method may involve a blocking web request to get the UUID for the given name."
 		// This the reason we should use this class for offline players :D

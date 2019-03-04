@@ -73,13 +73,13 @@ public final class FunctionReference<T> {
 	public boolean validateFunction(final boolean first) {
 		final Function<?> newFunc = Functions.getFunction(functionName);
 		SkriptLogger.setNode(node);
-		if (newFunc == null) {
-			if (first)
-				Skript.error("The function '" + functionName + "' does not exist.");
-			else
-				Skript.error("The function '" + functionName + "' was deleted or renamed, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
-			return false;
-		}
+		//if (newFunc == null) {
+			//if (first)
+				//Skript.error("The function '" + functionName + "' does not exist.");
+			//else
+				//Skript.error("The function '" + functionName + "' was deleted or renamed, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
+			//return false;
+		//}
 		if (newFunc == function)
 			return true;
 		

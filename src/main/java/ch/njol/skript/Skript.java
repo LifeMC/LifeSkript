@@ -454,6 +454,9 @@ public final class Skript extends JavaPlugin implements Listener {
 				
 			}
 			
+			if (!isEnabled())
+				return;
+			
 			Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 				
 				@Override
@@ -499,6 +502,9 @@ public final class Skript extends JavaPlugin implements Listener {
 			
 			latestVersion = getInstance().getDescription().getVersion();
 			
+			if (!isEnabled())
+				return;
+			
 			Bukkit.getScheduler().runTaskAsynchronously(getInstance(), new Runnable() {
 				
 				@Override
@@ -518,6 +524,8 @@ public final class Skript extends JavaPlugin implements Listener {
 						final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
 						
 						if (!latestTrimmed.equals(currentTrimmed)) {
+							if (!isEnabled())
+								return;
 							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 								
 								@Override
@@ -530,6 +538,8 @@ public final class Skript extends JavaPlugin implements Listener {
 							updateAvailable = true;
 							latestVersion = latest;
 						} else {
+							if (!isEnabled())
+								return;
 							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 								
 								@Override
@@ -541,6 +551,8 @@ public final class Skript extends JavaPlugin implements Listener {
 							printIssuesLink();
 						}
 					} catch (final Throwable tw) {
+						if (!isEnabled())
+							return;
 						Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 							
 							@Override
@@ -550,6 +562,8 @@ public final class Skript extends JavaPlugin implements Listener {
 							
 						});
 						if (Skript.logHigh()) {
+							if (!isEnabled())
+								return;
 							Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
 								
 								@Override

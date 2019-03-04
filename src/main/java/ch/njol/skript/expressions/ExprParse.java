@@ -144,9 +144,17 @@ public final class ExprParse extends SimpleExpression<Object> {
 				final ParseResult r = SkriptParser.parse(t, pattern);
 				if (r != null) {
 					assert plurals.length == r.exprs.length;
-					final Object[] os = new Object[r.exprs.length];
-					for (int i = 0; i < os.length; i++)
-						os[i] = plurals[i] ? r.exprs[i].getArray(null) : r.exprs[i].getSingle(null);
+					int resultCount = 0;
+					for (final Expression<?> expr : r.exprs) {
+						if (expr != null) // Ignore missing optional parts
+							resultCount++;
+					}
+
+					final Object[] os = new Object[resultCount];
+					for (int i = 0, slot = 0; i < r.exprs.length; i++) {
+						if (r.exprs[i] != null)
+							os[slot++] = plurals[i] ? r.exprs[i].getArray(null) : r.exprs[i].getSingle(null);
+					}
 					return os;
 				}
 			}

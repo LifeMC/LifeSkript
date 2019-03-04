@@ -96,7 +96,11 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 				} else if (sub.matches("^\\d+(.\\d+)?$")) {
 					if (i == subs.length - 1)
 						return null;
-					amount = Double.parseDouble(sub);
+					try {
+						amount = Double.parseDouble(sub);
+					} catch (final NumberFormatException e) {
+						throw new IllegalArgumentException("invalid timespan: " + s);
+					}
 					sub = subs[++i];
 				}
 				
