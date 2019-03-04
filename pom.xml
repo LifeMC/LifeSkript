@@ -179,6 +179,12 @@
 			<url>http://lifemcserver.com</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>lifemc-repo</id>
+			<url>http://lifemcserver.com</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<resources>
@@ -247,7 +253,7 @@
 		          <dependency>
                     <groupId>org.eclipse.jdt.core.compiler</groupId>
                     <artifactId>ecj</artifactId>
-                    <version>4.6.1</version>
+                    <version>4.11RC1</version>
                   </dependency>
 		        </dependencies>
 			</plugin>
