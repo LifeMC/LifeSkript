@@ -6,15 +6,18 @@ Also, Skript is a very easy and understandable domain-specific scripting languag
 
 # Server Compatibility
 Requirements for running Skript is:
-- Java 6 **or later** installed. (java 8 is recommended)
-- A bukkit or bukkit-based (craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
+- Java 6 **or later** installed. (java 8 or 11 is recommended)
+- A bukkit or bukkit-based (bukkit, craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
 - Minecraft version compatibility is:
   - Tested: 1.7.10 - 1.8.8 (also any version between these)
   - Can maybe work: 1.2.5 and above (others also maybe work)
-- If your server is 1.9+, please use Bensku's fork. It's the most updated latest fork of Skript. Get it here: https://github.com/SkriptLang/Skript
+- If your server is 1.9 or above, please use Bensku's fork. It's the most updated latest fork of Skript. Get it here: https://github.com/SkriptLang/Skript
+
+I've only created this fork for my old 1.7.10 server, so don't expect too much. I will back-port and/or make some sort of bug fixes and features but nothing too much.
 
 # Issues and Pull Requests
-Feel free to report all issues, make pull requests etc. but i can't guarantee these issues will be fixed.
+Feel free to report all issues, make pull requests etc. but i can't guarantee these issues will be fixed because i'm not the original
+author of the Skript and don't know everything about Skript.
 
 # Versioning System
 * Stable Releases: No suffix. Just (generally) a major version. (like V10, V11 etc.)
@@ -36,8 +39,8 @@ https://github.com/LifeMC/LifeSkript/wiki
 Some useful links maybe help you.
 
 ## Github Links
-- Bensku's Fork (1.9+): https://github.com/SkriptLang/Skript
-- Mirreski's Repo: https://github.com/Mirreski/Skript
+- Bensku's Fork (1.9 or above): https://github.com/SkriptLang/Skript
+- Mirreski's Repo (it's also abondoned i think): https://github.com/Mirreski/Skript
 - Njol's Original Repo (abandoned, read-only): https://github.com/Njol/Skript
 
 ## Documentation
