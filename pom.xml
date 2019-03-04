@@ -181,22 +181,6 @@
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>njol-repo</id>
-			<url>http://maven.njol.ch/repo</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>sk89q-repo</id>
-			<url>http://maven.sk89q.com/repo</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>techcable-repo</id>
-			<url>http://repo.techcable.net/content/repositories/public</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spigot-repo</id>
-			<url>http://hub.spigotmc.org/nexus/content/groups/public</url>
-		</pluginRepository>
-		<pluginRepository>
 			<id>lifemc-repo</id>
 			<url>http://lifemcserver.com</url>
 		</pluginRepository>
