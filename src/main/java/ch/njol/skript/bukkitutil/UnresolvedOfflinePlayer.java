@@ -31,6 +31,9 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
+
+import java.lang.Thread;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -71,13 +74,14 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 					
 					p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
 					
-					if (!p.actionQueue.isEmpty()) {
-						final Runnable action = p.actionQueue.take();
-
-						if (action != null) {
-							action.run();
-						}
-					}
+					if (!p.actionQueue.isEmpty())
+						for(final Runnable action : p.actionQueue)
+							if (action != null) {
+								p.actionQueue.remove(action);
+								action.run();
+							}
+					
+					Thread.sleep(100L);
 				} catch (final InterruptedException e) {
 					//Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
 					break;
@@ -102,6 +106,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 	public UnresolvedOfflinePlayer(final String name) {
 		if (!threadStarted.get()) { // Do not start in static initializer, only start it when required.
 			threadStarted.set(true);
+			resolverThread.setPriority(Thread.MIN_PRIORITY);
 			resolverThread.start();
 			Skript.closeOnDisable(new Closeable() {
 				@Override
