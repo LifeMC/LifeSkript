@@ -828,13 +828,21 @@ public final class Skript extends JavaPlugin implements Listener {
 			return;
 		disabled = true;
 		
-		EvtSkript.onSkriptStop(); // TODO [code style] warn user about delays in Skript stop events
+		if (Skript.logHigh())
+			getLogger().info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
+		EvtSkript.onSkriptStop();
 		
+		if (Skript.logHigh())
+			getLogger().info("Disabling scripts..");
 		disableScripts();
 		
+		if (Skript.logHigh())
+			getLogger().info("Unregistering tasks and event listeners..");
 		Bukkit.getScheduler().cancelTasks(this);
 		HandlerList.unregisterAll((JavaPlugin) this);
 		
+		if (Skript.logHigh())
+			getLogger().info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
 		for (final Closeable c : closeOnDisable) {
 			try {
 				c.close();
@@ -871,7 +879,7 @@ public final class Skript extends JavaPlugin implements Listener {
 										}
 									}
 								} catch (final Throwable ex) {
-									if (testing())
+									if (testing() || Skript.logHigh())
 										ex.printStackTrace();
 								}
 							}
@@ -880,7 +888,7 @@ public final class Skript extends JavaPlugin implements Listener {
 						jar.close();
 					}
 				} catch (final Throwable ex) {
-					if (testing())
+					if (testing() || Skript.logHigh())
 						ex.printStackTrace();
 				}
 			}
