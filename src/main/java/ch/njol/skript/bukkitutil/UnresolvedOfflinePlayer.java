@@ -59,7 +59,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 		@SuppressWarnings("deprecation")
 		@Override
 		public final void run() {
-			while (true) {
+			while (Bukkit.getServer() != null && Skript.getInstance().isEnabled()) {
 				try {
 					final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 					
@@ -71,13 +71,16 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 					
 					p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
 					
-					if (!p.actionQueue.isEmpty())
-						for (final Runnable action : p.actionQueue)
-							if (action != null)
-								action.run();
+					if (!p.actionQueue.isEmpty()) {
+						final Runnable action = p.actionQueue.take();
+
+						if (action != null) {
+							action.run();
+						}
+					}
 				} catch (final InterruptedException e) {
-					Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
-					continue;
+					//Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
+					break;
 				}
 			}
 		}
