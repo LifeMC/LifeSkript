@@ -54,7 +54,8 @@ public final class ThrownPotionData extends EntityData<ThrownPotion> {
     @Override
     protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {
         if (exprs.length > 0 && exprs[0] != null) {
-            if (Converters.convert(exprs[0].getAll(), ItemType.class, t -> {
+            //noinspection RedundantCast
+            if (Converters.convert((ItemType[]) exprs[0].getAll(), ItemType.class, t -> {
                 ItemType r = null;
                 for (final ItemData d : t.getTypes()) {
                     if (d.getId() == Material.POTION.getId()) {
