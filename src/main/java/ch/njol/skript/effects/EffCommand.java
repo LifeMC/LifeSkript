@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -45,50 +45,50 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"make player execute command \"/suicide\"", "execute console command \"/say Hello everyone!\""})
 @Since("1.0")
 public final class EffCommand extends Effect {
-	static {
-		Skript.registerEffect(EffCommand.class, "[execute] [the] command %strings% [by %-commandsenders%]", "[execute] [the] %commandsenders% command %strings%", "(let|make) %commandsenders% execute [[the] command] %strings%");
-	}
-	
-	@Nullable
-	private Expression<CommandSender> senders;
-	@SuppressWarnings("null")
-	private Expression<String> commands;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		if (matchedPattern == 0) {
-			commands = (Expression<String>) vars[0];
-			senders = (Expression<CommandSender>) vars[1];
-		} else {
-			senders = (Expression<CommandSender>) vars[0];
-			commands = (Expression<String>) vars[1];
-		}
-		commands = VariableString.setStringMode(commands, StringMode.COMMAND);
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public void execute(final Event e) {
-		for (String command : commands.getArray(e)) {
-			assert command != null;
-			if (command.startsWith("/"))
-				command = "" + command.substring(1);
-			if (senders != null) {
-				for (final CommandSender sender : senders.getArray(e)) {
-					assert sender != null;
-					Skript.dispatchCommand(sender, command);
-				}
-			} else {
-				Skript.dispatchCommand(Bukkit.getConsoleSender(), command);
-			}
-		}
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "make " + (senders != null ? senders.toString(e, debug) : "the console") + " execute the command " + commands.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerEffect(EffCommand.class, "[execute] [the] command %strings% [by %-commandsenders%]", "[execute] [the] %commandsenders% command %strings%", "(let|make) %commandsenders% execute [[the] command] %strings%");
+    }
+
+    @Nullable
+    private Expression<CommandSender> senders;
+    @SuppressWarnings("null")
+    private Expression<String> commands;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        if (matchedPattern == 0) {
+            commands = (Expression<String>) vars[0];
+            senders = (Expression<CommandSender>) vars[1];
+        } else {
+            senders = (Expression<CommandSender>) vars[0];
+            commands = (Expression<String>) vars[1];
+        }
+        commands = VariableString.setStringMode(commands, StringMode.COMMAND);
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public void execute(final Event e) {
+        for (String command : commands.getArray(e)) {
+            assert command != null;
+            if (command.startsWith("/"))
+                command = "" + command.substring(1);
+            if (senders != null) {
+                for (final CommandSender sender : senders.getArray(e)) {
+                    assert sender != null;
+                    Skript.dispatchCommand(sender, command);
+                }
+            } else {
+                Skript.dispatchCommand(Bukkit.getConsoleSender(), command);
+            }
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "make " + (senders != null ? senders.toString(e, debug) : "the console") + " execute the command " + commands.toString(e, debug);
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -32,98 +32,94 @@ import java.util.logging.Level;
  * @author Peter Güttinger
  */
 public class LogEntry {
-	
-	public final Level level;
-	public final int quality;
-	
-	public final String message;
-	
-	@Nullable
-	public final Node node;
-	
-	@Nullable
-	private final String from;
-	private final boolean tracked;
-	
-	public LogEntry(final Level level, final String message) {
-		this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, SkriptLogger.getNode());
-	}
-	
-	public LogEntry(final Level level, final int quality, final String message) {
-		this(level, quality, message, SkriptLogger.getNode());
-	}
-	
-	public LogEntry(final Level level, final ErrorQuality quality, final String message) {
-		this(level, quality.quality(), message, SkriptLogger.getNode());
-	}
-	
-	public LogEntry(final Level level, final String message, final @Nullable Node node) {
-		this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, node);
-	}
-	
-	public LogEntry(final Level level, final ErrorQuality quality, final String message, final Node node) {
-		this(level, quality.quality(), message, node);
-	}
-	
-	public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node) {
-		this(level, quality, message, node, false);
-	}
-	
-	public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
-		this.level = level;
-		this.quality = quality;
-		this.message = message;
-		this.node = node;
-		this.tracked = tracked;
-		from = tracked || Skript.debug() ? findCaller() : "";
-	}
-	
-	private final static String skriptLogPackageName = "" + SkriptLogger.class.getPackage().getName();
-	
-	static String findCaller() {
-		final StackTraceElement[] es = new Exception().getStackTrace();
-		for (int i = 0; i < es.length; i++) {
-			if (!es[i].getClassName().startsWith(skriptLogPackageName))
-				continue;
-			i++;
-			while (i < es.length - 1 && (es[i].getClassName().startsWith(skriptLogPackageName) || es[i].getClassName().equals(Skript.class.getName())))
-				i++;
-			if (i >= es.length)
-				i = es.length - 1;
-			return " (from " + es[i] + ")";
-		}
-		return " (from an unknown source)";
-	}
-	
-	public Level getLevel() {
-		return level;
-	}
-	
-	public int getQuality() {
-		return quality;
-	}
-	
-	public String getMessage() {
-		return toString();
-	}
-	
-	void discarded(final String info) {
-		if (tracked)
-			SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Exception().getStackTrace()[1] + "; " + info);
-	}
-	
-	void logged() {
-		if (tracked)
-			SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " logged" + findCaller());
-	}
-	
-	@Override
-	public String toString() {
-		final Node n = node;
-		if (n == null || level.intValue() < Level.WARNING.intValue())
-			return message;
-		final Config c = n.getConfig();
-		return message + from + " (" + c.getFileName() + ", line " + n.getLine() + ": " + n.save().trim() + "')";
-	}
-	
+
+    private final static String skriptLogPackageName = "" + SkriptLogger.class.getPackage().getName();
+    public final Level level;
+    public final int quality;
+    public final String message;
+    @Nullable
+    public final Node node;
+    @Nullable
+    private final String from;
+    private final boolean tracked;
+
+    public LogEntry(final Level level, final String message) {
+        this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, SkriptLogger.getNode());
+    }
+
+    public LogEntry(final Level level, final int quality, final String message) {
+        this(level, quality, message, SkriptLogger.getNode());
+    }
+
+    public LogEntry(final Level level, final ErrorQuality quality, final String message) {
+        this(level, quality.quality(), message, SkriptLogger.getNode());
+    }
+
+    public LogEntry(final Level level, final String message, final @Nullable Node node) {
+        this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, node);
+    }
+
+    public LogEntry(final Level level, final ErrorQuality quality, final String message, final Node node) {
+        this(level, quality.quality(), message, node);
+    }
+
+    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node) {
+        this(level, quality, message, node, false);
+    }
+
+    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
+        this.level = level;
+        this.quality = quality;
+        this.message = message;
+        this.node = node;
+        this.tracked = tracked;
+        from = tracked || Skript.debug() ? findCaller() : "";
+    }
+
+    static String findCaller() {
+        final StackTraceElement[] es = new Exception().getStackTrace();
+        for (int i = 0; i < es.length; i++) {
+            if (!es[i].getClassName().startsWith(skriptLogPackageName))
+                continue;
+            i++;
+            while (i < es.length - 1 && (es[i].getClassName().startsWith(skriptLogPackageName) || es[i].getClassName().equals(Skript.class.getName())))
+                i++;
+            if (i >= es.length)
+                i = es.length - 1;
+            return " (from " + es[i] + ")";
+        }
+        return " (from an unknown source)";
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    public String getMessage() {
+        return toString();
+    }
+
+    void discarded(final String info) {
+        if (tracked)
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Exception().getStackTrace()[1] + "; " + info);
+    }
+
+    void logged() {
+        if (tracked)
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " logged" + findCaller());
+    }
+
+    @Override
+    public String toString() {
+        final Node n = node;
+        if (n == null || level.intValue() < Level.WARNING.intValue())
+            return message;
+        final Config c = n.getConfig();
+        return message + from + " (" + c.getFileName() + ", line " + n.getLine() + ": " + n.save().trim() + "')";
+    }
+
 }

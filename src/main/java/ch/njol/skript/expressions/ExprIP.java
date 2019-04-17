@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -39,24 +39,24 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"IP-ban the player # is equal to the next line", "ban the IP-address of the player", "broadcast \"Banned the IP %IP of player%\""})
 @Since("1.4")
 public final class ExprIP extends SimplePropertyExpression<Player, String> {
-	static {
-		Skript.registerExpression(ExprIP.class, String.class, ExpressionType.PROPERTY, "IP[s][( |-)address[es]] of %players%", "%players%'[s] IP[s][( |-)address[es]]");
-	}
-	
-	@Override
-	@Nullable
-	public String convert(final Player p) {
-		return p.getAddress().getAddress().getHostAddress();
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "IP address" + (getExpr().isSingle() ? "" : "es");
-	}
-	
+    static {
+        Skript.registerExpression(ExprIP.class, String.class, ExpressionType.PROPERTY, "IP[s][( |-)address[es]] of %players%", "%players%'[s] IP[s][( |-)address[es]]");
+    }
+
+    @Override
+    @Nullable
+    public String convert(final Player p) {
+        return p.getAddress().getAddress().getHostAddress();
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "IP address" + (getExpr().isSingle() ? "" : "es");
+    }
+
 }

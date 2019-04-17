@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.classes;
@@ -27,11 +27,11 @@ package ch.njol.skript.classes;
  * @author Peter Güttinger
  */
 public interface Arithmetic<A, R> {
-	
-	R difference(final A first, final A second);
-	
-	A add(final A value, final R difference);
-	
-	A subtract(final A value, final R difference);
-	
+
+    R difference(final A first, final A second);
+
+    A add(final A value, final R difference);
+
+    A subtract(final A value, final R difference);
+
 }

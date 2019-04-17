@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -53,131 +53,131 @@ import java.util.List;
 @Since("1.0")
 @Events("death")
 public class ExprDrops extends SimpleExpression<ItemStack> {
-	static {
-		Skript.registerExpression(ExprDrops.class, ItemStack.class, ExpressionType.SIMPLE, "[the] drops");
-	}
-	
-	@SuppressWarnings("null")
-	private Kleenean delayed;
-	
-	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		if (!ScriptLoader.isCurrentEvent(EntityDeathEvent.class)) {
-			Skript.error("The expression 'drops' can only be used in death events", ErrorQuality.SEMANTIC_ERROR);
-			return false;
-		}
-		delayed = isDelayed;
-		return true;
-	}
-	
-	private final static ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
-	
-	@Override
-	@Nullable
-	protected ItemStack[] get(final Event e) {
-		if (!(e instanceof EntityDeathEvent))
-			return new ItemStack[0];
-		return ((EntityDeathEvent) e).getDrops().toArray(EMPTY_ITEMSTACK_ARRAY);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode == ChangeMode.RESET)
-			return null;
-		if (delayed.isTrue()) {
-			Skript.error("Can't change the drops anymore after the event has already passed");
-			return null;
-		}
-		return CollectionUtils.array(ItemType[].class, Inventory[].class, Experience[].class);
-	}
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public void change(final Event e, final @Nullable Object[] deltas, final ChangeMode mode) {
-		assert mode != ChangeMode.RESET;
-		if (!(e instanceof EntityDeathEvent)) {
-			assert false;
-			return;
-		}
-		
-		final List<ItemStack> drops = ((EntityDeathEvent) e).getDrops();
-		if (mode == ChangeMode.DELETE) {
-			drops.clear();
-			return;
-		}
-		boolean cleared = false;
-		
-		assert deltas != null;
-		for (final Object delta : deltas) {
-			if (delta instanceof Experience) {
-				if (mode == ChangeMode.REMOVE_ALL || mode == ChangeMode.REMOVE && ((Experience) delta).getInternalXP() == -1) {
-					((EntityDeathEvent) e).setDroppedExp(0);
-				} else if (mode == ChangeMode.SET) {
-					((EntityDeathEvent) e).setDroppedExp(((Experience) delta).getXP());
-				} else {
-					((EntityDeathEvent) e).setDroppedExp(Math.max(0, ((EntityDeathEvent) e).getDroppedExp() + (mode == ChangeMode.ADD ? 1 : -1) * ((Experience) delta).getXP()));
-				}
-			} else {
-				switch (mode) {
-					case SET:
-						if (!cleared) {
-							drops.clear();
-							cleared = true;
-						}
-						//$FALL-THROUGH$
-					case ADD:
-						if (delta instanceof Inventory) {
-							for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
-								if (is != null)
-									drops.add(is);
-							}
-						} else {
-							((ItemType) delta).addTo(drops);
-						}
-						break;
-					case REMOVE:
-					case REMOVE_ALL:
-						if (delta instanceof Inventory) {
-							for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
-								if (is == null)
-									continue;
-								if (mode == ChangeMode.REMOVE)
-									new ItemType(is).removeFrom(drops);
-								else
-									new ItemType(is).removeAll(drops);
-							}
-						} else {
-							if (mode == ChangeMode.REMOVE)
-								((ItemType) delta).removeFrom(drops);
-							else
-								((ItemType) delta).removeAll(drops);
-						}
-						break;
-					case DELETE:
-					case RESET:
-						assert false;
-				}
-			}
-		}
-	}
-	
-	@Override
-	public Class<ItemStack> getReturnType() {
-		return ItemStack.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		if (e == null)
-			return "the drops";
-		return Classes.getDebugMessage(getAll(e));
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return false;
-	}
-	
+    private final static ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
+
+    static {
+        Skript.registerExpression(ExprDrops.class, ItemStack.class, ExpressionType.SIMPLE, "[the] drops");
+    }
+
+    @SuppressWarnings("null")
+    private Kleenean delayed;
+
+    @Override
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        if (!ScriptLoader.isCurrentEvent(EntityDeathEvent.class)) {
+            Skript.error("The expression 'drops' can only be used in death events", ErrorQuality.SEMANTIC_ERROR);
+            return false;
+        }
+        delayed = isDelayed;
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected ItemStack[] get(final Event e) {
+        if (!(e instanceof EntityDeathEvent))
+            return new ItemStack[0];
+        return ((EntityDeathEvent) e).getDrops().toArray(EMPTY_ITEMSTACK_ARRAY);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode == ChangeMode.RESET)
+            return null;
+        if (delayed.isTrue()) {
+            Skript.error("Can't change the drops anymore after the event has already passed");
+            return null;
+        }
+        return CollectionUtils.array(ItemType[].class, Inventory[].class, Experience[].class);
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public void change(final Event e, final @Nullable Object[] deltas, final ChangeMode mode) {
+        assert mode != ChangeMode.RESET;
+        if (!(e instanceof EntityDeathEvent)) {
+            assert false;
+            return;
+        }
+
+        final List<ItemStack> drops = ((EntityDeathEvent) e).getDrops();
+        if (mode == ChangeMode.DELETE) {
+            drops.clear();
+            return;
+        }
+        boolean cleared = false;
+
+        assert deltas != null;
+        for (final Object delta : deltas) {
+            if (delta instanceof Experience) {
+                if (mode == ChangeMode.REMOVE_ALL || mode == ChangeMode.REMOVE && ((Experience) delta).getInternalXP() == -1) {
+                    ((EntityDeathEvent) e).setDroppedExp(0);
+                } else if (mode == ChangeMode.SET) {
+                    ((EntityDeathEvent) e).setDroppedExp(((Experience) delta).getXP());
+                } else {
+                    ((EntityDeathEvent) e).setDroppedExp(Math.max(0, ((EntityDeathEvent) e).getDroppedExp() + (mode == ChangeMode.ADD ? 1 : -1) * ((Experience) delta).getXP()));
+                }
+            } else {
+                switch (mode) {
+                    case SET:
+                        if (!cleared) {
+                            drops.clear();
+                            cleared = true;
+                        }
+                        //$FALL-THROUGH$
+                    case ADD:
+                        if (delta instanceof Inventory) {
+                            for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
+                                if (is != null)
+                                    drops.add(is);
+                            }
+                        } else {
+                            ((ItemType) delta).addTo(drops);
+                        }
+                        break;
+                    case REMOVE:
+                    case REMOVE_ALL:
+                        if (delta instanceof Inventory) {
+                            for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
+                                if (is == null)
+                                    continue;
+                                if (mode == ChangeMode.REMOVE)
+                                    new ItemType(is).removeFrom(drops);
+                                else
+                                    new ItemType(is).removeAll(drops);
+                            }
+                        } else {
+                            if (mode == ChangeMode.REMOVE)
+                                ((ItemType) delta).removeFrom(drops);
+                            else
+                                ((ItemType) delta).removeAll(drops);
+                        }
+                        break;
+                    case DELETE:
+                    case RESET:
+                        assert false;
+                }
+            }
+        }
+    }
+
+    @Override
+    public Class<ItemStack> getReturnType() {
+        return ItemStack.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        if (e == null)
+            return "the drops";
+        return Classes.getDebugMessage(getAll(e));
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
 }

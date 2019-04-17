@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -37,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * TODO should 'amount of [item]' return the size of the stack?
- * 
+ *
  * @author Peter Güttinger
  */
 @Name("Amount")
@@ -45,44 +45,44 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"message \"There are %number of all players% players online!\""})
 @Since("1.0")
 public final class ExprAmount extends SimpleExpression<Integer> {
-	static {
-		Skript.registerExpression(ExprAmount.class, Integer.class, ExpressionType.PROPERTY, "(amount|number|size) of %objects%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<?> expr;
-	
-	@SuppressWarnings("null")
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		expr = exprs[0];
-		if (expr instanceof Literal)
-			return false;
-		if (expr.isSingle()) {
-			Skript.error("'" + expr.toString(null, false) + "' can only ever have one value at most, thus the 'amount of ...' expression is useless. Use '... exists' instead to find out whether the expression has a value.");
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<Integer> getReturnType() {
-		return Integer.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "amount of " + expr.toString(e, debug);
-	}
-	
-	@Override
-	protected Integer[] get(final Event e) {
-		return new Integer[] {expr.getArray(e).length};
-	}
-	
+    static {
+        Skript.registerExpression(ExprAmount.class, Integer.class, ExpressionType.PROPERTY, "(amount|number|size) of %objects%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<?> expr;
+
+    @SuppressWarnings("null")
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        expr = exprs[0];
+        if (expr instanceof Literal)
+            return false;
+        if (expr.isSingle()) {
+            Skript.error("'" + expr.toString(null, false) + "' can only ever have one value at most, thus the 'amount of ...' expression is useless. Use '... exists' instead to find out whether the expression has a value.");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<Integer> getReturnType() {
+        return Integer.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "amount of " + expr.toString(e, debug);
+    }
+
+    @Override
+    protected Integer[] get(final Event e) {
+        return new Integer[]{expr.getArray(e).length};
+    }
+
 }

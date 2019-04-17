@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.doc;
@@ -25,12 +25,12 @@ import java.lang.annotation.*;
 
 /**
  * Prevents warnings about missing documentation.
- * 
+ *
  * @author Peter Güttinger
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface NoDoc {
-	
+
 }

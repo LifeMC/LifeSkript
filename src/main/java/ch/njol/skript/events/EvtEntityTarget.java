@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.events;
@@ -33,26 +33,26 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class EvtEntityTarget extends SkriptEvent {
-	static {
-		Skript.registerEvent("Target", EvtEntityTarget.class, EntityTargetEvent.class, "[entity] target", "[entity] un[-]target").description("Called when a mob starts/stops following/attacking another entity, usually a player.").examples("").since("1.0");
-	}
-	
-	private boolean target;
-	
-	@Override
-	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
-		target = matchedPattern == 0;
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return ((EntityTargetEvent) e).getTarget() == null ^ target;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "entity " + (target ? "" : "un") + "target";
-	}
-	
+    static {
+        Skript.registerEvent("Target", EvtEntityTarget.class, EntityTargetEvent.class, "[entity] target", "[entity] un[-]target").description("Called when a mob starts/stops following/attacking another entity, usually a player.").examples("").since("1.0");
+    }
+
+    private boolean target;
+
+    @Override
+    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+        target = matchedPattern == 0;
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return ((EntityTargetEvent) e).getTarget() == null ^ target;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "entity " + (target ? "" : "un") + "target";
+    }
+
 }

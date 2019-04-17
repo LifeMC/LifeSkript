@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -46,62 +46,61 @@ import java.security.NoSuchAlgorithmException;
 @Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} to hashed text-argument", "command /login <text>:", "	trigger:", "		{password.%player%} is hashed text-argument:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
 @Since("2.0")
 public final class ExprHash extends PropertyExpression<String, String> {
-	static {
-		Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
-	}
-	
-	@SuppressWarnings("null")
-	private final static Charset UTF_8 = Charset.forName("UTF-8");
-	
-	@Nullable
-	static final MessageDigest md5;
-	
-	static {
-		try {
-			md5 = MessageDigest.getInstance("MD5");
-		} catch (final NoSuchAlgorithmException e) {
-			throw new InternalError("JVM does not adhere to Java specifications");
-		}
-	}
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (md5 == null) {
-			Skript.error("The Java Virtual Machine running on this server does not support the MD5 algorithm, thus you cannot use the 'hash' expression.");
-			return false;
-		}
-		setExpr((Expression<? extends String>) exprs[0]);
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	protected String[] get(final Event e, final String[] source) {
-		assert md5 != null;
-		final String[] r = new String[source.length];
-		for (int i = 0; i < r.length; i++)
-			r[i] = toHex(md5.digest(source[i].getBytes(UTF_8)));
-		return r;
-	}
-	
-	private static String toHex(final byte[] b) {
-		final char[] r = new char[2 * b.length];
-		for (int i = 0; i < b.length; i++) {
-			r[2 * i] = Character.forDigit((b[i] & 0xF0) >> 4, 16);
-			r[2 * i + 1] = Character.forDigit(b[i] & 0x0F, 16);
-		}
-		return new String(r);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "hash of " + getExpr();
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
+    @Nullable
+    static final MessageDigest md5;
+    @SuppressWarnings("null")
+    private final static Charset UTF_8 = Charset.forName("UTF-8");
+
+    static {
+        Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
+    }
+
+    static {
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (final NoSuchAlgorithmException e) {
+            throw new InternalError("JVM does not adhere to Java specifications");
+        }
+    }
+
+    private static String toHex(final byte[] b) {
+        final char[] r = new char[2 * b.length];
+        for (int i = 0; i < b.length; i++) {
+            r[2 * i] = Character.forDigit((b[i] & 0xF0) >> 4, 16);
+            r[2 * i + 1] = Character.forDigit(b[i] & 0x0F, 16);
+        }
+        return new String(r);
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (md5 == null) {
+            Skript.error("The Java Virtual Machine running on this server does not support the MD5 algorithm, thus you cannot use the 'hash' expression.");
+            return false;
+        }
+        setExpr((Expression<? extends String>) exprs[0]);
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected String[] get(final Event e, final String[] source) {
+        assert md5 != null;
+        final String[] r = new String[source.length];
+        for (int i = 0; i < r.length; i++)
+            r[i] = toHex(md5.digest(source[i].getBytes(UTF_8)));
+        return r;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "hash of " + getExpr();
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
 }

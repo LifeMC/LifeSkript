@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -36,23 +36,23 @@ import org.bukkit.Location;
 @Examples({"on damage:", "	altitude of the attacker is higher that the altitude of the victim", "	set damage to damage * 1.2"})
 @Since("1.4.3")
 public class ExprAltitude extends SimplePropertyExpression<Location, Double> {
-	static {
-		register(ExprAltitude.class, Double.class, "altitude[s]", "locations");
-	}
-	
-	@Override
-	public Double convert(final Location l) {
-		return l.getY();
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "altitude";
-	}
-	
-	@Override
-	public Class<Double> getReturnType() {
-		return Double.class;
-	}
-	
+    static {
+        register(ExprAltitude.class, Double.class, "altitude[s]", "locations");
+    }
+
+    @Override
+    public Double convert(final Location l) {
+        return l.getY();
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "altitude";
+    }
+
+    @Override
+    public Class<Double> getReturnType() {
+        return Double.class;
+    }
+
 }

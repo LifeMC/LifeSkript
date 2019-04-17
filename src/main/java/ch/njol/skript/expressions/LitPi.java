@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -42,23 +42,23 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("set {_pi} to pi # 3.141592653589793")
 @Since("2.2-Fixes-V10c")
 public final class LitPi extends SimpleLiteral<Double> {
-	static {
-		Skript.registerExpression(LitPi.class, Double.class, ExpressionType.SIMPLE, "[the] pi [(number|double|constant)]");
-	}
-	
-	@SuppressWarnings("null")
-	public LitPi() {
-		super(Math.PI, false);
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		return true;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "the pi number";
-	}
-	
+    static {
+        Skript.registerExpression(LitPi.class, Double.class, ExpressionType.SIMPLE, "[the] pi [(number|double|constant)]");
+    }
+
+    @SuppressWarnings("null")
+    public LitPi() {
+        super(Math.PI, false);
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        return true;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "the pi number";
+    }
+
 }

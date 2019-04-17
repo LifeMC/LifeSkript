@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -25,20 +25,20 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A literal, e.g. a number, string or item. Literals are constants which do not depend on the event and can thus e.g. be used in events.
- * 
+ *
  * @author Peter Güttinger
  */
 public interface Literal<T> extends Expression<T> {
-	
-	T[] getArray();
-	
-	T getSingle();
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@Nullable
-	<R> Literal<? extends R> getConvertedExpression(final Class<R>... to);
-	
-	T[] getAll();
-	
+
+    T[] getArray();
+
+    T getSingle();
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    <R> Literal<? extends R> getConvertedExpression(final Class<R>... to);
+
+    T[] getAll();
+
 }

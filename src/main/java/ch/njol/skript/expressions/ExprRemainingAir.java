@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -37,23 +37,23 @@ import org.bukkit.entity.LivingEntity;
 @Examples({"player's remaining air is less than 3 seconds:", "	send \"hurry, get to the surface!\" to the player"})
 @Since("")
 public class ExprRemainingAir extends SimplePropertyExpression<LivingEntity, Timespan> {
-	static {
-		register(ExprRemainingAir.class, Timespan.class, "remaining air", "livingentities");
-	}
-	
-	@Override
-	public Class<Timespan> getReturnType() {
-		return Timespan.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "remaining air";
-	}
-	
-	@Override
-	public Timespan convert(final LivingEntity e) {
-		return Timespan.fromTicks_i(e.getRemainingAir());
-	}
-	
+    static {
+        register(ExprRemainingAir.class, Timespan.class, "remaining air", "livingentities");
+    }
+
+    @Override
+    public Class<Timespan> getReturnType() {
+        return Timespan.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "remaining air";
+    }
+
+    @Override
+    public Timespan convert(final LivingEntity e) {
+        return Timespan.fromTicks_i(e.getRemainingAir());
+    }
+
 }

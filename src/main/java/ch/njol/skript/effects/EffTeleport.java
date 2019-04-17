@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -49,66 +49,66 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"teleport the player to {homes.%player%}", "teleport the attacker to the victim"})
 @Since("1.0")
 public class EffTeleport extends Effect {
-	static {
-		Skript.registerEffect(EffTeleport.class, "teleport %entities% (to|%direction%) %location%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Entity> entities;
-	@SuppressWarnings("null")
-	private Expression<Location> location;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		entities = (Expression<Entity>) exprs[0];
-		location = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
-		return true;
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void execute(final Event e) {
-		Location to = location.getSingle(e);
-		if (to == null)
-			return;
-		if (Math.abs(to.getX() - to.getBlockX() - 0.5) < Skript.EPSILON && Math.abs(to.getZ() - to.getBlockZ() - 0.5) < Skript.EPSILON) {
-			final Block on = to.getBlock().getRelative(BlockFace.DOWN);
-			if (on.getType() != Material.AIR) {
-				to = to.clone();
-				to.setY(on.getY() + Utils.getBlockHeight(on.getTypeId(), on.getData()));
-			}
-		}
-		for (final Entity entity : entities.getArray(e)) {
-			final Location loc;
-			if (ignoreDirection(to.getYaw(), to.getPitch())) {
-				loc = to.clone();
-				loc.setPitch(entity.getLocation().getPitch());
-				loc.setYaw(entity.getLocation().getYaw());
-			} else {
-				loc = to;
-			}
-			loc.getChunk().load();
-			if (e instanceof PlayerRespawnEvent && entity.equals(((PlayerRespawnEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
-				((PlayerRespawnEvent) e).setRespawnLocation(loc);
-			} else {
-				entity.teleport(loc);
-			}
-		}
-	}
-	
-	/**
-	 * @param yaw Notch-yaw
-	 * @param pitch Notch-pitch
-	 * @return Whether the given pitch and yaw represent a cartesian coordinate direction
-	 */
-	private static boolean ignoreDirection(final float yaw, final float pitch) {
-		return (pitch == 0 || Math.abs(pitch - 90) < Skript.EPSILON || Math.abs(pitch + 90) < Skript.EPSILON) && (yaw == 0 || Math.abs(Math.sin(Math.toRadians(yaw))) < Skript.EPSILON || Math.abs(Math.cos(Math.toRadians(yaw))) < Skript.EPSILON);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "teleport " + entities.toString(e, debug) + " to " + location.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerEffect(EffTeleport.class, "teleport %entities% (to|%direction%) %location%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<Entity> entities;
+    @SuppressWarnings("null")
+    private Expression<Location> location;
+
+    /**
+     * @param yaw   Notch-yaw
+     * @param pitch Notch-pitch
+     * @return Whether the given pitch and yaw represent a cartesian coordinate direction
+     */
+    private static boolean ignoreDirection(final float yaw, final float pitch) {
+        return (pitch == 0 || Math.abs(pitch - 90) < Skript.EPSILON || Math.abs(pitch + 90) < Skript.EPSILON) && (yaw == 0 || Math.abs(Math.sin(Math.toRadians(yaw))) < Skript.EPSILON || Math.abs(Math.cos(Math.toRadians(yaw))) < Skript.EPSILON);
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        entities = (Expression<Entity>) exprs[0];
+        location = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        return true;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void execute(final Event e) {
+        Location to = location.getSingle(e);
+        if (to == null)
+            return;
+        if (Math.abs(to.getX() - to.getBlockX() - 0.5) < Skript.EPSILON && Math.abs(to.getZ() - to.getBlockZ() - 0.5) < Skript.EPSILON) {
+            final Block on = to.getBlock().getRelative(BlockFace.DOWN);
+            if (on.getType() != Material.AIR) {
+                to = to.clone();
+                to.setY(on.getY() + Utils.getBlockHeight(on.getTypeId(), on.getData()));
+            }
+        }
+        for (final Entity entity : entities.getArray(e)) {
+            final Location loc;
+            if (ignoreDirection(to.getYaw(), to.getPitch())) {
+                loc = to.clone();
+                loc.setPitch(entity.getLocation().getPitch());
+                loc.setYaw(entity.getLocation().getYaw());
+            } else {
+                loc = to;
+            }
+            loc.getChunk().load();
+            if (e instanceof PlayerRespawnEvent && entity.equals(((PlayerRespawnEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
+                ((PlayerRespawnEvent) e).setRespawnLocation(loc);
+            } else {
+                entity.teleport(loc);
+            }
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "teleport " + entities.toString(e, debug) + " to " + location.toString(e, debug);
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -47,60 +47,60 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"block can hold 200 cobblestone", "player has enough space for 64 feathers"})
 @Since("1.0")
 public class CondCanHold extends Condition {
-	static {
-		Skript.registerCondition(CondCanHold.class, "%inventories% (can hold|ha(s|ve) [enough] space (for|to hold)) %itemtypes%", "%inventories% (can(no|')t hold|(ha(s|ve) not|ha(s|ve)n't|do[es]n't have) [enough] space (for|to hold)) %itemtypes%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Inventory> invis;
-	@SuppressWarnings("null")
-	Expression<ItemType> items;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		invis = (Expression<Inventory>) vars[0];
-		items = (Expression<ItemType>) vars[1];
-		if (items instanceof Literal) {
-			for (ItemType t : ((Literal<ItemType>) items).getAll()) {
-				t = t.getItem();
-				if (!(t.isAll() || t.getTypes().size() == 1 && !t.getTypes().get(0).hasDataRange() && t.getTypes().get(0).getId() != -1)) {
-					Skript.error("The condition 'can hold' can currently only be used with aliases that start with 'every' or 'all', or only represent one item and one data value.", ErrorQuality.SEMANTIC_ERROR);
-					return false;
-				}
-			}
-		}
-		setNegated(matchedPattern == 1);
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return invis.check(e, new Checker<Inventory>() {
-			@Override
-			public boolean check(final Inventory invi) {
-				if (!items.getAnd()) {
-					return items.check(e, new Checker<ItemType>() {
-						@Override
-						public boolean check(final ItemType t) {
-							return t.getItem().hasSpace(invi);
-						}
-					}, isNegated());
-				}
-				final ItemStack[] buf = ItemType.getCopiedContents(invi);
-				return items.check(e, new Checker<ItemType>() {
-					@Override
-					public boolean check(final ItemType t) {
-						return t.getItem().addTo(buf);
-					}
-				}, isNegated());
-			}
-		});
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return invis.toString(e, debug) + " can" + (isNegated() ? "'t" : "") + " hold " + items.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerCondition(CondCanHold.class, "%inventories% (can hold|ha(s|ve) [enough] space (for|to hold)) %itemtypes%", "%inventories% (can(no|')t hold|(ha(s|ve) not|ha(s|ve)n't|do[es]n't have) [enough] space (for|to hold)) %itemtypes%");
+    }
+
+    @SuppressWarnings("null")
+    Expression<ItemType> items;
+    @SuppressWarnings("null")
+    private Expression<Inventory> invis;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        invis = (Expression<Inventory>) vars[0];
+        items = (Expression<ItemType>) vars[1];
+        if (items instanceof Literal) {
+            for (ItemType t : ((Literal<ItemType>) items).getAll()) {
+                t = t.getItem();
+                if (!(t.isAll() || t.getTypes().size() == 1 && !t.getTypes().get(0).hasDataRange() && t.getTypes().get(0).getId() != -1)) {
+                    Skript.error("The condition 'can hold' can currently only be used with aliases that start with 'every' or 'all', or only represent one item and one data value.", ErrorQuality.SEMANTIC_ERROR);
+                    return false;
+                }
+            }
+        }
+        setNegated(matchedPattern == 1);
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return invis.check(e, new Checker<Inventory>() {
+            @Override
+            public boolean check(final Inventory invi) {
+                if (!items.getAnd()) {
+                    return items.check(e, new Checker<ItemType>() {
+                        @Override
+                        public boolean check(final ItemType t) {
+                            return t.getItem().hasSpace(invi);
+                        }
+                    }, isNegated());
+                }
+                final ItemStack[] buf = ItemType.getCopiedContents(invi);
+                return items.check(e, new Checker<ItemType>() {
+                    @Override
+                    public boolean check(final ItemType t) {
+                        return t.getItem().addTo(buf);
+                    }
+                }, isNegated());
+            }
+        });
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return invis.toString(e, debug) + " can" + (isNegated() ? "'t" : "") + " hold " + items.toString(e, debug);
+    }
+
 }

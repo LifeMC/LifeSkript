@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks.regions;
@@ -42,89 +42,90 @@ import java.util.Set;
  */
 // REMIND support more plugins?
 public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
-	
-	public RegionsPlugin() throws IOException {}
-	
-	public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<RegionsPlugin<?>>(2);
-	
-	static {
-		Variables.yggdrasil.registerClassResolver(new ClassResolver() {
-			@Override
-			@Nullable
-			public String getID(final Class<?> c) {
-				for (final RegionsPlugin<?> p : plugins)
-					if (p.getRegionClass() == c)
-						return c.getSimpleName();
-				return null;
-			}
-			
-			@Override
-			@Nullable
-			public Class<?> getClass(final String id) {
-				for (final RegionsPlugin<?> p : plugins)
-					if (id.equals(p.getRegionClass().getSimpleName()))
-						return p.getRegionClass();
-				return null;
-			}
-		});
-	}
-	
-	@Override
-	protected boolean init() {
-		plugins.add(this);
-		return true;
-	}
-	
-	public abstract boolean canBuild_i(Player p, Location l);
-	
-	public static boolean canBuild(final Player p, final Location l) {
-		for (final RegionsPlugin<?> pl : plugins) {
-			if (!pl.canBuild_i(p, l))
-				return false;
-		}
-		return true;
-	}
-	
-	public abstract Collection<? extends Region> getRegionsAt_i(Location l);
-	
-	public static Set<? extends Region> getRegionsAt(final Location l) {
-		final Set<Region> r = new HashSet<Region>();
-		for (final RegionsPlugin<?> pl : plugins) {
-			r.addAll(pl.getRegionsAt_i(l));
-		}
-		return r;
-	}
-	
-	@Nullable
-	public abstract Region getRegion_i(World world, String name);
-	
-	@Nullable
-	public static Region getRegion(final World world, final String name) {
-		for (final RegionsPlugin<?> pl : plugins) {
-			return pl.getRegion_i(world, name);
-		}
-		return null;
-	}
-	
-	public abstract boolean hasMultipleOwners_i();
-	
-	public static boolean hasMultipleOwners() {
-		for (final RegionsPlugin<?> pl : plugins) {
-			if (pl.hasMultipleOwners_i())
-				return true;
-		}
-		return false;
-	}
-	
-	protected abstract Class<? extends Region> getRegionClass();
-	
-	@Nullable
-	public static RegionsPlugin<?> getPlugin(final String name) {
-		for (final RegionsPlugin<?> pl : plugins) {
-			if (pl.getName().equalsIgnoreCase(name))
-				return pl;
-		}
-		return null;
-	}
-	
+
+    public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<RegionsPlugin<?>>(2);
+
+    static {
+        Variables.yggdrasil.registerClassResolver(new ClassResolver() {
+            @Override
+            @Nullable
+            public String getID(final Class<?> c) {
+                for (final RegionsPlugin<?> p : plugins)
+                    if (p.getRegionClass() == c)
+                        return c.getSimpleName();
+                return null;
+            }
+
+            @Override
+            @Nullable
+            public Class<?> getClass(final String id) {
+                for (final RegionsPlugin<?> p : plugins)
+                    if (id.equals(p.getRegionClass().getSimpleName()))
+                        return p.getRegionClass();
+                return null;
+            }
+        });
+    }
+
+    public RegionsPlugin() throws IOException {
+    }
+
+    public static boolean canBuild(final Player p, final Location l) {
+        for (final RegionsPlugin<?> pl : plugins) {
+            if (!pl.canBuild_i(p, l))
+                return false;
+        }
+        return true;
+    }
+
+    public static Set<? extends Region> getRegionsAt(final Location l) {
+        final Set<Region> r = new HashSet<Region>();
+        for (final RegionsPlugin<?> pl : plugins) {
+            r.addAll(pl.getRegionsAt_i(l));
+        }
+        return r;
+    }
+
+    @Nullable
+    public static Region getRegion(final World world, final String name) {
+        for (final RegionsPlugin<?> pl : plugins) {
+            return pl.getRegion_i(world, name);
+        }
+        return null;
+    }
+
+    public static boolean hasMultipleOwners() {
+        for (final RegionsPlugin<?> pl : plugins) {
+            if (pl.hasMultipleOwners_i())
+                return true;
+        }
+        return false;
+    }
+
+    @Nullable
+    public static RegionsPlugin<?> getPlugin(final String name) {
+        for (final RegionsPlugin<?> pl : plugins) {
+            if (pl.getName().equalsIgnoreCase(name))
+                return pl;
+        }
+        return null;
+    }
+
+    @Override
+    protected boolean init() {
+        plugins.add(this);
+        return true;
+    }
+
+    public abstract boolean canBuild_i(Player p, Location l);
+
+    public abstract Collection<? extends Region> getRegionsAt_i(Location l);
+
+    @Nullable
+    public abstract Region getRegion_i(World world, String name);
+
+    public abstract boolean hasMultipleOwners_i();
+
+    protected abstract Class<? extends Region> getRegionClass();
+
 }

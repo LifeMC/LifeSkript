@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -27,35 +27,35 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class ListRangeIterator<T> implements Iterator<T> {
-	
-	private final ListIterator<T> iter;
-	private int end;
-	
-	public ListRangeIterator(final List<T> list, final int start, final int end) {
-		final ListIterator<T> iter = list.listIterator(start);
-		if (iter == null)
-			throw new IllegalArgumentException("" + list);
-		this.iter = iter;
-		this.end = end;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return iter.nextIndex() < end;
-	}
-	
-	@Override
-	@Nullable
-	public T next() {
-		if (!hasNext())
-			throw new NoSuchElementException();
-		return iter.next();
-	}
-	
-	@Override
-	public void remove() {
-		iter.remove();
-		end--;
-	}
-	
+
+    private final ListIterator<T> iter;
+    private int end;
+
+    public ListRangeIterator(final List<T> list, final int start, final int end) {
+        final ListIterator<T> iter = list.listIterator(start);
+        if (iter == null)
+            throw new IllegalArgumentException("" + list);
+        this.iter = iter;
+        this.end = end;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iter.nextIndex() < end;
+    }
+
+    @Override
+    @Nullable
+    public T next() {
+        if (!hasNext())
+            throw new NoSuchElementException();
+        return iter.next();
+    }
+
+    @Override
+    public void remove() {
+        iter.remove();
+        end--;
+    }
+
 }

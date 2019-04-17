@@ -13,25 +13,25 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
 
 /**
  * Like {@link java.io.Closeable}, but not used for resources, thus it neither throws checked exceptions nor causes resource leak warnings.
- * 
+ *
  * @author Peter Güttinger
  */
 public interface Closeable {
-	
-	/**
-	 * Closes this object. This method may be called multiple times and may or may not have an effect on subsequent calls (e.g. a task might be stopped, but resumed later and
-	 * stopped again).
-	 */
-	void close();
-	
+
+    /**
+     * Closes this object. This method may be called multiple times and may or may not have an effect on subsequent calls (e.g. a task might be stopped, but resumed later and
+     * stopped again).
+     */
+    void close();
+
 }

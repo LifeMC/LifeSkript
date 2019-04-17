@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -29,29 +29,30 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents a container for a single item. This can e.g. be an inventory slot or an item frame. // TODO actually make an item frame slot
- * 
+ *
  * @author Peter Güttinger
  */
 public abstract class Slot implements Debuggable {
-	
-	protected Slot() {}
-	
-	@Nullable
-	public abstract ItemStack getItem();
-	
-	public abstract void setItem(final @Nullable ItemStack item);
-	
-	@Override
-	public final String toString() {
-		return Classes.toString(getItem());
-	}
-	
-	@Override
-	public final String toString(final @Nullable Event e, final boolean debug) {
-		if (!debug)
-			Classes.toString(getItem());
-		return toString_i();
-	}
-	
-	protected abstract String toString_i();
+
+    protected Slot() {
+    }
+
+    @Nullable
+    public abstract ItemStack getItem();
+
+    public abstract void setItem(final @Nullable ItemStack item);
+
+    @Override
+    public final String toString() {
+        return Classes.toString(getItem());
+    }
+
+    @Override
+    public final String toString(final @Nullable Event e, final boolean debug) {
+        if (!debug)
+            Classes.toString(getItem());
+        return toString_i();
+    }
+
+    protected abstract String toString_i();
 }

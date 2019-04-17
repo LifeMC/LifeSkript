@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -44,43 +44,43 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"player is holding a stick", "victim isn't holding a sword of sharpness"})
 @Since("1.0")
 public class CondItemInHand extends Condition {
-	
-	static {
-		Skript.registerCondition(CondItemInHand.class, "[%livingentities%] ha(s|ve) %itemtypes% in hand", "[%livingentities%] (is|are) holding %itemtypes%", "[%livingentities%] (ha(s|ve) not|do[es]n't have) %itemtypes% in hand", "[%livingentities%] (is not|isn't) holding %itemtypes%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<LivingEntity> entities;
-	@SuppressWarnings("null")
-	Expression<ItemType> types;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		entities = (Expression<LivingEntity>) vars[0];
-		types = (Expression<ItemType>) vars[1];
-		setNegated(matchedPattern >= 2);
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return entities.check(e, new Checker<LivingEntity>() {
-			@Override
-			public boolean check(final LivingEntity en) {
-				return types.check(e, new Checker<ItemType>() {
-					@Override
-					public boolean check(final ItemType type) {
-						return type.isOfType(en.getEquipment().getItemInHand());
-					}
-				}, isNegated());
-			}
-		});
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return entities.toString(e, debug) + " " + (entities.isSingle() ? "is" : "are") + " holding " + types.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerCondition(CondItemInHand.class, "[%livingentities%] ha(s|ve) %itemtypes% in hand", "[%livingentities%] (is|are) holding %itemtypes%", "[%livingentities%] (ha(s|ve) not|do[es]n't have) %itemtypes% in hand", "[%livingentities%] (is not|isn't) holding %itemtypes%");
+    }
+
+    @SuppressWarnings("null")
+    Expression<ItemType> types;
+    @SuppressWarnings("null")
+    private Expression<LivingEntity> entities;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        entities = (Expression<LivingEntity>) vars[0];
+        types = (Expression<ItemType>) vars[1];
+        setNegated(matchedPattern >= 2);
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return entities.check(e, new Checker<LivingEntity>() {
+            @Override
+            public boolean check(final LivingEntity en) {
+                return types.check(e, new Checker<ItemType>() {
+                    @Override
+                    public boolean check(final ItemType type) {
+                        return type.isOfType(en.getEquipment().getItemInHand());
+                    }
+                }, isNegated());
+            }
+        });
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return entities.toString(e, debug) + " " + (entities.isSingle() ? "is" : "are") + " holding " + types.toString(e, debug);
+    }
+
 }

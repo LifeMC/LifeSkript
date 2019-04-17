@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -44,55 +44,55 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set the player's walk speed to 1", "increase the argument's fly speed by 0.1"})
 @Since("")
 public class ExprSpeed extends SimplePropertyExpression<Player, Float> {
-	static {
-		register(ExprSpeed.class, Float.class, "(0¦walk[ing]|1¦fl(y[ing]|ight))[( |-])speed", "players");
-	}
-	
-	private boolean walk;
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (!Skript.isRunningMinecraft(1, 4)) {
-			Skript.error("fly and walk speed can only be used in Minecraft 1.4 and newer");
-			return false;
-		}
-		super.init(exprs, matchedPattern, isDelayed, parseResult);
-		walk = parseResult.mark == 0;
-		return true;
-	}
-	
-	@Override
-	public Float convert(final Player p) {
-		return walk ? p.getWalkSpeed() : p.getFlySpeed();
-	}
-	
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode == ChangeMode.SET || mode == ChangeMode.RESET)
-			return new Class[] {Number.class};
-		return null;
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
-		final float d = delta == null ? 0 : Math2.fit(-1, ((Number) delta[0]).floatValue(), 1);
-		for (final Player p : getExpr().getArray(e)) {
-			if (walk)
-				p.setWalkSpeed(delta == null ? 0.2f : d);
-			else
-				p.setFlySpeed(delta == null ? 0.1f : d);
-		}
-	}
-	
-	@Override
-	public Class<Float> getReturnType() {
-		return Float.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return walk ? "walk speed" : "fly speed";
-	}
-	
+    static {
+        register(ExprSpeed.class, Float.class, "(0¦walk[ing]|1¦fl(y[ing]|ight))[( |-])speed", "players");
+    }
+
+    private boolean walk;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (!Skript.isRunningMinecraft(1, 4)) {
+            Skript.error("fly and walk speed can only be used in Minecraft 1.4 and newer");
+            return false;
+        }
+        super.init(exprs, matchedPattern, isDelayed, parseResult);
+        walk = parseResult.mark == 0;
+        return true;
+    }
+
+    @Override
+    public Float convert(final Player p) {
+        return walk ? p.getWalkSpeed() : p.getFlySpeed();
+    }
+
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode == ChangeMode.SET || mode == ChangeMode.RESET)
+            return new Class[]{Number.class};
+        return null;
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+        final float d = delta == null ? 0 : Math2.fit(-1, ((Number) delta[0]).floatValue(), 1);
+        for (final Player p : getExpr().getArray(e)) {
+            if (walk)
+                p.setWalkSpeed(delta == null ? 0.2f : d);
+            else
+                p.setFlySpeed(delta == null ? 0.1f : d);
+        }
+    }
+
+    @Override
+    public Class<Float> getReturnType() {
+        return Float.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return walk ? "walk speed" : "fly speed";
+    }
+
 }

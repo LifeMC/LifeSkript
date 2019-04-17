@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.command;
@@ -28,42 +28,41 @@ import org.bukkit.event.HandlerList;
  * @author Peter Güttinger
  */
 public final class ScriptCommandEvent extends CommandEvent {
-	
-	private final ScriptCommand skriptCommand;
-	private boolean cooldownCancelled;
-	
-	public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
-		super(sender, command.getLabel(), null);
-		skriptCommand = command;
-	}
-	
-	public ScriptCommand getSkriptCommand() {
-		return skriptCommand;
-	}
-	
-	@Override
-	public String[] getArgs() {
-		throw new UnsupportedOperationException();
-	}
-	
-	public boolean isCooldownCancelled() {
-		return cooldownCancelled;
-	}
-	
-	public void setCooldownCancelled(final boolean cooldownCancelled) {
-		this.cooldownCancelled = cooldownCancelled;
-	}
-	
-	// Bukkit stuff
-	private final static HandlerList handlers = new HandlerList();
-	
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-	
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-	
+
+    // Bukkit stuff
+    private final static HandlerList handlers = new HandlerList();
+    private final ScriptCommand skriptCommand;
+    private boolean cooldownCancelled;
+
+    public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
+        super(sender, command.getLabel(), null);
+        skriptCommand = command;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    public ScriptCommand getSkriptCommand() {
+        return skriptCommand;
+    }
+
+    @Override
+    public String[] getArgs() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean isCooldownCancelled() {
+        return cooldownCancelled;
+    }
+
+    public void setCooldownCancelled(final boolean cooldownCancelled) {
+        this.cooldownCancelled = cooldownCancelled;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
 }

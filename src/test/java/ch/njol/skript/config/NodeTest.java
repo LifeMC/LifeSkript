@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config;
@@ -31,18 +31,18 @@ import static org.junit.Assert.assertArrayEquals;
  */
 @SuppressWarnings("null")
 public class NodeTest {
-	
-	@Test
-	public void splitLineTest() {
-		
-		final String[][] data = {{"", "", ""}, {"ab", "ab", ""}, {"ab#", "ab", "#"}, {"ab##", "ab#", ""}, {"ab###", "ab#", "#"}, {"#ab", "", "#ab"}, {"ab#cd", "ab", "#cd"}, {"ab##cd", "ab#cd", ""}, {"ab###cd", "ab#", "#cd"}, {"######", "###", ""}, {"#######", "###", "#"}, {"#### # ####", "## ", "# ####"}, {"##### ####", "##", "# ####"}, {"#### #####", "## ##", "#"}, {"#########", "####", "#"}, {"a##b#c##d#e", "a#b", "#c##d#e"}, {" a ## b # c ## d # e ", " a # b ", "# c ## d # e "},
-		};
-		
-		for (final String[] d : data) {
-			final NonNullPair<String, String> p = Node.splitLine(d[0]);
-			assertArrayEquals(d[0], new String[] {d[1], d[2]}, new String[] {p.getFirst(), p.getSecond()});
-		}
-		
-	}
-	
+
+    @Test
+    public void splitLineTest() {
+
+        final String[][] data = {{"", "", ""}, {"ab", "ab", ""}, {"ab#", "ab", "#"}, {"ab##", "ab#", ""}, {"ab###", "ab#", "#"}, {"#ab", "", "#ab"}, {"ab#cd", "ab", "#cd"}, {"ab##cd", "ab#cd", ""}, {"ab###cd", "ab#", "#cd"}, {"######", "###", ""}, {"#######", "###", "#"}, {"#### # ####", "## ", "# ####"}, {"##### ####", "##", "# ####"}, {"#### #####", "## ##", "#"}, {"#########", "####", "#"}, {"a##b#c##d#e", "a#b", "#c##d#e"}, {" a ## b # c ## d # e ", " a # b ", "# c ## d # e "},
+        };
+
+        for (final String[] d : data) {
+            final NonNullPair<String, String> p = Node.splitLine(d[0]);
+            assertArrayEquals(d[0], new String[]{d[1], d[2]}, new String[]{p.getFirst(), p.getSecond()});
+        }
+
+    }
+
 }

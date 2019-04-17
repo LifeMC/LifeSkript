@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -27,11 +27,11 @@ import org.bukkit.event.Event;
  * Effects which can be tested implement this interface.
  * <p>
  * TODO implement this
- * 
+ *
  * @author Peter Güttinger
  */
 public interface Testable {
-	
-	boolean test(final Event e);
-	
+
+    boolean test(final Event e);
+
 }

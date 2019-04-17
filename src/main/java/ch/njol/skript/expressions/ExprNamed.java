@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -46,51 +46,51 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"give a diamond sword of sharpness 100 named \"<gold>Excalibur\" to the player", "set tool of player to the player's tool named \"<gold>Wand\"", "set the name of the player's tool to \"<gold>Wand\""})
 @Since("2.0")
 public class ExprNamed extends PropertyExpression<ItemType, ItemType> {
-	static {
-		Skript.registerExpression(ExprNamed.class, ItemType.class, ExpressionType.PROPERTY, "%itemtypes% (named|with name[s]) %string%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<String> name;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (!Skript.isRunningMinecraft(1, 4, 5)) {
-			Skript.error("Item names are only available in Minecraft 1.4.5+");
-			return false;
-		}
-		setExpr((Expression<? extends ItemType>) exprs[0]);
-		name = (Expression<String>) exprs[1];
-		return true;
-	}
-	
-	@Override
-	protected ItemType[] get(final Event e, final ItemType[] source) {
-		final String n = name.getSingle(e);
-		if (n == null)
-			return new ItemType[0];
-		final ItemType[] r = source.clone();
-		for (int i = 0; i < r.length; i++) {
-			r[i] = source[i].clone();
-			ItemMeta m = (ItemMeta) r[i].getItemMeta();
-			if (m == null)
-				m = Bukkit.getItemFactory().getItemMeta(Material.STONE); // AIR results in null
-			assert m != null : r[i];
-			m.setDisplayName(n);
-			r[i].setItemMeta(m);
-		}
-		return r;
-	}
-	
-	@Override
-	public Class<ItemType> getReturnType() {
-		return ItemType.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return getExpr().toString(e, debug) + " named " + name;
-	}
-	
+    static {
+        Skript.registerExpression(ExprNamed.class, ItemType.class, ExpressionType.PROPERTY, "%itemtypes% (named|with name[s]) %string%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> name;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (!Skript.isRunningMinecraft(1, 4, 5)) {
+            Skript.error("Item names are only available in Minecraft 1.4.5+");
+            return false;
+        }
+        setExpr((Expression<? extends ItemType>) exprs[0]);
+        name = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
+    protected ItemType[] get(final Event e, final ItemType[] source) {
+        final String n = name.getSingle(e);
+        if (n == null)
+            return new ItemType[0];
+        final ItemType[] r = source.clone();
+        for (int i = 0; i < r.length; i++) {
+            r[i] = source[i].clone();
+            ItemMeta m = (ItemMeta) r[i].getItemMeta();
+            if (m == null)
+                m = Bukkit.getItemFactory().getItemMeta(Material.STONE); // AIR results in null
+            assert m != null : r[i];
+            m.setDisplayName(n);
+            r[i].setItemMeta(m);
+        }
+        return r;
+    }
+
+    @Override
+    public Class<ItemType> getReturnType() {
+        return ItemType.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return getExpr().toString(e, debug) + " named " + name;
+    }
+
 }

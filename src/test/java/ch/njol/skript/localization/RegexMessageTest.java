@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.localization;
@@ -27,15 +27,15 @@ import org.junit.Test;
  * @author Peter Güttinger
  */
 public class RegexMessageTest {
-	
-	@Test
-	public void test() {
-		
-		final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};
-		
-		for (final String test : tests)
-			assert !RegexMessage.nop.matcher(test).find() && !RegexMessage.nop.matcher(test).matches() : test;
-		
-	}
-	
+
+    @Test
+    public void test() {
+
+        final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};
+
+        for (final String test : tests)
+            assert !RegexMessage.nop.matcher(test).find() && !RegexMessage.nop.matcher(test).matches() : test;
+
+    }
+
 }

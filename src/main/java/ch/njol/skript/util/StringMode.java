@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -25,5 +25,5 @@ package ch.njol.skript.util;
  * @author Peter Güttinger
  */
 public enum StringMode {
-	MESSAGE, VARIABLE_NAME, COMMAND, DEBUG
+    MESSAGE, VARIABLE_NAME, COMMAND, DEBUG
 }

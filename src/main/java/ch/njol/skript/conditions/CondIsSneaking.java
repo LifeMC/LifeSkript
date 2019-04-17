@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -36,19 +36,19 @@ import org.bukkit.entity.Player;
 @Examples({"# prevent mobs from seeing sneaking players if they are at least 4 meters apart", "on target:", "	target is sneaking", "	distance of target and the entity is bigger than 4", "	cancel the event"})
 @Since("1.4.4")
 public class CondIsSneaking extends PropertyCondition<Player> {
-	
-	static {
-		register(CondIsSneaking.class, "sneaking", "players");
-	}
-	
-	@Override
-	public boolean check(final Player p) {
-		return p.isSneaking();
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "sneaking";
-	}
-	
+
+    static {
+        register(CondIsSneaking.class, "sneaking", "players");
+    }
+
+    @Override
+    public boolean check(final Player p) {
+        return p.isSneaking();
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "sneaking";
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.localization;
@@ -25,13 +25,13 @@ package ch.njol.skript.localization;
  * @author Peter Güttinger
  */
 public final class GeneralWords {
-	
-	private GeneralWords() {
-		throw new UnsupportedOperationException();
-	}
-	
-	public final static Message and = new Message("and");
-	public final static Message or = new Message("or");
-	public final static Message not = new Message("not");
-	
+
+    public final static Message and = new Message("and");
+    public final static Message or = new Message("or");
+    public final static Message not = new Message("not");
+
+    private GeneralWords() {
+        throw new UnsupportedOperationException();
+    }
+
 }

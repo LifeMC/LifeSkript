@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -38,24 +38,24 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("open the player's ender chest to the player")
 @Since("2.0")
 public class ExprEnderChest extends SimplePropertyExpression<Player, Inventory> {
-	static {
-		register(ExprEnderChest.class, Inventory.class, "ender[ ]chest[s]", "players");
-	}
-	
-	@Override
-	@Nullable
-	public Inventory convert(final Player p) {
-		return p.getEnderChest();
-	}
-	
-	@Override
-	public Class<Inventory> getReturnType() {
-		return Inventory.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "ender chest";
-	}
-	
+    static {
+        register(ExprEnderChest.class, Inventory.class, "ender[ ]chest[s]", "players");
+    }
+
+    @Override
+    @Nullable
+    public Inventory convert(final Player p) {
+        return p.getEnderChest();
+    }
+
+    @Override
+    public Class<Inventory> getReturnType() {
+        return Inventory.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "ender chest";
+    }
+
 }

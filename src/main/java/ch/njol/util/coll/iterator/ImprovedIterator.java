@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -24,35 +24,35 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.Iterator;
 
 public class ImprovedIterator<T> implements Iterator<T> {
-	
-	private final Iterator<T> iter;
-	
-	@Nullable
-	private T current;
-	
-	public ImprovedIterator(final Iterator<T> iter) {
-		this.iter = iter;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return iter.hasNext();
-	}
-	
-	@Override
-	@Nullable
-	public T next() {
-		return current = iter.next();
-	}
-	
-	@Override
-	public void remove() {
-		iter.remove();
-	}
-	
-	@Nullable
-	public T current() {
-		return current;
-	}
-	
+
+    private final Iterator<T> iter;
+
+    @Nullable
+    private T current;
+
+    public ImprovedIterator(final Iterator<T> iter) {
+        this.iter = iter;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return iter.hasNext();
+    }
+
+    @Override
+    @Nullable
+    public T next() {
+        return current = iter.next();
+    }
+
+    @Override
+    public void remove() {
+        iter.remove();
+    }
+
+    @Nullable
+    public T current() {
+        return current;
+    }
+
 }

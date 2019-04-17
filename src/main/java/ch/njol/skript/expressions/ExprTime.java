@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -49,84 +49,84 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"time in world is between 18:00 and 6:00:", "	broadcast \"It's night-time, watch out for monsters!\""})
 @Since("1.0")
 public final class ExprTime extends PropertyExpression<World, Time> {
-	static {
-		Skript.registerExpression(ExprTime.class, Time.class, ExpressionType.PROPERTY, "[the] time [(in|of) %worlds%]", "%worlds%'[s] time");
-	}
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		setExpr((Expression<World>) exprs[0]);
-		return true;
-	}
-	
-	@Override
-	protected Time[] get(final Event e, final World[] source) {
-		return get(source, new Getter<Time, World>() {
-			@Override
-			public Time get(final World w) {
-				return new Time((int) w.getTime());
-			}
-		});
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		switch (mode) {
-			case ADD:
-			case REMOVE:
-				return CollectionUtils.array(Timespan.class);
-			case SET:
-				return CollectionUtils.array(Time.class);
-			case DELETE:
-			case REMOVE_ALL:
-			case RESET:
-			default:
-				return null;
-		}
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-		final World[] worlds = getExpr().getArray(e);
-		int mod = 1;
-		switch (mode) {
-			case SET:
-				assert delta != null;
-				final Time time = (Time) delta[0];
-				for (final World w : worlds) {
-					w.setTime(time.getTicks());
-				}
-				break;
-			case REMOVE:
-				mod = -1;
-				//$FALL-THROUGH$
-			case ADD:
-				assert delta != null;
-				final Timespan ts = (Timespan) delta[0];
-				for (final World w : worlds) {
-					w.setTime(w.getTime() + mod * ts.getTicks_i());
-				}
-				break;
-			case DELETE:
-			case REMOVE_ALL:
-			case RESET:
-				assert false;
-		}
-	}
-	
-	@Override
-	public Class<Time> getReturnType() {
-		return Time.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		if (e == null)
-			return "the time in " + getExpr().toString(e, debug);
-		return Classes.getDebugMessage(getAll(e));
-	}
-	
+    static {
+        Skript.registerExpression(ExprTime.class, Time.class, ExpressionType.PROPERTY, "[the] time [(in|of) %worlds%]", "%worlds%'[s] time");
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        setExpr((Expression<World>) exprs[0]);
+        return true;
+    }
+
+    @Override
+    protected Time[] get(final Event e, final World[] source) {
+        return get(source, new Getter<Time, World>() {
+            @Override
+            public Time get(final World w) {
+                return new Time((int) w.getTime());
+            }
+        });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        switch (mode) {
+            case ADD:
+            case REMOVE:
+                return CollectionUtils.array(Timespan.class);
+            case SET:
+                return CollectionUtils.array(Time.class);
+            case DELETE:
+            case REMOVE_ALL:
+            case RESET:
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+        final World[] worlds = getExpr().getArray(e);
+        int mod = 1;
+        switch (mode) {
+            case SET:
+                assert delta != null;
+                final Time time = (Time) delta[0];
+                for (final World w : worlds) {
+                    w.setTime(time.getTicks());
+                }
+                break;
+            case REMOVE:
+                mod = -1;
+                //$FALL-THROUGH$
+            case ADD:
+                assert delta != null;
+                final Timespan ts = (Timespan) delta[0];
+                for (final World w : worlds) {
+                    w.setTime(w.getTime() + mod * ts.getTicks_i());
+                }
+                break;
+            case DELETE:
+            case REMOVE_ALL:
+            case RESET:
+                assert false;
+        }
+    }
+
+    @Override
+    public Class<Time> getReturnType() {
+        return Time.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        if (e == null)
+            return "the time in " + getExpr().toString(e, debug);
+        return Classes.getDebugMessage(getAll(e));
+    }
+
 }

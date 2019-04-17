@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config;
@@ -29,42 +29,42 @@ import java.util.Map.Entry;
  * @author Peter Güttinger
  */
 public final class EntryNode extends Node implements Entry<String, String> {
-	
-	private String value;
-	
-	public EntryNode(final String key, final String value, final String comment, final SectionNode parent, final int lineNum) {
-		super(key, comment, parent, lineNum);
-		this.value = value;
-	}
-	
-	public EntryNode(final String key, final String value, final SectionNode parent) {
-		super(key, parent);
-		this.value = value;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public String getKey() {
-		return key;
-	}
-	
-	@Override
-	public String getValue() {
-		return value;
-	}
-	
-	@Override
-	public String setValue(final @Nullable String v) {
-		if (v == null)
-			return value;
-		final String r = value;
-		value = v;
-		return r;
-	}
-	
-	@Override
-	String save_i() {
-		return key + config.getSaveSeparator() + value;
-	}
-	
+
+    private String value;
+
+    public EntryNode(final String key, final String value, final String comment, final SectionNode parent, final int lineNum) {
+        super(key, comment, parent, lineNum);
+        this.value = value;
+    }
+
+    public EntryNode(final String key, final String value, final SectionNode parent) {
+        super(key, parent);
+        this.value = value;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String setValue(final @Nullable String v) {
+        if (v == null)
+            return value;
+        final String r = value;
+        value = v;
+        return r;
+    }
+
+    @Override
+    String save_i() {
+        return key + config.getSaveSeparator() + value;
+    }
+
 }

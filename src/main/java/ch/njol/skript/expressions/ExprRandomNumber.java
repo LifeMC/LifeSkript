@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -45,55 +45,53 @@ import java.util.Random;
 @Examples({"set the player's health to a random number between 5 and 10", "send \"You rolled a %random integer from 1 to 6%!\" to the player"})
 @Since("1.4")
 public final class ExprRandomNumber extends SimpleExpression<Number> {
-	static {
-		Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED, "[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<? extends Number> lower, upper;
-	
-	private final Random rand = new Random();
-	
-	private boolean integer;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		lower = (Expression<Number>) exprs[0];
-		upper = (Expression<Number>) exprs[1];
-		integer = parser.mark == 1;
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected Number[] get(final Event e) {
-		final Number l = lower.getSingle(e);
-		final Number u = upper.getSingle(e);
-		if (u == null || l == null)
-			return null;
-		final double ll = Math.min(l.doubleValue(), u.doubleValue());
-		final double uu = Math.max(l.doubleValue(), u.doubleValue());
-		if (integer) {
-			return new Long[] {Math2.ceil(ll) + Math2.mod(rand.nextLong(), Math2.floor(uu) - Math2.ceil(ll) + 1)};
-		} else {
-			return new Double[] {ll + rand.nextDouble() * (uu - ll)};
-		}
-	}
-	
-	@Override
-	public Class<? extends Number> getReturnType() {
-		return integer ? Long.class : Double.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "a random " + (integer ? "integer" : "number") + " between " + lower.toString(e, debug) + " and " + upper.toString(e, debug);
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
+    static {
+        Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED, "[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");
+    }
+
+    private final Random rand = new Random();
+    @SuppressWarnings("null")
+    private Expression<? extends Number> lower, upper;
+    private boolean integer;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        lower = (Expression<Number>) exprs[0];
+        upper = (Expression<Number>) exprs[1];
+        integer = parser.mark == 1;
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected Number[] get(final Event e) {
+        final Number l = lower.getSingle(e);
+        final Number u = upper.getSingle(e);
+        if (u == null || l == null)
+            return null;
+        final double ll = Math.min(l.doubleValue(), u.doubleValue());
+        final double uu = Math.max(l.doubleValue(), u.doubleValue());
+        if (integer) {
+            return new Long[]{Math2.ceil(ll) + Math2.mod(rand.nextLong(), Math2.floor(uu) - Math2.ceil(ll) + 1)};
+        } else {
+            return new Double[]{ll + rand.nextDouble() * (uu - ll)};
+        }
+    }
+
+    @Override
+    public Class<? extends Number> getReturnType() {
+        return integer ? Long.class : Double.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "a random " + (integer ? "integer" : "number") + " between " + lower.toString(e, debug) + " and " + upper.toString(e, debug);
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
 }

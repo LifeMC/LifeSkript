@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.classes;
@@ -26,106 +26,106 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * used to convert data from one type to another.
- * 
+ *
  * @param <F> the accepted type of objects to convert <u>f</u>rom
  * @param <T> the type to convert <u>t</u>o
  * @author Peter Güttinger
  * @see ch.njol.skript.registrations.Converters#registerConverter(Class, Class, Converter)
  */
 public interface Converter<F, T> {
-	
-	int NO_LEFT_CHAINING = 1;
-	int NO_RIGHT_CHAINING = 2;
-	int NO_CHAINING = NO_LEFT_CHAINING | NO_RIGHT_CHAINING;
-	int NO_COMMAND_ARGUMENTS = 4;
-	
-	/**
-	 * holds information about a converter
-	 * 
-	 * @author Peter Güttinger
-	 * @param <F> same as in {@link Converter}
-	 * @param <T> dito
-	 */
-	@SuppressWarnings("null")
-	@NonNullByDefault
-	final class ConverterInfo<F, T> {
-		
-		public final Class<F> from;
-		public final Class<T> to;
-		public final Converter<F, T> converter;
-		public final int options;
-		
-		public ConverterInfo(final Class<F> from, final Class<T> to, final Converter<F, T> converter, final int options) {
-			this.from = from;
-			this.to = to;
-			this.converter = converter;
-			this.options = options;
-		}
-		
-	}
-	
-	/**
-	 * Converts an object from the given to the desired type.
-	 * 
-	 * @param f The object to convert.
-	 * @return the converted object
-	 */
-	@Nullable
-	T convert(final F f);
-	
-	final class ConverterUtils { //NOSONAR
-		
-		public static <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
-			return createInstanceofConverter(conv.from, conv.converter);
-		}
-		
-		public static <F, T> Converter<?, T> createInstanceofConverter(final Class<F> from, final Converter<F, T> conv) {
-			return new Converter<Object, T>() {
-				@SuppressWarnings("unchecked")
-				@Override
-				@Nullable
-				public T convert(final Object o) {
-					if (!from.isInstance(o))
-						return null;
-					return conv.convert((F) o);
-				}
-			};
-		}
-		
-		public static <F, T> Converter<F, T> createInstanceofConverter(final Converter<F, ?> conv, final Class<T> to) {
-			return new Converter<F, T>() {
-				@SuppressWarnings("unchecked")
-				@Override
-				@Nullable
-				public T convert(final F f) {
-					final Object o = conv.convert(f);
-					if (to.isInstance(o))
-						return (T) o;
-					return null;
-				}
-			};
-		}
-		
-		public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final ConverterInfo<F, ?> conv, final Class<T> to) {
-			return createDoubleInstanceofConverter(conv.from, conv.converter, to);
-		}
-		
-		public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final Class<F> from, final Converter<F, ?> conv, final Class<T> to) {
-			return new Converter<Object, T>() {
-				@SuppressWarnings("unchecked")
-				@Override
-				@Nullable
-				public T convert(final Object o) {
-					if (!from.isInstance(o))
-						return null;
-					final Object o2 = conv.convert((F) o);
-					if (to.isInstance(o2))
-						return (T) o2;
-					return null;
-				}
-			};
-		}
-		
-	}
-	
+
+    int NO_LEFT_CHAINING = 1;
+    int NO_RIGHT_CHAINING = 2;
+    int NO_CHAINING = NO_LEFT_CHAINING | NO_RIGHT_CHAINING;
+    int NO_COMMAND_ARGUMENTS = 4;
+
+    /**
+     * Converts an object from the given to the desired type.
+     *
+     * @param f The object to convert.
+     * @return the converted object
+     */
+    @Nullable
+    T convert(final F f);
+
+    /**
+     * holds information about a converter
+     *
+     * @param <F> same as in {@link Converter}
+     * @param <T> dito
+     * @author Peter Güttinger
+     */
+    @SuppressWarnings("null")
+    @NonNullByDefault
+    final class ConverterInfo<F, T> {
+
+        public final Class<F> from;
+        public final Class<T> to;
+        public final Converter<F, T> converter;
+        public final int options;
+
+        public ConverterInfo(final Class<F> from, final Class<T> to, final Converter<F, T> converter, final int options) {
+            this.from = from;
+            this.to = to;
+            this.converter = converter;
+            this.options = options;
+        }
+
+    }
+
+    final class ConverterUtils { //NOSONAR
+
+        public static <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
+            return createInstanceofConverter(conv.from, conv.converter);
+        }
+
+        public static <F, T> Converter<?, T> createInstanceofConverter(final Class<F> from, final Converter<F, T> conv) {
+            return new Converter<Object, T>() {
+                @SuppressWarnings("unchecked")
+                @Override
+                @Nullable
+                public T convert(final Object o) {
+                    if (!from.isInstance(o))
+                        return null;
+                    return conv.convert((F) o);
+                }
+            };
+        }
+
+        public static <F, T> Converter<F, T> createInstanceofConverter(final Converter<F, ?> conv, final Class<T> to) {
+            return new Converter<F, T>() {
+                @SuppressWarnings("unchecked")
+                @Override
+                @Nullable
+                public T convert(final F f) {
+                    final Object o = conv.convert(f);
+                    if (to.isInstance(o))
+                        return (T) o;
+                    return null;
+                }
+            };
+        }
+
+        public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final ConverterInfo<F, ?> conv, final Class<T> to) {
+            return createDoubleInstanceofConverter(conv.from, conv.converter, to);
+        }
+
+        public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final Class<F> from, final Converter<F, ?> conv, final Class<T> to) {
+            return new Converter<Object, T>() {
+                @SuppressWarnings("unchecked")
+                @Override
+                @Nullable
+                public T convert(final Object o) {
+                    if (!from.isInstance(o))
+                        return null;
+                    final Object o2 = conv.convert((F) o);
+                    if (to.isInstance(o2))
+                        return (T) o2;
+                    return null;
+                }
+            };
+        }
+
+    }
+
 }

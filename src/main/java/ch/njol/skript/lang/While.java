@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -29,43 +29,42 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class While extends TriggerSection {
-	
-	private final Condition c;
-	
-	public While(final Condition c, final SectionNode n) {
-		super(n);
-		this.c = c;
-		super.setNext(this);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "while " + c.toString(e, debug);
-	}
-	
-	@Override
-	@Nullable
-	protected TriggerItem walk(final Event e) {
-		if (c.check(e)) {
-			return walk(e, true);
-		} else {
-			debug(e, false);
-			return actualNext;
-		}
-	}
-	
-	@Nullable
-	private TriggerItem actualNext;
-	
-	@Override
-	public While setNext(final @Nullable TriggerItem next) {
-		actualNext = next;
-		return this;
-	}
-	
-	@Nullable
-	public TriggerItem getActualNext() {
-		return actualNext;
-	}
-	
+
+    private final Condition c;
+    @Nullable
+    private TriggerItem actualNext;
+
+    public While(final Condition c, final SectionNode n) {
+        super(n);
+        this.c = c;
+        super.setNext(this);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "while " + c.toString(e, debug);
+    }
+
+    @Override
+    @Nullable
+    protected TriggerItem walk(final Event e) {
+        if (c.check(e)) {
+            return walk(e, true);
+        } else {
+            debug(e, false);
+            return actualNext;
+        }
+    }
+
+    @Override
+    public While setNext(final @Nullable TriggerItem next) {
+        actualNext = next;
+        return this;
+    }
+
+    @Nullable
+    public TriggerItem getActualNext() {
+        return actualNext;
+    }
+
 }

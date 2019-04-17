@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -34,41 +34,41 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public class InventorySlot extends Slot {
-	
-	private final Inventory invi;
-	private final int index;
-	
-	public InventorySlot(final Inventory invi, final int index) {
-		this.invi = invi;
-		this.index = index;
-	}
-	
-	public Inventory getInventory() {
-		return invi;
-	}
-	
-	public int getIndex() {
-		return index;
-	}
-	
-	@Override
-	@Nullable
-	public ItemStack getItem() {
-		return invi.getItem(index) == null ? new ItemStack(Material.AIR, 1) : invi.getItem(index).clone();
-	}
-	
-	@Override
-	public void setItem(final @Nullable ItemStack item) {
-		invi.setItem(index, item != null && item.getType() != Material.AIR ? item : null);
-		if (invi instanceof PlayerInventory)
-			PlayerUtils.updateInventory((Player) invi.getHolder());
-	}
-	
-	@Override
-	public String toString_i() {
-		if (invi.getHolder() != null)
-			return "slot " + index + " of inventory of " + Classes.toString(invi.getHolder());
-		return "slot " + index + " of " + Classes.toString(invi);
-	}
-	
+
+    private final Inventory invi;
+    private final int index;
+
+    public InventorySlot(final Inventory invi, final int index) {
+        this.invi = invi;
+        this.index = index;
+    }
+
+    public Inventory getInventory() {
+        return invi;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    @Override
+    @Nullable
+    public ItemStack getItem() {
+        return invi.getItem(index) == null ? new ItemStack(Material.AIR, 1) : invi.getItem(index).clone();
+    }
+
+    @Override
+    public void setItem(final @Nullable ItemStack item) {
+        invi.setItem(index, item != null && item.getType() != Material.AIR ? item : null);
+        if (invi instanceof PlayerInventory)
+            PlayerUtils.updateInventory((Player) invi.getHolder());
+    }
+
+    @Override
+    public String toString_i() {
+        if (invi.getHolder() != null)
+            return "slot " + index + " of inventory of " + Classes.toString(invi.getHolder());
+        return "slot " + index + " of " + Classes.toString(invi);
+    }
+
 }

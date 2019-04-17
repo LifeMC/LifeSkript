@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -42,35 +42,35 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"message \"A wild %player% appeared!\"", "message \"This message is a distraction. Mwahaha!\"", "send \"Your kill streak is %{kill streak.%player%}%.\" to player", "if the targeted entity exists:", "	message \"You're currently looking at a %type of the targeted entity%!\""})
 @Since("1.0")
 public final class EffMessage extends Effect {
-	static {
-		Skript.registerEffect(EffMessage.class, "(message|msg|tell|send [message]) %strings% [to %commandsenders%]");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<String> messages;
-	@SuppressWarnings("null")
-	private Expression<CommandSender> recipients;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		messages = (Expression<String>) exprs[0];
-		recipients = (Expression<CommandSender>) exprs[1];
-		return true;
-	}
-	
-	@Override
-	protected void execute(final Event e) {
-		for (final String message : messages.getArray(e)) {
+    static {
+        Skript.registerEffect(EffMessage.class, "(message|msg|tell|send [message]) %strings% [to %commandsenders%]");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> messages;
+    @SuppressWarnings("null")
+    private Expression<CommandSender> recipients;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        messages = (Expression<String>) exprs[0];
+        recipients = (Expression<CommandSender>) exprs[1];
+        return true;
+    }
+
+    @Override
+    protected void execute(final Event e) {
+        for (final String message : messages.getArray(e)) {
 //			message = StringUtils.fixCapitalization(message);
-			for (final CommandSender s : recipients.getArray(e)) {
-				s.sendMessage(message);
-			}
-		}
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "send " + messages.toString(e, debug) + " to " + recipients.toString(e, debug);
-	}
+            for (final CommandSender s : recipients.getArray(e)) {
+                s.sendMessage(message);
+            }
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "send " + messages.toString(e, debug) + " to " + recipients.toString(e, debug);
+    }
 }

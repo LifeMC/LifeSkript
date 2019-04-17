@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -36,29 +36,29 @@ import org.eclipse.jdt.annotation.Nullable;
  * Majority of Skript and Minecraft APIs are not thread-safe, so be careful.
  */
 public abstract class AsyncEffect extends Effect {
-	
-	@Override
-	@Nullable
-	protected TriggerItem walk(final Event e) {
-		debug(e, true);
-		final TriggerItem next = getNext();
-		Delay.addDelayedEvent(e);
-		Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), new Runnable() {
-			@Override
-			@SuppressWarnings("synthetic-access")
-			public final void run() {
-				execute(e); // Execute this effect
-				if (next != null) {
-					Bukkit.getScheduler().runTask(Skript.getInstance(), new Runnable() {
-						@Override
-						public final void run() { // Walk to next item synchronously
-							TriggerItem.walk(next, e);
-						}
-					});
-				}
-			}
-		});
-		return null;
-	}
-	
+
+    @Override
+    @Nullable
+    protected TriggerItem walk(final Event e) {
+        debug(e, true);
+        final TriggerItem next = getNext();
+        Delay.addDelayedEvent(e);
+        Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), new Runnable() {
+            @Override
+            @SuppressWarnings("synthetic-access")
+            public final void run() {
+                execute(e); // Execute this effect
+                if (next != null) {
+                    Bukkit.getScheduler().runTask(Skript.getInstance(), new Runnable() {
+                        @Override
+                        public final void run() { // Walk to next item synchronously
+                            TriggerItem.walk(next, e);
+                        }
+                    });
+                }
+            }
+        });
+        return null;
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -40,62 +40,62 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events({"damage", "death"})
 public class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, Double> {
-	static {
-		register(ExprMaxHealth.class, Double.class, "max[imum] health", "livingentities");
-	}
-	
-	@Override
-	public Double convert(final LivingEntity e) {
-		return HealthUtils.getMaxHealth(e);
-	}
-	
-	@Override
-	public Class<Double> getReturnType() {
-		return Double.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "max health";
-	}
-	
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (!Skript.methodExists(Damageable.class, "setMaxHealth", double.class)) {
-			Skript.error("The max health of an entity can only be changed in Minecraft 1.6 and later");
-			return null;
-		}
-		
-		if (mode != ChangeMode.DELETE && mode != ChangeMode.REMOVE_ALL)
-			return new Class[] {Number.class};
-		return null;
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-		double d = delta == null ? 0 : ((Number) delta[0]).doubleValue();
-		for (final LivingEntity en : getExpr().getArray(e)) {
-			assert en != null : getExpr();
-			switch (mode) {
-				case SET:
-					HealthUtils.setMaxHealth(en, d);
-					break;
-				case REMOVE:
-					d = -d;
-					//$FALL-THROUGH$
-				case ADD:
-					HealthUtils.setMaxHealth(en, HealthUtils.getMaxHealth(en) + d);
-					break;
-				case RESET:
-					en.resetMaxHealth();
-					break;
-				case DELETE:
-				case REMOVE_ALL:
-					assert false;
-					
-			}
-		}
-	}
-	
+    static {
+        register(ExprMaxHealth.class, Double.class, "max[imum] health", "livingentities");
+    }
+
+    @Override
+    public Double convert(final LivingEntity e) {
+        return HealthUtils.getMaxHealth(e);
+    }
+
+    @Override
+    public Class<Double> getReturnType() {
+        return Double.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "max health";
+    }
+
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (!Skript.methodExists(Damageable.class, "setMaxHealth", double.class)) {
+            Skript.error("The max health of an entity can only be changed in Minecraft 1.6 and later");
+            return null;
+        }
+
+        if (mode != ChangeMode.DELETE && mode != ChangeMode.REMOVE_ALL)
+            return new Class[]{Number.class};
+        return null;
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+        double d = delta == null ? 0 : ((Number) delta[0]).doubleValue();
+        for (final LivingEntity en : getExpr().getArray(e)) {
+            assert en != null : getExpr();
+            switch (mode) {
+                case SET:
+                    HealthUtils.setMaxHealth(en, d);
+                    break;
+                case REMOVE:
+                    d = -d;
+                    //$FALL-THROUGH$
+                case ADD:
+                    HealthUtils.setMaxHealth(en, HealthUtils.getMaxHealth(en) + d);
+                    break;
+                case RESET:
+                    en.resetMaxHealth();
+                    break;
+                case DELETE:
+                case REMOVE_ALL:
+                    assert false;
+
+            }
+        }
+    }
+
 }

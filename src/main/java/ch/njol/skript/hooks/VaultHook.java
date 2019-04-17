@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks;
@@ -33,34 +33,35 @@ import java.io.IOException;
  * @author Peter Güttinger
  */
 public final class VaultHook extends Hook<Vault> {
-	
-	public VaultHook() throws IOException {}
-	
-	@SuppressWarnings("null")
-	public static Economy economy;
-	@SuppressWarnings("null")
-	public static Chat chat;
-	
-	@SuppressWarnings("null")
-	@Override
-	protected boolean init() {
-		economy = Bukkit.getServicesManager().getRegistration(Economy.class) == null ? null : Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
-		chat = Bukkit.getServicesManager().getRegistration(Chat.class) == null ? null : Bukkit.getServicesManager().getRegistration(Chat.class).getProvider();
-		return economy != null || chat != null;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	protected void loadClasses() throws IOException {
-		if (economy != null)
-			Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".economy");
-		if (chat != null)
-			Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".chat");
-	}
-	
-	@Override
-	public String getName() {
-		return "Vault";
-	}
-	
+
+    @SuppressWarnings("null")
+    public static Economy economy;
+    @SuppressWarnings("null")
+    public static Chat chat;
+
+    public VaultHook() throws IOException {
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected boolean init() {
+        economy = Bukkit.getServicesManager().getRegistration(Economy.class) == null ? null : Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
+        chat = Bukkit.getServicesManager().getRegistration(Chat.class) == null ? null : Bukkit.getServicesManager().getRegistration(Chat.class).getProvider();
+        return economy != null || chat != null;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected void loadClasses() throws IOException {
+        if (economy != null)
+            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".economy");
+        if (chat != null)
+            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".chat");
+    }
+
+    @Override
+    public String getName() {
+        return "Vault";
+    }
+
 }

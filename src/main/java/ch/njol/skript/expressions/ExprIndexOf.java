@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -42,47 +42,47 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set {_@} to the first index of \"@\" in the text argument", "if {_s} contains \"abc\":", "	set {_s} to the first (index of \"abc\" in {_s} + 3) characters of {_s} # removes everything after the first \"abc\" from {_s}"})
 @Since("2.1")
 public class ExprIndexOf extends SimpleExpression<Integer> {
-	static {
-		Skript.registerExpression(ExprIndexOf.class, Integer.class, ExpressionType.COMBINED, "[the] (0¦|0¦first|1¦last) index of %string% in %string%");
-	}
-	
-	boolean first;
-	
-	@SuppressWarnings("null")
-	Expression<String> haystack, needle;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		first = parseResult.mark == 0;
-		needle = (Expression<String>) exprs[0];
-		haystack = (Expression<String>) exprs[1];
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected Integer[] get(final Event e) {
-		final String h = haystack.getSingle(e), n = needle.getSingle(e);
-		if (h == null || n == null)
-			return new Integer[0];
-		final int i = first ? h.indexOf(n) : h.lastIndexOf(n);
-		return new Integer[] {i == -1 ? -1 : i + 1};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<Integer> getReturnType() {
-		return Integer.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the " + (first ? "first" : "last") + " index of " + needle.toString(e, debug) + " in " + haystack.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerExpression(ExprIndexOf.class, Integer.class, ExpressionType.COMBINED, "[the] (0¦|0¦first|1¦last) index of %string% in %string%");
+    }
+
+    boolean first;
+
+    @SuppressWarnings("null")
+    Expression<String> haystack, needle;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        first = parseResult.mark == 0;
+        needle = (Expression<String>) exprs[0];
+        haystack = (Expression<String>) exprs[1];
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected Integer[] get(final Event e) {
+        final String h = haystack.getSingle(e), n = needle.getSingle(e);
+        if (h == null || n == null)
+            return new Integer[0];
+        final int i = first ? h.indexOf(n) : h.lastIndexOf(n);
+        return new Integer[]{i == -1 ? -1 : i + 1};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<Integer> getReturnType() {
+        return Integer.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the " + (first ? "first" : "last") + " index of " + needle.toString(e, debug) + " in " + haystack.toString(e, debug);
+    }
+
 }

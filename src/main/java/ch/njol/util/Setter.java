@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
@@ -23,7 +23,7 @@ package ch.njol.util;
  * @author Peter Güttinger
  */
 public interface Setter<T> {
-	
-	void set(final T t);
-	
+
+    void set(final T t);
+
 }

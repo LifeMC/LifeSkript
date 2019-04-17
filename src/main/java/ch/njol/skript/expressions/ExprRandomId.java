@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -44,33 +44,33 @@ import java.util.UUID;
 @Examples("set {id} to random id")
 @Since("2.2-Fixes-V10c")
 public final class ExprRandomId extends SimpleExpression<String> {
-	static {
-		Skript.registerExpression(ExprRandomId.class, String.class, ExpressionType.SIMPLE, "[a] [new] random [uu]id");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		return true;
-	}
-	
-	@Override
-	protected String[] get(final Event e) {
-		return new String[] {UUID.randomUUID().toString()};
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "random uuid";
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
+    static {
+        Skript.registerExpression(ExprRandomId.class, String.class, ExpressionType.SIMPLE, "[a] [new] random [uu]id");
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        return true;
+    }
+
+    @Override
+    protected String[] get(final Event e) {
+        return new String[]{UUID.randomUUID().toString()};
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "random uuid";
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
 }

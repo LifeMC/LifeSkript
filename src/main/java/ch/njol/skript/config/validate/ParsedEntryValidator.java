@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config.validate;
@@ -31,26 +31,26 @@ import ch.njol.util.Setter;
  * @author Peter Güttinger
  */
 public final class ParsedEntryValidator<T> extends EntryValidator {
-	
-	private final Parser<? extends T> parser;
-	private final Setter<T> setter;
-	
-	public ParsedEntryValidator(final Parser<? extends T> parser, final Setter<T> setter) {
-		assert parser != null;
-		assert setter != null;
-		this.parser = parser;
-		this.setter = setter;
-	}
-	
-	@Override
-	public boolean validate(final Node node) {
-		if (!super.validate(node))
-			return false;
-		final T t = parser.parse(((EntryNode) node).getValue(), ParseContext.CONFIG);
-		if (t == null)
-			return false;
-		setter.set(t);
-		return true;
-	}
-	
+
+    private final Parser<? extends T> parser;
+    private final Setter<T> setter;
+
+    public ParsedEntryValidator(final Parser<? extends T> parser, final Setter<T> setter) {
+        assert parser != null;
+        assert setter != null;
+        this.parser = parser;
+        this.setter = setter;
+    }
+
+    @Override
+    public boolean validate(final Node node) {
+        if (!super.validate(node))
+            return false;
+        final T t = parser.parse(((EntryNode) node).getValue(), ParseContext.CONFIG);
+        if (t == null)
+            return false;
+        setter.set(t);
+        return true;
+    }
+
 }

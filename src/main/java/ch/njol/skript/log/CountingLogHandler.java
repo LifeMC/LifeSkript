@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -25,28 +25,28 @@ import java.util.logging.Level;
 
 /**
  * Counts logged messages of a certain type
- * 
+ *
  * @author Peter Güttinger
  */
 public final class CountingLogHandler extends LogHandler {
-	
-	private final int minimum;
-	
-	private int count;
-	
-	public CountingLogHandler(final Level minimum) {
-		this.minimum = minimum.intValue();
-	}
-	
-	@Override
-	public LogResult log(final LogEntry entry) {
-		if (entry.level.intValue() >= minimum)
-			count++;
-		return LogResult.LOG;
-	}
-	
-	public int getCount() {
-		return count;
-	}
-	
+
+    private final int minimum;
+
+    private int count;
+
+    public CountingLogHandler(final Level minimum) {
+        this.minimum = minimum.intValue();
+    }
+
+    @Override
+    public LogResult log(final LogEntry entry) {
+        if (entry.level.intValue() >= minimum)
+            count++;
+        return LogResult.LOG;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
 }

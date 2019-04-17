@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -42,41 +42,41 @@ import java.util.List;
 @Examples("loop all players:\n" + "\tif loop-value does not have permission \"moderator\":\n" + "\t\tcontinue # filter out non moderators\n" + "\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
 @Since("2.2-Fixes-V10")
 public final class EffContinue extends Effect {
-	
-	static {
-		Skript.registerEffect(EffContinue.class, "continue [loop]");
-	}
-	
-	@SuppressWarnings("null")
-	private Loop loop;
-	
-	@Override
-	protected void execute(final Event e) {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Nullable
-	@Override
-	protected TriggerItem walk(final Event e) {
-		TriggerItem.walk(loop, e);
-		return null;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "continue";
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-		final List<Loop> loops = ScriptLoader.currentLoops;
-		if (loops.isEmpty()) {
-			Skript.error("Continue may only be used in loops");
-			return false;
-		}
-		loop = loops.get(loops.size() - 1); // the most recent loop
-		return true;
-	}
-	
+
+    static {
+        Skript.registerEffect(EffContinue.class, "continue [loop]");
+    }
+
+    @SuppressWarnings("null")
+    private Loop loop;
+
+    @Override
+    protected void execute(final Event e) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Nullable
+    @Override
+    protected TriggerItem walk(final Event e) {
+        TriggerItem.walk(loop, e);
+        return null;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "continue";
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        final List<Loop> loops = ScriptLoader.currentLoops;
+        if (loops.isEmpty()) {
+            Skript.error("Continue may only be used in loops");
+            return false;
+        }
+        loop = loops.get(loops.size() - 1); // the most recent loop
+        return true;
+    }
+
 }

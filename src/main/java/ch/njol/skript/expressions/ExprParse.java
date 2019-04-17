@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -51,128 +51,128 @@ import java.lang.reflect.Array;
 @Examples({"set {var} to line 1 parsed as number", "on chat:", "	set {var::*} to message parsed as \"buying %items% for %money%\"", "	if parse error is set:", "		message \"%parse error%\"", "	else if {var::*} is set:", "		cancel event", "		remove {var::2} from the player's balance", "		give {var::1::*} to the player"})
 @Since("2.0")
 public final class ExprParse extends SimpleExpression<Object> {
-	static {
-		Skript.registerExpression(ExprParse.class, Object.class, ExpressionType.COMBINED, "%string% parsed as (%-*classinfo%|\"<.*>\")");
-	}
-	
-	@Nullable
-	static String lastError;
-	
-	@SuppressWarnings("null")
-	private Expression<String> text;
-	
-	@Nullable
-	private String pattern;
-	@Nullable
-	private boolean[] plurals;
-	
-	@Nullable
-	private ClassInfo<?> c;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		text = (Expression<String>) exprs[0];
-		if (exprs[1] == null) {
-			String pattern = "" + parseResult.regexes.get(0).group();
-			if (!VariableString.isQuotedCorrectly(pattern, false)) {
-				Skript.error("Invalid amount and/or placement of double quotes in '" + pattern + "'", ErrorQuality.SEMANTIC_ERROR);
-				return false;
-			}
-			// escape '¦'
-			final StringBuilder b = new StringBuilder(pattern.length());
-			for (int i = 0; i < pattern.length(); i++) {
-				final char c = pattern.charAt(i);
-				if (c == '\\') {
-					b.append(c);
-					b.append(pattern.charAt(i + 1));
-					i++;
-				} else if (c == '¦') {
-					b.append("\\¦");
-				} else {
-					b.append(c);
-				}
-			}
-			pattern = "" + b.toString();
-			final NonNullPair<String, boolean[]> p = SkriptParser.validatePattern(pattern);
-			if (p == null)
-				return false;
-			this.pattern = p.getFirst();
-			plurals = p.getSecond();
-		} else {
-			c = ((Literal<ClassInfo<?>>) exprs[1]).getSingle();
-			if (c.getC() == String.class) {
-				Skript.error("Parsing as text is useless as only things that are already text may be parsed");
-				return false;
-			}
-			final Parser<?> p = c.getParser();
-			if (p == null || !p.canParse(ParseContext.COMMAND)) { // TODO special parse context?
-				Skript.error("Text cannot be parsed as " + c.getName().withIndefiniteArticle(), ErrorQuality.SEMANTIC_ERROR);
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	@Nullable
-	protected Object[] get(final Event e) {
-		final String t = text.getSingle(e);
-		if (t == null)
-			return null;
-		final ParseLogHandler h = SkriptLogger.startParseLogHandler();
-		try {
-			if (c != null) {
-				final Parser<?> p = c.getParser();
-				assert p != null; // checked in init()
-				final Object o = p.parse(t, ParseContext.COMMAND);
-				if (o != null) {
-					final Object[] one = (Object[]) Array.newInstance(c.getC(), 1);
-					one[0] = o;
-					return one;
-				}
-			} else {
-				assert pattern != null && plurals != null;
-				final ParseResult r = SkriptParser.parse(t, pattern);
-				if (r != null) {
-					assert plurals.length == r.exprs.length;
-					int resultCount = 0;
-					for (final Expression<?> expr : r.exprs) {
-						if (expr != null) // Ignore missing optional parts
-							resultCount++;
-					}
+    @Nullable
+    static String lastError;
 
-					final Object[] os = new Object[resultCount];
-					for (int i = 0, slot = 0; i < r.exprs.length; i++) {
-						if (r.exprs[i] != null)
-							os[slot++] = plurals[i] ? r.exprs[i].getArray(null) : r.exprs[i].getSingle(null);
-					}
-					return os;
-				}
-			}
-			final LogEntry err = h.getError();
-			lastError = err != null ? err.getMessage() : null;
-			return null;
-		} finally {
-			h.clear();
-			h.printLog();
-		}
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return pattern == null;
-	}
-	
-	@Override
-	public Class<?> getReturnType() {
-		return c != null ? c.getC() : Object[].class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return text.toString(e, debug) + " parsed as " + (c != null ? c.toString(Language.F_INDEFINITE_ARTICLE) : pattern);
-	}
-	
+    static {
+        Skript.registerExpression(ExprParse.class, Object.class, ExpressionType.COMBINED, "%string% parsed as (%-*classinfo%|\"<.*>\")");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> text;
+
+    @Nullable
+    private String pattern;
+    @Nullable
+    private boolean[] plurals;
+
+    @Nullable
+    private ClassInfo<?> c;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        text = (Expression<String>) exprs[0];
+        if (exprs[1] == null) {
+            String pattern = "" + parseResult.regexes.get(0).group();
+            if (!VariableString.isQuotedCorrectly(pattern, false)) {
+                Skript.error("Invalid amount and/or placement of double quotes in '" + pattern + "'", ErrorQuality.SEMANTIC_ERROR);
+                return false;
+            }
+            // escape '¦'
+            final StringBuilder b = new StringBuilder(pattern.length());
+            for (int i = 0; i < pattern.length(); i++) {
+                final char c = pattern.charAt(i);
+                if (c == '\\') {
+                    b.append(c);
+                    b.append(pattern.charAt(i + 1));
+                    i++;
+                } else if (c == '¦') {
+                    b.append("\\¦");
+                } else {
+                    b.append(c);
+                }
+            }
+            pattern = "" + b.toString();
+            final NonNullPair<String, boolean[]> p = SkriptParser.validatePattern(pattern);
+            if (p == null)
+                return false;
+            this.pattern = p.getFirst();
+            plurals = p.getSecond();
+        } else {
+            c = ((Literal<ClassInfo<?>>) exprs[1]).getSingle();
+            if (c.getC() == String.class) {
+                Skript.error("Parsing as text is useless as only things that are already text may be parsed");
+                return false;
+            }
+            final Parser<?> p = c.getParser();
+            if (p == null || !p.canParse(ParseContext.COMMAND)) { // TODO special parse context?
+                Skript.error("Text cannot be parsed as " + c.getName().withIndefiniteArticle(), ErrorQuality.SEMANTIC_ERROR);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    @Nullable
+    protected Object[] get(final Event e) {
+        final String t = text.getSingle(e);
+        if (t == null)
+            return null;
+        final ParseLogHandler h = SkriptLogger.startParseLogHandler();
+        try {
+            if (c != null) {
+                final Parser<?> p = c.getParser();
+                assert p != null; // checked in init()
+                final Object o = p.parse(t, ParseContext.COMMAND);
+                if (o != null) {
+                    final Object[] one = (Object[]) Array.newInstance(c.getC(), 1);
+                    one[0] = o;
+                    return one;
+                }
+            } else {
+                assert pattern != null && plurals != null;
+                final ParseResult r = SkriptParser.parse(t, pattern);
+                if (r != null) {
+                    assert plurals.length == r.exprs.length;
+                    int resultCount = 0;
+                    for (final Expression<?> expr : r.exprs) {
+                        if (expr != null) // Ignore missing optional parts
+                            resultCount++;
+                    }
+
+                    final Object[] os = new Object[resultCount];
+                    for (int i = 0, slot = 0; i < r.exprs.length; i++) {
+                        if (r.exprs[i] != null)
+                            os[slot++] = plurals[i] ? r.exprs[i].getArray(null) : r.exprs[i].getSingle(null);
+                    }
+                    return os;
+                }
+            }
+            final LogEntry err = h.getError();
+            lastError = err != null ? err.getMessage() : null;
+            return null;
+        } finally {
+            h.clear();
+            h.printLog();
+        }
+    }
+
+    @Override
+    public boolean isSingle() {
+        return pattern == null;
+    }
+
+    @Override
+    public Class<?> getReturnType() {
+        return c != null ? c.getC() : Object[].class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return text.toString(e, debug) + " parsed as " + (c != null ? c.toString(Language.F_INDEFINITE_ARTICLE) : pattern);
+    }
+
 }

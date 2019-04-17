@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.classes;
@@ -32,30 +32,30 @@ import java.io.StreamCorruptedException;
  * @author Peter Güttinger
  */
 public class YggdrasilSerializer<T extends YggdrasilSerializable> extends Serializer<T> {
-	
-	@Override
-	public Fields serialize(final T o) throws NotSerializableException {
-		if (o instanceof YggdrasilExtendedSerializable)
-			return ((YggdrasilExtendedSerializable) o).serialize();
-		return new Fields(o);
-	}
-	
-	@Override
-	public void deserialize(final T o, final Fields f) throws StreamCorruptedException, NotSerializableException {
-		if (o instanceof YggdrasilExtendedSerializable)
-			((YggdrasilExtendedSerializable) o).deserialize(f);
-		else
-			f.setFields(o);
-	}
-	
-	@Override
-	public boolean mustSyncDeserialization() {
-		return false;
-	}
-	
-	@Override
-	public boolean canBeInstantiated() {
-		return true;
-	}
-	
+
+    @Override
+    public Fields serialize(final T o) throws NotSerializableException {
+        if (o instanceof YggdrasilExtendedSerializable)
+            return ((YggdrasilExtendedSerializable) o).serialize();
+        return new Fields(o);
+    }
+
+    @Override
+    public void deserialize(final T o, final Fields f) throws StreamCorruptedException, NotSerializableException {
+        if (o instanceof YggdrasilExtendedSerializable)
+            ((YggdrasilExtendedSerializable) o).deserialize(f);
+        else
+            f.setFields(o);
+    }
+
+    @Override
+    public boolean mustSyncDeserialization() {
+        return false;
+    }
+
+    @Override
+    public boolean canBeInstantiated() {
+        return true;
+    }
+
 }

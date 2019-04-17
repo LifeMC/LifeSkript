@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -28,60 +28,58 @@ import java.util.NoSuchElementException;
  * An iterator that iterates over all elements of several iterables.
  * <p>
  * Elements are removable from this iterator if the source iterables support element removal, unless removal is blocked on creation.
- * 
+ *
  * @author Peter Güttinger
  */
 public class CombinedIterator<T> implements Iterator<T> {
-	
-	private final Iterator<? extends Iterable<T>> iterators;
-	private final boolean removable;
-	
-	public CombinedIterator(final Iterator<? extends Iterable<T>> iterators) {
-		this(iterators, true);
-	}
-	
-	public CombinedIterator(final Iterator<? extends Iterable<T>> iterators, final boolean removable) {
-		this.iterators = iterators;
-		this.removable = removable;
-	}
-	
-	@Nullable
-	private Iterator<T> current;
-	
-	@SuppressWarnings("null")
-	@Override
-	public boolean hasNext() {
-		while ((current == null || !current.hasNext()) && iterators.hasNext()) {
-			current = iterators.next().iterator();
-		}
-		return current != null && current.hasNext();
-	}
-	
-	/**
-	 * The iterator that returned the last element (stored for possible removal of said element)
-	 */
-	@Nullable
-	private Iterator<T> last;
-	
-	@Nullable
-	@Override
-	public T next() {
-		if (!hasNext())
-			throw new NoSuchElementException();
-		final Iterator<T> current = this.current;
-		assert current != null;
-		last = current;
-		return current.next();
-	}
-	
-	@Override
-	public void remove() {
-		if (!removable)
-			throw new UnsupportedOperationException();
-		if (last != null)
-			last.remove();
-		else
-			throw new IllegalStateException();
-	}
-	
+
+    private final Iterator<? extends Iterable<T>> iterators;
+    private final boolean removable;
+    @Nullable
+    private Iterator<T> current;
+    /**
+     * The iterator that returned the last element (stored for possible removal of said element)
+     */
+    @Nullable
+    private Iterator<T> last;
+
+    public CombinedIterator(final Iterator<? extends Iterable<T>> iterators) {
+        this(iterators, true);
+    }
+
+    public CombinedIterator(final Iterator<? extends Iterable<T>> iterators, final boolean removable) {
+        this.iterators = iterators;
+        this.removable = removable;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public boolean hasNext() {
+        while ((current == null || !current.hasNext()) && iterators.hasNext()) {
+            current = iterators.next().iterator();
+        }
+        return current != null && current.hasNext();
+    }
+
+    @Nullable
+    @Override
+    public T next() {
+        if (!hasNext())
+            throw new NoSuchElementException();
+        final Iterator<T> current = this.current;
+        assert current != null;
+        last = current;
+        return current.next();
+    }
+
+    @Override
+    public void remove() {
+        if (!removable)
+            throw new UnsupportedOperationException();
+        if (last != null)
+            last.remove();
+        else
+            throw new IllegalStateException();
+    }
+
 }

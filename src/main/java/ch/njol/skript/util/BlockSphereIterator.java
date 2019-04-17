@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -32,15 +32,15 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public class BlockSphereIterator extends CheckedIterator<Block> {
-	
-	public BlockSphereIterator(final Location center, final double radius) {
-		super(new AABB(center, radius + 0.5001, radius + 0.5001, radius + 0.5001).iterator(), new NullableChecker<Block>() {
-			private final double rSquared = radius * radius * Skript.EPSILON_MULT;
-			
-			@Override
-			public boolean check(final @Nullable Block b) {
-				return b != null && center.distanceSquared(b.getLocation().add(0.5, 0.5, 0.5)) < rSquared;
-			}
-		});
-	}
+
+    public BlockSphereIterator(final Location center, final double radius) {
+        super(new AABB(center, radius + 0.5001, radius + 0.5001, radius + 0.5001).iterator(), new NullableChecker<Block>() {
+            private final double rSquared = radius * radius * Skript.EPSILON_MULT;
+
+            @Override
+            public boolean check(final @Nullable Block b) {
+                return b != null && center.distanceSquared(b.getLocation().add(0.5, 0.5, 0.5)) < rSquared;
+            }
+        });
+    }
 }

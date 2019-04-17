@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * @author Peter Güttinger
  */
 public interface Predicate<T> {
-	
-	boolean test(final @Nullable T paramT);
-	
+
+    boolean test(final @Nullable T paramT);
+
 }

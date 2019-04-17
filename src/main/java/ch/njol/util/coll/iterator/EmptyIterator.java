@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -28,37 +28,37 @@ import java.util.NoSuchElementException;
  * @author Peter Güttinger
  */
 public final class EmptyIterator<T> implements Iterator<T> {
-	
-	public final static EmptyIterator<Object> instance = new EmptyIterator<Object>();
-	
-	@SuppressWarnings("unchecked")
-	public static <T> EmptyIterator<T> get() {
-		return (EmptyIterator<T>) instance;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return false;
-	}
-	
-	@Override
-	public T next() {
-		throw new NoSuchElementException();
-	}
-	
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Override
-	public boolean equals(final @Nullable Object obj) {
-		return obj instanceof EmptyIterator;
-	}
-	
-	@Override
-	public int hashCode() {
-		return 0;
-	}
-	
+
+    public final static EmptyIterator<Object> instance = new EmptyIterator<Object>();
+
+    @SuppressWarnings("unchecked")
+    public static <T> EmptyIterator<T> get() {
+        return (EmptyIterator<T>) instance;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return false;
+    }
+
+    @Override
+    public T next() {
+        throw new NoSuchElementException();
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        return obj instanceof EmptyIterator;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
 }

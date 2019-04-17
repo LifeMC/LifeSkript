@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks.regions.expressions;
@@ -51,78 +51,78 @@ import java.util.NoSuchElementException;
 @Examples({"loop all blocks in the region {arena.%{faction.%player%}%}:", "	clear the loop-block"})
 @Since("2.1")
 public final class ExprBlocksInRegion extends SimpleExpression<Block> {
-	static {
-		Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Region> regions;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		regions = (Expression<Region>) exprs[0];
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	protected Block[] get(final Event e) {
-		final Iterator<Block> iter = iterator(e);
-		final ArrayList<Block> r = new ArrayList<Block>();
-		while (iter.hasNext())
-			r.add(iter.next());
-		return r.toArray(new Block[0]);
-	}
-	
-	@Override
-	@NonNull
-	public Iterator<Block> iterator(final Event e) {
-		final Region[] rs = regions.getArray(e);
-		if (rs.length == 0)
-			return EmptyIterator.get();
-		return new Iterator<Block>() {
-			private Iterator<Block> current = rs[0].getBlocks();
-			private final Iterator<Region> iter = new ArrayIterator<Region>(rs, 1);
-			
-			@Override
-			public boolean hasNext() {
-				while (!current.hasNext() && iter.hasNext()) {
-					final Region r = iter.next();
-					if (r != null)
-						current = r.getBlocks();
-				}
-				return current.hasNext();
-			}
-			
-			@SuppressWarnings("null")
-			@Override
-			public Block next() {
-				if (!hasNext())
-					throw new NoSuchElementException();
-				return current.next();
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return false;
-	}
-	
-	@Override
-	public Class<? extends Block> getReturnType() {
-		return Block.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "all blocks in " + regions.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<Region> regions;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        regions = (Expression<Region>) exprs[0];
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected Block[] get(final Event e) {
+        final Iterator<Block> iter = iterator(e);
+        final ArrayList<Block> r = new ArrayList<Block>();
+        while (iter.hasNext())
+            r.add(iter.next());
+        return r.toArray(new Block[0]);
+    }
+
+    @Override
+    @NonNull
+    public Iterator<Block> iterator(final Event e) {
+        final Region[] rs = regions.getArray(e);
+        if (rs.length == 0)
+            return EmptyIterator.get();
+        return new Iterator<Block>() {
+            private final Iterator<Region> iter = new ArrayIterator<Region>(rs, 1);
+            private Iterator<Block> current = rs[0].getBlocks();
+
+            @Override
+            public boolean hasNext() {
+                while (!current.hasNext() && iter.hasNext()) {
+                    final Region r = iter.next();
+                    if (r != null)
+                        current = r.getBlocks();
+                }
+                return current.hasNext();
+            }
+
+            @SuppressWarnings("null")
+            @Override
+            public Block next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+                return current.next();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
+    @Override
+    public Class<? extends Block> getReturnType() {
+        return Block.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "all blocks in " + regions.toString(e, debug);
+    }
+
 }

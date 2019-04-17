@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -38,69 +38,68 @@ import java.util.Map;
  */
 @SuppressWarnings("deprecation")
 public final class PotionEffectUtils {
-	
-	private PotionEffectUtils() {
-		throw new UnsupportedOperationException();
-	}
-	
-	final static Map<String, PotionEffectType> types = new HashMap<String, PotionEffectType>();
-	
-	final static String[] names = new String[getMaxPotionId() + 1];
-	
-	// MCPC+ workaround
-	private static int getMaxPotionId() {
-		int i = 0;
-		for (final PotionEffectType t : PotionEffectType.values()) {
-			if (t != null && t.getId() > i)
-				i = t.getId();
-		}
-		return i;
-	}
-	
-	static {
-		Language.addListener(new LanguageChangeListener() {
-			@Override
-			public void onLanguageChange() {
-				types.clear();
-				for (final PotionEffectType t : PotionEffectType.values()) {
-					if (t == null)
-						continue;
-					final String[] ls = Language.getList("potions." + t.getName());
-					names[t.getId()] = ls[0];
-					for (final String l : ls) {
-						types.put(l.toLowerCase(), t);
-					}
-				}
-			}
-		});
-	}
-	
-	@Nullable
-	public static PotionEffectType parseType(final String s) {
-		return types.get(s.toLowerCase());
-	}
-	
-	@SuppressWarnings("null")
-	public static String toString(final PotionEffectType t) {
-		return names[t.getId()];
-	}
-	
-	// REMIND flags?
-	@SuppressWarnings("null")
-	public static String toString(final PotionEffectType t, final int flags) {
-		return names[t.getId()];
-	}
-	
-	public static String[] getNames() {
-		return names;
-	}
-	
-	public static short guessData(final ThrownPotion p) {
-		if (p.getEffects().size() == 1) {
-			final PotionEffect e = p.getEffects().iterator().next();
-			final Potion d = new Potion(PotionType.getByEffect(e.getType())).splash();
-			return d.toDamageValue();
-		}
-		return 0;
-	}
+
+    final static Map<String, PotionEffectType> types = new HashMap<String, PotionEffectType>();
+    final static String[] names = new String[getMaxPotionId() + 1];
+
+    static {
+        Language.addListener(new LanguageChangeListener() {
+            @Override
+            public void onLanguageChange() {
+                types.clear();
+                for (final PotionEffectType t : PotionEffectType.values()) {
+                    if (t == null)
+                        continue;
+                    final String[] ls = Language.getList("potions." + t.getName());
+                    names[t.getId()] = ls[0];
+                    for (final String l : ls) {
+                        types.put(l.toLowerCase(), t);
+                    }
+                }
+            }
+        });
+    }
+
+    private PotionEffectUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    // MCPC+ workaround
+    private static int getMaxPotionId() {
+        int i = 0;
+        for (final PotionEffectType t : PotionEffectType.values()) {
+            if (t != null && t.getId() > i)
+                i = t.getId();
+        }
+        return i;
+    }
+
+    @Nullable
+    public static PotionEffectType parseType(final String s) {
+        return types.get(s.toLowerCase());
+    }
+
+    @SuppressWarnings("null")
+    public static String toString(final PotionEffectType t) {
+        return names[t.getId()];
+    }
+
+    // REMIND flags?
+    @SuppressWarnings("null")
+    public static String toString(final PotionEffectType t, final int flags) {
+        return names[t.getId()];
+    }
+
+    public static String[] getNames() {
+        return names;
+    }
+
+    public static short guessData(final ThrownPotion p) {
+        if (p.getEffects().size() == 1) {
+            final PotionEffect e = p.getEffects().iterator().next();
+            final Potion d = new Potion(PotionType.getByEffect(e.getType())).splash();
+            return d.toDamageValue();
+        }
+        return 0;
+    }
 }

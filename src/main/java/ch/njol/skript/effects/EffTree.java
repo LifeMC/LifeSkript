@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -44,39 +44,39 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"grow a tall redwood tree above the clicked block"})
 @Since("1.0")
 public class EffTree extends Effect {
-	
-	static {
-		Skript.registerEffect(EffTree.class, "(grow|create|generate) tree [of type %structuretype%] %directions% %locations%", "(grow|create|generate) %structuretype% [tree] %directions% %locations%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Location> blocks;
-	@SuppressWarnings("null")
-	private Expression<StructureType> type;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		type = (Expression<StructureType>) exprs[0];
-		blocks = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public void execute(final Event e) {
-		final StructureType type = this.type.getSingle(e);
-		if (type == null)
-			return;
-		for (final Location l : blocks.getArray(e)) {
-			assert l != null : blocks;
-			type.grow(l.getBlock());
-		}
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "grow tree of type " + type.toString(e, debug) + " " + blocks.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerEffect(EffTree.class, "(grow|create|generate) tree [of type %structuretype%] %directions% %locations%", "(grow|create|generate) %structuretype% [tree] %directions% %locations%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<Location> blocks;
+    @SuppressWarnings("null")
+    private Expression<StructureType> type;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        type = (Expression<StructureType>) exprs[0];
+        blocks = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public void execute(final Event e) {
+        final StructureType type = this.type.getSingle(e);
+        if (type == null)
+            return;
+        for (final Location l : blocks.getArray(e)) {
+            assert l != null : blocks;
+            type.grow(l.getBlock());
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "grow tree of type " + type.toString(e, debug) + " " + blocks.toString(e, debug);
+    }
+
 }

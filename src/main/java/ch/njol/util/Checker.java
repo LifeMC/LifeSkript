@@ -11,16 +11,16 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
 
 public interface Checker<T> {
-	
-	boolean check(final T o);
-	
+
+    boolean check(final T o);
+
 }

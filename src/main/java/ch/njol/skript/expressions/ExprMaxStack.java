@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -36,23 +36,23 @@ import org.bukkit.inventory.ItemStack;
 @Examples("send \"You can only pick up %max stack size of player's tool% of %type of (player's tool)%\" to player")
 @Since("2.1")
 public class ExprMaxStack extends SimplePropertyExpression<ItemStack, Integer> {
-	static {
-		register(ExprMaxStack.class, Integer.class, "max[imum] stack[[ ]size]", "itemstack");
-	}
-	
-	@Override
-	public Class<Integer> getReturnType() {
-		return Integer.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "maximum stack size";
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public Integer convert(final ItemStack i) {
-		return i.getMaxStackSize();
-	}
+    static {
+        register(ExprMaxStack.class, Integer.class, "max[imum] stack[[ ]size]", "itemstack");
+    }
+
+    @Override
+    public Class<Integer> getReturnType() {
+        return Integer.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "maximum stack size";
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public Integer convert(final ItemStack i) {
+        return i.getMaxStackSize();
+    }
 }

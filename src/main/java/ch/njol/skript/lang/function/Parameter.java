@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang.function;
@@ -31,58 +31,54 @@ import ch.njol.skript.util.Utils;
 import org.eclipse.jdt.annotation.Nullable;
 
 public final class Parameter<T> {
-	
-	final String name;
-	
-	final ClassInfo<T> type;
-	
-	@Nullable
-	final Expression<? extends T> def;
-	
-	final boolean single;
-	final boolean isNone;
-	
-	@SuppressWarnings("null")
-	public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
-		this.name = name != null ? name.toLowerCase() : null;
-		this.type = type;
-		this.def = def;
-		this.single = single;
-		this.isNone = false;
-	}
-	
-	@SuppressWarnings("null")
-	public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
-		this.name = name != null ? name.toLowerCase() : null;
-		this.type = type;
-		this.def = def;
-		this.single = single;
-		this.isNone = isNone;
-	}
-	
-	public ClassInfo<T> getType() {
-		return type;
-	}
-	
-	@Nullable
-	public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
-		if (def != null) {
-			final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
-			return newInstance(name, type, single, def, isNone);
-		} else {
-			return newInstance(name, type, single, def, false);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Nullable
-	public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
-		if (!Variable.isValidVariableName(name, false, false)) {
-			Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
-			return null;
-		}
-		Expression<? extends T> d = null;
-		if (def != null) {
+
+    final String name;
+
+    final ClassInfo<T> type;
+
+    @Nullable
+    final Expression<? extends T> def;
+
+    final boolean single;
+    final boolean isNone;
+
+    @SuppressWarnings("null")
+    public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
+        this.name = name != null ? name.toLowerCase() : null;
+        this.type = type;
+        this.def = def;
+        this.single = single;
+        this.isNone = false;
+    }
+
+    @SuppressWarnings("null")
+    public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
+        this.name = name != null ? name.toLowerCase() : null;
+        this.type = type;
+        this.def = def;
+        this.single = single;
+        this.isNone = isNone;
+    }
+
+    @Nullable
+    public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
+        if (def != null) {
+            final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
+            return newInstance(name, type, single, def, isNone);
+        } else {
+            return newInstance(name, type, single, def, false);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
+        if (!Variable.isValidVariableName(name, false, false)) {
+            Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
+            return null;
+        }
+        Expression<? extends T> d = null;
+        if (def != null) {
 //			if (def.startsWith("%") && def.endsWith("%")) {
 //				final RetainingLogHandler log = SkriptLogger.startRetainingLog();
 //				try {
@@ -96,34 +92,38 @@ public final class Parameter<T> {
 //					log.stop();
 //				}
 //			} else {
-			final RetainingLogHandler log = SkriptLogger.startRetainingLog();
-			try {
-				if (type.getC() == String.class) {
-					if (def.startsWith("\"") && def.endsWith("\""))
-						d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
-					else
-						d = (Expression<? extends T>) new SimpleLiteral<String>(def, false);
-				} else {
-					d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
-				}
-				if (d == null) {
-					if (!isNone) {
-						log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
-						return null;
-					}
-				}
-				log.printLog();
-			} finally {
-				log.stop();
-			}
+            final RetainingLogHandler log = SkriptLogger.startRetainingLog();
+            try {
+                if (type.getC() == String.class) {
+                    if (def.startsWith("\"") && def.endsWith("\""))
+                        d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
+                    else
+                        d = (Expression<? extends T>) new SimpleLiteral<String>(def, false);
+                } else {
+                    d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
+                }
+                if (d == null) {
+                    if (!isNone) {
+                        log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
+                        return null;
+                    }
+                }
+                log.printLog();
+            } finally {
+                log.stop();
+            }
 //			}
-		}
-		return new Parameter<T>(name, type, single, d, isNone);
-	}
-	
-	@Override
-	public String toString() {
-		return name + ": " + Utils.toEnglishPlural(type.getCodeName(), !single) + (def != null ? " = " + def.toString(null, true) : "");
-	}
-	
+        }
+        return new Parameter<T>(name, type, single, d, isNone);
+    }
+
+    public ClassInfo<T> getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + Utils.toEnglishPlural(type.getCodeName(), !single) + (def != null ? " = " + def.toString(null, true) : "");
+    }
+
 }

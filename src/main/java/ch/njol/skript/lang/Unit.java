@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -25,16 +25,16 @@ package ch.njol.skript.lang;
  * @author Peter Güttinger
  */
 public interface Unit extends Cloneable {
-	
-	int getAmount();
-	
-	void setAmount(final double amount);
-	
-	@Override
-	String toString();
-	
-	String toString(final int flags);
-	
-	Unit clone();
-	
+
+    int getAmount();
+
+    void setAmount(final double amount);
+
+    @Override
+    String toString();
+
+    String toString(final int flags);
+
+    Unit clone();
+
 }

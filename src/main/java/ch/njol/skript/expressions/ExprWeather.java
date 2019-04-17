@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -49,76 +49,76 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 @Events("weather change")
 public class ExprWeather extends PropertyExpression<World, WeatherType> {
-	static {
-		Skript.registerExpression(ExprWeather.class, WeatherType.class, ExpressionType.PROPERTY, "[the] weather [(in|of) %worlds%]", "%worlds%'[s] weather");
-	}
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		setExpr((Expression<World>) exprs[0]);
-		return true;
-	}
-	
-	@Override
-	protected WeatherType[] get(final Event e, final World[] source) {
-		return get(source, new Getter<WeatherType, World>() {
-			@Override
-			public WeatherType get(final World w) {
-				if (getTime() >= 0 && e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e))
-					return WeatherType.fromEvent((WeatherEvent) e);
-				else
-					return WeatherType.fromWorld(w);
-			}
-		});
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the weather in " + getExpr().toString(e, debug);
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode == ChangeMode.DELETE || mode == ChangeMode.SET)
-			return CollectionUtils.array(WeatherType.class);
-		return null;
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-		final WeatherType t = delta == null ? WeatherType.CLEAR : (WeatherType) delta[0];
-		for (final World w : getExpr().getArray(e)) {
-			assert w != null : getExpr();
-			if (getTime() >= 0 && e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e)) {
-				if (e instanceof WeatherChangeEvent) {
-					if (((WeatherChangeEvent) e).toWeatherState() && t == WeatherType.CLEAR)
-						((WeatherChangeEvent) e).setCancelled(true);
-					if (((WeatherChangeEvent) e).getWorld().isThundering() != (t == WeatherType.THUNDER))
-						((WeatherChangeEvent) e).getWorld().setThundering(t == WeatherType.THUNDER);
-				} else if (e instanceof ThunderChangeEvent) {
-					if (((ThunderChangeEvent) e).toThunderState() && t != WeatherType.THUNDER)
-						((ThunderChangeEvent) e).setCancelled(true);
-					if (((ThunderChangeEvent) e).getWorld().hasStorm() == (t == WeatherType.CLEAR))
-						((ThunderChangeEvent) e).getWorld().setStorm(t != WeatherType.CLEAR);
-				}
-			} else {
-				t.setWeather(w);
-			}
-		}
-	}
-	
-	@Override
-	public Class<WeatherType> getReturnType() {
-		return WeatherType.class;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean setTime(final int time) {
-		return super.setTime(time, getExpr(), WeatherChangeEvent.class, ThunderChangeEvent.class);
-	}
-	
+    static {
+        Skript.registerExpression(ExprWeather.class, WeatherType.class, ExpressionType.PROPERTY, "[the] weather [(in|of) %worlds%]", "%worlds%'[s] weather");
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        setExpr((Expression<World>) exprs[0]);
+        return true;
+    }
+
+    @Override
+    protected WeatherType[] get(final Event e, final World[] source) {
+        return get(source, new Getter<WeatherType, World>() {
+            @Override
+            public WeatherType get(final World w) {
+                if (getTime() >= 0 && e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e))
+                    return WeatherType.fromEvent((WeatherEvent) e);
+                else
+                    return WeatherType.fromWorld(w);
+            }
+        });
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the weather in " + getExpr().toString(e, debug);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode == ChangeMode.DELETE || mode == ChangeMode.SET)
+            return CollectionUtils.array(WeatherType.class);
+        return null;
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+        final WeatherType t = delta == null ? WeatherType.CLEAR : (WeatherType) delta[0];
+        for (final World w : getExpr().getArray(e)) {
+            assert w != null : getExpr();
+            if (getTime() >= 0 && e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e)) {
+                if (e instanceof WeatherChangeEvent) {
+                    if (((WeatherChangeEvent) e).toWeatherState() && t == WeatherType.CLEAR)
+                        ((WeatherChangeEvent) e).setCancelled(true);
+                    if (((WeatherChangeEvent) e).getWorld().isThundering() != (t == WeatherType.THUNDER))
+                        ((WeatherChangeEvent) e).getWorld().setThundering(t == WeatherType.THUNDER);
+                } else if (e instanceof ThunderChangeEvent) {
+                    if (((ThunderChangeEvent) e).toThunderState() && t != WeatherType.THUNDER)
+                        ((ThunderChangeEvent) e).setCancelled(true);
+                    if (((ThunderChangeEvent) e).getWorld().hasStorm() == (t == WeatherType.CLEAR))
+                        ((ThunderChangeEvent) e).getWorld().setStorm(t != WeatherType.CLEAR);
+                }
+            } else {
+                t.setWeather(w);
+            }
+        }
+    }
+
+    @Override
+    public Class<WeatherType> getReturnType() {
+        return WeatherType.class;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean setTime(final int time) {
+        return super.setTime(time, getExpr(), WeatherChangeEvent.class, ThunderChangeEvent.class);
+    }
+
 }

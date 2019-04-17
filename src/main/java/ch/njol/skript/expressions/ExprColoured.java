@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -45,38 +45,38 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on chat:", "	set message to coloured message", "command /fade <player>:", "	trigger:", "		set display name of the player-argument to uncoloured display name of the player-argument"})
 @Since("2.0")
 public class ExprColoured extends PropertyExpression<String, String> {
-	static {
-		Skript.registerExpression(ExprColoured.class, String.class, ExpressionType.COMBINED, "(colo[u]r-|colo[u]red )%strings%", "(un|non)[-](colo[u]r-|colo[u]red )%strings%");
-	}
-	
-	boolean color;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		setExpr((Expression<? extends String>) exprs[0]);
-		color = matchedPattern == 0;
-		return true;
-	}
-	
-	@Override
-	protected String[] get(final Event e, final String[] source) {
-		return get(source, new Converter<String, String>() {
-			@Override
-			public String convert(final String s) {
-				return color ? Utils.replaceChatStyles(s) : "" + ChatColor.stripColor(s);
-			}
-		});
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return (color ? "" : "un") + "coloured " + getExpr().toString(e, debug);
-	}
-	
+    static {
+        Skript.registerExpression(ExprColoured.class, String.class, ExpressionType.COMBINED, "(colo[u]r-|colo[u]red )%strings%", "(un|non)[-](colo[u]r-|colo[u]red )%strings%");
+    }
+
+    boolean color;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        setExpr((Expression<? extends String>) exprs[0]);
+        color = matchedPattern == 0;
+        return true;
+    }
+
+    @Override
+    protected String[] get(final Event e, final String[] source) {
+        return get(source, new Converter<String, String>() {
+            @Override
+            public String convert(final String s) {
+                return color ? Utils.replaceChatStyles(s) : "" + ChatColor.stripColor(s);
+            }
+        });
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return (color ? "" : "un") + "coloured " + getExpr().toString(e, debug);
+    }
+
 }

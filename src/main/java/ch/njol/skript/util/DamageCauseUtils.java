@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -28,24 +28,24 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class DamageCauseUtils {
-	
-	private DamageCauseUtils() {
-		throw new UnsupportedOperationException();
-	}
-	
-	private final static EnumUtils<DamageCause> util = new EnumUtils<DamageCause>(DamageCause.class, "damage causes");
-	
-	@Nullable
-	public static DamageCause parse(final String s) {
-		return util.parse(s);
-	}
-	
-	public static String toString(final DamageCause dc, final int flags) {
-		return util.toString(dc, flags);
-	}
-	
-	public static String getAllNames() {
-		return util.getAllNames();
-	}
-	
+
+    private final static EnumUtils<DamageCause> util = new EnumUtils<DamageCause>(DamageCause.class, "damage causes");
+
+    private DamageCauseUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Nullable
+    public static DamageCause parse(final String s) {
+        return util.parse(s);
+    }
+
+    public static String toString(final DamageCause dc, final int flags) {
+        return util.toString(dc, flags);
+    }
+
+    public static String getAllNames() {
+        return util.getAllNames();
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript;
@@ -61,203 +61,169 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 final public class ScriptLoader {
-	private ScriptLoader() {}
-	
-	private final static Message m_no_errors = new Message("skript.no errors"),
-			m_no_scripts = new Message("skript.no scripts");
-	private final static PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
-	
-	@Nullable
-	public static Config currentScript;
-	
-	/**
-	 * use {@link #setCurrentEvent(String, Class...)}
-	 */
-	@Nullable
-	private static String currentEventName;
-	
-	@Nullable
-	public static String getCurrentEventName() {
-		return currentEventName;
-	}
-	
-	/**
-	 * use {@link #setCurrentEvent(String, Class...)}
-	 */
-	@Nullable
-	private static Class<? extends Event>[] currentEvents;
-	
-	/**
-	 * Call {@link #deleteCurrentEvent()} after parsing
-	 * 
-	 * @param name
-	 * @param events
-	 */
-	@SafeVarargs
-	public static void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
-		currentEventName = name;
-		currentEvents = events;
-		hasDelayBefore = Kleenean.FALSE;
-	}
-	
-	public static void deleteCurrentEvent() {
-		currentEventName = null;
-		currentEvents = null;
-		hasDelayBefore = Kleenean.FALSE;
-	}
-	
-	public static final List<TriggerSection> currentSections = new ArrayList<TriggerSection>();
-	public final static List<Loop> currentLoops = new ArrayList<Loop>();
-	private final static Map<String, ItemType> currentAliases = new HashMap<String, ItemType>();
-	final static HashMap<String, String> currentOptions = new HashMap<String, String>();
-	
-	public static Map<String, ItemType> getScriptAliases() {
-		return currentAliases;
-	}
-	
-	/**
-	 * must be synchronized
-	 */
-	private final static ScriptInfo loadedScripts = new ScriptInfo();
-	
-	public static Kleenean hasDelayBefore = Kleenean.FALSE;
-	
-	public static class ScriptInfo {
-		public int files, triggers, commands, functions;
-		
-		public ScriptInfo() {}
-		
-		public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions) {
-			files = numFiles;
-			triggers = numTriggers;
-			commands = numCommands;
-			functions = numFunctions;
-		}
-		
-		public void add(final ScriptInfo other) {
-			files += other.files;
-			triggers += other.triggers;
-			commands += other.commands;
-			functions += other.functions;
-		}
-		
-		public void subtract(final ScriptInfo other) {
-			files -= other.files;
-			triggers -= other.triggers;
-			commands -= other.commands;
-			functions -= other.functions;
-		}
-	}
-	
+    public static final List<TriggerSection> currentSections = new ArrayList<TriggerSection>();
+    public final static List<Loop> currentLoops = new ArrayList<Loop>();
+    final static HashMap<String, String> currentOptions = new HashMap<String, String>();
+    private final static Message m_no_errors = new Message("skript.no errors"),
+            m_no_scripts = new Message("skript.no scripts");
+    private final static PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
+    private final static Map<String, ItemType> currentAliases = new HashMap<String, ItemType>();
+    /**
+     * must be synchronized
+     */
+    private final static ScriptInfo loadedScripts = new ScriptInfo();
+    /**
+     * Filter for enabled scripts & folders.
+     */
+    private final static FileFilter scriptFilter = new FileFilter() {
+        @Override
+        public boolean accept(final @Nullable File f) {
+            return f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
+        }
+    };
+    @Nullable
+    public static Config currentScript;
+    public static Kleenean hasDelayBefore = Kleenean.FALSE;
+    /**
+     * use {@link #setCurrentEvent(String, Class...)}
+     */
+    @Nullable
+    private static String currentEventName;
+    /**
+     * use {@link #setCurrentEvent(String, Class...)}
+     */
+    @Nullable
+    private static Class<? extends Event>[] currentEvents;
+    private static String indentation = "";
+
+    private ScriptLoader() {
+    }
+
+    @Nullable
+    public static String getCurrentEventName() {
+        return currentEventName;
+    }
+
+    /**
+     * Call {@link #deleteCurrentEvent()} after parsing
+     *
+     * @param name
+     * @param events
+     */
+    @SafeVarargs
+    public static void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
+        currentEventName = name;
+        currentEvents = events;
+        hasDelayBefore = Kleenean.FALSE;
+    }
+
+    public static void deleteCurrentEvent() {
+        currentEventName = null;
+        currentEvents = null;
+        hasDelayBefore = Kleenean.FALSE;
+    }
+
 //	private final static class SerializedScript {
 //		public SerializedScript() {}
 //
 //		public final List<Trigger> triggers = new ArrayList<Trigger>();
 //		public final List<ScriptCommand> commands = new ArrayList<ScriptCommand>();
 //	}
-	
-	private static String indentation = "";
-	
-	static ScriptInfo loadScripts() {
-		final File scriptsFolder = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
-		if (!scriptsFolder.isDirectory())
-			scriptsFolder.mkdirs();
-		
-		final Date start = new Date();
-		
-		final ScriptInfo i;
-		
-		final ErrorDescLogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler(null, null, m_no_errors.toString()));
-		try {
-			Language.setUseLocal(false);
-			
-			i = loadScripts(scriptsFolder);
-			
-			synchronized (loadedScripts) {
-				loadedScripts.add(i);
-			}
-		} finally {
-			Language.setUseLocal(true);
-			h.stop();
-		}
-		
-		if (i.files == 0)
-			Skript.warning(m_no_scripts.toString());
-		if (Skript.logNormal() && i.files > 0)
-			Skript.info(m_scripts_loaded.toString(i.files, i.triggers, i.commands, start.difference(new Date())));
-		
-		SkriptEventHandler.registerBukkitEvents();
-		
-		return i;
-	}
-	
-	/**
-	 * Filter for enabled scripts & folders.
-	 */
-	private final static FileFilter scriptFilter = new FileFilter() {
-		@Override
-		public boolean accept(final @Nullable File f) {
-			return f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
-		}
-	};
-	
-	/**
-	 * Loads enabled scripts from the specified directory and it's subdirectories.
-	 * 
-	 * @param directory
-	 * @return Info on the loaded scripts
-	 */
-	public static ScriptInfo loadScripts(final File directory) {
-		final ScriptInfo i = new ScriptInfo();
-		final boolean wasLocal = Language.setUseLocal(false);
-		try {
-			final File[] files = directory.listFiles(scriptFilter);
-			Arrays.sort(files);
-			for (final File f : files) {
-				if (f.isDirectory()) {
-					i.add(loadScripts(f));
-				} else {
-					i.add(loadScript(f));
-				}
-			}
-		} finally {
-			if (wasLocal)
-				Language.setUseLocal(true);
-		}
-		return i;
-	}
-	
-	/**
-	 * Loads the specified scripts.
-	 * 
-	 * @param files
-	 * @return Info on the loaded scripts
-	 */
-	public static ScriptInfo loadScripts(final File[] files) {
-		Arrays.sort(files);
-		final ScriptInfo i = new ScriptInfo();
-		final boolean wasLocal = Language.setUseLocal(false);
-		try {
-			for (final File f : files) {
-				assert f != null : Arrays.toString(files);
-				i.add(loadScript(f));
-			}
-		} finally {
-			if (wasLocal)
-				Language.setUseLocal(true);
-		}
-		
-		synchronized (loadedScripts) {
-			loadedScripts.add(i);
-		}
-		
-		SkriptEventHandler.registerBukkitEvents();
-		
-		return i;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static ScriptInfo loadScript(final File f) {
+
+    public static Map<String, ItemType> getScriptAliases() {
+        return currentAliases;
+    }
+
+    static ScriptInfo loadScripts() {
+        final File scriptsFolder = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
+        if (!scriptsFolder.isDirectory())
+            scriptsFolder.mkdirs();
+
+        final Date start = new Date();
+
+        final ScriptInfo i;
+
+        final ErrorDescLogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler(null, null, m_no_errors.toString()));
+        try {
+            Language.setUseLocal(false);
+
+            i = loadScripts(scriptsFolder);
+
+            synchronized (loadedScripts) {
+                loadedScripts.add(i);
+            }
+        } finally {
+            Language.setUseLocal(true);
+            h.stop();
+        }
+
+        if (i.files == 0)
+            Skript.warning(m_no_scripts.toString());
+        if (Skript.logNormal() && i.files > 0)
+            Skript.info(m_scripts_loaded.toString(i.files, i.triggers, i.commands, start.difference(new Date())));
+
+        SkriptEventHandler.registerBukkitEvents();
+
+        return i;
+    }
+
+    /**
+     * Loads enabled scripts from the specified directory and it's subdirectories.
+     *
+     * @param directory
+     * @return Info on the loaded scripts
+     */
+    public static ScriptInfo loadScripts(final File directory) {
+        final ScriptInfo i = new ScriptInfo();
+        final boolean wasLocal = Language.setUseLocal(false);
+        try {
+            final File[] files = directory.listFiles(scriptFilter);
+            Arrays.sort(files);
+            for (final File f : files) {
+                if (f.isDirectory()) {
+                    i.add(loadScripts(f));
+                } else {
+                    i.add(loadScript(f));
+                }
+            }
+        } finally {
+            if (wasLocal)
+                Language.setUseLocal(true);
+        }
+        return i;
+    }
+
+    /**
+     * Loads the specified scripts.
+     *
+     * @param files
+     * @return Info on the loaded scripts
+     */
+    public static ScriptInfo loadScripts(final File[] files) {
+        Arrays.sort(files);
+        final ScriptInfo i = new ScriptInfo();
+        final boolean wasLocal = Language.setUseLocal(false);
+        try {
+            for (final File f : files) {
+                assert f != null : Arrays.toString(files);
+                i.add(loadScript(f));
+            }
+        } finally {
+            if (wasLocal)
+                Language.setUseLocal(true);
+        }
+
+        synchronized (loadedScripts) {
+            loadedScripts.add(i);
+        }
+
+        SkriptEventHandler.registerBukkitEvents();
+
+        return i;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static ScriptInfo loadScript(final File f) {
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -313,217 +279,217 @@ final public class ScriptLoader {
 //				}
 //			}
 //		}
-		try {
-			
-			@Nullable
-			Date startDate = null;
-			
-			if (Skript.logHigh())
-				startDate = new Date();
-			
-			final Config config = new Config(f, true, false, ":");
-			
-			if (SkriptConfig.keepConfigsLoaded.value())
-				SkriptConfig.configs.add(config);
-			
-			int numTriggers = 0;
-			int numCommands = 0;
-			int numFunctions = 0;
-			
-			currentAliases.clear();
-			currentOptions.clear();
-			currentScript = config;
-			
+        try {
+
+            @Nullable
+            Date startDate = null;
+
+            if (Skript.logHigh())
+                startDate = new Date();
+
+            final Config config = new Config(f, true, false, ":");
+
+            if (SkriptConfig.keepConfigsLoaded.value())
+                SkriptConfig.configs.add(config);
+
+            int numTriggers = 0;
+            int numCommands = 0;
+            int numFunctions = 0;
+
+            currentAliases.clear();
+            currentOptions.clear();
+            currentScript = config;
+
 //			final SerializedScript script = new SerializedScript();
-			
-			final CountingLogHandler numErrors = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
-			
-			try {
-				for (final Node cnode : config.getMainNode()) {
-					if (!(cnode instanceof SectionNode)) {
-						Skript.error("invalid line - all code has to be put into triggers");
-						continue;
-					}
-					
-					final SectionNode node = (SectionNode) cnode;
-					String event = node.getKey();
-					if (event == null)
-						continue;
-					
-					if ("aliases".equalsIgnoreCase(event)) {
-						node.convertToEntries(0, "=");
-						for (final Node n : node) {
-							if (!(n instanceof EntryNode)) {
-								Skript.error("invalid line in aliases section");
-								continue;
-							}
-							final ItemType t = Aliases.parseAlias(((EntryNode) n).getValue());
-							if (t == null)
-								continue;
-							currentAliases.put(((EntryNode) n).getKey().toLowerCase(), t);
-						}
-						continue;
-					} else if ("options".equalsIgnoreCase(event)) {
-						node.convertToEntries(0);
-						for (final Node n : node) {
-							if (!(n instanceof EntryNode)) {
-								Skript.error("invalid line in options");
-								continue;
-							}
-							currentOptions.put(((EntryNode) n).getKey(), ((EntryNode) n).getValue());
-						}
-						continue;
-					} else if ("variables".equalsIgnoreCase(event)) {
-						node.convertToEntries(0, "=");
-						for (final Node n : node) {
-							if (!(n instanceof EntryNode)) {
-								Skript.error("Invalid line in variables section");
-								continue;
-							}
-							String name = ((EntryNode) n).getKey().toLowerCase(Locale.ENGLISH);
-							if (name.startsWith("{") && name.endsWith("}"))
-								name = "" + name.substring(1, name.length() - 1);
-							final String var = name;
-							name = StringUtils.replaceAll(name, "%(.+)?%", new Callback<String, Matcher>() {
-								@Override
-								@Nullable
-								public String run(final Matcher m) {
-									if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
-										Skript.error("'" + var + "' is not a valid name for a default variable");
-										return null;
-									}
-									final ClassInfo<?> ci = Classes.getClassInfoFromUserInput("" + m.group(1));
-									if (ci == null) {
-										Skript.error("Can't understand the type '" + m.group(1) + "'");
-										return null;
-									}
-									return "<" + ci.getCodeName() + ">";
-								}
-							});
-							if (name == null) {
-								continue;
-							} else if (name.contains("%")) {
-								Skript.error("Invalid use of percent signs in variable name");
-								continue;
-							}
-							// Variables feature is for setting default variables,
-							// Not a shortcut for setting variables at startup.
-							// So if variable already exists, do nothing and continue.
-							if (Variables.getVariable(name, null, false) != null)
-								continue;
-							Object o;
-							final ParseLogHandler log = SkriptLogger.startParseLogHandler();
-							try {
-								o = Classes.parseSimple(((EntryNode) n).getValue(), Object.class, ParseContext.SCRIPT);
-								if (o == null) {
-									log.printError("Can't understand the value '" + ((EntryNode) n).getValue() + "'");
-									continue;
-								}
-								log.printLog();
-							} finally {
-								log.stop();
-							}
-							final ClassInfo<?> ci = Classes.getSuperClassInfo(o.getClass());
-							if (ci.getSerializer() == null) {
-								Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
-								continue;
-							} else if (ci.getSerializeAs() != null) {
-								final ClassInfo<?> as = Classes.getExactClassInfo(ci.getSerializeAs());
-								if (as == null) {
-									assert false : ci;
-									continue;
-								}
-								o = Converters.convert(o, as.getC());
-								if (o == null) {
-									Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
-									continue;
-								}
-							}
-							Variables.setVariable(name, o, null, false);
-						}
-						continue;
-					}
-					
-					if (!SkriptParser.validateLine(event))
-						continue;
-					
-					if (event.toLowerCase().startsWith("command ")) {
-						
-						setCurrentEvent("command", CommandEvent.class);
-						
-						final ScriptCommand c = Commands.loadCommand(node);
-						if (c != null) {
-							numCommands++;
+
+            final CountingLogHandler numErrors = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
+
+            try {
+                for (final Node cnode : config.getMainNode()) {
+                    if (!(cnode instanceof SectionNode)) {
+                        Skript.error("invalid line - all code has to be put into triggers");
+                        continue;
+                    }
+
+                    final SectionNode node = (SectionNode) cnode;
+                    String event = node.getKey();
+                    if (event == null)
+                        continue;
+
+                    if ("aliases".equalsIgnoreCase(event)) {
+                        node.convertToEntries(0, "=");
+                        for (final Node n : node) {
+                            if (!(n instanceof EntryNode)) {
+                                Skript.error("invalid line in aliases section");
+                                continue;
+                            }
+                            final ItemType t = Aliases.parseAlias(((EntryNode) n).getValue());
+                            if (t == null)
+                                continue;
+                            currentAliases.put(n.getKey().toLowerCase(), t);
+                        }
+                        continue;
+                    } else if ("options".equalsIgnoreCase(event)) {
+                        node.convertToEntries(0);
+                        for (final Node n : node) {
+                            if (!(n instanceof EntryNode)) {
+                                Skript.error("invalid line in options");
+                                continue;
+                            }
+                            currentOptions.put(n.getKey(), ((EntryNode) n).getValue());
+                        }
+                        continue;
+                    } else if ("variables".equalsIgnoreCase(event)) {
+                        node.convertToEntries(0, "=");
+                        for (final Node n : node) {
+                            if (!(n instanceof EntryNode)) {
+                                Skript.error("Invalid line in variables section");
+                                continue;
+                            }
+                            String name = n.getKey().toLowerCase(Locale.ENGLISH);
+                            if (name.startsWith("{") && name.endsWith("}"))
+                                name = "" + name.substring(1, name.length() - 1);
+                            final String var = name;
+                            name = StringUtils.replaceAll(name, "%(.+)?%", new Callback<String, Matcher>() {
+                                @Override
+                                @Nullable
+                                public String run(final Matcher m) {
+                                    if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
+                                        Skript.error("'" + var + "' is not a valid name for a default variable");
+                                        return null;
+                                    }
+                                    final ClassInfo<?> ci = Classes.getClassInfoFromUserInput("" + m.group(1));
+                                    if (ci == null) {
+                                        Skript.error("Can't understand the type '" + m.group(1) + "'");
+                                        return null;
+                                    }
+                                    return "<" + ci.getCodeName() + ">";
+                                }
+                            });
+                            if (name == null) {
+                                continue;
+                            } else if (name.contains("%")) {
+                                Skript.error("Invalid use of percent signs in variable name");
+                                continue;
+                            }
+                            // Variables feature is for setting default variables,
+                            // Not a shortcut for setting variables at startup.
+                            // So if variable already exists, do nothing and continue.
+                            if (Variables.getVariable(name, null, false) != null)
+                                continue;
+                            Object o;
+                            final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+                            try {
+                                o = Classes.parseSimple(((EntryNode) n).getValue(), Object.class, ParseContext.SCRIPT);
+                                if (o == null) {
+                                    log.printError("Can't understand the value '" + ((EntryNode) n).getValue() + "'");
+                                    continue;
+                                }
+                                log.printLog();
+                            } finally {
+                                log.stop();
+                            }
+                            final ClassInfo<?> ci = Classes.getSuperClassInfo(o.getClass());
+                            if (ci.getSerializer() == null) {
+                                Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
+                                continue;
+                            } else if (ci.getSerializeAs() != null) {
+                                final ClassInfo<?> as = Classes.getExactClassInfo(ci.getSerializeAs());
+                                if (as == null) {
+                                    assert false : ci;
+                                    continue;
+                                }
+                                o = Converters.convert(o, as.getC());
+                                if (o == null) {
+                                    Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
+                                    continue;
+                                }
+                            }
+                            Variables.setVariable(name, o, null, false);
+                        }
+                        continue;
+                    }
+
+                    if (!SkriptParser.validateLine(event))
+                        continue;
+
+                    if (event.toLowerCase().startsWith("command ")) {
+
+                        setCurrentEvent("command", CommandEvent.class);
+
+                        final ScriptCommand c = Commands.loadCommand(node);
+                        if (c != null) {
+                            numCommands++;
 //							script.commands.add(c);
-						}
-						
-						deleteCurrentEvent();
-						
-						continue;
-					} else if (event.toLowerCase().startsWith("function ")) {
-						
-						setCurrentEvent("function", FunctionEvent.class);
-						
-						final Function<?> func = Functions.loadFunction(node);
-						if (func != null) {
-							numFunctions++;
-						}
-						
-						deleteCurrentEvent();
-						
-						continue;
-					}
-					
-					if (Skript.logVeryHigh() && !Skript.debug())
-						Skript.info("loading trigger '" + event + "'");
-					
-					if (StringUtils.startsWithIgnoreCase(event, "on "))
-						event = "" + event.substring("on ".length());
-					
-					event = replaceOptions(event);
-					
-					final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
-					if (parsedEvent == null)
-						continue;
-					
-					if (Skript.debug() || node.debug())
-						Skript.debug(event + " (" + parsedEvent.getSecond().toString(null, true) + "):");
-					
-					setCurrentEvent("" + parsedEvent.getFirst().getName().toLowerCase(Locale.ENGLISH), parsedEvent.getFirst().events);
-					final Trigger trigger;
-					try {
-						trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
-						trigger.setLineNumber(node.getLine());
-						trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
-					} finally {
-						deleteCurrentEvent();
-					}
-					
-					if (parsedEvent.getSecond() instanceof SelfRegisteringSkriptEvent) {
-						((SelfRegisteringSkriptEvent) parsedEvent.getSecond()).register(trigger);
-						SkriptEventHandler.addSelfRegisteringTrigger(trigger);
-					} else {
-						SkriptEventHandler.addTrigger(parsedEvent.getFirst().events, trigger);
-					}
-					
+                        }
+
+                        deleteCurrentEvent();
+
+                        continue;
+                    } else if (event.toLowerCase().startsWith("function ")) {
+
+                        setCurrentEvent("function", FunctionEvent.class);
+
+                        final Function<?> func = Functions.loadFunction(node);
+                        if (func != null) {
+                            numFunctions++;
+                        }
+
+                        deleteCurrentEvent();
+
+                        continue;
+                    }
+
+                    if (Skript.logVeryHigh() && !Skript.debug())
+                        Skript.info("loading trigger '" + event + "'");
+
+                    if (StringUtils.startsWithIgnoreCase(event, "on "))
+                        event = "" + event.substring("on ".length());
+
+                    event = replaceOptions(event);
+
+                    final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
+                    if (parsedEvent == null)
+                        continue;
+
+                    if (Skript.debug() || node.debug())
+                        Skript.debug(event + " (" + parsedEvent.getSecond().toString(null, true) + "):");
+
+                    setCurrentEvent("" + parsedEvent.getFirst().getName().toLowerCase(Locale.ENGLISH), parsedEvent.getFirst().events);
+                    final Trigger trigger;
+                    try {
+                        trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
+                        trigger.setLineNumber(node.getLine());
+                        trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
+                    } finally {
+                        deleteCurrentEvent();
+                    }
+
+                    if (parsedEvent.getSecond() instanceof SelfRegisteringSkriptEvent) {
+                        ((SelfRegisteringSkriptEvent) parsedEvent.getSecond()).register(trigger);
+                        SkriptEventHandler.addSelfRegisteringTrigger(trigger);
+                    } else {
+                        SkriptEventHandler.addTrigger(parsedEvent.getFirst().events, trigger);
+                    }
+
 //					script.triggers.add(trigger);
-					
-					numTriggers++;
-				}
-				
-				if (Skript.logHigh() && startDate != null) {
-					
-					final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-					Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
-					
-				}
-				
-				currentScript = null;
-				
-			} finally {
-				numErrors.stop();
-			}
-			
+
+                    numTriggers++;
+                }
+
+                if (Skript.logHigh() && startDate != null) {
+
+                    final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
+
+                }
+
+                currentScript = null;
+
+            } finally {
+                numErrors.stop();
+            }
+
 //			if (SkriptConfig.enableScriptCaching.value() && cache != null) {
 //				if (numErrors.getCount() > 0) {
 //					ObjectOutputStream out = null;
@@ -548,275 +514,303 @@ final public class ScriptLoader {
 //					}
 //				}
 //			}
-			
-			return new ScriptInfo(1, numTriggers, numCommands, numFunctions);
-		} catch (final IOException e) {
-			Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
-		} catch (final Throwable tw) {
-			Skript.exception(tw, "Could not load " + f.getName());
-		} finally {
-			SkriptLogger.setNode(null);
-		}
-		return new ScriptInfo();
-	}
-	
-	/**
-	 * Unloads enabled scripts from the specified directory and its subdirectories.
-	 * 
-	 * @param folder
-	 * @return Info on the unloaded scripts
-	 */
-	static ScriptInfo unloadScripts(final File folder) {
-		final ScriptInfo r = unloadScripts_(folder);
-		Functions.validateFunctions();
-		return r;
-	}
-	
-	private static ScriptInfo unloadScripts_(final File folder) {
-		final ScriptInfo info = new ScriptInfo();
-		final File[] files = folder.listFiles(scriptFilter);
-		for (final File f : files) {
-			if (f.isDirectory()) {
-				info.add(unloadScripts_(f));
-			} else if (f.getName().endsWith(".sk")) {
-				info.add(unloadScript_(f));
-			}
-		}
-		return info;
-	}
-	
-	/**
-	 * Unloads the specified script.
-	 * 
-	 * @param script
-	 * @return Info on the unloaded script
-	 */
-	static ScriptInfo unloadScript(final File script) {
-		final ScriptInfo r = unloadScript_(script);
-		Functions.validateFunctions();
-		return r;
-	}
-	
-	private static ScriptInfo unloadScript_(final File script) {
-		final ScriptInfo info = SkriptEventHandler.removeTriggers(script);
-		synchronized (loadedScripts) {
-			loadedScripts.subtract(info);
-		}
-		return info;
-	}
-	
-	/**
-	 * Replaces options in a string. May return null, but only if the input is null.
-	 * 
-	 * @param s The string to replace options.
-	 * @return The replaced string. May return null, but only if the input is null.
-	 */
-	public static String replaceOptions(final String s) {
-		final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
-			@Override
-			@Nullable
-			public String run(final Matcher m) {
-				final String option = currentOptions.get(m.group(1));
-				if (option == null) {
-					Skript.error("undefined option " + m.group());
-					return m.group();
-				}
-				return Matcher.quoteReplacement(option);
-			}
-		});
-		assert r != null;
-		return r;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static List<TriggerItem> loadItems(final SectionNode node) {
-		
-		if (Skript.debug())
-			indentation += "    ";
-		
-		final List<TriggerItem> items = new ArrayList<TriggerItem>();
-		
-		Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
-		
-		for (final Node n : node) {
-			SkriptLogger.setNode(n);
-			if (n instanceof SimpleNode) {
-				final SimpleNode e = (SimpleNode) n;
-				final String s = replaceOptions("" + e.getKey());
-				if (!SkriptParser.validateLine(s))
-					continue;
-				final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
-				if (stmt == null)
-					continue;
-				if (Skript.debug() || n.debug())
-					Skript.debug(indentation + stmt.toString(null, true));
-				items.add(stmt);
-				if (stmt instanceof Delay)
-					hasDelayBefore = Kleenean.TRUE;
-			} else if (n instanceof SectionNode) {
-				String name = replaceOptions("" + n.getKey());
-				if (!SkriptParser.validateLine(name))
-					continue;
-				
-				if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
-					final String l = "" + name.substring("loop ".length());
-					final RetainingLogHandler h = SkriptLogger.startRetainingLog();
-					Expression<?> loopedExpr;
-					try {
-						loopedExpr = new SkriptParser(l).parseExpression(Object.class);
-						if (loopedExpr != null)
-							loopedExpr = loopedExpr.getConvertedExpression(Object.class);
-						if (loopedExpr == null) {
-							h.printErrors("Can't understand this loop: '" + name + "'");
-							continue;
-						}
-						h.printLog();
-					} finally {
-						h.stop();
-					}
-					if (loopedExpr.isSingle()) {
-						Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
-						continue;
-					}
-					if (Skript.debug() || n.debug())
-						Skript.debug(indentation + "loop " + loopedExpr.toString(null, true) + ":");
-					final Kleenean hadDelayBefore = hasDelayBefore;
-					items.add(new Loop(loopedExpr, (SectionNode) n));
-					if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
-						hasDelayBefore = Kleenean.UNKNOWN;
-				} else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
-					final String l = "" + name.substring("while ".length());
-					final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
-					if (c == null)
-						continue;
-					if (Skript.debug() || n.debug())
-						Skript.debug(indentation + "while " + c.toString(null, true) + ":");
-					final Kleenean hadDelayBefore = hasDelayBefore;
-					items.add(new While(c, (SectionNode) n));
-					if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
-						hasDelayBefore = Kleenean.UNKNOWN;
-				} else if ("else".equalsIgnoreCase(name)) {
-					if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
-						Skript.error("'else' has to be placed just after an 'if' or 'else if' section");
-						continue;
-					}
-					if (Skript.debug() || n.debug())
-						Skript.debug(indentation + "else:");
-					final Kleenean hadDelayAfterLastIf = hasDelayBefore;
-					hasDelayBefore = hadDelayBeforeLastIf;
-					((Conditional) items.get(items.size() - 1)).loadElseClause((SectionNode) n);
-					hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore));
-				} else if (StringUtils.startsWithIgnoreCase(name, "else if ")) {
-					if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
-						Skript.error("'else if' has to be placed just after another 'if' or 'else if' section");
-						continue;
-					}
-					name = "" + name.substring("else if ".length());
-					final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
-					if (cond == null)
-						continue;
-					if (Skript.debug() || n.debug())
-						Skript.debug(indentation + "else if " + cond.toString(null, true));
-					final Kleenean hadDelayAfterLastIf = hasDelayBefore;
-					hasDelayBefore = hadDelayBeforeLastIf;
-					((Conditional) items.get(items.size() - 1)).loadElseIf(cond, (SectionNode) n);
-					hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore.and(Kleenean.UNKNOWN)));
-				} else {
-					if (StringUtils.startsWithIgnoreCase(name, "if "))
-						name = "" + name.substring(3);
-					final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
-					if (cond == null)
-						continue;
-					if (Skript.debug() || n.debug())
-						Skript.debug(indentation + cond.toString(null, true) + ":");
-					final Kleenean hadDelayBefore = hasDelayBefore;
-					hadDelayBeforeLastIf = hadDelayBefore;
-					items.add(new Conditional(cond, (SectionNode) n));
-					hasDelayBefore = hadDelayBefore.or(hasDelayBefore.and(Kleenean.UNKNOWN));
-				}
-			}
-		}
-		
-		for (int i = 0; i < items.size() - 1; i++)
-			items.get(i).setNext(items.get(i + 1));
-		
-		SkriptLogger.setNode(node);
-		
-		if (Skript.debug())
-			indentation = "" + indentation.substring(0, indentation.length() - 4);
-		
-		return items;
-	}
-	
-	/**
-	 * For unit testing
-	 * 
-	 * @param node
-	 * @return The loaded Trigger
-	 */
-	@Nullable
-	static Trigger loadTrigger(final SectionNode node) {
-		String event = node.getKey();
-		if (event == null) {
-			assert false : node;
-			return null;
-		}
-		if (event.toLowerCase().startsWith("on "))
-			event = "" + event.substring("on ".length());
-		
-		final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
-		if (parsedEvent == null) {
-			assert false;
-			return null;
-		}
-		
-		setCurrentEvent("unit test", parsedEvent.getFirst().events);
-		try {
-			return new Trigger(null, event, parsedEvent.getSecond(), loadItems(node));
-		} finally {
-			deleteCurrentEvent();
-		}
-	}
-	
-	public static int loadedScripts() {
-		synchronized (loadedScripts) {
-			return loadedScripts.files;
-		}
-	}
-	
-	public static int loadedCommands() {
-		synchronized (loadedScripts) {
-			return loadedScripts.commands;
-		}
-	}
-	
-	public static int loadedFunctions() {
-		synchronized (loadedScripts) {
-			return loadedScripts.functions;
-		}
-	}
-	
-	public static int loadedTriggers() {
-		synchronized (loadedScripts) {
-			return loadedScripts.triggers;
-		}
-	}
-	
-	public static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
-		return CollectionUtils.containsSuperclass(currentEvents, event);
-	}
 
-	@SafeVarargs
-	public static boolean isCurrentEvent(final Class<? extends Event>... events) {
-		return CollectionUtils.containsAnySuperclass(currentEvents, events);
-	}
-	
-	/**
-	 * Use this sparingly; {@link #isCurrentEvent(Class)} or {@link #isCurrentEvent(Class...)} should be used in most cases.
-	 */
-	@Nullable
-	public static Class<? extends Event>[] getCurrentEvents() {
-		return currentEvents;
-	}
-	
+            return new ScriptInfo(1, numTriggers, numCommands, numFunctions);
+        } catch (final IOException e) {
+            Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
+        } catch (final Throwable tw) {
+            Skript.exception(tw, "Could not load " + f.getName());
+        } finally {
+            SkriptLogger.setNode(null);
+        }
+        return new ScriptInfo();
+    }
+
+    /**
+     * Unloads enabled scripts from the specified directory and its subdirectories.
+     *
+     * @param folder
+     * @return Info on the unloaded scripts
+     */
+    static ScriptInfo unloadScripts(final File folder) {
+        final ScriptInfo r = unloadScripts_(folder);
+        Functions.validateFunctions();
+        return r;
+    }
+
+    private static ScriptInfo unloadScripts_(final File folder) {
+        final ScriptInfo info = new ScriptInfo();
+        final File[] files = folder.listFiles(scriptFilter);
+        for (final File f : files) {
+            if (f.isDirectory()) {
+                info.add(unloadScripts_(f));
+            } else if (f.getName().endsWith(".sk")) {
+                info.add(unloadScript_(f));
+            }
+        }
+        return info;
+    }
+
+    /**
+     * Unloads the specified script.
+     *
+     * @param script
+     * @return Info on the unloaded script
+     */
+    static ScriptInfo unloadScript(final File script) {
+        final ScriptInfo r = unloadScript_(script);
+        Functions.validateFunctions();
+        return r;
+    }
+
+    private static ScriptInfo unloadScript_(final File script) {
+        final ScriptInfo info = SkriptEventHandler.removeTriggers(script);
+        synchronized (loadedScripts) {
+            loadedScripts.subtract(info);
+        }
+        return info;
+    }
+
+    /**
+     * Replaces options in a string. May return null, but only if the input is null.
+     *
+     * @param s The string to replace options.
+     * @return The replaced string. May return null, but only if the input is null.
+     */
+    public static String replaceOptions(final String s) {
+        final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
+            @Override
+            @Nullable
+            public String run(final Matcher m) {
+                final String option = currentOptions.get(m.group(1));
+                if (option == null) {
+                    Skript.error("undefined option " + m.group());
+                    return m.group();
+                }
+                return Matcher.quoteReplacement(option);
+            }
+        });
+        assert r != null;
+        return r;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<TriggerItem> loadItems(final SectionNode node) {
+
+        if (Skript.debug())
+            indentation += "    ";
+
+        final List<TriggerItem> items = new ArrayList<TriggerItem>();
+
+        Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
+
+        for (final Node n : node) {
+            SkriptLogger.setNode(n);
+            if (n instanceof SimpleNode) {
+                final SimpleNode e = (SimpleNode) n;
+                final String s = replaceOptions("" + e.getKey());
+                if (!SkriptParser.validateLine(s))
+                    continue;
+                final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
+                if (stmt == null)
+                    continue;
+                if (Skript.debug() || n.debug())
+                    Skript.debug(indentation + stmt.toString(null, true));
+                items.add(stmt);
+                if (stmt instanceof Delay)
+                    hasDelayBefore = Kleenean.TRUE;
+            } else if (n instanceof SectionNode) {
+                String name = replaceOptions("" + n.getKey());
+                if (!SkriptParser.validateLine(name))
+                    continue;
+
+                if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
+                    final String l = "" + name.substring("loop ".length());
+                    final RetainingLogHandler h = SkriptLogger.startRetainingLog();
+                    Expression<?> loopedExpr;
+                    try {
+                        loopedExpr = new SkriptParser(l).parseExpression(Object.class);
+                        if (loopedExpr != null)
+                            loopedExpr = loopedExpr.getConvertedExpression(Object.class);
+                        if (loopedExpr == null) {
+                            h.printErrors("Can't understand this loop: '" + name + "'");
+                            continue;
+                        }
+                        h.printLog();
+                    } finally {
+                        h.stop();
+                    }
+                    if (loopedExpr.isSingle()) {
+                        Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
+                        continue;
+                    }
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + "loop " + loopedExpr.toString(null, true) + ":");
+                    final Kleenean hadDelayBefore = hasDelayBefore;
+                    items.add(new Loop(loopedExpr, (SectionNode) n));
+                    if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
+                        hasDelayBefore = Kleenean.UNKNOWN;
+                } else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
+                    final String l = "" + name.substring("while ".length());
+                    final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
+                    if (c == null)
+                        continue;
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + "while " + c.toString(null, true) + ":");
+                    final Kleenean hadDelayBefore = hasDelayBefore;
+                    items.add(new While(c, (SectionNode) n));
+                    if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
+                        hasDelayBefore = Kleenean.UNKNOWN;
+                } else if ("else".equalsIgnoreCase(name)) {
+                    if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+                        Skript.error("'else' has to be placed just after an 'if' or 'else if' section");
+                        continue;
+                    }
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + "else:");
+                    final Kleenean hadDelayAfterLastIf = hasDelayBefore;
+                    hasDelayBefore = hadDelayBeforeLastIf;
+                    ((Conditional) items.get(items.size() - 1)).loadElseClause((SectionNode) n);
+                    hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore));
+                } else if (StringUtils.startsWithIgnoreCase(name, "else if ")) {
+                    if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+                        Skript.error("'else if' has to be placed just after another 'if' or 'else if' section");
+                        continue;
+                    }
+                    name = "" + name.substring("else if ".length());
+                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
+                    if (cond == null)
+                        continue;
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + "else if " + cond.toString(null, true));
+                    final Kleenean hadDelayAfterLastIf = hasDelayBefore;
+                    hasDelayBefore = hadDelayBeforeLastIf;
+                    ((Conditional) items.get(items.size() - 1)).loadElseIf(cond, (SectionNode) n);
+                    hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore.and(Kleenean.UNKNOWN)));
+                } else {
+                    if (StringUtils.startsWithIgnoreCase(name, "if "))
+                        name = "" + name.substring(3);
+                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
+                    if (cond == null)
+                        continue;
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + cond.toString(null, true) + ":");
+                    final Kleenean hadDelayBefore = hasDelayBefore;
+                    hadDelayBeforeLastIf = hadDelayBefore;
+                    items.add(new Conditional(cond, (SectionNode) n));
+                    hasDelayBefore = hadDelayBefore.or(hasDelayBefore.and(Kleenean.UNKNOWN));
+                }
+            }
+        }
+
+        for (int i = 0; i < items.size() - 1; i++)
+            items.get(i).setNext(items.get(i + 1));
+
+        SkriptLogger.setNode(node);
+
+        if (Skript.debug())
+            indentation = "" + indentation.substring(0, indentation.length() - 4);
+
+        return items;
+    }
+
+    /**
+     * For unit testing
+     *
+     * @param node
+     * @return The loaded Trigger
+     */
+    @Nullable
+    static Trigger loadTrigger(final SectionNode node) {
+        String event = node.getKey();
+        if (event == null) {
+            assert false : node;
+            return null;
+        }
+        if (event.toLowerCase().startsWith("on "))
+            event = "" + event.substring("on ".length());
+
+        final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
+        if (parsedEvent == null) {
+            assert false;
+            return null;
+        }
+
+        setCurrentEvent("unit test", parsedEvent.getFirst().events);
+        try {
+            return new Trigger(null, event, parsedEvent.getSecond(), loadItems(node));
+        } finally {
+            deleteCurrentEvent();
+        }
+    }
+
+    public static int loadedScripts() {
+        synchronized (loadedScripts) {
+            return loadedScripts.files;
+        }
+    }
+
+    public static int loadedCommands() {
+        synchronized (loadedScripts) {
+            return loadedScripts.commands;
+        }
+    }
+
+    public static int loadedFunctions() {
+        synchronized (loadedScripts) {
+            return loadedScripts.functions;
+        }
+    }
+
+    public static int loadedTriggers() {
+        synchronized (loadedScripts) {
+            return loadedScripts.triggers;
+        }
+    }
+
+    public static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
+        return CollectionUtils.containsSuperclass(currentEvents, event);
+    }
+
+    @SafeVarargs
+    public static boolean isCurrentEvent(final Class<? extends Event>... events) {
+        return CollectionUtils.containsAnySuperclass(currentEvents, events);
+    }
+
+    /**
+     * Use this sparingly; {@link #isCurrentEvent(Class)} or {@link #isCurrentEvent(Class...)} should be used in most cases.
+     */
+    @Nullable
+    public static Class<? extends Event>[] getCurrentEvents() {
+        return currentEvents;
+    }
+
+    public static class ScriptInfo {
+        public int files, triggers, commands, functions;
+
+        public ScriptInfo() {
+        }
+
+        public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions) {
+            files = numFiles;
+            triggers = numTriggers;
+            commands = numCommands;
+            functions = numFunctions;
+        }
+
+        public void add(final ScriptInfo other) {
+            files += other.files;
+            triggers += other.triggers;
+            commands += other.commands;
+            functions += other.functions;
+        }
+
+        public void subtract(final ScriptInfo other) {
+            files -= other.files;
+            triggers -= other.triggers;
+            commands -= other.commands;
+            functions -= other.functions;
+        }
+    }
+
 }

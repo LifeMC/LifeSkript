@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.bukkitutil;
@@ -32,26 +32,27 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * Workarounds for Minecraft & Bukkit quirks
- * 
+ *
  * @author Peter Güttinger
  */
 public final class Workarounds {
-	
-	private Workarounds() {
-		throw new UnsupportedOperationException();
-	}
-	
-	public static void init() {}
-	
-	static {
-		// allows to properly remove a player's tool in right click events
-		Bukkit.getPluginManager().registerEvents(new Listener() {
-			@EventHandler(priority = EventPriority.HIGHEST)
-			public void onInteract(final PlayerInteractEvent e) {
-				if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
-					e.setUseItemInHand(Result.DENY);
-			}
-		}, Skript.getInstance());
-	}
-	
+
+    static {
+        // allows to properly remove a player's tool in right click events
+        Bukkit.getPluginManager().registerEvents(new Listener() {
+            @EventHandler(priority = EventPriority.HIGHEST)
+            public void onInteract(final PlayerInteractEvent e) {
+                if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
+                    e.setUseItemInHand(Result.DENY);
+            }
+        }, Skript.getInstance());
+    }
+
+    private Workarounds() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void init() {
+    }
+
 }

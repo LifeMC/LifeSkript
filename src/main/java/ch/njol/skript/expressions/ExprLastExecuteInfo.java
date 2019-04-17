@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -45,52 +45,52 @@ import java.io.Serializable;
 @Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 if the player has permission \"skript.eval\"", "\t\tsend last execute errors to player if last execute state is false"})
 @Since("2.2-Fixes-V10c")
 public class ExprLastExecuteInfo extends SimpleExpression<Object> {
-	static {
-		Skript.registerExpression(ExprLastExecuteInfo.class, Object.class, ExpressionType.SIMPLE, "[the] last (0¦execute state|1¦execute errors)");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		mark = parseResult.mark;
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected Object[] get(final Event e) {
-		switch (mark) {
-			case 0:
-				return new Boolean[] {EffExec.lastExecuteState};
-			case 1:
-				return new String[] {EffExec.lastExecuteErrors};
-		}
-		return null;
-	}
-	
-	private int mark;
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Nullable
-	private String getExpressionName() {
-		switch (mark) {
-			case 0:
-				return "last execute state";
-			case 1:
-				return "last execute errors";
-		}
-		return null;
-	}
-	
-	@Override
-	public Class<? extends Serializable> getReturnType() {
-		return mark == 0 ? Boolean.class : String.class;
-	}
-	
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "the " + getExpressionName();
-	}
+    static {
+        Skript.registerExpression(ExprLastExecuteInfo.class, Object.class, ExpressionType.SIMPLE, "[the] last (0¦execute state|1¦execute errors)");
+    }
+
+    private int mark;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        mark = parseResult.mark;
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected Object[] get(final Event e) {
+        switch (mark) {
+            case 0:
+                return new Boolean[]{EffExec.lastExecuteState};
+            case 1:
+                return new String[]{EffExec.lastExecuteErrors};
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Nullable
+    private String getExpressionName() {
+        switch (mark) {
+            case 0:
+                return "last execute state";
+            case 1:
+                return "last execute errors";
+        }
+        return null;
+    }
+
+    @Override
+    public Class<? extends Serializable> getReturnType() {
+        return mark == 0 ? Boolean.class : String.class;
+    }
+
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "the " + getExpressionName();
+    }
 }

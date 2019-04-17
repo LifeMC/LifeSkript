@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -25,31 +25,32 @@ package ch.njol.skript.log;
  * @author Peter Güttinger
  */
 public abstract class LogHandler {
-	
-	public enum LogResult {
-		LOG, CACHED, DO_NOT_LOG
-	}
-	
-	/**
-	 * @param entry
-	 * @return Whether to print the specified entry or not.
-	 */
-	public abstract LogResult log(LogEntry entry);
-	
-	/**
-	 * Called just after the handler is removed from the active handlers stack.
-	 */
-	protected void onStop() {}
-	
-	public final void stop() {
-		SkriptLogger.removeHandler(this);
-		onStop();
-	}
-	
-	public boolean isStopped() {
-		return SkriptLogger.isStopped(this);
-	}
-	
+
+    /**
+     * @param entry
+     * @return Whether to print the specified entry or not.
+     */
+    public abstract LogResult log(LogEntry entry);
+
+    /**
+     * Called just after the handler is removed from the active handlers stack.
+     */
+    protected void onStop() {
+    }
+
+    public final void stop() {
+        SkriptLogger.removeHandler(this);
+        onStop();
+    }
+
+    public boolean isStopped() {
+        return SkriptLogger.isStopped(this);
+    }
+
+    public enum LogResult {
+        LOG, CACHED, DO_NOT_LOG
+    }
+
 //	/**
 //	 * Will be useful should Skript ever be written in Java 7
 //	 */
@@ -57,5 +58,5 @@ public abstract class LogHandler {
 //	public final void close() throws Exception {
 //		stop();
 //	}
-	
+
 }

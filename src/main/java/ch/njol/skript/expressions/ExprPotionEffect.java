@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -33,35 +33,35 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public class ExprPotionEffect extends SimpleExpression<PotionEffect> {
-	static {
-		// REMIND create
+    static {
+        // REMIND create
 //		Skript.registerExpression(ExprPotionEffect.class, PotionEffect.class, ExpressionType.COMBINED,"(|1¦extended) [potion [of]] %potioneffect%");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		return false;
-	}
-	
-	@Override
-	@Nullable
-	protected PotionEffect[] get(final Event e) {
-		return null;
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return false;
-	}
-	
-	@Override
-	public Class<PotionEffect> getReturnType() {
-		return PotionEffect.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "";
-	}
-	
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        return false;
+    }
+
+    @Override
+    @Nullable
+    protected PotionEffect[] get(final Event e) {
+        return null;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
+    @Override
+    public Class<PotionEffect> getReturnType() {
+        return PotionEffect.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "";
+    }
+
 }

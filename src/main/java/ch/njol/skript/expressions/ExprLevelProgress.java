@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -38,62 +38,62 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events("level change")
 public class ExprLevelProgress extends SimplePropertyExpression<Player, Float> {
-	static {
-		register(ExprLevelProgress.class, Float.class, "level progress", "players");
-	}
-	
-	@Override
-	public Float convert(final Player p) {
-		return p.getExp();
-	}
-	
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode == ChangeMode.REMOVE_ALL)
-			return null;
-		return new Class[] {Number.class};
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-		assert mode != ChangeMode.REMOVE_ALL;
-		
-		final float d = delta == null ? 0 : ((Number) delta[0]).floatValue();
-		for (final Player p : getExpr().getArray(e)) {
-			final float c;
-			switch (mode) {
-				case SET:
-					c = d;
-					break;
-				case ADD:
-					c = p.getExp() + d;
-					break;
-				case REMOVE:
-					c = p.getExp() - d;
-					break;
-				case DELETE:
-				case RESET:
-					c = 0;
-					break;
-				case REMOVE_ALL:
-				default:
-					assert false;
-					return;
-			}
-			p.setLevel(Math.max(0, p.getLevel() + (int) Math.floor(c)));
-			p.setExp(Math2.mod(c, 1));
-		}
-	}
-	
-	@Override
-	public Class<Float> getReturnType() {
-		return Float.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "level progress";
-	}
-	
+    static {
+        register(ExprLevelProgress.class, Float.class, "level progress", "players");
+    }
+
+    @Override
+    public Float convert(final Player p) {
+        return p.getExp();
+    }
+
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode == ChangeMode.REMOVE_ALL)
+            return null;
+        return new Class[]{Number.class};
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+        assert mode != ChangeMode.REMOVE_ALL;
+
+        final float d = delta == null ? 0 : ((Number) delta[0]).floatValue();
+        for (final Player p : getExpr().getArray(e)) {
+            final float c;
+            switch (mode) {
+                case SET:
+                    c = d;
+                    break;
+                case ADD:
+                    c = p.getExp() + d;
+                    break;
+                case REMOVE:
+                    c = p.getExp() - d;
+                    break;
+                case DELETE:
+                case RESET:
+                    c = 0;
+                    break;
+                case REMOVE_ALL:
+                default:
+                    assert false;
+                    return;
+            }
+            p.setLevel(Math.max(0, p.getLevel() + (int) Math.floor(c)));
+            p.setExp(Math2.mod(c, 1));
+        }
+    }
+
+    @Override
+    public Class<Float> getReturnType() {
+        return Float.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "level progress";
+    }
+
 }

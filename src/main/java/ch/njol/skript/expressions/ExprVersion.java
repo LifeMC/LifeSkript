@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -43,73 +43,73 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"message \"This server is running Minecraft %minecraft version% on Bukkit %bukkit version%\"", "message \"This server is powered by Skript %skript version%\""})
 @Since("2.0")
 public class ExprVersion extends SimpleExpression<String> {
-	
-	private enum VersionType {
-		BUKKIT("Bukkit") {
-			@Override
-			public String get() {
-				return "" + Bukkit.getBukkitVersion();
-			}
-		},
-		MINECRAFT("Minecraft") {
-			@Override
-			public String get() {
-				return Skript.getMinecraftVersion().toString();
-			}
-		},
-		SKRIPT("Skript") {
-			@Override
-			public String get() {
-				return Skript.getVersion().toString();
-			}
-		};
-		
-		private final String name;
-		
-		VersionType(final String name) {
-			this.name = name;
-		}
-		
-		@Override
-		public String toString() {
-			return name;
-		}
-		
-		public abstract String get();
-	}
-	
-	static {
-		Skript.registerExpression(ExprVersion.class, String.class, ExpressionType.SIMPLE, "(0¦[craft]bukkit|1¦minecraft|2¦skript)( |-)version");
-	}
-	
-	@SuppressWarnings("null")
-	private VersionType type;
-	
-	@SuppressWarnings("null")
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		type = VersionType.values()[parseResult.mark];
-		return true;
-	}
-	
-	@Override
-	protected String[] get(final Event e) {
-		return new String[] {type.get()};
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return type + " version";
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
+
+    static {
+        Skript.registerExpression(ExprVersion.class, String.class, ExpressionType.SIMPLE, "(0¦[craft]bukkit|1¦minecraft|2¦skript)( |-)version");
+    }
+
+    @SuppressWarnings("null")
+    private VersionType type;
+
+    @SuppressWarnings("null")
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        type = VersionType.values()[parseResult.mark];
+        return true;
+    }
+
+    @Override
+    protected String[] get(final Event e) {
+        return new String[]{type.get()};
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return type + " version";
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    private enum VersionType {
+        BUKKIT("Bukkit") {
+            @Override
+            public String get() {
+                return "" + Bukkit.getBukkitVersion();
+            }
+        },
+        MINECRAFT("Minecraft") {
+            @Override
+            public String get() {
+                return Skript.getMinecraftVersion().toString();
+            }
+        },
+        SKRIPT("Skript") {
+            @Override
+            public String get() {
+                return Skript.getVersion().toString();
+            }
+        };
+
+        private final String name;
+
+        VersionType(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+        public abstract String get();
+    }
+
 }

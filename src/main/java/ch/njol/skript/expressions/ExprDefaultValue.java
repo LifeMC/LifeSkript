@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -48,79 +48,79 @@ import java.lang.reflect.Array;
 @Since("2.2-Fixes-V10c")
 @SuppressWarnings("unchecked")
 public class ExprDefaultValue<T> extends SimpleExpression<T> {
-	
-	static {
-		Skript.registerExpression(ExprDefaultValue.class, Object.class, ExpressionType.COMBINED, "%objects% (otherwise|?[?]) %objects%"); // make them two like in C# (a ?? b style) (optional)
-	}
-	
-	private final ExprDefaultValue<?> source;
-	private final Class<T> superType;
-	@Nullable
-	private Expression<Object> first;
-	@Nullable
-	private Expression<Object> second;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	public ExprDefaultValue() {
-		this(null, (Class<? extends T>) Object.class);
-	}
-	
-	@SuppressWarnings({"unchecked", "null"})
-	private ExprDefaultValue(final ExprDefaultValue<?> source, final Class<? extends T>... types) {
-		this.source = source;
-		if (source != null) {
-			this.first = source.first;
-			this.second = source.second;
-		}
-		this.superType = (Class<T>) Utils.getSuperType(types);
-	}
-	
-	@Override
-	@SuppressWarnings({"unchecked", "null"})
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-		first = LiteralUtils.defendExpression(exprs[0]);
-		second = LiteralUtils.defendExpression(exprs[1]);
-		return LiteralUtils.canInitSafely(first, second);
-	}
-	
-	@Override
-	@SuppressWarnings({"unchecked", "null"})
-	protected T[] get(final Event e) {
-		final Object[] first = this.first.getArray(e);
-		final Object[] values = first.length != 0 ? first : second.getArray(e);
-		try {
-			return Converters.convertStrictly(values, superType);
-		} catch (final ClassCastException e1) {
-			return (T[]) Array.newInstance(superType, 0);
-		}
-	}
-	
-	@Override
-	public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
-		return new ExprDefaultValue<R>(this, to);
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	public Expression<?> getSource() {
-		return source == null ? this : source;
-	}
-	
-	@Override
-	public Class<T> getReturnType() {
-		return superType;
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	public boolean isSingle() {
-		return first.isSingle() && second.isSingle();
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	public String toString(final Event e, final boolean debug) {
-		return first.toString(e, debug) + " or else " + second.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerExpression(ExprDefaultValue.class, Object.class, ExpressionType.COMBINED, "%objects% (otherwise|?[?]) %objects%"); // make them two like in C# (a ?? b style) (optional)
+    }
+
+    private final ExprDefaultValue<?> source;
+    private final Class<T> superType;
+    @Nullable
+    private Expression<Object> first;
+    @Nullable
+    private Expression<Object> second;
+
+    @SuppressWarnings({"unchecked", "null"})
+    public ExprDefaultValue() {
+        this(null, (Class<? extends T>) Object.class);
+    }
+
+    @SuppressWarnings({"unchecked", "null"})
+    private ExprDefaultValue(final ExprDefaultValue<?> source, final Class<? extends T>... types) {
+        this.source = source;
+        if (source != null) {
+            this.first = source.first;
+            this.second = source.second;
+        }
+        this.superType = (Class<T>) Utils.getSuperType(types);
+    }
+
+    @Override
+    @SuppressWarnings({"unchecked", "null"})
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        first = LiteralUtils.defendExpression(exprs[0]);
+        second = LiteralUtils.defendExpression(exprs[1]);
+        return LiteralUtils.canInitSafely(first, second);
+    }
+
+    @Override
+    @SuppressWarnings({"unchecked", "null"})
+    protected T[] get(final Event e) {
+        final Object[] first = this.first.getArray(e);
+        final Object[] values = first.length != 0 ? first : second.getArray(e);
+        try {
+            return Converters.convertStrictly(values, superType);
+        } catch (final ClassCastException e1) {
+            return (T[]) Array.newInstance(superType, 0);
+        }
+    }
+
+    @Override
+    public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
+        return new ExprDefaultValue<R>(this, to);
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public Expression<?> getSource() {
+        return source == null ? this : source;
+    }
+
+    @Override
+    public Class<T> getReturnType() {
+        return superType;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public boolean isSingle() {
+        return first.isSingle() && second.isSingle();
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    public String toString(final Event e, final boolean debug) {
+        return first.toString(e, debug) + " or else " + second.toString(e, debug);
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -48,44 +48,44 @@ import java.util.regex.Matcher;
 @Since("2.0")
 // TODO add 'replace all <items> in <inventories> with <item>'
 public final class EffReplace extends Effect {
-	static {
-		Skript.registerEffect(EffReplace.class, "replace (all|every|) %strings% in %string% with %strings%", "replace (all|every|) %strings% with %string% in %strings%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<String> haystack, needles, replacement;
-	
-	@Override
-	@SuppressWarnings({"unchecked", "null"})
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		haystack = (Expression<String>) exprs[1 + matchedPattern];
-		if (!ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
-			Skript.error(haystack + " cannot be changed and can thus not have parts replaced.");
-			return false;
-		}
-		needles = (Expression<String>) exprs[0];
-		replacement = (Expression<String>) exprs[2 - matchedPattern];
-		return true;
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	protected void execute(final Event e) {
-		String h = haystack.getSingle(e);
-		final String[] ns = needles.getAll(e);
-		final String r = replacement.getSingle(e);
-		if (h == null || ns.length == 0 || r == null)
-			return;
-		for (final String n : ns) {
-			assert n != null;
-			h = StringUtils.replace(h, n, Matcher.quoteReplacement(r), SkriptConfig.caseSensitive.value());
-		}
-		haystack.change(e, new String[] {h}, ChangeMode.SET);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "replace " + needles.toString(e, debug) + " in " + haystack.toString(e, debug) + " with " + replacement.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerEffect(EffReplace.class, "replace (all|every|) %strings% in %string% with %strings%", "replace (all|every|) %strings% with %string% in %strings%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> haystack, needles, replacement;
+
+    @Override
+    @SuppressWarnings({"unchecked", "null"})
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        haystack = (Expression<String>) exprs[1 + matchedPattern];
+        if (!ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
+            Skript.error(haystack + " cannot be changed and can thus not have parts replaced.");
+            return false;
+        }
+        needles = (Expression<String>) exprs[0];
+        replacement = (Expression<String>) exprs[2 - matchedPattern];
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    protected void execute(final Event e) {
+        String h = haystack.getSingle(e);
+        final String[] ns = needles.getAll(e);
+        final String r = replacement.getSingle(e);
+        if (h == null || ns.length == 0 || r == null)
+            return;
+        for (final String n : ns) {
+            assert n != null;
+            h = StringUtils.replace(h, n, Matcher.quoteReplacement(r), SkriptConfig.caseSensitive.value());
+        }
+        haystack.change(e, new String[]{h}, ChangeMode.SET);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "replace " + needles.toString(e, debug) + " in " + haystack.toString(e, debug) + " with " + replacement.toString(e, debug);
+    }
+
 }

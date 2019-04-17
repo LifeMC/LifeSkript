@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
@@ -28,37 +28,37 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public final class LoggerFilter implements Filter, Closeable {
-	private final Logger l;
-	private final Collection<Filter> filters = new ArrayList<Filter>(5);
-	@Nullable
-	private final Filter oldFilter;
-	
-	public LoggerFilter(final Logger l) {
-		this.l = l;
-		oldFilter = l.getFilter();
-		l.setFilter(this);
-	}
-	
-	@Override
-	public boolean isLoggable(final @Nullable LogRecord record) {
-		if (oldFilter != null && !oldFilter.isLoggable(record))
-			return false;
-		for (final Filter f : filters)
-			if (!f.isLoggable(record))
-				return false;
-		return true;
-	}
-	
-	public void addFilter(final Filter f) {
-		filters.add(f);
-	}
-	
-	public boolean removeFilter(final Filter f) {
-		return filters.remove(f);
-	}
-	
-	@Override
-	public void close() {
-		l.setFilter(oldFilter);
-	}
+    private final Logger l;
+    private final Collection<Filter> filters = new ArrayList<Filter>(5);
+    @Nullable
+    private final Filter oldFilter;
+
+    public LoggerFilter(final Logger l) {
+        this.l = l;
+        oldFilter = l.getFilter();
+        l.setFilter(this);
+    }
+
+    @Override
+    public boolean isLoggable(final @Nullable LogRecord record) {
+        if (oldFilter != null && !oldFilter.isLoggable(record))
+            return false;
+        for (final Filter f : filters)
+            if (!f.isLoggable(record))
+                return false;
+        return true;
+    }
+
+    public void addFilter(final Filter f) {
+        filters.add(f);
+    }
+
+    public boolean removeFilter(final Filter f) {
+        return filters.remove(f);
+    }
+
+    @Override
+    public void close() {
+        l.setFilter(oldFilter);
+    }
 }

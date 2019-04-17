@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -36,19 +36,19 @@ import org.bukkit.entity.Player;
 @Examples({"# cut your enemies' throats in their sleep >=)", "on attack:", "	attacker is holding a sword", "	victim is sleeping", "	increase the damage by 1000"})
 @Since("1.4.4")
 public class CondIsSleeping extends PropertyCondition<Player> {
-	
-	static {
-		register(CondIsSleeping.class, "sleeping", "players");
-	}
-	
-	@Override
-	public boolean check(final Player p) {
-		return p.isSleeping();
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "sleeping";
-	}
-	
+
+    static {
+        register(CondIsSleeping.class, "sleeping", "players");
+    }
+
+    @Override
+    public boolean check(final Player p) {
+        return p.isSleeping();
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "sleeping";
+    }
+
 }

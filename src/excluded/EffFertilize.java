@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -35,38 +35,37 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * 
  * @author Peter Güttinger
  */
 public class EffFertilize extends Effect {
-	
-	static {
+
+    static {
 //		Skript.registerEffect(EffFertilize.class, "fertili(z|s)e %blocks%");
-	}
-	
-	private Expression<Block> blocks;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final int isDelayed, final ParseResult parser) {
-		blocks = (Expression<Block>) vars[0];
-		if (!Skript.isRunningCraftBukkit()) {
-			Skript.error("The fertilize effect can only be used with CraftBukkit", ErrorQuality.);
-return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public void execute(final Event e) {
-		for (final Block b : blocks.getArray(e)) {
-			Item.INK_SACK.interactWith(CraftItemStack.createNMSItemStack(new ItemStack(Material.INK_SACK, 1, Color.WHITE.getDye())), null, ((CraftWorld) b.getWorld()).getHandle(), b.getX(), b.getY(), b.getZ(), 0, 0, 0, 0);
-		}
-	}
-	
-	@Override
-	public String toString(final Event e, final boolean debug) {
-		return "fertilize " + blocks.toString(e, debug);
-	}
-	
+    }
+
+    private Expression<Block> blocks;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final int isDelayed, final ParseResult parser) {
+        blocks = (Expression<Block>) vars[0];
+        if (!Skript.isRunningCraftBukkit()) {
+            Skript.error("The fertilize effect can only be used with CraftBukkit", ErrorQuality.);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void execute(final Event e) {
+        for (final Block b : blocks.getArray(e)) {
+            Item.INK_SACK.interactWith(CraftItemStack.createNMSItemStack(new ItemStack(Material.INK_SACK, 1, Color.WHITE.getDye())), null, ((CraftWorld) b.getWorld()).getHandle(), b.getX(), b.getY(), b.getZ(), 0, 0, 0, 0);
+        }
+    }
+
+    @Override
+    public String toString(final Event e, final boolean debug) {
+        return "fertilize " + blocks.toString(e, debug);
+    }
+
 }

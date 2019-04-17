@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks.regions.events;
@@ -31,51 +31,49 @@ import org.bukkit.event.HandlerList;
  * @author Peter Güttinger
  */
 public final class RegionBorderEvent extends Event implements Cancellable {
-	
-	private final Region region;
-	final Player player;
-	private final boolean enter;
-	
-	public RegionBorderEvent(final Region region, final Player player, final boolean enter) {
-		this.region = region;
-		this.player = player;
-		this.enter = enter;
-	}
-	
-	public boolean isEntering() {
-		return enter;
-	}
-	
-	public Region getRegion() {
-		return region;
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	private boolean cancelled;
-	
-	@Override
-	public boolean isCancelled() {
-		return cancelled;
-	}
-	
-	@Override
-	public void setCancelled(final boolean cancel) {
-		cancelled = cancel;
-	}
-	
-	// Bukkit stuff
-	private final static HandlerList handlers = new HandlerList();
-	
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-	
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-	
+
+    // Bukkit stuff
+    private final static HandlerList handlers = new HandlerList();
+    final Player player;
+    private final Region region;
+    private final boolean enter;
+    private boolean cancelled;
+
+    public RegionBorderEvent(final Region region, final Player player, final boolean enter) {
+        this.region = region;
+        this.player = player;
+        this.enter = enter;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    public boolean isEntering() {
+        return enter;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public void setCancelled(final boolean cancel) {
+        cancelled = cancel;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -43,35 +43,35 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"player has played on this server before", "player hasn't played before"})
 @Since("1.4")
 public class CondPlayedBefore extends Condition {
-	
-	static {
-		Skript.registerCondition(CondPlayedBefore.class, "%offlineplayer% [(has|did)] [already] play[ed] [on (this|the) server] (before|already)", "%offlineplayer% (has not|hasn't|did not|didn't) [(already|yet)] play[ed] [on (this|the) server] (before|already|yet)");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<OfflinePlayer> player;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		player = (Expression<OfflinePlayer>) exprs[0];
-		setNegated(matchedPattern == 1);
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return player.check(e, new Checker<OfflinePlayer>() {
-			@Override
-			public boolean check(final OfflinePlayer p) {
-				return p.hasPlayedBefore();
-			}
-		}, isNegated());
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return player.toString(e, debug) + " " + (isNegated() ? "hasn't" : "has") + " played on this server before";
-	}
-	
+
+    static {
+        Skript.registerCondition(CondPlayedBefore.class, "%offlineplayer% [(has|did)] [already] play[ed] [on (this|the) server] (before|already)", "%offlineplayer% (has not|hasn't|did not|didn't) [(already|yet)] play[ed] [on (this|the) server] (before|already|yet)");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<OfflinePlayer> player;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        player = (Expression<OfflinePlayer>) exprs[0];
+        setNegated(matchedPattern == 1);
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return player.check(e, new Checker<OfflinePlayer>() {
+            @Override
+            public boolean check(final OfflinePlayer p) {
+                return p.hasPlayedBefore();
+            }
+        }, isNegated());
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return player.toString(e, debug) + " " + (isNegated() ? "hasn't" : "has") + " played on this server before";
+    }
+
 }

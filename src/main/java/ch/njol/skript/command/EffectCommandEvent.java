@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.command;
@@ -28,21 +28,21 @@ import org.bukkit.event.HandlerList;
  * @author Peter Güttinger
  */
 public class EffectCommandEvent extends CommandEvent {
-	
-	public EffectCommandEvent(final CommandSender sender, final String command) {
-		super(sender, command, new String[0]);
-	}
-	
-	// Bukkit stuff
-	private final static HandlerList handlers = new HandlerList();
-	
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-	
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-	
+
+    // Bukkit stuff
+    private final static HandlerList handlers = new HandlerList();
+
+    public EffectCommandEvent(final CommandSender sender, final String command) {
+        super(sender, command, new String[0]);
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -36,18 +36,18 @@ import org.bukkit.entity.Entity;
 @Examples({"# increased attack against buring targets", "victim is burning:", "	increase damage by 2"})
 @Since("1.4.4")
 public class CondIsBurning extends PropertyCondition<Entity> {
-	static {
-		register(CondIsBurning.class, "(burning|ignited|on fire)", "entities");
-	}
-	
-	@Override
-	public boolean check(final Entity e) {
-		return e.getFireTicks() > 0;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "burning";
-	}
-	
+    static {
+        register(CondIsBurning.class, "(burning|ignited|on fire)", "entities");
+    }
+
+    @Override
+    public boolean check(final Entity e) {
+        return e.getFireTicks() > 0;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "burning";
+    }
+
 }

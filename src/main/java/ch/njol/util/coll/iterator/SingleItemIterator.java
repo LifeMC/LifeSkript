@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -26,30 +26,30 @@ import java.util.NoSuchElementException;
  * @author Peter Güttinger
  */
 public class SingleItemIterator<T> implements Iterator<T> {
-	
-	private final T item;
-	private boolean returned;
-	
-	public SingleItemIterator(final T item) {
-		this.item = item;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		return !returned;
-	}
-	
-	@Override
-	public T next() {
-		if (returned)
-			throw new NoSuchElementException();
-		returned = true;
-		return item;
-	}
-	
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
-	
+
+    private final T item;
+    private boolean returned;
+
+    public SingleItemIterator(final T item) {
+        this.item = item;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return !returned;
+    }
+
+    @Override
+    public T next() {
+        if (returned)
+            throw new NoSuchElementException();
+        returned = true;
+        return item;
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
 }

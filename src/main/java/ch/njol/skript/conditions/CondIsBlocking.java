@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -36,19 +36,19 @@ import org.bukkit.entity.Player;
 @Examples("victim is blocking")
 @Since("")
 public final class CondIsBlocking extends PropertyCondition<Player> {
-	
-	static {
-		register(CondIsBlocking.class, "(blocking|defending)", "players");
-	}
-	
-	@Override
-	public boolean check(final Player p) {
-		return p.isBlocking();
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "blocking";
-	}
-	
+
+    static {
+        register(CondIsBlocking.class, "(blocking|defending)", "players");
+    }
+
+    @Override
+    public boolean check(final Player p) {
+        return p.isBlocking();
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "blocking";
+    }
+
 }

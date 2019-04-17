@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -47,86 +47,86 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on click on wool:", "	message \"This wool block is <%colour of block%>%colour of block%<reset>!\"", "	set the colour of the block to black"})
 @Since("1.2")
 public class ExprColorOf extends SimplePropertyExpression<Object, Color> {
-	static {
-		register(ExprColorOf.class, Color.class, "colo[u]r[s]", "itemstacks/entities");
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	@Nullable
-	public Color convert(final Object o) {
-		if (o instanceof ItemStack || o instanceof Item) {
-			final ItemStack is = o instanceof ItemStack ? (ItemStack) o : ((Item) o).getItemStack();
-			final MaterialData d = is.getData();
-			if (d instanceof Colorable)
-				return Color.byWoolColor(((Colorable) d).getColor());
-		} else if (o instanceof Colorable) { // Sheep
-			return Color.byWoolColor(((Colorable) o).getColor());
-		}
-		return null;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "colour";
-	}
-	
-	@Override
-	public Class<Color> getReturnType() {
-		return Color.class;
-	}
-	
-	boolean changeItemStack;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode != ChangeMode.SET)
-			return null;
-		if (Entity.class.isAssignableFrom(getExpr().getReturnType()))
-			return CollectionUtils.array(Color.class);
-		if (!getExpr().isSingle())
-			return null;
-		if (ChangerUtils.acceptsChange(getExpr(), mode, ItemStack.class, ItemType.class)) {
-			changeItemStack = ChangerUtils.acceptsChange(getExpr(), mode, ItemStack.class);
-			return CollectionUtils.array(Color.class);
-		}
-		return null;
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
-		assert mode == ChangeMode.SET;
-		assert delta != null;
-		
-		final Object[] os = getExpr().getArray(e);
-		if (os.length == 0)
-			return;
-		
-		final Color c = (Color) delta[0];
-		
-		for (final Object o : os) {
-			if (o instanceof ItemStack || o instanceof Item) {
-				final ItemStack is = o instanceof ItemStack ? (ItemStack) o : ((Item) o).getItemStack();
-				final MaterialData d = is.getData();
-				if (d instanceof Colorable)
-					((Colorable) d).setColor(c.getWoolColor());
-				else
-					continue;
-				
-				if (o instanceof ItemStack) {
-					if (changeItemStack)
-						getExpr().change(e, new ItemStack[] {is}, mode);
-					else
-						getExpr().change(e, new ItemType[] {new ItemType(is)}, mode);
-				} else {
-					((Item) o).setItemStack(is);
-				}
-			} else if (o instanceof Colorable) {
-				((Colorable) o).setColor(c.getWoolColor());
-			}
-		}
-	}
-	
+    static {
+        register(ExprColorOf.class, Color.class, "colo[u]r[s]", "itemstacks/entities");
+    }
+
+    boolean changeItemStack;
+
+    @SuppressWarnings("null")
+    @Override
+    @Nullable
+    public Color convert(final Object o) {
+        if (o instanceof ItemStack || o instanceof Item) {
+            final ItemStack is = o instanceof ItemStack ? (ItemStack) o : ((Item) o).getItemStack();
+            final MaterialData d = is.getData();
+            if (d instanceof Colorable)
+                return Color.byWoolColor(((Colorable) d).getColor());
+        } else if (o instanceof Colorable) { // Sheep
+            return Color.byWoolColor(((Colorable) o).getColor());
+        }
+        return null;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "colour";
+    }
+
+    @Override
+    public Class<Color> getReturnType() {
+        return Color.class;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode != ChangeMode.SET)
+            return null;
+        if (Entity.class.isAssignableFrom(getExpr().getReturnType()))
+            return CollectionUtils.array(Color.class);
+        if (!getExpr().isSingle())
+            return null;
+        if (ChangerUtils.acceptsChange(getExpr(), mode, ItemStack.class, ItemType.class)) {
+            changeItemStack = ChangerUtils.acceptsChange(getExpr(), mode, ItemStack.class);
+            return CollectionUtils.array(Color.class);
+        }
+        return null;
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+        assert mode == ChangeMode.SET;
+        assert delta != null;
+
+        final Object[] os = getExpr().getArray(e);
+        if (os.length == 0)
+            return;
+
+        final Color c = (Color) delta[0];
+
+        for (final Object o : os) {
+            if (o instanceof ItemStack || o instanceof Item) {
+                final ItemStack is = o instanceof ItemStack ? (ItemStack) o : ((Item) o).getItemStack();
+                final MaterialData d = is.getData();
+                if (d instanceof Colorable)
+                    ((Colorable) d).setColor(c.getWoolColor());
+                else
+                    continue;
+
+                if (o instanceof ItemStack) {
+                    if (changeItemStack)
+                        getExpr().change(e, new ItemStack[]{is}, mode);
+                    else
+                        getExpr().change(e, new ItemType[]{new ItemType(is)}, mode);
+                } else {
+                    ((Item) o).setItemStack(is);
+                }
+            } else if (o instanceof Colorable) {
+                ((Colorable) o).setColor(c.getWoolColor());
+            }
+        }
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -42,46 +42,46 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events("Script Load/Unload")
 public class ExprScript extends SimpleExpression<String> {
-	static {
-		Skript.registerExpression(ExprScript.class, String.class, ExpressionType.SIMPLE, "[the] script[['s] name]", "name of [the] script");
-	}
-	
-	@SuppressWarnings("null")
-	private String name;
-	
-	@SuppressWarnings({"null", "unused"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		final Config script = ScriptLoader.currentScript;
-		if (script == null) {
-			assert false;
-			return false;
-		}
-		String name = script.getFileName();
-		if (name.contains("."))
-			name = "" + name.substring(0, name.lastIndexOf('.'));
-		this.name = name;
-		return true;
-	}
-	
-	@Override
-	protected String[] get(final Event e) {
-		return new String[] {name};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the script's name";
-	}
-	
+    static {
+        Skript.registerExpression(ExprScript.class, String.class, ExpressionType.SIMPLE, "[the] script[['s] name]", "name of [the] script");
+    }
+
+    @SuppressWarnings("null")
+    private String name;
+
+    @SuppressWarnings({"null", "unused"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        final Config script = ScriptLoader.currentScript;
+        if (script == null) {
+            assert false;
+            return false;
+        }
+        String name = script.getFileName();
+        if (name.contains("."))
+            name = "" + name.substring(0, name.lastIndexOf('.'));
+        this.name = name;
+        return true;
+    }
+
+    @Override
+    protected String[] get(final Event e) {
+        return new String[]{name};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the script's name";
+    }
+
 }

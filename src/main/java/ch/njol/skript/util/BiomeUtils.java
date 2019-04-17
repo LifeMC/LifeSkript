@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -28,24 +28,24 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class BiomeUtils {
-	
-	private BiomeUtils() {
-		throw new UnsupportedOperationException();
-	}
-	
-	private final static EnumUtils<Biome> util = new EnumUtils<Biome>(Biome.class, "biomes");
-	
-	@Nullable
-	public static Biome parse(final String s) {
-		return util.parse(s);
-	}
-	
-	public static String toString(final Biome b, final int flags) {
-		return util.toString(b, flags);
-	}
-	
-	public static String getAllNames() {
-		return util.getAllNames();
-	}
-	
+
+    private final static EnumUtils<Biome> util = new EnumUtils<Biome>(Biome.class, "biomes");
+
+    private BiomeUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Nullable
+    public static Biome parse(final String s) {
+        return util.parse(s);
+    }
+
+    public static String toString(final Biome b, final int flags) {
+        return util.toString(b, flags);
+    }
+
+    public static String getAllNames() {
+        return util.getAllNames();
+    }
+
 }

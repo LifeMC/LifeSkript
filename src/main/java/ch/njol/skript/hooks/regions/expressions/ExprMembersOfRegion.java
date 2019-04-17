@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks.regions.expressions;
@@ -47,45 +47,45 @@ import java.util.ArrayList;
 @Examples({"on entering of a region:", "	message \"You're entering %region% whose owners are %owners of region%\"."})
 @Since("2.1")
 public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
-	static {
-		Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
-	}
-	
-	private boolean owners;
-	@SuppressWarnings("null")
-	private Expression<Region> regions;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		regions = (Expression<Region>) exprs[0];
-		owners = parseResult.mark == 1;
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	protected OfflinePlayer[] get(final Event e) {
-		final ArrayList<OfflinePlayer> r = new ArrayList<OfflinePlayer>();
-		for (final Region region : regions.getArray(e)) {
-			r.addAll(owners ? region.getOwners() : region.getMembers());
-		}
-		return r.toArray(new OfflinePlayer[0]);
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return owners && regions.isSingle() && !RegionsPlugin.hasMultipleOwners();
-	}
-	
-	@Override
-	public Class<? extends OfflinePlayer> getReturnType() {
-		return OfflinePlayer.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the " + (owners ? "owner" + (isSingle() ? "" : "s") : "members") + " of " + regions.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
+    }
+
+    private boolean owners;
+    @SuppressWarnings("null")
+    private Expression<Region> regions;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        regions = (Expression<Region>) exprs[0];
+        owners = parseResult.mark == 1;
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected OfflinePlayer[] get(final Event e) {
+        final ArrayList<OfflinePlayer> r = new ArrayList<OfflinePlayer>();
+        for (final Region region : regions.getArray(e)) {
+            r.addAll(owners ? region.getOwners() : region.getMembers());
+        }
+        return r.toArray(new OfflinePlayer[0]);
+    }
+
+    @Override
+    public boolean isSingle() {
+        return owners && regions.isSingle() && !RegionsPlugin.hasMultipleOwners();
+    }
+
+    @Override
+    public Class<? extends OfflinePlayer> getReturnType() {
+        return OfflinePlayer.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the " + (owners ? "owner" + (isSingle() ? "" : "s") : "members") + " of " + regions.toString(e, debug);
+    }
+
 }

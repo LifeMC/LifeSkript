@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.localization;
@@ -30,28 +30,27 @@ import static org.junit.Assert.assertEquals;
  * @author Peter Güttinger
  */
 public class NounTest {
-	
-	@Test
-	public void testGetPlural() {
-		final String[][] tests = {{"a", "a", "a"}, {"a¦b", "a", "ab"}, {"a¦b¦c", "ab", "ac"}, {"a¦b¦c¦d", "abd", "acd"}, {"a¦b¦c¦d¦e", "abd", "acde"}, {"a¦b¦c¦d¦e¦f", "abde", "acdf"}, {"a¦b¦c¦d¦e¦f¦g", "abdeg", "acdfg"},
-		};
-		for (final String[] test : tests) {
-			@SuppressWarnings("null")
-			final NonNullPair<String, String> p = Noun.getPlural(test[0]);
-			assertEquals(test[1], p.getFirst());
-			assertEquals(test[2], p.getSecond());
-		}
-	}
-	
-	@SuppressWarnings("null")
-	@Test
-	public void testNormalizePluralMarkers() {
-		final String[][] tests = {{"a", "a"}, {"a¦b", "a¦¦b¦"}, {"a¦b¦c", "a¦b¦c¦"}, {"a¦b¦c¦d", "a¦b¦c¦d"}, {"a¦b¦c¦d¦e", "a¦b¦c¦d¦¦e¦"}, {"a¦b¦c¦d¦e¦f", "a¦b¦c¦d¦e¦f¦"}, {"a¦b¦c¦d¦e¦f¦g", "a¦b¦c¦d¦e¦f¦g"},
-		};
-		for (final String[] test : tests) {
-			assertEquals(test[1], Noun.normalizePluralMarkers(test[0]));
-			assertEquals(test[1] + "@x", Noun.normalizePluralMarkers(test[0] + "@x"));
-		}
-	}
-	
+
+    @Test
+    public void testGetPlural() {
+        final String[][] tests = {{"a", "a", "a"}, {"a¦b", "a", "ab"}, {"a¦b¦c", "ab", "ac"}, {"a¦b¦c¦d", "abd", "acd"}, {"a¦b¦c¦d¦e", "abd", "acde"}, {"a¦b¦c¦d¦e¦f", "abde", "acdf"}, {"a¦b¦c¦d¦e¦f¦g", "abdeg", "acdfg"},
+        };
+        for (final String[] test : tests) {
+            @SuppressWarnings("null") final NonNullPair<String, String> p = Noun.getPlural(test[0]);
+            assertEquals(test[1], p.getFirst());
+            assertEquals(test[2], p.getSecond());
+        }
+    }
+
+    @SuppressWarnings("null")
+    @Test
+    public void testNormalizePluralMarkers() {
+        final String[][] tests = {{"a", "a"}, {"a¦b", "a¦¦b¦"}, {"a¦b¦c", "a¦b¦c¦"}, {"a¦b¦c¦d", "a¦b¦c¦d"}, {"a¦b¦c¦d¦e", "a¦b¦c¦d¦¦e¦"}, {"a¦b¦c¦d¦e¦f", "a¦b¦c¦d¦e¦f¦"}, {"a¦b¦c¦d¦e¦f¦g", "a¦b¦c¦d¦e¦f¦g"},
+        };
+        for (final String[] test : tests) {
+            assertEquals(test[1], Noun.normalizePluralMarkers(test[0]));
+            assertEquals(test[1] + "@x", Noun.normalizePluralMarkers(test[0] + "@x"));
+        }
+    }
+
 }

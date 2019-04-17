@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript;
@@ -38,51 +38,53 @@ import static org.junit.Assert.assertNotNull;
  * @author Peter Güttinger
  */
 public class SkriptTest {
-	
-	@SuppressWarnings("null")
-	private static final Player njol = createMock(Player.class);
-	static {
-		
-	}
-	
-//	@Test
-	public static void main() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+
+    @SuppressWarnings("null")
+    private static final Player njol = createMock(Player.class);
+
+    static {
+
+    }
+
+    //	@Test
+    public static void main() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
 //				org.bukkit.craftbukkit.Main.main(new String[] {"-nojline"});
-			}
-		}).start();
-		while (Bukkit.getServer() == null) {
-			try {
-				Thread.sleep(10);
-			} catch (final InterruptedException ignored) {}
-		}
-		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-			@Override
-			public void run() {
-				assertNotNull(Skript.getInstance());
-				test();
-			}
-		}, 2);
-	}
-	
-	static void test() {
-		
-		final Trigger t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player"));
-		assert t != null;
-		t.execute(new PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, null));
-		
-	}
-	
-	@SuppressWarnings("null")
-	private static SectionNode nodeFromString(final String s) {
-		try {
-			return new Config(s, "test.sk", true, false, ":").getMainNode();//.getNode(0);
-		} catch (final IOException e) {
-			assert false : e;
-			return null;
-		}
-	}
-	
+            }
+        }).start();
+        while (Bukkit.getServer() == null) {
+            try {
+                Thread.sleep(10);
+            } catch (final InterruptedException ignored) {
+            }
+        }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                assertNotNull(Skript.getInstance());
+                test();
+            }
+        }, 2);
+    }
+
+    static void test() {
+
+        final Trigger t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player"));
+        assert t != null;
+        t.execute(new PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, null));
+
+    }
+
+    @SuppressWarnings("null")
+    private static SectionNode nodeFromString(final String s) {
+        try {
+            return new Config(s, "test.sk", true, false, ":").getMainNode();//.getNode(0);
+        } catch (final IOException e) {
+            assert false : e;
+            return null;
+        }
+    }
+
 }

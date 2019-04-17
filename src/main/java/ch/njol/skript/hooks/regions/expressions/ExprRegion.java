@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.hooks.regions.expressions;
@@ -40,17 +40,17 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on region enter:", "	region is {forbidden region}", "	cancel the event"})
 @Since("2.1")
 public final class ExprRegion extends EventValueExpression<Region> {
-	static {
-		Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, "[the] [event-]region");
-	}
-	
-	public ExprRegion() {
-		super(Region.class);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the region";
-	}
-	
+    static {
+        Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, "[the] [event-]region");
+    }
+
+    public ExprRegion() {
+        super(Region.class);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the region";
+    }
+
 }

@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -28,40 +28,40 @@ import java.util.NoSuchElementException;
  * @author Peter Güttinger
  */
 public abstract class NonNullIterator<T> implements Iterator<T> {
-	
-	@Nullable
-	private T current;
-	
-	private boolean ended;
-	
-	@Override
-	public final boolean hasNext() {
-		if (current != null)
-			return true;
-		if (ended)
-			return false;
-		current = getNext();
-		if (current == null)
-			ended = true;
-		return !ended;
-	}
-	
-	@Nullable
-	protected abstract T getNext();
-	
-	@Override
-	public final T next() {
-		if (!hasNext())
-			throw new NoSuchElementException();
-		final T t = current;
-		current = null;
-		assert t != null;
-		return t;
-	}
-	
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
-	
+
+    @Nullable
+    private T current;
+
+    private boolean ended;
+
+    @Override
+    public final boolean hasNext() {
+        if (current != null)
+            return true;
+        if (ended)
+            return false;
+        current = getNext();
+        if (current == null)
+            ended = true;
+        return !ended;
+    }
+
+    @Nullable
+    protected abstract T getNext();
+
+    @Override
+    public final T next() {
+        if (!hasNext())
+            throw new NoSuchElementException();
+        final T t = current;
+        current = null;
+        assert t != null;
+        return t;
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
 }

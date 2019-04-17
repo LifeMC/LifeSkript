@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -47,154 +47,153 @@ import java.lang.reflect.Array;
 @Examples({"set the player's health to 10 - the player's health", "loop (argument + 2)/5 times:", "	message \"Two useless numbers: %loop-num*2 - 5%, %2^loop-num - 1%\"", "message \"You have %health of player * 2% half hearts of HP!\""})
 @Since("1.4.2")
 public final class ExprArithmetic extends SimpleExpression<Number> {
-	
-	private enum Operator {
-		PLUS('+') {
-			@SuppressWarnings("null")
-			@Override
-			public Number calculate(final Number n1, final Number n2, final boolean integer) {
-				if (integer)
-					return n1.longValue() + n2.longValue();
-				return n1.doubleValue() + n2.doubleValue();
-			}
-		},
-		MINUS('-') {
-			@SuppressWarnings("null")
-			@Override
-			public Number calculate(final Number n1, final Number n2, final boolean integer) {
-				if (integer)
-					return n1.longValue() - n2.longValue();
-				return n1.doubleValue() - n2.doubleValue();
-			}
-		},
-		MULT('*') {
-			@SuppressWarnings("null")
-			@Override
-			public Number calculate(final Number n1, final Number n2, final boolean integer) {
-				if (integer)
-					return n1.longValue() * n2.longValue();
-				return n1.doubleValue() * n2.doubleValue();
-			}
-		},
-		DIV('/') {
-			@SuppressWarnings("null")
-			@Override
-			public Number calculate(final Number n1, final Number n2, final boolean integer) {
-				if (integer) {
-					final long div = n2.longValue();
-					if (div == 0)
-						return Long.MAX_VALUE;
-					return n1.longValue() / div;
-				}
-				return n1.doubleValue() / n2.doubleValue();
-			}
-		},
-		EXP('^') {
-			@SuppressWarnings("null")
-			@Override
-			public Number calculate(final Number n1, final Number n2, final boolean integer) {
-				if (integer)
-					return (long) Math.pow(n1.longValue(), n2.longValue());
-				return Math.pow(n1.doubleValue(), n2.doubleValue());
-			}
-		};
-		
-		public final char sign;
-		
-		Operator(final char sign) {
-			this.sign = sign;
-		}
-		
-		public abstract Number calculate(Number n1, Number n2, boolean integer);
-		
-		@Override
-		public String toString() {
-			return "" + sign;
-		}
-	}
-	
-	private final static Patterns<Operator> patterns = new Patterns<Operator>(new Object[][] {
-			
-			{"%number%[ ]+[ ]%number%", Operator.PLUS}, {"%number%[ ]-[ ]%number%", Operator.MINUS},
-			
-			{"%number%[ ]*[ ]%number%", Operator.MULT}, {"%number%[ ]/[ ]%number%", Operator.DIV},
-			
-			{"%number%[ ]^[ ]%number%", Operator.EXP},
-	
-	});
-	
-	static {
-		Skript.registerExpression(ExprArithmetic.class, Number.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, patterns.getPatterns());
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<? extends Number> first, second;
-	@SuppressWarnings("null")
-	private Operator op;
-	
-	@SuppressWarnings("null")
-	private Class<? extends Number> returnType;
-	private boolean integer;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		first = (Expression<? extends Number>) exprs[0];
-		second = (Expression<? extends Number>) exprs[1];
-		op = patterns.getInfo(matchedPattern);
-		if (op == Operator.DIV || op == Operator.EXP) {
-			returnType = Double.class;
-		} else {
-			final Class<?> f = first.getReturnType(), s = second.getReturnType();
-			final Class<?>[] integers = {Long.class, Integer.class, Short.class, Byte.class};
-			boolean firstIsInt = false, secondIsInt = false;
-			for (final Class<?> i : integers) {
-				firstIsInt |= i.isAssignableFrom(f);
-				secondIsInt |= i.isAssignableFrom(s);
-			}
-			if (firstIsInt && secondIsInt)
-				returnType = Long.class;
-			else
-				returnType = Double.class;
-		}
-		integer = returnType == Long.class;
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	protected Number[] get(final Event e) {
-		final Number[] one = (Number[]) Array.newInstance(returnType, 1);
-		Number n1 = first.getSingle(e), n2 = second.getSingle(e);
-		if (n1 == null)
-			n1 = 0;
-		if (n2 == null)
-			n2 = 0;
-		one[0] = op.calculate(n1, n2, integer);
-		return one;
-	}
-	
-	@Override
-	public Class<? extends Number> getReturnType() {
-		return returnType;
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return first.toString(e, debug) + " " + op + " " + second.toString(e, debug);
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public Expression<? extends Number> simplify() {
-		if (first instanceof Literal && second instanceof Literal)
-			return new SimpleLiteral<Number>(getArray(null), Number.class, false);
-		return this;
-	}
-	
+
+    private final static Patterns<Operator> patterns = new Patterns<Operator>(new Object[][]{
+
+            {"%number%[ ]+[ ]%number%", Operator.PLUS}, {"%number%[ ]-[ ]%number%", Operator.MINUS},
+
+            {"%number%[ ]*[ ]%number%", Operator.MULT}, {"%number%[ ]/[ ]%number%", Operator.DIV},
+
+            {"%number%[ ]^[ ]%number%", Operator.EXP},
+
+    });
+
+    static {
+        Skript.registerExpression(ExprArithmetic.class, Number.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, patterns.getPatterns());
+    }
+
+    @SuppressWarnings("null")
+    private Expression<? extends Number> first, second;
+    @SuppressWarnings("null")
+    private Operator op;
+    @SuppressWarnings("null")
+    private Class<? extends Number> returnType;
+    private boolean integer;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        first = (Expression<? extends Number>) exprs[0];
+        second = (Expression<? extends Number>) exprs[1];
+        op = patterns.getInfo(matchedPattern);
+        if (op == Operator.DIV || op == Operator.EXP) {
+            returnType = Double.class;
+        } else {
+            final Class<?> f = first.getReturnType(), s = second.getReturnType();
+            final Class<?>[] integers = {Long.class, Integer.class, Short.class, Byte.class};
+            boolean firstIsInt = false, secondIsInt = false;
+            for (final Class<?> i : integers) {
+                firstIsInt |= i.isAssignableFrom(f);
+                secondIsInt |= i.isAssignableFrom(s);
+            }
+            if (firstIsInt && secondIsInt)
+                returnType = Long.class;
+            else
+                returnType = Double.class;
+        }
+        integer = returnType == Long.class;
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected Number[] get(final Event e) {
+        final Number[] one = (Number[]) Array.newInstance(returnType, 1);
+        Number n1 = first.getSingle(e), n2 = second.getSingle(e);
+        if (n1 == null)
+            n1 = 0;
+        if (n2 == null)
+            n2 = 0;
+        one[0] = op.calculate(n1, n2, integer);
+        return one;
+    }
+
+    @Override
+    public Class<? extends Number> getReturnType() {
+        return returnType;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return first.toString(e, debug) + " " + op + " " + second.toString(e, debug);
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public Expression<? extends Number> simplify() {
+        if (first instanceof Literal && second instanceof Literal)
+            return new SimpleLiteral<Number>(getArray(null), Number.class, false);
+        return this;
+    }
+
+    private enum Operator {
+        PLUS('+') {
+            @SuppressWarnings("null")
+            @Override
+            public Number calculate(final Number n1, final Number n2, final boolean integer) {
+                if (integer)
+                    return n1.longValue() + n2.longValue();
+                return n1.doubleValue() + n2.doubleValue();
+            }
+        },
+        MINUS('-') {
+            @SuppressWarnings("null")
+            @Override
+            public Number calculate(final Number n1, final Number n2, final boolean integer) {
+                if (integer)
+                    return n1.longValue() - n2.longValue();
+                return n1.doubleValue() - n2.doubleValue();
+            }
+        },
+        MULT('*') {
+            @SuppressWarnings("null")
+            @Override
+            public Number calculate(final Number n1, final Number n2, final boolean integer) {
+                if (integer)
+                    return n1.longValue() * n2.longValue();
+                return n1.doubleValue() * n2.doubleValue();
+            }
+        },
+        DIV('/') {
+            @SuppressWarnings("null")
+            @Override
+            public Number calculate(final Number n1, final Number n2, final boolean integer) {
+                if (integer) {
+                    final long div = n2.longValue();
+                    if (div == 0)
+                        return Long.MAX_VALUE;
+                    return n1.longValue() / div;
+                }
+                return n1.doubleValue() / n2.doubleValue();
+            }
+        },
+        EXP('^') {
+            @SuppressWarnings("null")
+            @Override
+            public Number calculate(final Number n1, final Number n2, final boolean integer) {
+                if (integer)
+                    return (long) Math.pow(n1.longValue(), n2.longValue());
+                return Math.pow(n1.doubleValue(), n2.doubleValue());
+            }
+        };
+
+        public final char sign;
+
+        Operator(final char sign) {
+            this.sign = sign;
+        }
+
+        public abstract Number calculate(Number n1, Number n2, boolean integer);
+
+        @Override
+        public String toString() {
+            return "" + sign;
+        }
+    }
+
 }

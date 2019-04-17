@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -29,40 +29,40 @@ import java.util.NoSuchElementException;
 
 /**
  * TODO this should actually only be an Iterator
- * 
+ *
  * @author Peter Güttinger
  */
 public class EnumerationIterable<T> implements Iterable<T> {
-	
-	@Nullable
-	final Enumeration<? extends T> e;
-	
-	public EnumerationIterable(final @Nullable Enumeration<? extends T> e) {
-		this.e = e;
-	}
-	
-	@Override
-	public Iterator<T> iterator() {
-		final Enumeration<? extends T> e = this.e;
-		if (e == null)
-			return EmptyIterator.get();
-		return new Iterator<T>() {
-			@Override
-			public boolean hasNext() {
-				return e.hasMoreElements();
-			}
-			
-			@Override
-			@Nullable
-			public T next() throws NoSuchElementException { //NOSONAR
-				return e.nextElement();
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-	
+
+    @Nullable
+    final Enumeration<? extends T> e;
+
+    public EnumerationIterable(final @Nullable Enumeration<? extends T> e) {
+        this.e = e;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        final Enumeration<? extends T> e = this.e;
+        if (e == null)
+            return EmptyIterator.get();
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return e.hasMoreElements();
+            }
+
+            @Override
+            @Nullable
+            public T next() throws NoSuchElementException { //NOSONAR
+                return e.nextElement();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
 }

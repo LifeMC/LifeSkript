@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -47,55 +47,54 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"player is banned", "victim is not IP-banned", "\"127.0.0.1\" is banned"})
 @Since("1.4")
 public class CondIsBanned extends Condition {
-	
-	static {
-		Skript.registerCondition(CondIsBanned.class, "%offlineplayers/strings% (is|are) banned", "%players/strings% (is|are) IP(-| |)banned", "%offlineplayers/strings% (isn't|is not|aren't|are not) banned", "%players/strings% (isn't|is not|aren't|are not) IP(-| |)banned");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<?> players;
-	
-	boolean ipBanned;
-	
-	@SuppressWarnings("null")
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		players = exprs[0];
-		setNegated(matchedPattern >= 2);
-		ipBanned = matchedPattern % 2 != 0;
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return players.check(e, new Checker<Object>() {
-			@Override
-			public boolean check(final Object o) {
-				if (o instanceof Player) {
-					if (ipBanned) {
-						return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
-					} else {
-						return ((Player) o).isBanned();
-					}
-				} else if (o instanceof OfflinePlayer) {
-					return ((OfflinePlayer) o).isBanned();
-				} else if (o instanceof String) {
-					return Bukkit.getIPBans().contains(o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(new OfflinePlayer[0]), new Predicate<OfflinePlayer>() {
-						@Override
-						public boolean test(final @Nullable OfflinePlayer t) {
-							return t != null && ((String) o).equals(t.getName());
-						}
-					});
-				}
-				assert false;
-				return false;
-			}
-		}, isNegated());
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return players.toString(e, debug) + (players.isSingle() ? " is " : " are ") + (isNegated() ? "not " : "") + (ipBanned ? "IP-" : "") + "banned";
-	}
-	
+
+    static {
+        Skript.registerCondition(CondIsBanned.class, "%offlineplayers/strings% (is|are) banned", "%players/strings% (is|are) IP(-| |)banned", "%offlineplayers/strings% (isn't|is not|aren't|are not) banned", "%players/strings% (isn't|is not|aren't|are not) IP(-| |)banned");
+    }
+
+    boolean ipBanned;
+    @SuppressWarnings("null")
+    private Expression<?> players;
+
+    @SuppressWarnings("null")
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        players = exprs[0];
+        setNegated(matchedPattern >= 2);
+        ipBanned = matchedPattern % 2 != 0;
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return players.check(e, new Checker<Object>() {
+            @Override
+            public boolean check(final Object o) {
+                if (o instanceof Player) {
+                    if (ipBanned) {
+                        return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
+                    } else {
+                        return ((Player) o).isBanned();
+                    }
+                } else if (o instanceof OfflinePlayer) {
+                    return ((OfflinePlayer) o).isBanned();
+                } else if (o instanceof String) {
+                    return Bukkit.getIPBans().contains(o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(new OfflinePlayer[0]), new Predicate<OfflinePlayer>() {
+                        @Override
+                        public boolean test(final @Nullable OfflinePlayer t) {
+                            return t != null && o.equals(t.getName());
+                        }
+                    });
+                }
+                assert false;
+                return false;
+            }
+        }, isNegated());
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return players.toString(e, debug) + (players.isSingle() ? " is " : " are ") + (isNegated() ? "not " : "") + (ipBanned ? "IP-" : "") + "banned";
+    }
+
 }

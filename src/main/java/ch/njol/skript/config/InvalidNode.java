@@ -13,29 +13,29 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config;
 
 /**
  * A line of a config that could not be parsed.
- * 
+ *
  * @author Peter Güttinger
  */
 public class InvalidNode extends VoidNode {
-	
+
 //	public InvalidNode(final SectionNode parent, final ConfigReader r) {
 //		super(parent, r);
 //		config.errors++;
 //	}
-	
-	public InvalidNode(final String value, final String comment, final SectionNode parent, final int lineNum) {
-		super(value, comment, parent, lineNum);
-		config.errors++;
-	}
-	
+
+    public InvalidNode(final String value, final String comment, final SectionNode parent, final int lineNum) {
+        super(value, comment, parent, lineNum);
+        config.errors++;
+    }
+
 }

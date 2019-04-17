@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -38,24 +38,24 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"add a plank to the player's inventory", "clear the player's inventory", "remove 5 wool from the inventory of the clicked block"})
 @Since("1.0")
 public class ExprInventory extends SimplePropertyExpression<InventoryHolder, Inventory> {
-	static {
-		register(ExprInventory.class, Inventory.class, "inventor(y|ies)", "inventoryholders");
-	}
-	
-	@Override
-	@Nullable
-	public Inventory convert(final InventoryHolder h) {
-		return h.getInventory();
-	}
-	
-	@Override
-	public Class<Inventory> getReturnType() {
-		return Inventory.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "inventor" + (getExpr().isSingle() ? "y" : "ies");
-	}
-	
+    static {
+        register(ExprInventory.class, Inventory.class, "inventor(y|ies)", "inventoryholders");
+    }
+
+    @Override
+    @Nullable
+    public Inventory convert(final InventoryHolder h) {
+        return h.getInventory();
+    }
+
+    @Override
+    public Class<Inventory> getReturnType() {
+        return Inventory.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "inventor" + (getExpr().isSingle() ? "y" : "ies");
+    }
+
 }

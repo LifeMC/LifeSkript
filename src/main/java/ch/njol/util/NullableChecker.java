@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util;
@@ -22,15 +22,15 @@ package ch.njol.util;
 import org.eclipse.jdt.annotation.Nullable;
 
 public interface NullableChecker<T> extends Checker<T> {
-	
-	@Override
-	boolean check(final @Nullable T o);
-	
-	NullableChecker<Object> nullChecker = new NullableChecker<Object>() {
-		@Override
-		public boolean check(final @Nullable Object o) {
-			return o != null;
-		}
-	};
-	
+
+    NullableChecker<Object> nullChecker = new NullableChecker<Object>() {
+        @Override
+        public boolean check(final @Nullable Object o) {
+            return o != null;
+        }
+    };
+
+    @Override
+    boolean check(final @Nullable T o);
+
 }

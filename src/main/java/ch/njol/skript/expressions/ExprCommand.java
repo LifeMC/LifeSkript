@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -43,61 +43,62 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events("command")
 public final class ExprCommand extends SimpleExpression<String> {
-	static {
-		Skript.registerExpression(ExprCommand.class, String.class, ExpressionType.SIMPLE, "[the] (full|complete|whole) command", "[the] command [label]", "[the] arguments");
-	}
-	
-	private final static int FULL = 0, LABEL = 1, ARGS = 2;
-	private int what;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		what = matchedPattern;
-		if (!ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class)) {
-			if (what != ARGS) // ExprArgument has the same syntax
-				Skript.error("The 'command' expression can only be used in a command event");
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected String[] get(final Event e) {
-		final String s;
-		if (e instanceof PlayerCommandPreprocessEvent) {
-			s = ((PlayerCommandPreprocessEvent) e).getMessage().substring(1).trim();
-		} else if (e instanceof ServerCommandEvent) {
-			s = ((ServerCommandEvent) e).getCommand().trim();
-		} else {
-			return new String[0];
-		}
-		if (what == FULL)
-			return new String[] {s};
-		final int c = s.indexOf(' ');
-		if (what == ARGS) {
-			if (c == -1)
-				return new String[0];
-			return new String[] {s.substring(c + 1).trim()};
-		}
-		assert what == LABEL;
-		return new String[] {c == -1 ? s : s.substring(0, c)};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return what == 0 ? "the full command" : what == 1 ? "the command" : "the arguments";
-	}
-	
+    private final static int FULL = 0, LABEL = 1, ARGS = 2;
+
+    static {
+        Skript.registerExpression(ExprCommand.class, String.class, ExpressionType.SIMPLE, "[the] (full|complete|whole) command", "[the] command [label]", "[the] arguments");
+    }
+
+    private int what;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        what = matchedPattern;
+        if (!ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class)) {
+            if (what != ARGS) // ExprArgument has the same syntax
+                Skript.error("The 'command' expression can only be used in a command event");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected String[] get(final Event e) {
+        final String s;
+        if (e instanceof PlayerCommandPreprocessEvent) {
+            s = ((PlayerCommandPreprocessEvent) e).getMessage().substring(1).trim();
+        } else if (e instanceof ServerCommandEvent) {
+            s = ((ServerCommandEvent) e).getCommand().trim();
+        } else {
+            return new String[0];
+        }
+        if (what == FULL)
+            return new String[]{s};
+        final int c = s.indexOf(' ');
+        if (what == ARGS) {
+            if (c == -1)
+                return new String[0];
+            return new String[]{s.substring(c + 1).trim()};
+        }
+        assert what == LABEL;
+        return new String[]{c == -1 ? s : s.substring(0, c)};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return what == 0 ? "the full command" : what == 1 ? "the command" : "the arguments";
+    }
+
 }

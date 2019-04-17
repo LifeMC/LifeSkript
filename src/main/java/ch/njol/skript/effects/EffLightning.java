@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -43,37 +43,37 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"strike lightning at the player", "strike lightning effect at the victim"})
 @Since("1.4")
 public class EffLightning extends Effect {
-	
-	static {
-		Skript.registerEffect(EffLightning.class, "(create|strike) lightning(1¦[ ]effect|) %directions% %locations%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Location> locations;
-	
-	private boolean effectOnly;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		locations = Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]);
-		effectOnly = parseResult.mark == 1;
-		return true;
-	}
-	
-	@Override
-	protected void execute(final Event e) {
-		for (final Location l : locations.getArray(e)) {
-			if (effectOnly)
-				l.getWorld().strikeLightningEffect(l);
-			else
-				l.getWorld().strikeLightning(l);
-		}
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "strike lightning " + (effectOnly ? "effect " : "") + locations.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerEffect(EffLightning.class, "(create|strike) lightning(1¦[ ]effect|) %directions% %locations%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<Location> locations;
+
+    private boolean effectOnly;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        locations = Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]);
+        effectOnly = parseResult.mark == 1;
+        return true;
+    }
+
+    @Override
+    protected void execute(final Event e) {
+        for (final Location l : locations.getArray(e)) {
+            if (effectOnly)
+                l.getWorld().strikeLightningEffect(l);
+            else
+                l.getWorld().strikeLightning(l);
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "strike lightning " + (effectOnly ? "effect " : "") + locations.toString(e, debug);
+    }
+
 }

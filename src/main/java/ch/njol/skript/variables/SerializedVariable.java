@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.variables;
@@ -27,23 +27,23 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class SerializedVariable {
-	public final String name;
-	@Nullable
-	public final Value value;
-	
-	public SerializedVariable(final String name, final @Nullable Value value) {
-		this.name = name;
-		this.value = value;
-	}
-	
-	public final static class Value {
-		public final String type;
-		public final byte[] data;
-		
-		public Value(final String type, final byte[] data) {
-			this.type = type;
-			this.data = data;
-		}
-	}
-	
+    public final String name;
+    @Nullable
+    public final Value value;
+
+    public SerializedVariable(final String name, final @Nullable Value value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public final static class Value {
+        public final String type;
+        public final byte[] data;
+
+        public Value(final String type, final byte[] data) {
+            this.type = type;
+            this.data = data;
+        }
+    }
+
 }

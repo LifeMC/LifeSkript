@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -44,42 +44,42 @@ import java.util.Arrays;
 @Examples({"set {list::*} to alphabetically sorted {list::*}"})
 @Since("2.2-Fixes-V9c")
 public class ExprAlphabetList extends SimpleExpression<String> {
-	
-	static {
-		Skript.registerExpression(ExprAlphabetList.class, String.class, ExpressionType.COMBINED, "alphabetically sorted %strings%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<String> texts;
-	
-	@SuppressWarnings({"null", "unchecked"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		texts = (Expression<String>) exprs[0];
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected String[] get(final Event e) {
-		final String[] sorted = texts.getAll(e).clone(); // Not yet sorted
-		Arrays.sort(sorted); // Now sorted
-		return sorted;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return false;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "alphabetically sorted strings: " + texts.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerExpression(ExprAlphabetList.class, String.class, ExpressionType.COMBINED, "alphabetically sorted %strings%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> texts;
+
+    @SuppressWarnings({"null", "unchecked"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        texts = (Expression<String>) exprs[0];
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected String[] get(final Event e) {
+        final String[] sorted = texts.getAll(e).clone(); // Not yet sorted
+        Arrays.sort(sorted); // Now sorted
+        return sorted;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "alphabetically sorted strings: " + texts.toString(e, debug);
+    }
+
 }

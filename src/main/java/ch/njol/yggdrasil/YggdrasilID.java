@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2013-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.yggdrasil;
@@ -25,12 +25,12 @@ import java.lang.annotation.*;
 
 /**
  * Can be used to set a class's or field's id used by Yggdrasil.
- * 
+ *
  * @author Peter Güttinger
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Documented
 public @interface YggdrasilID {
-	String value();
+    String value();
 }

@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter G�ttinger
- * 
+ *
  */
 
 package ch.njol.util;
@@ -25,24 +25,25 @@ import javax.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class SynchronizedReference<V> {
-	@Nullable
-	private volatile V value;
-	
-	public SynchronizedReference(@Nullable final V initialValue) {
-		this.value = initialValue;
-	}
-	
-	@SuppressWarnings("null")
-	public SynchronizedReference() {}
-	
-	@Nullable
-	public V get() {
-		assert Thread.holdsLock(this);
-		return this.value;
-	}
-	
-	public void set(@Nullable final V newValue) {
-		assert Thread.holdsLock(this);
-		this.value = newValue;
-	}
+    @Nullable
+    private volatile V value;
+
+    public SynchronizedReference(@Nullable final V initialValue) {
+        this.value = initialValue;
+    }
+
+    @SuppressWarnings("null")
+    public SynchronizedReference() {
+    }
+
+    @Nullable
+    public V get() {
+        assert Thread.holdsLock(this);
+        return this.value;
+    }
+
+    public void set(@Nullable final V newValue) {
+        assert Thread.holdsLock(this);
+        this.value = newValue;
+    }
 }

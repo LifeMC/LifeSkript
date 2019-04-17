@@ -13,24 +13,24 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
 
 /**
  * Blocks any messages from being logged.
- * 
+ *
  * @author Peter Güttinger
  */
 public final class BlockingLogHandler extends LogHandler {
-	
-	@Override
-	public LogResult log(final LogEntry entry) {
-		return LogResult.DO_NOT_LOG;
-	}
-	
+
+    @Override
+    public LogResult log(final LogEntry entry) {
+        return LogResult.DO_NOT_LOG;
+    }
+
 }

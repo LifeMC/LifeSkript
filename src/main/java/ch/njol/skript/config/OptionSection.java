@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config;
@@ -30,34 +30,34 @@ import java.util.Locale;
  * @author Peter Güttinger
  */
 public final class OptionSection {
-	
-	public final String key;
-	
-	public OptionSection(final String key) {
-		this.key = key;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Nullable
-	public <T> T get(String key) {
-		if (this.getClass() == OptionSection.class)
-			return null;
-		key = "" + key.toLowerCase(Locale.ENGLISH);
-		for (final Field f : this.getClass().getDeclaredFields()) {
-			f.setAccessible(true);
-			if (Option.class.isAssignableFrom(f.getType())) {
-				try {
-					final Option<?> o = (Option<?>) f.get(this);
-					if (o.key.equals(key))
-						return (T) o.value();
-				} catch (final IllegalArgumentException e) {
-					assert false;
-				} catch (final IllegalAccessException e) {
-					assert false;
-				}
-			}
-		}
-		return null;
-	}
-	
+
+    public final String key;
+
+    public OptionSection(final String key) {
+        this.key = key;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public <T> T get(String key) {
+        if (this.getClass() == OptionSection.class)
+            return null;
+        key = "" + key.toLowerCase(Locale.ENGLISH);
+        for (final Field f : this.getClass().getDeclaredFields()) {
+            f.setAccessible(true);
+            if (Option.class.isAssignableFrom(f.getType())) {
+                try {
+                    final Option<?> o = (Option<?>) f.get(this);
+                    if (o.key.equals(key))
+                        return (T) o.value();
+                } catch (final IllegalArgumentException e) {
+                    assert false;
+                } catch (final IllegalAccessException e) {
+                    assert false;
+                }
+            }
+        }
+        return null;
+    }
+
 }

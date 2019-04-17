@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -43,86 +43,86 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("\"oops!\" in upper case # OOPS!")
 @Since("2.2-Fixes-V9c")
 public final class ExprStringCase extends SimpleExpression<String> {
-	
-	private final static int UPPER = 0, LOWER = 1;
-	
-	/**
-	 * Helper function which takes nullable string and
-	 * uses given mode to it.
-	 * 
-	 * @param str Original string.
-	 * @param mode See above, UPPER or LOWER.
-	 * @return Changed string.
-	 */
-	@SuppressWarnings("null")
-	private static String changeCase(@Nullable final String str, final int mode) {
-		if (str == null)
-			return "";
-		else if (mode == UPPER)
-			return str.toUpperCase();
-		else if (mode == LOWER)
-			return str.toLowerCase();
-		else
-			return str;
-	}
-	
-	static {
-		Skript.registerExpression(ExprStringCase.class, String.class, ExpressionType.SIMPLE, "%string% in (0¦upper|1¦lower) case", "capitalized %string%");
-	}
-	
-	@Nullable
-	private Expression<String> origin;
-	@Nullable
-	private String literal;
-	private int mode;
-	
-	@SuppressWarnings({"unchecked"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (exprs[0] instanceof Literal)
-			literal = ((Literal<String>) exprs[0]).getSingle();
-		else
-			origin = (Expression<String>) exprs[0];
-		if (matchedPattern == 1)
-			mode = UPPER;
-		else
-			mode = parseResult.mark;
-		
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected String[] get(final Event e) {
-		String str;
-		if (literal != null)
-			str = changeCase(literal, mode);
-		else if (origin != null)
-			str = changeCase(origin.getSingle(e), mode);
-		else
-			str = "";
-		
-		return new String[] {str};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		if (literal != null)
-			return changeCase(literal, mode);
-		else if (origin != null && e != null)
-			return changeCase(origin.getSingle(e), mode);
-		
-		return "";
-	}
-	
+
+    private final static int UPPER = 0, LOWER = 1;
+
+    static {
+        Skript.registerExpression(ExprStringCase.class, String.class, ExpressionType.SIMPLE, "%string% in (0¦upper|1¦lower) case", "capitalized %string%");
+    }
+
+    @Nullable
+    private Expression<String> origin;
+    @Nullable
+    private String literal;
+    private int mode;
+
+    /**
+     * Helper function which takes nullable string and
+     * uses given mode to it.
+     *
+     * @param str  Original string.
+     * @param mode See above, UPPER or LOWER.
+     * @return Changed string.
+     */
+    @SuppressWarnings("null")
+    private static String changeCase(@Nullable final String str, final int mode) {
+        if (str == null)
+            return "";
+        else if (mode == UPPER)
+            return str.toUpperCase();
+        else if (mode == LOWER)
+            return str.toLowerCase();
+        else
+            return str;
+    }
+
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (exprs[0] instanceof Literal)
+            literal = ((Literal<String>) exprs[0]).getSingle();
+        else
+            origin = (Expression<String>) exprs[0];
+        if (matchedPattern == 1)
+            mode = UPPER;
+        else
+            mode = parseResult.mark;
+
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected String[] get(final Event e) {
+        String str;
+        if (literal != null)
+            str = changeCase(literal, mode);
+        else if (origin != null)
+            str = changeCase(origin.getSingle(e), mode);
+        else
+            str = "";
+
+        return new String[]{str};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        if (literal != null)
+            return changeCase(literal, mode);
+        else if (origin != null && e != null)
+            return changeCase(origin.getSingle(e), mode);
+
+        return "";
+    }
+
 }

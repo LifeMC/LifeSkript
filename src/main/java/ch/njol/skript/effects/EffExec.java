@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -45,58 +45,57 @@ import java.util.List;
 @Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
 public final class EffExec extends Effect {
-	static {
-		Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");
-	}
-	
-	public static volatile boolean lastExecuteState;
-	
-	@Nullable
-	public static volatile String lastExecuteErrors;
-	
-	@SuppressWarnings("null")
-	private Expression<String> input;
-	
-	@Override
-	@SuppressWarnings({"unchecked", "null"})
-	public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		input = (Expression<String>) vars[0];
-		return true;
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	protected void execute(final Event e) {
-		final String s = input.getSingle(e);
-		if (s == null)
-			return;
-		SkriptLogger.startSuppressing();
-		final Effect eff = Effect.parse(s, "can't understand this effect: '" + s + "'");
-		if (eff instanceof EffExec || eff instanceof EffAsyncExec) {
-			Skript.error("Execute effects may not be nested!");
-			return;
-		}
-		final List<LogEntry> entryList = SkriptLogger.stopSuppressing();
-		if (eff != null) {
-			eff.run(e);
-		} else {
-			final StringBuilder errorBuilder = new StringBuilder();
-			for (final LogEntry entry : entryList) {
-				errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
-			}
-			assert errorBuilder != null;
-			lastExecuteErrors = errorBuilder.toString();
-		}
-		
-		lastExecuteState = entryList.isEmpty();
-		entryList.clear();
-		
-		SkriptLogger.cleanSuppressState();
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "exec " + input.toString(e, debug);
-	}
-	
+    public static volatile boolean lastExecuteState;
+    @Nullable
+    public static volatile String lastExecuteErrors;
+
+    static {
+        Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<String> input;
+
+    @Override
+    @SuppressWarnings({"unchecked", "null"})
+    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        input = (Expression<String>) vars[0];
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    protected void execute(final Event e) {
+        final String s = input.getSingle(e);
+        if (s == null)
+            return;
+        SkriptLogger.startSuppressing();
+        final Effect eff = Effect.parse(s, "can't understand this effect: '" + s + "'");
+        if (eff instanceof EffExec || eff instanceof EffAsyncExec) {
+            Skript.error("Execute effects may not be nested!");
+            return;
+        }
+        final List<LogEntry> entryList = SkriptLogger.stopSuppressing();
+        if (eff != null) {
+            eff.run(e);
+        } else {
+            final StringBuilder errorBuilder = new StringBuilder();
+            for (final LogEntry entry : entryList) {
+                errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
+            }
+            assert errorBuilder != null;
+            lastExecuteErrors = errorBuilder.toString();
+        }
+
+        lastExecuteState = entryList.isEmpty();
+        entryList.clear();
+
+        SkriptLogger.cleanSuppressState();
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "exec " + input.toString(e, debug);
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -31,37 +31,37 @@ import org.bukkit.event.Event;
  * (e.g. the right click event is included in the PlayerInteractEvent which also includes lef clicks, thus the SkriptEvent {@link ch.njol.skript.events.EvtClick} checks whether it was a rightclick or
  * not).<br/>
  * It is also needed if the event has parameters.
- * 
+ *
  * @author Peter Güttinger
  * @see ch.njol.skript.Skript#registerEvent(String, Class, Class, String...)
  * @see ch.njol.skript.Skript#registerEvent(String, Class, Class[], String...)
  */
 public abstract class SkriptEvent implements SyntaxElement, Debuggable {
-	
-	@Override
-	public final boolean init(final ch.njol.skript.lang.Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		throw new UnsupportedOperationException();
-	}
-	
-	/**
-	 * called just after the constructor
-	 * 
-	 * @param args
-	 */
-	public abstract boolean init(final Literal<?>[] args, int matchedPattern, ParseResult parseResult);
-	
-	/**
-	 * Checks whether the given Event applies, e.g. the leftclick event is only part of the PlayerInteractEvent, and this checks whether the player leftclicked or not. This method
-	 * will only be called for events this SkriptEvent is registered for.
-	 * 
-	 * @param e
-	 * @return true if this is SkriptEvent is represented by the Bukkit Event or false if not
-	 */
-	public abstract boolean check(Event e);
-	
-	@Override
-	public String toString() {
-		return toString(null, false);
-	}
-	
+
+    @Override
+    public final boolean init(final ch.njol.skript.lang.Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * called just after the constructor
+     *
+     * @param args
+     */
+    public abstract boolean init(final Literal<?>[] args, int matchedPattern, ParseResult parseResult);
+
+    /**
+     * Checks whether the given Event applies, e.g. the leftclick event is only part of the PlayerInteractEvent, and this checks whether the player leftclicked or not. This method
+     * will only be called for events this SkriptEvent is registered for.
+     *
+     * @param e
+     * @return true if this is SkriptEvent is represented by the Bukkit Event or false if not
+     */
+    public abstract boolean check(Event e);
+
+    @Override
+    public String toString() {
+        return toString(null, false);
+    }
+
 }

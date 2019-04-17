@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -43,25 +43,25 @@ import org.eclipse.jdt.annotation.Nullable;
 })
 @Since("2.2-Fixes-V9c")
 public final class CondCancelled extends Condition {
-	
-	static {
-		Skript.registerCondition(CondCancelled.class, "[the] event is cancel[l]ed", "[the] event (is not|isn't) cancel[l]ed");
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return (e instanceof Cancellable && ((Cancellable) e).isCancelled()) ^ isNegated();
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return isNegated() ? "event is not cancelled" : "event is cancelled";
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-		setNegated(matchedPattern == 1);
-		return true;
-	}
-	
+
+    static {
+        Skript.registerCondition(CondCancelled.class, "[the] event is cancel[l]ed", "[the] event (is not|isn't) cancel[l]ed");
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return (e instanceof Cancellable && ((Cancellable) e).isCancelled()) ^ isNegated();
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return isNegated() ? "event is not cancelled" : "event is cancelled";
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        setNegated(matchedPattern == 1);
+        return true;
+    }
+
 }

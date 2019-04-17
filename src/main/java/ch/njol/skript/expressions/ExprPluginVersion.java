@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -45,60 +45,61 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-Fixes-V12")
 public final class ExprPluginVersion extends SimpleExpression<String> {
 
-	static {
-		Skript.registerExpression(ExprPluginVersion.class, String.class, ExpressionType.SIMPLE, "version of plugin %string%");
-	}
-	
-	private @Nullable Expression<String> pluginName;
-	
-	/**
-	 * @see ch.njol.skript.lang.Expression#isSingle()
-	 */
-	public boolean isSingle() {
-		return true;
-	}
+    static {
+        Skript.registerExpression(ExprPluginVersion.class, String.class, ExpressionType.SIMPLE, "version of plugin %string%");
+    }
 
-	/**
-	 * @see ch.njol.skript.lang.Expression#getReturnType()
-	 */
-	public Class<? extends String> getReturnType() {
-		return String.class;
-	}
+    private @Nullable
+    Expression<String> pluginName;
 
-	/**
-	 * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
-	 */
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		this.pluginName = (Expression<String>) exprs[0];
-		return true;
-	}
+    /**
+     * @see ch.njol.skript.lang.Expression#isSingle()
+     */
+    public boolean isSingle() {
+        return true;
+    }
 
-	/**
-	 * @see ch.njol.skript.lang.Debuggable#toString(org.bukkit.event.Event, boolean)
-	 */
-	@SuppressWarnings("null")
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "version of plugin \"" + pluginName.getSingle(e) + "\" (" + (get(e) != null ? get(e) : "".trim()) + ")";
-	}
+    /**
+     * @see ch.njol.skript.lang.Expression#getReturnType()
+     */
+    public Class<? extends String> getReturnType() {
+        return String.class;
+    }
 
-	/**
-	 * @see ch.njol.skript.lang.util.SimpleExpression#get(org.bukkit.event.Event)
-	 */
-	@Override
-	@Nullable
-	@SuppressWarnings("null")
-	protected String[] get(final Event e) {
-		String version = null;
-		
-		final Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName.getSingle(e));
-		
-		if (plugin != null)
-			version = plugin.getDescription().getVersion();
-		
-		if (version == null)
-			return null;
-		
-		return new String[] { version };
-	}
-	
+    /**
+     * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
+     */
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        this.pluginName = (Expression<String>) exprs[0];
+        return true;
+    }
+
+    /**
+     * @see ch.njol.skript.lang.Debuggable#toString(org.bukkit.event.Event, boolean)
+     */
+    @SuppressWarnings("null")
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "version of plugin \"" + pluginName.getSingle(e) + "\" (" + (get(e) != null ? get(e) : "".trim()) + ")";
+    }
+
+    /**
+     * @see ch.njol.skript.lang.util.SimpleExpression#get(org.bukkit.event.Event)
+     */
+    @Override
+    @Nullable
+    @SuppressWarnings("null")
+    protected String[] get(final Event e) {
+        String version = null;
+
+        final Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName.getSingle(e));
+
+        if (plugin != null)
+            version = plugin.getDescription().getVersion();
+
+        if (version == null)
+            return null;
+
+        return new String[]{version};
+    }
+
 }

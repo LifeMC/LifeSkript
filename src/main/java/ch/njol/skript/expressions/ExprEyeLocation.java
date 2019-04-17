@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -38,24 +38,24 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set the block at the player's head to air", "set the block in front of the player's eyes to glass", "loop blocks in front of the player's head:"})
 @Since("2.0")
 public class ExprEyeLocation extends SimplePropertyExpression<LivingEntity, Location> {
-	static {
-		register(ExprEyeLocation.class, Location.class, "(head|eye[s]) [location[s]]", "livingentities");
-	}
-	
-	@Override
-	public Class<Location> getReturnType() {
-		return Location.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "eye location";
-	}
-	
-	@Override
-	@Nullable
-	public Location convert(final LivingEntity e) {
-		return e.getEyeLocation();
-	}
-	
+    static {
+        register(ExprEyeLocation.class, Location.class, "(head|eye[s]) [location[s]]", "livingentities");
+    }
+
+    @Override
+    public Class<Location> getReturnType() {
+        return Location.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "eye location";
+    }
+
+    @Override
+    @Nullable
+    public Location convert(final LivingEntity e) {
+        return e.getEyeLocation();
+    }
+
 }

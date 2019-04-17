@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -45,39 +45,36 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"!heal me", "!kick myself", "!give a diamond axe to me"})
 @Since("2.1.1")
 public final class ExprMe extends SimpleExpression<CommandSender> {
-	static {
-		Skript.registerExpression(ExprMe.class, CommandSender.class, ExpressionType.SIMPLE, "me", "my[self]");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (!ScriptLoader.isCurrentEvent(EffectCommandEvent.class)) {
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected CommandSender[] get(final Event e) {
-		if (e instanceof EffectCommandEvent)
-			return new CommandSender[] {((EffectCommandEvent) e).getSender()};
-		return new CommandSender[0];
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<CommandSender> getReturnType() {
-		return CommandSender.class;
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return "me";
-	}
-	
+    static {
+        Skript.registerExpression(ExprMe.class, CommandSender.class, ExpressionType.SIMPLE, "me", "my[self]");
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        return ScriptLoader.isCurrentEvent(EffectCommandEvent.class);
+    }
+
+    @Override
+    @Nullable
+    protected CommandSender[] get(final Event e) {
+        if (e instanceof EffectCommandEvent)
+            return new CommandSender[]{((EffectCommandEvent) e).getSender()};
+        return new CommandSender[0];
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<CommandSender> getReturnType() {
+        return CommandSender.class;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "me";
+    }
+
 }

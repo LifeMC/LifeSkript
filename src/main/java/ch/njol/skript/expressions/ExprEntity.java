@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -50,76 +50,76 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"give a diamond sword of sharpness 3 to the player", "kill the creeper", "kill all powered creepers in the wolf's world", "projectile is an arrow"})
 @Since("1.0")
 public class ExprEntity extends SimpleExpression<Entity> {
-	static {
-		Skript.registerExpression(ExprEntity.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[the] [event-]<.+>");
-	}
-	
-	@SuppressWarnings("null")
-	private EntityData<?> type;
-	
-	@SuppressWarnings("null")
-	private EventValueExpression<Entity> entity;
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		final RetainingLogHandler log = SkriptLogger.startRetainingLog();
-		try {
-			if (!StringUtils.startsWithIgnoreCase(parseResult.expr, "the ") && !StringUtils.startsWithIgnoreCase(parseResult.expr, "event-")) {
-				
-				final String s = parseResult.regexes.get(0).group();
-				final ItemType item = Aliases.parseItemType("" + s);
-				log.clear();
-				if (item != null) {
-					log.printLog();
-					return false;
-				}
-				
-				//if(!StringUtils.startsWithIgnoreCase(parseResult.expr, "the event-") && !s.equalsIgnoreCase("player") && !s.equalsIgnoreCase("entity")){
-				//	return false;
-				//}
-				
-			}
-			
-			final EntityData<?> type = EntityData.parseWithoutIndefiniteArticle("" + parseResult.regexes.get(0).group());
-			log.clear();
-			log.printLog();
-			if (type == null || type.isPlural().isTrue())
-				return false;
-			this.type = type;
-		} finally {
-			log.stop();
-		}
-		entity = new EventValueExpression<Entity>(type.getType());
-		return entity.init();
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<? extends Entity> getReturnType() {
-		return type.getType();
-	}
-	
-	@Override
-	public boolean isDefault() {
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	protected Entity[] get(final Event e) {
-		final Entity[] es = entity.getArray(e);
-		if (es.length == 0 || type.isInstance(es[0]))
-			return es;
-		return null;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the " + type;
-	}
-	
+    static {
+        Skript.registerExpression(ExprEntity.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[the] [event-]<.+>");
+    }
+
+    @SuppressWarnings("null")
+    private EntityData<?> type;
+
+    @SuppressWarnings("null")
+    private EventValueExpression<Entity> entity;
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        final RetainingLogHandler log = SkriptLogger.startRetainingLog();
+        try {
+            if (!StringUtils.startsWithIgnoreCase(parseResult.expr, "the ") && !StringUtils.startsWithIgnoreCase(parseResult.expr, "event-")) {
+
+                final String s = parseResult.regexes.get(0).group();
+                final ItemType item = Aliases.parseItemType("" + s);
+                log.clear();
+                if (item != null) {
+                    log.printLog();
+                    return false;
+                }
+
+                //if(!StringUtils.startsWithIgnoreCase(parseResult.expr, "the event-") && !s.equalsIgnoreCase("player") && !s.equalsIgnoreCase("entity")){
+                //	return false;
+                //}
+
+            }
+
+            final EntityData<?> type = EntityData.parseWithoutIndefiniteArticle("" + parseResult.regexes.get(0).group());
+            log.clear();
+            log.printLog();
+            if (type == null || type.isPlural().isTrue())
+                return false;
+            this.type = type;
+        } finally {
+            log.stop();
+        }
+        entity = new EventValueExpression<Entity>(type.getType());
+        return entity.init();
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<? extends Entity> getReturnType() {
+        return type.getType();
+    }
+
+    @Override
+    public boolean isDefault() {
+        return true;
+    }
+
+    @Override
+    @Nullable
+    protected Entity[] get(final Event e) {
+        final Entity[] es = entity.getArray(e);
+        if (es.length == 0 || type.isInstance(es[0]))
+            return es;
+        return null;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the " + type;
+    }
+
 }

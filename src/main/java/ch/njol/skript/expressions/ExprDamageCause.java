@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -40,17 +40,17 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples("damage cause is lava, fire or burning")
 @Since("2.0")
 public class ExprDamageCause extends EventValueExpression<DamageCause> {
-	static {
-		Skript.registerExpression(ExprDamageCause.class, DamageCause.class, ExpressionType.SIMPLE, "[the] damage (cause|type)");
-	}
-	
-	public ExprDamageCause() {
-		super(DamageCause.class);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the damage cause";
-	}
-	
+    static {
+        Skript.registerExpression(ExprDamageCause.class, DamageCause.class, ExpressionType.SIMPLE, "[the] damage (cause|type)");
+    }
+
+    public ExprDamageCause() {
+        super(DamageCause.class);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the damage cause";
+    }
+
 }

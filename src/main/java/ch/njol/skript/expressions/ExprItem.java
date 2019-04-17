@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -44,77 +44,77 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on dispense:", "	item is a clock", "	set the time to 6:00"/*,"	delete the item"*/})
 @Since("")
 public class ExprItem extends EventValueExpression<ItemStack> {
-	static {
-		Skript.registerExpression(ExprItem.class, ItemStack.class, ExpressionType.SIMPLE, "[the] item");
-	}
-	
-	public ExprItem() {
-		super(ItemStack.class);
-	}
-	
-	@Nullable
-	private EventValueExpression<Item> item;
-	@Nullable
-	private EventValueExpression<Slot> slot;
-	
-	@Override
-	@Nullable
-	public Class<?>[] acceptChange(final ChangeMode mode) {
-		if (mode == ChangeMode.RESET)
-			return null;
-		item = new EventValueExpression<Item>(Item.class);
-		if (item.init())
-			return new Class[] {ItemType.class};
-		item = null;
-		slot = new EventValueExpression<Slot>(Slot.class);
-		if (slot.init())
-			return new Class[] {ItemType.class};
-		slot = null;
-		return null;
-	}
-	
-	@Override
-	public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-		assert mode != ChangeMode.RESET;
-		
-		final Item i = item != null ? item.getSingle(e) : null;
-		final Slot s = slot != null ? slot.getSingle(e) : null;
-		if (i == null && s == null)
-			return;
-		ItemStack is = i != null ? i.getItemStack() : s != null ? s.getItem() : null;
-		final ItemType t = delta == null ? null : (ItemType) delta[0];
-		switch (mode) {
-			case SET:
-				assert t != null;
-				is = t.getRandom();
-				break;
-			case ADD:
-			case REMOVE:
-			case REMOVE_ALL:
-				assert t != null;
-				if (t.isOfType(is)) {
-					if (mode == ChangeMode.ADD)
-						is = t.addTo(is);
-					else if (mode == ChangeMode.REMOVE)
-						is = t.removeFrom(is);
-					else
-						is = t.removeAll(is);
-				}
-				break;
-			case DELETE:
-				is = null;
-				if (i != null)
-					i.remove();
-				break;
-			case RESET:
-				assert false;
-		}
-		if (i != null)
-			i.setItemStack(is);
-		else if (s != null)
-			s.setItem(is);
-		else
-			assert false;
-	}
-	
+    static {
+        Skript.registerExpression(ExprItem.class, ItemStack.class, ExpressionType.SIMPLE, "[the] item");
+    }
+
+    @Nullable
+    private EventValueExpression<Item> item;
+    @Nullable
+    private EventValueExpression<Slot> slot;
+
+    public ExprItem() {
+        super(ItemStack.class);
+    }
+
+    @Override
+    @Nullable
+    public Class<?>[] acceptChange(final ChangeMode mode) {
+        if (mode == ChangeMode.RESET)
+            return null;
+        item = new EventValueExpression<Item>(Item.class);
+        if (item.init())
+            return new Class[]{ItemType.class};
+        item = null;
+        slot = new EventValueExpression<Slot>(Slot.class);
+        if (slot.init())
+            return new Class[]{ItemType.class};
+        slot = null;
+        return null;
+    }
+
+    @Override
+    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+        assert mode != ChangeMode.RESET;
+
+        final Item i = item != null ? item.getSingle(e) : null;
+        final Slot s = slot != null ? slot.getSingle(e) : null;
+        if (i == null && s == null)
+            return;
+        ItemStack is = i != null ? i.getItemStack() : s != null ? s.getItem() : null;
+        final ItemType t = delta == null ? null : (ItemType) delta[0];
+        switch (mode) {
+            case SET:
+                assert t != null;
+                is = t.getRandom();
+                break;
+            case ADD:
+            case REMOVE:
+            case REMOVE_ALL:
+                assert t != null;
+                if (t.isOfType(is)) {
+                    if (mode == ChangeMode.ADD)
+                        is = t.addTo(is);
+                    else if (mode == ChangeMode.REMOVE)
+                        is = t.removeFrom(is);
+                    else
+                        is = t.removeAll(is);
+                }
+                break;
+            case DELETE:
+                is = null;
+                if (i != null)
+                    i.remove();
+                break;
+            case RESET:
+                assert false;
+        }
+        if (i != null)
+            i.setItemStack(is);
+        else if (s != null)
+            s.setItem(is);
+        else
+            assert false;
+    }
+
 }

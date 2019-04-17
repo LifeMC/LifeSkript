@@ -13,21 +13,21 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
 
 public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
-	
-	public final Class<T> returnType;
-	
-	public ExpressionInfo(final String[] patterns, final Class<T> returnType, final Class<E> c) throws IllegalArgumentException {
-		super(patterns, c);
-		this.returnType = returnType;
-	}
-	
+
+    public final Class<T> returnType;
+
+    public ExpressionInfo(final String[] patterns, final Class<T> returnType, final Class<E> c) throws IllegalArgumentException {
+        super(patterns, c);
+        this.returnType = returnType;
+    }
+
 }

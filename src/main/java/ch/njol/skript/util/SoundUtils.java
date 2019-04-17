@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -28,28 +28,28 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class SoundUtils {
-	
-	private SoundUtils() {
-		throw new UnsupportedOperationException();
-	}
-	
-	static {
-		assert false;
-	}
-	
-	private final static EnumUtils<Sound> util = new EnumUtils<Sound>(Sound.class, "sounds");
-	
-	@Nullable
-	public static Sound parse(final String s) {
-		return util.parse(s);
-	}
-	
-	public static String toString(final Sound s, final int flags) {
-		return util.toString(s, flags);
-	}
-	
-	public static String getAllNames() {
-		return util.getAllNames();
-	}
-	
+
+    private final static EnumUtils<Sound> util = new EnumUtils<Sound>(Sound.class, "sounds");
+
+    static {
+        assert false;
+    }
+
+    private SoundUtils() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Nullable
+    public static Sound parse(final String s) {
+        return util.parse(s);
+    }
+
+    public static String toString(final Sound s, final int flags) {
+        return util.toString(s, flags);
+    }
+
+    public static String getAllNames() {
+        return util.getAllNames();
+    }
+
 }

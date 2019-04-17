@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -27,16 +27,16 @@ import java.util.logging.Level;
  * @author Peter Güttinger
  */
 public final class FilteringLogHandler extends LogHandler {
-	
-	private final int minimum;
-	
-	public FilteringLogHandler(final Level minimum) {
-		this.minimum = minimum.intValue();
-	}
-	
-	@Override
-	public LogResult log(final LogEntry entry) {
-		return entry.level.intValue() >= minimum ? LogResult.LOG : LogResult.DO_NOT_LOG;
-	}
-	
+
+    private final int minimum;
+
+    public FilteringLogHandler(final Level minimum) {
+        this.minimum = minimum.intValue();
+    }
+
+    @Override
+    public LogResult log(final LogEntry entry) {
+        return entry.level.intValue() >= minimum ? LogResult.LOG : LogResult.DO_NOT_LOG;
+    }
+
 }

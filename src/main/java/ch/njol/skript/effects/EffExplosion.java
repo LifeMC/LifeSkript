@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -43,50 +43,50 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"create an explosion of force 10 at the player", "create an explosion of force 0 at the victim"})
 @Since("1.0")
 public class EffExplosion extends Effect {
-	
-	static {
-		Skript.registerEffect(EffExplosion.class, "[(create|make)] [an] explosion (of|with) (force|strength|power) %number% [%directions% %locations%]", "[(create|make)] [a] safe explosion (of|with) (force|strength|power) %number% [%directions% %locations%]", "[(create|make)] [a] fake explosion [%directions% %locations%]", "[(create|make)] [an] explosion[ ]effect [%directions% %locations%]");
-	}
-	
-	@Nullable
-	private Expression<Number> force;
-	@SuppressWarnings("null")
-	private Expression<Location> locations;
-	
-	private boolean blockDamage;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-		force = matchedPattern <= 1 ? (Expression<Number>) exprs[0] : null;
-		blockDamage = matchedPattern != 1;
-		if (!blockDamage && !Skript.isRunningMinecraft(1, 4, 5)) {
-			Skript.error("Explosions which do not destroy blocks are only available in Bukkit 1.4.5+");
-			return false;
-		}
-		locations = Direction.combine((Expression<? extends Direction>) exprs[exprs.length - 2], (Expression<? extends Location>) exprs[exprs.length - 1]);
-		return true;
-	}
-	
-	@Override
-	public void execute(final Event e) {
-		final Number power = force != null ? force.getSingle(e) : 0;
-		if (power == null)
-			return;
-		for (final Location l : locations.getArray(e)) {
-			if (!blockDamage)
-				l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), power.floatValue(), false, false);
-			else
-				l.getWorld().createExplosion(l, power.floatValue());
-		}
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		if (force != null)
-			return "create explosion of force " + force.toString(e, debug) + " " + locations.toString(e, debug);
-		else
-			return "create explosion effect " + locations.toString(e, debug);
-	}
-	
+
+    static {
+        Skript.registerEffect(EffExplosion.class, "[(create|make)] [an] explosion (of|with) (force|strength|power) %number% [%directions% %locations%]", "[(create|make)] [a] safe explosion (of|with) (force|strength|power) %number% [%directions% %locations%]", "[(create|make)] [a] fake explosion [%directions% %locations%]", "[(create|make)] [an] explosion[ ]effect [%directions% %locations%]");
+    }
+
+    @Nullable
+    private Expression<Number> force;
+    @SuppressWarnings("null")
+    private Expression<Location> locations;
+
+    private boolean blockDamage;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        force = matchedPattern <= 1 ? (Expression<Number>) exprs[0] : null;
+        blockDamage = matchedPattern != 1;
+        if (!blockDamage && !Skript.isRunningMinecraft(1, 4, 5)) {
+            Skript.error("Explosions which do not destroy blocks are only available in Bukkit 1.4.5+");
+            return false;
+        }
+        locations = Direction.combine((Expression<? extends Direction>) exprs[exprs.length - 2], (Expression<? extends Location>) exprs[exprs.length - 1]);
+        return true;
+    }
+
+    @Override
+    public void execute(final Event e) {
+        final Number power = force != null ? force.getSingle(e) : 0;
+        if (power == null)
+            return;
+        for (final Location l : locations.getArray(e)) {
+            if (!blockDamage)
+                l.getWorld().createExplosion(l.getX(), l.getY(), l.getZ(), power.floatValue(), false, false);
+            else
+                l.getWorld().createExplosion(l, power.floatValue());
+        }
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        if (force != null)
+            return "create explosion of force " + force.toString(e, debug) + " " + locations.toString(e, debug);
+        else
+            return "create explosion effect " + locations.toString(e, debug);
+    }
+
 }

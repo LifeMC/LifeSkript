@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.events;
@@ -40,55 +40,19 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @SuppressWarnings("unchecked")
 public class EvtDamage extends SkriptEvent {
-	static {
-		Skript.registerEvent("Damage", EvtDamage.class, EntityDamageEvent.class, "damag(e|ing) [of %entitydata%]").description("Called when an entity receives damage, e.g. by an attack from another entity, lava, fire, drowning, fall, suffocation, etc.").examples("on damage", "on damage of a player").since("1.0");
-	}
-	
-	@Nullable
-	private Literal<EntityData<?>> types;
-	
-	@Override
-	public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
-		types = (Literal<EntityData<?>>) args[0];
-		return true;
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public boolean check(final Event evt) {
-		final EntityDamageEvent e = (EntityDamageEvent) evt;
-		if (!checkType(e.getEntity()))
-			return false;
-		if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof EnderDragon && ((EntityDamageByEntityEvent) e).getEntity() instanceof EnderDragon)
-			return false;
-		return checkDamage(e);
-	}
-	
-	private boolean checkType(final Entity e) {
-		if (types != null) {
-			for (final EntityData<?> d : types.getAll()) {
-				if (d.isInstance(e))
-					return true;
-			}
-			return false;
-		}
-		return true;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "damage" + (types != null ? " of " + types.toString(e, debug) : "");
-	}
-	
-//	private final static WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
-	
-	@SuppressWarnings("null")
-	private static boolean checkDamage(final EntityDamageEvent e) {
-		if (!(e.getEntity() instanceof LivingEntity))
-			return true;
-		final LivingEntity en = (LivingEntity) e.getEntity();
-		if (HealthUtils.getHealth(en) <= 0)
-			return false;
+    static {
+        Skript.registerEvent("Damage", EvtDamage.class, EntityDamageEvent.class, "damag(e|ing) [of %entitydata%]").description("Called when an entity receives damage, e.g. by an attack from another entity, lava, fire, drowning, fall, suffocation, etc.").examples("on damage", "on damage of a player").since("1.0");
+    }
+
+    @Nullable
+    private Literal<EntityData<?>> types;
+
+    @SuppressWarnings("null")
+    private static boolean checkDamage(final EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof LivingEntity))
+            return true;
+        final LivingEntity en = (LivingEntity) e.getEntity();
+        return !(HealthUtils.getHealth(en) <= 0);
 //		if (en.getNoDamageTicks() <= en.getMaximumNoDamageTicks() / 2) {
 //			lastDamages.put(en, e.getDamage());
 //			return true;
@@ -97,8 +61,42 @@ public class EvtDamage extends SkriptEvent {
 //		if (lastDamage != null && lastDamage >= e.getDamage())
 //			return false;
 //		lastDamages.put(en, e.getDamage());
-		return true;
-	}
+    }
+
+    @Override
+    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+        types = (Literal<EntityData<?>>) args[0];
+        return true;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public boolean check(final Event evt) {
+        final EntityDamageEvent e = (EntityDamageEvent) evt;
+        if (!checkType(e.getEntity()))
+            return false;
+        if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof EnderDragon && e.getEntity() instanceof EnderDragon)
+            return false;
+        return checkDamage(e);
+    }
+
+    private boolean checkType(final Entity e) {
+        if (types != null) {
+            for (final EntityData<?> d : types.getAll()) {
+                if (d.isInstance(e))
+                    return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+//	private final static WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "damage" + (types != null ? " of " + types.toString(e, debug) : "");
+    }
 	
 	/*
 	static {

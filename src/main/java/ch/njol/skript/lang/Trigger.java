@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.lang;
@@ -31,91 +31,91 @@ import java.util.List;
  * @author Peter Güttinger
  */
 public final class Trigger extends TriggerSection {
-	
-	private final String name;
-	private final SkriptEvent event;
-	
-	@Nullable
-	private final File script;
-	private int line = -1; // -1 is default: it means there is no line number available
-	private String debugLabel;
-	
-	public Trigger(final @Nullable File script, final String name, final SkriptEvent event, final List<TriggerItem> items) {
-		super(items);
-		this.script = script;
-		this.name = name;
-		this.event = event;
-		debugLabel = "unknown trigger";
-	}
-	
-	/**
-	 * Executes this trigger for certain event.
-	 * 
-	 * @param e The event.
-	 * @return false if an e error occurred.
-	 */
-	public boolean execute(final Event e) {
-		return TriggerItem.walk(this, e);
-	}
-	
-	@Override
-	@Nullable
-	protected TriggerItem walk(final Event e) {
-		return walk(e, true);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return name + " (" + event.toString(e, debug) + ")";
-	}
-	
-	/**
-	 * Gets name of this trigger.
-	 * 
-	 * @return Name of trigger.
-	 */
-	public String getName() {
-		return name;
-	}
-	
-	public SkriptEvent getEvent() {
-		return event;
-	}
-	
-	/**
-	 * Gets the file of this trigger.
-	 * 
-	 * @return The script file of trigger.
-	 */
-	@Nullable
-	public File getScript() {
-		return script;
-	}
-	
-	/**
-	 * Sets line number for this trigger's start.
-	 * 
-	 * @param line Line number.
-	 */
-	public void setLineNumber(final int line) {
-		this.line = line;
-	}
-	
-	/**
-	 * Gets line number for this trigger's start.
-	 * 
-	 * @return Line number.
-	 */
-	public int getLineNumber() {
-		return line;
-	}
-	
-	public void setDebugLabel(final String label) {
-		debugLabel = label;
-	}
-	
-	public String getDebugLabel() {
-		return debugLabel;
-	}
-	
+
+    private final String name;
+    private final SkriptEvent event;
+
+    @Nullable
+    private final File script;
+    private int line = -1; // -1 is default: it means there is no line number available
+    private String debugLabel;
+
+    public Trigger(final @Nullable File script, final String name, final SkriptEvent event, final List<TriggerItem> items) {
+        super(items);
+        this.script = script;
+        this.name = name;
+        this.event = event;
+        debugLabel = "unknown trigger";
+    }
+
+    /**
+     * Executes this trigger for certain event.
+     *
+     * @param e The event.
+     * @return false if an e error occurred.
+     */
+    public boolean execute(final Event e) {
+        return TriggerItem.walk(this, e);
+    }
+
+    @Override
+    @Nullable
+    protected TriggerItem walk(final Event e) {
+        return walk(e, true);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return name + " (" + event.toString(e, debug) + ")";
+    }
+
+    /**
+     * Gets name of this trigger.
+     *
+     * @return Name of trigger.
+     */
+    public String getName() {
+        return name;
+    }
+
+    public SkriptEvent getEvent() {
+        return event;
+    }
+
+    /**
+     * Gets the file of this trigger.
+     *
+     * @return The script file of trigger.
+     */
+    @Nullable
+    public File getScript() {
+        return script;
+    }
+
+    /**
+     * Gets line number for this trigger's start.
+     *
+     * @return Line number.
+     */
+    public int getLineNumber() {
+        return line;
+    }
+
+    /**
+     * Sets line number for this trigger's start.
+     *
+     * @param line Line number.
+     */
+    public void setLineNumber(final int line) {
+        this.line = line;
+    }
+
+    public String getDebugLabel() {
+        return debugLabel;
+    }
+
+    public void setDebugLabel(final String label) {
+        debugLabel = label;
+    }
+
 }

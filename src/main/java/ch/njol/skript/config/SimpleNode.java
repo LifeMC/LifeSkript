@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.config;
@@ -25,23 +25,23 @@ package ch.njol.skript.config;
  * @author Peter Güttinger
  */
 public class SimpleNode extends Node {
-	
-	public SimpleNode(final String value, final String comment, final int lineNum, final SectionNode parent) {
-		super(value, comment, parent, lineNum);
-	}
-	
-	public SimpleNode(final Config c) {
-		super(c);
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	String save_i() {
-		return key;
-	}
-	
-	public void set(final String s) {
-		key = s;
-	}
-	
+
+    public SimpleNode(final String value, final String comment, final int lineNum, final SectionNode parent) {
+        super(value, comment, parent, lineNum);
+    }
+
+    public SimpleNode(final Config c) {
+        super(c);
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    String save_i() {
+        return key;
+    }
+
+    public void set(final String s) {
+        key = s;
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2013 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.effects;
@@ -42,32 +42,32 @@ import org.eclipse.jdt.annotation.Nullable;
 })
 @Since("2.2-Fixes-V10b")
 public class EffCancelCooldown extends Effect {
-	static {
-		Skript.registerEffect(EffCancelCooldown.class, "(cancel|ignore) [the] [current] [command] cooldown", "un(cancel|ignore) [the] [current] [command] cooldown");
-	}
-	
-	private boolean cancel;
-	
-	@Override
-	protected void execute(final Event e) {
-		if (!(e instanceof ScriptCommandEvent)) {
-			return;
-		}
-		((ScriptCommandEvent) e).setCooldownCancelled(cancel);
-	}
-	
-	@Override
-	public String toString(@Nullable final Event e, final boolean debug) {
-		return (cancel ? "" : "un") + "cancel the command cooldown";
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-		if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
-			Skript.error("The cancel cooldown effect may only be used in a command.", ErrorQuality.SEMANTIC_ERROR);
-			return false;
-		}
-		cancel = matchedPattern == 0;
-		return true;
-	}
+    static {
+        Skript.registerEffect(EffCancelCooldown.class, "(cancel|ignore) [the] [current] [command] cooldown", "un(cancel|ignore) [the] [current] [command] cooldown");
+    }
+
+    private boolean cancel;
+
+    @Override
+    protected void execute(final Event e) {
+        if (!(e instanceof ScriptCommandEvent)) {
+            return;
+        }
+        ((ScriptCommandEvent) e).setCooldownCancelled(cancel);
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return (cancel ? "" : "un") + "cancel the command cooldown";
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        if (!ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
+            Skript.error("The cancel cooldown effect may only be used in a command.", ErrorQuality.SEMANTIC_ERROR);
+            return false;
+        }
+        cancel = matchedPattern == 0;
+        return true;
+    }
 }

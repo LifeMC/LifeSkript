@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -42,34 +42,34 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set {var} to line 1 parsed as integer", "if {var} is not set:", "	parse error is set:", "		message \"<red>Line 1 is invalid: %last parse error%\"", "	else:", "		message \"<red>Please put an integer on line 1!\""})
 @Since("2.0")
 public class ExprParseError extends SimpleExpression<String> {
-	static {
-		Skript.registerExpression(ExprParseError.class, String.class, ExpressionType.SIMPLE, "[the] [last] [parse] error");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		return true;
-	}
-	
-	@Override
-	@SuppressWarnings("null")
-	protected String[] get(final Event e) {
-		return ExprParse.lastError == null ? new String[0] : new String[] {ExprParse.lastError};
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<String> getReturnType() {
-		return String.class;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the last parse error";
-	}
-	
+    static {
+        Skript.registerExpression(ExprParseError.class, String.class, ExpressionType.SIMPLE, "[the] [last] [parse] error");
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("null")
+    protected String[] get(final Event e) {
+        return ExprParse.lastError == null ? new String[0] : new String[]{ExprParse.lastError};
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<String> getReturnType() {
+        return String.class;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the last parse error";
+    }
+
 }

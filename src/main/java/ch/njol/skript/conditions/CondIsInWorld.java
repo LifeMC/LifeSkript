@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -44,42 +44,42 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"player is in \"world\"", "argument isn't in world \"world_nether\"", "the player is in the world of the victim"})
 @Since("1.4")
 public final class CondIsInWorld extends Condition {
-	static {
-		Skript.registerCondition(CondIsInWorld.class, "%entities% (is|are) in [[the] world[s]] %worlds%", "%entities% (is not|isn't|are not|aren't) in [[the] world[s]] %worlds%");
-	}
-	
-	@SuppressWarnings("null")
-	private Expression<Entity> entities;
-	@SuppressWarnings("null")
-	Expression<World> worlds;
-	
-	@SuppressWarnings({"unchecked", "null"})
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		entities = (Expression<Entity>) exprs[0];
-		worlds = (Expression<World>) exprs[1];
-		setNegated(matchedPattern == 1);
-		return true;
-	}
-	
-	@Override
-	public boolean check(final Event e) {
-		return entities.check(e, new Checker<Entity>() {
-			@Override
-			public boolean check(final Entity en) {
-				return worlds.check(e, new Checker<World>() {
-					@Override
-					public boolean check(final World w) {
-						return en.getWorld() == w;
-					}
-				}, isNegated());
-			}
-		});
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return entities.toString(e, debug) + " " + (entities.isSingle() ? "is" : "are") + " " + (isNegated() ? "not " : "") + "in the world " + worlds.toString(e, debug);
-	}
-	
+    static {
+        Skript.registerCondition(CondIsInWorld.class, "%entities% (is|are) in [[the] world[s]] %worlds%", "%entities% (is not|isn't|are not|aren't) in [[the] world[s]] %worlds%");
+    }
+
+    @SuppressWarnings("null")
+    Expression<World> worlds;
+    @SuppressWarnings("null")
+    private Expression<Entity> entities;
+
+    @SuppressWarnings({"unchecked", "null"})
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        entities = (Expression<Entity>) exprs[0];
+        worlds = (Expression<World>) exprs[1];
+        setNegated(matchedPattern == 1);
+        return true;
+    }
+
+    @Override
+    public boolean check(final Event e) {
+        return entities.check(e, new Checker<Entity>() {
+            @Override
+            public boolean check(final Entity en) {
+                return worlds.check(e, new Checker<World>() {
+                    @Override
+                    public boolean check(final World w) {
+                        return en.getWorld() == w;
+                    }
+                }, isNegated());
+            }
+        });
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return entities.toString(e, debug) + " " + (entities.isSingle() ? "is" : "are") + " " + (isNegated() ? "not " : "") + "in the world " + worlds.toString(e, debug);
+    }
+
 }

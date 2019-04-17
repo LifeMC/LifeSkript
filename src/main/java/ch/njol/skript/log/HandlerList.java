@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -30,26 +30,26 @@ import java.util.LinkedList;
  * @author Peter Güttinger
  */
 public final class HandlerList implements Iterable<LogHandler> {
-	
-	private final LinkedList<LogHandler> list = new LinkedList<LogHandler>();
-	
-	public void add(final LogHandler h) {
-		list.addFirst(h);
-	}
-	
-	@Nullable
-	public LogHandler remove() {
-		return list.pop();
-	}
-	
-	@SuppressWarnings("null")
-	@Override
-	public Iterator<LogHandler> iterator() {
-		return list.iterator();
-	}
-	
-	public boolean contains(final LogHandler h) {
-		return list.contains(h);
-	}
-	
+
+    private final LinkedList<LogHandler> list = new LinkedList<LogHandler>();
+
+    public void add(final LogHandler h) {
+        list.addFirst(h);
+    }
+
+    @Nullable
+    public LogHandler remove() {
+        return list.pop();
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    public Iterator<LogHandler> iterator() {
+        return list.iterator();
+    }
+
+    public boolean contains(final LogHandler h) {
+        return list.contains(h);
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.log;
@@ -34,27 +34,28 @@ import java.util.logging.Filter;
  * <li>It's a miracle that it somehow even logs messages via Java's default logging system, but usually completely ignores it.
  * <li>Because Level is an enum it's not possible to create your own levels, e.g. DEBUG
  * </ul>
- * 
+ *
  * @author Peter Güttinger
  */
 public final class BukkitLoggerFilter {
-	
-	private final static LoggerFilter filter = new LoggerFilter(SkriptLogger.LOGGER);
-	static {
-		Skript.closeOnDisable(filter);
-	}
-	
-	/**
-	 * Adds a filter to Bukkit's log.
-	 * 
-	 * @param f A filter to filter log messages
-	 */
-	public static void addFilter(final Filter f) {
-		filter.addFilter(f);
-	}
-	
-	public static boolean removeFilter(final Filter f) {
-		return filter.removeFilter(f);
-	}
-	
+
+    private final static LoggerFilter filter = new LoggerFilter(SkriptLogger.LOGGER);
+
+    static {
+        Skript.closeOnDisable(filter);
+    }
+
+    /**
+     * Adds a filter to Bukkit's log.
+     *
+     * @param f A filter to filter log messages
+     */
+    public static void addFilter(final Filter f) {
+        filter.addFilter(f);
+    }
+
+    public static boolean removeFilter(final Filter f) {
+        return filter.removeFilter(f);
+    }
+
 }

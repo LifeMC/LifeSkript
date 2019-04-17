@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -37,22 +37,22 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @NoDoc
 public class LitAt extends SimpleLiteral<Direction> {
-	static {
-		Skript.registerExpression(LitAt.class, Direction.class, ExpressionType.SIMPLE, "at");
-	}
-	
-	public LitAt() {
-		super(Direction.ZERO, true);
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		return true;
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "at";
-	}
-	
+    static {
+        Skript.registerExpression(LitAt.class, Direction.class, ExpressionType.SIMPLE, "at");
+    }
+
+    public LitAt() {
+        super(Direction.ZERO, true);
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        return true;
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "at";
+    }
+
 }

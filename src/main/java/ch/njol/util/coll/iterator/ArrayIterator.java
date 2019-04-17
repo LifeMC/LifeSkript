@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll.iterator;
@@ -26,50 +26,50 @@ import java.util.NoSuchElementException;
 
 /**
  * A simple iterator to iterate over an array.
- * 
+ *
  * @author Peter Güttinger
  */
 public final class ArrayIterator<T> implements Iterator<T> {
-	
-	@Nullable
-	private final T[] array;
-	
-	private int index;
-	
-	public ArrayIterator(final @Nullable T[] array) {
-		this.array = array;
-	}
-	
-	public ArrayIterator(final @Nullable T[] array, final int start) {
-		this.array = array;
-		index = start;
-	}
-	
-	@Override
-	public boolean hasNext() {
-		final T[] arr = this.array;
-		if (arr == null)
-			return false;
-		return index < arr.length;
-	}
-	
-	@Override
-	@Nullable
-	public T next() {
-		final T[] array = this.array;
-		if (array == null || index >= array.length)
-			throw new NoSuchElementException();
-		return array[index++];
-	}
-	
-	/**
-	 * not supported by arrays.
-	 * 
-	 * @throws UnsupportedOperationException always
-	 */
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException();
-	}
-	
+
+    @Nullable
+    private final T[] array;
+
+    private int index;
+
+    public ArrayIterator(final @Nullable T[] array) {
+        this.array = array;
+    }
+
+    public ArrayIterator(final @Nullable T[] array, final int start) {
+        this.array = array;
+        index = start;
+    }
+
+    @Override
+    public boolean hasNext() {
+        final T[] arr = this.array;
+        if (arr == null)
+            return false;
+        return index < arr.length;
+    }
+
+    @Override
+    @Nullable
+    public T next() {
+        final T[] array = this.array;
+        if (array == null || index >= array.length)
+            throw new NoSuchElementException();
+        return array[index++];
+    }
+
+    /**
+     * not supported by arrays.
+     *
+     * @throws UnsupportedOperationException always
+     */
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
 }

@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.util;
@@ -39,79 +39,79 @@ import java.util.regex.Pattern;
  * @author Peter Güttinger
  */
 public enum StructureType {
-	TREE(TreeType.TREE, TreeType.BIG_TREE, TreeType.REDWOOD, TreeType.TALL_REDWOOD, TreeType.SMALL_JUNGLE, TreeType.JUNGLE, TreeType.SWAMP),
-	
-	REGULAR(TreeType.TREE, TreeType.BIG_TREE), SMALL_REGULAR(TreeType.TREE), BIG_REGULAR(TreeType.BIG_TREE), REDWOOD(TreeType.REDWOOD, TreeType.TALL_REDWOOD), SMALL_REDWOOD(TreeType.REDWOOD), BIG_REDWOOD(TreeType.TALL_REDWOOD), JUNGLE(TreeType.SMALL_JUNGLE, TreeType.JUNGLE), SMALL_JUNGLE(TreeType.SMALL_JUNGLE), BIG_JUNGLE(TreeType.JUNGLE), JUNGLE_BUSH(TreeType.JUNGLE_BUSH), SWAMP(TreeType.SWAMP),
-	
-	MUSHROOM(TreeType.RED_MUSHROOM, TreeType.BROWN_MUSHROOM), RED_MUSHROOM(TreeType.RED_MUSHROOM), BROWN_MUSHROOM(TreeType.BROWN_MUSHROOM),
-	
-	;
-	
-	private Noun name;
-	private final TreeType[] types;
-	
-	StructureType(final TreeType... types) {
-		this.types = types;
-		name = new Noun("tree types." + name() + ".name");
-	}
-	
-	public void grow(final Location loc) {
-		loc.getWorld().generateTree(loc, CollectionUtils.getRandom(types));
-	}
-	
-	public void grow(final Block b) {
-		b.getWorld().generateTree(b.getLocation(), CollectionUtils.getRandom(types));
-	}
-	
-	public TreeType[] getTypes() {
-		return types;
-	}
-	
-	@Override
-	public String toString() {
-		return name.toString();
-	}
-	
-	public String toString(final int flags) {
-		return name.toString(flags);
-	}
-	
-	public Noun getName() {
-		return name;
-	}
-	
-	public boolean is(final TreeType type) {
-		return CollectionUtils.contains(types, type);
-	}
-	
-	/**
-	 * lazy
-	 */
-	final static Map<Pattern, StructureType> parseMap = new HashMap<Pattern, StructureType>();
-	
-	static {
-		Language.addListener(new LanguageChangeListener() {
-			@Override
-			public void onLanguageChange() {
-				parseMap.clear();
-			}
-		});
-	}
-	
-	@Nullable
-	public static StructureType fromName(String s) {
-		if (parseMap.isEmpty()) {
-			for (final StructureType t : values()) {
-				final String pattern = Language.get("tree types." + t.name() + ".pattern");
-				parseMap.put(Pattern.compile(pattern, Pattern.CASE_INSENSITIVE), t);
-			}
-		}
-		s = "" + s.toLowerCase();
-		for (final Entry<Pattern, StructureType> e : parseMap.entrySet()) {
-			if (e.getKey().matcher(s).matches())
-				return e.getValue();
-		}
-		return null;
-	}
-	
+    TREE(TreeType.TREE, TreeType.BIG_TREE, TreeType.REDWOOD, TreeType.TALL_REDWOOD, TreeType.SMALL_JUNGLE, TreeType.JUNGLE, TreeType.SWAMP),
+
+    REGULAR(TreeType.TREE, TreeType.BIG_TREE), SMALL_REGULAR(TreeType.TREE), BIG_REGULAR(TreeType.BIG_TREE), REDWOOD(TreeType.REDWOOD, TreeType.TALL_REDWOOD), SMALL_REDWOOD(TreeType.REDWOOD), BIG_REDWOOD(TreeType.TALL_REDWOOD), JUNGLE(TreeType.SMALL_JUNGLE, TreeType.JUNGLE), SMALL_JUNGLE(TreeType.SMALL_JUNGLE), BIG_JUNGLE(TreeType.JUNGLE), JUNGLE_BUSH(TreeType.JUNGLE_BUSH), SWAMP(TreeType.SWAMP),
+
+    MUSHROOM(TreeType.RED_MUSHROOM, TreeType.BROWN_MUSHROOM), RED_MUSHROOM(TreeType.RED_MUSHROOM), BROWN_MUSHROOM(TreeType.BROWN_MUSHROOM),
+
+    ;
+
+    /**
+     * lazy
+     */
+    final static Map<Pattern, StructureType> parseMap = new HashMap<Pattern, StructureType>();
+
+    static {
+        Language.addListener(new LanguageChangeListener() {
+            @Override
+            public void onLanguageChange() {
+                parseMap.clear();
+            }
+        });
+    }
+
+    private final TreeType[] types;
+    private Noun name;
+
+    StructureType(final TreeType... types) {
+        this.types = types;
+        name = new Noun("tree types." + name() + ".name");
+    }
+
+    @Nullable
+    public static StructureType fromName(String s) {
+        if (parseMap.isEmpty()) {
+            for (final StructureType t : values()) {
+                final String pattern = Language.get("tree types." + t.name() + ".pattern");
+                parseMap.put(Pattern.compile(pattern, Pattern.CASE_INSENSITIVE), t);
+            }
+        }
+        s = "" + s.toLowerCase();
+        for (final Entry<Pattern, StructureType> e : parseMap.entrySet()) {
+            if (e.getKey().matcher(s).matches())
+                return e.getValue();
+        }
+        return null;
+    }
+
+    public void grow(final Location loc) {
+        loc.getWorld().generateTree(loc, CollectionUtils.getRandom(types));
+    }
+
+    public void grow(final Block b) {
+        b.getWorld().generateTree(b.getLocation(), CollectionUtils.getRandom(types));
+    }
+
+    public TreeType[] getTypes() {
+        return types;
+    }
+
+    @Override
+    public String toString() {
+        return name.toString();
+    }
+
+    public String toString(final int flags) {
+        return name.toString(flags);
+    }
+
+    public Noun getName() {
+        return name;
+    }
+
+    public boolean is(final TreeType type) {
+        return CollectionUtils.contains(types, type);
+    }
+
 }

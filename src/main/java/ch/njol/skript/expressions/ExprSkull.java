@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -54,56 +54,55 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"give the victim's skull to the attacker", "set the block at the entity to the entity's skull"})
 @Since("2.0")
 public class ExprSkull extends SimplePropertyExpression<Object, ItemType> {
-	static {
-		register(ExprSkull.class, ItemType.class, "skull", "offlineplayers/entities/entitydatas");
-	}
-	
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		if (!Skript.isRunningMinecraft(1, 4, 5)) {
-			Skript.error("Skulls are only available in Bukkit 1.4.5+");
-			return false;
-		}
-		return super.init(exprs, matchedPattern, isDelayed, parseResult);
-	}
-	
-	@Override
-	@Nullable
-	public ItemType convert(final Object o) {
-		final SkullType type;
-		if (o instanceof Skeleton || o instanceof SkeletonData) {
-			if (o instanceof SkeletonData ? ((SkeletonData) o).isWither() : ((Skeleton) o).getSkeletonType() == SkeletonType.WITHER) {
-				type = SkullType.WITHER;
-			} else {
-				type = SkullType.SKELETON;
-			}
-		} else if (o instanceof Zombie || o instanceof EntityData && Zombie.class.isAssignableFrom(((EntityData<?>) o).getType())) {
-			type = SkullType.ZOMBIE;
-		} else if (o instanceof OfflinePlayer || o instanceof PlayerData) {
-			type = SkullType.PLAYER;
-		} else if (o instanceof Creeper || o instanceof CreeperData) {
-			type = SkullType.CREEPER;
-		} else {
-			return null;
-		}
-		@SuppressWarnings("deprecation")
-		final ItemType i = new ItemType(Material.SKULL_ITEM.getId(), (short) type.ordinal());
-		if (o instanceof OfflinePlayer) {
-			final SkullMeta s = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
-			s.setOwner(((OfflinePlayer) o).getName());
-			i.setItemMeta(s);
-		}
-		return i;
-	}
-	
-	@Override
-	public Class<ItemType> getReturnType() {
-		return ItemType.class;
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "skull";
-	}
-	
+    static {
+        register(ExprSkull.class, ItemType.class, "skull", "offlineplayers/entities/entitydatas");
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (!Skript.isRunningMinecraft(1, 4, 5)) {
+            Skript.error("Skulls are only available in Bukkit 1.4.5+");
+            return false;
+        }
+        return super.init(exprs, matchedPattern, isDelayed, parseResult);
+    }
+
+    @Override
+    @Nullable
+    public ItemType convert(final Object o) {
+        final SkullType type;
+        if (o instanceof Skeleton || o instanceof SkeletonData) {
+            if (o instanceof SkeletonData ? ((SkeletonData) o).isWither() : ((Skeleton) o).getSkeletonType() == SkeletonType.WITHER) {
+                type = SkullType.WITHER;
+            } else {
+                type = SkullType.SKELETON;
+            }
+        } else if (o instanceof Zombie || o instanceof EntityData && Zombie.class.isAssignableFrom(((EntityData<?>) o).getType())) {
+            type = SkullType.ZOMBIE;
+        } else if (o instanceof OfflinePlayer || o instanceof PlayerData) {
+            type = SkullType.PLAYER;
+        } else if (o instanceof Creeper || o instanceof CreeperData) {
+            type = SkullType.CREEPER;
+        } else {
+            return null;
+        }
+        @SuppressWarnings("deprecation") final ItemType i = new ItemType(Material.SKULL_ITEM.getId(), (short) type.ordinal());
+        if (o instanceof OfflinePlayer) {
+            final SkullMeta s = (SkullMeta) Bukkit.getItemFactory().getItemMeta(Material.SKULL_ITEM);
+            s.setOwner(((OfflinePlayer) o).getName());
+            i.setItemMeta(s);
+        }
+        return i;
+    }
+
+    @Override
+    public Class<ItemType> getReturnType() {
+        return ItemType.class;
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "skull";
+    }
+
 }

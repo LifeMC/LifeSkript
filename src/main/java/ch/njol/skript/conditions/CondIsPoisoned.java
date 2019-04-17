@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.conditions;
@@ -37,19 +37,19 @@ import org.bukkit.potion.PotionEffectType;
 @Examples({"player is poisoned:", "	cure the player from posion", "	message \"You have been cured!\""})
 @Since("1.4.4")
 public class CondIsPoisoned extends PropertyCondition<LivingEntity> {
-	
-	static {
-		register(CondIsPoisoned.class, "poisoned", "livingentities");
-	}
-	
-	@Override
-	public boolean check(final LivingEntity e) {
-		return e.hasPotionEffect(PotionEffectType.POISON);
-	}
-	
-	@Override
-	protected String getPropertyName() {
-		return "poisoned";
-	}
-	
+
+    static {
+        register(CondIsPoisoned.class, "poisoned", "livingentities");
+    }
+
+    @Override
+    public boolean check(final LivingEntity e) {
+        return e.hasPotionEffect(PotionEffectType.POISON);
+    }
+
+    @Override
+    protected String getPropertyName() {
+        return "poisoned";
+    }
+
 }

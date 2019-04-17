@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -49,49 +49,49 @@ import java.lang.reflect.Array;
 @Examples({"spawn a priest", "set {%spawned priest%.healer} to true", "shoot an arrow from the last spawned entity", "ignite the shot projectile"})
 @Since("1.3 (spawned entity), 2.0 (shot entity)")
 public class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
-	static {
-		Skript.registerExpression(ExprLastSpawnedEntity.class, Entity.class, ExpressionType.SIMPLE, "[the] [last[ly]] (0¦spawned|1¦shot) %*entitydata%");
-	}
-	
-	boolean spawned;
-	@SuppressWarnings("null")
-	private EntityData<?> type;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-		type = ((Literal<EntityData<?>>) exprs[0]).getSingle();
-		spawned = parseResult.mark == 0;
-		return true;
-	}
-	
-	@Override
-	@Nullable
-	@SuppressWarnings({"null", "unused"})
-	protected Entity[] get(final Event e) {
-		final Entity en = spawned ? EffSpawn.lastSpawned : EffShoot.lastSpawned;
-		if (en == null)
-			return null;
-		if (!type.isInstance(en))
-			return null;
-		final Entity[] one = (Entity[]) Array.newInstance(type.getType(), 1);
-		one[0] = en;
-		return one;
-	}
-	
-	@Override
-	public boolean isSingle() {
-		return true;
-	}
-	
-	@Override
-	public Class<? extends Entity> getReturnType() {
-		return type.getType();
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the last " + (spawned ? "spawned" : "shot") + " " + type;
-	}
-	
+    static {
+        Skript.registerExpression(ExprLastSpawnedEntity.class, Entity.class, ExpressionType.SIMPLE, "[the] [last[ly]] (0¦spawned|1¦shot) %*entitydata%");
+    }
+
+    boolean spawned;
+    @SuppressWarnings("null")
+    private EntityData<?> type;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        type = ((Literal<EntityData<?>>) exprs[0]).getSingle();
+        spawned = parseResult.mark == 0;
+        return true;
+    }
+
+    @Override
+    @Nullable
+    @SuppressWarnings({"null", "unused"})
+    protected Entity[] get(final Event e) {
+        final Entity en = spawned ? EffSpawn.lastSpawned : EffShoot.lastSpawned;
+        if (en == null)
+            return null;
+        if (!type.isInstance(en))
+            return null;
+        final Entity[] one = (Entity[]) Array.newInstance(type.getType(), 1);
+        one[0] = en;
+        return one;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return true;
+    }
+
+    @Override
+    public Class<? extends Entity> getReturnType() {
+        return type.getType();
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the last " + (spawned ? "spawned" : "shot") + " " + type;
+    }
+
 }

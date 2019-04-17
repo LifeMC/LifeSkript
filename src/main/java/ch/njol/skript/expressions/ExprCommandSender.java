@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011, 2012 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.expressions;
@@ -38,17 +38,17 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events("command")
 public final class ExprCommandSender extends EventValueExpression<CommandSender> {
-	static {
-		Skript.registerExpression(ExprCommandSender.class, CommandSender.class, ExpressionType.SIMPLE, "[the] [command['s]] (sender|executor)");
-	}
-	
-	public ExprCommandSender() {
-		super(CommandSender.class);
-	}
-	
-	@Override
-	public String toString(final @Nullable Event e, final boolean debug) {
-		return "the command sender";
-	}
-	
+    static {
+        Skript.registerExpression(ExprCommandSender.class, CommandSender.class, ExpressionType.SIMPLE, "[the] [command['s]] (sender|executor)");
+    }
+
+    public ExprCommandSender() {
+        super(CommandSender.class);
+    }
+
+    @Override
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "the command sender";
+    }
+
 }

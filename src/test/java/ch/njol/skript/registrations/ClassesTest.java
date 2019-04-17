@@ -13,10 +13,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.skript.registrations;
@@ -129,9 +129,9 @@ public class ClassesTest {
 		Classes.onRegistrationsStop();
 	}
 	*/
-	
-	@org.junit.Test
-	public void testClasses() {
+
+    @org.junit.Test
+    public void testClasses() {
 		/*
 		final Object[] random = {
 				// Java
@@ -154,6 +154,6 @@ public class ClassesTest {
 			Classes.serialize(o); // includes a deserialisation test
 		}
 		*/
-	}
-	
+    }
+
 }

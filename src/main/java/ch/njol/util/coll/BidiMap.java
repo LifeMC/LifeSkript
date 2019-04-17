@@ -11,10 +11,10 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * 
+ *
+ *
  * Copyright 2011-2014 Peter Güttinger
- * 
+ *
  */
 
 package ch.njol.util.coll;
@@ -26,13 +26,13 @@ import java.util.Set;
  * @author Peter Güttinger
  */
 public interface BidiMap<T1, T2> extends Map<T1, T2> {
-	
-	BidiMap<T2, T1> getReverseView();
-	
-	T1 getKey(final T2 value);
-	
-	T2 getValue(final T1 key);
-	
-	Set<T2> valueSet();
-	
+
+    BidiMap<T2, T1> getReverseView();
+
+    T1 getKey(final T2 value);
+
+    T2 getValue(final T1 key);
+
+    Set<T2> valueSet();
+
 }
