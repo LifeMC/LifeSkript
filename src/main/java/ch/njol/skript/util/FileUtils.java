@@ -115,17 +115,12 @@ public final class FileUtils {
      */
     public static void save(final InputStream in, final File file) throws IOException {
         file.getParentFile().mkdirs();
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
+        try (FileOutputStream out = new FileOutputStream(file)) {
             final byte[] buffer = new byte[16 * 1024];
             int read;
             while ((read = in.read(buffer)) > 0) {
                 out.write(buffer, 0, read);
             }
-        } finally {
-            if (out != null)
-                out.close();
         }
     }
 

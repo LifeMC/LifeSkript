@@ -950,12 +950,9 @@ public final class Skript extends JavaPlugin implements Listener {
                                 saveTo = af;
                         }
                         if (saveTo != null) {
-                            final InputStream in = f.getInputStream(e);
-                            try {
+                            try (InputStream in = f.getInputStream(e)) {
                                 assert in != null;
                                 FileUtils.save(in, saveTo);
-                            } finally {
-                                in.close();
                             }
                         }
                     }
@@ -1024,8 +1021,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
                     // load hooks
                     try {
-                        final JarFile jar = new JarFile(getPluginFile());
-                        try {
+                        try (JarFile jar = new JarFile(getPluginFile())) {
                             for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                                 if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count("" + e.getName(), '/') <= 5) {
                                     final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
@@ -1043,11 +1039,6 @@ public final class Skript extends JavaPlugin implements Listener {
                                         Skript.exception(err.getCause(), "Class " + c + " generated an exception while loading");
                                     }
                                 }
-                            }
-                        } finally {
-                            try {
-                                jar.close();
-                            } catch (final IOException ignored) {
                             }
                         }
                     } catch (final Throwable tw) {
@@ -1332,8 +1323,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 try {
                     final Field modifiers = Field.class.getDeclaredField("modifiers");
                     modifiers.setAccessible(true);
-                    final JarFile jar = new JarFile(getPluginFile());
-                    try {
+                    try (JarFile jar = new JarFile(getPluginFile())) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
                                 try {
@@ -1353,8 +1343,6 @@ public final class Skript extends JavaPlugin implements Listener {
                                 }
                             }
                         }
-                    } finally {
-                        jar.close();
                     }
                 } catch (final Throwable ex) {
                     if (testing() || Skript.logHigh())

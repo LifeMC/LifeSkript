@@ -130,8 +130,7 @@ public final class Updater {
                     final URLConnection conn = new URL(filesURL).openConnection();
                     conn.setRequestProperty("User-Agent", "Skript/v" + Skript.getVersion() + " (by Njol)");
                     in = conn.getInputStream();
-                    final BufferedReader reader = new BufferedReader(new InputStreamReader(in, conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding()));
-                    try {
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding()))) {
                         final String line = reader.readLine();
                         if (line != null) {
                             final JSONArray a = (JSONArray) JSONValue.parse(line);
@@ -149,8 +148,6 @@ public final class Updater {
                                 }
                             }
                         }
-                    } finally {
-                        reader.close();
                     }
 
                     if (!infos.isEmpty()) {

@@ -77,11 +77,8 @@ public final class Config {
             if (Skript.logVeryHigh())
                 Skript.info("Loading '" + fileName + "'");
 
-            final ConfigReader r = new ConfigReader(source);
-            try {
+            try (ConfigReader r = new ConfigReader(source)) {
                 main = SectionNode.load(this, r);
-            } finally {
-                r.close();
             }
         } finally {
             source.close();
