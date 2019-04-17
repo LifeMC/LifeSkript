@@ -122,12 +122,7 @@ public final class SkriptConfig {
             return null;
         }
     });
-    private final static Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(new Setter<Verbosity>() {
-        @Override
-        public void set(final Verbosity v) {
-            SkriptLogger.setVerbosity(v);
-        }
-    });
+    private final static Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable
     static Config mainConfig;
 

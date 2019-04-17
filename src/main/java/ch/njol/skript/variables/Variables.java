@@ -34,7 +34,6 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.variables.DatabaseStorage.Type;
 import ch.njol.skript.variables.SerializedVariable.Value;
-import ch.njol.util.Closeable;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.SynchronizedReference;
@@ -153,33 +152,24 @@ public final class Variables {
             return false;
         }
 
-        Skript.closeOnDisable(new Closeable() {
-            @Override
-            public void close() {
-                Variables.close();
-            }
-        });
+        Skript.closeOnDisable(Variables::close);
 
         // reports once per second how many variables were loaded. Useful to make clear that Skript is still doing something if it's loading many variables
-        final Thread loadingLoggerThread = new Thread() {
-            @SuppressWarnings({"unused", "null"})
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(Skript.logNormal() ? 1000 : 5000); // low verbosity won't disable these messages, but makes them more rare
-                    } catch (final InterruptedException ignored) {
-                    }
-                    synchronized (tempVars) {
-                        final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();
-                        if (tvs != null)
-                            Skript.info("Loaded " + tvs.size() + " variables so far...");
-                        else
-                            break;
-                    }
+        final Thread loadingLoggerThread = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(Skript.logNormal() ? 1000 : 5000); // low verbosity won't disable these messages, but makes them more rare
+                } catch (final InterruptedException ignored) {
+                }
+                synchronized (tempVars) {
+                    final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();
+                    if (tvs != null)
+                        Skript.info("Loaded " + tvs.size() + " variables so far...");
+                    else
+                        break;
                 }
             }
-        };
+        });
         loadingLoggerThread.start();
 
         try {

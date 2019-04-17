@@ -113,11 +113,8 @@ public class ScriptCommand implements CommandExecutor {
         this.cooldownBypass = cooldownBypass;
         this.cooldownStorage = cooldownStorage;
 
-        final Iterator<String> as = aliases.iterator();
-        while (as.hasNext()) { // remove aliases that are the same as the command
-            if (as.next().equalsIgnoreCase(label))
-                as.remove();
-        }
+        // remove aliases that are the same as the command
+        aliases.removeIf(s -> s.equalsIgnoreCase(label));
         this.aliases = aliases;
         activeAliases = new ArrayList<>(aliases);
 
@@ -342,7 +339,7 @@ public class ScriptCommand implements CommandExecutor {
                     as.add(at);
                     helps.add(at);
                 }
-                Collections.sort(as, HelpTopicComparator.helpTopicComparatorInstance());
+                as.sort(HelpTopicComparator.helpTopicComparatorInstance());
                 topics.set(aliases, as);
             } catch (final Exception e) {
                 Skript.outdatedError(e);//, "error registering aliases for /" + getName());

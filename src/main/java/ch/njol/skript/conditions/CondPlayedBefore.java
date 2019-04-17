@@ -29,7 +29,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
@@ -61,12 +60,7 @@ public class CondPlayedBefore extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return player.check(e, new Checker<OfflinePlayer>() {
-            @Override
-            public boolean check(final OfflinePlayer p) {
-                return p.hasPlayedBefore();
-            }
-        }, isNegated());
+        return player.check(e, OfflinePlayer::hasPlayedBefore, isNegated());
     }
 
     @Override

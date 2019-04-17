@@ -327,12 +327,7 @@ public class DelayedChangeBlock implements Block {
         if (newState != null) {
             return false;
         } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    b.breakNaturally();
-                }
-            });
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), b::breakNaturally);
             return true;
         }
     }

@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.skript.localization.Noun;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Location;
@@ -53,12 +52,7 @@ public enum StructureType {
     final static Map<Pattern, StructureType> parseMap = new HashMap<>();
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                parseMap.clear();
-            }
-        });
+        Language.addListener(parseMap::clear);
     }
 
     private final TreeType[] types;

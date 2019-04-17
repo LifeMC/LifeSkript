@@ -289,11 +289,7 @@ public class Language {
     }
 
     private static void removeIgnored(final Set<String> keys) {
-        final Iterator<String> i = keys.iterator();
-        while (i.hasNext()) {
-            if (i.next().startsWith(Noun.GENDERS_SECTION))
-                i.remove();
-        }
+        keys.removeIf(s -> s.startsWith(Noun.GENDERS_SECTION));
     }
 
     /**

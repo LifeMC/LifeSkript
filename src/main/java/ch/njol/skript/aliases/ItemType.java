@@ -597,12 +597,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
                 return EmptyIterable.get();
             return new SingleItemIterable<>(i);
         }
-        return new Iterable<ItemStack>() {
-            @Override
-            public Iterator<ItemStack> iterator() {
-                return containerIterator();
-            }
-        };
+        return this::containerIterator;
     }
 
     public void setAll(final boolean all) {

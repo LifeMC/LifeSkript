@@ -73,12 +73,7 @@ public final class CondRegionContains extends Condition {
         return regions.check(e, new Checker<Region>() {
             @Override
             public boolean check(final Region r) {
-                return locs.check(e, new Checker<Location>() {
-                    @Override
-                    public boolean check(final Location l) {
-                        return r.contains(l);
-                    }
-                }, isNegated());
+                return locs.check(e, r::contains, isNegated());
             }
         });
     }

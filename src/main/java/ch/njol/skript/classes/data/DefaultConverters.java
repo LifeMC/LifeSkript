@@ -66,13 +66,7 @@ public final class DefaultConverters {
             }
         }, Converter.NO_COMMAND_ARGUMENTS);
         // OfflinePlayer - Player
-        Converters.registerConverter(OfflinePlayer.class, Player.class, new Converter<OfflinePlayer, Player>() {
-            @Override
-            @Nullable
-            public Player convert(final OfflinePlayer p) {
-                return p.getPlayer();
-            }
-        }, Converter.NO_COMMAND_ARGUMENTS);
+        Converters.registerConverter(OfflinePlayer.class, Player.class, OfflinePlayer::getPlayer, Converter.NO_COMMAND_ARGUMENTS);
 
         // TODO improve handling of interfaces
         // CommandSender - Player
@@ -144,29 +138,12 @@ public final class DefaultConverters {
 //				return l.getBlock();
 //			}
 //		});
-        Converters.registerConverter(Block.class, Location.class, new Converter<Block, Location>() {
-            @Override
-            @Nullable
-            public Location convert(final Block b) {
-                return BlockUtils.getLocation(b);
-            }
-        }, Converter.NO_COMMAND_ARGUMENTS);
+        Converters.registerConverter(Block.class, Location.class, BlockUtils::getLocation, Converter.NO_COMMAND_ARGUMENTS);
 
         // Entity - Location
-        Converters.registerConverter(Entity.class, Location.class, new Converter<Entity, Location>() {
-            @Override
-            @Nullable
-            public Location convert(final Entity e) {
-                return e.getLocation();
-            }
-        }, Converter.NO_COMMAND_ARGUMENTS);
+        Converters.registerConverter(Entity.class, Location.class, Entity::getLocation, Converter.NO_COMMAND_ARGUMENTS);
         // Entity - EntityData
-        Converters.registerConverter(Entity.class, EntityData.class, new Converter<Entity, EntityData>() {
-            @Override
-            public EntityData convert(final Entity e) {
-                return EntityData.fromEntity(e);
-            }
-        }, Converter.NO_COMMAND_ARGUMENTS);
+        Converters.registerConverter(Entity.class, EntityData.class, EntityData::fromEntity, Converter.NO_COMMAND_ARGUMENTS);
         // EntityData - EntityType
         Converters.registerConverter(EntityData.class, EntityType.class, new Converter<EntityData, EntityType>() {
             @Override
@@ -188,19 +165,8 @@ public final class DefaultConverters {
 //		});
 
         // ItemType - ItemStack
-        Converters.registerConverter(ItemType.class, ItemStack.class, new Converter<ItemType, ItemStack>() {
-            @Override
-            @Nullable
-            public ItemStack convert(final ItemType i) {
-                return i.getRandom();
-            }
-        });
-        Converters.registerConverter(ItemStack.class, ItemType.class, new Converter<ItemStack, ItemType>() {
-            @Override
-            public ItemType convert(final ItemStack i) {
-                return new ItemType(i);
-            }
-        });
+        Converters.registerConverter(ItemType.class, ItemStack.class, ItemType::getRandom);
+        Converters.registerConverter(ItemStack.class, ItemType.class, ItemType::new);
 
         // Experience - XpOrbData
         Converters.registerConverter(Experience.class, XpOrbData.class, new Converter<Experience, XpOrbData>() {

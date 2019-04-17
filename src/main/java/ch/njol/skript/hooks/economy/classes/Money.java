@@ -22,7 +22,10 @@
 package ch.njol.skript.hooks.economy.classes;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.*;
+import ch.njol.skript.classes.Arithmetic;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.Comparator;
+import ch.njol.skript.classes.Parser;
 import ch.njol.skript.hooks.VaultHook;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
@@ -100,13 +103,7 @@ public final class Money {
             }
         });
 
-        Converters.registerConverter(Money.class, Double.class, new Converter<Money, Double>() {
-            @SuppressWarnings("null")
-            @Override
-            public Double convert(final Money m) {
-                return m.getAmount();
-            }
-        });
+        Converters.registerConverter(Money.class, Double.class, Money::getAmount);
     }
 
     final double amount;

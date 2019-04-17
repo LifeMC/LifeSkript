@@ -181,9 +181,7 @@ public final class SkriptEventHandler {
 
     static void addTrigger(final Class<? extends Event>[] events, final Trigger trigger) {
         for (final Class<? extends Event> e : events) {
-            List<Trigger> ts = triggers.get(e);
-            if (ts == null)
-                triggers.put(e, ts = new ArrayList<>());
+            List<Trigger> ts = triggers.computeIfAbsent(e, k -> new ArrayList<>());
             ts.add(trigger);
         }
     }

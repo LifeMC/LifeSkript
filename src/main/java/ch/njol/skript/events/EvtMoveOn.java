@@ -218,9 +218,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
             for (final ItemData d : t) {
                 if (d.getId() > Skript.MAXBLOCKID)
                     continue;
-                List<Trigger> ts = itemTypeTriggers.get(d.getId());
-                if (ts == null)
-                    itemTypeTriggers.put(d.getId(), ts = new ArrayList<>());
+                List<Trigger> ts = itemTypeTriggers.computeIfAbsent(d.getId(), k -> new ArrayList<>());
                 ts.add(trigger);
             }
         }
