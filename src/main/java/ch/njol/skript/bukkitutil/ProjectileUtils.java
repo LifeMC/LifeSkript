@@ -64,10 +64,7 @@ public final class ProjectileUtils {
             return null;
         try {
             return getShooter.invoke(p);
-        } catch (final IllegalAccessException e) {
-            assert false;
-            return null;
-        } catch (final IllegalArgumentException e) {
+        } catch (final IllegalAccessException | IllegalArgumentException e) {
             assert false;
             return null;
         } catch (final InvocationTargetException e) {

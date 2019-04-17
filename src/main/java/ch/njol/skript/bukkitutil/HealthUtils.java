@@ -90,12 +90,10 @@ public final class HealthUtils {
             return e.getHealth() / 2;
         try {
             return ((Number) getHealth.invoke(e)).doubleValue() / 2;
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
         return 0;
     }
@@ -111,12 +109,10 @@ public final class HealthUtils {
         }
         try {
             setHealth.invoke(e, (int) Math.round(Math2.fit(0, health, getMaxHealth(e)) * 2));
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
     }
 
@@ -129,12 +125,10 @@ public final class HealthUtils {
             return e.getMaxHealth() / 2;
         try {
             return ((Number) getMaxHealth.invoke(e)).doubleValue() / 2;
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
         return 0;
     }
@@ -150,12 +144,10 @@ public final class HealthUtils {
         }
         try {
             setMaxHealth.invoke(e, Math.max(1, (int) Math.round(health * 2)));
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
     }
 
@@ -174,12 +166,10 @@ public final class HealthUtils {
         }
         try {
             damage.invoke(e, (int) Math.round(d * 2));
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
     }
 
@@ -200,12 +190,10 @@ public final class HealthUtils {
             return e.getDamage() / 2;
         try {
             return ((Number) getDamage.invoke(e)).doubleValue() / 2;
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
         return 0;
     }
@@ -217,12 +205,10 @@ public final class HealthUtils {
         }
         try {
             setDamage.invoke(e, (int) Math.round(damage * 2));
-        } catch (final IllegalAccessException ex) {
+        } catch (final IllegalAccessException | InvocationTargetException ex) {
             Skript.exception(ex);
         } catch (final IllegalArgumentException ex) {
             Skript.outdatedError(ex);
-        } catch (final InvocationTargetException ex) {
-            Skript.exception(ex);
         }
     }
 

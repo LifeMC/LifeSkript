@@ -77,16 +77,14 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
             getClaim.setAccessible(true);
             if (!Claim.class.isAssignableFrom(getClaim.getReturnType()))
                 getClaim = null;
-        } catch (final NoSuchMethodException ignored) {
-        } catch (final SecurityException ignored) {
+        } catch (final NoSuchMethodException | SecurityException ignored) {
         }
         try {
             claimsField = DataStore.class.getDeclaredField("claims");
             claimsField.setAccessible(true);
             if (!List.class.isAssignableFrom(claimsField.getType()))
                 claimsField = null;
-        } catch (final NoSuchFieldException ignored) {
-        } catch (final SecurityException ignored) {
+        } catch (final NoSuchFieldException | SecurityException ignored) {
         }
         if (getClaim == null && claimsField == null) {
             Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "." + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");
@@ -100,9 +98,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         if (getClaim != null) {
             try {
                 return (Claim) getClaim.invoke(plugin.dataStore, id);
-            } catch (final IllegalAccessException e) {
-                assert false : e;
-            } catch (final IllegalArgumentException e) {
+            } catch (final IllegalAccessException | IllegalArgumentException e) {
                 assert false : e;
             } catch (final InvocationTargetException e) {
                 throw new RuntimeException(e.getCause());
@@ -117,9 +113,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
                     if (((Claim) claim).getID() == id)
                         return (Claim) claim;
                 }
-            } catch (final IllegalArgumentException e) {
-                assert false : e;
-            } catch (final IllegalAccessException e) {
+            } catch (final IllegalArgumentException | IllegalAccessException e) {
                 assert false : e;
             }
         }

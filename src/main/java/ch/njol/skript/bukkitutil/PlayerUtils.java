@@ -87,9 +87,7 @@ public final class PlayerUtils {
                     return (Collection<? extends Player>) o;
                 else
                     return Arrays.asList((Player[]) o);
-            } catch (final IllegalAccessException e) {
-                Skript.outdatedError(e);
-            } catch (final IllegalArgumentException e) {
+            } catch (final IllegalAccessException | IllegalArgumentException e) {
                 Skript.outdatedError(e);
             } catch (final InvocationTargetException e) {
                 Skript.exception(e);
