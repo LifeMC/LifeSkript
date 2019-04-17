@@ -6,10 +6,10 @@ Also, Skript is a very easy and understandable domain-specific scripting languag
 
 # Server Compatibility
 Requirements for running Skript is:
-- Java 8 **or later** installed. (java 8 or 11 is recommended)
+- Java 8 **or later** installed. (java 8 or 11 is recommended) (java 8 is highly recommended)
 - A bukkit or bukkit-based (bukkit, craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
 - Minecraft version compatibility is:
-  - Tested: 1.7.10 - 1.8.8 (also any version between these)
+  - Tested: 1.7.10 - 1.8.8 (also any version between these) (recommended: TacoSpigot 1.8.8)
   - Can maybe work: 1.2.5 and above (others also maybe work)
 - If your server is 1.9 or above, please use Bensku's fork. It's the most updated latest fork of Skript. Get it here: https://github.com/SkriptLang/Skript
 
@@ -23,6 +23,8 @@ author of the Skript and don't know everything about Skript.
 * Stable Releases: No suffix. Just (generally) a major version. (like V10, V11 etc.)
 * Beta Releases (tested): Stable version + A suffix from alphabet. (like V10b, V10c etc.)
 * Nightly Builds (untested): Not available via official download. Clone this repo and build yourself.
+
+Note: Latest stable release contains all commits that contains "hotfix".
 
 # Download Links
 You can download latest release from here:<br />

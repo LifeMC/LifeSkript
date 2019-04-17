@@ -24,12 +24,9 @@ package ch.njol.skript.expressions.base;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.classes.Converter;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.lang.SyntaxElement;
 import ch.njol.skript.lang.util.ConvertedExpression;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.registrations.Converters;
-import ch.njol.util.Kleenean;
 
 import org.bukkit.event.Event;
 
@@ -39,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents an expression which is a wrapper of another one. Remember to set the wrapped expression in the constructor ({@link #WrapperExpression(SimpleExpression)})
- * or with {@link #setExpr(Expression)} in {@link SyntaxElement#init(Expression[], int, Kleenean, ParseResult) init()}.<br/>
+ * or with {@link #setExpr(Expression)} in {@link ch.njol.skript.lang.SyntaxElement#init(Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult) init()}.<br/>
  * If you override {@link #get(Event)} you must override {@link #iterator(Event)} as well.
  * 
  * @author Peter Güttinger
@@ -63,9 +60,10 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
 		return expr;
 	}
 	
+	@SafeVarargs
 	@Override
 	@Nullable
-	protected <R> ConvertedExpression<T, ? extends R> getConvertedExpr(final Class<R>... to) {
+	protected final <R> ConvertedExpression<T, ? extends R> getConvertedExpr(final Class<R>... to) {
 		for (final Class<R> c : to) {
 			assert c != null;
 			@SuppressWarnings("unchecked")

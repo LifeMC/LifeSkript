@@ -23,18 +23,13 @@ package ch.njol.skript.classes;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
-import ch.njol.skript.util.Task;
 import ch.njol.yggdrasil.Fields;
 import ch.njol.yggdrasil.YggdrasilSerializer;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.Callable;
 
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -97,7 +92,7 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * <b>This method must be thread-safe</b>. Use {@link Task#callSync(Callable)} if you need to serialise on Bukkit's main thread.
+	 * <b>This method must be thread-safe</b>. Use {@link ch.njol.skript.util.Task#callSync(java.util.concurrent.Callable)} if you need to serialise on Bukkit's main thread.
 	 */
 	@Override
 	public abstract Fields serialize(T o) throws NotSerializableException;
@@ -136,8 +131,8 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
 	}
 	
 	/**
-	 * Used to deserialise Bukkit objects and other stuff that cannot be instantiated, e.g. a plugin may and should not create a new instance of {@link World}, but use
-	 * {@link Bukkit#getWorld(String)} to get an existing world object.
+	 * Used to deserialise Bukkit objects and other stuff that cannot be instantiated, e.g. a plugin may and should not create a new instance of {@link org.bukkit.World}, but use
+	 * {@link org.bukkit.Bukkit#getWorld(String)} to get an existing world object.
 	 * 
 	 * @param fields The Fields object that holds the information about the serialised object
 	 * @return The deserialised object. Must not be null (throw an exception instead).

@@ -85,7 +85,7 @@ public class HorseData extends EntityData<Horse> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Horse> getSuperType() {
 		return new HorseData(variant);
 	}
 	

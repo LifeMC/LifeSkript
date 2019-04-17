@@ -195,8 +195,9 @@ public final class Variable<T> implements Expression<T> {
 		return toString(null, false);
 	}
 	
+	@SafeVarargs
 	@Override
-	public <R> Variable<R> getConvertedExpression(final Class<R>... to) {
+	public final <R> Variable<R> getConvertedExpression(final Class<R>... to) {
 		return new Variable<R>(name, to, local, list, this);
 	}
 	

@@ -121,6 +121,7 @@ final public class ScriptLoader {
 	 * @param name
 	 * @param events
 	 */
+	@SafeVarargs
 	public static void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
 		currentEventName = name;
 		currentEvents = events;
@@ -832,7 +833,8 @@ final public class ScriptLoader {
 	public static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
 		return CollectionUtils.containsSuperclass(currentEvents, event);
 	}
-	
+
+	@SafeVarargs
 	public static boolean isCurrentEvent(final Class<? extends Event>... events) {
 		return CollectionUtils.containsAnySuperclass(currentEvents, events);
 	}

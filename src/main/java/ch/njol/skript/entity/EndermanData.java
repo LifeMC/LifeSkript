@@ -170,7 +170,7 @@ public class EndermanData extends EntityData<Enderman> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Enderman> getSuperType() {
 		return new EndermanData();
 	}
 	

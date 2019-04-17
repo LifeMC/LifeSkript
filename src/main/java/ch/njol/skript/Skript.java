@@ -304,7 +304,7 @@ public final class Skript extends JavaPlugin implements Listener {
 			SkriptConfig.load();
 			Language.setUseLocal(true);
 			
-			Updater.start();
+			//Updater.start();
 			
 			Aliases.load();
 			
@@ -1359,12 +1359,8 @@ public final class Skript extends JavaPlugin implements Listener {
 		logEx();
 		logEx("End of Error.");
 		logEx();
-		
-		if (!FileUtils.RUNNINGJAVA6) {
-			return new EmptyStacktraceException();
-		} else {
-			return new RuntimeException();
-		}
+
+		return new EmptyStacktraceException();
 	}
 	
 	static void logEx() {

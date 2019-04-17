@@ -57,7 +57,7 @@ public class MinecartData extends EntityData<Minecart> {
 		
 		NORMAL(Skript.classExists("org.bukkit.entity.minecart.RideableMinecart") ? RideableMinecart.class : Minecart.class, "regular minecart"),
 		
-		STORAGE((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart"), "storage minecart"), POWERED((Class<? extends Minecart>) Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart"), "powered minecart"),
+		STORAGE(Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart"), "storage minecart"), POWERED(Compatibility.getClass("org.bukkit.entity.PoweredMinecart", "org.bukkit.entity.minecart.PoweredMinecart"), "powered minecart"),
 		
 		HOPPER(Skript.classExists("org.bukkit.entity.minecart.HopperMinecart") ? HopperMinecart.class : null, "hopper minecart"), EXPLOSIVE(Skript.classExists("org.bukkit.entity.minecart.ExplosiveMinecart") ? ExplosiveMinecart.class : null, "explosive minecart"), SPAWNER(Skript.classExists("org.bukkit.entity.minecart.SpawnerMinecart") ? SpawnerMinecart.class : null, "spawner minecart");
 		
@@ -172,7 +172,7 @@ public class MinecartData extends EntityData<Minecart> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Minecart> getSuperType() {
 		return new MinecartData(type);
 	}
 	

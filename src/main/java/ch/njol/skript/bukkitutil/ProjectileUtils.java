@@ -42,8 +42,9 @@ public final class ProjectileUtils {
 		throw new UnsupportedOperationException();
 	}
 	
-	private static final Method getShooter;
+	private static Method getShooter;
     private static Method setShooter;
+
 	static {
 		try {
 			getShooter = Projectile.class.getMethod("getShooter");

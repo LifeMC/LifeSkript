@@ -69,7 +69,7 @@ public class GuardianData extends EntityData<Guardian> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Guardian> getSuperType() {
 		return new GuardianData();
 	}
 	

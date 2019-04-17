@@ -30,7 +30,6 @@ import ch.njol.skript.command.Argument;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.command.ScriptCommand;
 import ch.njol.skript.command.ScriptCommandEvent;
-import ch.njol.skript.expressions.ExprParse;
 import ch.njol.skript.lang.function.ExprFunctionCall;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.FunctionReference;
@@ -1262,7 +1261,7 @@ public final class SkriptParser {
 	}
 	
 	/**
-	 * Validates a user-defined pattern (used in {@link ExprParse}).
+	 * Validates a user-defined pattern (used in {@link ch.njol.skript.expressions.ExprParse}).
 	 * 
 	 * @param pattern
 	 * @return The pattern with %codenames% and a boolean array that contains whetehr the expressions are plural or not

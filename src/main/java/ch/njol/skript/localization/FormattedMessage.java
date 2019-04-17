@@ -22,9 +22,7 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
-
 import java.util.IllegalFormatException;
-import java.util.concurrent.atomic.AtomicReference;
 
 public final class FormattedMessage extends Message {
 	
@@ -32,7 +30,7 @@ public final class FormattedMessage extends Message {
 	
 	/**
 	 * @param key
-	 * @param args An array of Objects to replace into the format message, e.g. {@link AtomicReference}s.
+	 * @param args An array of Objects to replace into the format message, e.g. {@link java.util.concurrent.atomic.AtomicReference}s.
 	 */
 	public FormattedMessage(final String key, final Object... args) {
 		super(key);

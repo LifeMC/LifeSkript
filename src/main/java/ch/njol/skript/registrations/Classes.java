@@ -39,7 +39,6 @@ import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import ch.njol.yggdrasil.Tag;
-import ch.njol.yggdrasil.Yggdrasil;
 import ch.njol.yggdrasil.YggdrasilInputStream;
 import ch.njol.yggdrasil.YggdrasilOutputStream;
 
@@ -628,7 +627,7 @@ public final class Classes {
 	}
 	
 	/**
-	 * consists of {@link Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
+	 * consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
 	 */
 	private final static byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
 	

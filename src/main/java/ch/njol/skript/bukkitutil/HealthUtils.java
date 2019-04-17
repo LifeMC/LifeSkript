@@ -42,12 +42,14 @@ public final class HealthUtils {
 		throw new UnsupportedOperationException();
 	}
 	
-	private final static boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);
-	private static final Method getHealth;
-	private static final Method setHealth;
-	private static final Method getMaxHealth;
-	private static final Method setMaxHealth;
-	private static final Method damage;
+	private static final boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);
+
+	private static Method getHealth;
+	private static Method setHealth;
+	private static Method getMaxHealth;
+	private static Method setMaxHealth;
+	private static Method damage;
+
 	static {
 		if (!supportsDoubles) {
 			try {
@@ -180,8 +182,9 @@ public final class HealthUtils {
 		setHealth(e, Math2.fit(0, getHealth(e) + h, getMaxHealth(e)));
 	}
 	
-	private static final Method getDamage;
-	private static final Method setDamage;
+	private static Method getDamage;
+	private static Method setDamage;
+
 	static {
 		if (!supportsDoubles) {
 			try {

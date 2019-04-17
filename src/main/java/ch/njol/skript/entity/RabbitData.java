@@ -68,7 +68,7 @@ public class RabbitData extends EntityData<Rabbit> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Rabbit> getSuperType() {
 		return new RabbitData();
 	}
 	

@@ -590,7 +590,7 @@ public final class Commands { //NOSONAR
 			this.aliasFor = aliasFor.startsWith("/") ? aliasFor : "/" + aliasFor;
 			this.helpMap = helpMap;
 			name = alias.startsWith("/") ? alias : "/" + alias;
-			assert !name.equals(this.aliasFor) : "Command " + name + " cannot be alias for itself";
+			Validate.isTrue(!name.equals(this.aliasFor), "Command " + name + " cannot be alias for itself");
 			shortText = ChatColor.YELLOW + "Alias for " + ChatColor.WHITE + this.aliasFor;
 		}
 		

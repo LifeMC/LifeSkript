@@ -98,7 +98,7 @@ public class OcelotData extends EntityData<Ocelot> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Ocelot> getSuperType() {
 		return new OcelotData();
 	}
 	

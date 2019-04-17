@@ -129,7 +129,8 @@ public final class ExprMessage extends SimpleExpression<String> {
 		final String name;
 		private final String pattern;
 		final Class<? extends Event>[] events;
-		
+
+		@SafeVarargs
 		MessageType(final String name, final String pattern, final Class<? extends Event>... events) {
 			this.name = name;
 			this.pattern = "[the] " + pattern;

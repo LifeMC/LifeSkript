@@ -21,8 +21,6 @@
 
 package ch.njol.skript.lang;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.events.EvtClick;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
@@ -31,13 +29,13 @@ import org.bukkit.event.Event;
 /**
  * A SkriptEvent is like a condition. It is called when any of the registered events occurs.
  * An instance of this class should then check whether the event applies
- * (e.g. the rightclick event is included in the PlayerInteractEvent which also includes lefclicks, thus the SkriptEvent {@link EvtClick} checks whether it was a rightclick or
+ * (e.g. the right click event is included in the PlayerInteractEvent which also includes lef clicks, thus the SkriptEvent {@link ch.njol.skript.events.EvtClick} checks whether it was a rightclick or
  * not).<br/>
  * It is also needed if the event has parameters.
  * 
  * @author Peter Güttinger
- * @see Skript#registerEvent(String, Class, Class, String...)
- * @see Skript#registerEvent(String, Class, Class[], String...)
+ * @see ch.njol.skript.Skript#registerEvent(String, Class, Class, String...)
+ * @see ch.njol.skript.Skript#registerEvent(String, Class, Class[], String...)
  */
 public abstract class SkriptEvent implements SyntaxElement, Debuggable {
 	

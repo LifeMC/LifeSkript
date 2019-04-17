@@ -22,9 +22,6 @@
 package ch.njol.skript.lang;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.lang.util.SimpleExpression;
-import ch.njol.util.Checker;
-
 import org.bukkit.event.Event;
 
 import java.util.Iterator;
@@ -47,7 +44,7 @@ public abstract class Condition extends Statement {
 	 * Checks whether this condition is satisfied with the given event. This should not alter the event or the world in any way, as conditions are only checked until one returns
 	 * false. All subsequent conditions of the same trigger will then be omitted.<br/>
 	 * <br/>
-	 * You might want to use {@link SimpleExpression#check(Event, Checker)}
+	 * You might want to use {@link ch.njol.skript.lang.util.SimpleExpression#check(Event, ch.njol.util.Checker)}
 	 * 
 	 * @param e the event to check
 	 * @return <code>true</code> if the condition is satisfied, <code>false</code> otherwise or if the condition doesn't apply to this event.
@@ -60,7 +57,7 @@ public abstract class Condition extends Statement {
 	}
 	
 	/**
-	 * Sets the negation status of this condition. This will change the behaviour of {@link Expression#check(Event, Checker, boolean)}.
+	 * Sets the negation status of this condition. This will change the behaviour of {@link Expression#check(Event, ch.njol.util.Checker, boolean)}.
 	 * 
 	 * @param invert
 	 */

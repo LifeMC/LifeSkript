@@ -98,7 +98,7 @@ public class CreeperData extends EntityData<Creeper> {
 	}
 	
 	@Override
-	public EntityData getSuperType() {
+	public EntityData<Creeper> getSuperType() {
 		return new CreeperData();
 	}
 	

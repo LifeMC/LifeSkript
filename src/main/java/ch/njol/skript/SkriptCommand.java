@@ -265,17 +265,12 @@ public final class SkriptCommand implements CommandExecutor {
 					}
 				}
 			} else if ("update".equalsIgnoreCase(args[0])) {
-				Updater.stateLock.writeLock().lock();
-				try {
-					if ("check".equals(args[1])) {
-						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
-					} else if ("changes".equalsIgnoreCase(args[1])) {
-						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
-					} else if ("download".equalsIgnoreCase(args[1])) {
-						Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
-					}
-				} finally {
-					Updater.stateLock.writeLock().unlock();
+				if ("check".equals(args[1])) {
+					Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
+				} else if ("changes".equalsIgnoreCase(args[1])) {
+					Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
+				} else if ("download".equalsIgnoreCase(args[1])) {
+					Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
 				}
 			} else if ("help".equalsIgnoreCase(args[0])) {
 				skriptCommandHelp.showHelp(sender);

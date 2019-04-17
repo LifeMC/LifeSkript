@@ -21,13 +21,11 @@
 
 package ch.njol.skript.classes;
 
-import ch.njol.yggdrasil.ClassResolver;
 import ch.njol.yggdrasil.Fields;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * Mainly kept for backwards compatibility, but also serves as {@link ClassResolver} for enums.
+ * Mainly kept for backwards compatibility, but also serves as {@link ch.njol.yggdrasil.ClassResolver} for enums.
  * 
  * @author Peter Güttinger
  */
