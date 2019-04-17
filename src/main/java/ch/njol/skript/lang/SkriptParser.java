@@ -52,13 +52,7 @@ import ch.njol.util.coll.CollectionUtils;
 
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,11 +69,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class SkriptParser {
 	
-	final String expr;
+	private final String expr;
 	
-	public final static int PARSE_EXPRESSIONS = 1;
-	public final static int PARSE_LITERALS = 2;
-	public final static int ALL_FLAGS = PARSE_EXPRESSIONS | PARSE_LITERALS;
+	public static final int PARSE_EXPRESSIONS = 1;
+	public static final int PARSE_LITERALS = 2;
+	public static final int ALL_FLAGS = PARSE_EXPRESSIONS | PARSE_LITERALS;
 	
 	private final int flags;
 	public final ParseContext context;
@@ -113,10 +107,10 @@ public final class SkriptParser {
 		this(expr, other.flags, other.context);
 	}
 	
-	public final static String wildcard = "[^\"]*?(?:\"[^\"]*?\"[^\"]*?)*?";
-	public final static String stringMatcher = "\"[^\"]*?(?:\"\"[^\"]*)*?\"";
+	public static final String wildcard = "[^\"]*?(?:\"[^\"]*?\"[^\"]*?)*?";
+	public static final String stringMatcher = "\"[^\"]*?(?:\"\"[^\"]*)*?\"";
 	
-	public final static class ParseResult {
+	public static final class ParseResult {
 		
 		public final Expression<?>[] exprs;
 		public final List<MatchResult> regexes = new ArrayList<MatchResult>(1);
@@ -136,7 +130,7 @@ public final class SkriptParser {
 		
 	}
 	
-	private final static class MalformedPatternException extends RuntimeException {
+	private static final class MalformedPatternException extends RuntimeException {
 		
 		private static final long serialVersionUID = -5133477361763823946L;
 		
@@ -385,10 +379,10 @@ public final class SkriptParser {
 	 * group 1 is null for ',', otherwise it's one of and/or/nor (not necessarily lowercase).
 	 */
 	@SuppressWarnings("null")
-	public final static Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(and|n?or)\\s+|\\s*,\\s*", Pattern.CASE_INSENSITIVE);
+	public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(and|n?or)\\s+|\\s*,\\s*", Pattern.CASE_INSENSITIVE);
 	
-	private final static String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
-	private final static String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
+	private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
+	private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
 	
 	private boolean suppressMissingAndOrWarnings;
 	
@@ -690,7 +684,7 @@ public final class SkriptParser {
 //	}
 	
 	@SuppressWarnings("null")
-	private final static Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*)\\)");
+	private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*)\\)");
 	
 	/**
 	 * @param types The required return type or null if it is not used (e.g. when calling a void function)
@@ -912,11 +906,20 @@ public final class SkriptParser {
 	 * @param c The character to search for
 	 * @return The number of unescaped occurrences of the given character
 	 */
-	static int countUnescaped(final String pattern, final char c) {
+	private static int countUnescaped(final String pattern, final char c) {
 		return countUnescaped(pattern, c, 0, pattern.length());
 	}
-	
-	static int countUnescaped(final String pattern, final char c, final int start, final int end) {
+
+	/**
+	 * Counts how often the given character occurs in the given string, ignoring any escaped occurrences of the character.
+	 *
+	 * @param pattern
+	 * @param start
+	 * @param end
+	 * @param c The character to search for
+	 * @return The number of unescaped occurrences of the given character
+	 */
+	private static int countUnescaped(final String pattern, final char c, final int start, final int end) {
 		assert start >= 0 && start <= end && end <= pattern.length() : start + ", " + end + "; " + pattern.length();
 		int r = 0;
 		for (int i = start; i < end; i++) {
@@ -973,7 +976,11 @@ public final class SkriptParser {
 			return "" + b.toString();
 		}
 	}
-	
+
+	/**
+	 * @param cs
+	 * @return "not an x" or "neither an x, a y nor a z"
+	 */
 	public static String notOfType(final ClassInfo<?>... cs) {
 		if (cs.length == 1) {
 			return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
@@ -1041,17 +1048,21 @@ public final class SkriptParser {
 		}
 		return level;
 	}
-	
+
 	/**
 	 * Prints errors
 	 * 
-	 * @param pattern
+	 * @param pattern The pattern to parse
 	 * @param i Position in the input string
 	 * @param j Position in the pattern
 	 * @return Parsed result or null on error (which does not imply that an error was printed)
 	 */
 	@Nullable
-	private ParseResult parse_i(final String pattern, int i, int j) {
+	private final ParseResult parse_i(final String pattern, int i, int j) {
+
+		if (pattern == null)
+			return null;
+
 		ParseResult res;
 		int end, i2;
 		
