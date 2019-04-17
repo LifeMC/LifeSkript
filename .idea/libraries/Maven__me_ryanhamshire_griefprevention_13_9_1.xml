@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: me.ryanhamshire:griefprevention:13.9.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/ryanhamshire/griefprevention/13.9.1/griefprevention-13.9.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/me/ryanhamshire/griefprevention/13.9.1/griefprevention-13.9.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/me/ryanhamshire/griefprevention/13.9.1/griefprevention-13.9.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

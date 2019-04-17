@@ -2,8 +2,6 @@
 :
 
 Skript.iml,6\f\6f3885578c954683f98dceae73b366f85491a8bc
-J
-.github/CODE_OF_CONDUCT.md,2\9\29946be0ce52b5170bf24d21ddb326a9eb7a05d9
 X
 (src/main/java/ch/njol/util/WebUtils.java,f\8\f8aeada1735e29c1d74ac79006d248bea327bf6a
 n
