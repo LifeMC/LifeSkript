@@ -36,7 +36,7 @@ import static ch.njol.yggdrasil.Tag.*;
 public abstract class YggdrasilInputStream implements Closeable {
 
     protected final Yggdrasil yggdrasil;
-    private final List<Object> readObjects = new ArrayList<Object>();
+    private final List<Object> readObjects = new ArrayList<>();
 
     // Tag
 

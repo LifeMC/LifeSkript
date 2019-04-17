@@ -43,8 +43,8 @@ public final class Loop extends TriggerSection {
 
     private final Expression<?> expr;
 
-    private final transient Map<Event, Object> current = new WeakHashMap<Event, Object>();
-    private final transient Map<Event, Iterator<?>> currentIter = new WeakHashMap<Event, Iterator<?>>();
+    private final transient Map<Event, Object> current = new WeakHashMap<>();
+    private final transient Map<Event, Iterator<?>> currentIter = new WeakHashMap<>();
 
     @Nullable
     private TriggerItem actualNext;

@@ -32,7 +32,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
     private final static Class<?>[] supportedClasses = {ArrayList.class, LinkedList.class, HashSet.class, HashMap.class, UUID.class
     };
 
-    private final static Set<Class<?>> set = new HashSet<Class<?>>(Arrays.asList(supportedClasses));
+    private final static Set<Class<?>> set = new HashSet<>(Arrays.asList(supportedClasses));
 
     @Override
     @Nullable

@@ -64,7 +64,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             m_adult = new Adjective(LANGUAGE_NODE + ".age adjectives.adult");
 
     // must be here to be initialised before 'new SimpleLiteral' is called in the register block below
-    private final static List<EntityDataInfo<?>> infos = new ArrayList<EntityDataInfo<?>>();
+    private final static List<EntityDataInfo<?>> infos = new ArrayList<>();
 
     public static final Serializer<EntityData> serializer = new Serializer<EntityData>() {
         @Override
@@ -136,7 +136,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     private final static Player[] EMPTY_PLAYER_ARRAY = new Player[0];
 
     static {
-        Classes.registerClass(new ClassInfo<EntityData>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<EntityData>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
+        Classes.registerClass(new ClassInfo<>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
             @Override
             public String toString(final EntityData d, final int flags) {
                 return d.toString(flags);
@@ -181,7 +181,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     public static <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final int defaultName, final String... codeNames) throws IllegalArgumentException {
-        final EntityDataInfo<T> info = new EntityDataInfo<T>(dataClass, name, codeNames, defaultName, entityClass);
+        final EntityDataInfo<T> info = new EntityDataInfo<>(dataClass, name, codeNames, defaultName, entityClass);
         for (int i = 0; i < infos.size(); i++) {
             if (infos.get(i).entityClass.isAssignableFrom(entityClass)) {
                 infos.add(i, info);
@@ -244,7 +244,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         if (type == Player.class) {
             if (worlds == null && types.length == 1 && types[0] instanceof PlayerData && ((PlayerData) types[0]).op == 0)
                 return (E[]) PlayerUtils.getOnlinePlayers().toArray(EMPTY_PLAYER_ARRAY);
-            final List<Player> list = new ArrayList<Player>();
+            final List<Player> list = new ArrayList<>();
             for (final Player p : PlayerUtils.getOnlinePlayers()) {
                 if (worlds != null && !CollectionUtils.contains(worlds, p.getWorld()))
                     continue;
@@ -257,7 +257,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             }
             return (E[]) list.toArray(new Player[0]);
         }
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         if (worlds == null)
             worlds = Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY);
         for (final World w : worlds) {
@@ -453,7 +453,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     @SuppressWarnings({"null", "unchecked"})
     public E[] getAll(final World... worlds) {
         assert worlds != null && worlds.length > 0 : Arrays.toString(worlds);
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         for (final World w : worlds) {
             for (final E e : w.getEntitiesByClass(getType()))
                 if (match(e))

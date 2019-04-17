@@ -54,8 +54,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public final class Updater {
 
     public final static ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
-    public final static List<VersionInfo> infos = new ArrayList<VersionInfo>();
-    public final static AtomicReference<VersionInfo> latest = new AtomicReference<VersionInfo>();
+    public final static List<VersionInfo> infos = new ArrayList<>();
+    public final static AtomicReference<VersionInfo> latest = new AtomicReference<>();
     // must be down here as they reference 'error' and 'latest' which are defined above
     public final static Message m_not_started = new Message("updater.not started");
     public final static Message m_checking = new Message("updater.checking");
@@ -67,7 +67,7 @@ public final class Updater {
     public final static Message m_download_in_progress = new Message("updater.download in progress");
     public final static FormattedMessage m_downloaded = new FormattedMessage("updater.downloaded", latest);
     public final static Message m_internal_error = new Message("updater.internal error");
-    final static AtomicReference<String> error = new AtomicReference<String>();
+    final static AtomicReference<String> error = new AtomicReference<>();
     public final static FormattedMessage m_check_error = new FormattedMessage("updater.check error", error);
     public final static FormattedMessage m_download_error = new FormattedMessage("updater.download error", error);
     /**

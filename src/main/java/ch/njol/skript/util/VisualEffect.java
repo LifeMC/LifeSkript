@@ -52,7 +52,7 @@ import java.util.List;
  * @author Peter Güttinger
  */
 public final class VisualEffect implements SyntaxElement, YggdrasilSerializable {
-    final static List<Type> types = new ArrayList<Type>(Type.values().length);
+    final static List<Type> types = new ArrayList<>(Type.values().length);
     final static Noun[] names = new Noun[Type.values().length];
     private final static String LANGUAGE_NODE = "visual effects";
     private final static String TYPE_ID = "VisualEffect.Type";
@@ -71,7 +71,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
             public void onLanguageChange() {
                 final Type[] ts = Type.values();
                 types.clear();
-                final List<String> patterns = new ArrayList<String>(ts.length);
+                final List<String> patterns = new ArrayList<>(ts.length);
                 for (int i = 0; i < ts.length; i++) {
                     final String node = LANGUAGE_NODE + "." + ts[i].name();
                     final String pattern = Language.get_(node + ".pattern");
@@ -87,7 +87,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
                 }
                 final String[] ps = patterns.toArray(new String[0]);
                 assert ps != null;
-                info = new SyntaxElementInfo<VisualEffect>(ps, VisualEffect.class);
+                info = new SyntaxElementInfo<>(ps, VisualEffect.class);
             }
         });
     }
@@ -109,7 +109,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
         final SyntaxElementInfo<VisualEffect> info = VisualEffect.info;
         if (info == null)
             return null;
-        return SkriptParser.parseStatic(Noun.stripIndefiniteArticle(s), new SingleItemIterator<SyntaxElementInfo<VisualEffect>>(info), null);
+        return SkriptParser.parseStatic(Noun.stripIndefiniteArticle(s), new SingleItemIterator<>(info), null);
     }
 
     public static String getAllNames() {

@@ -110,7 +110,7 @@ public final class SkriptAddon {
             subPackages[i] = subPackages[i].replace('.', '/') + "/";
         basePackage = basePackage.replace('.', '/') + "/";
         try {
-            for (final JarEntry e : new EnumerationIterable<JarEntry>(jar.entries())) {
+            for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                 if (e.getName().startsWith(basePackage) && e.getName().endsWith(".class")) {
                     boolean load = subPackages.length == 0;
                     for (final String sub : subPackages) {

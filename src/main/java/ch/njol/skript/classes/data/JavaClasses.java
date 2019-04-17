@@ -47,11 +47,11 @@ public final class JavaClasses {
     public final static int VARIABLENAME_NUMBERACCURACY = 8;
 
     static {
-        Classes.registerClass(new ClassInfo<Object>(Object.class, "object").user("objects?").name("Object").description("The supertype of all types, meaning that if %object% is used in e.g. a condition it will accept all kinds of expressions.").usage("").examples("").since("1.0"));
+        Classes.registerClass(new ClassInfo<>(Object.class, "object").user("objects?").name("Object").description("The supertype of all types, meaning that if %object% is used in e.g. a condition it will accept all kinds of expressions.").usage("").examples("").since("1.0"));
 
-        Classes.registerClass(new ClassInfo<Number>(Number.class, "number").user("num(ber)?s?").name("Number").description("A number, e.g. 2.5, 3, or -9812454.", "Please note that many expressions only need integers, i.e. will discard any frational parts of any numbers without producing an error.").usage("<code>[-]###[.###]</code> (any amount of digits; very large numbers will be truncated though)").examples("set the player's health to 5.5", "set {_temp} to 2*{_temp} - 2.5").since("1.0")
+        Classes.registerClass(new ClassInfo<>(Number.class, "number").user("num(ber)?s?").name("Number").description("A number, e.g. 2.5, 3, or -9812454.", "Please note that many expressions only need integers, i.e. will discard any frational parts of any numbers without producing an error.").usage("<code>[-]###[.###]</code> (any amount of digits; very large numbers will be truncated though)").examples("set the player's health to 5.5", "set {_temp} to 2*{_temp} - 2.5").since("1.0")
                 // is registered after all other number classes
-                .defaultExpression(new SimpleLiteral<Number>(1, true)).parser(new Parser<Number>() {
+                .defaultExpression(new SimpleLiteral<>(1, true)).parser(new Parser<Number>() {
                     @Override
                     @Nullable
                     public Number parse(final String s, final ParseContext context) {
@@ -117,7 +117,7 @@ public final class JavaClasses {
                     }
                 }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Long>(Long.class, "long").user("int(eger)?s?").name(ClassInfo.NO_DOC).before("integer", "short", "byte").defaultExpression(new SimpleLiteral<Long>((long) 1, true)).parser(new Parser<Long>() {
+        Classes.registerClass(new ClassInfo<>(Long.class, "long").user("int(eger)?s?").name(ClassInfo.NO_DOC).before("integer", "short", "byte").defaultExpression(new SimpleLiteral<>((long) 1, true)).parser(new Parser<Long>() {
             @Override
             @Nullable
             public Long parse(final String s, final ParseContext context) {
@@ -175,7 +175,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Integer>(Integer.class, "integer").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<Integer>(1, true)).parser(new Parser<Integer>() {
+        Classes.registerClass(new ClassInfo<>(Integer.class, "integer").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1, true)).parser(new Parser<Integer>() {
             @Override
             @Nullable
             public Integer parse(final String s, final ParseContext context) {
@@ -233,7 +233,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Double>(Double.class, "double").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<Double>(1., true)).after("long").before("float", "integer", "short", "byte").parser(new Parser<Double>() {
+        Classes.registerClass(new ClassInfo<>(Double.class, "double").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1., true)).after("long").before("float", "integer", "short", "byte").parser(new Parser<Double>() {
             @Override
             @Nullable
             public Double parse(final String s, final ParseContext context) {
@@ -291,7 +291,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Float>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<Float>(1f, true)).parser(new Parser<Float>() {
+        Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1f, true)).parser(new Parser<Float>() {
             @Override
             @Nullable
             public Float parse(final String s, final ParseContext context) {
@@ -349,7 +349,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Boolean>(Boolean.class, "boolean").user("booleans?").name("Boolean").description("A boolean is a value that is either true or false. Other accepted names are 'on' and 'yes' for true, and 'off' and 'no' for false.").usage("true/yes/on or false/no/off").examples("set {config.%player%.use mod} to false").since("1.0").parser(new Parser<Boolean>() {
+        Classes.registerClass(new ClassInfo<>(Boolean.class, "boolean").user("booleans?").name("Boolean").description("A boolean is a value that is either true or false. Other accepted names are 'on' and 'yes' for true, and 'off' and 'no' for false.").usage("true/yes/on or false/no/off").examples("set {config.%player%.use mod} to false").since("1.0").parser(new Parser<Boolean>() {
             private final RegexMessage truePattern = new RegexMessage("boolean.true.pattern");
             private final RegexMessage falsePattern = new RegexMessage("boolean.false.pattern");
 
@@ -413,7 +413,7 @@ public final class JavaClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Short>(Short.class, "short").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<Short>((short) 1, true)).parser(new Parser<Short>() {
+        Classes.registerClass(new ClassInfo<>(Short.class, "short").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>((short) 1, true)).parser(new Parser<Short>() {
             @Override
             @Nullable
             public Short parse(final String s, final ParseContext context) {
@@ -471,7 +471,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<Byte>(Byte.class, "byte").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<Byte>((byte) 1, true)).parser(new Parser<Byte>() {
+        Classes.registerClass(new ClassInfo<>(Byte.class, "byte").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>((byte) 1, true)).parser(new Parser<Byte>() {
             @Override
             @Nullable
             public Byte parse(final String s, final ParseContext context) {
@@ -529,7 +529,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<String>(String.class, "string").user("(text|string)s?").name("Text").description("Text is simply text, i.e. a sequence of characters, which can optionally contain expressions which will be replaced with a meaningful representation " + "(e.g. %player% will be replaced with the player's name).", "Because scripts are also text, you have to put text into double quotes to tell Skript which part of the line is an effect/expression and which part is the text.", "Please read the article on <a href='../strings/'>Texts and Variable Names</a> to learn more.").usage("simple: <code>\"...\"</code>", "quotes: <code>\"...\"\"...\"</code>", "expressions: <code>\"...%expression%...\"</code>", "percent signs: <code>\"...%%...\"</code>").examples("broadcast \"Hello World!\"", "message \"Hello %player%\"", "message \"The id of \"\"%type of tool%\"\" is %id of tool%.\"").since("1.0").parser(new Parser<String>() {
+        Classes.registerClass(new ClassInfo<>(String.class, "string").user("(text|string)s?").name("Text").description("Text is simply text, i.e. a sequence of characters, which can optionally contain expressions which will be replaced with a meaningful representation " + "(e.g. %player% will be replaced with the player's name).", "Because scripts are also text, you have to put text into double quotes to tell Skript which part of the line is an effect/expression and which part is the text.", "Please read the article on <a href='../strings/'>Texts and Variable Names</a> to learn more.").usage("simple: <code>\"...\"</code>", "quotes: <code>\"...\"\"...\"</code>", "expressions: <code>\"...%expression%...\"</code>", "percent signs: <code>\"...%%...\"</code>").examples("broadcast \"Hello World!\"", "message \"Hello %player%\"", "message \"The id of \"\"%type of tool%\"\" is %id of tool%.\"").since("1.0").parser(new Parser<String>() {
             @Override
             @Nullable
             public String parse(final String s, final ParseContext context) {

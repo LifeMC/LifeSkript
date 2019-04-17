@@ -38,7 +38,7 @@ import java.util.List;
  */
 public final class SimpleEntityData extends EntityData<Entity> {
 
-    private final static List<SimpleEntityDataInfo> types = new ArrayList<SimpleEntityDataInfo>();
+    private final static List<SimpleEntityDataInfo> types = new ArrayList<>();
 
     static {
         types.add(new SimpleEntityDataInfo("arrow", Arrow.class));

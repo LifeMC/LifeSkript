@@ -35,7 +35,7 @@ public final class Adjective extends Message {
     private final static int DEFINITE_ARTICLE = -100;
     private final static String DEFINITE_ARTICLE_TOKEN = "+";
 
-    private final HashMap<Integer, String> genders = new HashMap<Integer, String>();
+    private final HashMap<Integer, String> genders = new HashMap<>();
     @Nullable
     String def;
 

@@ -45,12 +45,12 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
-    final static Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<Class<? extends Event>, List<Trigger>>();
-    private final static List<Trigger> selfRegisteredTriggers = new ArrayList<Trigger>();
+    final static Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
+    private final static List<Trigger> selfRegisteredTriggers = new ArrayList<>();
     /**
      * Stores which events are currently registered with Bukkit
      */
-    private final static Set<Class<? extends Event>> registeredEvents = new HashSet<Class<? extends Event>>();
+    private final static Set<Class<? extends Event>> registeredEvents = new HashSet<>();
     private final static Listener listener = new Listener() {
     };
     @Nullable
@@ -183,7 +183,7 @@ public final class SkriptEventHandler {
         for (final Class<? extends Event> e : events) {
             List<Trigger> ts = triggers.get(e);
             if (ts == null)
-                triggers.put(e, ts = new ArrayList<Trigger>());
+                triggers.put(e, ts = new ArrayList<>());
             ts.add(trigger);
         }
     }

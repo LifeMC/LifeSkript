@@ -126,7 +126,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
      */
     @Override
     public Pair<T1, T2> clone() {
-        return new Pair<T1, T2>(this);
+        return new Pair<>(this);
     }
 
 }

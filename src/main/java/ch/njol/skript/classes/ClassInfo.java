@@ -51,7 +51,7 @@ public class ClassInfo<T> implements Debuggable {
     private final Class<T> c;
     private final String codeName;
     private final Noun name;
-    private final Set<String> after = new HashSet<String>();
+    private final Set<String> after = new HashSet<>();
     @Nullable
     private DefaultExpression<T> defaultExpression;
     @Nullable
@@ -322,7 +322,7 @@ public class ClassInfo<T> implements Debuggable {
      */
     public ClassInfo<T> before(final String... before) {
         assert this.before == null;
-        this.before = new HashSet<String>(Arrays.asList(before));
+        this.before = new HashSet<>(Arrays.asList(before));
         return this;
     }
 

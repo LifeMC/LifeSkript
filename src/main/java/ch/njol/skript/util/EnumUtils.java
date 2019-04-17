@@ -35,7 +35,7 @@ public final class EnumUtils<E extends Enum<E>> {
 
     private final Class<E> c;
     private final String languageNode;
-    private final HashMap<String, E> parseMap = new HashMap<String, E>();
+    private final HashMap<String, E> parseMap = new HashMap<>();
     private String[] names;
 
     public EnumUtils(final Class<E> c, final String languageNode) {

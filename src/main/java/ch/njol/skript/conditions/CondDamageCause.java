@@ -54,7 +54,7 @@ public final class CondDamageCause extends Condition {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        cause = new EventValueExpression<DamageCause>(DamageCause.class);
+        cause = new EventValueExpression<>(DamageCause.class);
         expected = (Expression<DamageCause>) exprs[0];
         setNegated(parseResult.mark == 1);
         return ((EventValueExpression<DamageCause>) cause).init();

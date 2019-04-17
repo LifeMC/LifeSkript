@@ -62,11 +62,11 @@ public class ExprItem extends EventValueExpression<ItemStack> {
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.RESET)
             return null;
-        item = new EventValueExpression<Item>(Item.class);
+        item = new EventValueExpression<>(Item.class);
         if (item.init())
             return new Class[]{ItemType.class};
         item = null;
-        slot = new EventValueExpression<Slot>(Slot.class);
+        slot = new EventValueExpression<>(Slot.class);
         if (slot.init())
             return new Class[]{ItemType.class};
         slot = null;

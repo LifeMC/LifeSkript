@@ -40,11 +40,11 @@ public class Noun extends Message {
     // TODO remove NO_GENDER and add boolean/flag uncountable (e.g. Luft: 'die Luft', aber nicht 'eine Luft')
     public final static int PLURAL = -2, NO_GENDER = -3; // -1 is sometimes used as 'not set'
     public final static String PLURAL_TOKEN = "x", NO_GENDER_TOKEN = "-";
-    final static HashMap<String, Integer> genders = new HashMap<String, Integer>();
-    final static List<String> indefiniteArticles = new ArrayList<String>(3);
-    final static List<String> definiteArticles = new ArrayList<String>(3);
-    final static List<String> localIndefiniteArticles = new ArrayList<String>(3);
-    final static List<String> localDefiniteArticles = new ArrayList<String>(3);
+    final static HashMap<String, Integer> genders = new HashMap<>();
+    final static List<String> indefiniteArticles = new ArrayList<>(3);
+    final static List<String> definiteArticles = new ArrayList<>(3);
+    final static List<String> localIndefiniteArticles = new ArrayList<>(3);
+    final static List<String> localDefiniteArticles = new ArrayList<>(3);
     static String definitePluralArticle = "";
     static String localDefinitePluralArticle = "";
 
@@ -135,7 +135,7 @@ public class Noun extends Message {
      * @return (singular, plural)
      */
     public static NonNullPair<String, String> getPlural(final String s) {
-        final NonNullPair<String, String> r = new NonNullPair<String, String>("", "");
+        final NonNullPair<String, String> r = new NonNullPair<>("", "");
         int part = 3; // 1 = singular, 2 = plural, 3 = both
         int i = StringUtils.count(s, '¦');
         int last = 0, c = -1;
@@ -223,7 +223,7 @@ public class Noun extends Message {
             g = getGender("" + s.substring(c + 1).trim(), key);
             s = "" + s.substring(0, c).trim();
         }
-        return new NonNullPair<String, Integer>(s, g);
+        return new NonNullPair<>(s, g);
     }
 
     public static String stripIndefiniteArticle(final String s) {

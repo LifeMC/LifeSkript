@@ -66,7 +66,7 @@ public class ExprSignText extends SimpleExpression<String> {
         if (matchedPattern == 0)
             line = (Expression<Number>) exprs[0];
         else
-            line = new SimpleLiteral<Number>(parseResult.mark, false);
+            line = new SimpleLiteral<>(parseResult.mark, false);
         block = (Expression<Block>) exprs[exprs.length - 1];
         return true;
     }

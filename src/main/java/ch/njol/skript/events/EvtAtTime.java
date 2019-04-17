@@ -49,7 +49,7 @@ import java.util.Map.Entry;
 @SuppressFBWarnings("EQ_COMPARETO_USE_OBJECT_EQUALS")
 public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<EvtAtTime> {
     public final static World[] EMPTY_WORLD_ARRAY = new World[0];
-    final static HashMap<World, EvtAtInfo> triggers = new HashMap<World, EvtAtInfo>();
+    final static HashMap<World, EvtAtInfo> triggers = new HashMap<>();
     private final static int CHECKPERIOD = 10;
     private static int taskID = -1;
 
@@ -196,7 +196,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     private final static class EvtAtInfo {
-        final ArrayList<EvtAtTime> list = new ArrayList<EvtAtTime>();
+        final ArrayList<EvtAtTime> list = new ArrayList<>();
         int lastTick; // as Bukkit's scheduler is inconsistent this saves the exact tick when the events were last checked
         int currentIndex;
 

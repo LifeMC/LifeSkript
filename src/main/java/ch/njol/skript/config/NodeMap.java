@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public final class NodeMap {
 
-    private final Map<String, Node> map = new HashMap<String, Node>();
+    private final Map<String, Node> map = new HashMap<>();
 
     public static boolean inMap(final Node n) {
         return n instanceof EntryNode || n instanceof SectionNode;

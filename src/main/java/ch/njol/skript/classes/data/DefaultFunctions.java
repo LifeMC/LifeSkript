@@ -52,8 +52,8 @@ public final class DefaultFunctions {
         final ClassInfo<Number> numberClass = Classes.getExactClassInfo(Number.class);
         final ClassInfo<Long> longClass = Classes.getExactClassInfo(Long.class);
 
-        final Parameter<?>[] numberParam = new Parameter[]{new Parameter<Number>("n", numberClass, true, null)};
-        final Parameter<?>[] numbersParam = new Parameter[]{new Parameter<Number>("ns", numberClass, false, null)};
+        final Parameter<?>[] numberParam = new Parameter[]{new Parameter<>("n", numberClass, true, null)};
+        final Parameter<?>[] numbersParam = new Parameter[]{new Parameter<>("ns", numberClass, false, null)};
 
         // basic math functions
 
@@ -100,7 +100,7 @@ public final class DefaultFunctions {
             }
         }.description("Returns the absolute value of the argument, i.e. makes the argument positive.").examples("abs(3) = 3", "abs(-2) = 2").since("2.2"));
 
-        Functions.registerFunction(new JavaFunction<Number>("mod", new Parameter[]{new Parameter<Number>("d", numberClass, true, null), new Parameter<Number>("m", numberClass, true, null)}, numberClass, true) {
+        Functions.registerFunction(new JavaFunction<Number>("mod", new Parameter[]{new Parameter<>("d", numberClass, true, null), new Parameter<>("m", numberClass, true, null)}, numberClass, true) {
             @Override
             public Number[] execute(final FunctionEvent e, final Object[][] params) {
                 final Number m = (Number) params[1][0];
@@ -124,7 +124,7 @@ public final class DefaultFunctions {
                 return new Double[]{Math.log(((Number) params[0][0]).doubleValue())};
             }
         }.description("The natural logarithm. You probably don't need this if you don't know what this is.", "Returns NaN (not a number) if the argument is negative.").examples("ln(1) = 0", "ln(exp(5)) = 5", "ln(2) = " + StringUtils.toString(Math.log(2), 4)).since("2.2"));
-        Functions.registerFunction(new JavaFunction<Number>("log", new Parameter[]{new Parameter<Number>("n", numberClass, true, null), new Parameter<Number>("base", numberClass, true, new SimpleLiteral<Number>(10, false))}, numberClass, true) {
+        Functions.registerFunction(new JavaFunction<Number>("log", new Parameter[]{new Parameter<>("n", numberClass, true, null), new Parameter<>("base", numberClass, true, new SimpleLiteral<Number>(10, false))}, numberClass, true) {
             @Override
             public Number[] execute(final FunctionEvent e, final Object[][] params) {
                 return new Double[]{Math.log10(((Number) params[0][0]).doubleValue()) / Math.log10(((Number) params[1][0]).doubleValue())};
@@ -177,7 +177,7 @@ public final class DefaultFunctions {
                 return new Double[]{Math.toDegrees(Math.atan(((Number) params[0][0]).doubleValue()))};
             }
         }.description("The inverse of the <a href='#tan'>tangent</a>, also called arctan. Returns result in degrees, not radians. Only returns values from -90 to 90.").examples("atan(0) = 0", "atan(1) = 45", "atan(10000) = " + s(Math.toDegrees(Math.atan(10000)))).since("2.2"));
-        Functions.registerFunction(new JavaFunction<Number>("atan2", new Parameter[]{new Parameter<Number>("x", numberClass, true, null), new Parameter<Number>("y", numberClass, true, null)}, numberClass, true) {
+        Functions.registerFunction(new JavaFunction<Number>("atan2", new Parameter[]{new Parameter<>("x", numberClass, true, null), new Parameter<>("y", numberClass, true, null)}, numberClass, true) {
             @Override
             public Number[] execute(final FunctionEvent e, final Object[][] params) {
                 return new Double[]{Math.toDegrees(Math.atan2(((Number) params[1][0]).doubleValue(), ((Number) params[0][0]).doubleValue()))};
@@ -236,7 +236,7 @@ public final class DefaultFunctions {
 
         // misc
 
-        Functions.registerFunction(new JavaFunction<World>("world", new Parameter[]{new Parameter<String>("name", Classes.getExactClassInfo(String.class), true, null)}, Classes.getExactClassInfo(World.class), true) {
+        Functions.registerFunction(new JavaFunction<World>("world", new Parameter[]{new Parameter<>("name", Classes.getExactClassInfo(String.class), true, null)}, Classes.getExactClassInfo(World.class), true) {
             @Override
             @Nullable
             public World[] execute(final FunctionEvent e, final Object[][] params) {
@@ -247,7 +247,7 @@ public final class DefaultFunctions {
 
         // the location expression doesn't work, so why not make a function for the same purpose
         // FIXME document on ExprLocation as well
-        Functions.registerFunction(new JavaFunction<Location>("location", new Parameter[]{new Parameter<Number>("x", numberClass, true, null), new Parameter<Number>("y", numberClass, true, null), new Parameter<Number>("z", numberClass, true, null), new Parameter<World>("world", Classes.getExactClassInfo(World.class), true, new EventValueExpression<World>(World.class)), new Parameter<Number>("yaw", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<Number>("pitch", numberClass, true, new SimpleLiteral<Number>(0, true))
+        Functions.registerFunction(new JavaFunction<Location>("location", new Parameter[]{new Parameter<>("x", numberClass, true, null), new Parameter<>("y", numberClass, true, null), new Parameter<>("z", numberClass, true, null), new Parameter<>("world", Classes.getExactClassInfo(World.class), true, new EventValueExpression<>(World.class)), new Parameter<>("yaw", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<>("pitch", numberClass, true, new SimpleLiteral<Number>(0, true))
         }, Classes.getExactClassInfo(Location.class), true) {
             @Override
             public Location[] execute(final FunctionEvent e, final Object[][] params) {
@@ -255,7 +255,7 @@ public final class DefaultFunctions {
             }
         }.description("Creates a location from a world and 3 coordinates, with an optional yaw and pitch.").examples("location(0, 128, 0)", "location(player's x-coordinate, player's y-coordinate + 5, player's z-coordinate, player's world, 0, 90)").since("2.2"));
 
-        Functions.registerFunction(new JavaFunction<Date>("date", new Parameter[]{new Parameter<Number>("year", numberClass, true, null), new Parameter<Number>("month", numberClass, true, null), new Parameter<Number>("day", numberClass, true, null), new Parameter<Number>("hour", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<Number>("minute", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<Number>("second", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<Number>("millisecond", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<Number>("zone_offset", numberClass, true, new SimpleLiteral<Number>(Double.NaN, true)), new Parameter<Number>("dst_offset", numberClass, true, new SimpleLiteral<Number>(Double.NaN, true)),
+        Functions.registerFunction(new JavaFunction<Date>("date", new Parameter[]{new Parameter<>("year", numberClass, true, null), new Parameter<>("month", numberClass, true, null), new Parameter<>("day", numberClass, true, null), new Parameter<>("hour", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<>("minute", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<>("second", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<>("millisecond", numberClass, true, new SimpleLiteral<Number>(0, true)), new Parameter<>("zone_offset", numberClass, true, new SimpleLiteral<Number>(Double.NaN, true)), new Parameter<>("dst_offset", numberClass, true, new SimpleLiteral<Number>(Double.NaN, true)),
         }, Classes.getExactClassInfo(Date.class), true) {
             private final int[] fields = {Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND, Calendar.ZONE_OFFSET, Calendar.DST_OFFSET};
             private final int[] offsets = {0, -1, 0, 0, 0, 0, 0, 0, 0};

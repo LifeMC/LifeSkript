@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  */
 public final class VariableString implements Expression<String> {
 
-    public final static Map<String, Pattern> variableNames = new HashMap<String, Pattern>();
+    public final static Map<String, Pattern> variableNames = new HashMap<>();
     private final String orig;
 
     @Nullable
@@ -147,7 +147,7 @@ public final class VariableString implements Expression<String> {
             return null;
         }
         final String s = Utils.replaceChatStyles("" + orig.replace("\"\"", "\""));
-        final ArrayList<Object> string = new ArrayList<Object>(n / 2 + 2);
+        final ArrayList<Object> string = new ArrayList<>(n / 2 + 2);
         int c = s.indexOf('%');
         if (c != -1) {
             if (c != 0)
@@ -561,7 +561,7 @@ public final class VariableString implements Expression<String> {
 
     @Override
     public Iterator<? extends String> iterator(final Event e) {
-        return new SingleItemIterator<String>(toString(e));
+        return new SingleItemIterator<>(toString(e));
     }
 
     @Override

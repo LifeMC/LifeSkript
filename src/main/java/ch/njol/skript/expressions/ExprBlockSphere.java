@@ -72,7 +72,7 @@ public class ExprBlockSphere extends SimpleExpression<Block> {
         final Location l = center.getSingle(e);
         final Number r = radius.getSingle(e);
         if (l == null || r == null)
-            return new EmptyIterator<Block>();
+            return new EmptyIterator<>();
         return new BlockSphereIterator(l, r.doubleValue());
     }
 
@@ -82,8 +82,8 @@ public class ExprBlockSphere extends SimpleExpression<Block> {
         final Number r = radius.getSingle(e);
         if (r == null)
             return new Block[0];
-        final ArrayList<Block> list = new ArrayList<Block>((int) (1.1 * 4 / 3. * Math.PI * Math.pow(r.doubleValue(), 3)));
-        for (final Block b : new IteratorIterable<Block>(iterator(e)))
+        final ArrayList<Block> list = new ArrayList<>((int) (1.1 * 4 / 3. * Math.PI * Math.pow(r.doubleValue(), 3)));
+        for (final Block b : new IteratorIterable<>(iterator(e)))
             list.add(b);
         return list.toArray(new Block[0]);
     }

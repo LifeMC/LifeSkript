@@ -83,8 +83,8 @@ public final class Yggdrasil {
 
     public final short version;
 
-    private final List<ClassResolver> classResolvers = new ArrayList<ClassResolver>();
-    private final List<FieldHandler> fieldHandlers = new ArrayList<FieldHandler>();
+    private final List<ClassResolver> classResolvers = new ArrayList<>();
+    private final List<FieldHandler> fieldHandlers = new ArrayList<>();
 
     private final SimpleClassResolver simpleClassResolver = new SimpleClassResolver();
 

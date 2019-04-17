@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
 public class Documentation {
 
     public final static boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
-    private static final ArrayList<Pattern> validation = new ArrayList<Pattern>();
+    private static final ArrayList<Pattern> validation = new ArrayList<>();
     private final static String[] urls = {"expressions", "effects", "conditions"};
 
     static {
@@ -85,7 +85,7 @@ public class Documentation {
         pw.println("UPDATE syntax_elements SET patterns='';");
         pw.println();
         pw.println("-- expressions");
-        for (final ExpressionInfo<?, ?> e : new IteratorIterable<ExpressionInfo<?, ?>>(Skript.getExpressions())) {
+        for (final ExpressionInfo<?, ?> e : new IteratorIterable<>(Skript.getExpressions())) {
             assert e != null;
             insertSyntaxElement(pw, e, "expression");
         }

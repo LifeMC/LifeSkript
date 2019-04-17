@@ -50,7 +50,7 @@ import java.util.logging.Level;
 @Examples({"on place of TNT:", "	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
-    final static HashMap<String, PrintWriter> writers = new HashMap<String, PrintWriter>();
+    final static HashMap<String, PrintWriter> writers = new HashMap<>();
     private final static File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
 
     static {

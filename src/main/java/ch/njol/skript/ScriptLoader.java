@@ -61,13 +61,13 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 final public class ScriptLoader {
-    public static final List<TriggerSection> currentSections = new ArrayList<TriggerSection>();
-    public final static List<Loop> currentLoops = new ArrayList<Loop>();
-    final static HashMap<String, String> currentOptions = new HashMap<String, String>();
+    public static final List<TriggerSection> currentSections = new ArrayList<>();
+    public final static List<Loop> currentLoops = new ArrayList<>();
+    final static HashMap<String, String> currentOptions = new HashMap<>();
     private final static Message m_no_errors = new Message("skript.no errors"),
             m_no_scripts = new Message("skript.no scripts");
     private final static PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
-    private final static Map<String, ItemType> currentAliases = new HashMap<String, ItemType>();
+    private final static Map<String, ItemType> currentAliases = new HashMap<>();
     /**
      * must be synchronized
      */
@@ -600,7 +600,7 @@ final public class ScriptLoader {
         if (Skript.debug())
             indentation += "    ";
 
-        final List<TriggerItem> items = new ArrayList<TriggerItem>();
+        final List<TriggerItem> items = new ArrayList<>();
 
         Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
 

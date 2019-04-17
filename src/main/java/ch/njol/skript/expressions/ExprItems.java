@@ -83,8 +83,8 @@ public class ExprItems extends SimpleExpression<ItemStack> {
     protected ItemStack[] get(final Event e) {
         if (buffer != null)
             return buffer;
-        final ArrayList<ItemStack> r = new ArrayList<ItemStack>();
-        for (final ItemStack is : new IteratorIterable<ItemStack>(iterator(e)))
+        final ArrayList<ItemStack> r = new ArrayList<>();
+        for (final ItemStack is : new IteratorIterable<>(iterator(e)))
             r.add(is);
         if (types instanceof Literal)
             return buffer = r.toArray(new ItemStack[0]);
@@ -98,7 +98,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
         if (types == null) {
             iter = new Iterator<ItemStack>() {
 
-                private final Iterator<Material> iterator = new ArrayIterator<Material>(Material.values());
+                private final Iterator<Material> iterator = new ArrayIterator<>(Material.values());
 
                 @Override
                 public boolean hasNext() {
@@ -116,7 +116,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
 
             };
         } else {
-            @SuppressWarnings("null") final Iterator<ItemType> it = new ArrayIterator<ItemType>(types.getArray(e));
+            @SuppressWarnings("null") final Iterator<ItemType> it = new ArrayIterator<>(types.getArray(e));
             if (!it.hasNext())
                 return null;
             iter = new Iterator<ItemStack>() {
@@ -151,7 +151,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
         if (!blocks)
             return iter;
 
-        return new CheckedIterator<ItemStack>(iter, new NullableChecker<ItemStack>() {
+        return new CheckedIterator<>(iter, new NullableChecker<ItemStack>() {
             @SuppressWarnings("deprecation")
             @Override
             public boolean check(final @Nullable ItemStack is) {

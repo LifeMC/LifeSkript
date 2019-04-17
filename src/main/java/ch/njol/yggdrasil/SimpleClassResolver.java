@@ -9,7 +9,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public class SimpleClassResolver implements ClassResolver {
 
-    private final BidiMap<Class<?>, String> classes = new BidiHashMap<Class<?>, String>();
+    private final BidiMap<Class<?>, String> classes = new BidiHashMap<>();
 
     public void registerClass(final Class<?> c, final String id) {
         final String oldId = classes.put(c, id);

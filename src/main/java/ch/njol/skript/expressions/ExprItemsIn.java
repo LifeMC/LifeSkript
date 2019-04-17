@@ -69,7 +69,7 @@ public class ExprItemsIn extends SimpleExpression<Slot> {
     @SuppressWarnings("null")
     @Override
     protected Slot[] get(final Event e) {
-        final ArrayList<Slot> r = new ArrayList<Slot>();
+        final ArrayList<Slot> r = new ArrayList<>();
         for (final Inventory invi : invis.getArray(e)) {
             for (int i = 0; i < invi.getSize(); i++) {
                 if (invi.getItem(i) != null)

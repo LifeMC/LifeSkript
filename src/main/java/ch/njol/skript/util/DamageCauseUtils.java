@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class DamageCauseUtils {
 
-    private final static EnumUtils<DamageCause> util = new EnumUtils<DamageCause>(DamageCause.class, "damage causes");
+    private final static EnumUtils<DamageCause> util = new EnumUtils<>(DamageCause.class, "damage causes");
 
     private DamageCauseUtils() {
         throw new UnsupportedOperationException();

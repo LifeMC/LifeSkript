@@ -68,7 +68,7 @@ import java.util.Map.Entry;
 public class EventValueExpression<T> extends SimpleExpression<T> implements DefaultExpression<T> {
 
     private final Class<? extends T> c;
-    private final Map<Class<? extends Event>, Getter<? extends T, ?>> getters = new HashMap<Class<? extends Event>, Getter<? extends T, ?>>();
+    private final Map<Class<? extends Event>, Getter<? extends T, ?>> getters = new HashMap<>();
     @Nullable
     private Changer<? super T> changer;
 

@@ -97,7 +97,7 @@ public class ExprDefaultValue<T> extends SimpleExpression<T> {
 
     @Override
     public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
-        return new ExprDefaultValue<R>(this, to);
+        return new ExprDefaultValue<>(this, to);
     }
 
     @Override

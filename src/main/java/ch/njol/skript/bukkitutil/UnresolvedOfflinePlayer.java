@@ -47,7 +47,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 
-    final static BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<UnresolvedOfflinePlayer>();
+    final static BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<>();
     final static AtomicBoolean threadStarted = new AtomicBoolean();
     final static Thread resolverThread = Skript.newThread(new Runnable() {
         @SuppressWarnings("deprecation")
@@ -80,7 +80,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             }
         }
     }, "Skript offline player resolver thread");
-    final BlockingQueue<Runnable> actionQueue = new LinkedBlockingQueue<Runnable>();
+    final BlockingQueue<Runnable> actionQueue = new LinkedBlockingQueue<>();
     final String name;
     @Nullable
     OfflinePlayer bukkitOfflinePlayer;

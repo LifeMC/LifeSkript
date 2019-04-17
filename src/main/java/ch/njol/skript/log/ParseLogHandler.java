@@ -33,7 +33,7 @@ import java.util.logging.Level;
  */
 public class ParseLogHandler extends LogHandler {
 
-    private final List<LogEntry> log = new ArrayList<LogEntry>();
+    private final List<LogEntry> log = new ArrayList<>();
     boolean printedErrorOrLog;
     @Nullable
     private LogEntry error;

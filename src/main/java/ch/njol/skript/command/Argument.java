@@ -54,7 +54,7 @@ public final class Argument<T> {
 
     private final boolean optional;
 
-    private final transient WeakHashMap<Event, T[]> current = new WeakHashMap<Event, T[]>();
+    private final transient WeakHashMap<Event, T[]> current = new WeakHashMap<>();
 
     private Argument(@Nullable final String name, final @Nullable Expression<? extends T> def, final ClassInfo<T> type, final boolean single, final int index, final boolean optional) {
         this.name = name;
@@ -93,7 +93,7 @@ public final class Argument<T> {
                         if (def.startsWith("\"") && def.endsWith("\""))
                             d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
                         else
-                            d = (Expression<? extends T>) new SimpleLiteral<String>(def, false);
+                            d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                     } else {
                         d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
                     }
@@ -107,7 +107,7 @@ public final class Argument<T> {
                 }
             }
         }
-        return new Argument<T>(name, d, type, single, index, def != null || forceOptional);
+        return new Argument<>(name, d, type, single, index, def != null || forceOptional);
     }
 
     @Override

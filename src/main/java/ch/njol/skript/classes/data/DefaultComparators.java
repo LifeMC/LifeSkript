@@ -50,7 +50,7 @@ import java.util.Map.Entry;
 public final class DefaultComparators {
 
     // EntityData - ItemType
-    final static LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<Class<? extends Entity>, Material>();
+    final static LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>();
     public final static Comparator<EntityData, ItemType> entityItemComparator = new Comparator<EntityData, ItemType>() {
         @Override
         public Relation compare(final EntityData e, final ItemType i) {

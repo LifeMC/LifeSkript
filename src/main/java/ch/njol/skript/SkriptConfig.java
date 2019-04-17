@@ -47,7 +47,7 @@ import java.util.Locale;
 @SuppressWarnings("unused")
 public final class SkriptConfig {
 
-    public final static Option<String> language = new Option<String>("language", "english").optional(true).setter(new Setter<String>() {
+    public final static Option<String> language = new Option<>("language", "english").optional(true).setter(new Setter<String>() {
         @Override
         public void set(final String s) {
             if (!Language.load(s)) {
@@ -55,14 +55,14 @@ public final class SkriptConfig {
             }
         }
     });
-    public final static Option<Boolean> enableEffectCommands = new Option<Boolean>("enable effect commands", false);
-    public final static Option<String> effectCommandToken = new Option<String>("effect command token", "!");
-    public final static Option<Boolean> allowOpsToUseEffectCommands = new Option<Boolean>("allow ops to use effect commands", true);
+    public final static Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", false);
+    public final static Option<String> effectCommandToken = new Option<>("effect command token", "!");
+    public final static Option<Boolean> allowOpsToUseEffectCommands = new Option<>("allow ops to use effect commands", true);
     // everything handled by Variables
     public final static OptionSection databases = new OptionSection("databases");
-    public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<Boolean>("use player UUIDs in variable names", false);
-    public final static Option<Boolean> enablePlayerVariableFix = new Option<Boolean>("player variable fix", true);
-    public final static Option<EventPriority> defaultEventPriority = new Option<EventPriority>("plugin priority", EventPriority.NORMAL, new Converter<String, EventPriority>() {
+    public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<>("use player UUIDs in variable names", false);
+    public final static Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
+    public final static Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, new Converter<String, EventPriority>() {
         @Override
         @Nullable
         public EventPriority convert(final String s) {
@@ -74,29 +74,29 @@ public final class SkriptConfig {
             }
         }
     });
-    public final static Option<Boolean> logPlayerCommands = new Option<Boolean>("log player commands", true);
+    public final static Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
      * Maximum number of digits to display after the period for floats and doubles
      */
-    public final static Option<Integer> numberAccuracy = new Option<Integer>("number accuracy", 2);
-    public final static Option<Integer> maxTargetBlockDistance = new Option<Integer>("maximum target block distance", 100);
-    public final static Option<Boolean> caseSensitive = new Option<Boolean>("case sensitive", false);
-    public final static Option<Boolean> disableDocumentationGeneration = new Option<Boolean>("disable documentation generation", false);
-    public final static Option<Boolean> disableVariableConflictWarnings = new Option<Boolean>("disable variable conflict warnings", true);
-    public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<Boolean>("disable variable will not be saved warnings", true);
-    public final static Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<Boolean>("disable expression is already a text warnings", false);
-    public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<Boolean>("disable variable name starting with expression warnings", false);
-    public final static Option<Boolean> disableStartStopEventWarnings = new Option<Boolean>("disable start stop event warnings", false);
-    public final static Option<Boolean> disableTooLongDelayWarnings = new Option<Boolean>("disable too long delay warnings", false);
-    public final static Option<Boolean> disableDelaysInFunctionsWarnings = new Option<Boolean>("disable delays in functions causes function to return instantly warnings", false);
-    public final static Option<Boolean> enableScriptCaching = new Option<Boolean>("enable script caching", false).optional(true);
-    public final static Option<Boolean> keepConfigsLoaded = new Option<Boolean>("keep configs loaded", false).optional(true);
-    static final Collection<Config> configs = new ArrayList<Config>();
-    final static Option<String> version = new Option<String>("version", Skript.getVersion().toString()).optional(true);
+    public final static Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
+    public final static Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
+    public final static Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
+    public final static Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
+    public final static Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", true);
+    public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", true);
+    public final static Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);
+    public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<>("disable variable name starting with expression warnings", false);
+    public final static Option<Boolean> disableStartStopEventWarnings = new Option<>("disable start stop event warnings", false);
+    public final static Option<Boolean> disableTooLongDelayWarnings = new Option<>("disable too long delay warnings", false);
+    public final static Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
+    public final static Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
+    public final static Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
+    static final Collection<Config> configs = new ArrayList<>();
+    final static Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
 
     // Disable warnings options
-    final static Option<Boolean> checkForNewVersion = new Option<Boolean>("check for new version", false);
-    final static Option<Timespan> updateCheckInterval = new Option<Timespan>("update check interval", new Timespan(0)).setter(new Setter<Timespan>() {
+    final static Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
+    final static Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(new Setter<Timespan>() {
         @SuppressWarnings("null")
         @Override
         public void set(final Timespan t) {
@@ -105,10 +105,10 @@ public final class SkriptConfig {
             //ct.setNextExecution(t.getTicks_i());
         }
     });
-    final static Option<Boolean> automaticallyDownloadNewVersion = new Option<Boolean>("automatically download new version", false);
+    final static Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
     @SuppressWarnings("null")
     private final static DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    private final static Option<DateFormat> dateFormat = new Option<DateFormat>("date format", shortDateFormat, new Converter<String, DateFormat>() {
+    private final static Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, new Converter<String, DateFormat>() {
         @Override
         @Nullable
         public DateFormat convert(final String s) {
@@ -122,7 +122,7 @@ public final class SkriptConfig {
             return null;
         }
     });
-    private final static Option<Verbosity> verbosity = new Option<Verbosity>("verbosity", Verbosity.NORMAL, new EnumParser<Verbosity>(Verbosity.class, "verbosity")).setter(new Setter<Verbosity>() {
+    private final static Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(new Setter<Verbosity>() {
         @Override
         public void set(final Verbosity v) {
             SkriptLogger.setVerbosity(v);

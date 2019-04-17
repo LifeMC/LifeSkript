@@ -87,7 +87,7 @@ public final class FileUtils {
      * @throws IOException If renaming one of the files caused an IOException. Some files might have been renamed already.
      */
     public static Collection<File> renameAll(final File directory, final Converter<String, String> renamer) throws IOException {
-        final Collection<File> changed = new ArrayList<File>();
+        final Collection<File> changed = new ArrayList<>();
         for (final File f : directory.listFiles()) {
             if (f.isDirectory()) {
                 changed.addAll(renameAll(f, renamer));

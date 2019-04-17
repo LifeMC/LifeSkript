@@ -65,7 +65,7 @@ public final class DatabaseStorage extends VariablesStorage {
      */
     private final static long TRANSACTION_DELAY = 500;
     @SuppressWarnings("null")
-    final SynchronizedReference<Database> db = new SynchronizedReference<Database>(null);
+    final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
     long monitor_interval;
     /**

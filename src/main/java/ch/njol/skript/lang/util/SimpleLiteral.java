@@ -139,7 +139,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
         final R[] parsedData = Converters.convertArray(data, to, (Class<R>) Utils.getSuperType(to));
         if (parsedData.length != data.length)
             return null;
-        return new ConvertedLiteral<T, R>(this, parsedData, (Class<R>) Utils.getSuperType(to));
+        return new ConvertedLiteral<>(this, parsedData, (Class<R>) Utils.getSuperType(to));
     }
 
     @Override

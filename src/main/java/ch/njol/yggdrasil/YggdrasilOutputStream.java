@@ -37,7 +37,7 @@ import static ch.njol.yggdrasil.Tag.*;
 public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     protected final Yggdrasil yggdrasil;
-    private final IdentityHashMap<Object, Integer> writtenObjects = new IdentityHashMap<Object, Integer>();
+    private final IdentityHashMap<Object, Integer> writtenObjects = new IdentityHashMap<>();
 
     // Tag
     private int nextObjectID;

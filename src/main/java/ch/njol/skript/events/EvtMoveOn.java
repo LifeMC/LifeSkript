@@ -82,7 +82,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //	}
 
     //	private final static HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
-    final static HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<Integer, List<Trigger>>();
+    final static HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<>();
     private final static EventExecutor executor = new EventExecutor() {
         @SuppressWarnings("null")
         @Override
@@ -220,7 +220,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
                     continue;
                 List<Trigger> ts = itemTypeTriggers.get(d.getId());
                 if (ts == null)
-                    itemTypeTriggers.put(d.getId(), ts = new ArrayList<Trigger>());
+                    itemTypeTriggers.put(d.getId(), ts = new ArrayList<>());
                 ts.add(trigger);
             }
         }

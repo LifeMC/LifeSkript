@@ -45,7 +45,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     private final static Charset UTF_8 = Charset.forName("UTF-8");
     final InputStream in;
     private final short version;
-    private final List<String> readShortStrings = new ArrayList<String>();
+    private final List<String> readShortStrings = new ArrayList<>();
 
     // private
 

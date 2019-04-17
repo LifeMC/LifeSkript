@@ -129,7 +129,7 @@ public class ExprDrops extends SimpleExpression<ItemStack> {
                         //$FALL-THROUGH$
                     case ADD:
                         if (delta instanceof Inventory) {
-                            for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
+                            for (final ItemStack is : new IteratorIterable<>(((Inventory) delta).iterator())) {
                                 if (is != null)
                                     drops.add(is);
                             }
@@ -140,7 +140,7 @@ public class ExprDrops extends SimpleExpression<ItemStack> {
                     case REMOVE:
                     case REMOVE_ALL:
                         if (delta instanceof Inventory) {
-                            for (final ItemStack is : new IteratorIterable<ItemStack>(((Inventory) delta).iterator())) {
+                            for (final ItemStack is : new IteratorIterable<>(((Inventory) delta).iterator())) {
                                 if (is == null)
                                     continue;
                                 if (mode == ChangeMode.REMOVE)

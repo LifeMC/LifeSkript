@@ -199,7 +199,7 @@ public final class CollectionUtils {
         if (map == null)
             return null;
         if (map.containsKey(key))
-            return new Pair<T, U>(key, map.get(key));
+            return new Pair<>(key, map.get(key));
         return null;
     }
 
@@ -301,7 +301,7 @@ public final class CollectionUtils {
             return Collections.emptySet();
         if (sets.length == 1 && sets[0] != null)
             return sets[0];
-        final Set<E> l = new HashSet<E>(sets[0]);
+        final Set<E> l = new HashSet<>(sets[0]);
         for (int i = 1; i < sets.length; i++) {
             if (sets[i] == null)
                 continue;
@@ -323,7 +323,7 @@ public final class CollectionUtils {
             return Collections.emptySet();
         if (sets.length == 1 && sets[0] != null)
             return sets[0];
-        final Set<E> l = new HashSet<E>(sets[0]);
+        final Set<E> l = new HashSet<>(sets[0]);
         for (int i = 1; i < sets.length; i++) {
             if (sets[i] == null)
                 continue;

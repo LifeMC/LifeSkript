@@ -54,17 +54,17 @@ public class ReversedListView<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ReversedListIterator<T>(list);
+        return new ReversedListIterator<>(list);
     }
 
     @Override
     public ListIterator<T> listIterator() {
-        return new ReversedListIterator<T>(list);
+        return new ReversedListIterator<>(list);
     }
 
     @Override
     public ListIterator<T> listIterator(final int index) {
-        return new ReversedListIterator<T>(list, index);
+        return new ReversedListIterator<>(list, index);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class ReversedListView<T> implements List<T> {
         final List<T> l = list.subList(size() - toIndex, size() - fromIndex);
         if (l == null)
             throw new UnsupportedOperationException("" + list);
-        return new ReversedListView<T>(l);
+        return new ReversedListView<>(l);
     }
 
     @Override

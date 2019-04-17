@@ -89,7 +89,7 @@ public class ExprEntity extends SimpleExpression<Entity> {
         } finally {
             log.stop();
         }
-        entity = new EventValueExpression<Entity>(type.getType());
+        entity = new EventValueExpression<>(type.getType());
         return entity.init();
     }
 

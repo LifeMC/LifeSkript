@@ -41,7 +41,7 @@ import java.util.Collection;
  */
 @SuppressWarnings("unchecked")
 public class EvtSkript extends SelfRegisteringSkriptEvent {
-    private final static Collection<Trigger> start = new ArrayList<Trigger>(), stop = new ArrayList<Trigger>();
+    private final static Collection<Trigger> start = new ArrayList<>(), stop = new ArrayList<>();
 
     static {
         Skript.registerEvent("Server Start/Stop", EvtSkript.class, CollectionUtils.array(SkriptStartEvent.class, SkriptStopEvent.class), "(0¦server|1¦skript) (start|load|enable)", "(0¦server|1¦skript) (stop|unload|disable)").description("Called when the server starts or stops (actually, when Skript starts or stops, so a /reload will trigger these events as well).").examples("on Skript start", "on server stop").since("2.0");

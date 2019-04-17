@@ -43,7 +43,7 @@ import java.util.Set;
 // REMIND support more plugins?
 public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 
-    public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<RegionsPlugin<?>>(2);
+    public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<>(2);
 
     static {
         Variables.yggdrasil.registerClassResolver(new ClassResolver() {
@@ -79,7 +79,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
     }
 
     public static Set<? extends Region> getRegionsAt(final Location l) {
-        final Set<Region> r = new HashSet<Region>();
+        final Set<Region> r = new HashSet<>();
         for (final RegionsPlugin<?> pl : plugins) {
             r.addAll(pl.getRegionsAt_i(l));
         }

@@ -48,7 +48,7 @@ import java.lang.reflect.Array;
 @Since("1.4.2")
 public final class ExprArithmetic extends SimpleExpression<Number> {
 
-    private final static Patterns<Operator> patterns = new Patterns<Operator>(new Object[][]{
+    private final static Patterns<Operator> patterns = new Patterns<>(new Object[][]{
 
             {"%number%[ ]+[ ]%number%", Operator.PLUS}, {"%number%[ ]-[ ]%number%", Operator.MINUS},
 
@@ -127,7 +127,7 @@ public final class ExprArithmetic extends SimpleExpression<Number> {
     @Override
     public Expression<? extends Number> simplify() {
         if (first instanceof Literal && second instanceof Literal)
-            return new SimpleLiteral<Number>(getArray(null), Number.class, false);
+            return new SimpleLiteral<>(getArray(null), Number.class, false);
         return this;
     }
 

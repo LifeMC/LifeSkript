@@ -54,7 +54,7 @@ import java.util.WeakHashMap;
 @Since("1.0")
 public class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     public static final boolean set = Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class);
-    private final static WeakHashMap<Player, Block> targetedBlocks = new WeakHashMap<Player, Block>();
+    private final static WeakHashMap<Player, Block> targetedBlocks = new WeakHashMap<>();
     @Nullable
     private static Event last;
     private static long blocksValidForTick;

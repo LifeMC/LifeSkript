@@ -39,7 +39,7 @@ import java.util.HashMap;
 public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 
     final static long[] times = {50L, 1000L, 1000L * 60L, 1000L * 60L * 60L, 1000L * 60L * 60L * 24L};
-    final static HashMap<String, Long> parseValues = new HashMap<String, Long>();
+    final static HashMap<String, Long> parseValues = new HashMap<>();
     private final static Noun m_tick = new Noun("time.tick");
     private final static Noun m_second = new Noun("time.second");
     private final static Noun m_minute = new Noun("time.minute");
@@ -47,7 +47,7 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
     private final static Noun m_day = new Noun("time.day");
     final static Noun[] names = {m_tick, m_second, m_minute, m_hour, m_day};
     @SuppressWarnings("unchecked")
-    final static NonNullPair<Noun, Long>[] simpleValues = new NonNullPair[]{new NonNullPair<Noun, Long>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<Noun, Long>(m_hour, 1000L * 60 * 60), new NonNullPair<Noun, Long>(m_minute, 1000L * 60), new NonNullPair<Noun, Long>(m_second, 1000L)
+    final static NonNullPair<Noun, Long>[] simpleValues = new NonNullPair[]{new NonNullPair<>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<>(m_hour, 1000L * 60 * 60), new NonNullPair<>(m_minute, 1000L * 60), new NonNullPair<>(m_second, 1000L)
     };
 
     static {

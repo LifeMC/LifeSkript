@@ -103,7 +103,7 @@ public class ExprTernary<T> extends SimpleExpression<T> {
 
     @Override
     public <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
-        return new ExprTernary<R>(this, to);
+        return new ExprTernary<>(this, to);
     }
 
     @Override

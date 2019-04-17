@@ -39,7 +39,7 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public final class PotionEffectUtils {
 
-    final static Map<String, PotionEffectType> types = new HashMap<String, PotionEffectType>();
+    final static Map<String, PotionEffectType> types = new HashMap<>();
     final static String[] names = new String[getMaxPotionId() + 1];
 
     static {

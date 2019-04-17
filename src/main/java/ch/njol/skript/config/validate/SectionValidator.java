@@ -38,7 +38,7 @@ import java.util.Map.Entry;
  */
 public final class SectionValidator implements NodeValidator {
 
-    private final HashMap<String, NodeInfo> nodes = new HashMap<String, NodeInfo>();
+    private final HashMap<String, NodeInfo> nodes = new HashMap<>();
     private boolean allowUndefinedSections;
     private boolean allowUndefinedEntries;
 
@@ -69,7 +69,7 @@ public final class SectionValidator implements NodeValidator {
     }
 
     public <T> SectionValidator addEntry(final String name, final Parser<? extends T> parser, final Setter<T> setter, final boolean optional) {
-        addNode(name, new ParsedEntryValidator<T>(parser, setter), optional);
+        addNode(name, new ParsedEntryValidator<>(parser, setter), optional);
         return this;
     }
 

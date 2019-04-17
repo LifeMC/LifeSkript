@@ -57,10 +57,10 @@ import java.util.regex.Pattern;
  */
 public final class Classes {
 
-    private final static List<ClassInfo<?>> tempClassInfos = new ArrayList<ClassInfo<?>>();
-    private final static HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<Class<?>, ClassInfo<?>>();
-    private final static HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<Class<?>, ClassInfo<?>>();
-    private final static HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<String, ClassInfo<?>>();
+    private final static List<ClassInfo<?>> tempClassInfos = new ArrayList<>();
+    private final static HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<>();
+    private final static HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>();
+    private final static HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>();
     /**
      * consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */
@@ -146,7 +146,7 @@ public final class Classes {
 
         // remove unresolvable dependencies (and print a warning if testing)
         for (final ClassInfo<?> ci : tempClassInfos) {
-            final Set<String> s = new HashSet<String>();
+            final Set<String> s = new HashSet<>();
             final Set<String> before = ci.before();
             if (before != null) {
                 for (final String b : before) {
@@ -166,7 +166,7 @@ public final class Classes {
                 Skript.warning(s.size() + " dependency/ies could not be resolved for " + ci + ": " + StringUtils.join(s, ", "));
         }
 
-        final List<ClassInfo<?>> classInfos = new ArrayList<ClassInfo<?>>(tempClassInfos.size());
+        final List<ClassInfo<?>> classInfos = new ArrayList<>(tempClassInfos.size());
 
         boolean changed = true;
         while (changed) {

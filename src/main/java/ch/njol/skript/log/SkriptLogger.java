@@ -201,14 +201,14 @@ public final class SkriptLogger {
     }
 
     public static void startSuppressing() {
-        suppressed = new ArrayList<LogEntry>();
+        suppressed = new ArrayList<>();
         suppressing = true;
     }
 
     @SuppressWarnings("null")
     public static List<LogEntry> stopSuppressing() {
         if (suppressed == null) {
-            return new ArrayList<LogEntry>();
+            return new ArrayList<>();
         }
         return suppressed;
     }

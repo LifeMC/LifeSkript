@@ -57,7 +57,7 @@ import java.util.logging.Level;
 @Examples({"# set:", "Set the player's display name to \"<red>%name of player%\"", "set the block above the victim to lava", "# add:", "add 2 to the player's health # preferably use '<a href='#heal'>heal</a>' for this", "add argument to {blacklist::*}", "give a diamond pickaxe of efficiency 5 to the player", "increase the data value of the clicked block by 1", "# remove:", "remove 2 pickaxes from the victim", "subtract 2.5 from {points.%player%}", "# remove all:", "remove every iron tool from the player", "remove all minecarts from {entitylist::*}", "# delete:", "delete the block below the player", "clear drops", "delete {variable}", "# reset:", "reset walk speed of player", "reset chunk at the targeted block"})
 @Since("1.0 (set, add, remove, delete), 2.0 (remove all)")
 public class EffChange extends Effect {
-    private static final Patterns<ChangeMode> patterns = new Patterns<ChangeMode>(new Object[][]{{"(add|give) %objects% to %~objects%", ChangeMode.ADD}, {"increase %~objects% by %objects%", ChangeMode.ADD}, {"give %~objects% %objects%", ChangeMode.ADD},
+    private static final Patterns<ChangeMode> patterns = new Patterns<>(new Object[][]{{"(add|give) %objects% to %~objects%", ChangeMode.ADD}, {"increase %~objects% by %objects%", ChangeMode.ADD}, {"give %~objects% %objects%", ChangeMode.ADD},
 
             {"set %~objects% to %objects%", ChangeMode.SET},
 

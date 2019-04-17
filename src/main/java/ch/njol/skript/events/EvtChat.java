@@ -47,7 +47,7 @@ import java.util.concurrent.Callable;
  */
 @SuppressWarnings("deprecation")
 public final class EvtChat extends SelfRegisteringSkriptEvent {
-    final static Collection<Trigger> triggers = new ArrayList<Trigger>();
+    final static Collection<Trigger> triggers = new ArrayList<>();
     private final static EventExecutor executor = new EventExecutor() {
 
         final void execute(final Event e) {

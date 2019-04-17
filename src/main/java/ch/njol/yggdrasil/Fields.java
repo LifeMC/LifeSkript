@@ -35,11 +35,11 @@ import java.util.*;
 @NotThreadSafe
 public final class Fields implements Iterable<FieldContext> {
 
-    private final static Map<Class<?>, Collection<Field>> cache = new HashMap<Class<?>, Collection<Field>>();
+    private final static Map<Class<?>, Collection<Field>> cache = new HashMap<>();
     @Nullable
     private final Yggdrasil yggdrasil;
 
-    private final Map<String, FieldContext> fields = new HashMap<String, FieldContext>();
+    private final Map<String, FieldContext> fields = new HashMap<>();
 
     /**
      * Creates an empty Fields object.
@@ -110,8 +110,8 @@ public final class Fields implements Iterable<FieldContext> {
         Collection<Field> fields = cache.get(c);
         if (fields != null)
             return fields;
-        fields = new ArrayList<Field>();
-        final Set<String> ids = new HashSet<String>();
+        fields = new ArrayList<>();
+        final Set<String> ids = new HashSet<>();
         for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
             final Field[] fs = sc.getDeclaredFields();
             for (final Field f : fs) {
@@ -144,7 +144,7 @@ public final class Fields implements Iterable<FieldContext> {
         final Yggdrasil y = yggdrasil;
         if (y == null)
             throw new YggdrasilException("");
-        final Set<FieldContext> excessive = new HashSet<FieldContext>(fields.values());
+        final Set<FieldContext> excessive = new HashSet<>(fields.values());
         final Class<?> oc = o.getClass();
         assert oc != null;
         for (final Field f : getFields(oc)) {

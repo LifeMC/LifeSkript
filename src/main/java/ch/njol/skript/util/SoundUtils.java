@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class SoundUtils {
 
-    private final static EnumUtils<Sound> util = new EnumUtils<Sound>(Sound.class, "sounds");
+    private final static EnumUtils<Sound> util = new EnumUtils<>(Sound.class, "sounds");
 
     static {
         assert false;

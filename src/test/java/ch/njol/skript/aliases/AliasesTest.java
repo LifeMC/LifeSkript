@@ -53,20 +53,20 @@ public class AliasesTest {
         t.add(new ItemData(0));
 
         final Aliases.Variations v = new Aliases.Variations();
-        final LinkedHashMap<String, ItemType> var1 = new LinkedHashMap<String, ItemType>();
+        final LinkedHashMap<String, ItemType> var1 = new LinkedHashMap<>();
         var1.put("{default}", t);
         var1.put("v1.1", t);
         var1.put("v1.2", t);
         v.put("var1", var1);
-        final LinkedHashMap<String, ItemType> var2 = new LinkedHashMap<String, ItemType>();
+        final LinkedHashMap<String, ItemType> var2 = new LinkedHashMap<>();
         var2.put("v2.1 @a", t);
         var2.put("v2.2", t);
         v.put("var2", var2);
-        final LinkedHashMap<String, ItemType> var3 = new LinkedHashMap<String, ItemType>();
+        final LinkedHashMap<String, ItemType> var3 = new LinkedHashMap<>();
         var3.put("v3.1¦¦s¦", t);
         var3.put("v3.2¦a¦b¦", t);
         v.put("var3", var3);
-        final LinkedHashMap<String, ItemType> varL = new LinkedHashMap<String, ItemType>();
+        final LinkedHashMap<String, ItemType> varL = new LinkedHashMap<>();
         varL.put("{default}", t);
         varL.put("normales ", t);
         varL.put("Birken", t);

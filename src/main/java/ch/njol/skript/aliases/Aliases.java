@@ -60,10 +60,10 @@ public final class Aliases { //NOSONAR
     /**
      * Note to self: never use this, use {@link #getAlias_i(String)} instead.
      */
-    private final static HashMap<String, ItemType> aliases_english = new HashMap<String, ItemType>(10000);
-    private final static HashMap<String, ItemType> aliases_localised = new HashMap<String, ItemType>(1000);
-    private final static HashMap<Integer, MaterialName> materialNames_english = new HashMap<Integer, MaterialName>(Material.values().length);
-    private final static HashMap<Integer, MaterialName> materialNames_localised = new HashMap<Integer, MaterialName>(Material.values().length);
+    private final static HashMap<String, ItemType> aliases_english = new HashMap<>(10000);
+    private final static HashMap<String, ItemType> aliases_localised = new HashMap<>(1000);
+    private final static HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
+    private final static HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);
     // this is not an alias!
     private final static ItemType everything = new ItemType();
     private final static Message m_brackets_error = new Message("aliases.brackets error");
@@ -178,7 +178,7 @@ public final class Aliases { //NOSONAR
      * @return A map containing all parsed aliases
      */
     static LinkedHashMap<String, ItemType> getAliases(final String name, final ItemType value, final Variations variations) {
-        final LinkedHashMap<String, ItemType> r = new LinkedHashMap<String, ItemType>(); // LinkedHashMap to preserve order for item names
+        final LinkedHashMap<String, ItemType> r = new LinkedHashMap<>(); // LinkedHashMap to preserve order for item names
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
             if ("[({".indexOf(c) != -1) {
@@ -396,7 +396,7 @@ public final class Aliases { //NOSONAR
                 } else {
                     if (n == null)
                         materialNames.put(d.getId(), n = new MaterialName(d.getId(), "" + d.getId(), "" + d.getId(), g.getSecond()));
-                    @SuppressWarnings("null") final NonNullPair<Short, Short> data = new NonNullPair<Short, Short>(d.dataMin, d.dataMax);
+                    @SuppressWarnings("null") final NonNullPair<Short, Short> data = new NonNullPair<>(d.dataMin, d.dataMax);
                     n.names.put(data, p);
                 }
             }
@@ -545,7 +545,7 @@ public final class Aliases { //NOSONAR
             }
             if (t2.numTypes() == 0)
                 continue;
-            final Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
+            final Map<Enchantment, Integer> enchantments = new HashMap<>();
             final String[] enchs = lc.substring(c + of.length()).split("\\s*(,|" + Pattern.quote(Language.get("and")) + ")\\s*");
             for (final String ench : enchs) {
                 final EnchantmentType e = EnchantmentType.parse("" + ench);
@@ -743,7 +743,7 @@ public final class Aliases { //NOSONAR
                     return;
                 }
 
-                final ArrayList<String> aliasNodes = new ArrayList<String>();
+                final ArrayList<String> aliasNodes = new ArrayList<>();
 
                 aliasConfig.validate(new SectionValidator().addEntry("aliases", new Setter<String>() {
                     @Override
@@ -806,7 +806,7 @@ public final class Aliases { //NOSONAR
                                 Skript.error(m_unexpected_non_variation_section.toString());
                                 continue;
                             }
-                            final HashMap<String, ItemType> vs = new HashMap<String, ItemType>();
+                            final HashMap<String, ItemType> vs = new HashMap<>();
                             for (final Node a : (SectionNode) n) {
                                 if (a instanceof SectionNode) {
                                     Skript.error(m_unexpected_section.toString());

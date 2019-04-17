@@ -154,7 +154,7 @@ public class MinecartData extends EntityData<Minecart> {
         public static final String[] codeNames;
 
         static {
-            final ArrayList<String> cn = new ArrayList<String>();
+            final ArrayList<String> cn = new ArrayList<>();
             for (final MinecartType t : values()) {
                 if (t.c != null)
                     cn.add(t.codeName);

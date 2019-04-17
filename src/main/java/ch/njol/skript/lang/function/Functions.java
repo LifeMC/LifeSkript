@@ -46,12 +46,12 @@ import java.util.regex.Pattern;
 public final class Functions {
 
     public final static String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
-    final static Map<String, JavaFunction<?>> javaFunctions = new HashMap<String, JavaFunction<?>>();
-    final static Map<String, FunctionData> functions = new HashMap<String, FunctionData>();
+    final static Map<String, JavaFunction<?>> javaFunctions = new HashMap<>();
+    final static Map<String, FunctionData> functions = new HashMap<>();
     @SuppressWarnings("null")
     private final static Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
-    private final static Collection<FunctionReference<?>> toValidate = new ArrayList<FunctionReference<?>>();
+    private final static Collection<FunctionReference<?>> toValidate = new ArrayList<>();
     @Nullable
     public static ScriptFunction<?> currentFunction;
 
@@ -91,7 +91,7 @@ public final class Functions {
         if (!m.matches())
             return error("Invalid function definition. Please check for typos and that the function's name only contains letters and underscores. Refer to the documentation for more information.");
         final String args = m.group(2);
-        final List<Parameter<?>> params = new ArrayList<Parameter<?>>();
+        final List<Parameter<?>> params = new ArrayList<>();
         int j = 0;
         for (int i = 0; i <= args.length(); i = SkriptParser.next(args, i, ParseContext.DEFAULT)) {
             if (i == -1)
@@ -155,7 +155,7 @@ public final class Functions {
         if (Skript.debug() || node.debug())
             Skript.debug("function " + name + "(" + StringUtils.join(params, ", ") + ")" + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ":");
 
-        @SuppressWarnings("null") final Function<?> f = new ScriptFunction<Object>(name, params.toArray(new Parameter[0]), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
+        @SuppressWarnings("null") final Function<?> f = new ScriptFunction<>(name, params.toArray(new Parameter[0]), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
 //		functions.put(name, new FunctionData(f)); // in constructor
         return f;
     }
@@ -230,7 +230,7 @@ public final class Functions {
 
     final static class FunctionData {
         final Function<?> function;
-        final Collection<FunctionReference<?>> calls = new ArrayList<FunctionReference<?>>();
+        final Collection<FunctionReference<?>> calls = new ArrayList<>();
 
         public FunctionData(final Function<?> function) {
             this.function = function;

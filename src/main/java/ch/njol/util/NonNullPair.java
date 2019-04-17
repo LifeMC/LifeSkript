@@ -84,7 +84,7 @@ public final class NonNullPair<T1, T2> extends Pair<T1, T2> {
      */
     @Override
     public NonNullPair<T1, T2> clone() {
-        return new NonNullPair<T1, T2>(this);
+        return new NonNullPair<>(this);
     }
 
 }

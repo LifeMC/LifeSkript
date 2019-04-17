@@ -171,7 +171,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
             final Iterator<? extends Entity> iter = iterator(e);
             if (iter == null || !iter.hasNext())
                 return new Entity[0];
-            final List<Entity> l = new ArrayList<Entity>();
+            final List<Entity> l = new ArrayList<>();
             while (iter.hasNext())
                 l.add(iter.next());
             return l.toArray((Entity[]) Array.newInstance(returnType, l.size()));
@@ -227,7 +227,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
             final Collection<Entity> es = getNearbyEntities(l, d, d, d);
             final double radiusSquared = d * d * Skript.EPSILON_MULT;
             final EntityData<?>[] ts = types.getAll(e);
-            return new CheckedIterator<Entity>(es.iterator(), new NullableChecker<Entity>() {
+            return new CheckedIterator<>(es.iterator(), new NullableChecker<Entity>() {
                 @Override
                 public boolean check(final @Nullable Entity e) {
                     if (e == null || e.getLocation().distanceSquared(l) > radiusSquared)

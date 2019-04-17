@@ -69,7 +69,7 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
     @Override
     protected Block[] get(final Event e) {
         final Iterator<Block> iter = iterator(e);
-        final ArrayList<Block> r = new ArrayList<Block>();
+        final ArrayList<Block> r = new ArrayList<>();
         while (iter.hasNext())
             r.add(iter.next());
         return r.toArray(new Block[0]);
@@ -82,7 +82,7 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
         if (rs.length == 0)
             return EmptyIterator.get();
         return new Iterator<Block>() {
-            private final Iterator<Region> iter = new ArrayIterator<Region>(rs, 1);
+            private final Iterator<Region> iter = new ArrayIterator<>(rs, 1);
             private Iterator<Block> current = rs[0].getBlocks();
 
             @Override

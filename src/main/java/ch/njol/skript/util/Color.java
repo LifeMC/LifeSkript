@@ -51,8 +51,8 @@ public enum Color implements YggdrasilSerializable {
 
     DARK_PURPLE(DyeColor.PURPLE, ChatColor.DARK_PURPLE, org.bukkit.Color.fromRGB(0x7F3FB2)), LIGHT_PURPLE(DyeColor.MAGENTA, ChatColor.LIGHT_PURPLE, org.bukkit.Color.fromRGB(0xB24CD8));
 
-    final static Map<String, Color> byName = new HashMap<String, Color>();
-    final static Map<String, Color> byEnglishName = new HashMap<String, Color>();
+    final static Map<String, Color> byName = new HashMap<>();
+    final static Map<String, Color> byEnglishName = new HashMap<>();
     private final static String LANGUAGE_NODE = "colors";
     private final static Color[] byWool = new Color[16];
     public volatile static boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");

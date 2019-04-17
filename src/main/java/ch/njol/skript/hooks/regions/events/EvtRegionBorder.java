@@ -52,7 +52,7 @@ import java.util.Set;
  * @author Peter Güttinger
  */
 public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
-    private final static Collection<Trigger> triggers = new ArrayList<Trigger>();
+    private final static Collection<Trigger> triggers = new ArrayList<>();
     // even WorldGuard doesn't have events, and this way all region plugins are supported for sure.
     private final static EventExecutor ee = new EventExecutor() {
         @Nullable

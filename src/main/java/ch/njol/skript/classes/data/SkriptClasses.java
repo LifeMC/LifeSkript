@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
 public final class SkriptClasses {
 
     static {
-        Classes.registerClass(new ClassInfo<ClassInfo>(ClassInfo.class, "classinfo").user("types?").name("Type").description("Represents a type, e.g. number, object, item type, location, block, world, entity type, etc.", "This is mostly used for expressions like 'event-&lt;type&gt;', '&lt;type&gt;-argument', 'loop-&lt;type&gt;', etc., e.g. event-world, number-argument and loop-player.").usage("See the type name patterns of all types - including this one").examples("{variable} is a number # check whether the variable contains a number, e.g. -1 or 5.5", "{variable} is a type # check whether the variable contains a type, e.g. number or player", "{variable} is an object # will always succeed if the variable is set as everything is an object, even types.", "disable PvP in the event-world", "kill the loop-entity").since("2.0").after("entitydata", "entitytype", "itemtype").parser(new Parser<ClassInfo>() {
+        Classes.registerClass(new ClassInfo<>(ClassInfo.class, "classinfo").user("types?").name("Type").description("Represents a type, e.g. number, object, item type, location, block, world, entity type, etc.", "This is mostly used for expressions like 'event-&lt;type&gt;', '&lt;type&gt;-argument', 'loop-&lt;type&gt;', etc., e.g. event-world, number-argument and loop-player.").usage("See the type name patterns of all types - including this one").examples("{variable} is a number # check whether the variable contains a number, e.g. -1 or 5.5", "{variable} is a type # check whether the variable contains a type, e.g. number or player", "{variable} is an object # will always succeed if the variable is set as everything is an object, even types.", "disable PvP in the event-world", "kill the loop-entity").since("2.0").after("entitydata", "entitytype", "itemtype").parser(new Parser<ClassInfo>() {
             @Override
             @Nullable
             public ClassInfo parse(final String s, final ParseContext context) {
@@ -121,7 +121,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<WeatherType>(WeatherType.class, "weathertype").user("weather ?types?", "weather conditions?", "weathers?").name("Weather Type").description("The weather types sunny, rainy, and thundering.").usage("clear/sun/sunny, rain/rainy/raining, and thunder/thundering/thunderstorm").examples("is raining", "is sunny in the player's world", "message \"It is %weather in the argument's world% in %world of the argument%\"").since("1.0").defaultExpression(new SimpleLiteral<WeatherType>(WeatherType.CLEAR, true)).parser(new Parser<WeatherType>() {
+        Classes.registerClass(new ClassInfo<>(WeatherType.class, "weathertype").user("weather ?types?", "weather conditions?", "weathers?").name("Weather Type").description("The weather types sunny, rainy, and thundering.").usage("clear/sun/sunny, rain/rainy/raining, and thunder/thundering/thunderstorm").examples("is raining", "is sunny in the player's world", "message \"It is %weather in the argument's world% in %world of the argument%\"").since("1.0").defaultExpression(new SimpleLiteral<>(WeatherType.CLEAR, true)).parser(new Parser<WeatherType>() {
             @Override
             @Nullable
             public WeatherType parse(final String s, final ParseContext context) {
@@ -142,9 +142,9 @@ public final class SkriptClasses {
             public String getVariableNamePattern() {
                 return "[a-z]+";
             }
-        }).serializer(new EnumSerializer<WeatherType>(WeatherType.class)));
+        }).serializer(new EnumSerializer<>(WeatherType.class)));
 
-        Classes.registerClass(new ClassInfo<ItemType>(ItemType.class, "itemtype").user("item ?types?", "items", "materials").name("Item Type").description("An item type is an alias, e.g. 'a pickaxe', 'all plants', etc., and can result in different items when added to an inventory, " + "and unlike <a href='#itemstack'>items</a> they are well suited for checking whether an inventory contains a certain item or whether a certain item is of a certain type.", "An item type can also have one or more <a href='#enchantmenttype'>enchantments</a> with or without a specific level defined, " + "and can optionally start with 'all' or 'every' to make this item type represent <i>all</i> types that the alias represents, including data ranges.").usage("<code>[&lt;number&gt; [of]] [all/every] &lt;alias&gt; [of &lt;enchantment&gt; [&lt;level&gt;] [,/and &lt;more enchantments...&gt;]]</code>").examples("give 4 torches to the player", "add all slabs to the inventory of the block", "player's tool is a diamond sword of sharpness", "remove a pickaxes of fortune 4 from {stored items::*}", "set {_item} to 10 of every upside-down stair", "block is dirt or farmland").since("1.0").before("itemstack", "entitydata", "entitytype").after("number", "integer", "long", "time").parser(new Parser<ItemType>() {
+        Classes.registerClass(new ClassInfo<>(ItemType.class, "itemtype").user("item ?types?", "items", "materials").name("Item Type").description("An item type is an alias, e.g. 'a pickaxe', 'all plants', etc., and can result in different items when added to an inventory, " + "and unlike <a href='#itemstack'>items</a> they are well suited for checking whether an inventory contains a certain item or whether a certain item is of a certain type.", "An item type can also have one or more <a href='#enchantmenttype'>enchantments</a> with or without a specific level defined, " + "and can optionally start with 'all' or 'every' to make this item type represent <i>all</i> types that the alias represents, including data ranges.").usage("<code>[&lt;number&gt; [of]] [all/every] &lt;alias&gt; [of &lt;enchantment&gt; [&lt;level&gt;] [,/and &lt;more enchantments...&gt;]]</code>").examples("give 4 torches to the player", "add all slabs to the inventory of the block", "player's tool is a diamond sword of sharpness", "remove a pickaxes of fortune 4 from {stored items::*}", "set {_item} to 10 of every upside-down stair", "block is dirt or farmland").since("1.0").before("itemstack", "entitydata", "entitytype").after("number", "integer", "long", "time").parser(new Parser<ItemType>() {
             @Override
             @Nullable
             public ItemType parse(final String s, final ParseContext context) {
@@ -266,7 +266,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Time>(Time.class, "time").user("times?").name("Time").description("A time is a point in a minecraft day's time (i.e. ranges from 0:00 to 23:59), which can vary per world.", "See <a href='#date'>date</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("<code>##:##</code>", "<code>##[:##][ ]am/pm</code>").examples("at 20:00:", "	time is 8 pm", "	broadcast \"It's %time%\"").since("1.0").defaultExpression(new EventValueExpression<Time>(Time.class)).parser(new Parser<Time>() {
+        Classes.registerClass(new ClassInfo<>(Time.class, "time").user("times?").name("Time").description("A time is a point in a minecraft day's time (i.e. ranges from 0:00 to 23:59), which can vary per world.", "See <a href='#date'>date</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("<code>##:##</code>", "<code>##[:##][ ]am/pm</code>").examples("at 20:00:", "	time is 8 pm", "	broadcast \"It's %time%\"").since("1.0").defaultExpression(new EventValueExpression<>(Time.class)).parser(new Parser<Time>() {
             @Override
             @Nullable
             public Time parse(final String s, final ParseContext context) {
@@ -305,7 +305,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Timespan>(Timespan.class, "timespan").user("time ?spans?").name("Timespan").description("A timespan is a difference of two different dates or times, e.g '10 minutes'. Timespans are always displayed as real life time, but can be defined as minecraft time, e.g. '5 minecraft days and 12 hours'.", "See <a href='#date'>date</a> and <a href='#time'>time</a> for the other time types of Skript.").usage("<code>&lt;number&gt; [minecraft/mc/real/rl/irl] ticks/seconds/minutes/hours/days [[,/and] &lt;more...&gt;</code>]", "<code>[###:]##:##[.####]</code> ([hours:]minutes:seconds[.milliseconds])").examples("every 5 minecraft days:", "	wait a minecraft second and 5 ticks", "every 10 mc days and 12 hours:", "	halt for 12.7 irl minutes, 12 hours and 120.5 seconds").since("1.0").parser(new Parser<Timespan>() {
+        Classes.registerClass(new ClassInfo<>(Timespan.class, "timespan").user("time ?spans?").name("Timespan").description("A timespan is a difference of two different dates or times, e.g '10 minutes'. Timespans are always displayed as real life time, but can be defined as minecraft time, e.g. '5 minecraft days and 12 hours'.", "See <a href='#date'>date</a> and <a href='#time'>time</a> for the other time types of Skript.").usage("<code>&lt;number&gt; [minecraft/mc/real/rl/irl] ticks/seconds/minutes/hours/days [[,/and] &lt;more...&gt;</code>]", "<code>[###:]##:##[.####]</code> ([hours:]minutes:seconds[.milliseconds])").examples("every 5 minecraft days:", "	wait a minecraft second and 5 ticks", "every 10 mc days and 12 hours:", "	halt for 12.7 irl minutes, 12 hours and 120.5 seconds").since("1.0").parser(new Parser<Timespan>() {
             @Override
             @Nullable
             public Timespan parse(final String s, final ParseContext context) {
@@ -365,8 +365,8 @@ public final class SkriptClasses {
         }));
 
         // TODO remove
-        Classes.registerClass(new ClassInfo<Timeperiod>(Timeperiod.class, "timeperiod").user("time ?periods?", "durations?").name("Timeperiod").description("A period of time between two <a href='#time'>times</a>. Mostly useful since you can use this to test for whether it's day, night, dusk or dawn in a specific world.", "This type might be removed in the future as you can use 'time of world is between x and y' as a replacement.").usage("<code>##:## - ##:##</code>", "dusk/day/dawn/night").examples("time in world is night").since("1.0").before("timespan") // otherwise "day" gets parsed as '1 day'
-                .defaultExpression(new SimpleLiteral<Timeperiod>(new Timeperiod(0, 23999), true)).parser(new Parser<Timeperiod>() {
+        Classes.registerClass(new ClassInfo<>(Timeperiod.class, "timeperiod").user("time ?periods?", "durations?").name("Timeperiod").description("A period of time between two <a href='#time'>times</a>. Mostly useful since you can use this to test for whether it's day, night, dusk or dawn in a specific world.", "This type might be removed in the future as you can use 'time of world is between x and y' as a replacement.").usage("<code>##:## - ##:##</code>", "dusk/day/dawn/night").examples("time in world is night").since("1.0").before("timespan") // otherwise "day" gets parsed as '1 day'
+                .defaultExpression(new SimpleLiteral<>(new Timeperiod(0, 23999), true)).parser(new Parser<Timeperiod>() {
                     @Override
                     @Nullable
                     public Timeperiod parse(final String s, final ParseContext context) {
@@ -423,7 +423,7 @@ public final class SkriptClasses {
                     }
                 }));
 
-        Classes.registerClass(new ClassInfo<Date>(Date.class, "date").user("dates?").name("Date").description("A date is a certain point in the real world's time which can currently only be obtained with <a href='../expressions/#ExprNow'>now</a>.", "See <a href='#time'>time</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("").examples("set {_yesterday} to now", "subtract a day from {_yesterday}", "# now {_yesterday} represents the date 24 hours before now").since("1.4").serializer(new YggdrasilSerializer<Date>() {
+        Classes.registerClass(new ClassInfo<>(Date.class, "date").user("dates?").name("Date").description("A date is a certain point in the real world's time which can currently only be obtained with <a href='../expressions/#ExprNow'>now</a>.", "See <a href='#time'>time</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("").examples("set {_yesterday} to now", "subtract a day from {_yesterday}", "# now {_yesterday} represents the date 24 hours before now").since("1.4").serializer(new YggdrasilSerializer<Date>() {
             //						return "" + d.getTimestamp();
             @Override
             @Nullable
@@ -451,7 +451,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Direction>(Direction.class, "direction").user("directions?").name("Direction").description("A direction, e.g. north, east, behind, 5 south east, 1.3 meters to the right, etc.", "<a href='#location'>Locations</a> and some <a href='#block'>blocks</a> also have a direction, but without a length.", "Please note that directions have changed extensively in the betas and might not work perfectly. They can also not be used as command arguments.").usage("see <a href='../expressions/#ExprDirection'>direction (expression)</a>").examples("set the block below the victim to a chest", "loop blocks from the block infront of the player to the block 10 below the player:", "	set the block behind the loop-block to water").since("2.0").defaultExpression(new SimpleLiteral<Direction>(new Direction(new double[]{0, 0, 0}), true)).parser(new Parser<Direction>() {
+        Classes.registerClass(new ClassInfo<>(Direction.class, "direction").user("directions?").name("Direction").description("A direction, e.g. north, east, behind, 5 south east, 1.3 meters to the right, etc.", "<a href='#location'>Locations</a> and some <a href='#block'>blocks</a> also have a direction, but without a length.", "Please note that directions have changed extensively in the betas and might not work perfectly. They can also not be used as command arguments.").usage("see <a href='../expressions/#ExprDirection'>direction (expression)</a>").examples("set the block below the victim to a chest", "loop blocks from the block infront of the player to the block 10 below the player:", "	set the block behind the loop-block to water").since("2.0").defaultExpression(new SimpleLiteral<>(new Direction(new double[]{0, 0, 0}), true)).parser(new Parser<Direction>() {
             @Override
             @Nullable
             public Direction parse(final String s, final ParseContext context) {
@@ -487,7 +487,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Slot>(Slot.class, "slot").user("(inventory )?slots?").name("Inventory Slot").description("Represents a single slot of an <a href='#inventory'>inventory</a>. " + "Notable slots are the <a href='../expressions/#ExprArmorSlot'>armour slots</a> and <a href='../expressions/#ExprFurnaceSlot'>furnace slots</a>. ", "The most important property that distinguishes a slot from an <a href='#itemstack'>item</a> is its ability to be changed, e.g. it can be set, deleted, enchanted, etc. " + "(Some item expressions can be changed as well, e.g. items stored in variables. " + "For that matter: slots are never saved to variables, only the items they represent at the time when the variable is set).", "Please note that <a href='../expressions/#ExprTool'>tool</a> can be regarded a slot, but it can actually change it's position, i.e. doesn't represent always the same slot.").usage("").examples("set tool of player to dirt", "delete helmet of the victim", "set the colour of the player's tool to green", "enchant the player's chestplate with projectile protection 5").since("").defaultExpression(new EventValueExpression<Slot>(Slot.class)).changer(new Changer<Slot>() {
+        Classes.registerClass(new ClassInfo<>(Slot.class, "slot").user("(inventory )?slots?").name("Inventory Slot").description("Represents a single slot of an <a href='#inventory'>inventory</a>. " + "Notable slots are the <a href='../expressions/#ExprArmorSlot'>armour slots</a> and <a href='../expressions/#ExprFurnaceSlot'>furnace slots</a>. ", "The most important property that distinguishes a slot from an <a href='#itemstack'>item</a> is its ability to be changed, e.g. it can be set, deleted, enchanted, etc. " + "(Some item expressions can be changed as well, e.g. items stored in variables. " + "For that matter: slots are never saved to variables, only the items they represent at the time when the variable is set).", "Please note that <a href='../expressions/#ExprTool'>tool</a> can be regarded a slot, but it can actually change it's position, i.e. doesn't represent always the same slot.").usage("").examples("set tool of player to dirt", "delete helmet of the victim", "set the colour of the player's tool to green", "enchant the player's chestplate with projectile protection 5").since("").defaultExpression(new EventValueExpression<>(Slot.class)).changer(new Changer<Slot>() {
             @SuppressWarnings("unchecked")
             @Override
             @Nullable
@@ -554,7 +554,7 @@ public final class SkriptClasses {
             }
         }).serializeAs(ItemStack.class));
 
-        Classes.registerClass(new ClassInfo<Color>(Color.class, "color").user("colou?rs?").name("Colour").description("Wool, dye and chat colours.").usage("black, dark grey/dark gray, grey/light grey/gray/light gray/silver, white, blue/dark blue, cyan/aqua/dark cyan/dark aqua, light blue/light cyan/light aqua, green/dark green, light green/lime/lime green, yellow/light yellow, orange/gold/dark yellow, red/dark red, pink/light red, purple/dark purple, magenta/light purple, brown/indigo").examples("color of the sheep is red or black", "set the colour of the block to green", "message \"You're holding a <%color of tool%>%color of tool%<reset> wool block\"").since("").parser(new Parser<Color>() {
+        Classes.registerClass(new ClassInfo<>(Color.class, "color").user("colou?rs?").name("Colour").description("Wool, dye and chat colours.").usage("black, dark grey/dark gray, grey/light grey/gray/light gray/silver, white, blue/dark blue, cyan/aqua/dark cyan/dark aqua, light blue/light cyan/light aqua, green/dark green, light green/lime/lime green, yellow/light yellow, orange/gold/dark yellow, red/dark red, pink/light red, purple/dark purple, magenta/light purple, brown/indigo").examples("color of the sheep is red or black", "set the colour of the block to green", "message \"You're holding a <%color of tool%>%color of tool%<reset> wool block\"").since("").parser(new Parser<Color>() {
             @Override
             @Nullable
             public Color parse(final String s, final ParseContext context) {
@@ -575,9 +575,9 @@ public final class SkriptClasses {
             public String getVariableNamePattern() {
                 return "[a-z ]+";
             }
-        }).serializer(new EnumSerializer<Color>(Color.class)));
+        }).serializer(new EnumSerializer<>(Color.class)));
 
-        Classes.registerClass(new ClassInfo<StructureType>(StructureType.class, "structuretype").user("tree ?types?", "trees?").name("Tree Type").description("A tree type represents a tree species or a huge mushroom species. These can be generated in a world with the <a href='../effects/#EffTree'>generate tree</a> effect.").usage("<code>[any] &lt;general tree/mushroom type&gt;</code>, e.g. tree/any jungle tree/etc.", "<code>&lt;specific tree/mushroom species&gt;</code>, e.g. red mushroom/small jungle tree/big regular tree/etc.").examples("grow any regular tree at the block", "grow a huge red mushroom above the block").since("").defaultExpression(new SimpleLiteral<StructureType>(StructureType.TREE, true)).parser(new Parser<StructureType>() {
+        Classes.registerClass(new ClassInfo<>(StructureType.class, "structuretype").user("tree ?types?", "trees?").name("Tree Type").description("A tree type represents a tree species or a huge mushroom species. These can be generated in a world with the <a href='../effects/#EffTree'>generate tree</a> effect.").usage("<code>[any] &lt;general tree/mushroom type&gt;</code>, e.g. tree/any jungle tree/etc.", "<code>&lt;specific tree/mushroom species&gt;</code>, e.g. red mushroom/small jungle tree/big regular tree/etc.").examples("grow any regular tree at the block", "grow a huge red mushroom above the block").since("").defaultExpression(new SimpleLiteral<>(StructureType.TREE, true)).parser(new Parser<StructureType>() {
             @Override
             @Nullable
             public StructureType parse(final String s, final ParseContext context) {
@@ -598,9 +598,9 @@ public final class SkriptClasses {
             public String getVariableNamePattern() {
                 return "[a-z ]+";
             }
-        }).serializer(new EnumSerializer<StructureType>(StructureType.class)));
+        }).serializer(new EnumSerializer<>(StructureType.class)));
 
-        Classes.registerClass(new ClassInfo<EnchantmentType>(EnchantmentType.class, "enchantmenttype").user("enchant(ing|ment) types?").name("Enchantment Type").description("An enchantment with an optional level, e.g. 'sharpness 2' or 'fortune'.").usage("<code>&lt;enchantment&gt; [&lt;level&gt;]</code>").examples("enchant the player's tool with sharpness 5", "helmet is enchanted with waterbreathing").since("1.4.6").parser(new Parser<EnchantmentType>() {
+        Classes.registerClass(new ClassInfo<>(EnchantmentType.class, "enchantmenttype").user("enchant(ing|ment) types?").name("Enchantment Type").description("An enchantment with an optional level, e.g. 'sharpness 2' or 'fortune'.").usage("<code>&lt;enchantment&gt; [&lt;level&gt;]</code>").examples("enchant the player's tool with sharpness 5", "helmet is enchanted with waterbreathing").since("1.4.6").parser(new Parser<EnchantmentType>() {
             @Override
             @Nullable
             public EnchantmentType parse(final String s, final ParseContext context) {
@@ -641,7 +641,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<Experience>(Experience.class, "experience").name("Experience").description("Experience points. Please note that Bukkit only allows to give XP, but not remove XP from players. " + "You can however change a player's <a href='../expressions/#ExprLevel'>level</a> and <a href='../expressions/#ExprLevelProgress'>level progress</a> freely.").usage("<code>[&lt;number&gt;] ([e]xp|experience [point[s]])</code>").examples("give 10 xp to the player").since("2.0").parser(new Parser<Experience>() {
+        Classes.registerClass(new ClassInfo<>(Experience.class, "experience").name("Experience").description("Experience points. Please note that Bukkit only allows to give XP, but not remove XP from players. " + "You can however change a player's <a href='../expressions/#ExprLevel'>level</a> and <a href='../expressions/#ExprLevelProgress'>level progress</a> freely.").usage("<code>[&lt;number&gt;] ([e]xp|experience [point[s]])</code>").examples("give 10 xp to the player").since("2.0").parser(new Parser<Experience>() {
             private final RegexMessage pattern = new RegexMessage("types.experience.pattern", Pattern.CASE_INSENSITIVE);
 
             @Override
@@ -684,7 +684,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<VisualEffect>(VisualEffect.class, "visualeffect").name("Visual Effect").description("A visible effect, e.g. particles.").examples("show wolf hearts on the clicked wolf", "play mob spawner flames at the targeted block to the player").usage(VisualEffect.getAllNames()).since("2.1").user("(visual|particle) effects?").parser(new Parser<VisualEffect>() {
+        Classes.registerClass(new ClassInfo<>(VisualEffect.class, "visualeffect").name("Visual Effect").description("A visible effect, e.g. particles.").examples("show wolf hearts on the clicked wolf", "play mob spawner flames at the targeted block to the player").usage(VisualEffect.getAllNames()).since("2.1").user("(visual|particle) effects?").parser(new Parser<VisualEffect>() {
             @Override
             @Nullable
             public VisualEffect parse(final String s, final ParseContext context) {
@@ -705,7 +705,7 @@ public final class SkriptClasses {
             public String getVariableNamePattern() {
                 return ".*";
             }
-        }).serializer(new YggdrasilSerializer<VisualEffect>()));
+        }).serializer(new YggdrasilSerializer<>()));
     }
 
     public SkriptClasses() {

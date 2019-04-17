@@ -32,7 +32,7 @@ public final class ScriptOptions {
 
     @SuppressWarnings("null")
     private static ScriptOptions instance;
-    private final HashMap<File, Boolean> usesNewLoops = new HashMap<File, Boolean>();
+    private final HashMap<File, Boolean> usesNewLoops = new HashMap<>();
 
     private ScriptOptions() {
         ScriptOptions.instance = this;

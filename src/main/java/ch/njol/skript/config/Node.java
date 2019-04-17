@@ -98,8 +98,8 @@ protected Config config;
     public static NonNullPair<String, String> splitLine(final String line) {
         final Matcher m = linePattern.matcher(line);
         if (m.matches())
-            return new NonNullPair<String, String>("" + m.group(1).replace("##", "#"), "" + m.group(2));
-        return new NonNullPair<String, String>("" + line.replace("##", "#"), "");
+            return new NonNullPair<>("" + m.group(1).replace("##", "#"), "" + m.group(2));
+        return new NonNullPair<>("" + line.replace("##", "#"), "");
     }
 
     /**

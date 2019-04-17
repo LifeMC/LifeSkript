@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 public final class LoggerFilter implements Filter, Closeable {
     private final Logger l;
-    private final Collection<Filter> filters = new ArrayList<Filter>(5);
+    private final Collection<Filter> filters = new ArrayList<>(5);
     @Nullable
     private final Filter oldFilter;
 

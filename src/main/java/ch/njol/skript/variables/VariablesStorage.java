@@ -55,7 +55,7 @@ public abstract class VariablesStorage implements Closeable {
      * Must be locked after {@link Variables#getReadLock()} (if that lock is used at all)
      */
     protected final Object connectionLock = new Object();
-    final LinkedBlockingQueue<SerializedVariable> changesQueue = new LinkedBlockingQueue<SerializedVariable>(QUEUE_SIZE);
+    final LinkedBlockingQueue<SerializedVariable> changesQueue = new LinkedBlockingQueue<>(QUEUE_SIZE);
     // created in the constructor, started in load()
     private final Thread writeThread;
     protected volatile boolean closed;

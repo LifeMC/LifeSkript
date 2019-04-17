@@ -50,7 +50,7 @@ public enum StructureType {
     /**
      * lazy
      */
-    final static Map<Pattern, StructureType> parseMap = new HashMap<Pattern, StructureType>();
+    final static Map<Pattern, StructureType> parseMap = new HashMap<>();
 
     static {
         Language.addListener(new LanguageChangeListener() {

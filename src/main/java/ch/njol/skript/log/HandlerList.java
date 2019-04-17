@@ -31,7 +31,7 @@ import java.util.LinkedList;
  */
 public final class HandlerList implements Iterable<LogHandler> {
 
-    private final LinkedList<LogHandler> list = new LinkedList<LogHandler>();
+    private final LinkedList<LogHandler> list = new LinkedList<>();
 
     public void add(final LogHandler h) {
         list.addFirst(h);

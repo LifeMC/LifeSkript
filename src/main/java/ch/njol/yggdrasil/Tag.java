@@ -76,10 +76,10 @@ public enum Tag {
      * primitive tags are between these value
      */
     public final static int MIN_WRAPPER = T_BYTE_OBJ.tag, MAX_WRAPPER = T_BOOLEAN_OBJ.tag;
-    private final static Map<Class<?>, Tag> types = new HashMap<Class<?>, Tag>();
+    private final static Map<Class<?>, Tag> types = new HashMap<>();
     private final static Tag[] byID = new Tag[256];
-    private final static Map<String, Tag> byName = new HashMap<String, Tag>();
-    private final static HashMap<Class<?>, Tag> wrapperTypes = new HashMap<Class<?>, Tag>();
+    private final static Map<String, Tag> byName = new HashMap<>();
+    private final static HashMap<Class<?>, Tag> wrapperTypes = new HashMap<>();
 
     static {
         for (final Tag t : Tag.values()) {

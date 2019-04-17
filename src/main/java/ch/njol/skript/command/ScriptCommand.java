@@ -81,9 +81,9 @@ public class ScriptCommand implements CommandExecutor {
     private final String pattern;
     private final List<Argument<?>> arguments;
     private final transient PluginCommand bukkitCommand;
-    private final Map<UUID, Date> lastUsageMap = new HashMap<UUID, Date>();
-    private final transient Map<String, Command> overriddenAliases = new HashMap<String, Command>();
-    private final transient Collection<HelpTopic> helps = new ArrayList<HelpTopic>();
+    private final Map<UUID, Date> lastUsageMap = new HashMap<>();
+    private final transient Map<String, Command> overriddenAliases = new HashMap<>();
+    private final transient Collection<HelpTopic> helps = new ArrayList<>();
     private List<String> activeAliases;
     @Nullable
     private transient Command overridden;
@@ -106,10 +106,10 @@ public class ScriptCommand implements CommandExecutor {
         this.name = name;
         label = "" + name.toLowerCase();
         this.permission = permission;
-        this.permissionMessage = permissionMessage == null ? new SimpleLiteral<String>(Language.get("commands.no permission message"), false) : permissionMessage;
+        this.permissionMessage = permissionMessage == null ? new SimpleLiteral<>(Language.get("commands.no permission message"), false) : permissionMessage;
 
         this.cooldown = cooldown;
-        this.cooldownMessage = cooldownMessage == null ? new SimpleLiteral<String>(Language.get("commands.cooldown message"), false) : cooldownMessage;
+        this.cooldownMessage = cooldownMessage == null ? new SimpleLiteral<>(Language.get("commands.cooldown message"), false) : cooldownMessage;
         this.cooldownBypass = cooldownBypass;
         this.cooldownStorage = cooldownStorage;
 
@@ -119,7 +119,7 @@ public class ScriptCommand implements CommandExecutor {
                 as.remove();
         }
         this.aliases = aliases;
-        activeAliases = new ArrayList<String>(aliases);
+        activeAliases = new ArrayList<>(aliases);
 
         this.description = Utils.replaceEnglishChatStyles(description);
         this.usage = Utils.replaceEnglishChatStyles(usage);
@@ -306,7 +306,7 @@ public class ScriptCommand implements CommandExecutor {
                 aliases.removeAll(activeAliases);
             for (final String alias : activeAliases)
                 knownCommands.remove(alias);
-            activeAliases = new ArrayList<String>(this.aliases);
+            activeAliases = new ArrayList<>(this.aliases);
             bukkitCommand.unregister(commandMap);
             bukkitCommand.setAliases(this.aliases);
             if (overridden != null) {
@@ -336,7 +336,7 @@ public class ScriptCommand implements CommandExecutor {
             try {
                 final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
                 topics.setAccessible(true);
-                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<HelpTopic>((Collection<HelpTopic>) topics.get(aliases));
+                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 for (final String alias : activeAliases) {
                     final HelpTopic at = new CommandAliasHelpTopic("/" + alias, "/" + getLabel(), help);
                     as.add(at);
@@ -357,7 +357,7 @@ public class ScriptCommand implements CommandExecutor {
             try {
                 final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
                 topics.setAccessible(true);
-                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<HelpTopic>((Collection<HelpTopic>) topics.get(aliases));
+                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 as.removeAll(helps);
                 topics.set(aliases, as);
             } catch (final Exception e) {

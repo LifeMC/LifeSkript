@@ -34,7 +34,7 @@ import java.util.logging.Level;
  */
 public class RetainingLogHandler extends LogHandler {
 
-    private final Deque<LogEntry> log = new LinkedList<LogEntry>();
+    private final Deque<LogEntry> log = new LinkedList<>();
     boolean printedErrorOrLog;
     private int numErrors;
 
@@ -182,7 +182,7 @@ public class RetainingLogHandler extends LogHandler {
     }
 
     public Collection<LogEntry> getErrors() {
-        final Collection<LogEntry> r = new ArrayList<LogEntry>();
+        final Collection<LogEntry> r = new ArrayList<>();
         for (final LogEntry e : log) {
             if (e.getLevel().intValue() >= Level.SEVERE.intValue())
                 r.add(e);

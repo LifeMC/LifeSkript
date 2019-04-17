@@ -84,7 +84,7 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
                 return new Integer[0];
             return new Integer[]{t.getTypes().get(0).getId()};
         }
-        final ArrayList<Integer> r = new ArrayList<Integer>();
+        final ArrayList<Integer> r = new ArrayList<>();
         for (final ItemType t : source) {
             for (final ItemData d : t) {
                 r.add(d.getId());
@@ -167,7 +167,7 @@ public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
                 return null;
             if (t.numTypes() == 0)
                 return null;
-            return new SingleItemIterator<Integer>(t.getTypes().get(0).getId());
+            return new SingleItemIterator<>(t.getTypes().get(0).getId());
         }
         final Iterator<? extends ItemType> iter = getExpr().iterator(e);
         if (iter == null || !iter.hasNext())

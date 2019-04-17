@@ -160,7 +160,7 @@ public final class FunctionReference<T> {
 
         final Object[][] params = new Object[singleUberParam ? 1 : parameters.length][];
         if (singleUberParam && parameters.length > 1) {
-            final ArrayList<Object> l = new ArrayList<Object>();
+            final ArrayList<Object> l = new ArrayList<>();
             for (final Expression<?> parameter : parameters)
                 l.addAll(Arrays.asList(parameter.getArray(e))); // TODO what if an argument is not available? pass null or abort?
             params[0] = l.toArray();

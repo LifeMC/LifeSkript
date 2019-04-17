@@ -44,7 +44,7 @@ public class CommandHelp {
     private final static ArgsMessage m_invalid_argument = new ArgsMessage("commands.invalid argument");
     private final static Message m_usage = new Message("commands.usage");
     private final String argsColor;
-    private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<String, Object>();
+    private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<>();
     private String command;
     @Nullable
     private Message description;

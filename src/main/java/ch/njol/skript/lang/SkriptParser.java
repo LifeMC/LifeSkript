@@ -83,7 +83,7 @@ public final class SkriptParser {
     private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*)\\)");
     private final static Message m_quotes_error = new Message("skript.quotes error");
     private final static Message m_brackets_error = new Message("skript.brackets error");
-    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<String, ExprInfo>();
+    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
     public final ParseContext context;
     private final String expr;
     private final int flags;
@@ -550,9 +550,9 @@ public final class SkriptParser {
      */
     @Nullable
     public static NonNullPair<String, boolean[]> validatePattern(final String pattern) {
-        final List<Boolean> ps = new ArrayList<Boolean>();
+        final List<Boolean> ps = new ArrayList<>();
         int groupLevel = 0, optionalLevel = 0;
-        final Deque<Character> groups = new LinkedList<Character>();
+        final Deque<Character> groups = new LinkedList<>();
         final StringBuilder b = new StringBuilder(pattern.length());
         int last = 0;
         for (int i = 0; i < pattern.length(); i++) {
@@ -615,7 +615,7 @@ public final class SkriptParser {
         final boolean[] plurals = new boolean[ps.size()];
         for (int i = 0; i < plurals.length; i++)
             plurals[i] = ps.get(i);
-        return new NonNullPair<String, boolean[]>("" + b.toString(), plurals);
+        return new NonNullPair<>("" + b.toString(), plurals);
     }
 
     @Nullable
@@ -825,7 +825,7 @@ public final class SkriptParser {
                 final T t = Classes.parse(expr, c, context);
                 if (t != null) {
                     log.printLog();
-                    return new SimpleLiteral<T>(t, false);
+                    return new SimpleLiteral<>(t, false);
                 }
             }
             log.printError();
@@ -874,7 +874,7 @@ public final class SkriptParser {
             }
             log.clear();
 
-            final List<int[]> pieces = new ArrayList<int[]>();
+            final List<int[]> pieces = new ArrayList<>();
             {
                 final Matcher m = listSplitPattern.matcher(expr);
                 int i = 0, j = 0;
@@ -913,7 +913,7 @@ public final class SkriptParser {
             Kleenean and = Kleenean.UNKNOWN;
             boolean isLiteralList = true;
 
-            final List<Expression<? extends T>> ts = new ArrayList<Expression<? extends T>>();
+            final List<Expression<? extends T>> ts = new ArrayList<>();
 
             outer:
             for (int b = 0; b < pieces.size(); ) {
@@ -1017,11 +1017,11 @@ public final class SkriptParser {
             if (isLiteralList) {
                 final Literal<T>[] ls = ts.toArray(new Literal[0]);
                 assert ls != null;
-                return new LiteralList<T>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
+                return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             } else {
                 final Expression<T>[] es = ts.toArray(new Expression[0]);
                 assert es != null;
-                return new ExpressionList<T>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
+                return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
         } finally {
             log.stop();
@@ -1093,7 +1093,7 @@ public final class SkriptParser {
 //					}
 //				}
 //			}
-            @SuppressWarnings("null") final FunctionReference<T> e = new FunctionReference<T>(functionName, SkriptLogger.getNode(), ScriptLoader.currentScript != null ? ScriptLoader.currentScript.getFile() : null, types, params);//.toArray(new Expression[params.size()]));
+            @SuppressWarnings("null") final FunctionReference<T> e = new FunctionReference<>(functionName, SkriptLogger.getNode(), ScriptLoader.currentScript != null ? ScriptLoader.currentScript.getFile() : null, types, params);//.toArray(new Expression[params.size()]));
             if (!e.validateFunction(true)) {
                 log.printError();
                 return null;
@@ -1127,7 +1127,7 @@ public final class SkriptParser {
                                 return null;
                             }
                             log.printLog();
-                            return new NonNullPair<SkriptEventInfo<?>, SkriptEvent>(info, e);
+                            return new NonNullPair<>(info, e);
                         }
                     } catch (final InstantiationException e) {
                         assert false;
@@ -1367,7 +1367,7 @@ public final class SkriptParser {
     public static final class ParseResult {
 
         public final Expression<?>[] exprs;
-        public final List<MatchResult> regexes = new ArrayList<MatchResult>(1);
+        public final List<MatchResult> regexes = new ArrayList<>(1);
 
         public final String expr;
 

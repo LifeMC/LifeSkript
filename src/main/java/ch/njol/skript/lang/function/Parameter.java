@@ -98,7 +98,7 @@ public final class Parameter<T> {
                     if (def.startsWith("\"") && def.endsWith("\""))
                         d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
                     else
-                        d = (Expression<? extends T>) new SimpleLiteral<String>(def, false);
+                        d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                 } else {
                     d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
                 }
@@ -114,7 +114,7 @@ public final class Parameter<T> {
             }
 //			}
         }
-        return new Parameter<T>(name, type, single, d, isNone);
+        return new Parameter<>(name, type, single, d, isNone);
     }
 
     public ClassInfo<T> getType() {

@@ -44,7 +44,7 @@ import java.util.Iterator;
  */
 public final class SectionNode extends Node implements Iterable<Node> {
 
-    private final ArrayList<Node> nodes = new ArrayList<Node>();
+    private final ArrayList<Node> nodes = new ArrayList<>();
     /**
      * Note to self: use getNodeMap()
      */
@@ -425,7 +425,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
     }
 
     HashMap<String, String> toMap(final String prefix, final String separator) {
-        final HashMap<String, String> r = new HashMap<String, String>();
+        final HashMap<String, String> r = new HashMap<>();
         for (final Node n : this) {
             if (n instanceof EntryNode) {
                 r.put(prefix + n.getKey(), ((EntryNode) n).getValue());

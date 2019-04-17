@@ -40,11 +40,11 @@ public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, 
     }
 
     public BidiHashMap() {
-        other = new BidiHashMap<T2, T1>(this);
+        other = new BidiHashMap<>(this);
     }
 
     public BidiHashMap(final Map<? extends T1, ? extends T2> values) {
-        other = new BidiHashMap<T2, T1>(this);
+        other = new BidiHashMap<>(this);
         putAll(values);
     }
 

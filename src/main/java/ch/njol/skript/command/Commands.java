@@ -86,7 +86,7 @@ public final class Commands { //NOSONAR
     public final static Message m_correct_usage = new Message("commands.correct usage");
     public final static Message m_internal_error = new Message("commands.internal error");
 
-    private final static Map<String, ScriptCommand> commands = new HashMap<String, ScriptCommand>();
+    private final static Map<String, ScriptCommand> commands = new HashMap<>();
     private final static SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
     private final static Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
@@ -345,7 +345,7 @@ public final class Commands { //NOSONAR
         final String arguments = m.group(3) == null ? "" : m.group(3);
         final StringBuilder pattern = new StringBuilder();
 
-        List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<Argument<?>>(); //Mirre
+        List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
         m = argumentPattern.matcher(arguments);
         int lastEnd = 0;
         int optionals = 0;
@@ -412,16 +412,16 @@ public final class Commands { //NOSONAR
         if (!(node.get("trigger") instanceof SectionNode))
             return null;
 
-        ArrayList<String> aliases = new ArrayList<String>(Arrays.asList(ScriptLoader.replaceOptions(node.get("aliases", "")).split("\\s*,\\s*/?")));
+        ArrayList<String> aliases = new ArrayList<>(Arrays.asList(ScriptLoader.replaceOptions(node.get("aliases", "")).split("\\s*,\\s*/?")));
         if (aliases.get(0).startsWith("/"))
             aliases.set(0, aliases.get(0).substring(1));
         else if (aliases.get(0).isEmpty())
-            aliases = new ArrayList<String>(0);
+            aliases = new ArrayList<>(0);
 
         final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
         Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
         if (permissionMessage != null && ((VariableString) permissionMessage).isSimple()) {
-            permissionMessage = new SimpleLiteral<String>(rawPermissionMessage, false);
+            permissionMessage = new SimpleLiteral<>(rawPermissionMessage, false);
         }
 
         final SectionNode trigger = (SectionNode) node.get("trigger");
