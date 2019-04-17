@@ -6,4 +6,4 @@ jdk:
   - openjdk11
   - openjdk-ea
 
-script: "mvn -e -DcompilerArgument=-O clean install package"
+script: "mvn --batch-mode -e -DcompilerArgument=-O clean install package"
