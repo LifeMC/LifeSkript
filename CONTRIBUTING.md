@@ -1,9 +1,9 @@
 # What is Contributing?
 Contributing, means helping this project to grow, makes you a Contributor in this repository. This the page for reading before contributing.
 
-# Difference between Contributor and Collabrator
+# Difference between Contributor and Collaborator
 Contributor is a person outside of the core development team and contributed to this repository via making pull requests.
-Collabrator is a person inside of the core development team and have write access to this repository.
+Collaborator is a person inside of the core development team and have write access to this repository.
 
 # Contributing to this repository
 Step by step:
