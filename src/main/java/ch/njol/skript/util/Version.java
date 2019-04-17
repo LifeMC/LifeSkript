@@ -21,12 +21,12 @@
 
 package ch.njol.skript.util;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

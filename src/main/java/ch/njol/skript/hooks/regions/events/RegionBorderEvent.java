@@ -22,7 +22,6 @@
 package ch.njol.skript.hooks.regions.events;
 
 import ch.njol.skript.hooks.regions.classes.Region;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;

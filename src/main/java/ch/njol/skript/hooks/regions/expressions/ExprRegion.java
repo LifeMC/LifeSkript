@@ -29,9 +29,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.ExpressionType;
-
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

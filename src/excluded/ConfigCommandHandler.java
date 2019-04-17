@@ -21,12 +21,11 @@
 
 package ch.njol.skript;
 
-import java.util.HashMap;
-
+import ch.njol.skript.util.Utils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import ch.njol.skript.util.Utils;
+import java.util.HashMap;
 
 public class CommandHandler {
 	

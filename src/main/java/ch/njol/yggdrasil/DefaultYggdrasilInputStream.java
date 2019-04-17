@@ -21,8 +21,7 @@
 
 package ch.njol.yggdrasil;
 
-import static ch.njol.yggdrasil.Tag.T_ARRAY;
-import static ch.njol.yggdrasil.Tag.T_REFERENCE;
+import org.eclipse.jdt.annotation.NonNull;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -33,7 +32,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
+import static ch.njol.yggdrasil.Tag.T_ARRAY;
+import static ch.njol.yggdrasil.Tag.T_REFERENCE;
 
 //Naming conventions:
 // x(): read info & data (e.g. content type, contents) [i.e. no tag]

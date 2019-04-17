@@ -34,15 +34,13 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.InventorySlot;
 import ch.njol.skript.util.Slot;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

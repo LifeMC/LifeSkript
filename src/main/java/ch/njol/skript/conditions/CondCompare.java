@@ -41,9 +41,7 @@ import ch.njol.skript.util.Patterns;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

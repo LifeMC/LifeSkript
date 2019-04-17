@@ -22,12 +22,11 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Basic class to get text from the language file(s).

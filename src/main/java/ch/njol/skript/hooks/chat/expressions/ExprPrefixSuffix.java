@@ -31,10 +31,8 @@ import ch.njol.skript.hooks.VaultHook;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

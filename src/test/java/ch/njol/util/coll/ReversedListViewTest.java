@@ -21,10 +21,10 @@
 
 package ch.njol.util.coll;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

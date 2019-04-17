@@ -2,10 +2,9 @@ package ch.njol.yggdrasil;
 
 import ch.njol.util.coll.BidiHashMap;
 import ch.njol.util.coll.BidiMap;
+import org.eclipse.jdt.annotation.Nullable;
 
 import javax.annotation.concurrent.NotThreadSafe;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 @NotThreadSafe
 public class SimpleClassResolver implements ClassResolver {

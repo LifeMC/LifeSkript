@@ -21,20 +21,12 @@
 
 package ch.njol.skript.util;
 
+import org.junit.Test;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import org.junit.Test;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 

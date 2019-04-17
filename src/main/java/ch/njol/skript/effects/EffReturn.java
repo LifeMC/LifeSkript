@@ -37,9 +37,7 @@ import ch.njol.skript.lang.function.ScriptFunction;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

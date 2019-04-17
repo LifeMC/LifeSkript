@@ -32,10 +32,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

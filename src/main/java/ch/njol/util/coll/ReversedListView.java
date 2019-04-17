@@ -20,14 +20,13 @@
 package ch.njol.util.coll;
 
 import ch.njol.util.coll.iterator.ReversedListIterator;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

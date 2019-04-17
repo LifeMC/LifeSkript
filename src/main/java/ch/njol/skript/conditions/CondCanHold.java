@@ -34,11 +34,9 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

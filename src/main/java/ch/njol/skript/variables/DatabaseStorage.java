@@ -30,9 +30,10 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Task;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.SynchronizedReference;
-
+import lib.PatPeter.SQLibrary.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.sql.PreparedStatement;
@@ -41,14 +42,6 @@ import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.Callable;
-
-import org.eclipse.jdt.annotation.Nullable;
-
-import lib.PatPeter.SQLibrary.Database;
-import lib.PatPeter.SQLibrary.DatabaseException;
-import lib.PatPeter.SQLibrary.MySQL;
-import lib.PatPeter.SQLibrary.SQLibrary;
-import lib.PatPeter.SQLibrary.SQLite;
 
 /**
  * TODO create a metadata table to store some properties (e.g. Skript version, Yggdrasil version) -- but what if some variables cannot be converted? move them to a different table?

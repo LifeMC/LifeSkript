@@ -26,10 +26,8 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
-
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

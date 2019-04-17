@@ -23,17 +23,15 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.LanguageChangeListener;
-
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

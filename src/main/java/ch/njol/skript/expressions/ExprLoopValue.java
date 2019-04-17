@@ -41,15 +41,13 @@ import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.ScriptOptions;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Used to access a loop's current value.

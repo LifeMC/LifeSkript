@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import org.bukkit.Sound;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

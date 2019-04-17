@@ -23,7 +23,6 @@ package ch.njol.skript.lang;
 
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
 
 /**

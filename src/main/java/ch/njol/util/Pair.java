@@ -19,10 +19,10 @@
 
 package ch.njol.util;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.Map.Entry;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

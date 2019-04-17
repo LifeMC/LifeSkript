@@ -21,6 +21,8 @@
 
 package ch.njol.util;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,8 +33,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An utility class about Web.

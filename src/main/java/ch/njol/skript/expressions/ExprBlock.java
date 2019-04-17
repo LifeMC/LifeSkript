@@ -35,11 +35,9 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.ConvertedExpression;
 import ch.njol.skript.util.Direction;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

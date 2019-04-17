@@ -25,10 +25,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

@@ -25,7 +25,6 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.config.EntryNode;
 import ch.njol.skript.config.Node;
 import ch.njol.util.Setter;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

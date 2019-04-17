@@ -32,13 +32,11 @@ import ch.njol.skript.util.EquipmentSlot;
 import ch.njol.skript.util.EquipmentSlot.EquipSlot;
 import ch.njol.skript.util.Slot;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EntityEquipment;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

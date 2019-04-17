@@ -24,7 +24,6 @@ package ch.njol.skript;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.lang.Trigger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -33,7 +32,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.io.IOException;
 
 import static org.easymock.EasyMock.createMock;
-
 import static org.junit.Assert.assertNotNull;
 
 /**

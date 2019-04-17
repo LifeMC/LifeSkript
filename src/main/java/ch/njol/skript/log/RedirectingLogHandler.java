@@ -23,10 +23,9 @@ package ch.njol.skript.log;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.logging.Level;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Redirects the log to a {@link CommandSender}.

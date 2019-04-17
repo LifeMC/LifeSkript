@@ -31,14 +31,12 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Set;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Mirreducki, Eugenio GuzmÃ¡n

@@ -23,7 +23,6 @@ package ch.njol.skript.classes;
 
 import ch.njol.skript.classes.data.DefaultChangers;
 import ch.njol.skript.lang.Expression;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

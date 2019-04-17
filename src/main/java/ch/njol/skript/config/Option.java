@@ -28,10 +28,9 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.Setter;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

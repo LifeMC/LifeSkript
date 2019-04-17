@@ -24,7 +24,6 @@ package ch.njol.skript.classes;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.StringMode;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

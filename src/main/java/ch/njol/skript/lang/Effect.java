@@ -25,12 +25,10 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.function.EffFunctionCall;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * An effect which is unconditionally executed when reached, and execution will usually continue with the next item of the trigger after this effect is executed (the stop effect

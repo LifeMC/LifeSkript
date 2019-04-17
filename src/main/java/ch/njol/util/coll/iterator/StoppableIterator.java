@@ -20,11 +20,10 @@
 package ch.njol.util.coll.iterator;
 
 import ch.njol.util.NullableChecker;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

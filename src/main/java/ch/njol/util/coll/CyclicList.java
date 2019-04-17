@@ -20,13 +20,12 @@
 package ch.njol.util.coll;
 
 import ch.njol.util.Math2;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A list with fixed size that overrides the oldest elements when new elements are added and no more space is available.

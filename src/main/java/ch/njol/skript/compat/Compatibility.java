@@ -22,7 +22,6 @@
 package ch.njol.skript.compat;
 
 import ch.njol.skript.Skript;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 

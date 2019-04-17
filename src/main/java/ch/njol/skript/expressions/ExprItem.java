@@ -31,11 +31,9 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.util.Slot;
-
 import org.bukkit.entity.Item;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

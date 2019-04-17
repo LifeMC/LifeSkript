@@ -28,13 +28,12 @@ import ch.njol.skript.classes.Comparator.Relation;
 import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.InverseComparator;
 import ch.njol.util.Pair;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

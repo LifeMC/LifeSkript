@@ -23,10 +23,9 @@ package ch.njol.skript.config;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Converter;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

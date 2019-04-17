@@ -19,9 +19,9 @@
 
 package ch.njol.util;
 
-import java.util.Collection;
-
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.util.Collection;
 
 /**
  * @author Peter Güttinger

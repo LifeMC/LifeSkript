@@ -23,22 +23,17 @@ package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
 import ch.njol.util.Closeable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
-
-import java.lang.Thread;
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents a {@link OfflinePlayer} but not resolved yet.

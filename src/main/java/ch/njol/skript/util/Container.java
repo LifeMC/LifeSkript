@@ -21,14 +21,10 @@
 
 package ch.njol.skript.util;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNullByDefault;
+
+import java.lang.annotation.*;
+import java.util.Iterator;
 
 /**
  * Represents a class which is a container, i.e. something like a collection.<br>

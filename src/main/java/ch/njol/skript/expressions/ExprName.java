@@ -36,14 +36,12 @@ import ch.njol.skript.lang.Variable;
 import ch.njol.skript.util.Slot;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

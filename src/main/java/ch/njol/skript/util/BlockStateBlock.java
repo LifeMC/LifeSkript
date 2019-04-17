@@ -22,26 +22,16 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.Skript;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Biome;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.PistonMoveReaction;
+import org.bukkit.*;
+import org.bukkit.block.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import org.eclipse.jdt.annotation.NonNullByDefault;
 
 /**
  * A block that gets all data from a BlockState, and either reflects changes on the BlockState or delays them to the real block by 1 tick depending on which constructor is used.

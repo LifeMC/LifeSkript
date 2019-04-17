@@ -39,10 +39,8 @@ import ch.njol.skript.registrations.Comparators;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
-
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

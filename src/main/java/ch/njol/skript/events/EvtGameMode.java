@@ -26,11 +26,9 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Checker;
-
 import org.bukkit.GameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

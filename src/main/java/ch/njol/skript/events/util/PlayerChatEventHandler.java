@@ -22,7 +22,6 @@
 package ch.njol.skript.events.util;
 
 import ch.njol.skript.Skript;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

@@ -21,21 +21,15 @@
 
 package ch.njol.skript;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import ch.njol.skript.config.*;
+import ch.njol.util.Pair;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import ch.njol.skript.config.Config;
-import ch.njol.skript.config.EntryNode;
-import ch.njol.skript.config.InvalidNode;
-import ch.njol.skript.config.Node;
-import ch.njol.skript.config.SectionNode;
-import ch.njol.skript.config.VoidNode;
-import ch.njol.util.Pair;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerCommand implements CommandExecutor {
 	

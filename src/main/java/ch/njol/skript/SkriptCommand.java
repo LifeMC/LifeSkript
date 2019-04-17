@@ -12,18 +12,15 @@ import ch.njol.skript.util.Color;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.util.StringUtils;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-
-import org.eclipse.jdt.annotation.Nullable;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /*
  *   This file is part of Skript.

@@ -22,20 +22,15 @@
 package ch.njol.skript;
 
 import ch.njol.skript.classes.Converter;
-import ch.njol.skript.config.Config;
-import ch.njol.skript.config.EnumParser;
-import ch.njol.skript.config.Option;
-import ch.njol.skript.config.OptionSection;
-import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.config.*;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
 import ch.njol.skript.util.FileUtils;
-import ch.njol.skript.util.Task;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Setter;
-
 import org.bukkit.event.EventPriority;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +40,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

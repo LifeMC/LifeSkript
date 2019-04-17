@@ -29,10 +29,9 @@ import ch.njol.skript.localization.Noun;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.yggdrasil.YggdrasilSerializable;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

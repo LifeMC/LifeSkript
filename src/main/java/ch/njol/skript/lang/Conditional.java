@@ -23,9 +23,7 @@ package ch.njol.skript.lang;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
-
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

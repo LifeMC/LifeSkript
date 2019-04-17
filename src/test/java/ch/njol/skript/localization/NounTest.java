@@ -22,7 +22,6 @@
 package ch.njol.skript.localization;
 
 import ch.njol.util.NonNullPair;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -28,9 +28,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.ExpressionType;
-
 import org.bukkit.entity.Player;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

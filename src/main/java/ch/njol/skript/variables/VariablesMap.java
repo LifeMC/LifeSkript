@@ -24,14 +24,13 @@ package ch.njol.skript.variables;
 import ch.njol.skript.lang.Variable;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.StringUtils;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 final class VariablesMap {
 	

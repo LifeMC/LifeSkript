@@ -27,16 +27,10 @@ import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.Converter.ConverterInfo;
 import ch.njol.skript.classes.Converter.ConverterUtils;
 import ch.njol.util.Pair;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.jdt.annotation.Nullable;
+import java.util.*;
 
 /**
  * @author Peter Güttinger

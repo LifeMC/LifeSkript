@@ -35,18 +35,12 @@ import ch.njol.skript.util.AsyncEffect;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.util.Closeable;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.logging.Level;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

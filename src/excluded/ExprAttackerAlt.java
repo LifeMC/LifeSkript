@@ -21,6 +21,18 @@
 
 package ch.njol.skript.expressions;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.Skript.ExpressionType;
+import ch.njol.skript.api.Changer;
+import ch.njol.skript.api.Converter;
+import ch.njol.skript.api.Converter.ConverterUtils;
+import ch.njol.skript.classes.ClassInfo;
+import ch.njol.skript.classes.DefaultChangers;
+import ch.njol.skript.expressions.ExprAttackerAlt.Attacker;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.SimpleExpression;
+import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.ItemType;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -34,19 +46,6 @@ import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-
-import ch.njol.skript.Skript;
-import ch.njol.skript.Skript.ExpressionType;
-import ch.njol.skript.api.Changer;
-import ch.njol.skript.api.Converter;
-import ch.njol.skript.api.Converter.ConverterUtils;
-import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.classes.DefaultChangers;
-import ch.njol.skript.expressions.ExprAttackerAlt.Attacker;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SimpleExpression;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.util.ItemType;
 
 /**
  * 

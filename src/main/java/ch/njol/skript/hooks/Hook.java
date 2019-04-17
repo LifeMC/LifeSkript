@@ -23,7 +23,6 @@ package ch.njol.skript.hooks;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.localization.ArgsMessage;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

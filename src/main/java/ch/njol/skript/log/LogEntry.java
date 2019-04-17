@@ -24,10 +24,9 @@ package ch.njol.skript.log;
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.config.Node;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.logging.Level;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

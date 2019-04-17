@@ -33,11 +33,9 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.WeatherType;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.World;
 import org.bukkit.event.Event;
 import org.bukkit.event.weather.WeatherEvent;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

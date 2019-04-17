@@ -22,7 +22,6 @@
 package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Event.Result;

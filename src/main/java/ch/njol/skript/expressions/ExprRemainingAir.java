@@ -27,7 +27,6 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.util.Timespan;
-
 import org.bukkit.entity.LivingEntity;
 
 /**

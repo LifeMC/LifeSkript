@@ -32,12 +32,10 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.List;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

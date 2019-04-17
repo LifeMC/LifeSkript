@@ -25,17 +25,15 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.skript.localization.Noun;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.Location;
 import org.bukkit.TreeType;
 import org.bukkit.block.Block;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

@@ -22,14 +22,13 @@
 package ch.njol.skript.aliases;
 
 import ch.njol.skript.log.BukkitLoggerFilter;
+import org.eclipse.jdt.annotation.Nullable;
+import org.junit.Test;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.logging.Filter;
 import java.util.logging.LogRecord;
-
-import org.eclipse.jdt.annotation.Nullable;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -32,12 +32,10 @@ import ch.njol.skript.lang.util.ConvertedExpression;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Checker;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents an expression. Expressions are used within conditions, effects and other expressions.

@@ -19,12 +19,12 @@
 
 package ch.njol.util;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

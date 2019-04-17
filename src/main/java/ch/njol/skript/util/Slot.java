@@ -23,10 +23,8 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.lang.Debuggable;
 import ch.njol.skript.registrations.Classes;
-
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

@@ -23,7 +23,6 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.SkriptConfig;
 import ch.njol.yggdrasil.YggdrasilSerializable;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

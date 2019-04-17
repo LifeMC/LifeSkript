@@ -22,12 +22,10 @@
 package ch.njol.skript.lang;
 
 import ch.njol.skript.SkriptAPIException;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementInfo<E> {
 	

@@ -22,12 +22,11 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

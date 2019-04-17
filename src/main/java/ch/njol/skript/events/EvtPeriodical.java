@@ -31,11 +31,9 @@ import ch.njol.skript.lang.SkriptEventInfo;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.util.Timespan;
-
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

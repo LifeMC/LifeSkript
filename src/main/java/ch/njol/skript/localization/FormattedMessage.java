@@ -22,6 +22,7 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
+
 import java.util.IllegalFormatException;
 
 public final class FormattedMessage extends Message {

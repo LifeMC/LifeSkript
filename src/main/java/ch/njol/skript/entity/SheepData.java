@@ -30,12 +30,10 @@ import ch.njol.skript.localization.Noun;
 import ch.njol.skript.util.Color;
 import ch.njol.util.Checker;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.entity.Sheep;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

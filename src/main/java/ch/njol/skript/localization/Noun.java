@@ -27,13 +27,12 @@ import ch.njol.skript.localization.Language.LanguageListenerPriority;
 import ch.njol.skript.util.ObjectUtils;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

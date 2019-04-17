@@ -21,10 +21,10 @@
 
 package ch.njol.skript.log;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

@@ -21,15 +21,14 @@
 
 package ch.njol.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.Random;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * @author Peter Güttinger

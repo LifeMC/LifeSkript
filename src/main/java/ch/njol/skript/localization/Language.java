@@ -27,25 +27,12 @@ import ch.njol.skript.config.Config;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.Version;
 import ch.njol.util.StringUtils;
-
 import org.bukkit.plugin.Plugin;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.io.*;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger

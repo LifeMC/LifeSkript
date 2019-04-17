@@ -36,15 +36,13 @@ import ch.njol.skript.lang.TriggerItem;
 import ch.njol.skript.lang.function.FunctionEvent;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.Set;
 import java.util.WeakHashMap;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

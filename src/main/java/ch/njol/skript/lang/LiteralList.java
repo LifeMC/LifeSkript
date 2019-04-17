@@ -23,10 +23,9 @@ package ch.njol.skript.lang;
 
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.util.Utils;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A list of literals. Can contain {@link UnparsedLiteral}s.

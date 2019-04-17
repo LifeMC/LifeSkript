@@ -30,9 +30,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.yggdrasil.YggdrasilSerializable;
-
 import org.bukkit.entity.Entity;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

@@ -38,14 +38,12 @@ import ch.njol.skript.log.ErrorQuality;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.UUID;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Cooldown Time/Remaining Time/Elapsed Time/Last Usage Date/Cooldown Bypass Permission")
 @Description({"Only usable in command events. Represents the cooldown time, the remaining time, or the elapsed time, or the last usage date, or the cooldown bypass permission."})

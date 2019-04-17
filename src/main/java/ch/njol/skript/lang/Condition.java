@@ -23,10 +23,9 @@ package ch.njol.skript.lang;
 
 import ch.njol.skript.Skript;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A condition which must be fulfilled for the trigger to continue. If the condition is in a section the behaviour depends on the section.

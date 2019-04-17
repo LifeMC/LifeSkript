@@ -35,12 +35,10 @@ import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.LiteralUtils;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Ternary")
 @Description("A shorthand expression for returning something based on a condition.")

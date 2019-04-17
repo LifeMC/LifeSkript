@@ -23,12 +23,10 @@ package ch.njol.skript.lang;
 
 import ch.njol.skript.Skript;
 import ch.njol.util.StringUtils;
-
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents a trigger item, i.e. a trigger section, a condition or an effect.

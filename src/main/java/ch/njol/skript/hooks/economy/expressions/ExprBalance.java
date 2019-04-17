@@ -29,10 +29,8 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.hooks.VaultHook;
 import ch.njol.skript.hooks.economy.classes.Money;
-
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

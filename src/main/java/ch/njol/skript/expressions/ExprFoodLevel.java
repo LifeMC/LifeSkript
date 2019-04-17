@@ -36,11 +36,9 @@ import ch.njol.skript.util.Getter;
 import ch.njol.util.Kleenean;
 import ch.njol.util.Math2;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

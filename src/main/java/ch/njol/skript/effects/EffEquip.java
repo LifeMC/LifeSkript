@@ -33,7 +33,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Testable;
 import ch.njol.util.Kleenean;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
@@ -42,7 +41,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.ItemStack;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

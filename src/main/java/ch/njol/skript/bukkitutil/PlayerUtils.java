@@ -23,19 +23,13 @@ package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.util.Task;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.eclipse.jdt.annotation.Nullable;
+import java.util.*;
 
 /**
  * TODO check all updates and find out which ones are not required

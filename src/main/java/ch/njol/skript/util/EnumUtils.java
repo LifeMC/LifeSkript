@@ -24,10 +24,9 @@ package ch.njol.skript.util;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.util.StringUtils;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

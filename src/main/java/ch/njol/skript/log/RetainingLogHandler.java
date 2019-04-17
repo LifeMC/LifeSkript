@@ -22,18 +22,12 @@
 package ch.njol.skript.log;
 
 import ch.njol.skript.Skript;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.logging.Level;
-
 import org.eclipse.jdt.annotation.Nullable;
+
+import java.util.*;
+import java.util.logging.Level;
 
 /**
  * @author Peter Güttinger

@@ -25,10 +25,8 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerJoinEvent;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

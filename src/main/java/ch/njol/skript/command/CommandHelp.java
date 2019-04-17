@@ -25,16 +25,14 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.util.Color;
-
 import org.bukkit.command.CommandSender;
-
-import static org.bukkit.ChatColor.GRAY;
-import static org.bukkit.ChatColor.RESET;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import org.eclipse.jdt.annotation.Nullable;
+import static org.bukkit.ChatColor.GRAY;
+import static org.bukkit.ChatColor.RESET;
 
 /**
  * @author Peter Güttinger

@@ -31,12 +31,10 @@ import ch.njol.skript.effects.Delay;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.util.coll.CollectionUtils;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

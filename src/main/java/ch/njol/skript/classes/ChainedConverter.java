@@ -22,7 +22,6 @@
 package ch.njol.skript.classes;
 
 import ch.njol.skript.registrations.Converters;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

@@ -22,25 +22,12 @@
 package ch.njol.yggdrasil;
 
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.StreamCorruptedException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
+
+import java.io.*;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
