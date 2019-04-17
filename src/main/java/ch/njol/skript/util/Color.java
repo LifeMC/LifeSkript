@@ -24,7 +24,6 @@ package ch.njol.skript.util;
 import ch.njol.skript.Skript;
 import ch.njol.skript.localization.Adjective;
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.yggdrasil.YggdrasilSerializable;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -66,20 +65,17 @@ public enum Color implements YggdrasilSerializable {
     }
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                final boolean english = byEnglishName.isEmpty();
-                byName.clear();
-                for (final Color c : values()) {
-                    final String[] names = Language.getList(LANGUAGE_NODE + "." + c.name() + ".names");
-                    for (final String name : names) {
-                        byName.put(name.toLowerCase(), c);
-                        if (english)
-                            byEnglishName.put(name.toLowerCase(), c);
-                    }
-                    c.adjective = new Adjective(LANGUAGE_NODE + "." + c.name() + ".adjective");
+        Language.addListener(() -> {
+            final boolean english = byEnglishName.isEmpty();
+            byName.clear();
+            for (final Color c : values()) {
+                final String[] names = Language.getList(LANGUAGE_NODE + "." + c.name() + ".names");
+                for (final String name : names) {
+                    byName.put(name.toLowerCase(), c);
+                    if (english)
+                        byEnglishName.put(name.toLowerCase(), c);
                 }
+                c.adjective = new Adjective(LANGUAGE_NODE + "." + c.name() + ".adjective");
             }
         });
     }

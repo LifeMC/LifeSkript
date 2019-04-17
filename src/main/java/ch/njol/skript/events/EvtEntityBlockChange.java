@@ -64,22 +64,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
     }
 
     private enum ChangeEvent {
-        ENDERMAN_PLACE("enderman place", new Checker<EntityChangeBlockEvent>() {
-            @Override
-            public boolean check(final EntityChangeBlockEvent e) {
-                return e.getEntity() instanceof Enderman && e.getTo() != Material.AIR;
-            }
-        }), ENDERMAN_PICKUP("enderman pickup", new Checker<EntityChangeBlockEvent>() {
-            @Override
-            public boolean check(final EntityChangeBlockEvent e) {
-                return e.getEntity() instanceof Enderman && e.getTo() == Material.AIR;
-            }
-        }), SHEEP_EAT("sheep eat", new Checker<EntityChangeBlockEvent>() {
-            @Override
-            public boolean check(final EntityChangeBlockEvent e) {
-                return e.getEntity() instanceof Sheep;
-            }
-        });
+        ENDERMAN_PLACE("enderman place", e -> e.getEntity() instanceof Enderman && e.getTo() != Material.AIR), ENDERMAN_PICKUP("enderman pickup", e -> e.getEntity() instanceof Enderman && e.getTo() == Material.AIR), SHEEP_EAT("sheep eat", e -> e.getEntity() instanceof Sheep);
         // TODO silverfishes
 
         static final String[] patterns;

@@ -36,7 +36,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-import org.bukkit.event.EventException;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.EventExecutor;
@@ -83,14 +82,11 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 
     //	private final static HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
     final static HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<>();
-    private final static EventExecutor executor = new EventExecutor() {
-        @SuppressWarnings("null")
-        @Override
-        public void execute(final @Nullable Listener l, final @Nullable Event event) throws EventException {
-            if (event == null)
-                return;
-            final PlayerMoveEvent e = (PlayerMoveEvent) event;
-            final Location from = e.getFrom(), to = e.getTo();
+    private final static EventExecutor executor = (l, event) -> {
+        if (event == null)
+            return;
+        final PlayerMoveEvent e = (PlayerMoveEvent) event;
+        final Location from = e.getFrom(), to = e.getTo();
 //			if (!blockTriggers.isEmpty()) {
 //				final List<Trigger> ts = blockTriggers.get(new BlockLocation(to.getWorld(), to.getBlockX(), to.getBlockY(), to.getBlockZ()));
 //				if (ts != null) {
@@ -101,32 +97,31 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //					}
 //				}
 //			}
-            if (!itemTypeTriggers.isEmpty()) {
-                final int id = getOnBlock(to);
-                if (id == 0)
-                    return;
-                final List<Trigger> ts = itemTypeTriggers.get(id);
-                if (ts == null)
-                    return;
-                final int y = getBlockY(to.getY(), id);
-                if (to.getWorld().equals(from.getWorld()) && to.getBlockX() == from.getBlockX() && to.getBlockZ() == from.getBlockZ() && y == getBlockY(from.getY(), getOnBlock(from)) && getOnBlock(from) == id)
-                    return;
-                SkriptEventHandler.logEventStart(e);
-                final byte data = to.getWorld().getBlockAt(to.getBlockX(), y, to.getBlockZ()).getData();
-                triggersLoop:
-                for (final Trigger t : ts) {
-                    final EvtMoveOn se = (EvtMoveOn) t.getEvent();
-                    for (final ItemType i : se.types) {
-                        if (i.isOfType(id, data)) {
-                            SkriptEventHandler.logTriggerStart(t);
-                            t.execute(e);
-                            SkriptEventHandler.logTriggerEnd(t);
-                            continue triggersLoop;
-                        }
+        if (!itemTypeTriggers.isEmpty()) {
+            final int id = getOnBlock(to);
+            if (id == 0)
+                return;
+            final List<Trigger> ts = itemTypeTriggers.get(id);
+            if (ts == null)
+                return;
+            final int y = getBlockY(to.getY(), id);
+            if (to.getWorld().equals(from.getWorld()) && to.getBlockX() == from.getBlockX() && to.getBlockZ() == from.getBlockZ() && y == getBlockY(from.getY(), getOnBlock(from)) && getOnBlock(from) == id)
+                return;
+            SkriptEventHandler.logEventStart(e);
+            final byte data = to.getWorld().getBlockAt(to.getBlockX(), y, to.getBlockZ()).getData();
+            triggersLoop:
+            for (final Trigger t : ts) {
+                final EvtMoveOn se = (EvtMoveOn) t.getEvent();
+                for (final ItemType i : se.types) {
+                    if (i.isOfType(id, data)) {
+                        SkriptEventHandler.logTriggerStart(t);
+                        t.execute(e);
+                        SkriptEventHandler.logTriggerEnd(t);
+                        continue triggersLoop;
                     }
                 }
-                SkriptEventHandler.logEventEnd();
             }
+            SkriptEventHandler.logEventEnd();
         }
     };
     private static boolean registeredExecutor;

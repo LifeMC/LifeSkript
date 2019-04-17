@@ -31,7 +31,6 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.EnchantmentType;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
@@ -68,21 +67,13 @@ public class CondIsEnchanted extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return items.check(e, new Checker<ItemType>() {
-            @Override
-            public boolean check(final ItemType item) {
-                final Expression<EnchantmentType> es = enchs;
-                if (es == null) {
-                    final Map<Enchantment, Integer> enchs = item.getEnchantments();
-                    return isNegated() ^ (enchs != null && !enchs.isEmpty());
-                }
-                return es.check(e, new Checker<EnchantmentType>() {
-                    @Override
-                    public boolean check(final EnchantmentType ench) {
-                        return ench.has(item);
-                    }
-                }, isNegated());
+        return items.check(e, item -> {
+            final Expression<EnchantmentType> es = enchs;
+            if (es == null) {
+                final Map<Enchantment, Integer> enchs = item.getEnchantments();
+                return isNegated() ^ (enchs != null && !enchs.isEmpty());
             }
+            return es.check(e, ench -> ench.has(item), isNegated());
         });
     }
 

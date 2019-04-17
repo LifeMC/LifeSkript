@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -68,12 +67,9 @@ public class ExprLightLevel extends PropertyExpression<Location, Byte> {
 
     @Override
     protected Byte[] get(final Event e, final Location[] source) {
-        return get(source, new Converter<Location, Byte>() {
-            @Override
-            public Byte convert(final Location l) {
-                final Block b = l.getBlock();
-                return whatLight == ANY ? b.getLightLevel() : whatLight == BLOCK ? b.getLightFromBlocks() : b.getLightFromSky();
-            }
+        return get(source, l -> {
+            final Block b = l.getBlock();
+            return whatLight == ANY ? b.getLightLevel() : whatLight == BLOCK ? b.getLightFromBlocks() : b.getLightFromSky();
         });
     }
 

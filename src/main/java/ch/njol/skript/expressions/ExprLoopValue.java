@@ -23,7 +23,6 @@ package ch.njol.skript.expressions;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -130,13 +129,7 @@ public class ExprLoopValue extends SimpleExpression<Object> {
     @Nullable
     protected <R> ConvertedExpression<Object, ? extends R> getConvertedExpr(final Class<R>... to) {
         if (isVariableLoop && !isIndex) {
-            return new ConvertedExpression<>(this, (Class<R>) Utils.getSuperType(to), new Converter<Object, R>() {
-                @Override
-                @Nullable
-                public R convert(final Object o) {
-                    return Converters.convert(o, to);
-                }
-            });
+            return new ConvertedExpression<>(this, (Class<R>) Utils.getSuperType(to), o -> Converters.convert(o, to));
         } else {
             return super.getConvertedExpr(to);
         }

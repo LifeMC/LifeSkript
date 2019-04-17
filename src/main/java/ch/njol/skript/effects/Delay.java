@@ -95,13 +95,10 @@ public final class Delay extends Effect {
             final Timespan d = duration.getSingle(e);
             if (d == null)
                 return null;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                @Override
-                public final void run() {
-                    if (Skript.debug())
-                        Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
-                    TriggerItem.walk(next, e);
-                }
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
+                if (Skript.debug())
+                    Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
+                TriggerItem.walk(next, e);
             }, d.getTicks_i());
         }
         return null;

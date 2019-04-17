@@ -30,7 +30,6 @@ import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
@@ -64,17 +63,7 @@ public class CondIsRiding extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return entities.check(e, new Checker<Entity>() {
-            @Override
-            public boolean check(final Entity en) {
-                return types.check(e, new Checker<EntityData<?>>() {
-                    @Override
-                    public boolean check(final EntityData<?> d) {
-                        return d.isInstance(en.getVehicle());
-                    }
-                }, isNegated());
-            }
-        });
+        return entities.check(e, en -> types.check(e, d -> d.isInstance(en.getVehicle()), isNegated()));
     }
 
     @Override

@@ -45,7 +45,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger
@@ -56,80 +55,50 @@ public final class DefaultConverters {
     static {
 
         // OfflinePlayer - PlayerInventory
-        Converters.registerConverter(OfflinePlayer.class, PlayerInventory.class, new Converter<OfflinePlayer, PlayerInventory>() {
-            @Override
-            @Nullable
-            public PlayerInventory convert(final OfflinePlayer p) {
-                if (!p.isOnline())
-                    return null;
-                return p.getPlayer().getInventory();
-            }
+        Converters.registerConverter(OfflinePlayer.class, PlayerInventory.class, p -> {
+            if (!p.isOnline())
+                return null;
+            return p.getPlayer().getInventory();
         }, Converter.NO_COMMAND_ARGUMENTS);
         // OfflinePlayer - Player
         Converters.registerConverter(OfflinePlayer.class, Player.class, OfflinePlayer::getPlayer, Converter.NO_COMMAND_ARGUMENTS);
 
         // TODO improve handling of interfaces
         // CommandSender - Player
-        Converters.registerConverter(CommandSender.class, Player.class, new Converter<CommandSender, Player>() {
-            @Override
-            @Nullable
-            public Player convert(final CommandSender s) {
-                if (s instanceof Player)
-                    return (Player) s;
-                return null;
-            }
+        Converters.registerConverter(CommandSender.class, Player.class, s -> {
+            if (s instanceof Player)
+                return (Player) s;
+            return null;
         });
         // Entity - Player
-        Converters.registerConverter(Entity.class, Player.class, new Converter<Entity, Player>() {
-            @Override
-            @Nullable
-            public Player convert(final Entity e) {
-                if (e instanceof Player)
-                    return (Player) e;
-                return null;
-            }
+        Converters.registerConverter(Entity.class, Player.class, e -> {
+            if (e instanceof Player)
+                return (Player) e;
+            return null;
         });
         // Entity - LivingEntity // Entity->Player is used if this doesn't exist
-        Converters.registerConverter(Entity.class, LivingEntity.class, new Converter<Entity, LivingEntity>() {
-            @Override
-            @Nullable
-            public LivingEntity convert(final Entity e) {
-                if (e instanceof LivingEntity)
-                    return (LivingEntity) e;
-                return null;
-            }
+        Converters.registerConverter(Entity.class, LivingEntity.class, e -> {
+            if (e instanceof LivingEntity)
+                return (LivingEntity) e;
+            return null;
         });
 
         // Block - Inventory
-        Converters.registerConverter(Block.class, Inventory.class, new Converter<Block, Inventory>() {
-            @Override
-            @Nullable
-            public Inventory convert(final Block b) {
-                if (b.getState() instanceof InventoryHolder)
-                    return ((InventoryHolder) b.getState()).getInventory();
-                return null;
-            }
+        Converters.registerConverter(Block.class, Inventory.class, b -> {
+            if (b.getState() instanceof InventoryHolder)
+                return ((InventoryHolder) b.getState()).getInventory();
+            return null;
         }, Converter.NO_COMMAND_ARGUMENTS);
 
         // Entity - Inventory
-        Converters.registerConverter(Entity.class, Inventory.class, new Converter<Entity, Inventory>() {
-            @Override
-            @Nullable
-            public Inventory convert(final Entity e) {
-                if (e instanceof InventoryHolder)
-                    return ((InventoryHolder) e).getInventory();
-                return null;
-            }
+        Converters.registerConverter(Entity.class, Inventory.class, e -> {
+            if (e instanceof InventoryHolder)
+                return ((InventoryHolder) e).getInventory();
+            return null;
         }, Converter.NO_COMMAND_ARGUMENTS);
 
         // Block - ItemStack
-        Converters.registerConverter(Block.class, ItemStack.class, new Converter<Block, ItemStack>() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public ItemStack convert(final Block b) {
-                return new ItemStack(b.getTypeId(), 1, b.getData());
-            }
-        }, Converter.NO_LEFT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
+        Converters.registerConverter(Block.class, ItemStack.class, b -> new ItemStack(b.getTypeId(), 1, b.getData()), Converter.NO_LEFT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
 
         // Location - Block
 //		Converters.registerConverter(Location.class, Block.class, new Converter<Location, Block>() {
@@ -145,12 +114,7 @@ public final class DefaultConverters {
         // Entity - EntityData
         Converters.registerConverter(Entity.class, EntityData.class, EntityData::fromEntity, Converter.NO_COMMAND_ARGUMENTS);
         // EntityData - EntityType
-        Converters.registerConverter(EntityData.class, EntityType.class, new Converter<EntityData, EntityType>() {
-            @Override
-            public EntityType convert(final EntityData data) {
-                return new EntityType(data, -1);
-            }
-        });
+        Converters.registerConverter(EntityData.class, EntityType.class, data -> new EntityType(data, -1));
 
         // Location - World
 //		Skript.registerConverter(Location.class, World.class, new Converter<Location, World>() {
@@ -169,18 +133,8 @@ public final class DefaultConverters {
         Converters.registerConverter(ItemStack.class, ItemType.class, ItemType::new);
 
         // Experience - XpOrbData
-        Converters.registerConverter(Experience.class, XpOrbData.class, new Converter<Experience, XpOrbData>() {
-            @Override
-            public XpOrbData convert(final Experience e) {
-                return new XpOrbData(e.getXP());
-            }
-        });
-        Converters.registerConverter(XpOrbData.class, Experience.class, new Converter<XpOrbData, Experience>() {
-            @Override
-            public Experience convert(final XpOrbData e) {
-                return new Experience(e.getExperience());
-            }
-        });
+        Converters.registerConverter(Experience.class, XpOrbData.class, e -> new XpOrbData(e.getXP()));
+        Converters.registerConverter(XpOrbData.class, Experience.class, e -> new Experience(e.getExperience()));
 
 //		// Item - ItemStack
 //		Converters.registerConverter(Item.class, ItemStack.class, new Converter<Item, ItemStack>() {
@@ -191,14 +145,11 @@ public final class DefaultConverters {
 //		});
 
         // Slot - ItemStack
-        Converters.registerConverter(Slot.class, ItemStack.class, new Converter<Slot, ItemStack>() {
-            @Override
-            public ItemStack convert(final Slot s) {
-                final ItemStack i = s.getItem();
-                if (i == null)
-                    return new ItemStack(Material.AIR, 1);
-                return i;
-            }
+        Converters.registerConverter(Slot.class, ItemStack.class, s -> {
+            final ItemStack i = s.getItem();
+            if (i == null)
+                return new ItemStack(Material.AIR, 1);
+            return i;
         });
 //		// Slot - Inventory
 //		Skript.addConverter(Slot.class, Inventory.class, new Converter<Slot, Inventory>() {
@@ -211,17 +162,13 @@ public final class DefaultConverters {
 //		});
 
         // Block - InventoryHolder
-        Converters.registerConverter(Block.class, InventoryHolder.class, new Converter<Block, InventoryHolder>() {
-            @Override
-            @Nullable
-            public InventoryHolder convert(final Block b) {
-                if (b.getState() == null)
-                    return null;
-                final BlockState s = b.getState();
-                if (s instanceof InventoryHolder)
-                    return (InventoryHolder) s;
+        Converters.registerConverter(Block.class, InventoryHolder.class, b -> {
+            if (b.getState() == null)
                 return null;
-            }
+            final BlockState s = b.getState();
+            if (s instanceof InventoryHolder)
+                return (InventoryHolder) s;
+            return null;
         }, Converter.NO_COMMAND_ARGUMENTS);
 //		Skript.registerConverter(InventoryHolder.class, Block.class, new Converter<InventoryHolder, Block>() {
 //			@Override
@@ -245,12 +192,7 @@ public final class DefaultConverters {
 //		});
 
         // Enchantment - EnchantmentType
-        Converters.registerConverter(Enchantment.class, EnchantmentType.class, new Converter<Enchantment, EnchantmentType>() {
-            @Override
-            public EnchantmentType convert(final Enchantment e) {
-                return new EnchantmentType(e, -1);
-            }
-        });
+        Converters.registerConverter(Enchantment.class, EnchantmentType.class, e -> new EnchantmentType(e, -1));
 
     }
 

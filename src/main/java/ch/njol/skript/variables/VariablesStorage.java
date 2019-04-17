@@ -73,20 +73,16 @@ public abstract class VariablesStorage implements Closeable {
 
     protected VariablesStorage(final String name) {
         databaseName = name;
-        writeThread = Skript.newThread(new Runnable() {
-            @SuppressWarnings({"unused", "null"})
-            @Override
-            public final void run() {
-                while (!closed) {
-                    try {
-                        final SerializedVariable var = changesQueue.take();
-                        final Value d = var.value;
-                        if (d != null)
-                            save(var.name, d.type, d.data);
-                        else
-                            save(var.name, null, null);
-                    } catch (final InterruptedException ignored) {
-                    }
+        writeThread = Skript.newThread(() -> {
+            while (!closed) {
+                try {
+                    final SerializedVariable var = changesQueue.take();
+                    final Value d = var.value;
+                    if (d != null)
+                        save(var.name, d.type, d.data);
+                    else
+                        save(var.name, null, null);
+                } catch (final InterruptedException ignored) {
                 }
             }
         }, "Skript variable save thread for database '" + name + "'");

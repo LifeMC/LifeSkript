@@ -159,33 +159,18 @@ public class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
             if (e instanceof FurnaceSmeltEvent) {
                 if (slot == RESULT && getTime() >= 0) {
                     if (item == null || item.getType() == Material.AIR) { // null/air crashes the server on account of a NPE if using event.setResult(...)
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                            @Override
-                            public void run() {
-                                FurnaceEventSlot.super.setItem(null);
-                            }
-                        });
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(null));
                     } else {
                         ((FurnaceSmeltEvent) e).setResult(item);
                     }
                 } else if (slot == ORE && getTime() >= 0) {
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                        @Override
-                        public void run() {
-                            FurnaceEventSlot.super.setItem(item);
-                        }
-                    });
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(item));
                 } else {
                     super.setItem(item);
                 }
             } else {
                 if (slot == FUEL && getTime() >= 0) {
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                        @Override
-                        public void run() {
-                            FurnaceEventSlot.super.setItem(item);
-                        }
-                    });
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(item));
                 } else {
                     super.setItem(item);
                 }

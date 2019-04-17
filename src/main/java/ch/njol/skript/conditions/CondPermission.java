@@ -29,7 +29,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
@@ -63,26 +62,18 @@ public final class CondPermission extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return senders.check(e, new Checker<CommandSender>() {
-            @Override
-            public boolean check(final CommandSender s) {
-                return permissions.check(e, new Checker<String>() {
-                    @Override
-                    public boolean check(final String perm) {
-                        if (s.hasPermission(perm))
-                            return true;
-                        // player has perm skript.foo.bar if he has skript.foo.* or skript.*, but not for other plugin's permissions since they can define their own *
-                        if (perm.startsWith("skript.")) {
-                            for (int i = perm.lastIndexOf('.'); i != -1; i = perm.lastIndexOf('.', i - 1)) {
-                                if (s.hasPermission(perm.substring(0, i + 1) + "*"))
-                                    return true;
-                            }
-                        }
-                        return false;
-                    }
-                }, isNegated());
+        return senders.check(e, s -> permissions.check(e, perm -> {
+            if (s.hasPermission(perm))
+                return true;
+            // player has perm skript.foo.bar if he has skript.foo.* or skript.*, but not for other plugin's permissions since they can define their own *
+            if (perm.startsWith("skript.")) {
+                for (int i = perm.lastIndexOf('.'); i != -1; i = perm.lastIndexOf('.', i - 1)) {
+                    if (s.hasPermission(perm.substring(0, i + 1) + "*"))
+                        return true;
+                }
             }
-        });
+            return false;
+        }, isNegated()));
     }
 
     @Override

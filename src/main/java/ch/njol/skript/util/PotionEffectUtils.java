@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
@@ -43,18 +42,15 @@ public final class PotionEffectUtils {
     final static String[] names = new String[getMaxPotionId() + 1];
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                types.clear();
-                for (final PotionEffectType t : PotionEffectType.values()) {
-                    if (t == null)
-                        continue;
-                    final String[] ls = Language.getList("potions." + t.getName());
-                    names[t.getId()] = ls[0];
-                    for (final String l : ls) {
-                        types.put(l.toLowerCase(), t);
-                    }
+        Language.addListener(() -> {
+            types.clear();
+            for (final PotionEffectType t : PotionEffectType.values()) {
+                if (t == null)
+                    continue;
+                final String[] ls = Language.getList("potions." + t.getName());
+                names[t.getId()] = ls[0];
+                for (final String l : ls) {
+                    types.put(l.toLowerCase(), t);
                 }
             }
         });

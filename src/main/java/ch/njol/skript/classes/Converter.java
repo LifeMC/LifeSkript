@@ -80,29 +80,19 @@ public interface Converter<F, T> {
         }
 
         public static <F, T> Converter<?, T> createInstanceofConverter(final Class<F> from, final Converter<F, T> conv) {
-            return new Converter<Object, T>() {
-                @SuppressWarnings("unchecked")
-                @Override
-                @Nullable
-                public T convert(final Object o) {
-                    if (!from.isInstance(o))
-                        return null;
-                    return conv.convert((F) o);
-                }
+            return (Converter<Object, T>) o -> {
+                if (!from.isInstance(o))
+                    return null;
+                return conv.convert((F) o);
             };
         }
 
         public static <F, T> Converter<F, T> createInstanceofConverter(final Converter<F, ?> conv, final Class<T> to) {
-            return new Converter<F, T>() {
-                @SuppressWarnings("unchecked")
-                @Override
-                @Nullable
-                public T convert(final F f) {
-                    final Object o = conv.convert(f);
-                    if (to.isInstance(o))
-                        return (T) o;
-                    return null;
-                }
+            return f -> {
+                final Object o = conv.convert(f);
+                if (to.isInstance(o))
+                    return (T) o;
+                return null;
             };
         }
 
@@ -111,18 +101,13 @@ public interface Converter<F, T> {
         }
 
         public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final Class<F> from, final Converter<F, ?> conv, final Class<T> to) {
-            return new Converter<Object, T>() {
-                @SuppressWarnings("unchecked")
-                @Override
-                @Nullable
-                public T convert(final Object o) {
-                    if (!from.isInstance(o))
-                        return null;
-                    final Object o2 = conv.convert((F) o);
-                    if (to.isInstance(o2))
-                        return (T) o2;
+            return (Converter<Object, T>) o -> {
+                if (!from.isInstance(o))
                     return null;
-                }
+                final Object o2 = conv.convert((F) o);
+                if (to.isInstance(o2))
+                    return (T) o2;
+                return null;
             };
         }
 

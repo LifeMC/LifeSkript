@@ -23,12 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public interface NullableChecker<T> extends Checker<T> {
 
-    NullableChecker<Object> nullChecker = new NullableChecker<Object>() {
-        @Override
-        public boolean check(final @Nullable Object o) {
-            return o != null;
-        }
-    };
+    NullableChecker<Object> nullChecker = o -> o != null;
 
     @Override
     boolean check(final @Nullable T o);

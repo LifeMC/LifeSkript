@@ -31,7 +31,6 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
-import ch.njol.util.Checker;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -163,12 +162,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
         if (r == null)
             return true;
         final Region re = ((RegionBorderEvent) e).getRegion();
-        return r.check(e, new Checker<Region>() {
-            @Override
-            public boolean check(final Region r) {
-                return r.equals(re);
-            }
-        });
+        return r.check(e, r1 -> r1.equals(re));
     }
 
 }

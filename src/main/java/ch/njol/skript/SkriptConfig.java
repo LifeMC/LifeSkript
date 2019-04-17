@@ -21,14 +21,12 @@
 
 package ch.njol.skript;
 
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.config.*;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.skript.util.Timespan;
-import ch.njol.util.Setter;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -47,12 +45,9 @@ import java.util.Locale;
 @SuppressWarnings("unused")
 public final class SkriptConfig {
 
-    public final static Option<String> language = new Option<>("language", "english").optional(true).setter(new Setter<String>() {
-        @Override
-        public void set(final String s) {
-            if (!Language.load(s)) {
-                Skript.error("No language file found for '" + s + "'!");
-            }
+    public final static Option<String> language = new Option<>("language", "english").optional(true).setter(s -> {
+        if (!Language.load(s)) {
+            Skript.error("No language file found for '" + s + "'!");
         }
     });
     public final static Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", false);
@@ -62,16 +57,12 @@ public final class SkriptConfig {
     public final static OptionSection databases = new OptionSection("databases");
     public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<>("use player UUIDs in variable names", false);
     public final static Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
-    public final static Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, new Converter<String, EventPriority>() {
-        @Override
-        @Nullable
-        public EventPriority convert(final String s) {
-            try {
-                return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
-            } catch (final IllegalArgumentException e) {
-                Skript.error("The plugin priority has to be one of lowest, low, normal, high, or highest.");
-                return EventPriority.NORMAL;
-            }
+    public final static Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
+        try {
+            return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
+        } catch (final IllegalArgumentException e) {
+            Skript.error("The plugin priority has to be one of lowest, low, normal, high, or highest.");
+            return EventPriority.NORMAL;
         }
     });
     public final static Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
@@ -96,31 +87,23 @@ public final class SkriptConfig {
 
     // Disable warnings options
     final static Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
-    final static Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(new Setter<Timespan>() {
-        @SuppressWarnings("null")
-        @Override
-        public void set(final Timespan t) {
-            //final Task ct = Updater.checkerTask;
-            //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
-            //ct.setNextExecution(t.getTicks_i());
-        }
+    final static Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
+        //final Task ct = Updater.checkerTask;
+        //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
+        //ct.setNextExecution(t.getTicks_i());
     });
     final static Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
     @SuppressWarnings("null")
     private final static DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    private final static Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, new Converter<String, DateFormat>() {
-        @Override
-        @Nullable
-        public DateFormat convert(final String s) {
-            try {
-                if ("default".equalsIgnoreCase(s))
-                    return null;
-                return new SimpleDateFormat(s);
-            } catch (final IllegalArgumentException e) {
-                Skript.error("'" + s + "' is not a valid date format. Please refer to http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html for instructions on the format.");
-            }
-            return null;
+    private final static Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, s -> {
+        try {
+            if ("default".equalsIgnoreCase(s))
+                return null;
+            return new SimpleDateFormat(s);
+        } catch (final IllegalArgumentException e) {
+            Skript.error("'" + s + "' is not a valid date format. Please refer to http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html for instructions on the format.");
         }
+        return null;
     });
     private final static Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable

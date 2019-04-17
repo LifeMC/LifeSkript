@@ -28,7 +28,6 @@ import ch.njol.skript.localization.Adjective;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Noun;
 import ch.njol.skript.util.Color;
-import ch.njol.util.Checker;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Sheep;
 import org.eclipse.jdt.annotation.Nullable;
@@ -78,12 +77,7 @@ public class SheepData extends EntityData<Sheep> {
 
     @Override
     public boolean match(final Sheep entity) {
-        return (sheared == 0 || entity.isSheared() == (sheared == 1)) && (colors == null || SimpleExpression.check(colors, new Checker<Color>() {
-            @Override
-            public boolean check(final @Nullable Color c) {
-                return c != null && entity.getColor() == c.getWoolColor();
-            }
-        }, false, false));
+        return (sheared == 0 || entity.isSheared() == (sheared == 1)) && (colors == null || SimpleExpression.check(colors, c -> c != null && entity.getColor() == c.getWoolColor(), false, false));
     }
 
     @Override

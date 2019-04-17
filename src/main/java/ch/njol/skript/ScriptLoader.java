@@ -42,7 +42,6 @@ import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.variables.Variables;
-import ch.njol.util.Callback;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -75,12 +74,7 @@ final public class ScriptLoader {
     /**
      * Filter for enabled scripts & folders.
      */
-    private final static FileFilter scriptFilter = new FileFilter() {
-        @Override
-        public boolean accept(final @Nullable File f) {
-            return f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
-        }
-    };
+    private final static FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -350,21 +344,17 @@ final public class ScriptLoader {
                             if (name.startsWith("{") && name.endsWith("}"))
                                 name = "" + name.substring(1, name.length() - 1);
                             final String var = name;
-                            name = StringUtils.replaceAll(name, "%(.+)?%", new Callback<String, Matcher>() {
-                                @Override
-                                @Nullable
-                                public String run(final Matcher m) {
-                                    if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
-                                        Skript.error("'" + var + "' is not a valid name for a default variable");
-                                        return null;
-                                    }
-                                    final ClassInfo<?> ci = Classes.getClassInfoFromUserInput("" + m.group(1));
-                                    if (ci == null) {
-                                        Skript.error("Can't understand the type '" + m.group(1) + "'");
-                                        return null;
-                                    }
-                                    return "<" + ci.getCodeName() + ">";
+                            name = StringUtils.replaceAll(name, "%(.+)?%", m -> {
+                                if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
+                                    Skript.error("'" + var + "' is not a valid name for a default variable");
+                                    return null;
                                 }
+                                final ClassInfo<?> ci = Classes.getClassInfoFromUserInput("" + m.group(1));
+                                if (ci == null) {
+                                    Skript.error("Can't understand the type '" + m.group(1) + "'");
+                                    return null;
+                                }
+                                return "<" + ci.getCodeName() + ">";
                             });
                             if (name == null) {
                                 continue;
@@ -578,17 +568,13 @@ final public class ScriptLoader {
      * @return The replaced string. May return null, but only if the input is null.
      */
     public static String replaceOptions(final String s) {
-        final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", new Callback<String, Matcher>() {
-            @Override
-            @Nullable
-            public String run(final Matcher m) {
-                final String option = currentOptions.get(m.group(1));
-                if (option == null) {
-                    Skript.error("undefined option " + m.group());
-                    return m.group();
-                }
-                return Matcher.quoteReplacement(option);
+        final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", m -> {
+            final String option = currentOptions.get(m.group(1));
+            if (option == null) {
+                Skript.error("undefined option " + m.group());
+                return m.group();
             }
+            return Matcher.quoteReplacement(option);
         });
         assert r != null;
         return r;

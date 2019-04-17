@@ -43,19 +43,12 @@ public abstract class AsyncEffect extends Effect {
         debug(e, true);
         final TriggerItem next = getNext();
         Delay.addDelayedEvent(e);
-        Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), new Runnable() {
-            @Override
-            @SuppressWarnings("synthetic-access")
-            public final void run() {
-                execute(e); // Execute this effect
-                if (next != null) {
-                    Bukkit.getScheduler().runTask(Skript.getInstance(), new Runnable() {
-                        @Override
-                        public final void run() { // Walk to next item synchronously
-                            TriggerItem.walk(next, e);
-                        }
-                    });
-                }
+        Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), () -> {
+            execute(e); // Execute this effect
+            if (next != null) {
+                Bukkit.getScheduler().runTask(Skript.getInstance(), () -> { // Walk to next item synchronously
+                    TriggerItem.walk(next, e);
+                });
             }
         });
         return null;

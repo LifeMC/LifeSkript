@@ -67,25 +67,17 @@ public final class CondIsOfType extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return what.check(e, new Checker<Object>() {
-            @Override
-            public boolean check(final Object o1) {
-                return types.check(e, new Checker<Object>() {
-                    @Override
-                    public boolean check(final Object o2) {
-                        if (o2 instanceof ItemType && o1 instanceof ItemType) {
-                            return ((ItemType) o2).isSupertypeOf((ItemType) o1);
-                        } else if (o2 instanceof EntityData && o1 instanceof Entity) {
-                            return ((EntityData<?>) o2).isInstance((Entity) o1);
-                        } else if (o2 instanceof ItemType && o1 instanceof Entity) {
-                            return Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity((Entity) o1), (ItemType) o2));
-                        } else {
-                            return false;
-                        }
-                    }
-                }, isNegated());
+        return what.check(e, (Checker<Object>) o1 -> types.check(e, (Checker<Object>) o2 -> {
+            if (o2 instanceof ItemType && o1 instanceof ItemType) {
+                return ((ItemType) o2).isSupertypeOf((ItemType) o1);
+            } else if (o2 instanceof EntityData && o1 instanceof Entity) {
+                return ((EntityData<?>) o2).isInstance((Entity) o1);
+            } else if (o2 instanceof ItemType && o1 instanceof Entity) {
+                return Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity((Entity) o1), (ItemType) o2));
+            } else {
+                return false;
             }
-        });
+        }, isNegated()));
     }
 
     @Override

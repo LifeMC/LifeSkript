@@ -27,7 +27,6 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.util.Checker;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Enderman;
 import org.bukkit.inventory.ItemStack;
@@ -85,13 +84,7 @@ public class EndermanData extends EntityData<Enderman> {
 
     @Override
     public boolean match(final Enderman entity) {
-        return hand == null || SimpleExpression.check(hand, new Checker<ItemType>() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean check(final @Nullable ItemType t) {
-                return t != null && t.isOfType(entity.getCarriedMaterial().getItemTypeId(), entity.getCarriedMaterial().getData());
-            }
-        }, false, false);
+        return hand == null || SimpleExpression.check(hand, t -> t != null && t.isOfType(entity.getCarriedMaterial().getItemTypeId(), entity.getCarriedMaterial().getData()), false, false);
     }
 
     @Override

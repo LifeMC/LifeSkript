@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import org.bukkit.World;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -42,16 +41,13 @@ public enum WeatherType {
     final static Map<String, WeatherType> byName = new HashMap<>();
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                byName.clear();
-                for (final WeatherType t : values()) {
-                    t.names = Language.getList("weather." + t.name() + ".name");
-                    t.adjective = Language.get("weather." + t.name() + ".adjective");
-                    for (final String name : t.names) {
-                        byName.put(name, t);
-                    }
+        Language.addListener(() -> {
+            byName.clear();
+            for (final WeatherType t : values()) {
+                t.names = Language.getList("weather." + t.name() + ".name");
+                t.adjective = Language.get("weather." + t.name() + ".adjective");
+                for (final String name : t.names) {
+                    byName.put(name, t);
                 }
             }
         });

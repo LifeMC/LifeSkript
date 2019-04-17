@@ -32,7 +32,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.ErrorQuality;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
@@ -76,25 +75,12 @@ public class CondCanHold extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return invis.check(e, new Checker<Inventory>() {
-            @Override
-            public boolean check(final Inventory invi) {
-                if (!items.getAnd()) {
-                    return items.check(e, new Checker<ItemType>() {
-                        @Override
-                        public boolean check(final ItemType t) {
-                            return t.getItem().hasSpace(invi);
-                        }
-                    }, isNegated());
-                }
-                final ItemStack[] buf = ItemType.getCopiedContents(invi);
-                return items.check(e, new Checker<ItemType>() {
-                    @Override
-                    public boolean check(final ItemType t) {
-                        return t.getItem().addTo(buf);
-                    }
-                }, isNegated());
+        return invis.check(e, invi -> {
+            if (!items.getAnd()) {
+                return items.check(e, t -> t.getItem().hasSpace(invi), isNegated());
             }
+            final ItemStack[] buf = ItemType.getCopiedContents(invi);
+            return items.check(e, t -> t.getItem().addTo(buf), isNegated());
         });
     }
 

@@ -25,9 +25,7 @@ import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.effects.EffTeleport;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.util.Callback;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.Pair;
 import ch.njol.util.StringUtils;
@@ -43,7 +41,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -86,17 +83,14 @@ public final class Utils {
     private final static Pattern stylePattern = Pattern.compile("<([^<>]+)>");
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                final boolean english = englishChat.isEmpty();
-                chat.clear();
-                for (final ChatColor style : styles) {
-                    for (final String s : Language.getList("chat styles." + style.name())) {
-                        chat.put(s.toLowerCase(), style.toString());
-                        if (english)
-                            englishChat.put(s.toLowerCase(), style.toString());
-                    }
+        Language.addListener(() -> {
+            final boolean english = englishChat.isEmpty();
+            chat.clear();
+            for (final ChatColor style : styles) {
+                for (final String s : Language.getList("chat styles." + style.name())) {
+                    chat.put(s.toLowerCase(), style.toString());
+                    if (english)
+                        englishChat.put(s.toLowerCase(), style.toString());
                 }
             }
         });
@@ -397,17 +391,14 @@ public final class Utils {
     public static String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll("" + message.replace("<<none>>", ""), stylePattern, new Callback<String, Matcher>() {
-            @Override
-            public String run(final @Nullable Matcher m) {
-                @SuppressWarnings("null") final Color c = Color.byName("" + m.group(1));
-                if (c != null)
-                    return c.getChat();
-                final String f = chat.get(m.group(1).toLowerCase());
-                if (f != null)
-                    return f;
-                return "" + m.group();
-            }
+        String m = StringUtils.replaceAll("" + message.replace("<<none>>", ""), stylePattern, m1 -> {
+            @SuppressWarnings("null") final Color c = Color.byName("" + m1.group(1));
+            if (c != null)
+                return c.getChat();
+            final String f = chat.get(m1.group(1).toLowerCase());
+            if (f != null)
+                return f;
+            return "" + m1.group();
         });
         assert m != null;
         m = ChatColor.translateAlternateColorCodes('&', "" + m);
@@ -424,17 +415,14 @@ public final class Utils {
     public static String replaceEnglishChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll(message, stylePattern, new Callback<String, Matcher>() {
-            @Override
-            public String run(final @Nullable Matcher m) {
-                @SuppressWarnings("null") final Color c = Color.byEnglishName("" + m.group(1));
-                if (c != null)
-                    return c.getChat();
-                final String f = englishChat.get(m.group(1).toLowerCase());
-                if (f != null)
-                    return f;
-                return "" + m.group();
-            }
+        String m = StringUtils.replaceAll(message, stylePattern, m1 -> {
+            @SuppressWarnings("null") final Color c = Color.byEnglishName("" + m1.group(1));
+            if (c != null)
+                return c.getChat();
+            final String f = englishChat.get(m1.group(1).toLowerCase());
+            if (f != null)
+                return f;
+            return "" + m1.group();
         });
         assert m != null;
         m = ChatColor.translateAlternateColorCodes('&', "" + m);

@@ -29,7 +29,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.World;
 import org.bukkit.event.Event;
@@ -67,12 +66,7 @@ public class CondPvP extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return worlds.check(e, new Checker<World>() {
-            @Override
-            public boolean check(final World w) {
-                return w.getPVP() == enabled;
-            }
-        }, isNegated());
+        return worlds.check(e, w -> w.getPVP() == enabled, isNegated());
     }
 
 }

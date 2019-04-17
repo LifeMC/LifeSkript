@@ -25,7 +25,6 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import org.bukkit.GameMode;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -52,12 +51,7 @@ public final class EvtGameMode extends SkriptEvent {
     @Override
     public boolean check(final Event e) {
         if (mode != null) {
-            return mode.check(e, new Checker<GameMode>() {
-                @Override
-                public boolean check(final GameMode m) {
-                    return ((PlayerGameModeChangeEvent) e).getNewGameMode() == m;
-                }
-            });
+            return mode.check(e, m -> ((PlayerGameModeChangeEvent) e).getNewGameMode() == m);
         }
         return true;
     }

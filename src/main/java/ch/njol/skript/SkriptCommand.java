@@ -1,7 +1,6 @@
 package ch.njol.skript;
 
 import ch.njol.skript.ScriptLoader.ScriptInfo;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
@@ -119,14 +118,10 @@ public final class SkriptCommand implements CommandExecutor {
     }
 
     private static Collection<File> toggleScripts(final File folder, final boolean enable) throws IOException {
-        return FileUtils.renameAll(folder, new Converter<String, String>() {
-            @Override
-            @Nullable
-            public String convert(final String name) {
-                if (StringUtils.endsWithIgnoreCase(name, ".sk") && name.startsWith("-") == enable)
-                    return enable ? name.substring(1) : "-" + name;
-                return null;
-            }
+        return FileUtils.renameAll(folder, name -> {
+            if (StringUtils.endsWithIgnoreCase(name, ".sk") && name.startsWith("-") == enable)
+                return enable ? name.substring(1) : "-" + name;
+            return null;
         });
     }
 

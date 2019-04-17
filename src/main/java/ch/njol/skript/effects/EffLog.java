@@ -33,7 +33,6 @@ import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.AsyncEffect;
 import ch.njol.skript.util.ExceptionUtils;
-import ch.njol.util.Closeable;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -58,12 +57,9 @@ public final class EffLog extends AsyncEffect {
     }
 
     static {
-        Skript.closeOnDisable(new Closeable() {
-            @Override
-            public void close() {
-                for (final PrintWriter pw : writers.values())
-                    pw.close();
-            }
+        Skript.closeOnDisable(() -> {
+            for (final PrintWriter pw : writers.values())
+                pw.close();
         });
     }
 

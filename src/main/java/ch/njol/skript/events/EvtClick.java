@@ -117,24 +117,16 @@ public final class EvtClick extends SkriptEvent {
             return false;
         }
 
-        if (tools != null && !tools.check(e, new Checker<ItemType>() {
-            @Override
-            public boolean check(final ItemType t) {
-                return t.isOfType(player.getItemInHand());
-            }
-        })) {
+        if (tools != null && !tools.check(e, t -> t.isOfType(player.getItemInHand()))) {
             return false;
         }
 
         if (types != null) {
-            return types.check(e, new Checker<Object>() {
-                @Override
-                public boolean check(final Object o) {
-                    if (entity != null) {
-                        return o instanceof EntityData ? ((EntityData<?>) o).isInstance(entity) : Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity(entity), (ItemType) o));
-                    } else {
-                        return !(o instanceof EntityData) && ((ItemType) o).isOfType(block);
-                    }
+            return types.check(e, (Checker<Object>) o -> {
+                if (entity != null) {
+                    return o instanceof EntityData ? ((EntityData<?>) o).isInstance(entity) : Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity(entity), (ItemType) o));
+                } else {
+                    return !(o instanceof EntityData) && ((ItemType) o).isOfType(block);
                 }
             });
         }

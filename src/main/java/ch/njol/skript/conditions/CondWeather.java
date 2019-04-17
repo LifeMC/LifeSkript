@@ -31,7 +31,6 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.WeatherType;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.World;
 import org.bukkit.event.Event;
@@ -65,22 +64,14 @@ public class CondWeather extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return worlds.check(e, new Checker<World>() {
-            @Override
-            public boolean check(final World w) {
-                final WeatherType t;
-                if (e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e)) {
-                    t = WeatherType.fromEvent((WeatherEvent) e);
-                } else {
-                    t = WeatherType.fromWorld(w);
-                }
-                return weathers.check(e, new Checker<WeatherType>() {
-                    @Override
-                    public boolean check(final WeatherType wt) {
-                        return wt == t;
-                    }
-                }, isNegated());
+        return worlds.check(e, w -> {
+            final WeatherType t;
+            if (e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e)) {
+                t = WeatherType.fromEvent((WeatherEvent) e);
+            } else {
+                t = WeatherType.fromWorld(w);
             }
+            return weathers.check(e, wt -> wt == t, isNegated());
         });
     }
 

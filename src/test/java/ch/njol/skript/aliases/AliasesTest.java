@@ -22,13 +22,10 @@
 package ch.njol.skript.aliases;
 
 import ch.njol.skript.log.BukkitLoggerFilter;
-import org.eclipse.jdt.annotation.Nullable;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
 
 import static org.junit.Assert.assertEquals;
 
@@ -37,13 +34,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class AliasesTest {
     static {
-        BukkitLoggerFilter.addFilter(new Filter() {
-            @Override
-            public boolean isLoggable(final @Nullable LogRecord record) {
-                if (record == null)
-                    return false;
-                return record.getMessage() == null || !record.getMessage().startsWith("[Skript] Missing entry");
-            }
+        BukkitLoggerFilter.addFilter(record -> {
+            if (record == null)
+                return false;
+            return record.getMessage() == null || !record.getMessage().startsWith("[Skript] Missing entry");
         });
     }
 

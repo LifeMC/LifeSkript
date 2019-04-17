@@ -40,20 +40,17 @@ public class Message {
     static boolean firstChange = true;
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                for (final Message m : messages) {
-                    synchronized (m) {
-                        m.revalidate = true;
-                    }
-                    if (firstChange && Skript.testing()) {
-                        if (!Language.english.containsKey(m.key))
-                            Language.missingEntryError(m.key);
-                    }
+        Language.addListener(() -> {
+            for (final Message m : messages) {
+                synchronized (m) {
+                    m.revalidate = true;
                 }
-                firstChange = false;
+                if (firstChange && Skript.testing()) {
+                    if (!Language.english.containsKey(m.key))
+                        Language.missingEntryError(m.key);
+                }
             }
+            firstChange = false;
         });
     }
 

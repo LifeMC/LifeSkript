@@ -24,7 +24,6 @@ package ch.njol.skript.entity;
 import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.ItemData;
 import ch.njol.skript.aliases.ItemType;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.localization.Adjective;
@@ -61,24 +60,20 @@ public final class FallingBlockData extends EntityData<FallingBlock> {
     @Override
     protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {
         if (exprs.length > 0 && exprs[0] != null) {
-            if ((types = Converters.convert(((Literal<ItemType>) exprs[0]).getAll(), ItemType.class, new Converter<ItemType, ItemType>() {
-                @Override
-                @Nullable
-                public ItemType convert(ItemType t) {
-                    t = t.getBlock().clone();
-                    final Iterator<ItemData> iter = t.iterator();
-                    while (iter.hasNext()) {
-                        final int id = iter.next().getId();
-                        if (id <= 0 || id > Skript.MAXBLOCKID)
-                            iter.remove();
-                    }
-                    if (t.numTypes() == 0)
-                        return null;
-                    t.setAmount(-1);
-                    t.setAll(false);
-                    t.clearEnchantments();
-                    return t;
+            if ((types = Converters.convert(((Literal<ItemType>) exprs[0]).getAll(), ItemType.class, t -> {
+                t = t.getBlock().clone();
+                final Iterator<ItemData> iter = t.iterator();
+                while (iter.hasNext()) {
+                    final int id = iter.next().getId();
+                    if (id <= 0 || id > Skript.MAXBLOCKID)
+                        iter.remove();
                 }
+                if (t.numTypes() == 0)
+                    return null;
+                t.setAmount(-1);
+                t.setAll(false);
+                t.clearEnchantments();
+                return t;
             })).length == 0) {
                 Skript.error(m_not_a_block_error.toString());
                 return false;

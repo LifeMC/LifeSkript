@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -47,12 +46,7 @@ public final class EnumUtils<E extends Enum<E>> {
 
         names = new String[c.getEnumConstants().length];
 
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                validate(true);
-            }
-        });
+        Language.addListener(() -> validate(true));
     }
 
     /**

@@ -70,13 +70,9 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
                     execute(e);
                     return;
                 }
-                Task.callSync(new Callable<Void>() {
-                    @Override
-                    @Nullable
-                    public Void call() throws Exception {
-                        execute(e);
-                        return null;
-                    }
+                Task.callSync((Callable<Void>) () -> {
+                    execute(e);
+                    return null;
                 });
             }
         }

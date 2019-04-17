@@ -26,7 +26,6 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.StructureType;
-import ch.njol.util.Checker;
 import org.bukkit.event.Event;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.eclipse.jdt.annotation.Nullable;
@@ -57,13 +56,7 @@ public final class EvtGrow extends SkriptEvent {
     @Override
     public boolean check(final Event e) {
         if (types != null) {
-            return types.check(e, new Checker<StructureType>() {
-                @SuppressWarnings("null")
-                @Override
-                public boolean check(final StructureType t) {
-                    return t.is(((StructureGrowEvent) e).getSpecies());
-                }
-            });
+            return types.check(e, t -> t.is(((StructureGrowEvent) e).getSpecies()));
         }
         return true;
     }

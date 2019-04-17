@@ -49,47 +49,43 @@ public class Noun extends Message {
     static String localDefinitePluralArticle = "";
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @SuppressWarnings({"null", "unused"})
-            @Override
-            public void onLanguageChange() {
-                Map<String, String> lang = Language.useLocal ? Language.localized : Language.english;
-                if (lang == null)
-                    lang = Language.english;
-                genders.clear();
-                indefiniteArticles.clear();
-                definiteArticles.clear();
-                for (int i = 0; i < 100; i++) {
-                    final String g = lang.get(GENDERS_SECTION + i + ".id");
-                    if (g == null)
-                        break;
-                    if (g.equalsIgnoreCase(PLURAL_TOKEN) || g.equalsIgnoreCase(NO_GENDER_TOKEN)) {
-                        Skript.error("gender #" + i + " uses a reserved character as ID, please use something different!");
-                        continue;
-                    }
-                    genders.put(g, i);
-                    final String ia = lang.get(GENDERS_SECTION + i + ".indefinite article");
-                    indefiniteArticles.add(ia == null ? "" : ia);
-                    final String da = lang.get(GENDERS_SECTION + i + ".definite article");
-                    definiteArticles.add(da == null ? "" : da);
+        Language.addListener(() -> {
+            Map<String, String> lang = Language.useLocal ? Language.localized : Language.english;
+            if (lang == null)
+                lang = Language.english;
+            genders.clear();
+            indefiniteArticles.clear();
+            definiteArticles.clear();
+            for (int i = 0; i < 100; i++) {
+                final String g = lang.get(GENDERS_SECTION + i + ".id");
+                if (g == null)
+                    break;
+                if (g.equalsIgnoreCase(PLURAL_TOKEN) || g.equalsIgnoreCase(NO_GENDER_TOKEN)) {
+                    Skript.error("gender #" + i + " uses a reserved character as ID, please use something different!");
+                    continue;
                 }
-                if (genders.isEmpty()) {
-                    Skript.error("No genders defined in language file " + Language.getName() + ".lang!");
-                    indefiniteArticles.add("");
-                    definiteArticles.add("");
-                }
-                final String dpa = lang.get(GENDERS_SECTION + "plural.definite article");
-                if (dpa == null)
-                    Skript.error("Missing entry '" + GENDERS_SECTION + "plural.definite article' in the " + Language.getName() + " language file!");
-                definitePluralArticle = dpa == null ? "" : dpa;
+                genders.put(g, i);
+                final String ia = lang.get(GENDERS_SECTION + i + ".indefinite article");
+                indefiniteArticles.add(ia == null ? "" : ia);
+                final String da = lang.get(GENDERS_SECTION + i + ".definite article");
+                definiteArticles.add(da == null ? "" : da);
+            }
+            if (genders.isEmpty()) {
+                Skript.error("No genders defined in language file " + Language.getName() + ".lang!");
+                indefiniteArticles.add("");
+                definiteArticles.add("");
+            }
+            final String dpa = lang.get(GENDERS_SECTION + "plural.definite article");
+            if (dpa == null)
+                Skript.error("Missing entry '" + GENDERS_SECTION + "plural.definite article' in the " + Language.getName() + " language file!");
+            definitePluralArticle = dpa == null ? "" : dpa;
 
-                if (Language.useLocal || localIndefiniteArticles.isEmpty()) {
-                    localIndefiniteArticles.clear();
-                    localIndefiniteArticles.addAll(indefiniteArticles);
-                    localDefiniteArticles.clear();
-                    localDefiniteArticles.addAll(definiteArticles);
-                    localDefinitePluralArticle = definitePluralArticle;
-                }
+            if (Language.useLocal || localIndefiniteArticles.isEmpty()) {
+                localIndefiniteArticles.clear();
+                localIndefiniteArticles.addAll(indefiniteArticles);
+                localDefiniteArticles.clear();
+                localDefiniteArticles.addAll(definiteArticles);
+                localDefinitePluralArticle = definitePluralArticle;
             }
         }, LanguageListenerPriority.EARLIEST);
     }

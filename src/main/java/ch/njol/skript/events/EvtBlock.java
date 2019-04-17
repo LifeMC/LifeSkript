@@ -30,7 +30,6 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.util.Checker;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.*;
@@ -101,22 +100,12 @@ public final class EvtBlock extends SkriptEvent {
             durability = 0;
         } else if (Skript.isRunningMinecraft(1, 4, 3) && e instanceof HangingEvent) {
             final EntityData<?> d = EntityData.fromEntity(((HangingEvent) e).getEntity());
-            return types.check(e, new Checker<ItemType>() {
-                @Override
-                public boolean check(final @Nullable ItemType t) {
-                    return t != null && Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(d, t));
-                }
-            });
+            return types.check(e, t -> t != null && Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(d, t)));
         } else {
             assert false;
             return false;
         }
-        return types.check(e, new Checker<ItemType>() {
-            @Override
-            public boolean check(final @Nullable ItemType t) {
-                return t != null && t.isOfType(id, durability);
-            }
-        });
+        return types.check(e, t -> t != null && t.isOfType(id, durability));
     }
 
     @Override

@@ -30,7 +30,6 @@ import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
@@ -66,17 +65,7 @@ public final class CondIsMember extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return players.check(e, new Checker<OfflinePlayer>() {
-            @Override
-            public boolean check(final OfflinePlayer p) {
-                return regions.check(e, new Checker<Region>() {
-                    @Override
-                    public boolean check(final Region r) {
-                        return owner ? r.isOwner(p) : r.isMember(p);
-                    }
-                }, isNegated());
-            }
-        });
+        return players.check(e, p -> regions.check(e, r -> owner ? r.isOwner(p) : r.isMember(p), isNegated()));
     }
 
     @Override

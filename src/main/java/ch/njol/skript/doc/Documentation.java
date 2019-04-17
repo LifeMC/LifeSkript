@@ -32,7 +32,6 @@ import ch.njol.skript.lang.function.JavaFunction;
 import ch.njol.skript.lang.function.Parameter;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
-import ch.njol.util.Callback;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
@@ -137,6 +136,7 @@ public class Documentation {
     }
 
     private static String cleanPatterns(final String patterns) {
+        // link & fancy types
         final String s = StringUtils.replaceAll("" + escapeHTML(patterns) // escape HTML
                         .replaceAll("(?<=[(|])[-0-9]+?¦", "") // remove marks
                         .replace("()", "") // remove empty mark setting groups (mark¦)
@@ -144,41 +144,38 @@ public class Documentation {
                         .replaceAll("\\(\\|([^|]+?)\\)", "[$1]") // dito
                         .replaceAll("\\((.+?)\\|\\)", "[($1)]") // replace (a|b|) with [(a|b)]
                         .replaceAll("\\(\\|(.+?)\\)", "[($1)]") // dito
-                , "(?<!\\\\)%(.+?)(?<!\\\\)%", new Callback<String, Matcher>() { // link & fancy types
-                    @Override
-                    public String run(final @Nullable Matcher m) {
-                        @SuppressWarnings("null")
-                        String s = m.group(1);
-                        if (s.startsWith("-"))
-                            s = s.substring(1);
-                        String flag = "";
-                        if (s.startsWith("*") || s.startsWith("~")) {
-                            flag = s.substring(0, 1);
-                            s = s.substring(1);
-                        }
-                        final int a = s.indexOf('@');
-                        if (a != -1)
-                            s = s.substring(0, a);
-                        final StringBuilder b = new StringBuilder("%");
-                        b.append(flag);
-                        boolean first = true;
-                        for (final String c : s.split("/")) {
-                            assert c != null;
-                            if (!first)
-                                b.append("/");
-                            first = false;
-                            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(c);
-                            final ClassInfo<?> ci = Classes.getClassInfoNoError(p.getFirst());
-                            if (ci != null && ci.getDocName() != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC)) {
-                                b.append("<a href='../classes/#").append(p.getFirst()).append("'>").append(ci.getName().toString(p.getSecond())).append("</a>");
-                            } else {
-                                b.append(c);
-                                if (ci != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC))
-                                    Skript.warning("Used class " + p.getFirst() + " has no docName/name defined");
-                            }
-                        }
-                        return "" + b.append("%").toString();
+                , "(?<!\\\\)%(.+?)(?<!\\\\)%", m -> {
+                    @SuppressWarnings("null")
+                    String s1 = m.group(1);
+                    if (s1.startsWith("-"))
+                        s1 = s1.substring(1);
+                    String flag = "";
+                    if (s1.startsWith("*") || s1.startsWith("~")) {
+                        flag = s1.substring(0, 1);
+                        s1 = s1.substring(1);
                     }
+                    final int a = s1.indexOf('@');
+                    if (a != -1)
+                        s1 = s1.substring(0, a);
+                    final StringBuilder b = new StringBuilder("%");
+                    b.append(flag);
+                    boolean first = true;
+                    for (final String c : s1.split("/")) {
+                        assert c != null;
+                        if (!first)
+                            b.append("/");
+                        first = false;
+                        final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(c);
+                        final ClassInfo<?> ci = Classes.getClassInfoNoError(p.getFirst());
+                        if (ci != null && ci.getDocName() != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC)) {
+                            b.append("<a href='../classes/#").append(p.getFirst()).append("'>").append(ci.getName().toString(p.getSecond())).append("</a>");
+                        } else {
+                            b.append(c);
+                            if (ci != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC))
+                                Skript.warning("Used class " + p.getFirst() + " has no docName/name defined");
+                        }
+                    }
+                    return "" + b.append("%").toString();
                 });
         assert s != null : patterns;
         return s;

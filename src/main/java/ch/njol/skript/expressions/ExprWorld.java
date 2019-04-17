@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -74,21 +73,17 @@ public final class ExprWorld extends PropertyExpression<Object, World> {
     protected World[] get(final Event e, final Object[] source) {
         if (source instanceof World[]) // event value (see init)
             return (World[]) source;
-        return get(source, new Converter<Object, World>() {
-            @Override
-            @Nullable
-            public World convert(final Object o) {
-                if (o instanceof Entity) {
-                    if (getTime() > 0 && e instanceof PlayerTeleportEvent && o.equals(((PlayerTeleportEvent) e).getPlayer()) && !Delay.isDelayed(e))
-                        return ((PlayerTeleportEvent) e).getTo().getWorld();
-                    else
-                        return ((Entity) o).getWorld();
-                }
-                if (o instanceof Location)
-                    return ((Location) o).getWorld();
-                assert false : o;
-                return null;
+        return get(source, o -> {
+            if (o instanceof Entity) {
+                if (getTime() > 0 && e instanceof PlayerTeleportEvent && o.equals(((PlayerTeleportEvent) e).getPlayer()) && !Delay.isDelayed(e))
+                    return ((PlayerTeleportEvent) e).getTo().getWorld();
+                else
+                    return ((Entity) o).getWorld();
             }
+            if (o instanceof Location)
+                return ((Location) o).getWorld();
+            assert false : o;
+            return null;
         });
     }
 

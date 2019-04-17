@@ -23,7 +23,6 @@ package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -64,14 +63,10 @@ public class ExprGameMode extends PropertyExpression<Player, GameMode> {
 
     @Override
     protected GameMode[] get(final Event e, final Player[] source) {
-        return get(source, new Converter<Player, GameMode>() {
-            @Override
-            @Nullable
-            public GameMode convert(final Player p) {
-                if (getTime() >= 0 && e instanceof PlayerGameModeChangeEvent && ((PlayerGameModeChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e))
-                    return ((PlayerGameModeChangeEvent) e).getNewGameMode();
-                return p.getGameMode();
-            }
+        return get(source, p -> {
+            if (getTime() >= 0 && e instanceof PlayerGameModeChangeEvent && ((PlayerGameModeChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e))
+                return ((PlayerGameModeChangeEvent) e).getNewGameMode();
+            return p.getGameMode();
         });
     }
 

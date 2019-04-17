@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -51,18 +50,14 @@ public class ExprVehicle extends SimplePropertyExpression<Entity, Entity> {
 
     @Override
     protected Entity[] get(final Event e, final Entity[] source) {
-        return get(source, new Converter<Entity, Entity>() {
-            @Override
-            @Nullable
-            public Entity convert(final Entity p) {
-                if (getTime() >= 0 && e instanceof VehicleEnterEvent && p.equals(((VehicleEnterEvent) e).getEntered()) && !Delay.isDelayed(e)) {
-                    return ((VehicleEnterEvent) e).getVehicle();
-                }
-                if (getTime() >= 0 && e instanceof VehicleExitEvent && p.equals(((VehicleExitEvent) e).getExited()) && !Delay.isDelayed(e)) {
-                    return ((VehicleExitEvent) e).getVehicle();
-                }
-                return p.getVehicle();
+        return get(source, p -> {
+            if (getTime() >= 0 && e instanceof VehicleEnterEvent && p.equals(((VehicleEnterEvent) e).getEntered()) && !Delay.isDelayed(e)) {
+                return ((VehicleEnterEvent) e).getVehicle();
             }
+            if (getTime() >= 0 && e instanceof VehicleExitEvent && p.equals(((VehicleExitEvent) e).getExited()) && !Delay.isDelayed(e)) {
+                return ((VehicleExitEvent) e).getVehicle();
+            }
+            return p.getVehicle();
         });
     }
 

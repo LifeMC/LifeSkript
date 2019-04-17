@@ -169,14 +169,11 @@ public class ConvertedExpression<F, T> implements Expression<T> {
 
     @Override
     public boolean check(final Event e, final Checker<? super T> c) {
-        return source.check(e, new Checker<F>() {
-            @Override
-            public boolean check(final F f) {
-                final T t = conv.convert(f);
-                if (t == null)
-                    return false;
-                return c.check(t);
-            }
+        return source.check(e, (Checker<F>) f -> {
+            final T t = conv.convert(f);
+            if (t == null)
+                return false;
+            return c.check(t);
         });
     }
 

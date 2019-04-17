@@ -30,7 +30,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -65,17 +64,7 @@ public class CondItemInHand extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return entities.check(e, new Checker<LivingEntity>() {
-            @Override
-            public boolean check(final LivingEntity en) {
-                return types.check(e, new Checker<ItemType>() {
-                    @Override
-                    public boolean check(final ItemType type) {
-                        return type.isOfType(en.getEquipment().getItemInHand());
-                    }
-                }, isNegated());
-            }
-        });
+        return entities.check(e, en -> types.check(e, type -> type.isOfType(en.getEquipment().getItemInHand()), isNegated()));
     }
 
     @Override

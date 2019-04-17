@@ -26,7 +26,6 @@ import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -94,12 +93,7 @@ public class EvtItem extends SkriptEvent {
             assert false;
             return false;
         }
-        return types.check(e, new Checker<ItemType>() {
-            @Override
-            public boolean check(final ItemType t) {
-                return t.isOfType(is);
-            }
-        });
+        return types.check(e, t -> t.isOfType(is));
     }
 
     @Override

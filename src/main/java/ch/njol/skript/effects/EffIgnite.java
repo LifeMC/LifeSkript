@@ -81,12 +81,7 @@ public class EffIgnite extends Effect {
         }
         for (final Entity en : entities.getArray(e)) {
             if (e instanceof EntityDamageEvent && ((EntityDamageEvent) e).getEntity() == en && !Delay.isDelayed(e)) {
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-                        en.setFireTicks(d);
-                    }
-                });
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> en.setFireTicks(d));
             } else {
                 if (e instanceof EntityCombustEvent && ((EntityCombustEvent) e).getEntity() == en && !Delay.isDelayed(e))
                     ((EntityCombustEvent) e).setCancelled(true);// can't change the duration, thus simply cancel the event (and create a new one)

@@ -27,7 +27,6 @@ import ch.njol.skript.config.validate.EntryValidator;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.NonNullPair;
-import ch.njol.util.NullableChecker;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import org.eclipse.jdt.annotation.NonNull;
@@ -160,12 +159,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
     public Iterator<Node> iterator() {
         @SuppressWarnings("null")
         @NonNull final Iterator<Node> iter = nodes.iterator();
-        return new CheckedIterator<Node>(iter, new NullableChecker<Node>() {
-            @Override
-            public boolean check(final @Nullable Node n) {
-                return n != null && !n.isVoid();
-            }
-        }) {
+        return new CheckedIterator<Node>(iter, n -> n != null && !n.isVoid()) {
             @Override
             public boolean hasNext() {
                 final boolean hasNext = super.hasNext();

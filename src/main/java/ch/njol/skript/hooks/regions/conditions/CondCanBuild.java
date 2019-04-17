@@ -31,7 +31,6 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -66,17 +65,7 @@ public final class CondCanBuild extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return players.check(e, new Checker<Player>() {
-            @Override
-            public boolean check(final Player p) {
-                return locations.check(e, new Checker<Location>() {
-                    @Override
-                    public boolean check(final Location l) {
-                        return RegionsPlugin.canBuild(p, l);
-                    }
-                }, isNegated());
-            }
-        });
+        return players.check(e, p -> locations.check(e, l -> RegionsPlugin.canBuild(p, l), isNegated()));
     }
 
     @Override

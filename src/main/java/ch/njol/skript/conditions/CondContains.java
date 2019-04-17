@@ -91,36 +91,18 @@ public final class CondContains extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return containers.check(e, new Checker<Object>() {
-            @Override
-            public boolean check(final Object container) {
-                if (containers instanceof Variable && !containers.isSingle()) {
-                    return items.check(e, new Checker<Object>() {
-                        @Override
-                        public boolean check(final Object item) {
-                            return Relation.EQUAL.is(Comparators.compare(container, item));
-                        }
-                    }, isNegated());
-                } else {
-                    if (container instanceof Inventory) {
-                        final Inventory invi = (Inventory) container;
-                        return items.check(e, new Checker<Object>() {
-                            @Override
-                            public boolean check(final Object type) {
-                                return type instanceof ItemType && ((ItemType) type).isContainedIn(invi);
-                            }
-                        }, isNegated());
-                    } else if (container instanceof String) {
-                        final String s = (String) container;
-                        return items.check(e, new Checker<Object>() {
-                            @Override
-                            public boolean check(final Object type) {
-                                return type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value());
-                            }
-                        }, isNegated());
-                    }
-                    return false;
+        return containers.check(e, (Checker<Object>) container -> {
+            if (containers instanceof Variable && !containers.isSingle()) {
+                return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(container, item)), isNegated());
+            } else {
+                if (container instanceof Inventory) {
+                    final Inventory invi = (Inventory) container;
+                    return items.check(e, (Checker<Object>) type -> type instanceof ItemType && ((ItemType) type).isContainedIn(invi), isNegated());
+                } else if (container instanceof String) {
+                    final String s = (String) container;
+                    return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
                 }
+                return false;
             }
         });
     }

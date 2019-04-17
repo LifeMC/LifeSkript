@@ -45,7 +45,6 @@ import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Closeable;
-import ch.njol.util.NullableChecker;
 import ch.njol.util.StringUtils;
 import ch.njol.util.WebUtils;
 import ch.njol.util.coll.CollectionUtils;
@@ -75,7 +74,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Filter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -174,12 +172,7 @@ public final class Skript extends JavaPlugin implements Listener {
     static boolean runningCraftBukkit;
     @Nullable
     private static Version version;
-    public final static UncaughtExceptionHandler UEH = new UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(final @Nullable Thread t, final @Nullable Throwable e) {
-            Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
-        }
-    };
+    public final static UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
     private static SkriptAddon addon;
@@ -205,25 +198,11 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static void printDownloadLink() {
-        Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-            @Override
-            public final void run() {
-                Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK);
-            }
-
-        });
+        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK));
     }
 
     public static void printIssuesLink() {
-        Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-            @Override
-            public final void run() {
-                Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK);
-            }
-
-        });
+        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
     @Nullable
@@ -587,18 +566,15 @@ public final class Skript extends JavaPlugin implements Listener {
     // ================ EVENTS ================
 
     public static Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
-        return new CheckedIterator<>(getExpressions(), new NullableChecker<ExpressionInfo<?, ?>>() {
-            @Override
-            public boolean check(final @Nullable ExpressionInfo<?, ?> i) {
-                if (i == null || i.returnType == Object.class)
+        return new CheckedIterator<>(getExpressions(), i -> {
+            if (i == null || i.returnType == Object.class)
+                return true;
+            for (final Class<?> returnType : returnTypes) {
+                assert returnType != null;
+                if (Converters.converterExists(i.returnType, returnType))
                     return true;
-                for (final Class<?> returnType : returnTypes) {
-                    assert returnType != null;
-                    if (Converters.converterExists(i.returnType, returnType))
-                        return true;
-                }
-                return false;
             }
+            return false;
         });
     }
 
@@ -1116,33 +1092,18 @@ public final class Skript extends JavaPlugin implements Listener {
                     EvtSkript.onSkriptStart();
 
                     // suppresses the "can't keep up" warning after loading all scripts
-                    final Filter f = new Filter() {
-                        @Override
-                        public boolean isLoggable(final @Nullable LogRecord record) {
-                            return record != null && record.getMessage() != null && !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase());
-                        }
-                    };
+                    final Filter f = record -> record != null && record.getMessage() != null && !record.getMessage().toLowerCase().startsWith("can't keep up!".toLowerCase());
                     BukkitLoggerFilter.addFilter(f);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.this, new Runnable() {
-                        @Override
-                        public void run() {
-                            BukkitLoggerFilter.removeFilter(f);
-                        }
-                    }, 1);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.this, () -> BukkitLoggerFilter.removeFilter(f), 1);
                 }
             });
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
 
-                Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+                Bukkit.getScheduler().runTask(getInstance(), () -> {
 
-                    @Override
-                    public final void run() {
-
-                        Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
-                        Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
-
-                    }
+                    Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
+                    Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
 
                 });
 
@@ -1151,18 +1112,13 @@ public final class Skript extends JavaPlugin implements Listener {
             if (!isEnabled())
                 return;
 
-            Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
+            Bukkit.getScheduler().runTask(getInstance(), () -> {
 
-                @Override
-                public final void run() {
+                if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
 
-                    if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
+                    if (!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
 
-                        if (!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
-
-                            Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
-
-                        }
+                        Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
 
                     }
 
@@ -1199,78 +1155,45 @@ public final class Skript extends JavaPlugin implements Listener {
             if (!isEnabled())
                 return;
 
-            Bukkit.getScheduler().runTaskAsynchronously(getInstance(), new Runnable() {
+            Bukkit.getScheduler().runTaskAsynchronously(getInstance(), () -> {
+                try {
+                    final String current = getInstance().getDescription().getVersion();
 
-                @Override
-                public final void run() {
-                    try {
-                        final String current = getInstance().getDescription().getVersion();
+                    if (current == null || current.length() < 1)
+                        return;
 
-                        if (current == null || current.length() < 1)
-                            return;
+                    final String latest = getLatestVersion();
 
-                        final String latest = getLatestVersion();
+                    if (latest == null)
+                        return;
 
-                        if (latest == null)
-                            return;
+                    final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
+                    final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
 
-                        final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
-                        final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
-
-                        if (!latestTrimmed.equals(currentTrimmed)) {
-                            if (!isEnabled())
-                                return;
-                            Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-                                @Override
-                                public final void run() {
-                                    Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")");
-                                }
-
-                            });
-                            printDownloadLink();
-                            updateAvailable = true;
-                            latestVersion = latest;
-                        } else {
-                            if (!isEnabled())
-                                return;
-                            Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-                                @Override
-                                public final void run() {
-                                    Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!");
-                                }
-
-                            });
-                            printIssuesLink();
-                        }
-                    } catch (final Throwable tw) {
+                    if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-                            @Override
-                            public final void run() {
-                                Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")");
-                            }
-
-                        });
-                        if (Skript.logHigh()) {
-                            if (!isEnabled())
-                                return;
-                            Bukkit.getScheduler().runTask(getInstance(), new Runnable() {
-
-                                @Override
-                                public final void run() {
-                                    Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw);
-                                }
-
-                            });
-                        }
+                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
                         printDownloadLink();
+                        updateAvailable = true;
+                        latestVersion = latest;
+                    } else {
+                        if (!isEnabled())
+                            return;
+                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
+                        printIssuesLink();
                     }
+                } catch (final Throwable tw) {
+                    if (!isEnabled())
+                        return;
+                    Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                    if (Skript.logHigh()) {
+                        if (!isEnabled())
+                            return;
+                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw));
+                    }
+                    printDownloadLink();
                 }
-
             });
 
         } catch (final Throwable tw) {
@@ -1312,42 +1235,38 @@ public final class Skript extends JavaPlugin implements Listener {
 
         // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
         // async to not slow down server reload, delayed to not slow down server shutdown
-        final Thread t = newThread(new Runnable() {
-            @SuppressWarnings("synthetic-access")
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10000);
-                } catch (final InterruptedException ignored) {
-                }
-                try {
-                    final Field modifiers = Field.class.getDeclaredField("modifiers");
-                    modifiers.setAccessible(true);
-                    try (JarFile jar = new JarFile(getPluginFile())) {
-                        for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
-                            if (e.getName().endsWith(".class")) {
-                                try {
-                                    final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader());
-                                    for (final Field f : c.getDeclaredFields()) {
-                                        if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
-                                            if (Modifier.isFinal(f.getModifiers())) {
-                                                modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-                                            }
-                                            f.setAccessible(true);
-                                            f.set(null, null);
+        final Thread t = newThread(() -> {
+            try {
+                Thread.sleep(10000);
+            } catch (final InterruptedException ignored) {
+            }
+            try {
+                final Field modifiers = Field.class.getDeclaredField("modifiers");
+                modifiers.setAccessible(true);
+                try (JarFile jar = new JarFile(getPluginFile())) {
+                    for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
+                        if (e.getName().endsWith(".class")) {
+                            try {
+                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader());
+                                for (final Field f : c.getDeclaredFields()) {
+                                    if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
+                                        if (Modifier.isFinal(f.getModifiers())) {
+                                            modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
                                         }
+                                        f.setAccessible(true);
+                                        f.set(null, null);
                                     }
-                                } catch (final Throwable ex) {
-                                    if (testing() || Skript.logHigh())
-                                        ex.printStackTrace();
                                 }
+                            } catch (final Throwable ex) {
+                                if (testing() || Skript.logHigh())
+                                    ex.printStackTrace();
                             }
                         }
                     }
-                } catch (final Throwable ex) {
-                    if (testing() || Skript.logHigh())
-                        ex.printStackTrace();
                 }
+            } catch (final Throwable ex) {
+                if (testing() || Skript.logHigh())
+                    ex.printStackTrace();
             }
         }, "Skript cleanup thread");
         t.setPriority(Thread.MIN_PRIORITY);

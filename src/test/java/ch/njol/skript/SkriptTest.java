@@ -48,11 +48,8 @@ public class SkriptTest {
 
     //	@Test
     public static void main() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
 //				org.bukkit.craftbukkit.Main.main(new String[] {"-nojline"});
-            }
         }).start();
         while (Bukkit.getServer() == null) {
             try {
@@ -60,12 +57,9 @@ public class SkriptTest {
             } catch (final InterruptedException ignored) {
             }
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                assertNotNull(Skript.getInstance());
-                test();
-            }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
+            assertNotNull(Skript.getInstance());
+            test();
         }, 2);
     }
 

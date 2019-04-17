@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -60,16 +59,12 @@ public final class ExprRound extends PropertyExpression<Number, Long> {
 
     @Override
     protected Long[] get(final Event e, final Number[] source) {
-        return get(source, new Converter<Number, Long>() {
-            @SuppressWarnings("null")
-            @Override
-            public Long convert(final Number n) {
-                if (n instanceof Integer)
-                    return n.longValue();
-                else if (n instanceof Long)
-                    return (Long) n;
-                return action == -1 ? Math2.floor(n.doubleValue()) : action == 0 ? Math2.round(n.doubleValue()) : Math2.ceil(n.doubleValue());
-            }
+        return get(source, n -> {
+            if (n instanceof Integer)
+                return n.longValue();
+            else if (n instanceof Long)
+                return (Long) n;
+            return action == -1 ? Math2.floor(n.doubleValue()) : action == 0 ? Math2.round(n.doubleValue()) : Math2.ceil(n.doubleValue());
         });
     }
 

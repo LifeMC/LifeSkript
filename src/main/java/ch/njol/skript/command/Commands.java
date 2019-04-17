@@ -40,7 +40,6 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Timespan;
 import ch.njol.skript.util.Utils;
-import ch.njol.util.Callback;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.Validate;
@@ -66,7 +65,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.logging.Filter;
@@ -114,12 +112,7 @@ public final class Commands { //NOSONAR
                 if (handleEffectCommand(e.getPlayer(), e.getMessage()))
                     e.setCancelled(true);
             } else {
-                final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return handleEffectCommand(e.getPlayer(), e.getMessage());
-                    }
-                });
+                final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
                 try {
                     while (true) {
                         try {
@@ -392,14 +385,11 @@ public final class Commands { //NOSONAR
         String desc = "/" + command + " ";
         final boolean wasLocal = Language.setUseLocal(true); // use localised class names in description
         try {
-            desc += StringUtils.replaceAll(pattern, "(?<!\\\\)%-?(.+?)%", new Callback<String, Matcher>() {
-                @Override
-                public String run(final @Nullable Matcher m) {
-                    assert m != null;
-                    final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + m.group(1));
-                    final String s = p.getFirst();
-                    return "<" + Classes.getClassInfo(s).getName().toString(p.getSecond()) + ">";
-                }
+            desc += StringUtils.replaceAll(pattern, "(?<!\\\\)%-?(.+?)%", m1 -> {
+                assert m1 != null;
+                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + m1.group(1));
+                final String s1 = p.getFirst();
+                return "<" + Classes.getClassInfo(s1).getName().toString(p.getSecond()) + ">";
             });
         } finally {
             Language.setUseLocal(wasLocal);

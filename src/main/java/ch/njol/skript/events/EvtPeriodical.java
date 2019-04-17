@@ -86,22 +86,12 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
         this.t = t;
         int[] taskIDs;
         if (worlds == null) {
-            taskIDs = new int[]{Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), new Runnable() {
-                @Override
-                public final void run() {
-                    execute(null);
-                }
-            }, period.getTicks_i(), period.getTicks_i())};
+            taskIDs = new int[]{Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), () -> execute(null), period.getTicks_i(), period.getTicks_i())};
         } else {
             taskIDs = new int[worlds.length];
             for (int i = 0; i < worlds.length; i++) {
                 final World w = worlds[i];
-                taskIDs[i] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), new Runnable() {
-                    @Override
-                    public final void run() {
-                        execute(w);
-                    }
-                }, period.getTicks_i() - w.getFullTime() % period.getTicks_i(), period.getTicks_i());
+                taskIDs[i] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), () -> execute(w), period.getTicks_i() - w.getFullTime() % period.getTicks_i(), period.getTicks_i());
                 assert worlds != null; // FindBugs
             }
         }

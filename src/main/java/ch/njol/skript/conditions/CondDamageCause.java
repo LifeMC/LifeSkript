@@ -30,7 +30,6 @@ import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -65,12 +64,7 @@ public final class CondDamageCause extends Condition {
         final DamageCause c = cause.getSingle(e);
         if (c == null)
             return false;
-        return expected.check(e, new Checker<DamageCause>() {
-            @Override
-            public boolean check(final DamageCause o) {
-                return c == o;
-            }
-        }, isNegated());
+        return expected.check(e, o -> c == o, isNegated());
     }
 
     @Override

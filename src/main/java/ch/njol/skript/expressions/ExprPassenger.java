@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -51,18 +50,14 @@ public class ExprPassenger extends SimplePropertyExpression<Entity, Entity> { //
 
     @Override
     protected Entity[] get(final Event e, final Entity[] source) {
-        return get(source, new Converter<Entity, Entity>() {
-            @Override
-            @Nullable
-            public Entity convert(final Entity v) {
-                if (getTime() >= 0 && e instanceof VehicleEnterEvent && v.equals(((VehicleEnterEvent) e).getVehicle()) && !Delay.isDelayed(e)) {
-                    return ((VehicleEnterEvent) e).getEntered();
-                }
-                if (getTime() >= 0 && e instanceof VehicleExitEvent && v.equals(((VehicleExitEvent) e).getVehicle()) && !Delay.isDelayed(e)) {
-                    return ((VehicleExitEvent) e).getExited();
-                }
-                return v.getPassenger();
+        return get(source, v -> {
+            if (getTime() >= 0 && e instanceof VehicleEnterEvent && v.equals(((VehicleEnterEvent) e).getVehicle()) && !Delay.isDelayed(e)) {
+                return ((VehicleEnterEvent) e).getEntered();
             }
+            if (getTime() >= 0 && e instanceof VehicleExitEvent && v.equals(((VehicleExitEvent) e).getVehicle()) && !Delay.isDelayed(e)) {
+                return ((VehicleExitEvent) e).getExited();
+            }
+            return v.getPassenger();
         });
     }
 

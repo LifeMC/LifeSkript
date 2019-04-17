@@ -24,7 +24,6 @@ package ch.njol.skript.util;
 import ch.njol.skript.Skript;
 import ch.njol.skript.localization.GeneralWords;
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.skript.localization.Noun;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.coll.CollectionUtils;
@@ -51,13 +50,10 @@ public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
     };
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                for (int i = 0; i < names.length; i++) {
-                    parseValues.put(names[i].getSingular().toLowerCase(), times[i]);
-                    parseValues.put(names[i].getPlural().toLowerCase(), times[i]);
-                }
+        Language.addListener(() -> {
+            for (int i = 0; i < names.length; i++) {
+                parseValues.put(names[i].getSingular().toLowerCase(), times[i]);
+                parseValues.put(names[i].getPlural().toLowerCase(), times[i]);
             }
         });
     }

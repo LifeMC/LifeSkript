@@ -23,7 +23,6 @@ package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.ItemType;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -67,16 +66,12 @@ public class ExprEnchantmentLevel extends PropertyExpression<ItemType, Integer> 
         final Enchantment ench = enchantment.getSingle(e);
         if (ench == null)
             return new Integer[0];
-        return get(source, new Converter<ItemType, Integer>() {
-            @Override
-            @Nullable
-            public Integer convert(final ItemType i) {
-                final Map<Enchantment, Integer> enchs = i.getEnchantments();
-                if (enchs == null)
-                    return 0;
-                final Integer l = enchs.get(ench);
-                return l == null ? Integer.valueOf(0) : l;
-            }
+        return get(source, i -> {
+            final Map<Enchantment, Integer> enchs = i.getEnchantments();
+            if (enchs == null)
+                return 0;
+            final Integer l = enchs.get(ench);
+            return l == null ? Integer.valueOf(0) : l;
         });
     }
 

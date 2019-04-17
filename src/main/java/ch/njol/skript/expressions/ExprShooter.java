@@ -24,7 +24,6 @@ package ch.njol.skript.expressions;
 import ch.njol.skript.Skript;
 import ch.njol.skript.bukkitutil.ProjectileUtils;
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -60,15 +59,11 @@ public class ExprShooter extends PropertyExpression<Projectile, LivingEntity> {
 
     @Override
     protected LivingEntity[] get(final Event e, final Projectile[] source) {
-        return get(source, new Converter<Projectile, LivingEntity>() {
-            @Override
-            @Nullable
-            public LivingEntity convert(final Projectile p) {
-                final Object o = ProjectileUtils.getShooter(p);
-                if (o instanceof LivingEntity)
-                    return (LivingEntity) o;
-                return null;
-            }
+        return get(source, p -> {
+            final Object o = ProjectileUtils.getShooter(p);
+            if (o instanceof LivingEntity)
+                return (LivingEntity) o;
+            return null;
         });
     }
 

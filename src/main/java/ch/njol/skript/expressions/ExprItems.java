@@ -33,7 +33,6 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ch.njol.util.NullableChecker;
 import ch.njol.util.coll.iterator.ArrayIterator;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.IteratorIterable;
@@ -151,13 +150,7 @@ public class ExprItems extends SimpleExpression<ItemStack> {
         if (!blocks)
             return iter;
 
-        return new CheckedIterator<>(iter, new NullableChecker<ItemStack>() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean check(final @Nullable ItemStack is) {
-                return is != null && is.getTypeId() <= Skript.MAXBLOCKID;
-            }
-        });
+        return new CheckedIterator<>(iter, is -> is != null && is.getTypeId() <= Skript.MAXBLOCKID);
     }
 
     @Override

@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -69,22 +68,18 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
 
     @Override
     protected Object[] get(final Event e, final Object[] source) {
-        return get(source, new Converter<Object, Object>() {
-            @Override
-            @Nullable
-            public Object convert(final Object o) {
-                final Number a = amount.getSingle(e);
-                if (a == null)
-                    return null;
-                if (o instanceof ItemStack) {
-                    final ItemStack is = ((ItemStack) o).clone();
-                    is.setAmount(a.intValue());
-                    return is;
-                } else {
-                    final EntityType t = ((EntityType) o).clone();
-                    t.amount = a.intValue();
-                    return t;
-                }
+        return get(source, o -> {
+            final Number a = amount.getSingle(e);
+            if (a == null)
+                return null;
+            if (o instanceof ItemStack) {
+                final ItemStack is = ((ItemStack) o).clone();
+                is.setAmount(a.intValue());
+                return is;
+            } else {
+                final EntityType t = ((EntityType) o).clone();
+                t.amount = a.intValue();
+                return t;
             }
         });
     }

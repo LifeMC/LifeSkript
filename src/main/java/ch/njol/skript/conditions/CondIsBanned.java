@@ -67,28 +67,20 @@ public class CondIsBanned extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return players.check(e, new Checker<Object>() {
-            @Override
-            public boolean check(final Object o) {
-                if (o instanceof Player) {
-                    if (ipBanned) {
-                        return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
-                    } else {
-                        return ((Player) o).isBanned();
-                    }
-                } else if (o instanceof OfflinePlayer) {
-                    return ((OfflinePlayer) o).isBanned();
-                } else if (o instanceof String) {
-                    return Bukkit.getIPBans().contains(o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(new OfflinePlayer[0]), new Predicate<OfflinePlayer>() {
-                        @Override
-                        public boolean test(final @Nullable OfflinePlayer t) {
-                            return t != null && o.equals(t.getName());
-                        }
-                    });
+        return players.check(e, (Checker<Object>) o -> {
+            if (o instanceof Player) {
+                if (ipBanned) {
+                    return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
+                } else {
+                    return ((Player) o).isBanned();
                 }
-                assert false;
-                return false;
+            } else if (o instanceof OfflinePlayer) {
+                return ((OfflinePlayer) o).isBanned();
+            } else if (o instanceof String) {
+                return Bukkit.getIPBans().contains(o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(new OfflinePlayer[0]), (Predicate<OfflinePlayer>) t -> t != null && o.equals(t.getName()));
             }
+            assert false;
+            return false;
         }, isNegated());
     }
 

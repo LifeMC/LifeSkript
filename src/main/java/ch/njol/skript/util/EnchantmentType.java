@@ -23,7 +23,6 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.yggdrasil.YggdrasilSerializable;
 import org.bukkit.enchantments.Enchantment;
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,16 +44,13 @@ public class EnchantmentType implements YggdrasilSerializable {
     private final static Pattern pattern = Pattern.compile(".+ \\d+");
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                enchantmentNames.clear();
-                for (final Enchantment e : Enchantment.values()) {
-                    final String[] names = Language.getList(LANGUAGE_NODE + ".names." + e.getName());
-                    enchantmentNames.put(e, names[0]);
-                    for (final String n : names)
-                        enchantmentPatterns.put(n.toLowerCase(), e);
-                }
+        Language.addListener(() -> {
+            enchantmentNames.clear();
+            for (final Enchantment e : Enchantment.values()) {
+                final String[] names = Language.getList(LANGUAGE_NODE + ".names." + e.getName());
+                enchantmentNames.put(e, names[0]);
+                for (final String n : names)
+                    enchantmentPatterns.put(n.toLowerCase(), e);
             }
         });
     }

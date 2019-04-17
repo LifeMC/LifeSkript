@@ -23,7 +23,6 @@ package ch.njol.skript.entity;
 
 import ch.njol.skript.aliases.ItemData;
 import ch.njol.skript.aliases.ItemType;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.localization.Adjective;
@@ -55,22 +54,17 @@ public final class ThrownPotionData extends EntityData<ThrownPotion> {
     @Override
     protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {
         if (exprs.length > 0 && exprs[0] != null) {
-            if (Converters.convert((ItemType[]) exprs[0].getAll(), ItemType.class, new Converter<ItemType, ItemType>() {
-                @SuppressWarnings("deprecation")
-                @Override
-                @Nullable
-                public ItemType convert(final ItemType t) {
-                    ItemType r = null;
-                    for (final ItemData d : t.getTypes()) {
-                        if (d.getId() == Material.POTION.getId()) {
-                            if (r == null)
-                                r = new ItemType(d);
-                            else
-                                r.add(d);
-                        }
+            if (Converters.convert(exprs[0].getAll(), ItemType.class, t -> {
+                ItemType r = null;
+                for (final ItemData d : t.getTypes()) {
+                    if (d.getId() == Material.POTION.getId()) {
+                        if (r == null)
+                            r = new ItemType(d);
+                        else
+                            r.add(d);
                     }
-                    return r;
                 }
+                return r;
             }).length == 0) {
                 return false; // no error message - other things can be thrown as well
             }

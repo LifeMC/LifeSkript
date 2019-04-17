@@ -42,12 +42,7 @@ public final class Comparators {
 
     public final static Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<>();
     private final static Map<Pair<Class<?>, Class<?>>, Comparator<?, ?>> comparatorsQuickAccess = new HashMap<>();
-    private final static java.util.Comparator<Object> javaComparator = new java.util.Comparator<Object>() {
-        @Override
-        public int compare(final @Nullable Object o1, final @Nullable Object o2) {
-            return Comparators.compare(o1, o2).getRelation();
-        }
-    };
+    private final static java.util.Comparator<Object> javaComparator = (o1, o2) -> compare(o1, o2).getRelation();
 
     private Comparators() {
         throw new UnsupportedOperationException();

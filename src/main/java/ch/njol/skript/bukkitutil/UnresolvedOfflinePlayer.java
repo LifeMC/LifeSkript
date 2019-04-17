@@ -22,7 +22,6 @@
 package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
-import ch.njol.util.Closeable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -49,34 +48,30 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 
     final static BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<>();
     final static AtomicBoolean threadStarted = new AtomicBoolean();
-    final static Thread resolverThread = Skript.newThread(new Runnable() {
-        @SuppressWarnings("deprecation")
-        @Override
-        public final void run() {
-            while (Bukkit.getServer() != null && Skript.getInstance().isEnabled()) {
-                try {
-                    final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
+    final static Thread resolverThread = Skript.newThread(() -> {
+        while (Bukkit.getServer() != null && Skript.getInstance().isEnabled()) {
+            try {
+                final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 
-                    if (p == null)
-                        continue;
+                if (p == null)
+                    continue;
 
-                    if (p.bukkitOfflinePlayer != null) // If already resolved by the resolveNow method, just ignore it.
-                        continue;
+                if (p.bukkitOfflinePlayer != null) // If already resolved by the resolveNow method, just ignore it.
+                    continue;
 
-                    p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
+                p.bukkitOfflinePlayer = Bukkit.getOfflinePlayer(p.name);
 
-                    if (!p.actionQueue.isEmpty())
-                        for (final Runnable action : p.actionQueue)
-                            if (action != null) {
-                                p.actionQueue.remove(action);
-                                action.run();
-                            }
+                if (!p.actionQueue.isEmpty())
+                    for (final Runnable action : p.actionQueue)
+                        if (action != null) {
+                            p.actionQueue.remove(action);
+                            action.run();
+                        }
 
-                    Thread.sleep(100L);
-                } catch (final InterruptedException e) {
-                    //Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
-                    break;
-                }
+                Thread.sleep(100L);
+            } catch (final InterruptedException e) {
+                //Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
+                break;
             }
         }
     }, "Skript offline player resolver thread");
@@ -98,13 +93,10 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             threadStarted.set(true);
             resolverThread.setPriority(Thread.MIN_PRIORITY);
             resolverThread.start();
-            Skript.closeOnDisable(new Closeable() {
-                @Override
-                public final void close() {
-                    try {
-                        resolverThread.interrupt();
-                    } catch (final Throwable ignored) { /* ignored */ }
-                }
+            Skript.closeOnDisable(() -> {
+                try {
+                    resolverThread.interrupt();
+                } catch (final Throwable ignored) { /* ignored */ }
             });
         }
         this.name = name;
@@ -150,12 +142,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.permissions.ServerOperator#setOp(boolean)
      */
     public void setOp(final boolean value) {
-        actionQueue.add(new Runnable() {
-            @SuppressWarnings("null")
-            public final void run() {
-                bukkitOfflinePlayer.setOp(value);
-            }
-        });
+        actionQueue.add(() -> bukkitOfflinePlayer.setOp(value));
     }
 
     /**
@@ -208,12 +195,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      */
     @Deprecated
     public void setBanned(final boolean banned) {
-        actionQueue.add(new Runnable() {
-            @SuppressWarnings("null")
-            public final void run() {
-                bukkitOfflinePlayer.setBanned(banned);
-            }
-        });
+        actionQueue.add(() -> bukkitOfflinePlayer.setBanned(banned));
     }
 
     /**
@@ -235,12 +217,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.OfflinePlayer#setWhitelisted(boolean)
      */
     public void setWhitelisted(final boolean value) {
-        actionQueue.add(new Runnable() {
-            @SuppressWarnings("null")
-            public final void run() {
-                bukkitOfflinePlayer.setWhitelisted(value);
-            }
-        });
+        actionQueue.add(() -> bukkitOfflinePlayer.setWhitelisted(value));
     }
 
     /**

@@ -22,7 +22,6 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -61,12 +60,7 @@ public class ExprColoured extends PropertyExpression<String, String> {
 
     @Override
     protected String[] get(final Event e, final String[] source) {
-        return get(source, new Converter<String, String>() {
-            @Override
-            public String convert(final String s) {
-                return color ? Utils.replaceChatStyles(s) : "" + ChatColor.stripColor(s);
-            }
-        });
+        return get(source, s -> color ? Utils.replaceChatStyles(s) : "" + ChatColor.stripColor(s));
     }
 
     @Override

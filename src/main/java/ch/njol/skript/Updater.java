@@ -119,96 +119,92 @@ public final class Updater {
         }
         if (!isAutomatic || Skript.logNormal())
             Skript.info(sender, "" + m_checking);
-        Skript.newThread(new Runnable() {
-            @SuppressWarnings("null")
-            @Override
-            public void run() {
-                infos.clear();
+        Skript.newThread(() -> {
+            infos.clear();
 
-                InputStream in = null;
-                try {
-                    final URLConnection conn = new URL(filesURL).openConnection();
-                    conn.setRequestProperty("User-Agent", "Skript/v" + Skript.getVersion() + " (by Njol)");
-                    in = conn.getInputStream();
-                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding()))) {
-                        final String line = reader.readLine();
-                        if (line != null) {
-                            final JSONArray a = (JSONArray) JSONValue.parse(line);
-                            for (final Object o : a) {
-                                final Object name = ((JSONObject) o).get("name");
-                                if (!(name instanceof String) || !((String) name).matches("\\d+\\.\\d+(\\.\\d+)?( \\(jar( only)?\\))?"))// not the default version pattern to not match beta/etc. versions
-                                    continue;
-                                final Object url = ((JSONObject) o).get("downloadUrl");
-                                if (!(url instanceof String))
-                                    continue;
+            InputStream in = null;
+            try {
+                final URLConnection conn = new URL(filesURL).openConnection();
+                conn.setRequestProperty("User-Agent", "Skript/v" + Skript.getVersion() + " (by Njol)");
+                in = conn.getInputStream();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding()))) {
+                    final String line = reader.readLine();
+                    if (line != null) {
+                        final JSONArray a = (JSONArray) JSONValue.parse(line);
+                        for (final Object o : a) {
+                            final Object name = ((JSONObject) o).get("name");
+                            if (!(name instanceof String) || !((String) name).matches("\\d+\\.\\d+(\\.\\d+)?( \\(jar( only)?\\))?"))// not the default version pattern to not match beta/etc. versions
+                                continue;
+                            final Object url = ((JSONObject) o).get("downloadUrl");
+                            if (!(url instanceof String))
+                                continue;
 
-                                final Version version = new Version(((String) name).contains(" ") ? "" + ((String) name).substring(0, ((String) name).indexOf(' ')) : (String) name);
-                                if (version.compareTo(Skript.getVersion()) > 0) {
-                                    infos.add(new VersionInfo((String) name, version, (String) url));
-                                }
+                            final Version version = new Version(((String) name).contains(" ") ? "" + ((String) name).substring(0, ((String) name).indexOf(' ')) : (String) name);
+                            if (version.compareTo(Skript.getVersion()) > 0) {
+                                infos.add(new VersionInfo((String) name, version, (String) url));
                             }
                         }
                     }
+                }
 
-                    if (!infos.isEmpty()) {
-                        Collections.sort(infos);
-                        latest.set(infos.get(0));
-                    } else {
-                        latest.set(null);
-                    }
+                if (!infos.isEmpty()) {
+                    Collections.sort(infos);
+                    latest.set(infos.get(0));
+                } else {
+                    latest.set(null);
+                }
 
-                    getChangelogs(sender);
+                getChangelogs(sender);
 
-                    final String message = infos.isEmpty() ? Skript.getVersion().isStable() ? "" + m_running_latest_version : "" + m_running_latest_version_beta : "" + m_update_available;
-                    if (isAutomatic && !infos.isEmpty()) {
-                        Skript.adminBroadcast(message);
-                    } else {
-                        Skript.info(sender, message);
-                    }
+                final String message = infos.isEmpty() ? Skript.getVersion().isStable() ? "" + m_running_latest_version : "" + m_running_latest_version_beta : "" + m_update_available;
+                if (isAutomatic && !infos.isEmpty()) {
+                    Skript.adminBroadcast(message);
+                } else {
+                    Skript.info(sender, message);
+                }
 
-                    if (download && !infos.isEmpty()) {
-                        stateLock.writeLock().lock();
-                        try {
-                            state = UpdateState.DOWNLOAD_IN_PROGRESS;
-                        } finally {
-                            stateLock.writeLock().unlock();
-                        }
-                        download_i(sender, isAutomatic);
-                    } else {
-                        stateLock.writeLock().lock();
-                        try {
-                            state = UpdateState.CHECKED_FOR_UPDATE;
-                        } finally {
-                            stateLock.writeLock().unlock();
-                        }
-                    }
-                } catch (final IOException e) {
+                if (download && !infos.isEmpty()) {
                     stateLock.writeLock().lock();
                     try {
-                        state = UpdateState.CHECK_ERROR;
-                        error.set(ExceptionUtils.toString(e));
-                        if (sender != null)
-                            Skript.error(sender, m_check_error.toString());
+                        state = UpdateState.DOWNLOAD_IN_PROGRESS;
                     } finally {
                         stateLock.writeLock().unlock();
                     }
-                } catch (final Exception e) {
+                    download_i(sender, isAutomatic);
+                } else {
+                    stateLock.writeLock().lock();
+                    try {
+                        state = UpdateState.CHECKED_FOR_UPDATE;
+                    } finally {
+                        stateLock.writeLock().unlock();
+                    }
+                }
+            } catch (final IOException e) {
+                stateLock.writeLock().lock();
+                try {
+                    state = UpdateState.CHECK_ERROR;
+                    error.set(ExceptionUtils.toString(e));
                     if (sender != null)
-                        Skript.error(sender, m_internal_error.toString());
-                    Skript.exception(e, "Unexpected error while checking for a new version of Skript");
-                    stateLock.writeLock().lock();
-                    try {
-                        state = UpdateState.CHECK_ERROR;
-                        error.set(e.getClass().getSimpleName() + ": " + e.getLocalizedMessage());
-                    } finally {
-                        stateLock.writeLock().unlock();
-                    }
+                        Skript.error(sender, m_check_error.toString());
                 } finally {
-                    if (in != null) {
-                        try {
-                            in.close();
-                        } catch (final IOException ignored) {
-                        }
+                    stateLock.writeLock().unlock();
+                }
+            } catch (final Exception e) {
+                if (sender != null)
+                    Skript.error(sender, m_internal_error.toString());
+                Skript.exception(e, "Unexpected error while checking for a new version of Skript");
+                stateLock.writeLock().lock();
+                try {
+                    state = UpdateState.CHECK_ERROR;
+                    error.set(e.getClass().getSimpleName() + ": " + e.getLocalizedMessage());
+                } finally {
+                    stateLock.writeLock().unlock();
+                }
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (final IOException ignored) {
                     }
                 }
             }
@@ -392,12 +388,7 @@ public final class Updater {
         } finally {
             stateLock.writeLock().unlock();
         }
-        Skript.newThread(new Runnable() {
-            @Override
-            public void run() {
-                download_i(sender, isAutomatic);
-            }
-        }, "Skript download thread").start();
+        Skript.newThread(() -> download_i(sender, isAutomatic), "Skript download thread").start();
     }
 
     public enum UpdateState {

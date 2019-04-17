@@ -34,40 +34,37 @@ import java.util.TreeMap;
 
 final class VariablesMap {
 
-    final static Comparator<String> variableNameComparator = new Comparator<String>() {
-        @Override
-        public int compare(final @Nullable String s1, final @Nullable String s2) {
-            if (s1 == null)
-                return s2 == null ? 0 : -1;
-            if (s2 == null)
-                return 1;
-            int i = 0, j = 0;
-            while (i < s1.length() && j < s2.length()) {
-                final char c1 = s1.charAt(i), c2 = s2.charAt(j);
-                if ('0' <= c1 && c1 <= '9' && '0' <= c2 && c2 <= '9') { // TODO negative numbers? what about {blah-%number%}? // '-' < '0'
-                    final int i2 = StringUtils.findLastDigit(s1, i), j2 = StringUtils.findLastDigit(s2, j);
-                    final long n1 = Utils.parseLong("" + s1.substring(i, i2)), n2 = Utils.parseLong("" + s2.substring(j, j2));
-                    if (n1 > n2)
-                        return 1;
-                    if (n1 < n2)
-                        return -1;
-                    i = i2;
-                    j = j2;
-                } else {
-                    if (c1 > c2)
-                        return 1;
-                    if (c1 < c2)
-                        return -1;
-                    i++;
-                    j++;
-                }
+    final static Comparator<String> variableNameComparator = (s1, s2) -> {
+        if (s1 == null)
+            return s2 == null ? 0 : -1;
+        if (s2 == null)
+            return 1;
+        int i = 0, j = 0;
+        while (i < s1.length() && j < s2.length()) {
+            final char c1 = s1.charAt(i), c2 = s2.charAt(j);
+            if ('0' <= c1 && c1 <= '9' && '0' <= c2 && c2 <= '9') { // TODO negative numbers? what about {blah-%number%}? // '-' < '0'
+                final int i2 = StringUtils.findLastDigit(s1, i), j2 = StringUtils.findLastDigit(s2, j);
+                final long n1 = Utils.parseLong("" + s1.substring(i, i2)), n2 = Utils.parseLong("" + s2.substring(j, j2));
+                if (n1 > n2)
+                    return 1;
+                if (n1 < n2)
+                    return -1;
+                i = i2;
+                j = j2;
+            } else {
+                if (c1 > c2)
+                    return 1;
+                if (c1 < c2)
+                    return -1;
+                i++;
+                j++;
             }
-            if (i < s1.length())
-                return -1;
-            if (j < s2.length())
-                return 1;
-            return 0;
         }
+        if (i < s1.length())
+            return -1;
+        if (j < s2.length())
+            return 1;
+        return 0;
     };
 
     final HashMap<String, Object> hashMap = new HashMap<>();

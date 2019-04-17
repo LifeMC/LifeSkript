@@ -54,28 +54,18 @@ public class Option<T> {
         parsedValue = defaultValue;
         @SuppressWarnings("unchecked") final Class<T> c = (Class<T>) defaultValue.getClass();
         if (c == String.class) {
-            parser = new Converter<String, T>() {
-                @SuppressWarnings("unchecked")
-                @Override
-                public T convert(final String s) {
-                    return (T) s;
-                }
-            };
+            parser = (Converter<String, T>) s -> (T) s;
         } else {
             final ClassInfo<T> ci = Classes.getExactClassInfo(c);
             final Parser<? extends T> p;
             if (ci == null || (p = ci.getParser()) == null)
                 throw new IllegalArgumentException(c.getName());
-            this.parser = new Converter<String, T>() {
-                @Override
-                @Nullable
-                public T convert(final String s) {
-                    final T t = p.parse(s, ParseContext.CONFIG);
-                    if (t != null)
-                        return t;
-                    Skript.error("'" + s + "' is not " + ci.getName().withIndefiniteArticle());
-                    return null;
-                }
+            this.parser = (Converter<String, T>) s -> {
+                final T t = p.parse(s, ParseContext.CONFIG);
+                if (t != null)
+                    return t;
+                Skript.error("'" + s + "' is not " + ci.getName().withIndefiniteArticle());
+                return null;
             };
         }
     }

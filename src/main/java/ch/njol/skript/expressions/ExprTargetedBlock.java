@@ -23,7 +23,6 @@ package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -115,13 +114,7 @@ public class ExprTargetedBlock extends PropertyExpression<Player, Block> {
 
     @Override
     protected Block[] get(final Event e, final Player[] source) {
-        return get(source, new Converter<Player, Block>() {
-            @Override
-            @Nullable
-            public Block convert(final Player p) {
-                return getTargetedBlock(p, e);
-            }
-        });
+        return get(source, p -> getTargetedBlock(p, e));
     }
 
     @Override

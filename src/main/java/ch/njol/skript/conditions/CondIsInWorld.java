@@ -29,7 +29,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -64,17 +63,7 @@ public final class CondIsInWorld extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return entities.check(e, new Checker<Entity>() {
-            @Override
-            public boolean check(final Entity en) {
-                return worlds.check(e, new Checker<World>() {
-                    @Override
-                    public boolean check(final World w) {
-                        return en.getWorld() == w;
-                    }
-                }, isNegated());
-            }
-        });
+        return entities.check(e, en -> worlds.check(e, w -> en.getWorld() == w, isNegated()));
     }
 
     @Override

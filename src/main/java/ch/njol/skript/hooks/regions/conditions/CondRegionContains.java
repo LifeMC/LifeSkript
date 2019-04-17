@@ -31,7 +31,6 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -70,12 +69,7 @@ public final class CondRegionContains extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return regions.check(e, new Checker<Region>() {
-            @Override
-            public boolean check(final Region r) {
-                return locs.check(e, r::contains, isNegated());
-            }
-        });
+        return regions.check(e, r -> locs.check(e, r::contains, isNegated()));
     }
 
     @Override

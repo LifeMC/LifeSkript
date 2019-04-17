@@ -31,7 +31,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.Timespan;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -65,17 +64,7 @@ public final class CondDate extends Condition {
     @Override
     public boolean check(final Event e) {
         final long now = System.currentTimeMillis();
-        return date.check(e, new Checker<Date>() {
-            @Override
-            public boolean check(final Date d) {
-                return delta.check(e, new Checker<Timespan>() {
-                    @Override
-                    public boolean check(final Timespan t) {
-                        return now - d.getTimestamp() >= t.getMilliSeconds();
-                    }
-                }, isNegated());
-            }
-        });
+        return date.check(e, d -> delta.check(e, t -> now - d.getTimestamp() >= t.getMilliSeconds(), isNegated()));
     }
 
     @Override

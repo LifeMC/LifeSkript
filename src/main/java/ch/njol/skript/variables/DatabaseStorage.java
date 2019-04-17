@@ -41,7 +41,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.concurrent.Callable;
 
 /**
  * TODO create a metadata table to store some properties (e.g. Skript version, Yggdrasil version) -- but what if some variables cannot be converted? move them to a different table?
@@ -224,22 +223,19 @@ public final class DatabaseStorage extends VariablesStorage {
             }
 
             // periodically executes queries to keep the collection alive
-            Skript.newThread(new Runnable() {
-                @Override
-                public void run() {
-                    while (!closed) {
-                        synchronized (DatabaseStorage.this.db) {
-                            try {
-                                final Database db = DatabaseStorage.this.db.get();
-                                if (db != null)
-                                    db.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
-                            } catch (final SQLException ignored) {
-                            }
-                        }
+            Skript.newThread(() -> {
+                while (!closed) {
+                    synchronized (DatabaseStorage.this.db) {
                         try {
-                            Thread.sleep(1000 * 10);
-                        } catch (final InterruptedException ignored) {
+                            final Database db1 = DatabaseStorage.this.db.get();
+                            if (db1 != null)
+                                db1.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
+                        } catch (final SQLException ignored) {
                         }
+                    }
+                    try {
+                        Thread.sleep(1000 * 10);
+                    } catch (final InterruptedException ignored) {
                     }
                 }
             }, "Skript database '" + databaseName + "' connection keep-alive thread").start();
@@ -253,56 +249,49 @@ public final class DatabaseStorage extends VariablesStorage {
         Skript.debug("Database " + databaseName + " loaded. Queue size = " + changesQueue.size());
 
         // start committing thread. Its first execution will also commit the first batch of changed variables.
-        Skript.newThread(new Runnable() {
-            @SuppressWarnings("null")
-            @Override
-            public void run() {
-                long lastCommit;
-                while (!closed) {
-                    synchronized (db) {
-                        final Database db = DatabaseStorage.this.db.get();
-                        try {
-                            if (db != null)
-                                db.getConnection().commit();
-                        } catch (final SQLException e) {
-                            sqlException(e);
-                        }
-                        lastCommit = System.currentTimeMillis();
-                    }
+        Skript.newThread(() -> {
+            long lastCommit;
+            while (!closed) {
+                synchronized (db) {
+                    final Database db = DatabaseStorage.this.db.get();
                     try {
-                        Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
-                    } catch (final InterruptedException ignored) {
+                        if (db != null)
+                            db.getConnection().commit();
+                    } catch (final SQLException e) {
+                        sqlException(e);
                     }
+                    lastCommit = System.currentTimeMillis();
+                }
+                try {
+                    Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
+                } catch (final InterruptedException ignored) {
                 }
             }
         }, "Skript database '" + databaseName + "' transaction committing thread").start();
 
         if (monitor) {
-            Skript.newThread(new Runnable() {
-                @Override
-                public void run() {
-                    try { // variables were just downloaded, not need to check for modifications straight away
-                        Thread.sleep(monitor_interval);
-                    } catch (final InterruptedException ignored) {
+            Skript.newThread(() -> {
+                try { // variables were just downloaded, not need to check for modifications straight away
+                    Thread.sleep(monitor_interval);
+                } catch (final InterruptedException ignored) {
+                }
+
+                long lastWarning = Long.MIN_VALUE;
+                final int WARING_INTERVAL = 10;
+
+                while (!closed) {
+                    final long next = System.currentTimeMillis() + monitor_interval;
+                    checkDatabase();
+                    final long now = System.currentTimeMillis();
+                    if (next < now && lastWarning + WARING_INTERVAL * 1000 < now) {
+                        // TODO don't print this message when Skript loads (because scripts are loaded after variables and take some time)
+                        Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitor_interval) / 1000. + "s, monitor interval = " + monitor_interval / 1000. + "s). " + "Please increase your monitor interval or reduce usage of variables. " + "(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
+                        lastWarning = now;
                     }
-
-                    long lastWarning = Long.MIN_VALUE;
-                    final int WARING_INTERVAL = 10;
-
-                    while (!closed) {
-                        final long next = System.currentTimeMillis() + monitor_interval;
-                        checkDatabase();
-                        final long now = System.currentTimeMillis();
-                        if (next < now && lastWarning + WARING_INTERVAL * 1000 < now) {
-                            // TODO don't print this message when Skript loads (because scripts are loaded after variables and take some time)
-                            Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitor_interval) / 1000. + "s, monitor interval = " + monitor_interval / 1000. + "s). " + "Please increase your monitor interval or reduce usage of variables. " + "(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
-                            lastWarning = now;
-                        }
-                        while (System.currentTimeMillis() < next) {
-                            try {
-                                Thread.sleep(next - System.currentTimeMillis());
-                            } catch (final InterruptedException ignored) {
-                            }
+                    while (System.currentTimeMillis() < next) {
+                        try {
+                            Thread.sleep(next - System.currentTimeMillis());
+                        } catch (final InterruptedException ignored) {
                         }
                     }
                 }
@@ -515,48 +504,44 @@ public final class DatabaseStorage extends VariablesStorage {
 //		assert !Thread.holdsLock(db);
 //		synchronized (syncDeserializing) {
 
-        final SQLException e = Task.callSync(new Callable<SQLException>() {
-            @Override
-            @Nullable
-            public SQLException call() throws Exception {
-                try {
-                    while (r.next()) {
-                        int i = 1;
-                        final String name = r.getString(i++);
-                        if (name == null) {
-                            Skript.error("Variable with NULL name found in the database '" + databaseName + "', ignoring it");
+        final SQLException e = Task.callSync(() -> {
+            try {
+                while (r.next()) {
+                    int i = 1;
+                    final String name = r.getString(i++);
+                    if (name == null) {
+                        Skript.error("Variable with NULL name found in the database '" + databaseName + "', ignoring it");
+                        continue;
+                    }
+                    final String type = r.getString(i++);
+                    final byte[] value = r.getBytes(i++); // Blob not supported by SQLite
+                    lastRowID = r.getLong(i++);
+                    if (value == null) {
+                        Variables.variableLoaded(name, null, DatabaseStorage.this);
+                    } else {
+                        final ClassInfo<?> c = Classes.getClassInfoNoError(type);
+                        @SuppressWarnings("unused")
+                        Serializer<?> s;
+                        if (c == null || (s = c.getSerializer()) == null) {
+                            Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
                             continue;
                         }
-                        final String type = r.getString(i++);
-                        final byte[] value = r.getBytes(i++); // Blob not supported by SQLite
-                        lastRowID = r.getLong(i++);
-                        if (value == null) {
-                            Variables.variableLoaded(name, null, DatabaseStorage.this);
-                        } else {
-                            final ClassInfo<?> c = Classes.getClassInfoNoError(type);
-                            @SuppressWarnings("unused")
-                            Serializer<?> s;
-                            if (c == null || (s = c.getSerializer()) == null) {
-                                Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
-                                continue;
-                            }
 //					if (s.mustSyncDeserialization()) {
 //						syncDeserializing.add(new VariableInfo(name, value, c));
 //					} else {
-                            final Object d = Classes.deserialize(c, value);
-                            if (d == null) {
-                                Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because it cannot be loaded as " + c.getName().withIndefiniteArticle());
-                                continue;
-                            }
-                            Variables.variableLoaded(name, d, DatabaseStorage.this);
-//					}
+                        final Object d = Classes.deserialize(c, value);
+                        if (d == null) {
+                            Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because it cannot be loaded as " + c.getName().withIndefiniteArticle());
+                            continue;
                         }
+                        Variables.variableLoaded(name, d, DatabaseStorage.this);
+//					}
                     }
-                } catch (final SQLException e) {
-                    return e;
                 }
-                return null;
+            } catch (final SQLException e1) {
+                return e1;
             }
+            return null;
         });
         if (e != null)
             throw e;
@@ -650,48 +635,43 @@ public final class DatabaseStorage extends VariablesStorage {
             }
         };
 
-        final SQLException e = Task.callSync(new Callable<SQLException>() {
-            @SuppressWarnings("null")
-            @Override
-            @Nullable
-            public SQLException call() throws Exception {
-                try {
-                    while (r.next()) {
-                        int i = 1;
-                        final String name = r.getString(i++);
-                        if (name == null) {
-                            Skript.error("Variable with NULL name found in the database, ignoring it");
+        final SQLException e = Task.callSync(() -> {
+            try {
+                while (r.next()) {
+                    int i = 1;
+                    final String name = r.getString(i++);
+                    if (name == null) {
+                        Skript.error("Variable with NULL name found in the database, ignoring it");
+                        continue;
+                    }
+                    final String type = r.getString(i++);
+                    final String value = r.getString(i++);
+                    lastRowID = r.getLong(i++);
+                    if (type == null || value == null) {
+                        Variables.variableLoaded(name, null, hadNewTable ? temp : DatabaseStorage.this);
+                    } else {
+                        final ClassInfo<?> c = Classes.getClassInfoNoError(type);
+                        Serializer<?> s;
+                        if (c == null || (s = c.getSerializer()) == null) {
+                            Skript.error("Cannot load the variable {" + name + "} from the database, because the type '" + type + "' cannot be recognised or not stored in variables");
                             continue;
                         }
-                        final String type = r.getString(i++);
-                        final String value = r.getString(i++);
-                        lastRowID = r.getLong(i++);
-                        if (type == null || value == null) {
-                            Variables.variableLoaded(name, null, hadNewTable ? temp : DatabaseStorage.this);
-                        } else {
-                            final ClassInfo<?> c = Classes.getClassInfoNoError(type);
-                            Serializer<?> s;
-                            if (c == null || (s = c.getSerializer()) == null) {
-                                Skript.error("Cannot load the variable {" + name + "} from the database, because the type '" + type + "' cannot be recognised or not stored in variables");
-                                continue;
-                            }
 //					if (s.mustSyncDeserialization()) {
 //						oldSyncDeserializing.add(new OldVariableInfo(name, value, c));
 //					} else {
-                            final Object d = s.deserialize(value);
-                            if (d == null) {
-                                Skript.error("Cannot load the variable {" + name + "} from the database, because '" + value + "' cannot be parsed as a " + type);
-                                continue;
-                            }
-                            Variables.variableLoaded(name, d, DatabaseStorage.this);
-//					}
+                        final Object d = s.deserialize(value);
+                        if (d == null) {
+                            Skript.error("Cannot load the variable {" + name + "} from the database, because '" + value + "' cannot be parsed as a " + type);
+                            continue;
                         }
+                        Variables.variableLoaded(name, d, DatabaseStorage.this);
+//					}
                     }
-                } catch (final SQLException e) {
-                    return e;
                 }
-                return null;
+            } catch (final SQLException e1) {
+                return e1;
             }
+            return null;
         });
         if (e != null)
             throw e;

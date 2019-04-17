@@ -37,7 +37,6 @@ import ch.njol.skript.log.BlockingLogHandler;
 import ch.njol.skript.log.LogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
-import ch.njol.util.NullableChecker;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.NonNullIterator;
@@ -227,17 +226,14 @@ public final class ExprEntities extends SimpleExpression<Entity> {
             final Collection<Entity> es = getNearbyEntities(l, d, d, d);
             final double radiusSquared = d * d * Skript.EPSILON_MULT;
             final EntityData<?>[] ts = types.getAll(e);
-            return new CheckedIterator<>(es.iterator(), new NullableChecker<Entity>() {
-                @Override
-                public boolean check(final @Nullable Entity e) {
-                    if (e == null || e.getLocation().distanceSquared(l) > radiusSquared)
-                        return false;
-                    for (final EntityData<?> t : ts) {
-                        if (t.isInstance(e))
-                            return true;
-                    }
+            return new CheckedIterator<>(es.iterator(), e1 -> {
+                if (e1 == null || e1.getLocation().distanceSquared(l) > radiusSquared)
                     return false;
+                for (final EntityData<?> t : ts) {
+                    if (t.isInstance(e1))
+                        return true;
                 }
+                return false;
             });
         } else {
             if (worlds == null && returnType == Player.class)

@@ -30,7 +30,6 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Event;
@@ -66,21 +65,13 @@ public class CondIsWearing extends Condition {
 
     @Override
     public boolean check(final Event e) {
-        return entities.check(e, new Checker<LivingEntity>() {
-            @Override
-            public boolean check(final LivingEntity en) {
-                return types.check(e, new Checker<ItemType>() {
-                    @Override
-                    public boolean check(final ItemType t) {
-                        for (final ItemStack is : en.getEquipment().getArmorContents()) {
-                            if (t.isOfType(is) ^ t.isAll())
-                                return !t.isAll();
-                        }
-                        return t.isAll();
-                    }
-                }, isNegated());
+        return entities.check(e, en -> types.check(e, t -> {
+            for (final ItemStack is : en.getEquipment().getArmorContents()) {
+                if (t.isOfType(is) ^ t.isAll())
+                    return !t.isAll();
             }
-        });
+            return t.isAll();
+        }, isNegated()));
     }
 
     @Override
