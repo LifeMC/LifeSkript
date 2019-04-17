@@ -6,7 +6,7 @@ Also, Skript is a very easy and understandable domain-specific scripting languag
 
 # Server Compatibility
 Requirements for running Skript is:
-- Java 6 **or later** installed. (java 8 or 11 is recommended)
+- Java 8 **or later** installed. (java 8 or 11 is recommended)
 - A bukkit or bukkit-based (bukkit, craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
 - Minecraft version compatibility is:
   - Tested: 1.7.10 - 1.8.8 (also any version between these)

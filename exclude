@@ -6,3 +6,6 @@
 /dep
 /.apt_generated/
 /.apt_generated_tests/
+
+# Idea personal files
+/dictionaries
