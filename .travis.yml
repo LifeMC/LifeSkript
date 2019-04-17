@@ -1,9 +1,9 @@
 language: java
 
 jdk:
-  - openjdk11
-  - openjdk12
-  - openjdk8
   - oraclejdk8
+  - openjdk8
+  - openjdk11
+  - openjdk-ea
 
 script: "mvn -e -DcompilerArgument=-O clean install package"
