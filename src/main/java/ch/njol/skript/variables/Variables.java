@@ -155,11 +155,12 @@ public final class Variables {
         Skript.closeOnDisable(Variables::close);
 
         // reports once per second how many variables were loaded. Useful to make clear that Skript is still doing something if it's loading many variables
-        final Thread loadingLoggerThread = new Thread(() -> {
+        final Thread loadingLoggerThread = Skript.newThread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(Skript.logNormal() ? 1000 : 5000); // low verbosity won't disable these messages, but makes them more rare
-                } catch (final InterruptedException ignored) {
+                    Thread.sleep(Skript.logHigh() ? 1000 : Skript.logNormal() ? 3000 : 5000); // low verbosity won't disable these messages, but makes them more rare
+                } catch (final InterruptedException e) {
+                    break;
                 }
                 synchronized (tempVars) {
                     final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();
@@ -169,7 +170,8 @@ public final class Variables {
                         break;
                 }
             }
-        });
+            Thread.currentThread().interrupt();
+        }, "Skript variable load tracker thread");
         loadingLoggerThread.start();
 
         try {
