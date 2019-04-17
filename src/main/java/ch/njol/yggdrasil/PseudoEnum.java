@@ -38,7 +38,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
 	@SuppressWarnings({"unchecked"})
 	protected PseudoEnum(final String name) throws IllegalArgumentException {
 		this.name = name;
-		info = getInfo(getClass());
+		info = (Info<T>) getInfo(getClass());
 		info.writeLock.lock();
 		try {
 			if (info.map.containsKey(name))
