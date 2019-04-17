@@ -692,7 +692,7 @@ public final class Classes {
             final Chunk c1 = (Chunk) o, c2 = (Chunk) d;
             return c1.getWorld().equals(c2.getWorld()) && c1.getX() == c2.getX() && c1.getZ() == c2.getZ();
         }
-        return o == null ? d == null : o.equals(d);
+        return Objects.equals(o, d);
     }
 
     @Nullable

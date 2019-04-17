@@ -23,10 +23,7 @@ import ch.njol.util.coll.iterator.ReversedListIterator;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * @author Peter Güttinger
@@ -205,8 +202,8 @@ public class ReversedListView<T> implements List<T> {
             return false;
         final Iterator<?> os = other.iterator();
         for (T value : this) {
-            final Object t = value, o = os.next();
-            if (t == null ? o != null : !t.equals(o))
+            final Object o = os.next();
+            if (!Objects.equals(value, o))
                 return false;
         }
         return true;

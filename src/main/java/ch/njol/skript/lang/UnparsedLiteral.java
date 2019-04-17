@@ -83,9 +83,10 @@ public class UnparsedLiteral implements Literal<Object> {
         return Object.class;
     }
 
+    @SafeVarargs
     @Override
     @Nullable
-    public <R> Literal<? extends R> getConvertedExpression(final Class<R>... to) {
+    public final <R> Literal<? extends R> getConvertedExpression(final Class<R>... to) {
         return getConvertedExpression(ParseContext.DEFAULT, to);
     }
 
@@ -156,8 +157,9 @@ public class UnparsedLiteral implements Literal<Object> {
 //		return null;
 //	}
 
+    @SafeVarargs
     @Nullable
-    public <R> Literal<? extends R> getConvertedExpression(final ParseContext context, final Class<? extends R>... to) {
+    public final <R> Literal<? extends R> getConvertedExpression(final ParseContext context, final Class<? extends R>... to) {
         assert to != null && to.length > 0;
         assert to.length == 1 || !CollectionUtils.contains(to, Object.class);
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();

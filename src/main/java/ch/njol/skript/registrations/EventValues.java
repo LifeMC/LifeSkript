@@ -76,6 +76,7 @@ public final class EventValues {
      * @param time
      * @param excludes Subclasses of the event for which this event value should not be registered for
      */
+    @SafeVarargs
     public static <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>... excludes) {
         Skript.checkAcceptRegistrations();
         final List<EventValueInfo<?, ?>> eventValues = getEventValuesList(time);

@@ -828,7 +828,8 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return ok;
     }
 
-    public boolean removeAll(final List<ItemStack>... lists) {
+    @SafeVarargs
+    public final boolean removeAll(final List<ItemStack>... lists) {
         final boolean wasAll = all;
         final int oldAmount = amount;
         all = true;
@@ -845,7 +846,8 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param lists The lists to remove this type from. Each list should implement {@link RandomAccess} or this method will be slow.
      * @return Whether this whole item type could be removed (i.e. returns false if the lists didn't contain this item type completely)
      */
-    public boolean removeFrom(final List<ItemStack>... lists) {
+    @SafeVarargs
+    public final boolean removeFrom(final List<ItemStack>... lists) {
         int removed = 0;
         boolean ok = true;
 

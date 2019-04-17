@@ -50,7 +50,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == null ? t == null : array[i].equals(t))
+            if (Objects.equals(array[i], t))
                 return i;
         }
         return -1;
@@ -60,7 +60,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = array.length - 1; i >= 0; i--) {
-            if (array[i] == null ? t == null : array[i].equals(t))
+            if (Objects.equals(array[i], t))
                 return i;
         }
         return -1;
@@ -70,7 +70,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = start; i < end; i++) {
-            if (array[i] == null ? t == null : array[i].equals(t))
+            if (Objects.equals(array[i], t))
                 return i;
         }
         return -1;
@@ -80,6 +80,7 @@ public final class CollectionUtils {
         return indexOf(array, o) != -1;
     }
 
+    @SafeVarargs
     public static <T> boolean containsAny(final @Nullable T[] array, final @Nullable T... os) {
         if (array == null || os == null)
             return false;
@@ -90,6 +91,7 @@ public final class CollectionUtils {
         return false;
     }
 
+    @SafeVarargs
     public static <T> boolean containsAll(final @Nullable T[] array, final @Nullable T... os) {
         if (array == null || os == null)
             return false;
@@ -161,7 +163,7 @@ public final class CollectionUtils {
             return -1;
         int i = 0;
         for (final T a : iter) {
-            if (a == null ? o == null : a.equals(o))
+            if (Objects.equals(a, o))
                 return i;
             i++;
         }
@@ -292,6 +294,7 @@ public final class CollectionUtils {
      * @param sets
      * @return
      */
+    @SafeVarargs
     @SuppressWarnings("null")
     public static <E> Set<E> intersection(final @Nullable Set<E>... sets) {
         if (sets == null || sets.length == 0)
@@ -313,6 +316,7 @@ public final class CollectionUtils {
      * @param sets
      * @return
      */
+    @SafeVarargs
     @SuppressWarnings("null")
     public static <E> Set<E> union(final @Nullable Set<E>... sets) {
         if (sets == null || sets.length == 0)
@@ -336,6 +340,7 @@ public final class CollectionUtils {
      * @param array Some objects
      * @return The passed array
      */
+    @SafeVarargs
     @SuppressWarnings("null")
     @NonNull
     public static <T> T[] array(final @Nullable T... array) {

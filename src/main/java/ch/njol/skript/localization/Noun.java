@@ -24,15 +24,11 @@ package ch.njol.skript.localization;
 import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.localization.Language.LanguageListenerPriority;
-import ch.njol.skript.util.ObjectUtils;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Peter Güttinger
@@ -278,7 +274,7 @@ public class Noun extends Message {
         final NonNullPair<String, String> p = Noun.getPlural(value);
         singular = p.getFirst();
         plural = p.getSecond();
-        if (gender == PLURAL && !ObjectUtils.equals(singular, plural))
+        if (gender == PLURAL && !Objects.equals(singular, plural))
             Skript.warning("Noun '" + key + "' is of gender 'plural', but has different singular and plural values.");
     }
 

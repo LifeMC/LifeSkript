@@ -66,6 +66,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
         this.conv = conv;
     }
 
+    @SafeVarargs
     @Nullable
     public static <F, T> ConvertedExpression<F, T> newInstance(final Expression<F> v, final Class<T>... to) {
         assert !CollectionUtils.containsSuperclass(to, v.getReturnType());
