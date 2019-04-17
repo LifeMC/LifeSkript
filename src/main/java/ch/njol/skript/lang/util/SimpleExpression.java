@@ -196,6 +196,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
      * @see ConvertedExpression#newInstance(Expression, Class...)
      * @see Converter
      */
+    @SuppressWarnings("unchecked")
     @Nullable
     protected <R> ConvertedExpression<T, ? extends R> getConvertedExpr(final Class<R>... to) {
         assert !CollectionUtils.containsSuperclass(to, getReturnType());

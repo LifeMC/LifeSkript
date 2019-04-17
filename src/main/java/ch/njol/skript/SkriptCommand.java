@@ -4,6 +4,7 @@ import ch.njol.skript.ScriptLoader.ScriptInfo;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
+import ch.njol.skript.localization.Message;
 import ch.njol.skript.localization.PluralizingArgsMessage;
 import ch.njol.skript.log.RedirectingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
@@ -65,6 +66,8 @@ public final class SkriptCommand implements CommandExecutor {
     private final static File[] EMPTY_FILE_ARRAY = new File[0];
     private final static ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private final static ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
+
+    public final static Message m_running_latest_version = new Message("updater.running latest version");
 
     private static void reloading(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : Language.format(NODE + ".reload." + what, args);
@@ -291,11 +294,11 @@ public final class SkriptCommand implements CommandExecutor {
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
                 if ("check".equals(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("changes".equalsIgnoreCase(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("download".equalsIgnoreCase(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : Updater.m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 }
             } else if ("help".equalsIgnoreCase(args[0])) {
                 skriptCommandHelp.showHelp(sender);

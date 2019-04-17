@@ -132,6 +132,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * @see Converter
      * @see ConvertedExpression
      */
+    @SuppressWarnings("unchecked")
     @Nullable
     <R> Expression<? extends R> getConvertedExpression(final Class<R>... to);
 
