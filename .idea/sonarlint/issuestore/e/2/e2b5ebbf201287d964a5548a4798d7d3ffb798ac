@@ -1,0 +1,9 @@
+
+>squid:S1452¢"&Remove usage of generic wildcard type.(µºŸÌ
+vsquid:S2293×"YReplace the type specification in this constructor call with the diamond operator ("<>").(ížÆÉúÿÿÿÿ
+vsquid:S2293È"YReplace the type specification in this constructor call with the diamond operator ("<>").(…¥Üéüÿÿÿÿ
+>squid:S1452¢"&Remove usage of generic wildcard type.(µºŸÌ
+§%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.util.regex.PatternSyntaxException' which is a runtime exception.(›ŸØïýÿÿÿÿ
+>squid:S1452˜"&Remove usage of generic wildcard type.(ŒÔ¶‹
+>squid:S1452‰"&Remove usage of generic wildcard type.(çõ€…
+Csquid:S1452“"&Remove usage of generic wildcard type.(ÒøÇôøÿÿÿÿ

@@ -1,0 +1,31 @@
+
+Osquid:S2386è"+Make member "currentArguments" "protected".(¡ÓôŸşÿÿÿÿ8´ƒÿÌ¢-
+qsquid:ModifiersOrderCheck_"EReorder the modifiers to comply with the Java Language Specification.(ˆ›ĞÍ8´ƒÿÌ¢-
+Gsquid:S4274š"(Replace this assert with a proper check.(ıô…Š8´ƒÿÌ¢-
+Usquid:S1444"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
+Zsquid:S2696¯"6Make the enclosing method "static" or remove this set.(’ŸÜ±ùÿÿÿÿ8´ƒÿÌ¢-
+Gsquid:S1604½"(Make this anonymous inner class a lambda(ã¥¨”8´ƒÿÌ¢-
+jsquid:ModifiersOrderCheck`"EReorder the modifiers to comply with the Java Language Specification.(Ïºşœ
+qsquid:ModifiersOrderCheck½"EReorder the modifiers to comply with the Java Language Specification.(ûŸÜ8´ƒÿÌ¢-
+|squid:S2293c"YReplace the type specification in this constructor call with the diamond operator ("<>").(æŞÿ“ùÿÿÿÿ8´ƒÿÌ¢-
+}squid:S2293«"YReplace the type specification in this constructor call with the diamond operator ("<>").(‚‚¤éşÿÿÿÿ8´ƒÿÌ¢-
+qsquid:ModifiersOrderCheckŸ"EReorder the modifiers to comply with the Java Language Specification.(Ëªâ!8´ƒÿÌ¢-
+wsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(îÆğıüÿÿÿÿ8´ƒÿÌ¢-
+}squid:S2293¯"YReplace the type specification in this constructor call with the diamond operator ("<>").(á€¤æüÿÿÿÿ8´ƒÿÌ¢-
+wsquid:ModifiersOrderCheck•"EReorder the modifiers to comply with the Java Language Specification.(ğåÊıùÿÿÿÿ8´ƒÿÌ¢-
+:squid:S1700c"Rename field "commands"(æŞÿ“ùÿÿÿÿ8´ƒÿÌ¢-
+rsquid:ModifiersOrderCheck“"EReorder the modifiers to comply with the Java Language Specification.(Èˆ…Ó8´ƒÿÌ¢-
+qsquid:ModifiersOrderCheckÌ"EReorder the modifiers to comply with the Java Language Specification.(Æ÷ãL8´ƒÿÌ¢-
+osquid:ModifiersOrderChecka"EReorder the modifiers to comply with the Java Language Specification.(±ªÅÓøÿÿÿÿ
+vsquid:ModifiersOrderCheckc"EReorder the modifiers to comply with the Java Language Specification.(æŞÿ“ùÿÿÿÿ8´ƒÿÌ¢-
+Nsquid:S00108‚")Either remove or fill this block of code.(¦ªİÿÿÿÿÿ8Ë–„Í¢-
+rsquid:ModifiersOrderCheckÈ"EReorder the modifiers to comply with the Java Language Specification.( ¹•¨8´ƒÿÌ¢-
+rsquid:ModifiersOrderCheck×"EReorder the modifiers to comply with the Java Language Specification.(ÛäÃĞ8´ƒÿÌ¢-
+Xsquid:S1141~"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+Isquid:S00108í")Either remove or fill this block of code.(ÛÑ«8´ƒÿÌ¢-
+Zsquid:S2696µ"6Make the enclosing method "static" or remove this set.(’ŸÜ±ùÿÿÿÿ8´ƒÿÌ¢-
+}squid:S2293è"YReplace the type specification in this constructor call with the diamond operator ("<>").(¡ÓôŸşÿÿÿÿ8´ƒÿÌ¢-
+Lsquid:S1659¾"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
+Ysquid:S1141é"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+xsquid:S2293´"YReplace the type specification in this constructor call with the diamond operator ("<>").(‘‡¨8´ƒÿÌ¢-
+lsquid:CallToDeprecatedMethodÏ"7Remove this use of "PlayerChatEvent"; it is deprecated.(…«¡Çùÿÿÿÿ8´ƒÿÌ¢-

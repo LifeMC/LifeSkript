@@ -1,0 +1,5 @@
+
+Dsquid:S42749"(Replace this assert with a proper check.(°äè¸ıÿÿÿÿ
+psquid:S2293i"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÏÀû­
+Ssquid:S2065-"0Remove the "transient" modifier from this field.(Ê¡øıÿÿÿÿÿ8ÒÂÍÍ¢-
+Ksquid:S16040"(Make this anonymous inner class a lambda(ãû›êşÿÿÿÿ8ÒÂÍÍ¢-

@@ -1,0 +1,42 @@
+
+@squid:S1659_"*Declare "m_no_scripts" on a separate line.(³Ğ‘
+xsquid:S2293Œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Á„òœ8ÍûäÍ¢-
+wsquid:ModifiersOrderCheck•"EReorder the modifiers to comply with the Java Language Specification.(àË°øÿÿÿÿ8ÍûäÍ¢-
+osquid:ModifiersOrderCheck`"EReorder the modifiers to comply with the Java Language Specification.(£±Æúÿÿÿÿ
+rsquid:ModifiersOrderCheckŒ"EReorder the modifiers to comply with the Java Language Specification.(Á„òœ8ÍûäÍ¢-
+ksquid:ModifiersOrderCheck‹"EReorder the modifiers to comply with the Java Language Specification.(˜„õá
+Osquid:S1444c"3Make this "public static currentScript" field final(ÆÓÊøÿÿÿÿ
+gsquid:S2259Á"HA "NullPointerException" could be thrown; "loopedExpr" is nullable here.(ÕÜ™Ì8ÍûäÍ¢-
+jsquid:ModifiersOrderCheck^"EReorder the modifiers to comply with the Java Language Specification.(ë”Ñê
+qsquid:S2293‹"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜„õá
+Š"squid:ClassVariableVisibilityCheckš"TMake commands a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+Xsquid:S1444—"4Make this "public static hasDelayBefore" field final(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
+Fsquid:S1604á"(Make this anonymous inner class a lambda(Ú½%8ÍûäÍ¢-
+‹"squid:ClassVariableVisibilityCheckš"UMake functions a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+Esquid:S1659š"&Declare "triggers" on a separate line.(©ıÃù8ÍûäÍ¢-
+5squid:S2386‰"Make this member "protected".(é¸â¹
+qsquid:S2293‰"YReplace the type specification in this constructor call with the diamond operator ("<>").(é¸â¹
+v
+squid:S135ò"YReduce the total number of break and continue statements in this loop to use at most one.(¨Ê§28ÍûäÍ¢-
+Esquid:S1659š"&Declare "commands" on a separate line.(©ıÃù8ÍûäÍ¢-
+Asquid:S2386Š"Make this member "protected".(¯³ÿ³ÿÿÿÿÿ8ÍûäÍ¢-
+Gsquid:S4274"(Replace this assert with a proper check.(ôÃ°²8ÍûäÍ¢-
+w
+squid:S135ÿ"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
+w
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
+•"squid:ClassVariableVisibilityCheck—"ZMake hasDelayBefore a static final constant or non-public and provide accessors if needed.(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
+Fsquid:S1659š"'Declare "functions" on a separate line.(©ıÃù8ÍûäÍ¢-
+osquid:ModifiersOrderCheck["EReorder the modifiers to comply with the Java Language Specification.(ÈÃŠíüÿÿÿÿ
+}squid:S2293™"YReplace the type specification in this constructor call with the diamond operator ("<>").(ş†Ïúÿÿÿÿÿ8ÍûäÍ¢-
+Gsquid:S1604Ÿ"(Make this anonymous inner class a lambda(òÕà8ÍûäÍ¢-
+Gsquid:S1604ƒ"(Make this anonymous inner class a lambda(ÜÛõ­8ÍûäÍ¢-
+w
+squid:S135–"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
+ssquid:S00100ô"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âÙüÿÿÿÿ8ÍûäÍ¢-
+nsquid:S00100Û"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°±·ï8ÍûäÍ¢-
+Š"squid:ClassVariableVisibilityCheckš"TMake triggers a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+psquid:ModifiersOrderCheckŠ"EReorder the modifiers to comply with the Java Language Specification.(¯³ÿ³ÿÿÿÿÿ
+‡"squid:ClassVariableVisibilityCheckš"QMake files a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+vsquid:S2293Š"YReplace the type specification in this constructor call with the diamond operator ("<>").(¯³ÿ³ÿÿÿÿÿ
+qsquid:ModifiersOrderChecká"EReorder the modifiers to comply with the Java Language Specification.(Ú½%8ÍûäÍ¢-

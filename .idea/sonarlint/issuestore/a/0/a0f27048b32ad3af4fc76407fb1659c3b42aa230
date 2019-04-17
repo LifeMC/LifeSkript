@@ -1,0 +1,9 @@
+
+§squid:S4449Æ"ŽAnnotate the parameter with @javax.annotation.Nullable in method 'getArray' declaration, or make sure that null can not be passed as argument.(¢€ª„
+osquid:S2293v"YReplace the type specification in this constructor call with the diamond operator ("<>").(€õú6
+qsquid:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¢€ª„
+<squid:S1659–"Declare "s" on a separate line.(þÍ‡—ùÿÿÿÿ
+Asquid:S1659…"$Declare "second" on a separate line.(°€é÷øÿÿÿÿ
+=squid:S1659ª" Declare "n2" on a separate line.(¼±¿Çúÿÿÿÿ
+isquid:ModifiersOrderCheckv"EReorder the modifiers to comply with the Java Language Specification.(€õú6
+Asquid:S1659˜")Declare "secondIsInt" on a separate line.(ìÄû³

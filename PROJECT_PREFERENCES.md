@@ -1,6 +1,6 @@
-# Code Of Conduct
+# Project Preferences
 
-Code of conduct includes the requirements you should read before making any contribution.
+Project preferences includes the requirements you should read before making any contribution.
 
 ## Our Standards
 

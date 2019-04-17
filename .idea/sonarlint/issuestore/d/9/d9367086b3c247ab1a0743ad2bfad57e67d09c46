@@ -1,0 +1,56 @@
+
+Rsquid:S1141×"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+psquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ü‰šÅûÿÿÿÿ
+ksquid:ModifiersOrderCheck“"EReorder the modifiers to comply with the Java Language Specification.(çÄúÒ
+jsquid:ModifiersOrderCheckX"EReorder the modifiers to comply with the Java Language Specification.(˜Ä†´
+psquid:ModifiersOrderCheck­"EReorder the modifiers to comply with the Java Language Specification.(ëÉÆÎøÿÿÿÿ
+psquid:S2293X"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜Ä†´
+jsquid:ModifiersOrderCheckc"EReorder the modifiers to comply with the Java Language Specification.(™“ Œ
+ksquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(×Ÿ®
+osquid:ModifiersOrderCheckZ"EReorder the modifiers to comply with the Java Language Specification.(š—§‹øÿÿÿÿ
+ksquid:ModifiersOrderCheck¡"EReorder the modifiers to comply with the Java Language Specification.(Åôâ
+Isquid:S1068z"-Remove this unused "verbosity" private field.(Ô›Ì”ıÿÿÿÿ
+vsquid:S2293§"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸ßÍöıÿÿÿÿ
+psquid:S2293Y"YReplace the type specification in this constructor call with the diamond operator ("<>").(èŠ“Ñ
+psquid:ModifiersOrderCheck¥"EReorder the modifiers to comply with the Java Language Specification.(ç â°úÿÿÿÿ
+qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(×Ÿ®
+vsquid:S2293Ÿ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ë³Ü×şÿÿÿÿ
+jsquid:ModifiersOrderCheckd"EReorder the modifiers to comply with the Java Language Specification.(îù¬
+osquid:ModifiersOrderCheckL"EReorder the modifiers to comply with the Java Language Specification.(ìëìúÿÿÿÿ
+qsquid:S2293£"YReplace the type specification in this constructor call with the diamond operator ("<>").(‡ïûñ
+Rsquid:S1141Î"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+osquid:ModifiersOrderCheckz"EReorder the modifiers to comply with the Java Language Specification.(Ô›Ì”ıÿÿÿÿ
+jsquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(ÿëù´
+Rsquid:S1141å"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+psquid:ModifiersOrderCheckœ"EReorder the modifiers to comply with the Java Language Specification.(±ˆã‰şÿÿÿÿ
+psquid:S2293d"YReplace the type specification in this constructor call with the diamond operator ("<>").(îù¬
+ksquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(åİ§
+psquid:ModifiersOrderCheck—"EReorder the modifiers to comply with the Java Language Specification.(Íû—–ÿÿÿÿÿ
+qsquid:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(ˆßÀÈ
+jsquid:ModifiersOrderCheck`"EReorder the modifiers to comply with the Java Language Specification.(”ßê„
+qsquid:S2293“"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÄúÒ
+qsquid:S2293¡"YReplace the type specification in this constructor call with the diamond operator ("<>").(Åôâ
+usquid:S2293L"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìëìúÿÿÿÿ
+jsquid:ModifiersOrderCheckC"EReorder the modifiers to comply with the Java Language Specification.(Ø÷ëî
+qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(åİ§
+vsquid:S2293œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(±ˆã‰şÿÿÿÿ
+jsquid:ModifiersOrderCheck_"EReorder the modifiers to comply with the Java Language Specification.(ü ĞÆ
+ksquid:ModifiersOrderCheck˜"EReorder the modifiers to comply with the Java Language Specification.(Îß¦º
+ksquid:ModifiersOrderCheck«"EReorder the modifiers to comply with the Java Language Specification.(ƒÚòÑ
+osquid:ModifiersOrderCheckV"EReorder the modifiers to comply with the Java Language Specification.(äÇáÏûÿÿÿÿ
+usquid:S2293V"YReplace the type specification in this constructor call with the diamond operator ("<>").(äÇáÏûÿÿÿÿ
+jsquid:ModifiersOrderCheckY"EReorder the modifiers to comply with the Java Language Specification.(èŠ“Ñ
+ksquid:ModifiersOrderCheck•"EReorder the modifiers to comply with the Java Language Specification.(ˆßÀÈ
+psquid:ModifiersOrderCheckŸ"EReorder the modifiers to comply with the Java Language Specification.(Ë³Ü×şÿÿÿÿ
+psquid:ModifiersOrderCheck§"EReorder the modifiers to comply with the Java Language Specification.(¸ßÍöıÿÿÿÿ
+psquid:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(é„ƒŸ
+osquid:ModifiersOrderCheckM"EReorder the modifiers to comply with the Java Language Specification.(ı·×şÿÿÿÿ
+osquid:ModifiersOrderCheck]"EReorder the modifiers to comply with the Java Language Specification.(õÎà”øÿÿÿÿ
+usquid:S2293Z"YReplace the type specification in this constructor call with the diamond operator ("<>").(š—§‹øÿÿÿÿ
+psquid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").(”ßê„
+vsquid:S2293¥"YReplace the type specification in this constructor call with the diamond operator ("<>").(ç â°úÿÿÿÿ
+psquid:S2293_"YReplace the type specification in this constructor call with the diamond operator ("<>").(ü ĞÆ
+qsquid:S2293˜"YReplace the type specification in this constructor call with the diamond operator ("<>").(Îß¦º
+ksquid:ModifiersOrderCheck£"EReorder the modifiers to comply with the Java Language Specification.(‡ïûñ
+vsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ü‰šÅûÿÿÿÿ
+vsquid:S2293—"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íû—–ÿÿÿÿÿ

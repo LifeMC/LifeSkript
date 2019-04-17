@@ -1,0 +1,16 @@
+
+Lsquid:S2065M"0Remove the "transient" modifier from this field.(ĞŒßñÿÿÿÿÿ
+osquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(–‡™ïüÿÿÿÿ
+osquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(ò©ëªıÿÿÿÿ
+jsquid:ModifiersOrderCheckF"EReorder the modifiers to comply with the Java Language Specification.(îåÌü
+isquid:ModifiersOrderCheckO"EReorder the modifiers to comply with the Java Language Specification.(€ÂŸ0
+usquid:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(Éææšùÿÿÿÿ
+psquid:S2293F"YReplace the type specification in this constructor call with the diamond operator ("<>").(îåÌü
+d$squid:AssignmentInSubExpressionCheck–".Extract the assignment out of this expression.(Û¬Å£şÿÿÿÿ
+Esquid:S4274¡"(Replace this assert with a proper check.(›™ÍĞúÿÿÿÿ
+t
+squid:S135n"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
+Msquid:S2696µ"6Make the enclosing method "static" or remove this set.(ŒÅó%
+Zsquid:HiddenFieldCheckd"8Rename "tick" which hides the field declared at line 74.(À›¥è
+]squid:HiddenFieldCheckƒ"5Rename "t" which hides the field declared at line 72.(™ô³ôüÿÿÿÿ
+Dsquid:S1604^"(Make this anonymous inner class a lambda(¾ï‡úÿÿÿÿ

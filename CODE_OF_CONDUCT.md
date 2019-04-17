@@ -1,24 +1,76 @@
-# Code Of Conduct
+# Contributor Covenant Code of Conduct
 
-Code of conduct includes the requirements you should read before making any contribution.
+## Our Pledge
+
+In the interest of fostering an open and welcoming environment, we as
+contributors and maintainers pledge to making participation in our project and
+our community a harassment-free experience for everyone, regardless of age, body
+size, disability, ethnicity, sex characteristics, gender identity and expression,
+level of experience, education, socio-economic status, nationality, personal
+appearance, race, religion, or sexual identity and orientation.
 
 ## Our Standards
 
-### The preferences, by the core development team
-- You should use preferred IDE as Eclipse IDE.
-- You should include license headers and author section in new added files.
-- You should end new files with a new line. Read more: <a href="https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline">Why should text files end with a newline?</a>
-- You should not make any breaking changes and test at least one time your changes. You must check compile time errors and you should check runtime errors from a test server before making a pull request. (Tip: If you have a null warning or error, just suppress it.)
+Examples of behavior that contributes to creating a positive environment
+include:
 
-### Some information about files and folders
-- The files under .github folder is github-specific files for GitHub.
-- The files under .settings folder are for Eclipse settings.
-- The files under src are the source files for the project.
-- Files starting with "." in main folder are git or eclipse options.
-- Files named with a full uppercase letter in the main folder are for GitHub.
-- You can build the project using build.bat, you must run this file via administrator permissions, we have a a shortcut (.ink file) that runs the file via administrator perms, just use it or directly right click the build.bat file and run with administrator perms.
-- The files under src/excluded are excluded files, not included in built project.
-- The files or folders under src/test are also excluded, but it's for tests.
-- The plugin.yml, config.sk etc. files are in the src/resources folder. These are automatically added to built jar file by Maven.
-- Look the above three statements, for this situation, the real source is under src/main.
-- The Skript's actual source code can be found under src/main/java/ch/njol folder. The others (currently yggdrasil and util) are just dependencies, owned by Skript, but not directly Skript. It have general resources.
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
+
+Examples of unacceptable behavior by participants include:
+
+* The use of sexualized language or imagery and unwelcome sexual attention or
+ advances
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or electronic
+ address, without explicit permission
+* Other conduct which could reasonably be considered inappropriate in a
+ professional setting
+
+## Our Responsibilities
+
+Project maintainers are responsible for clarifying the standards of acceptable
+behavior and are expected to take appropriate and fair corrective action in
+response to any instances of unacceptable behavior.
+
+Project maintainers have the right and responsibility to remove, edit, or
+reject comments, commits, code, wiki edits, issues, and other contributions
+that are not aligned to this Code of Conduct, or to ban temporarily or
+permanently any contributor for other behaviors that they deem inappropriate,
+threatening, offensive, or harmful.
+
+## Scope
+
+This Code of Conduct applies both within project spaces and in public spaces
+when an individual is representing the project or its community. Examples of
+representing a project or community include using an official project e-mail
+address, posting via an official social media account, or acting as an appointed
+representative at an online or offline event. Representation of a project may be
+further defined and clarified by project maintainers.
+
+## Enforcement
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported by contacting the project team at support@lifemcserver.com. All
+complaints will be reviewed and investigated and will result in a response that
+is deemed necessary and appropriate to the circumstances. The project team is
+obligated to maintain confidentiality with regard to the reporter of an incident.
+Further details of specific enforcement policies may be posted separately.
+
+Project maintainers who do not follow or enforce the Code of Conduct in good
+faith may face temporary or permanent repercussions as determined by other
+members of the project's leadership.
+
+## Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
+available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+
+[homepage]: https://www.contributor-covenant.org
+
+For answers to common questions about this code of conduct, see
+https://www.contributor-covenant.org/faq

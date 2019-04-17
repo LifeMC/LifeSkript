@@ -1,0 +1,9 @@
+
+usquid:S2293X"YReplace the type specification in this constructor call with the diamond operator ("<>").(´–æùÿÿÿÿ
+vsquid:S2293­"YReplace the type specification in this constructor call with the diamond operator ("<>").(“‹„òúÿÿÿÿ
+Esquid:S4274€"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Zsquid:CallToDeprecatedMethod‡"1Remove this use of "getTypeId"; it is deprecated.(—¯Æº
+[squid:CallToDeprecatedMethodš"3Remove this use of "getMaterial"; it is deprecated.(«­øN
+=squid:S1168l"&Return an empty array instead of null.(¥¹ï
+=squid:S1168n"&Return an empty array instead of null.(¥¹ï
+=squid:S1168y"&Return an empty array instead of null.(¥¹ï

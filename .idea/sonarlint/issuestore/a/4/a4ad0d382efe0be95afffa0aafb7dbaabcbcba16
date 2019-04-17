@@ -1,0 +1,50 @@
+
+jsquid:ModifiersOrderCheckE"EReorder the modifiers to comply with the Java Language Specification.(Ğú“ò
+ksquid:ModifiersOrderCheck—"EReorder the modifiers to comply with the Java Language Specification.(¼Î×Í
+psquid:ModifiersOrderCheckœ"EReorder the modifiers to comply with the Java Language Specification.(¤İä‘ÿÿÿÿÿ
+psquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(û¶“»øÿÿÿÿ
+ksquid:ModifiersOrderCheck¤"EReorder the modifiers to comply with the Java Language Specification.(ˆ‚ÿÌ
+ksquid:ModifiersOrderCheck©"EReorder the modifiers to comply with the Java Language Specification.(Û¶©è
+psquid:ModifiersOrderCheck«"EReorder the modifiers to comply with the Java Language Specification.(ºûùÿÿÿÿ
+ksquid:ModifiersOrderCheck¬"EReorder the modifiers to comply with the Java Language Specification.(•ÿ¬
+psquid:ModifiersOrderCheck¯"EReorder the modifiers to comply with the Java Language Specification.(œ†Øùÿÿÿÿ
+ksquid:ModifiersOrderCheck°"EReorder the modifiers to comply with the Java Language Specification.(Ç“†á
+psquid:ModifiersOrderCheck±"EReorder the modifiers to comply with the Java Language Specification.(£ê‚üÿÿÿÿ
+psquid:ModifiersOrderCheck²"EReorder the modifiers to comply with the Java Language Specification.(Î’ª¥ıÿÿÿÿ
+psquid:ModifiersOrderCheck³"EReorder the modifiers to comply with the Java Language Specification.(å‘ş½üÿÿÿÿ
+ksquid:ModifiersOrderCheck´"EReorder the modifiers to comply with the Java Language Specification.(¤³Ÿé
+psquid:ModifiersOrderCheckµ"EReorder the modifiers to comply with the Java Language Specification.(÷½ä‚úÿÿÿÿ
+ksquid:ModifiersOrderCheck¶"EReorder the modifiers to comply with the Java Language Specification.(°ÿÂ
+ksquid:ModifiersOrderCheck·"EReorder the modifiers to comply with the Java Language Specification.(òÓã–
+ksquid:ModifiersOrderCheck¸"EReorder the modifiers to comply with the Java Language Specification.(—üÿâ
+psquid:ModifiersOrderCheck¹"EReorder the modifiers to comply with the Java Language Specification.(˜ÖŠµüÿÿÿÿ
+psquid:ModifiersOrderCheckº"EReorder the modifiers to comply with the Java Language Specification.(“òÎ–ùÿÿÿÿ
+qsquid:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(Û¶©è
+vsquid:S2293«"YReplace the type specification in this constructor call with the diamond operator ("<>").(ºûùÿÿÿÿ
+qsquid:S2293¬"YReplace the type specification in this constructor call with the diamond operator ("<>").(•ÿ¬
+Hsquid:S1444¨"+Make this "public static state" field final(´ø•»øÿÿÿÿ
+@squid:S4274æ"(Replace this assert with a proper check.(³Ä‰
+Gsquid:S2093ç"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+Gsquid:S2093Ê"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+Asquid:S2885"$Make "RFC2822" an instance variable.(û¶“»øÿÿÿÿ
+nsquid:S3973z"WUse curly braces or indentation to denote the code conditionally executed by this "if".(ïÃÀ
+nsquid:S3973"WUse curly braces or indentation to denote the code conditionally executed by this "if".(ûÌ”á
+tsquid:S3973„"WUse curly braces or indentation to denote the code conditionally executed by this "if".(óÅƒıÿÿÿÿ
+tsquid:S3973‰"WUse curly braces or indentation to denote the code conditionally executed by this "if".(©âèåùÿÿÿÿ
+osquid:S3973"WUse curly braces or indentation to denote the code conditionally executed by this "if".( ©ÑŞ
+u
+squid:S135ğ"YReduce the total number of break and continue statements in this loop to use at most one.(úµ½²ÿÿÿÿÿ
+u
+squid:S135Ô"YReduce the total number of break and continue statements in this loop to use at most one.(±­áÓüÿÿÿÿ
+…"squid:ClassVariableVisibilityCheck¨"QMake state a static final constant or non-public and provide accessors if needed.(´ø•»øÿÿÿÿ
+m squid:LabelsShouldNotBeUsedCheckÔ";Refactor the code to remove this label and the need for it.(±­áÓüÿÿÿÿ
+lsquid:S00100˜"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ìŒõ”úÿÿÿÿ
+Gsquid:S00108»")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
+Gsquid:S00108ˆ")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
+Gsquid:S00108")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
+Gsquid:S00108Û")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
+@squid:S1604à"(Make this anonymous inner class a lambda(°©Ä±
+@squid:S1604ï"(Make this anonymous inner class a lambda(°©Ä±
+asquid:S3358‹"DExtract this nested ternary operation into an independent statement.(°ãÖ¡üÿÿÿÿ
+:squid:S2386«"Make this member "protected".(ºûùÿÿÿÿ
+ssquid:S00115—"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¼Î×Í

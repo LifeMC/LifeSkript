@@ -1,0 +1,14 @@
+
+¤%squid:RedundantThrowsDeclarationCheckŒ"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+psquid:S2293”"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûœ†i
+psquid:S2293”"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûœ†i
+Esquid:S4274š"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Esquid:S4274"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Esquid:S4274¦"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Esquid:S4274¸"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Esquid:S4274¿"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+Esquid:S4274Ä"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
+=squid:S1168c"&Return an empty array instead of null.(¥¹ï
+>squid:S1168ƒ"&Return an empty array instead of null.(¥¹ï
+>squid:S1168†"&Return an empty array instead of null.(¥¹ï
+Fsquid:S00108H")Either remove or fill this block of code.(šøç¦ùÿÿÿÿ
