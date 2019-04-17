@@ -109,7 +109,7 @@ public final class Variables {
 		});
 	}
 	
-	static List<VariablesStorage> storages = new ArrayList<VariablesStorage>();
+	static final List<VariablesStorage> storages = new ArrayList<VariablesStorage>();
 	
 	public static boolean load() {
 		assert variables.treeMap.isEmpty();

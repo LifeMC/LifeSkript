@@ -29,7 +29,7 @@ import java.util.HashMap;
 final class MaterialName {
 	String singular;
 	String plural;
-	int gender;
+	final int gender;
 	private final int id;
 	final HashMap<NonNullPair<Short, Short>, NonNullPair<String, String>> names = new HashMap<NonNullPair<Short, Short>, NonNullPair<String, String>>();
 	

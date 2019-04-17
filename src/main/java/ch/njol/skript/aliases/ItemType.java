@@ -490,7 +490,8 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 	public Iterator<ItemStack> containerIterator() {
 		return new Iterator<ItemStack>() {
 			@SuppressWarnings("null")
-			Iterator<ItemData> iter = types.iterator();
+            final
+            Iterator<ItemData> iter = types.iterator();
 			@Nullable
 			Iterator<ItemStack> currentDataIter;
 			

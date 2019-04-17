@@ -564,7 +564,7 @@ public final class Aliases { //NOSONAR
 			if (t2.numTypes() == 0)
 				continue;
 			final Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
-			final String[] enchs = lc.substring(c + of.length(), lc.length()).split("\\s*(,|" + Pattern.quote(Language.get("and")) + ")\\s*");
+			final String[] enchs = lc.substring(c + of.length()).split("\\s*(,|" + Pattern.quote(Language.get("and")) + ")\\s*");
 			for (final String ench : enchs) {
 				final EnchantmentType e = EnchantmentType.parse("" + ench);
 				if (e == null)
@@ -720,7 +720,7 @@ public final class Aliases { //NOSONAR
 			i = s.length();
 		try {
 			t.dataMin = Short.parseShort(s.substring(0, i));
-			t.dataMax = i == s.length() ? t.dataMin : Short.parseShort(s.substring(i + 1, s.length()));
+			t.dataMax = i == s.length() ? t.dataMin : Short.parseShort(s.substring(i + 1));
 		} catch (final NumberFormatException e) { // overflow
 			Skript.error(m_out_of_data_range.toString(Short.MAX_VALUE));
 			return null;

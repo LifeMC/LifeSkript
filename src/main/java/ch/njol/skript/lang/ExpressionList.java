@@ -177,7 +177,7 @@ public class ExpressionList<T> implements Expression<T> {
 	@Override
 	public boolean check(final Event e, final Checker<? super T> c) {
 		for (final Expression<? extends T> expr : expressions) {
-			final Boolean b = expr.check(e, c);
+			final boolean b = expr.check(e, c);
 			if (and && !b)
 				return false;
 			if (!and && b)

@@ -199,9 +199,9 @@ public interface Comparator<T1, T2> {
 	 */
 	class ComparatorInfo<T1, T2> {
 		
-		public Class<T1> c1;
-		public Class<T2> c2;
-		public Comparator<T1, T2> c;
+		public final Class<T1> c1;
+		public final Class<T2> c2;
+		public final Comparator<T1, T2> c;
 		
 		public ComparatorInfo(final Class<T1> c1, final Class<T2> c2, final Comparator<T1, T2> c) {
 			this.c1 = c1;

@@ -49,12 +49,10 @@ import ch.njol.util.Callback;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 
+import ch.njol.util.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.SimpleCommandMap;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -84,7 +82,6 @@ import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.Nullable;
 
 //TODO option to disable replacement of <color>s in command arguments?
@@ -593,7 +590,7 @@ public final class Commands { //NOSONAR
 			this.aliasFor = aliasFor.startsWith("/") ? aliasFor : "/" + aliasFor;
 			this.helpMap = helpMap;
 			name = alias.startsWith("/") ? alias : "/" + alias;
-			Validate.isTrue(!name.equals(this.aliasFor), "Command " + name + " cannot be alias for itself");
+			assert !name.equals(this.aliasFor) : "Command " + name + " cannot be alias for itself";
 			shortText = ChatColor.YELLOW + "Alias for " + ChatColor.WHITE + this.aliasFor;
 		}
 		

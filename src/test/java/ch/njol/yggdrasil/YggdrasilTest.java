@@ -47,7 +47,7 @@ import static org.junit.Assert.assertEquals;
 @SuppressWarnings("resource")
 public class YggdrasilTest {
 	
-	static Yggdrasil y = new Yggdrasil();
+	static final Yggdrasil y = new Yggdrasil();
 	static {
 		y.registerSingleClass(TestEnum.class);
 		y.registerSingleClass(PETest1.class);

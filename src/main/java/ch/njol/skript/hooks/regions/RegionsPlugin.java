@@ -56,7 +56,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 			public String getID(final Class<?> c) {
 				for (final RegionsPlugin<?> p : plugins)
 					if (p.getRegionClass() == c)
-						return c.getClass().getSimpleName();
+						return c.getSimpleName();
 				return null;
 			}
 			

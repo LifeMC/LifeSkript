@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> implements Literal<T> {
 	
-	transient T[] data;
+	final transient T[] data;
 	
 	public ConvertedLiteral(final Literal<F> source, final T[] data, final Class<T> to) {
 		super(source, to, new Converter<F, T>() {

@@ -43,8 +43,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,13 +66,11 @@ public class Documentation {
 		if (!generate)
 			return;
 		try {
-			final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), "UTF-8"));
+			final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), StandardCharsets.UTF_8));
 			asSql(pw);
 			pw.flush();
 			pw.close();
 		} catch (final FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (final UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -169,11 +168,11 @@ public class Documentation {
 							first = false;
 							final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(c);
 							final ClassInfo<?> ci = Classes.getClassInfoNoError(p.getFirst());
-							if (ci != null && ci.getDocName() != null && ci.getDocName() != ClassInfo.NO_DOC) {
+							if (ci != null && ci.getDocName() != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC)) {
 								b.append("<a href='../classes/#").append(p.getFirst()).append("'>").append(ci.getName().toString(p.getSecond())).append("</a>");
 							} else {
 								b.append(c);
-								if (ci != null && ci.getDocName() != ClassInfo.NO_DOC)
+								if (ci != null && !Objects.equals(ci.getDocName(), ClassInfo.NO_DOC))
 									Skript.warning("Used class " + p.getFirst() + " has no docName/name defined");
 							}
 						}
@@ -225,7 +224,7 @@ public class Documentation {
 	}
 	
 	private static void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
-		if (info.getDocName() == ClassInfo.NO_DOC)
+		if (Objects.equals(info.getDocName(), ClassInfo.NO_DOC))
 			return;
 		if (info.getDocName() == null || info.getDescription() == null || info.getUsage() == null || info.getExamples() == null || info.getSince() == null) {
 			Skript.warning("Class " + info.getCodeName() + " is missing information");
@@ -270,7 +269,7 @@ public class Documentation {
 		pw.println("REPLACE INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "');");
 	}
 	
-	private static ArrayList<Pattern> validation = new ArrayList<Pattern>();
+	private static final ArrayList<Pattern> validation = new ArrayList<Pattern>();
 	static {
 		validation.add(Pattern.compile("<" + "(?!a href='|/a>|br ?/|/?(i|b|u|code|pre|ul|li|em)>)"));
 		validation.add(Pattern.compile("(?<!</a|'|br ?/|/?(i|b|u|code|pre|ul|li|em))" + ">"));
@@ -298,25 +297,31 @@ public class Documentation {
 			if (s[0].isEmpty())
 				s[0] = "../" + baseURL + "/";
 			if (s[0].startsWith("../") && s[0].endsWith("/")) {
-				if ("../classes/".equals(s[0])) {
-					if (Classes.getClassInfoNoError(s[1]) != null)
-						continue;
-				} else if ("../events/".equals(s[0])) {
-					for (final SkriptEventInfo<?> i : Skript.getEvents()) {
-						if (s[1].equals(i.getId()))
-							continue linkLoop;
-					}
-				} else if ("../functions/".equals(s[0])) {
-					if (Functions.getFunction("" + s[1]) != null)
-						continue;
-				} else {
-					final int i = CollectionUtils.indexOf(urls, s[0].substring("../".length(), s[0].length() - 1));
-					if (i != -1) {
-						try {
-							Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
+				switch (s[0]) {
+					case "../classes/":
+						if (Classes.getClassInfoNoError(s[1]) != null)
 							continue;
-						} catch (final ClassNotFoundException ignored) {}
-					}
+						break;
+					case "../events/":
+						for (final SkriptEventInfo<?> i : Skript.getEvents()) {
+							if (s[1].equals(i.getId()))
+								continue linkLoop;
+						}
+						break;
+					case "../functions/":
+						if (Functions.getFunction("" + s[1]) != null)
+							continue;
+						break;
+					default:
+						final int i = CollectionUtils.indexOf(urls, s[0].substring("../".length(), s[0].length() - 1));
+						if (i != -1) {
+							try {
+								Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
+								continue;
+							} catch (final ClassNotFoundException ignored) {
+							}
+						}
+						break;
 				}
 			}
 			Skript.warning("invalid link '" + url + "' found in '" + html + "'");

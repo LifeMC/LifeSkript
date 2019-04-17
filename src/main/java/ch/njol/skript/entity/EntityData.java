@@ -387,7 +387,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	@SuppressWarnings("null")
 	@Nullable
 	public static EntityData<?> parse(final String s) {
-		return SkriptParser.<EntityData<?>>parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
+		return SkriptParser.parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
 	}
 	
 	/**
@@ -399,7 +399,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 	@SuppressWarnings("null")
 	@Nullable
 	public static EntityData<?> parseWithoutIndefiniteArticle(final String s) {
-		return SkriptParser.<EntityData<?>>parseStatic(s, infos.iterator(), null); // fix for Java 9/10
+		return SkriptParser.parseStatic(s, infos.iterator(), null); // fix for Java 9/10
 	}
 	
 	@Nullable

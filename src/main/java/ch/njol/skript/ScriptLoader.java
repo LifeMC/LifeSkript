@@ -133,7 +133,7 @@ final public class ScriptLoader {
 		hasDelayBefore = Kleenean.FALSE;
 	}
 	
-	public static List<TriggerSection> currentSections = new ArrayList<TriggerSection>();
+	public static final List<TriggerSection> currentSections = new ArrayList<TriggerSection>();
 	public final static List<Loop> currentLoops = new ArrayList<Loop>();
 	private final static Map<String, ItemType> currentAliases = new HashMap<String, ItemType>();
 	final static HashMap<String, String> currentOptions = new HashMap<String, String>();

@@ -47,7 +47,7 @@ public final class Converters {
 		throw new UnsupportedOperationException();
 	}
 	
-	private static List<ConverterInfo<?, ?>> converters = new ArrayList<ConverterInfo<?, ?>>(50);
+	private static final List<ConverterInfo<?, ?>> converters = new ArrayList<ConverterInfo<?, ?>>(50);
 	
 	@SuppressWarnings("null")
 	public static List<ConverterInfo<?, ?>> getConverters() {

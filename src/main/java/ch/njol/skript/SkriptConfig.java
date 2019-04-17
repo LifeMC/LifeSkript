@@ -60,7 +60,7 @@ public final class SkriptConfig {
 	
 	@Nullable
 	static Config mainConfig;
-	static Collection<Config> configs = new ArrayList<Config>();
+	static final Collection<Config> configs = new ArrayList<Config>();
 	
 	final static Option<String> version = new Option<String>("version", Skript.getVersion().toString()).optional(true);
 	

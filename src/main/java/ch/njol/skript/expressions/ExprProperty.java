@@ -36,6 +36,8 @@ import org.bukkit.event.Event;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Arrays;
+
 /**
  * @author TheDGOfficial
  */
@@ -78,7 +80,7 @@ public final class ExprProperty extends SimpleExpression<String> {
 	 */
 	@SuppressWarnings("null")
 	public String toString(@Nullable final Event e, final boolean debug) {
-		return "property \"" + propertyName.getSingle(e) + "\" (" + get(e) + ")";
+		return "property \"" + propertyName.getSingle(e) + "\" (" + Arrays.toString(get(e)) + ")";
 	}
 
 	/**

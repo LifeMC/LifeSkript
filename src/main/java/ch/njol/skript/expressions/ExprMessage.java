@@ -136,7 +136,7 @@ public final class ExprMessage extends SimpleExpression<String> {
 			this.events = events;
 		}
 		
-		static String[] patterns;
+		static final String[] patterns;
 		static {
 			patterns = new String[values().length];
 			for (int i = 0; i < patterns.length; i++)

@@ -70,7 +70,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 			checker = c;
 		}
 		
-		static String[] patterns;
+		static final String[] patterns;
 		static {
 			patterns = new String[ChangeEvent.values().length];
 			for (int i = 0; i < patterns.length; i++) {

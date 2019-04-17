@@ -99,7 +99,7 @@ public final class Compatibility {
 	@SuppressWarnings("null")
 	public static <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
 		
-		return Compatibility.<Superclass>getClass(oldClass, newClass, null);
+		return Compatibility.getClass(oldClass, newClass, null);
 		
 	}
 	

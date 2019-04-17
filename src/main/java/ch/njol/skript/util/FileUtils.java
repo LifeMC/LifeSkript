@@ -37,18 +37,6 @@ import java.util.Collection;
  */
 public final class FileUtils {
 	
-	public static boolean RUNNINGJAVA6 = true;// = System.getProperty("java.version").startsWith("1.6"); // doesn't work reliably?
-	static {
-		try {
-			new File(".").toPath();
-			RUNNINGJAVA6 = false;
-		} catch (final NoSuchMethodError e) {
-			RUNNINGJAVA6 = true;
-		} catch (final Exception e) {
-			RUNNINGJAVA6 = false;
-		}
-	}
-	
 	private FileUtils() {}
 	
 	private final static SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
@@ -81,60 +69,15 @@ public final class FileUtils {
 	public static File move(final File from, final File to, final boolean replace) throws IOException {
 		if (!replace && to.exists())
 			throw new IOException("Can't rename " + from.getName() + " to " + to.getName() + ": The target file already exists");
-		if (!RUNNINGJAVA6) {
-			if (replace)
-				java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
-			else
-				java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.ATOMIC_MOVE);
-		} else {
-			File moveTo = null;
-			if (replace && to.exists()) {
-				moveTo = new File(to.getAbsolutePath() + ".old0");
-				int i = 0;
-				while (moveTo.exists() && i < 1000)
-					moveTo = new File(to.getAbsolutePath() + ".old" + (++i));
-				if (i == 999 || !to.renameTo(moveTo))
-					throw new IOException("Can't rename " + from.getName() + " to " + to.getName() + ": Cannot temporarily rename the target file");
-			}
-			if (!from.renameTo(to)) {
-				if (moveTo != null)
-					moveTo.renameTo(to);
-				throw new IOException("Can't rename " + from.getName() + " to " + to.getName());
-			}
-			if (moveTo != null)
-				moveTo.delete();
-		}
+		if (replace)
+			java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+		else
+			java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.ATOMIC_MOVE);
 		return to;
 	}
 	
 	public static void copy(final File from, final File to) throws IOException {
-		if (!RUNNINGJAVA6) {
-			java.nio.file.Files.copy(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
-		} else {
-			FileInputStream in = null;
-			FileOutputStream out = null;
-			try {
-				in = new FileInputStream(from);
-				out = new FileOutputStream(to);
-				final byte[] buffer = new byte[4096];
-				int bytesRead;
-				while ((bytesRead = in.read(buffer)) != -1)
-					out.write(buffer, 0, bytesRead);
-			} catch (final Exception e) {
-				throw new IOException("Can't copy " + from.getName() + " to " + to.getName() + ": " + e.getLocalizedMessage(), e);
-			} finally {
-				if (in != null) {
-					try {
-						in.close();
-					} catch (final IOException ignored) {}
-				}
-				if (out != null) {
-					try {
-						out.close();
-					} catch (final IOException ignored) {}
-				}
-			}
-		}
+		java.nio.file.Files.copy(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
 	}
 	
 	/**

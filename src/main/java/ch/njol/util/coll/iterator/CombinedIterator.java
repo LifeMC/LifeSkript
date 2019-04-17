@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class CombinedIterator<T> implements Iterator<T> {
 	
 	private final Iterator<? extends Iterable<T>> iterators;
-	private boolean removable;
+	private final boolean removable;
 	
 	public CombinedIterator(final Iterator<? extends Iterable<T>> iterators) {
 		this(iterators, true);

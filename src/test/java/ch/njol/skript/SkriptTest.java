@@ -42,7 +42,7 @@ import static org.junit.Assert.assertNotNull;
 public class SkriptTest {
 	
 	@SuppressWarnings("null")
-	private static Player njol = createMock(Player.class);
+	private static final Player njol = createMock(Player.class);
 	static {
 		
 	}

@@ -205,12 +205,11 @@ public class ReversedListView<T> implements List<T> {
 		if (other.size() != this.size())
 			return false;
 		final Iterator<?> os = other.iterator();
-		final Iterator<T> ts = this.iterator();
-		while (ts.hasNext()) {
-			final Object t = ts.next(), o = os.next();
-			if (t == null ? o != null : !t.equals(o))
-				return false;
-		}
+        for (T value : this) {
+            final Object t = value, o = os.next();
+            if (t == null ? o != null : !t.equals(o))
+                return false;
+        }
 		return true;
 	}
 	

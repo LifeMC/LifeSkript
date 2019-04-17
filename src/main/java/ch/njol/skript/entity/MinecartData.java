@@ -75,7 +75,7 @@ public class MinecartData extends EntityData<Minecart> {
 			return codeName;
 		}
 		
-		public static String[] codeNames;
+		public static final String[] codeNames;
 		static {
 			final ArrayList<String> cn = new ArrayList<String>();
 			for (final MinecartType t : values()) {

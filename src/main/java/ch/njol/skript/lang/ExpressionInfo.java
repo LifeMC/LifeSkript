@@ -23,7 +23,7 @@ package ch.njol.skript.lang;
 
 public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
 	
-	public Class<T> returnType;
+	public final Class<T> returnType;
 	
 	public ExpressionInfo(final String[] patterns, final Class<T> returnType, final Class<E> c) throws IllegalArgumentException {
 		super(patterns, c);

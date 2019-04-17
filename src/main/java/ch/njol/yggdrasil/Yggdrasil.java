@@ -83,7 +83,7 @@ public final class Yggdrasil {
 	 * <p>
 	 * hex: 0x59676700
 	 */
-	public final static int MAGIC_NUMBER = ('Y' << 24) + ('g' << 16) + ('g' << 8) + '\0';
+	public final static int MAGIC_NUMBER = ('Y' << 24) + ('g' << 16) + ('g' << 8);
 	
 	/** latest protocol version */
 	public final static short LATEST_VERSION = 1; // version 2 is only one minor change currently

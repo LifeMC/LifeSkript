@@ -39,8 +39,8 @@ import java.util.Map.Entry;
 public final class SectionValidator implements NodeValidator {
 	
 	private final static class NodeInfo {
-		public NodeValidator v;
-		public boolean optional;
+		public final NodeValidator v;
+		public final boolean optional;
 		
 		public NodeInfo(final NodeValidator v, final boolean optional) {
 			this.v = v;

@@ -109,7 +109,7 @@ public class ScriptCommand implements CommandExecutor {
 	public final static int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
 	final int executableBy;
 	
-	private transient PluginCommand bukkitCommand;
+	private final transient PluginCommand bukkitCommand;
 	
 	private final Map<UUID, Date> lastUsageMap = new HashMap<UUID, Date>();
 	
@@ -304,7 +304,7 @@ public class ScriptCommand implements CommandExecutor {
 	@Nullable
 	private transient Command overridden;
 	
-	private transient Map<String, Command> overriddenAliases = new HashMap<String, Command>();
+	private final transient Map<String, Command> overriddenAliases = new HashMap<String, Command>();
 	
 	public void register(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, final @Nullable Set<String> aliases) {
 		synchronized (commandMap) {
@@ -353,7 +353,7 @@ public class ScriptCommand implements CommandExecutor {
 		}
 	}
 	
-	private transient Collection<HelpTopic> helps = new ArrayList<HelpTopic>();
+	private final transient Collection<HelpTopic> helps = new ArrayList<HelpTopic>();
 	
 	public void registerHelp() {
 		helps.clear();

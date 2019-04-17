@@ -115,7 +115,8 @@ public class ExprNumbers extends SimpleExpression<Number> {
 		if (s == null || f == null || s.doubleValue() > f.doubleValue())
 			return null;
 		return new Iterator<Number>() {
-			double i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue(), max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
+			double i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
+            final double max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
 			
 			@Override
 			public boolean hasNext() {

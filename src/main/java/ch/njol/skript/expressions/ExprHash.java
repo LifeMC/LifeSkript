@@ -56,7 +56,7 @@ public class ExprHash extends PropertyExpression<String, String> {
 	private final static Charset UTF_8 = Charset.forName("UTF-8");
 	
 	@Nullable
-	static MessageDigest md5;
+	static final MessageDigest md5;
 	
 	static {
 		try {

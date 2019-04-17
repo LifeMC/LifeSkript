@@ -43,7 +43,11 @@ public final class HealthUtils {
 	}
 	
 	private final static boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);
-	private static Method getHealth, setHealth, getMaxHealth, setMaxHealth, damage;
+	private static final Method getHealth;
+	private static final Method setHealth;
+	private static final Method getMaxHealth;
+	private static final Method setMaxHealth;
+	private static final Method damage;
 	static {
 		if (!supportsDoubles) {
 			try {
@@ -176,7 +180,8 @@ public final class HealthUtils {
 		setHealth(e, Math2.fit(0, getHealth(e) + h, getMaxHealth(e)));
 	}
 	
-	private static Method getDamage, setDamage;
+	private static final Method getDamage;
+	private static final Method setDamage;
 	static {
 		if (!supportsDoubles) {
 			try {

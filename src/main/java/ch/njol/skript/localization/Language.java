@@ -77,7 +77,7 @@ public class Language {
 	
 	static boolean useLocal;
 	
-	private static HashMap<Plugin, Version> langVersion = new HashMap<Plugin, Version>();
+	private static final HashMap<Plugin, Version> langVersion = new HashMap<Plugin, Version>();
 	
 	public static String getName() {
 		return useLocal ? name : "english";
