@@ -56,7 +56,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"message \"You clicked on a %type of clicked entity%!\"", "clicked block is a chest:", "	show the inventory of the clicked block to the player"})
 @Since("1.0")
 @Events("click")
-public class ExprClicked extends SimpleExpression<Object> {
+public final class ExprClicked extends SimpleExpression<Object> {
 	static {
 		Skript.registerExpression(ExprClicked.class, Object.class, ExpressionType.SIMPLE, "[the] clicked (block|%-*itemtype/entitydata%)");
 	}

@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"# prevent any commands except for the /exit command during some game", "on command:", "{game.%player%.is playing} is true", "command is not \"exit\"", "message \"You're not allowed to use commands during the game\"", "cancel the event"})
 @Since("2.0")
 @Events("command")
-public class ExprCommand extends SimpleExpression<String> {
+public final class ExprCommand extends SimpleExpression<String> {
 	static {
 		Skript.registerExpression(ExprCommand.class, String.class, ExpressionType.SIMPLE, "[the] (full|complete|whole) command", "[the] command [label]", "[the] arguments");
 	}

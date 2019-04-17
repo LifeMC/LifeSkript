@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Hashes the given text using the MD5 algorithm. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an MD5 hash is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though which can easily crack short or insecure passwords."})
 @Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} to hashed text-argument", "command /login <text>:", "	trigger:", "		{password.%player%} is hashed text-argument:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
 @Since("2.0")
-public class ExprHash extends PropertyExpression<String, String> {
+public final class ExprHash extends PropertyExpression<String, String> {
 	static {
 		Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
 	}

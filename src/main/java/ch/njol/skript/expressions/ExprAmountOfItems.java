@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Counts how many of a particular <a href='../classes/#itemtype'>item type</a> are in a given inventory.")
 @Examples("message \"You have %number of ores in the player's inventory% ores in your inventory.\"")
 @Since("2.0")
-public class ExprAmountOfItems extends SimpleExpression<Integer> {
+public final class ExprAmountOfItems extends SimpleExpression<Integer> {
 	static {
 		Skript.registerExpression(ExprAmountOfItems.class, Integer.class, ExpressionType.PROPERTY, "[the] (amount|number) of %itemtypes% (in|of) %inventories%");
 	}

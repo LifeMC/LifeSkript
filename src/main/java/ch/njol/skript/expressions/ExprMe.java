@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("A 'me' expression that can be used in effect commands only.")
 @Examples({"!heal me", "!kick myself", "!give a diamond axe to me"})
 @Since("2.1.1")
-public class ExprMe extends SimpleExpression<CommandSender> {
+public final class ExprMe extends SimpleExpression<CommandSender> {
 	static {
 		Skript.registerExpression(ExprMe.class, CommandSender.class, ExpressionType.SIMPLE, "me", "my[self]");
 	}

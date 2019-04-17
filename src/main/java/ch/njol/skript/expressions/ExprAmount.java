@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"The amount of something.", "Please note that <code>amount of &lt;items&gt;</code> will not return the number of items, but the number of stacks, e.g. 1 for a stack of 64 torches."})
 @Examples({"message \"There are %number of all players% players online!\""})
 @Since("1.0")
-public class ExprAmount extends SimpleExpression<Integer> {
+public final class ExprAmount extends SimpleExpression<Integer> {
 	static {
 		Skript.registerExpression(ExprAmount.class, Integer.class, ExpressionType.PROPERTY, "(amount|number|size) of %objects%");
 	}

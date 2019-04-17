@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"The first, last or a random element of a set, e.g. a list variable.", "See also: <a href='#ExprRandom'>random</a>"})
 @Examples("give a random element out of {free items::*} to the player")
 @Since("2.0")
-public class ExprElement extends SimpleExpression<Object> {
+public final class ExprElement extends SimpleExpression<Object> {
 	
 	static {
 		Skript.registerExpression(ExprElement.class, Object.class, ExpressionType.PROPERTY, "(-1¦[the] first|1¦[the] last|0¦[a] random|2¦%-number%(st|nd|rd|th)) element [out] of %objects%");

@@ -65,7 +65,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("all entities in all world, in a specific world or in a radius around a certain location, e.g. 'all players', 'all creepers in the player's world', or 'players in radius 100 of the player'.")
 @Examples({"kill all creepers in the player's world", "send \"Psst!\" to all players witin 100 meters of the player", "give a diamond to all ops", "heal all tamed wolves in radius 2000 around {town center}"})
 @Since("1.2.1")
-public class ExprEntities extends SimpleExpression<Entity> {
+public final class ExprEntities extends SimpleExpression<Entity> {
 	static {
 		Skript.registerExpression(ExprEntities.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[all] %*entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] entities of type[s] %entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] %*entitydatas% (within|[with]in radius) %number% [(block[s]|met(er|re)[s])] (of|around) %location%", "[all] entities of type[s] %entitydatas% in radius %number% (of|around) %location%");
 	}

@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"make the command sender execute \"/say hi!\"", "on command:", "	log \"%executor% used command /%command% %arguments%\" to \"commands.log\""})
 @Since("2.0")
 @Events("command")
-public class ExprCommandSender extends EventValueExpression<CommandSender> {
+public final class ExprCommandSender extends EventValueExpression<CommandSender> {
 	static {
 		Skript.registerExpression(ExprCommandSender.class, CommandSender.class, ExpressionType.SIMPLE, "[the] [command['s]] (sender|executor)");
 	}

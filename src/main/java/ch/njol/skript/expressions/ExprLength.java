@@ -34,7 +34,7 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 @Description("The length of a text, in number of characters.")
 @Examples("set {_l} to length of the string argument")
 @Since("2.1")
-public class ExprLength extends SimplePropertyExpression<String, Integer> {
+public final class ExprLength extends SimplePropertyExpression<String, Integer> {
 	static {
 		register(ExprLength.class, Integer.class, "length", "strings");
 	}
