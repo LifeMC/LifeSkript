@@ -120,16 +120,14 @@ public final class BlockUtils { //NOSONAR
             }
             dataMax = (byte) Math.min(dataMax, attach.length - 1);
             // solid blocks?
-            if (CollectionUtils.indexOf(attach, BlockFace.DOWN, dataMin, dataMax) != -1) {
-                if (isSolid(b.getRelative(BlockFace.DOWN).getTypeId())) {
-                    for (final byte data : CollectionUtils.permutation(dataMin, dataMax)) {
-                        if (attach[data] != BlockFace.DOWN)
-                            continue;
-                        b.setTypeIdAndData(type, data, applyPhysics);
-                        return true;
-                    }
-                    assert false;
+            if (CollectionUtils.indexOf(attach, BlockFace.DOWN, dataMin, dataMax) != -1 && isSolid(b.getRelative(BlockFace.DOWN).getTypeId())) {
+                for (final byte data : CollectionUtils.permutation(dataMin, dataMax)) {
+                    if (attach[data] != BlockFace.DOWN)
+                        continue;
+                    b.setTypeIdAndData(type, data, applyPhysics);
+                    return true;
                 }
+                assert false;
             }
             for (final int data : CollectionUtils.permutation(dataMin, dataMax)) {
                 final BlockFace f = attach[data];
@@ -141,16 +139,14 @@ public final class BlockUtils { //NOSONAR
                 }
             }
             // no solid blocks - any blocks at all?
-            if (CollectionUtils.indexOf(attach, BlockFace.DOWN, dataMin, dataMax) != -1) {
-                if (b.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
-                    for (final byte data : CollectionUtils.permutation(dataMin, dataMax)) {
-                        if (attach[data] != BlockFace.DOWN)
-                            continue;
-                        b.setTypeIdAndData(type, data, applyPhysics);
-                        return true;
-                    }
-                    assert false;
+            if (CollectionUtils.indexOf(attach, BlockFace.DOWN, dataMin, dataMax) != -1 && b.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
+                for (final byte data : CollectionUtils.permutation(dataMin, dataMax)) {
+                    if (attach[data] != BlockFace.DOWN)
+                        continue;
+                    b.setTypeIdAndData(type, data, applyPhysics);
+                    return true;
                 }
+                assert false;
             }
             for (final int data : CollectionUtils.permutation(dataMin, dataMax)) {
                 final BlockFace f = attach[data];
@@ -240,13 +236,11 @@ public final class BlockUtils { //NOSONAR
         }
 
         // LARGE FLOWER
-        if (type == 175) {
-            if (b.getRelative(BlockFace.UP).getType() == Material.AIR) {
-                final byte data = (byte) Utils.random(dataMin, dataMax + 1);
-                b.getRelative(BlockFace.UP).setTypeIdAndData(type, (byte) (data | 0x4), false);
-                b.setTypeIdAndData(type, (byte) (data & ~0x4), applyPhysics);
-                return true;
-            }
+        if (type == 175 && b.getRelative(BlockFace.UP).getType() == Material.AIR) {
+            final byte data = (byte) Utils.random(dataMin, dataMax + 1);
+            b.getRelative(BlockFace.UP).setTypeIdAndData(type, (byte) (data | 0x4), false);
+            b.setTypeIdAndData(type, (byte) (data & ~0x4), applyPhysics);
+            return true;
         }
 
         // REMIND rails?

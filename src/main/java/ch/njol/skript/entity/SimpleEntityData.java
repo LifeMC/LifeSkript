@@ -80,10 +80,10 @@ public final class SimpleEntityData extends EntityData<Entity> {
         if (Skript.classExists("org.bukkit.entity.Firework"))
             types.add(new SimpleEntityDataInfo("firework", Firework.class));
         if (Skript.classExists("org.bukkit.entity.Endermite")) {
-            types.add(new SimpleEntityDataInfo("endermite", org.bukkit.entity.Endermite.class));
+            types.add(new SimpleEntityDataInfo("endermite", Endermite.class));
         }
         if (Skript.classExists("org.bukkit.entity.ArmorStand")) {
-            types.add(new SimpleEntityDataInfo("armor stand", org.bukkit.entity.ArmorStand.class));
+            types.add(new SimpleEntityDataInfo("armor stand", ArmorStand.class));
         }
         // TODO !Update with every version [entities]
 

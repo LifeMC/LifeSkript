@@ -79,10 +79,10 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
     public static <T extends PseudoEnum<T>> List<T> values(final Class<T> c) throws IllegalArgumentException {
         if (c != getDeclaringClass(c))
             throw new IllegalArgumentException(c + " != " + getDeclaringClass(c));
-        return values(c, getInfo(c));
+        return values(/*c,*/ getInfo(c));
     }
 
-    private static <T extends PseudoEnum<T>> List<T> values(final Class<T> c, final Info<T> info) {
+    private static <T extends PseudoEnum<T>> List<T> values(/*final Class<T> c,*/ final Info<T> info) {
         info.readLock.lock();
         try {
             return new ArrayList<>(info.values);
@@ -200,7 +200,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @see Enum#valueOf(Class, String)
      */
     public List<T> values() {
-        return values(getDeclaringClass(), info);
+        return values(/*getDeclaringClass(),*/ info);
     }
 
     /**

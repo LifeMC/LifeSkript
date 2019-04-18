@@ -33,10 +33,10 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class ExprPotionEffect extends SimpleExpression<PotionEffect> {
-    static {
+    //static {
         // REMIND create
 //		Skript.registerExpression(ExprPotionEffect.class, PotionEffect.class, ExpressionType.COMBINED,"(|1¦extended) [potion [of]] %potioneffect%");
-    }
+    //}
 
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {

@@ -114,6 +114,7 @@ public class Message {
      * changed since the last call of this method.
      */
     protected void onValueChange() {
+        /* empty to make override-able but not necessary (abstract) */
     }
 
 }

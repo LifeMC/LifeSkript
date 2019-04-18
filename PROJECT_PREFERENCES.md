@@ -5,7 +5,9 @@ Project preferences includes the requirements you should read before making any 
 ## Our Standards
 
 ### The preferences, by the core development team
-- You should use preferred IDE as Eclipse IDE.
+- You should use preferred IDE as Eclipse IDE.  
+(We recently switched to IntelliJ IDEA Ultimate Edition, but documents here still references Eclipse.)  
+
 - You should include license headers and author section in new added files.
 - You should end new files with a new line. Read more: <a href="https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline">Why should text files end with a newline?</a>
 - You should not make any breaking changes and test at least one time your changes. You must check compile time errors and you should check runtime errors from a test server before making a pull request. (Tip: If you have a null warning or error, just suppress it.)

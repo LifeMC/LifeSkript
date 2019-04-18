@@ -102,11 +102,9 @@ public final class Parameter<T> {
                 } else {
                     d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
                 }
-                if (d == null) {
-                    if (!isNone) {
-                        log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
-                        return null;
-                    }
+                if (d == null && !isNone) {
+                    log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
+                    return null;
                 }
                 log.printLog();
             } finally {

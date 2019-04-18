@@ -48,8 +48,8 @@ public final class CondIsMember extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<Region> regions;
-    boolean owner;
+    private Expression<Region> regions;
+    private boolean owner;
     @SuppressWarnings("null")
     private Expression<OfflinePlayer> players;
 

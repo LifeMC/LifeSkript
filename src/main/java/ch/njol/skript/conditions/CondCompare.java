@@ -101,7 +101,7 @@ public final class CondCompare extends Condition {
             if (third instanceof ExpressionList)
                 ((ExpressionList<?>) third).invertAnd();
         }
-        final boolean b = init(parser.expr);
+        final boolean b = init(/*parser.expr*/);
         final Expression<?> third = this.third;
         if (!b) {
             if (third == null && first.getReturnType() == Object.class && second.getReturnType() == Object.class) {
@@ -129,7 +129,7 @@ public final class CondCompare extends Condition {
     }
 
     @SuppressWarnings({"unchecked"})
-    private boolean init(final String expr) {
+    private boolean init(/*final String expr*/) {
         final RetainingLogHandler log = SkriptLogger.startRetainingLog();
         Expression<?> third = this.third;
         try {

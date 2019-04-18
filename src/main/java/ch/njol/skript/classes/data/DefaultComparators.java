@@ -37,6 +37,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
+import org.bukkit.entity.minecart.HopperMinecart;
+import org.bukkit.entity.minecart.RideableMinecart;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
@@ -185,9 +188,9 @@ public final class DefaultComparators {
         entityMaterials.put(Snowball.class, Material.SNOW_BALL);
         entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);
         if (Skript.classExists("org.bukkit.entity.FishHook")) {
-            entityMaterials.put(org.bukkit.entity.FishHook.class, Material.FISHING_ROD);
+            entityMaterials.put(FishHook.class, Material.FISHING_ROD);
         } else if (Skript.classExists("org.bukkit.entity.Fish")) {
-            entityMaterials.put(org.bukkit.entity.Fish.class, Material.FISHING_ROD);
+            entityMaterials.put(Fish.class, Material.FISHING_ROD);
         }
         entityMaterials.put(TNTPrimed.class, Material.TNT);
         entityMaterials.put(Slime.class, Material.SLIME_BALL);
@@ -196,16 +199,16 @@ public final class DefaultComparators {
         if (Skript.classExists("org.bukkit.entity.Firework"))
             entityMaterials.put(Firework.class, Material.FIREWORK);
         if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
-            entityMaterials.put(org.bukkit.entity.minecart.StorageMinecart.class, Material.STORAGE_MINECART);
-            entityMaterials.put(org.bukkit.entity.minecart.PoweredMinecart.class, Material.POWERED_MINECART);
-            entityMaterials.put(org.bukkit.entity.minecart.RideableMinecart.class, Material.MINECART);
-            entityMaterials.put(org.bukkit.entity.minecart.HopperMinecart.class, Material.HOPPER_MINECART);
-            entityMaterials.put(org.bukkit.entity.minecart.ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
-            entityMaterials.put(org.bukkit.entity.Minecart.class, Material.MINECART);
+            entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
+            entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
+            entityMaterials.put(RideableMinecart.class, Material.MINECART);
+            entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
+            entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
+            entityMaterials.put(Minecart.class, Material.MINECART);
         } else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
-            entityMaterials.put(org.bukkit.entity.StorageMinecart.class, Material.STORAGE_MINECART);
-            entityMaterials.put(org.bukkit.entity.PoweredMinecart.class, Material.POWERED_MINECART);
-            entityMaterials.put(org.bukkit.entity.Minecart.class, Material.MINECART);
+            entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
+            entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
+            entityMaterials.put(Minecart.class, Material.MINECART);
         }
     }
 
