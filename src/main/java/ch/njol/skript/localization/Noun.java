@@ -22,7 +22,6 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.localization.Language.LanguageListenerPriority;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -33,7 +32,7 @@ import java.util.*;
 /**
  * @author Peter Güttinger
  */
-public class Noun extends Message {
+public final class Noun extends Message {
 
     public final static String GENDERS_SECTION = "genders.";
 
@@ -206,7 +205,7 @@ public class Noun extends Message {
     }
 
     /**
-     * For use by {@link Aliases}
+     * For use by {@link ch.njol.skript.aliases.Aliases}
      *
      * @param s   String
      * @param key Key to report in case of error
@@ -247,8 +246,7 @@ public class Noun extends Message {
     }
 
     public static String toString(final String singular, final String plural, final int gender, final int flags) {
-        //FIXME Is this should be getArticleWithSpace(gender, flags) ?
-        return getArticleWithSpace(flags, gender) + ((flags & Language.F_PLURAL) != 0 ? plural : singular);
+        return getArticleWithSpace(gender, flags) + ((flags & Language.F_PLURAL) != 0 ? plural : singular);
     }
 
     @SuppressWarnings("null")
