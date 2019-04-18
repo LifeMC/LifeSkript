@@ -12,10 +12,10 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Skript.  If not, see <http://www.gnu.org/licenses/>.
+ *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2014 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
