@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class CreeperData extends EntityData<Creeper> {
+public final class CreeperData extends EntityData<Creeper> {
     static {
         EntityData.register(CreeperData.class, "creeper", Creeper.class, 1, "unpowered creeper", "creeper", "powered creeper");
     }

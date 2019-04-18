@@ -37,7 +37,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @author Peter Güttinger
  */
-public class SkriptTest {
+public final class SkriptTest {
 
     @SuppressWarnings("null")
     private static final Player njol = createMock(Player.class);

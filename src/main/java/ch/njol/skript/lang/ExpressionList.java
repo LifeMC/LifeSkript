@@ -22,7 +22,6 @@
 package ch.njol.skript.lang;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.conditions.CondCompare;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.util.Utils;
@@ -206,7 +205,7 @@ public class ExpressionList<T> implements Expression<T> {
     }
 
     /**
-     * For use in {@link CondCompare} only.
+     * For use in {@link ch.njol.skript.conditions.CondCompare} only.
      *
      * @return The old 'and' value
      */
@@ -216,7 +215,7 @@ public class ExpressionList<T> implements Expression<T> {
     }
 
     /**
-     * For use in {@link CondCompare} only.
+     * For use in {@link ch.njol.skript.conditions.CondCompare} only.
      */
     public void invertAnd() {
         and = !and;

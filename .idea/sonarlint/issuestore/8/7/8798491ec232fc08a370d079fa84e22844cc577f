@@ -1,76 +1,81 @@
 
-[squid:CallToDeprecatedMethodÖ"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
-Csquid:S1172Æ"&Remove these unused method parameters.(ÊÈù¬úÿÿÿÿ
-psquid:ModifiersOrderCheck¸"EReorder the modifiers to comply with the Java Language Specification.(šÇÄ¿øÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheck¢".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
-isquid:ModifiersOrderCheckY"EReorder the modifiers to comply with the Java Language Specification.(²´²+
-osquid:ModifiersOrderCheck}"EReorder the modifiers to comply with the Java Language Specification.(ÃğõØúÿÿÿÿ
-psquid:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(—¼­
-vsquid:S2293»"YReplace the type specification in this constructor call with the diamond operator ("<>").(Í’„©şÿÿÿÿ
-jsquid:ModifiersOrderCheckƒ"EReorder the modifiers to comply with the Java Language Specification.(ûÊ¢o
-d$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
-psquid:ModifiersOrderCheck‡"EReorder the modifiers to comply with the Java Language Specification.(·Ëü¯üÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheckš".Extract the assignment out of this expression.(©ºñõøÿÿÿÿ
+osquid:ModifiersOrderCheckE"EReorder the modifiers to comply with the Java Language Specification.(é°ÍÓøÿÿÿÿ
+[squid:CallToDeprecatedMethodÈ"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
+[squid:CallToDeprecatedMethodÉ"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ
+jsquid:ModifiersOrderCheckV"EReorder the modifiers to comply with the Java Language Specification.(¥úğ»
+vsquid:S2293Ÿ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Í’„©şÿÿÿÿ
+jsquid:ModifiersOrderCheckP"EReorder the modifiers to comply with the Java Language Specification.(¶‹­
+d$squid:AssignmentInSubExpressionCheckÜ".Extract the assignment out of this expression.(„§ øÿÿÿÿ
+jsquid:ModifiersOrderCheck["EReorder the modifiers to comply with the Java Language Specification.(äßÉµ
+… squid:ForLoopCounterChangedCheck£"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+osquid:ModifiersOrderCheckQ"EReorder the modifiers to comply with the Java Language Specification.(Ììüÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck‡".Extract the assignment out of this expression.(Œ™Ş¤
 u
-squid:S135®"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
-jsquid:ModifiersOrderCheckl"EReorder the modifiers to comply with the Java Language Specification.(çÒÀ‚
-psquid:ModifiersOrderCheck…"EReorder the modifiers to comply with the Java Language Specification.(ŠÏëËıÿÿÿÿ
-… squid:ForLoopCounterChangedCheck©"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
-isquid:ModifiersOrderCheckr"EReorder the modifiers to comply with the Java Language Specification.(ƒ‡ñA
-jsquid:ModifiersOrderCheck{"EReorder the modifiers to comply with the Java Language Specification.(âßá
-psquid:S2293J"YReplace the type specification in this constructor call with the diamond operator ("<>").(š®Í
-hsquid:ModifiersOrderCheckx"EReorder the modifiers to comply with the Java Language Specification.(ÀÎ
+squid:S135’"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
+[squid:S11344"DTake the required action to fix the issue indicated by this comment.(îÂ÷
+osquid:ModifiersOrderCheckS"EReorder the modifiers to comply with the Java Language Specification.(®†›¯ûÿÿÿÿ
 u
-squid:S135¼"YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
+squid:S135 "YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
+jsquid:ModifiersOrderCheck\"EReorder the modifiers to comply with the Java Language Specification.(§ûıÖ
+psquid:S2293>"YReplace the type specification in this constructor call with the diamond operator ("<>").(—¼­
+ksquid:S00100v"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢û€ãúÿÿÿÿ
+psquid:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(š®Í
+osquid:ModifiersOrderCheckF"EReorder the modifiers to comply with the Java Language Specification.(³®€øÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheckŠ".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
+jsquid:ModifiersOrderCheckK"EReorder the modifiers to comply with the Java Language Specification.(×Æ¶½
+osquid:ModifiersOrderCheckH"EReorder the modifiers to comply with the Java Language Specification.(·Şüïûÿÿÿÿ
+ksquid:ModifiersOrderCheckÅ"EReorder the modifiers to comply with the Java Language Specification.(Ôì´
+Vsquid:CallToDeprecatedMethodÇ"-Remove this use of "getId"; it is deprecated.(¡¤Š
+osquid:ModifiersOrderCheck^"EReorder the modifiers to comply with the Java Language Specification.(ì£íßúÿÿÿÿ
+osquid:S2293A"YReplace the type specification in this constructor call with the diamond operator ("<>").(²´²+
+isquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(²´²+
+psquid:S2293£"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅÎÔ4
+osquid:ModifiersOrderCheckG"EReorder the modifiers to comply with the Java Language Specification.(ÄàĞ«ûÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheckƒ".Extract the assignment out of this expression.(Ÿ¢¹ó
+Csquid:S1172¸"&Remove these unused method parameters.(ÊÈù¬úÿÿÿÿ
+qsquid:S2293´"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÉâÕ
+qsquid:S2293é"YReplace the type specification in this constructor call with the diamond operator ("<>").(şùæ
+osquid:ModifiersOrderCheckW"EReorder the modifiers to comply with the Java Language Specification.(ŠÏëËıÿÿÿÿ
+osquid:ModifiersOrderCheckL"EReorder the modifiers to comply with the Java Language Specification.(¡µÃûÿÿÿÿ
+jsquid:ModifiersOrderCheckN"EReorder the modifiers to comply with the Java Language Specification.(Å‹ßö
+jsquid:ModifiersOrderCheckC"EReorder the modifiers to comply with the Java Language Specification.(çÒÀ‚
+osquid:ModifiersOrderCheckO"EReorder the modifiers to comply with the Java Language Specification.(ÃğõØúÿÿÿÿ
+jsquid:ModifiersOrderCheckR"EReorder the modifiers to comply with the Java Language Specification.(¬ƒæè
+jsquid:ModifiersOrderCheckZ"EReorder the modifiers to comply with the Java Language Specification.(¿–Ø›
+… squid:ForLoopCounterChangedCheck†"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+psquid:ModifiersOrderCheckÄ"EReorder the modifiers to comply with the Java Language Specification.(·Ëü¯üÿÿÿÿ
 u
-squid:S135«"YReduce the total number of break and continue statements in this loop to use at most one.(ëúäºüÿÿÿÿ
-… squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
-3squid:S3626°"Remove this redundant jump.(ÉŠ©ƒ
-Gsquid:S1066š"/Merge this if statement with the enclosing one.(•Æ©ô
-d$squid:AssignmentInSubExpressionChecká".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
-d$squid:AssignmentInSubExpressionChecké".Extract the assignment out of this expression.(„§ øÿÿÿÿ
-jsquid:ModifiersOrderChecky"EReorder the modifiers to comply with the Java Language Specification.(×Æ¶½
-_$squid:AssignmentInSubExpressionCheck°".Extract the assignment out of this expression.(”–ä
-qsquid:S2293ü"YReplace the type specification in this constructor call with the diamond operator ("<>").(şùæ
-ksquid:ModifiersOrderCheck‚"EReorder the modifiers to comply with the Java Language Specification.(§ûıÖ
-qsquid:S2293¾"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÓÉâÕ
+squid:S135†"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
+isquid:ModifiersOrderCheckD"EReorder the modifiers to comply with the Java Language Specification.(ƒ‡ñA
+osquid:ModifiersOrderCheck]"EReorder the modifiers to comply with the Java Language Specification.(¸˜‰¶şÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
+isquid:ModifiersOrderCheckI"EReorder the modifiers to comply with the Java Language Specification.(¿‹øq
+psquid:S2293@"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸ª¬
+isquid:ModifiersOrderCheckU"EReorder the modifiers to comply with the Java Language Specification.(ûÊ¢o
+hsquid:ModifiersOrderCheckJ"EReorder the modifiers to comply with the Java Language Specification.(ÀÎ
+osquid:ModifiersOrderCheckY"EReorder the modifiers to comply with the Java Language Specification.(šÇÄ¿øÿÿÿÿ
+Lsquid:S1066"/Merge this if statement with the enclosing one.(˜¤íôıÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheckÔ".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(”–ä
+Gsquid:S1066ş"/Merge this if statement with the enclosing one.(•Æ©ô
+jsquid:ModifiersOrderCheckM"EReorder the modifiers to comply with the Java Language Specification.(âßá
+jsquid:ModifiersOrderCheckT"EReorder the modifiers to comply with the Java Language Specification.(ºƒâ
 u
-squid:S135¢"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
-psquid:ModifiersOrderCheck„"EReorder the modifiers to comply with the Java Language Specification.(ì£íßúÿÿÿÿ
-m squid:LabelsShouldNotBeUsedCheck«";Refactor the code to remove this label and the need for it.(ëúäºüÿÿÿÿ
-osquid:ModifiersOrderCheckz"EReorder the modifiers to comply with the Java Language Specification.(¡µÃûÿÿÿÿ
-vsquid:S2293œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(õÔÎÜıÿÿÿÿ
-ksquid:ModifiersOrderCheckˆ"EReorder the modifiers to comply with the Java Language Specification.(Ôì´
-psquid:ModifiersOrderCheckƒ"EReorder the modifiers to comply with the Java Language Specification.(¸˜‰¶şÿÿÿÿ
-_$squid:AssignmentInSubExpressionCheck›".Extract the assignment out of this expression.(Œ™Ş¤
-osquid:ModifiersOrderChecku"EReorder the modifiers to comply with the Java Language Specification.(ÄàĞ«ûÿÿÿÿ
-osquid:ModifiersOrderCheckt"EReorder the modifiers to comply with the Java Language Specification.(³®€øÿÿÿÿ
-ksquid:ModifiersOrderCheck€"EReorder the modifiers to comply with the Java Language Specification.(¬ƒæè
-ksquid:ModifiersOrderCheck€"EReorder the modifiers to comply with the Java Language Specification.(¿–Ø›
-… squid:ForLoopCounterChangedCheck¶"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
-Lsquid:S1066±"/Merge this if statement with the enclosing one.(˜¤íôıÿÿÿÿ
-_$squid:AssignmentInSubExpressionCheck—".Extract the assignment out of this expression.(Ÿ¢¹ó
-ksquid:ModifiersOrderCheck‚"EReorder the modifiers to comply with the Java Language Specification.(ºƒâ
-u
-squid:S135¦"YReduce the total number of break and continue statements in this loop to use at most one.(Ğ¸Ëùÿÿÿÿ
-[squid:CallToDeprecatedMethod×"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ
-jsquid:ModifiersOrderCheck|"EReorder the modifiers to comply with the Java Language Specification.(Å‹ßö
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ììüÿÿÿÿ
-psquid:S2293¶"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÅÎÔ4
-osquid:S2293Y"YReplace the type specification in this constructor call with the diamond operator ("<>").(²´²+
-osquid:ModifiersOrderCheckv"EReorder the modifiers to comply with the Java Language Specification.(·Şüïûÿÿÿÿ
-osquid:ModifiersOrderChecks"EReorder the modifiers to comply with the Java Language Specification.(é°ÍÓøÿÿÿÿ
-jsquid:ModifiersOrderCheckJ"EReorder the modifiers to comply with the Java Language Specification.(š®Í
-\squid:S3358ó"DExtract this nested ternary operation into an independent statement.(ØçÙÙ
-jsquid:ModifiersOrderCheckI"EReorder the modifiers to comply with the Java Language Specification.(—¼­
-jsquid:ModifiersOrderCheck~"EReorder the modifiers to comply with the Java Language Specification.(¶‹­
-ksquid:ModifiersOrderCheck„"EReorder the modifiers to comply with the Java Language Specification.(¥úğ»
-jsquid:ModifiersOrderCheckX"EReorder the modifiers to comply with the Java Language Specification.(¸ª¬
-isquid:ModifiersOrderCheckw"EReorder the modifiers to comply with the Java Language Specification.(¿‹øq
-psquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(®†›¯ûÿÿÿÿ
-psquid:S2293X"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸ª¬
-[squid:CallToDeprecatedMethodÖ"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
-ksquid:S00100Q"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢û€ãúÿÿÿÿ
-Vsquid:CallToDeprecatedMethodÕ"-Remove this use of "getId"; it is deprecated.(¡¤Š
-[squid:S1134;"DTake the required action to fix the issue indicated by this comment.(îÂ÷
-ksquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(äßÉµ
+squid:S135œ"YReduce the total number of break and continue statements in this loop to use at most one.(Ğ¸Ëùÿÿÿÿ
+3squid:S3626"Remove this redundant jump.(ÉŠ©ƒ
+d$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(©ºñõøÿÿÿÿ
+[squid:CallToDeprecatedMethodÈ"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
+\squid:S3358à"DExtract this nested ternary operation into an independent statement.(ØçÙÙ
+… squid:ForLoopCounterChangedCheck–"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+qsquid:ModifiersOrderCheck>"EReorder the modifiers to comply with the Java Language Specification.(—¼­8´¥„Û¢-
+qsquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(š®Í8´¥„Û¢-
+qsquid:ModifiersOrderCheck@"EReorder the modifiers to comply with the Java Language Specification.(¸ª¬8´¥„Û¢-
+}squid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ñÌı”ıÿÿÿÿ8´¥„Û¢-
+|
+squid:S135˜"YReduce the total number of break and continue statements in this loop to use at most one.(Ïäìóøÿÿÿÿ8´¥„Û¢-
+hsquid:CallToDeprecatedMethodÔ"3Remove this use of "getMaterial"; it is deprecated.(ØñÒúÿÿÿÿ8´¥„Û¢-
+csquid:CallToDeprecatedMethodà"3Remove this use of "getMaterial"; it is deprecated.(ØçÙÙ8´¥„Û¢-
+n squid:LabelsShouldNotBeUsedCheck—";Refactor the code to remove this label and the need for it.(àÏÅ)8´¥„Û¢-
+Dsquid:S1604"(Make this anonymous inner class a lambda(è€îı8´¥„Û¢-
+Dsquid:S1604"(Make this anonymous inner class a lambda(é‰À8´¥„Û¢-
+Dsquid:S1604"(Make this anonymous inner class a lambda(èœß8´¥„Û¢-

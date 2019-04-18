@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @author Peter Güttinger
  */
-public class EnumSerializer<T extends Enum<T>> extends Serializer<T> {
+public final class EnumSerializer<T extends Enum<T>> extends Serializer<T> {
 
     private final Class<T> c;
 

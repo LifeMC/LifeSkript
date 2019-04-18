@@ -53,7 +53,7 @@ import java.util.NoSuchElementException;
 @Description("The id of a specific item. You usually don't need this expression as you can likely do everything with aliases.")
 @Examples({"message \"the ID of %type of the clicked block% is %id of the clicked block%.\""})
 @Since("1.0")
-public class ExprIdOf extends PropertyExpression<ItemType, Integer> {
+public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
     static {
         Skript.registerExpression(ExprIdOf.class, Integer.class, ExpressionType.PROPERTY, "[the] id(1¦s|) of %itemtype%", "%itemtype%'[s] id(1¦s|)");
     }

@@ -1,2 +1,3 @@
 
-`squid:S33581"DExtract this nested ternary operation into an independent statement.(èÕÇ©øÿÿÿÿ
+`squid:S3358/"DExtract this nested ternary operation into an independent statement.(èÕÇ©øÿÿÿÿ
+ysquid:CallToDeprecatedMethodR"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(›ËÁı8Ù¦„Û¢-

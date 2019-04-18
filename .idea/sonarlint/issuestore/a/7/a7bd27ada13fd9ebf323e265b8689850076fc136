@@ -1,0 +1,10 @@
+
+jsquid:S2975€"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(¼’/
+qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¢„àË
+`squid:HiddenFieldCheckY"9Rename "first" which hides the field declared at line 33.(ÙÈ“ùøÿÿÿÿ
+\squid:HiddenFieldCheckZ":Rename "second" which hides the field declared at line 35.(ÀÛéÚ
+`squid:HiddenFieldCheckc"9Rename "first" which hides the field declared at line 33.(ÙÈ“ùøÿÿÿÿ
+\squid:HiddenFieldCheckd":Rename "second" which hides the field declared at line 35.(ÀÛéÚ
+_squid:S1182€"HUse super.clone() to create and seed the cloned instance to be returned.(¼’/
+Csquid:S1948""'Make "first" transient or serializable.(òè©®ûÿÿÿÿ
+Dsquid:S1948$"(Make "second" transient or serializable.(ë¤Îíúÿÿÿÿ

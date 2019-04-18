@@ -46,7 +46,7 @@ import java.util.Date;
 @Description({"Bans/unbans a player or IP.", "Starting with Skript 2.1.1 and Bukkit 1.7.2 R0.4, one can also ban players with a reason."})
 @Examples({"unban player", "ban \"127.0.0.1\"", "IP-ban the player because \"he is an idiot\""})
 @Since("1.4, 2.1.1 (ban reason)")
-public class EffBan extends Effect {
+public final class EffBan extends Effect {
 
     public final static boolean hasBanList = Skript.classExists("org.bukkit.BanList");
 

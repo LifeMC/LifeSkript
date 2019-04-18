@@ -1,0 +1,4 @@
+
+jsquid:S2975V"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ðÔ–Ù
+usquid:S2293W"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ôëï´ûÿÿÿÿ
+_squid:S1182V"HUse super.clone() to create and seed the cloned instance to be returned.(ðÔ–Ù

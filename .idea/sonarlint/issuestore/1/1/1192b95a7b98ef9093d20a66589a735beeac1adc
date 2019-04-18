@@ -1,0 +1,10 @@
+
+jsquid:ModifiersOrderCheck7"EReorder the modifiers to comply with the Java Language Specification.(Û‹ó•
+jsquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(ÌÊ¬ø
+osquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(ÔÔëİûÿÿÿÿ
+osquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(ÿÒ¸–ÿÿÿÿÿ
+psquid:S22937"YReplace the type specification in this constructor call with the diamond operator ("<>").(Û‹ó•
+osquid:S2293J"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ùäè
+usquid:S2293Z"YReplace the type specification in this constructor call with the diamond operator ("<>").(Òç®Åùÿÿÿÿ
+?squid:S1604E"(Make this anonymous inner class a lambda(íî‡Ë
+§squid:S4449|"Annotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.(‰˜ë×

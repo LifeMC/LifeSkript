@@ -22,7 +22,6 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
-import ch.njol.skript.effects.EffTeleport;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.registrations.Classes;
@@ -319,7 +318,7 @@ public final class Utils {
     }
 
     /**
-     * Gets the collision height of solid or partially-solid blocks at the center of the block. This is mostly for use in the {@link EffTeleport teleport effect}.
+     * Gets the collision height of solid or partially-solid blocks at the center of the block. This is mostly for use in the {@link ch.njol.skript.effects.EffTeleport teleport effect}.
      * <p>
      * TODO !Update with every version [blocks]
      *

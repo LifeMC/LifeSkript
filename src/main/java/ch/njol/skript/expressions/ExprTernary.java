@@ -45,7 +45,7 @@ import java.lang.reflect.Array;
 @Examples({"set {points} to 500 if {admin::%player's uuid%} is set else 100"})
 @Since("2.2-dev36")
 @SuppressWarnings({"null", "unchecked"})
-public class ExprTernary<T> extends SimpleExpression<T> {
+public final class ExprTernary<T> extends SimpleExpression<T> {
 
     static {
         Skript.registerExpression(ExprTernary.class, Object.class, ExpressionType.COMBINED, "%objects% if <.+>[,] (otherwise|?[?]|[or ]else) %objects%");

@@ -44,7 +44,7 @@ import java.util.logging.Level;
  * @author Peter Güttinger
  * @see SimpleLiteral
  */
-public class UnparsedLiteral implements Literal<Object> {
+public final class UnparsedLiteral implements Literal<Object> {
 
     private final String data;
     @Nullable

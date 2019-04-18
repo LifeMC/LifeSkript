@@ -37,7 +37,7 @@ commands:
     permission: skript.admin
     usage: /skript help
 
-soft-depend: [SQLibrary, Vault, WorldGuard, WorldEdit, Residence, Factions, GriefPrevention, PreciousStones]
+soft-depend: [SQLibrary, Vault, WorldGuard, WorldEdit, Residence, Factions, ASkyBlock, NoCheatPlus, GriefPrevention, PreciousStones]
 
 permissions:
   skript.*:

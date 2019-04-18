@@ -24,7 +24,7 @@ import java.util.Iterator;
 /**
  * @author Peter Güttinger
  */
-public class IteratorIterable<T> implements Iterable<T> {
+public final class IteratorIterable<T> implements Iterable<T> {
 
     private final Iterator<T> iter;
 

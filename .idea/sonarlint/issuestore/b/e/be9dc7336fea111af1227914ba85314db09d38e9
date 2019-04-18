@@ -1,7 +1,6 @@
 
-osquid:ModifiersOrderCheck*"EReorder the modifiers to comply with the Java Language Specification.(ôé›öÿÿÿÿÿ
 t
 squid:S135["YReduce the total number of break and continue statements in this loop to use at most one.(ðå üþÿÿÿÿ
+osquid:ModifiersOrderCheck'"EReorder the modifiers to comply with the Java Language Specification.(ôé›öÿÿÿÿÿ
+Fsquid:S2093v"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
 psquid:S2293Z"YReplace the type specification in this constructor call with the diamond operator ("<>").(èÊ—œ
-Fsquid:S2093w"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-_squid:UselessImportCheck"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ8©©ÝÌ¢-

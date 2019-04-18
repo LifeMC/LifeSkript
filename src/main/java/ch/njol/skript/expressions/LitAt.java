@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @NoDoc
-public class LitAt extends SimpleLiteral<Direction> {
+public final class LitAt extends SimpleLiteral<Direction> {
     static {
         Skript.registerExpression(LitAt.class, Direction.class, ExpressionType.SIMPLE, "at");
     }

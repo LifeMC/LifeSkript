@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"The passenger of a vehicle, or the rider of a mob.", "See also: <a href='#ExprVehicle'>vehicle</a>"})
 @Examples({"passenger of the minecart is a creeper or a cow", "the saddled pig's passenger is a player"})
 @Since("2.0")
-public class ExprPassenger extends SimplePropertyExpression<Entity, Entity> { // REMIND create 'vehicle' and 'passenger' expressions for vehicle enter/exit events?
+public final class ExprPassenger extends SimplePropertyExpression<Entity, Entity> { // REMIND create 'vehicle' and 'passenger' expressions for vehicle enter/exit events?
     static {
         register(ExprPassenger.class, Entity.class, "passenger[s]", "entities");
     }

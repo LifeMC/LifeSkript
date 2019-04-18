@@ -45,7 +45,7 @@ import java.util.List;
 @Description("Execute a effect dynamically and asynchronously in runtime")
 @Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 async if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
-public class EffAsyncExec extends AsyncEffect {
+public final class EffAsyncExec extends AsyncEffect {
     static {
         Skript.registerEffect(EffAsyncExec.class, "(exec[ute]|eval[uate]) %string% async[hronously]");
     }

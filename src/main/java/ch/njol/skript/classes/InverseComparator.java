@@ -24,7 +24,7 @@ package ch.njol.skript.classes;
 /**
  * @author Peter Güttinger
  */
-public class InverseComparator<T1, T2> implements Comparator<T1, T2> {
+public final class InverseComparator<T1, T2> implements Comparator<T1, T2> {
 
     private final Comparator<? super T2, ? super T1> comp;
 

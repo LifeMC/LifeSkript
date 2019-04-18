@@ -1,0 +1,24 @@
+
+Asquid:S16595"*Declare "paramPattern" on a separate line.(¨ı¬‹
+osquid:ModifiersOrderCheck0"EReorder the modifiers to comply with the Java Language Specification.(ŞÈ½–şÿÿÿÿ
+osquid:ModifiersOrderCheck1"EReorder the modifiers to comply with the Java Language Specification.(”üÛ³ùÿÿÿÿ
+osquid:ModifiersOrderCheck2"EReorder the modifiers to comply with the Java Language Specification.(é‚€åüÿÿÿÿ
+osquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(¥À¤¬ÿÿÿÿÿ
+jsquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(ëüŒØ
+ksquid:ModifiersOrderCheckç"EReorder the modifiers to comply with the Java Language Specification.(‰ÕÆ
+usquid:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(”üÛ³ùÿÿÿÿ
+usquid:S22932"YReplace the type specification in this constructor call with the diamond operator ("<>").(é‚€åüÿÿÿÿ
+psquid:S22936"YReplace the type specification in this constructor call with the diamond operator ("<>").(ëüŒØ
+psquid:S2293^"YReplace the type specification in this constructor call with the diamond operator ("<>").(·ùª
+vsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ó®çûÿÿÿÿ
+qsquid:S2293é"YReplace the type specification in this constructor call with the diamond operator ("<>").(õô†¥
+Qsquid:S14448"5Make this "public static currentFunction" field final(ØĞÙùıÿÿÿÿ
+Bsquid:S1452B"&Remove usage of generic wildcard type.(×èÏ¬ûÿÿÿÿ
+=squid:S1452U"&Remove usage of generic wildcard type.(°êé€
+>squid:S1452ª"&Remove usage of generic wildcard type.(‘ïú¼
+Csquid:S1452ã"&Remove usage of generic wildcard type.(íÊğŞøÿÿÿÿ
+t
+squid:S135`"YReduce the total number of break and continue statements in this loop to use at most one.(’ÀÓ—üÿÿÿÿ
+wsquid:S001150"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ŞÈ½–şÿÿÿÿ
+4squid:S17002"Rename field "functions"(é‚€åüÿÿÿÿ
+zsquid:S1157o"cReplace these toUpperCase()/toLowerCase() and equals() calls with a single equalsIgnoreCase() call.(Üñ

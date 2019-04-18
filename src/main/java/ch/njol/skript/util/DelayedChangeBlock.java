@@ -40,7 +40,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 @NonNullByDefault(false)
-public class DelayedChangeBlock implements Block {
+public final class DelayedChangeBlock implements Block {
 
     final Block b;
     @Nullable

@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Only usable in command events. The cooldown of the command"})
 @Examples({"send \"The cooldown of this command is: %cooldown%\""})
 @Since("2.2-Fixes-V10b")
-public class ExprCmdCooldown extends SimpleExpression<Timespan> {
+public final class ExprCmdCooldown extends SimpleExpression<Timespan> {
     static {
         Skript.registerExpression(ExprCmdCooldown.class, Timespan.class, ExpressionType.SIMPLE, "[the] cooldown [(of [the] command)]");
     }

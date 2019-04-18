@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Colours leather armour in a given <a href='../classes/#color'>colour</a>. " + "You can also use RGB codes if you feel limited with the 16 default colours. " + "RGB codes are three numbers from 0 to 255 in the order <code>(red, green, blue)</code>, where <code>(0,0,0)</code> is black and <code>(255,255,255)</code> is white.")
 @Examples({"dye player's helmet blue", "colour the player's tool red"})
 @Since("2.0")
-public class EffColorArmor extends Effect {
+public final class EffColorArmor extends Effect {
     static {
         Skript.registerEffect(EffColorArmor.class, "(dye|colo[u]r|paint) %slots/itemstack% %color%", "(dye|colo[u]r|paint) %slots/itemstack% \\(%number%, %number%, %number%\\)");
     }

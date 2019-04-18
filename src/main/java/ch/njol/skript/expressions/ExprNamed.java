@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Directly names an item, useful for defining a named item in a script. " + "If you want to (re)name existing items you can either use this expression or use <code>set <a href='#ExprName'>name of &lt;item&gt;</a> to &lt;text&gt;</code>.")
 @Examples({"give a diamond sword of sharpness 100 named \"<gold>Excalibur\" to the player", "set tool of player to the player's tool named \"<gold>Wand\"", "set the name of the player's tool to \"<gold>Wand\""})
 @Since("2.0")
-public class ExprNamed extends PropertyExpression<ItemType, ItemType> {
+public final class ExprNamed extends PropertyExpression<ItemType, ItemType> {
     static {
         Skript.registerExpression(ExprNamed.class, ItemType.class, ExpressionType.PROPERTY, "%itemtypes% (named|with name[s]) %string%");
     }

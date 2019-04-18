@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class EvtFirstJoin extends SkriptEvent {
+public final class EvtFirstJoin extends SkriptEvent {
     static {
         Skript.registerEvent("First Join", EvtFirstJoin.class, PlayerJoinEvent.class, "first (join|login)").description("Called when a player joins the server for the first time.").examples("").since("1.3.7");
     }

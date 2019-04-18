@@ -1,0 +1,20 @@
+
+fsquid:S3824µ"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(®Šµè
+¤%squid:RedundantThrowsDeclarationCheck¡"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¢»°‚øÿÿÿÿ
+jsquid:ModifiersOrderCheck&"EReorder the modifiers to comply with the Java Language Specification.(€ıøÌ
+psquid:ModifiersOrderCheck‘"EReorder the modifiers to comply with the Java Language Specification.(é³à•ÿÿÿÿÿ
+psquid:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(€ıøÌ
+psquid:S2293*"YReplace the type specification in this constructor call with the diamond operator ("<>").(²ì¿³
+psquid:S2293o"YReplace the type specification in this constructor call with the diamond operator ("<>").(–—‘ê
+psquid:S2293p"YReplace the type specification in this constructor call with the diamond operator ("<>").(ª‹‰õ
+qsquid:S2293‘"YReplace the type specification in this constructor call with the diamond operator ("<>").(À¡Ç
+_$squid:AssignmentInSubExpressionCheck·".Extract the assignment out of this expression.(•„øç
+_$squid:AssignmentInSubExpressionCheck¾".Extract the assignment out of this expression.(•„øç
+bsquid:HiddenFieldCheck±":Rename "value" which hides the field declared at line 282.(¸ù¸üşÿÿÿÿ
+bsquid:HiddenFieldCheckÊ":Rename "value" which hides the field declared at line 282.(¸ù¸üşÿÿÿÿ
+bsquid:HiddenFieldCheckâ":Rename "value" which hides the field declared at line 282.(¸ù¸üşÿÿÿÿ
+Osquid:S2589Ø"7Remove this expression which always evaluates to "true"(Ù°½İ
+Msquid:S1133¨"5Do not forget to remove this deprecated code someday.(Æö—İ
+Qsquid:MissingDeprecatedCheck¨"(Add the missing @deprecated Javadoc tag.(Æö—İ
+^squid:S2147"DCombine this catch with the one at line 94, which has the same body.(éáåøÿÿÿÿ
+,squid:S1700*"Rename field "fields"(²ì¿³

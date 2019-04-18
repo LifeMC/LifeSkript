@@ -141,7 +141,7 @@ public final class FallingBlockData extends EntityData<FallingBlock> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<FallingBlock> getSuperType() {
         return new FallingBlockData();
     }
 

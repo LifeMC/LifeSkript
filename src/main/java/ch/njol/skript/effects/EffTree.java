@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Creates a tree.", "This may require that there is enough space above the given location and that the block below is dirt/grass, but it is possible that the tree will just grow anyways, possibly replacing every block in its path."})
 @Examples({"grow a tall redwood tree above the clicked block"})
 @Since("1.0")
-public class EffTree extends Effect {
+public final class EffTree extends Effect {
 
     static {
         Skript.registerEffect(EffTree.class, "(grow|create|generate) tree [of type %structuretype%] %directions% %locations%", "(grow|create|generate) %structuretype% [tree] %directions% %locations%");

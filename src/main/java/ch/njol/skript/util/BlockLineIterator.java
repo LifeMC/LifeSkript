@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class BlockLineIterator extends StoppableIterator<Block> {
+public final class BlockLineIterator extends StoppableIterator<Block> {
 
     /**
      * @param start

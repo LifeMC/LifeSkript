@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Parses &lt;colour&gt;s (including chat styles) in a message or removes any colours & chat styles from the message.")
 @Examples({"on chat:", "	set message to coloured message", "command /fade <player>:", "	trigger:", "		set display name of the player-argument to uncoloured display name of the player-argument"})
 @Since("2.0")
-public class ExprColoured extends PropertyExpression<String, String> {
+public final class ExprColoured extends PropertyExpression<String, String> {
     static {
         Skript.registerExpression(ExprColoured.class, String.class, ExpressionType.COMBINED, "(colo[u]r-|colo[u]red )%strings%", "(un|non)[-](colo[u]r-|colo[u]red )%strings%");
     }

@@ -111,7 +111,7 @@ public final class ThrownPotionData extends EntityData<ThrownPotion> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<ThrownPotion> getSuperType() {
         return new ThrownPotionData();
     }
 

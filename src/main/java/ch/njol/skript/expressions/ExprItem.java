@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The item involved in an event, e.g. in a drop, dispense, pickup or craft event.")
 @Examples({"on dispense:", "	item is a clock", "	set the time to 6:00"/*,"	delete the item"*/})
 @Since("")
-public class ExprItem extends EventValueExpression<ItemStack> {
+public final class ExprItem extends EventValueExpression<ItemStack> {
     static {
         Skript.registerExpression(ExprItem.class, ItemStack.class, ExpressionType.SIMPLE, "[the] item");
     }

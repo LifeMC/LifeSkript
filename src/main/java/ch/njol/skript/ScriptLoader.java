@@ -59,7 +59,7 @@ import java.util.regex.Matcher;
 /**
  * @author Peter Güttinger
  */
-final public class ScriptLoader {
+public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
     public final static List<Loop> currentLoops = new ArrayList<>();
     final static HashMap<String, String> currentOptions = new HashMap<>();

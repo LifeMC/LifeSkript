@@ -51,7 +51,7 @@ import java.util.WeakHashMap;
 @Description("The block at the crosshair. This regards all blocks that are not air as fully opaque, e.g. torches will be like a solid stone block for this expression.")
 @Examples({"# A command to set the block a player looks at to a specific type:", "command /setblock <material>:", "    trigger:", "        set targeted block to argument"})
 @Since("1.0")
-public class ExprTargetedBlock extends PropertyExpression<Player, Block> {
+public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     public static final boolean set = Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class);
     private final static WeakHashMap<Player, Block> targetedBlocks = new WeakHashMap<>();
     @Nullable

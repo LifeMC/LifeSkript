@@ -1,0 +1,8 @@
+
+>squid:S1659C""Declare "from" on a separate line.(Ý¹Š›þÿÿÿÿ
+:squid:S1659F"#Declare "newRs" on a separate line.(Ñìý÷
+isquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(º—´n
+osquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(ßÕÇ™üÿÿÿÿ
+osquid:S22936"YReplace the type specification in this constructor call with the diamond operator ("<>").(º—´n
+=squid:S1604"(Make this anonymous inner class a lambda(¼ô…Å
+ªsquid:S4449F"’Annotate the parameter with @javax.annotation.Nullable in method 'getRegionsAt' declaration, or make sure that null can not be passed as argument.(Ñìý÷

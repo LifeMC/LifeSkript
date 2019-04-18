@@ -21,16 +21,7 @@
 
 package ch.njol.skript.lang;
 
-import ch.njol.skript.ScriptLoader;
-import ch.njol.skript.Skript;
-import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Changer.ChangerUtils;
-import ch.njol.skript.classes.Converter;
-import ch.njol.skript.conditions.CondIsSet;
-import ch.njol.skript.lang.util.ConvertedExpression;
-import ch.njol.skript.lang.util.SimpleExpression;
-import ch.njol.skript.log.ErrorQuality;
 import ch.njol.util.Checker;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -41,8 +32,8 @@ import java.util.Iterator;
  * Represents an expression. Expressions are used within conditions, effects and other expressions.
  *
  * @author Peter Güttinger
- * @see Skript#registerExpression(Class, Class, ExpressionType, String...)
- * @see SimpleExpression
+ * @see ch.njol.skript.Skript#registerExpression(Class, Class, ExpressionType, String...)
+ * @see ch.njol.skript.lang.util.SimpleExpression
  * @see SyntaxElement
  */
 public interface Expression<T> extends SyntaxElement, Debuggable {
@@ -102,7 +93,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * @param c       A checker
      * @param negated The cheking condition's negated state. This is used to invert the output of the checker if set to true (i.e. <tt>negated ^ checker.check(...)</tt>)
      * @return Whether this expression matches or doesn't match the given checker depending on the condition's negated state.
-     * @see SimpleExpression#check(Object[], Checker, boolean, boolean)
+     * @see ch.njol.skript.lang.util.SimpleExpression#check(Object[], Checker, boolean, boolean)
      */
     boolean check(final Event e, final Checker<? super T> c, final boolean negated);
 
@@ -113,7 +104,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * @param e The event
      * @param c A checker
      * @return Whether this expression matches the given checker
-     * @see SimpleExpression#check(Object[], Checker, boolean, boolean)
+     * @see ch.njol.skript.lang.util.SimpleExpression#check(Object[], Checker, boolean, boolean)
      */
     boolean check(final Event e, final Checker<? super T> c);
 
@@ -124,13 +115,13 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * expression's returnType to the desired class. Thus this method should only be overridden if this expression's returnType is Object.
      * <p>
      * The returned expression should delegate this method to the original expression's method to prevent excessive converted expression chains (see also
-     * {@link ConvertedExpression}).
+     * {@link ch.njol.skript.lang.util.ConvertedExpression}).
      *
      * @param to The desired return type of the returned expression
      * @return Expression with the desired return type or null if the expression can't be converted to the given type. Returns the expression itself if it already returns the
      * desired type.
-     * @see Converter
-     * @see ConvertedExpression
+     * @see ch.njol.skript.classes.Converter
+     * @see ch.njol.skript.lang.util.ConvertedExpression
      */
     @SuppressWarnings("unchecked")
     @Nullable
@@ -146,7 +137,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     /**
      * Returns true if this expression returns all possible values, false if it only returns some of them.
      * <p>
-     * This method significantly influences {@link #check(Event, Checker)}, {@link #check(Event, Checker, boolean)} and {@link CondIsSet} and thus breaks conditions that use this
+     * This method significantly influences {@link #check(Event, Checker)}, {@link #check(Event, Checker, boolean)} and {@link ch.njol.skript.conditions.CondIsSet} and thus breaks conditions that use this
      * expression if it returns a wrong value.
      * <p>
      * This method must return true if this is a {@link #isSingle() single} expression. // TODO make this method irrelevant for single expressions
@@ -161,15 +152,14 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * This method will <b>not</b> be called if this expression is <i>guaranteed</i> to be used after a delay (an error will be printed immediately), but <b>will</b> be called if
      * it only <i>can be</i> after a delay (e.g. if the preceding delay is in an if or a loop) as well as if there's no delay involved.
      * <p>
-     * If this method returns false the expression will be discarded and an error message is printed. Custom error messages must be of {@link ErrorQuality#SEMANTIC_ERROR} to be
-     * printed (NB: {@link Skript#error(String)} always creates semantic errors).
+     * If this method returns false the expression will be discarded and an error message is printed. Custom error messages must be of {@link ch.njol.skript.log.ErrorQuality#SEMANTIC_ERROR} to be
+     * printed (NB: {@link ch.njol.skript.Skript#error(String)} always creates semantic errors).
      *
      * @param time -1 for past or 1 for future. 0 is never passed to this method as it represents the default state.
      * @return Whether this expression has distinct time states, e.g. a player never changes but a block can. This should be sensitive for the event (using
-     * {@link ScriptLoader#isCurrentEvent(Class)}).
-     * @see SimpleExpression#setTime(int, Class, Expression...)
-     * @see SimpleExpression#setTime(int, Expression, Class...)
-     * @see ScriptLoader#isCurrentEvent(Class...)
+     * {@link ch.njol.skript.ScriptLoader#isCurrentEvent(Class)}).
+     * @see ch.njol.skript.lang.util.SimpleExpression#setTime(int)
+     * @see ch.njol.skript.ScriptLoader#isCurrentEvent(Class...)
      */
     boolean setTime(final int time);
 
@@ -232,13 +222,13 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     /**
      * Tests whether this expression supports the given mode, and if yes what type it expects the <code>delta</code> to be.
      * <p>
-     * <b>Use {@link ChangerUtils#acceptsChange(Expression, ChangeMode, Class...)} to test whether an expression supports changing</b>, don't directly use this method!
+     * <b>Use {@link ch.njol.skript.classes.Changer.ChangerUtils#acceptsChange(Expression, ChangeMode, Class...)} to test whether an expression supports changing</b>, don't directly use this method!
      * <p>
      * Please note that if a changer is registered for this expression's {@link #getReturnType() returnType} this method does not have to be overridden. If you override it though
      * make sure to return <tt>super.acceptChange(mode)</tt>, and to handle the appropriate ChangeMode(s) in {@link #change(Event, Object[], ChangeMode)} with
      * <tt>super.change(...)</tt>.
      * <p>
-     * Unlike {@link Changer#acceptChange(ChangeMode)} this method may print errors.
+     * Unlike {@link ch.njol.skript.classes.Changer#acceptChange(ChangeMode)} this method may print errors.
      *
      * @param mode
      * @return An array of types that {@link #change(Event, Object[], ChangeMode)} accepts as its <code>delta</code> parameter (which can be arrays to denote that multiple of

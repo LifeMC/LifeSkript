@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class ExprPotionEffect extends SimpleExpression<PotionEffect> {
+public final class ExprPotionEffect extends SimpleExpression<PotionEffect> {
     static {
         // REMIND create
 //		Skript.registerExpression(ExprPotionEffect.class, PotionEffect.class, ExpressionType.COMBINED,"(|1¦extended) [potion [of]] %potioneffect%");

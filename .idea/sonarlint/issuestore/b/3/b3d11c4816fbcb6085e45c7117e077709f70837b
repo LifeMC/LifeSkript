@@ -1,0 +1,11 @@
+
+£%squid:RedundantThrowsDeclarationCheckx"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+"squid:SwitchLastCaseIsDefaultCheckƒ"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
+"squid:SwitchLastCaseIsDefaultCheck"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
+usquid:S2293E"YReplace the type specification in this constructor call with the diamond operator ("<>").(¼Š™ñûÿÿÿÿ
+hsquid:S1301ƒ"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ
+hsquid:S1301"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ
+Ssquid:S2696"6Make the enclosing method "static" or remove this set.(—–¤Òùÿÿÿÿ
+Zsquid:HiddenFieldCheckZ"8Rename "line" which hides the field declared at line 58.(±¤Åÿ
+Zsquid:HiddenFieldCheck|"8Rename "line" which hides the field declared at line 58.(±¤Åÿ
+=squid:S1168s"&Return an empty array instead of null.(¥¹ï

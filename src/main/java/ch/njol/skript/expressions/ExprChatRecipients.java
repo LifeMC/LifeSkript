@@ -41,7 +41,7 @@ import java.util.Set;
 /**
  * @author Mirreducki, Eugenio GuzmÃ¡n
  */
-public class ExprChatRecipients extends SimpleExpression<Player> {
+public final class ExprChatRecipients extends SimpleExpression<Player> {
 
     static {
         Skript.registerExpression(ExprChatRecipients.class, Player.class, ExpressionType.SIMPLE, "[chat][( |-)]recipients");

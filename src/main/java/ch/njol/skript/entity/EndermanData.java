@@ -38,7 +38,7 @@ import java.util.Arrays;
 /**
  * @author Peter Güttinger
  */
-public class EndermanData extends EntityData<Enderman> {
+public final class EndermanData extends EntityData<Enderman> {
     private final static ArgsMessage format = new ArgsMessage("entities.enderman.format");
 
     static {

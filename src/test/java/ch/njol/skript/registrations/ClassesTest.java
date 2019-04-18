@@ -74,7 +74,7 @@ import ch.njol.skript.util.WeatherType;
 /**
  * @author Peter Güttinger
  */
-public class ClassesTest {
+public final class ClassesTest {
 	
 	/*
 	@Before

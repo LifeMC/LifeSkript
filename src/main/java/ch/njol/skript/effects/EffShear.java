@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Shears or 'un-shears' a sheep. Please note that no wool is dropped, this only sets the 'sheared' state of the sheep.")
 @Examples({"on rightclick on a sheep holding a sword:", "	shear the clicked sheep"})
 @Since("2.0")
-public class EffShear extends Effect {
+public final class EffShear extends Effect {
     static {
         Skript.registerEffect(EffShear.class, "shear %livingentities%", "un[-]shear %livingentities%");
     }

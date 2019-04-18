@@ -47,7 +47,7 @@ import java.lang.reflect.Array;
 @Examples({"broadcast {score::%player's uuid%} otherwise \"%player% has no score!\""})
 @Since("2.2-Fixes-V10c")
 @SuppressWarnings("unchecked")
-public class ExprDefaultValue<T> extends SimpleExpression<T> {
+public final class ExprDefaultValue<T> extends SimpleExpression<T> {
 
     static {
         Skript.registerExpression(ExprDefaultValue.class, Object.class, ExpressionType.COMBINED, "%objects% (otherwise|?[?]) %objects%"); // make them two like in C# (a ?? b style) (optional)

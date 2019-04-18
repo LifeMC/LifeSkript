@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class ListRangeIterator<T> implements Iterator<T> {
+public final class ListRangeIterator<T> implements Iterator<T> {
 
     private final ListIterator<T> iter;
     private int end;

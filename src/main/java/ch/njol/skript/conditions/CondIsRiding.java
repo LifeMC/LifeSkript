@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Tests whether an entity is riding another or is in a vehicle.")
 @Examples({"player is riding a saddled pig"})
 @Since("2.0")
-public class CondIsRiding extends Condition {
+public final class CondIsRiding extends Condition {
     static {
         Skript.registerCondition(CondIsRiding.class, "%entities% (is|are) riding [%entitydatas%]", "%entities% (isn't|is not|aren't|are not) riding [%entitydatas%]");
     }

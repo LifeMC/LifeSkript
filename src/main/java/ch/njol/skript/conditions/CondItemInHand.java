@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Checks whether a player is holdign a specific item. Cannot be used with endermen, use 'entity is [not] an enderman holding &lt;item type&gt;' instead.")
 @Examples({"player is holding a stick", "victim isn't holding a sword of sharpness"})
 @Since("1.0")
-public class CondItemInHand extends Condition {
+public final class CondItemInHand extends Condition {
 
     static {
         Skript.registerCondition(CondItemInHand.class, "[%livingentities%] ha(s|ve) %itemtypes% in hand", "[%livingentities%] (is|are) holding %itemtypes%", "[%livingentities%] (ha(s|ve) not|do[es]n't have) %itemtypes% in hand", "[%livingentities%] (is not|isn't) holding %itemtypes%");

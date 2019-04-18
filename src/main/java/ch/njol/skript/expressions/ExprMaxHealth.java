@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on join:", "	set the maximum health of the player to 100", "spawn a giant", "set the last spawned entity's max health to 1000"})
 @Since("2.0")
 @Events({"damage", "death"})
-public class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, Double> {
+public final class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, Double> {
     static {
         register(ExprMaxHealth.class, Double.class, "max[imum] health", "livingentities");
     }

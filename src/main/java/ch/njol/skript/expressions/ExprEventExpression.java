@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @NoDoc
-public class ExprEventExpression extends WrapperExpression<Object> {
+public final class ExprEventExpression extends WrapperExpression<Object> {
     static {
         Skript.registerExpression(ExprEventExpression.class, Object.class, ExpressionType.PROPERTY, "[the] event-%*classinfo%");// property so that it is parsed after most other expressions
     }

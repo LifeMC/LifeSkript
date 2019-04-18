@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * @author Peter Güttinger
  */
-public class RegexMessageTest {
+public final class RegexMessageTest {
 
     @Test
     public void test() {

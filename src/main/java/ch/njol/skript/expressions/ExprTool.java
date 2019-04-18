@@ -56,7 +56,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The item a player is holding.")
 @Examples({"player is holding a pickaxe", "# is the same as", "player's tool is a pickaxe"})
 @Since("1.0")
-public class ExprTool extends PropertyExpression<LivingEntity, Slot> {
+public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
     static {
         Skript.registerExpression(ExprTool.class, Slot.class, ExpressionType.PROPERTY, "[the] (tool|held item|weapon) [of %livingentities%]", "%livingentities%'[s] (tool|held item|weapon)");
     }

@@ -37,7 +37,7 @@ import static org.bukkit.ChatColor.RESET;
 /**
  * @author Peter Güttinger
  */
-public class CommandHelp {
+public final class CommandHelp {
 
     private final static String DEFAULTENTRY = "description";
 

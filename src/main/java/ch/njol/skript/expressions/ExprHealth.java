@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"message \"You have %health% HP left.\""})
 @Since("1.0")
 @Events("damage")
-public class ExprHealth extends PropertyExpression<LivingEntity, Double> {
+public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {
     static {
         register(ExprHealth.class, Double.class, "health", "livingentities");
     }

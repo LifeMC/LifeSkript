@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Güttinger
  */
-public class UtilsTest {
+public final class UtilsTest {
 
     @Test
     @SuppressWarnings("null")

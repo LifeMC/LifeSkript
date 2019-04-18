@@ -23,7 +23,6 @@ package ch.njol.skript.registrations;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Converter;
-import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.util.Getter;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -93,7 +92,7 @@ public final class EventValues {
     /**
      * Gets a specific value from an event. Returns null if the event doesn't have such a value (conversions are done to try and get the desired value).
      * <p>
-     * It is recommended to use {@link EventValues#getEventValueGetter(Class, Class, int)} or {@link EventValueExpression#EventValueExpression(Class)} instead of invoking this
+     * It is recommended to use {@link EventValues#getEventValueGetter(Class, Class, int)} or {@link ch.njol.skript.expressions.base.EventValueExpression#EventValueExpression(Class)} instead of invoking this
      * method repeatedly.
      *
      * @param e
@@ -120,7 +119,7 @@ public final class EventValues {
      * @param time
      * @return A getter to get values for a given type of events
      * @see #registerEventValue(Class, Class, Getter, int)
-     * @see EventValueExpression#EventValueExpression(Class)
+     * @see ch.njol.skript.expressions.base.EventValueExpression#EventValueExpression(Class)
      */
     @Nullable
     public static <T, E extends Event> Getter<? extends T, ? super E> getEventValueGetter(final Class<E> e, final Class<T> c, final int time) {
@@ -183,7 +182,7 @@ public final class EventValues {
     }
 
     private static boolean checkExcludes(final EventValueInfo<?, ?> ev, final Class<? extends Event> e) {
-        final Class<? extends Event>[] excl = ev.exculdes;
+        final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.exculdes;
         if (excl == null)
             return true;
         for (final Class<? extends Event> ex : excl) {

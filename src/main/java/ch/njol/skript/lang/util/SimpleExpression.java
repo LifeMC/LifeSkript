@@ -27,9 +27,7 @@ import ch.njol.skript.SkriptAPIException;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Checker;
@@ -46,7 +44,7 @@ import java.util.Iterator;
  * An implementation of the {@link Expression} interface. You should usually extend this class to make a new expression.
  *
  * @author Peter Güttinger
- * @see Skript#registerExpression(Class, Class, ExpressionType, String...)
+ * @see Skript#registerExpression(Class, Class, ch.njol.skript.lang.ExpressionType, String...)
  */
 public abstract class SimpleExpression<T> implements Expression<T> {
 
@@ -194,7 +192,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
      * @return Expression with the desired return type or null if it can't be converted to the given type
      * @see Expression#getConvertedExpression(Class...)
      * @see ConvertedExpression#newInstance(Expression, Class...)
-     * @see Converter
+     * @see ch.njol.skript.classes.Converter
      */
     @SuppressWarnings("unchecked")
     @Nullable

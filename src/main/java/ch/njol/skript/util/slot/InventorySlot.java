@@ -33,7 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class InventorySlot extends Slot {
+public final class InventorySlot extends Slot {
 
     private final Inventory invi;
     private final int index;

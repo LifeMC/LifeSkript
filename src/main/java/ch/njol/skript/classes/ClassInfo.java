@@ -21,10 +21,8 @@
 
 package ch.njol.skript.classes;
 
-import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.Debuggable;
 import ch.njol.skript.lang.DefaultExpression;
-import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Noun;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.bukkit.event.Event;
@@ -126,8 +124,8 @@ public class ClassInfo<T> implements Debuggable {
 
     /**
      * @param defaultExpression The default (event) value of this class or null if not applicable
-     * @see EventValueExpression
-     * @see SimpleLiteral
+     * @see ch.njol.skript.expressions.base.EventValueExpression
+     * @see ch.njol.skript.lang.util.SimpleLiteral
      */
     public ClassInfo<T> defaultExpression(final DefaultExpression<T> defaultExpression) {
         assert this.defaultExpression == null;

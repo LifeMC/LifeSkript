@@ -1,45 +1,40 @@
 
-psquid:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÔèĞè
-<squid:S1659O"%Declare "m_adult" on a separate line.(òŸÃÔ
-Esquid:S4274º"(Replace this assert with a proper check.(ê‚”õùÿÿÿÿ
-[squid:HiddenFieldCheckk"9Rename "info" which hides the field declared at line 248.(¿ı„
-[squid:S2589º"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
-¤%squid:RedundantThrowsDeclarationChecké"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(‘Áñ¾ùÿÿÿÿ
-¤%squid:RedundantThrowsDeclarationCheckí"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÌÈ¹¥úÿÿÿÿ
-jsquid:ModifiersOrderCheckN"EReorder the modifiers to comply with the Java Language Specification.(£éƒã
-Psquid:MissingDeprecatedCheck"(Add the missing @deprecated Javadoc tag.(ìæê€
->squid:S1452ì"&Remove usage of generic wildcard type.(İİ®
-jsquid:ModifiersOrderCheckR"EReorder the modifiers to comply with the Java Language Specification.(ÔèĞè
-¤%squid:RedundantThrowsDeclarationCheck¸"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(üøÿÿÿÿ
-jsquid:ModifiersOrderCheckM"EReorder the modifiers to comply with the Java Language Specification.(Î†«•
-qsquid:S2293·"YReplace the type specification in this constructor call with the diamond operator ("<>").(´—ŒÕ
->squid:S1452…"&Remove usage of generic wildcard type.(Ê¨ÊÏ
->squid:S1452†"&Remove usage of generic wildcard type.(•ÒĞˆ
-Vsquid:S2589¶"7Remove this expression which always evaluates to "true"(Ê÷Èù8é¿Î¢-
-vsquid:S2293î"YReplace the type specification in this constructor call with the diamond operator ("<>").(›Åàêûÿÿÿÿ
-[squid:S2589º"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
-Tsquid:S2065ø"0Remove the "transient" modifier from this field.(ÃÉÓ¬øÿÿÿÿ8é¿Î¢-
-Csquid:S1452õ"&Remove usage of generic wildcard type.( Šøıÿÿÿÿ
-Csquid:S1452‚"&Remove usage of generic wildcard type.(Àè¢şÿÿÿÿ
-nsquid:S00100È"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óŒ“Ó8é¿Î¢-
-asquid:S2147t"ECombine this catch with the one at line 114, which has the same body.(éáåøÿÿÿÿ
-@squid:S4274—"(Replace this assert with a proper check.(ºÑáˆ
-\squid:S3358·"DExtract this nested ternary operation into an independent statement.(œÂÂ‚
-Jsquid:S2390™",Remove this reference to "SimpleEntityData".(˜Â…_8é¿Î¢-
-psquid:ModifiersOrderCheck±"EReorder the modifiers to comply with the Java Language Specification.(Èı—Òøÿÿÿÿ
-Esquid:S4274Á"(Replace this assert with a proper check.(­àƒ€üÿÿÿÿ
-ssquid:S00100Ö"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÃÁúúÿÿÿÿ8é¿Î¢-
-qsquid:S2293Û"YReplace the type specification in this constructor call with the diamond operator ("<>").(´—ŒÕ
-\squid:S3358½"DExtract this nested ternary operation into an independent statement.(±ğ×ä
-psquid:ModifiersOrderCheckÀ"EReorder the modifiers to comply with the Java Language Specification.(ó’ÉËúÿÿÿÿ
-@squid:S4274Ê"(Replace this assert with a proper check.(±æ¸¦
-Csquid:S1452‘"&Remove usage of generic wildcard type.(­øßÑÿÿÿÿÿ
-\squid:S3358‘"DExtract this nested ternary operation into an independent statement.(ÏÀìÎ
-Qsquid:MissingDeprecatedCheck°"(Add the missing @deprecated Javadoc tag.(›ËÁı
-jsquid:ModifiersOrderCheckK"EReorder the modifiers to comply with the Java Language Specification.(ÚÔƒé
-Hsquid:S1172é"+Remove this unused method parameter "name".(‘Áñ¾ùÿÿÿÿ
-vsquid:S2293Î"YReplace the type specification in this constructor call with the diamond operator ("<>").(Šô‡›ÿÿÿÿÿ
-@squid:S4274¶"(Replace this assert with a proper check.(Ê÷Èù
-\squid:S3358"DExtract this nested ternary operation into an independent statement.(­Ñ£Ô
-Msquid:S1133°"5Do not forget to remove this deprecated code someday.(›ËÁı
-Lsquid:S1133"5Do not forget to remove this deprecated code someday.(ìæê€
+¤%squid:RedundantThrowsDeclarationCheckğ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(üøÿÿÿÿ
+vsquid:S2293¶"YReplace the type specification in this constructor call with the diamond operator ("<>").(›Åàêûÿÿÿÿ
+psquid:ModifiersOrderChecké"EReorder the modifiers to comply with the Java Language Specification.(Èı—Òøÿÿÿÿ
+jsquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(ÚÔƒé
+Psquid:MissingDeprecatedCheckn"(Add the missing @deprecated Javadoc tag.(ìæê€
+qsquid:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(´—ŒÕ
+psquid:ModifiersOrderCheck†"EReorder the modifiers to comply with the Java Language Specification.(ó’ÉËúÿÿÿÿ
+<squid:S1659@"%Declare "m_adult" on a separate line.(òŸÃÔ
+>squid:S1452¬"&Remove usage of generic wildcard type.(•ÒĞˆ
+Jsquid:S2390‰",Remove this reference to "SimpleEntityData".(˜Â…_8é¿Î¢-
+Csquid:S1452¨"&Remove usage of generic wildcard type.(Àè¢şÿÿÿÿ
+>squid:S1452Ù"&Remove usage of generic wildcard type.(Ê¨ÊÏ
+\squid:S3358õ"DExtract this nested ternary operation into an independent statement.(±ğ×ä
+^squid:S2147"DCombine this catch with the one at line 99, which has the same body.(éáåøÿÿÿÿ
+qsquid:S2293‚"YReplace the type specification in this constructor call with the diamond operator ("<>").(´—ŒÕ
+Vsquid:S2589Å"7Remove this expression which always evaluates to "true"(Ê÷Èù8é¿Î¢-
+Tsquid:S2065¢"0Remove the "transient" modifier from this field.(ÃÉÓ¬øÿÿÿÿ8é¿Î¢-
+jsquid:ModifiersOrderCheckC"EReorder the modifiers to comply with the Java Language Specification.(ÔèĞè
+psquid:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÔèĞè
+Csquid:S1452å"&Remove usage of generic wildcard type.(­øßÑÿÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheckµ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÌÈ¹¥úÿÿÿÿ
+Lsquid:S1133n"5Do not forget to remove this deprecated code someday.(ìæê€
+¤%squid:RedundantThrowsDeclarationCheck±"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(‘Áñ¾ùÿÿÿÿ
+Msquid:S1133å"5Do not forget to remove this deprecated code someday.(›ËÁı
+Qsquid:MissingDeprecatedCheckå"(Add the missing @deprecated Javadoc tag.(›ËÁı
+\squid:S3358Æ"DExtract this nested ternary operation into an independent statement.(­Ñ£Ô
+\squid:S3358ï"DExtract this nested ternary operation into an independent statement.(œÂÂ‚
+vsquid:S2293õ"YReplace the type specification in this constructor call with the diamond operator ("<>").(Šô‡›ÿÿÿÿÿ
+[squid:S2589ò"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
+Hsquid:S1172±"+Remove this unused method parameter "name".(‘Áñ¾ùÿÿÿÿ
+ssquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÃÁúúÿÿÿÿ8é¿Î¢-
+jsquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(£éƒã
+>squid:S1452À"&Remove usage of generic wildcard type.(İİ®
+[squid:S2589ò"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
+nsquid:S00100€"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óŒ“Ó8é¿Î¢-
+\squid:S3358É"DExtract this nested ternary operation into an independent statement.(ÏÀìÎ
+jsquid:ModifiersOrderCheck>"EReorder the modifiers to comply with the Java Language Specification.(Î†«•
+Csquid:S1452É"&Remove usage of generic wildcard type.( Šøıÿÿÿÿ
+[squid:HiddenFieldCheck\"9Rename "info" which hides the field declared at line 164.(¿ı„

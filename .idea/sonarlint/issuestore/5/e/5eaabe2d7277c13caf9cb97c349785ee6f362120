@@ -1,0 +1,18 @@
+
+%squid:RedundantThrowsDeclarationCheckÙ"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(ğÿ»æşÿÿÿÿ
+%squid:RedundantThrowsDeclarationCheckí"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(ë©áëøÿÿÿÿ
+jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(·°·
+usquid:S2293("YReplace the type specification in this constructor call with the diamond operator ("<>").(‚¹ÁÏøÿÿÿÿ
+psquid:S2293)"YReplace the type specification in this constructor call with the diamond operator ("<>").(·°·
+usquid:S2293A"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÂÄóøÿÿÿÿ
+usquid:S2293f"YReplace the type specification in this constructor call with the diamond operator ("<>").(ßçû½şÿÿÿÿ
+qsquid:S2293¨"YReplace the type specification in this constructor call with the diamond operator ("<>").(‰¢ù
+qsquid:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(‰¢ù
+qsquid:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(‚«Ÿ
+=squid:S14520"&Remove usage of generic wildcard type.(ÕÕÏŸ
+=squid:S14520"&Remove usage of generic wildcard type.(ÕÕÏŸ
+Csquid:S1452”"&Remove usage of generic wildcard type.(Ä÷íîşÿÿÿÿ
+Csquid:S1452”"&Remove usage of generic wildcard type.(Ä÷íîşÿÿÿÿ
+lsquid:S00100Ÿ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ËÃô‡şÿÿÿÿ
+>squid:S1168¥"&Return an empty array instead of null.(¥¹ï
+5squid:S1700("Rename field "converters"(‚¹ÁÏøÿÿÿÿ

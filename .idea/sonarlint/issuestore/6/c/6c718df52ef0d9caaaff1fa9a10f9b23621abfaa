@@ -1,0 +1,8 @@
+
+Qsquid:S1141K"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+msquid:CallToDeprecatedMethoda"@Remove this use of "scheduleAsyncDelayedTask"; it is deprecated.(°›Šµıÿÿÿÿ
+osquid:CallToDeprecatedMethodg"BRemove this use of "scheduleAsyncRepeatingTask"; it is deprecated.(œÀş°úÿÿÿÿ
+Fsquid:S00108M")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Asquid:S00108R")Either remove or fill this block of code.(œ€šÂ
+Dsquid:S00108")Either remove or fill this block of code.(ù±Õ…ùÿÿÿÿ
+^squid:S2147"DCombine this catch with the one at line 82, which has the same body.(ù±Õ…ùÿÿÿÿ

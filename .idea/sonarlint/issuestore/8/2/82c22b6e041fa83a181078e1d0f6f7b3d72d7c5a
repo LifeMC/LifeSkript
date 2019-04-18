@@ -1,0 +1,22 @@
+
+>squid:S1659A""Declare "BF_Y" on a separate line.(–Ô’şûÿÿÿÿ
+>squid:S1659A""Declare "BF_Z" on a separate line.(–Ô’şûÿÿÿÿ
+;squid:S1659W"$Declare "yawOrY" on a separate line.( ¾®Á
+>squid:S1659W"'Declare "lengthOrZ" on a separate line.( ¾®Á
+jsquid:ModifiersOrderCheck;"EReorder the modifiers to comply with the Java Language Specification.(‡ÁÇ 
+osquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(º³ëÃıÿÿÿÿ
+osquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(–Ô’şûÿÿÿÿ
+osquid:ModifiersOrderCheckB"EReorder the modifiers to comply with the Java Language Specification.(é‰ƒÀıÿÿÿÿ
+jsquid:ModifiersOrderCheckF"EReorder the modifiers to comply with the Java Language Specification.(µßÓû
+osquid:ModifiersOrderCheckG"EReorder the modifiers to comply with the Java Language Specification.(¹»êòÿÿÿÿÿ
+jsquid:ModifiersOrderCheckH"EReorder the modifiers to comply with the Java Language Specification.(—°¾Ú
+osquid:ModifiersOrderCheckI"EReorder the modifiers to comply with the Java Language Specification.(»•šØûÿÿÿÿ
+Msquid:S1133•"5Do not forget to remove this deprecated code someday.(õĞ´™
+Qsquid:MissingDeprecatedCheck•"(Add the missing @deprecated Javadoc tag.(õĞ´™
+[squid:CallToDeprecatedMethod­"2Remove this use of "getNewData"; it is deprecated.(±ê¹á
+Xsquid:CallToDeprecatedMethod­"/Remove this use of "getData"; it is deprecated.(±ê¹á
+`squid:CallToDeprecatedMethod“"2Remove this use of "getNewData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+]squid:CallToDeprecatedMethod“"/Remove this use of "getData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+\squid:S3358¸"DExtract this nested ternary operation into an independent statement.(çÇ±
+_squid:S2147"ECombine this catch with the one at line 455, which has the same body.(éáåøÿÿÿÿ
+Zsquid:S2147"ECombine this catch with the one at line 455, which has the same body.(Ê­È

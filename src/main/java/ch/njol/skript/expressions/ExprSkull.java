@@ -53,7 +53,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Gets a skull item representing a player or an entity.")
 @Examples({"give the victim's skull to the attacker", "set the block at the entity to the entity's skull"})
 @Since("2.0")
-public class ExprSkull extends SimplePropertyExpression<Object, ItemType> {
+public final class ExprSkull extends SimplePropertyExpression<Object, ItemType> {
     static {
         register(ExprSkull.class, ItemType.class, "skull", "offlineplayers/entities/entitydatas");
     }

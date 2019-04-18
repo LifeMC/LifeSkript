@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class HorseData extends EntityData<Horse> {
+public final class HorseData extends EntityData<Horse> {
     static {
         if (Skript.classExists("org.bukkit.entity.Horse")) {
             register(HorseData.class, "horse", Horse.class, 0, "horse", "donkey", "mule", "undead horse", "skeleton horse");

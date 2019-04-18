@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 @Description("Checks whether a player is flying")
 @Examples("player is not flying")
 @Since("1.4.4")
-public class CondIsFlying extends PropertyCondition<Player> {
+public final class CondIsFlying extends PropertyCondition<Player> {
 
     static {
         register(CondIsFlying.class, "flying", "players");

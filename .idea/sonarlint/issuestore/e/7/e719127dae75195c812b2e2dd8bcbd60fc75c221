@@ -1,0 +1,8 @@
+
+„ squid:ForLoopCounterChangedCheckT"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+„ squid:ForLoopCounterChangedCheckV"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+„ squid:ForLoopCounterChangedCheckX"XRefactor the code in order to not assign to this loop counter from within the loop body.(éÒĞ»
+ssquid:S2629l"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(¨É‘
+xsquid:S2629q"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(Òç™½úÿÿÿÿ
+osquid:ModifiersOrderCheck$"EReorder the modifiers to comply with the Java Language Specification.(¸±‚üıÿÿÿÿ
+wsquid:S00115$"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¸±‚üıÿÿÿÿ

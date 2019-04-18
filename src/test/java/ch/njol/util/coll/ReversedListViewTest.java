@@ -28,7 +28,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class ReversedListViewTest {
+public final class ReversedListViewTest {
 
     @Test
     public void test() {

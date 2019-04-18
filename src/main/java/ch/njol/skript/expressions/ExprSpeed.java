@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"A player's walking or flying speed. Both can be changed, but values must be between -1 and 1 (excessive values will be changed to -1 or 1 respectively). Negative values reverse directions.", "Please note that changing a player's speed will change his FOV just like potions do."})
 @Examples({"set the player's walk speed to 1", "increase the argument's fly speed by 0.1"})
 @Since("")
-public class ExprSpeed extends SimplePropertyExpression<Player, Float> {
+public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
     static {
         register(ExprSpeed.class, Float.class, "(0¦walk[ing]|1¦fl(y[ing]|ight))[( |-])speed", "players");
     }

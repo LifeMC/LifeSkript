@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"command /nick <text>:", "\texecutable by: players", "\tcooldown: 10 seconds", "\ttrigger:", "\t\tif length of arg-1 is more than 16:", "\t\t\t# Makes it so that invalid arguments don't make you wait for the cooldown again", "\t\t\tcancel the cooldown", "\t\t\tsend \"Your nickname may be at most 16 characters.\"", "\t\t\tstop", "\t\tset the player's display name to arg-1"
 })
 @Since("2.2-Fixes-V10b")
-public class EffCancelCooldown extends Effect {
+public final class EffCancelCooldown extends Effect {
     static {
         Skript.registerEffect(EffCancelCooldown.class, "(cancel|ignore) [the] [current] [command] cooldown", "un(cancel|ignore) [the] [current] [command] cooldown");
     }

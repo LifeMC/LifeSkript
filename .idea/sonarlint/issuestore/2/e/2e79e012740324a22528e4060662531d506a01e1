@@ -1,0 +1,14 @@
+
+Gsquid:S16592"+Declare "FIRST_WARNING" on a separate line.(Ñ­Ğşÿÿÿÿ
+osquid:ModifiersOrderCheck2"EReorder the modifiers to comply with the Java Language Specification.(Ñ­Ğşÿÿÿÿ
+jsquid:ModifiersOrderCheck3"EReorder the modifiers to comply with the Java Language Specification.(óÆ®
+jsquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(Üì‡
+psquid:S2293:"YReplace the type specification in this constructor call with the diamond operator ("<>").(ãí™¦
+[squid:HiddenFieldCheckƒ"8Rename "file" which hides the field declared at line 62.(ôÓ¸
+`squid:HiddenFieldCheckÎ"8Rename "file" which hides the field declared at line 62.(ı —Ñÿÿÿÿÿ
+[squid:S1134+"DTake the required action to fix the issue indicated by this comment.(”½ô¢
+lsquid:S00100µ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™Òµòûÿÿÿÿ
+Dsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Gsquid:S00108û")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Gsquid:S00108Š")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(î´õÂÿÿÿÿÿ

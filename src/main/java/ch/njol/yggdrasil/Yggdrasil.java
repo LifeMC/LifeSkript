@@ -22,9 +22,7 @@
 package ch.njol.yggdrasil;
 
 import ch.njol.yggdrasil.Fields.FieldContext;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustEnum;
-import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable;
 import org.eclipse.jdt.annotation.Nullable;
 
 import javax.annotation.concurrent.NotThreadSafe;
@@ -58,9 +56,9 @@ import java.util.List;
  * <b>Customisation</b>
  * <p>
  * Any object that does not meet the above requirements for serialisation can still be (de)serialised using an {@link YggdrasilSerializer} (useful for objects of an external API),
- * or by implementing {@link YggdrasilExtendedSerializable}.
+ * or by implementing {@link ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable}.
  * <p>
- * The behaviour in case of an invalid or outdated stream can be defined likewise, or one can implement {@link YggdrasilRobustSerializable} or {@link YggdrasilRobustEnum}
+ * The behaviour in case of an invalid or outdated stream can be defined likewise, or one can implement {@link ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustSerializable} or {@link YggdrasilRobustEnum}
  * respectively.
  *
  * @author Peter Güttinger

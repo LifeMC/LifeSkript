@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Set the PvP status for a given world.")
 @Examples({"enable PvP #(current world only)", "disable PvP in all worlds"})
 @Since("1.3.4")
-public class EffPvP extends Effect {
+public final class EffPvP extends Effect {
 
     static {
         Skript.registerEffect(EffPvP.class, "enable PvP [in %worlds%]", "disable PVP [in %worlds%]");

@@ -1,0 +1,7 @@
+
+Lsquid:S20659"0Remove the "transient" modifier from this field.(ÎÄÝæùÿÿÿÿ
+usquid:S22939"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÎÄÝæùÿÿÿÿ
+psquid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").(¢ì×Ý
+usquid:S2293n"YReplace the type specification in this constructor call with the diamond operator ("<>").(¤—Ü¹ýÿÿÿÿ
+Ysquid:HiddenFieldChecks"7Rename "def" which hides the field declared at line 47.(ü€ïÝ
+[squid:HiddenFieldCheck…"8Rename "name" which hides the field declared at line 44.(·Œ”¶

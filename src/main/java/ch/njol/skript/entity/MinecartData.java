@@ -40,7 +40,7 @@ import java.util.ArrayList;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public class MinecartData extends EntityData<Minecart> {
+public final class MinecartData extends EntityData<Minecart> {
 
     @Nullable
     static final Class<? extends Minecart> storageMinecart = Compatibility.getClass("org.bukkit.entity.StorageMinecart", "org.bukkit.entity.minecart.StorageMinecart");

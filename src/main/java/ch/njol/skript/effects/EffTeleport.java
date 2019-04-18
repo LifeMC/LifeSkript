@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Teleport an entity to a specific location.")
 @Examples({"teleport the player to {homes.%player%}", "teleport the attacker to the victim"})
 @Since("1.0")
-public class EffTeleport extends Effect {
+public final class EffTeleport extends Effect {
     static {
         Skript.registerEffect(EffTeleport.class, "teleport %entities% (to|%direction%) %location%");
     }

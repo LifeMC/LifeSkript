@@ -23,7 +23,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
 
-public class ImprovedIterator<T> implements Iterator<T> {
+public final class ImprovedIterator<T> implements Iterator<T> {
 
     private final Iterator<T> iter;
 

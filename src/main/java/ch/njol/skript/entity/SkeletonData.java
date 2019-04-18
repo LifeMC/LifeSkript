@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class SkeletonData extends EntityData<Skeleton> {
+public final class SkeletonData extends EntityData<Skeleton> {
     private final static boolean hasWither = Skript.methodExists(Skeleton.class, "getSkeletonType");
 
     static {
@@ -116,7 +116,7 @@ public class SkeletonData extends EntityData<Skeleton> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Skeleton> getSuperType() {
         return new SkeletonData(wither);
     }
 

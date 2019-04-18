@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * @author Peter Güttinger
  */
-public class EnchantmentType implements YggdrasilSerializable {
+public final class EnchantmentType implements YggdrasilSerializable {
 
     final static Map<Enchantment, String> enchantmentNames = new HashMap<>();
     final static Map<String, Enchantment> enchantmentPatterns = new HashMap<>();

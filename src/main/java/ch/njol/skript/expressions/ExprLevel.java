@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"reduce the victim's level by 1", "set the player's level to 0"})
 @Since("")
 @Events("level change")
-public class ExprLevel extends SimplePropertyExpression<Player, Integer> {
+public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
     static {
         register(ExprLevel.class, Integer.class, "level", "players");
     }

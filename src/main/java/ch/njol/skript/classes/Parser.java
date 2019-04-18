@@ -22,7 +22,6 @@
 package ch.njol.skript.classes;
 
 import ch.njol.skript.lang.ParseContext;
-import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.StringMode;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -31,9 +30,9 @@ import org.eclipse.jdt.annotation.Nullable;
  *
  * @param <T> the type of this parser
  * @author Peter Güttinger
- * @see Classes#registerClass(ClassInfo)
+ * @see ch.njol.skript.registrations.Classes#registerClass(ClassInfo)
  * @see ClassInfo
- * @see Classes#toString(Object)
+ * @see ch.njol.skript.registrations.Classes#toString(Object)
  */
 public abstract class Parser<T> {
 

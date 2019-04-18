@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Poison or cure a creature.")
 @Examples({"poison the player", "poison the victim for 20 seconds", "cure the player from poison"})
 @Since("1.3.2")
-public class EffPoison extends Effect {
+public final class EffPoison extends Effect {
     private final static int DEFAULT_DURATION = 15 * 20; // 15 seconds on hard difficulty, same as EffPotion
 
     static {

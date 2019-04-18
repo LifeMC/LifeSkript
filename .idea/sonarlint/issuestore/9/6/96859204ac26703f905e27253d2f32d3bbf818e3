@@ -1,38 +1,34 @@
 
-osquid:ModifiersOrderCheckR"EReorder the modifiers to comply with the Java Language Specification.(èÃàşüÿÿÿÿ
-qsquid:ModifiersOrderCheckû"EReorder the modifiers to comply with the Java Language Specification.(ƒ’W8òñÍ¢-
-jsquid:ModifiersOrderCheckS"EReorder the modifiers to comply with the Java Language Specification.(“ø Š
-Jsquid:S1452À"&Remove usage of generic wildcard type.(åçµùÿÿÿÿ8òñÍ¢-
-k$squid:AssignmentInSubExpressionCheckº".Extract the assignment out of this expression.(Ô×¸Šıÿÿÿÿ8òñÍ¢-
-usquid:S2293T"YReplace the type specification in this constructor call with the diamond operator ("<>").(»èƒÛüÿÿÿÿ
-Dsquid:S1452Ö"&Remove usage of generic wildcard type.(Ä„ÿY8òñÍ¢-
-Esquid:S1452š"&Remove usage of generic wildcard type.(Î´Àƒ8òñÍ¢-
-‹ squid:ForLoopCounterChangedCheck¼"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8òñÍ¢-
-vsquid:ModifiersOrderCheckQ"EReorder the modifiers to comply with the Java Language Specification.(‹ÓŞÅùÿÿÿÿ8òñÍ¢-
-Esquid:S1452ó"&Remove usage of generic wildcard type.(‘Ğ™†8òñÍ¢-
-Lsquid:S4274º"(Replace this assert with a proper check.(Ô×¸Šıÿÿÿÿ8òñÍ¢-
-wsquid:S2095®"SUse try-with-resources or close this "YggdrasilOutputStream" in a "finally" clause.(ŸÊÙôúÿÿÿÿ8òñÍ¢-
-Jsquid:S1452"&Remove usage of generic wildcard type.(ıå‡€øÿÿÿÿ8òñÍ¢-
-wsquid:ModifiersOrderCheckø"EReorder the modifiers to comply with the Java Language Specification.(¶Ú–şÿÿÿÿ8òñÍ¢-
-Ysquid:S1854º"5Remove this useless assignment to local variable "d".(Ô×¸Šıÿÿÿÿ8òñÍ¢-
-8squid:S1659Ç" Declare "c2" on a separate line.(Ü¾óò
-psquid:S2293S"YReplace the type specification in this constructor call with the diamond operator ("<>").(“ø Š
-Nsquid:S2093ß"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8òñÍ¢-
-usquid:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(èÃàşüÿÿÿÿ
-‡squid:S2637"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8òñÍ¢-
-Lsquid:S4274œ"(Replace this assert with a proper check.(ªŸÿÍùÿÿÿÿ8òñÍ¢-
-Lsquid:S4274İ"(Replace this assert with a proper check.(üÜšÏşÿÿÿÿ8òñÍ¢-
-Jsquid:S1452ä"&Remove usage of generic wildcard type.(íæŸ’ÿÿÿÿÿ8òñÍ¢-
-]squid:MissingDeprecatedCheckş"(Add the missing @deprecated Javadoc tag.(±Ãë—üÿÿÿÿ8òñÍ¢-
-osquid:ModifiersOrderCheckT"EReorder the modifiers to comply with the Java Language Specification.(»èƒÛüÿÿÿÿ
-|squid:S2293Q"YReplace the type specification in this constructor call with the diamond operator ("<>").(‹ÓŞÅùÿÿÿÿ8òñÍ¢-
-Esquid:S1452ä"&Remove usage of generic wildcard type.(ÂËÏÆ8òñÍ¢-
-Ysquid:S1133ş"5Do not forget to remove this deprecated code someday.(±Ãë—üÿÿÿÿ8òñÍ¢-
-hsquid:S3358Ê"DExtract this nested ternary operation into an independent statement.(Êû˜­ûÿÿÿÿ8òñÍ¢-
-}squid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜óÖ‰úÿÿÿÿ8òñÍ¢-
-xsquid:S2293²"YReplace the type specification in this constructor call with the diamond operator ("<>").(îÿÉ8òñÍ¢-
-Jsquid:S1452÷"&Remove usage of generic wildcard type.(±û»ùÿÿÿÿÿ8òñÍ¢-
-Ksquid:S1905¿",Remove this unnecessary cast to "Converter".(´ƒìı8òñÍ¢-
-Nsquid:S00108ë")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ8òñÍ¢-
-Nsquid:S00108ï")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ8òñÍ¢-
-Lsquid:S4274µ"(Replace this assert with a proper check.(£’í‘ùÿÿÿÿ8òñÍ¢-
+Ksquid:S1905µ",Remove this unnecessary cast to "Converter".(´ƒìı8òñÍ¢-
+vsquid:ModifiersOrderCheckC"EReorder the modifiers to comply with the Java Language Specification.(¶Ú–şÿÿÿÿ8òñÍ¢-
+Jsquid:S1452í"&Remove usage of generic wildcard type.(±û»ùÿÿÿÿÿ8òñÍ¢-
+osquid:ModifiersOrderCheck="EReorder the modifiers to comply with the Java Language Specification.(èÃàşüÿÿÿÿ
+Esquid:S1452Û"&Remove usage of generic wildcard type.(ÂËÏÆ8òñÍ¢-
+Jsquid:S1452Û"&Remove usage of generic wildcard type.(íæŸ’ÿÿÿÿÿ8òñÍ¢-
+vsquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(‹ÓŞÅùÿÿÿÿ8òñÍ¢-
+wsquid:S2095›"SUse try-with-resources or close this "YggdrasilOutputStream" in a "finally" clause.(ŸÊÙôúÿÿÿÿ8òñÍ¢-
+|squid:S2293<"YReplace the type specification in this constructor call with the diamond operator ("<>").(‹ÓŞÅùÿÿÿÿ8òñÍ¢-
+Ysquid:S1854§"5Remove this useless assignment to local variable "d".(Ô×¸Šıÿÿÿÿ8òñÍ¢-
+Esquid:S1452ê"&Remove usage of generic wildcard type.(‘Ğ™†8òñÍ¢-
+jsquid:ModifiersOrderCheck>"EReorder the modifiers to comply with the Java Language Specification.(“ø Š
+8squid:S1659´" Declare "c2" on a separate line.(Ü¾óò
+osquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(»èƒÛüÿÿÿÿ
+usquid:S2293="YReplace the type specification in this constructor call with the diamond operator ("<>").(èÃàşüÿÿÿÿ
+}squid:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜óÖ‰úÿÿÿÿ8òñÍ¢-
+psquid:ModifiersOrderCheckE"EReorder the modifiers to comply with the Java Language Specification.(ƒ’W8òñÍ¢-
+xsquid:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(îÿÉ8òñÍ¢-
+Dsquid:S1452Ì"&Remove usage of generic wildcard type.(Ä„ÿY8òñÍ¢-
+Nsquid:S2093Ì"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8òñÍ¢-
+Hsquid:S00108İ")Either remove or fill this block of code.(éúá)8‹„Û¢-
+Hsquid:S00108Ø")Either remove or fill this block of code.(éúá)8‹„Û¢-
+Jsquid:S1452·"&Remove usage of generic wildcard type.(åçµùÿÿÿÿ8òñÍ¢-
+k$squid:AssignmentInSubExpressionCheck§".Extract the assignment out of this expression.(Ô×¸Šıÿÿÿÿ8òñÍ¢-
+]squid:MissingDeprecatedCheckí"(Add the missing @deprecated Javadoc tag.(±Ãë—üÿÿÿÿ8òñÍ¢-
+‹ squid:ForLoopCounterChangedCheck³"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8òñÍ¢-
+Jsquid:S1452ø"&Remove usage of generic wildcard type.(ıå‡€øÿÿÿÿ8òñÍ¢-
+‡squid:S2637”"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8òñÍ¢-
+hsquid:S3358¿"DExtract this nested ternary operation into an independent statement.(íáÇûÿÿÿÿ8‹„Û¢-
+usquid:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(»èƒÛüÿÿÿÿ
+Ysquid:S1133í"5Do not forget to remove this deprecated code someday.(±Ãë—üÿÿÿÿ8òñÍ¢-
+Esquid:S1452‘"&Remove usage of generic wildcard type.(Î´Àƒ8òñÍ¢-
+psquid:S2293>"YReplace the type specification in this constructor call with the diamond operator ("<>").(“ø Š

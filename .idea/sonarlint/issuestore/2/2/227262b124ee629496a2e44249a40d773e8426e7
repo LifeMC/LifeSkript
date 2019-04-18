@@ -1,0 +1,12 @@
+
+jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(Øğº¬
+isquid:ModifiersOrderCheck*"EReorder the modifiers to comply with the Java Language Specification.(¡Ÿº
+psquid:S2293)"YReplace the type specification in this constructor call with the diamond operator ("<>").(Øğº¬
+Rsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(¶ç
+
+Zsquid:CallToDeprecatedMethodC"-Remove this use of "getId"; it is deprecated.(Ëï¹ìûÿÿÿÿ
+Zsquid:CallToDeprecatedMethodD"-Remove this use of "getId"; it is deprecated.(™•¡şûÿÿÿÿ
+Tsquid:CallToDeprecatedMethodP"-Remove this use of "getId"; it is deprecated.(Å²
+Tsquid:CallToDeprecatedMethodV"-Remove this use of "getId"; it is deprecated.(Å²
+bsquid:CallToDeprecatedMethoda"5Remove this use of "toDamageValue"; it is deprecated.(»ûéÙøÿÿÿÿ
+=squid:S1604"(Make this anonymous inner class a lambda(íî‡Ë

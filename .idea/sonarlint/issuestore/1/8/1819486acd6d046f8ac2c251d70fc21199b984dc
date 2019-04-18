@@ -1,0 +1,10 @@
+
+jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(…О‚Я
+jsquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(™Спњ
+osquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(ЭяїЮяяяяя
+psquid:S2293)"YReplace the type specification in this constructor call with the diamond operator ("<>").(…О‚Я
+=squid:S1452G"&Remove usage of generic wildcard type.(ги ‹
+_squid:CallToDeprecatedMethod1"7Remove this use of "updateInventory"; it is deprecated.(юЭЌУ
+esquid:S2259U"NA "NullPointerException" could be thrown; "getOnlinePlayers" is nullable here.(Ю¤јЧ
+Ysquid:S2147"DCombine this catch with the one at line 90, which has the same body.(аЇтЕ
+wsquid:S001159"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ЭяїЮяяяяя

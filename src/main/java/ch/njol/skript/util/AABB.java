@@ -38,7 +38,7 @@ import java.util.NoSuchElementException;
  *
  * @author Peter Güttinger
  */
-public class AABB implements Iterable<Block> {
+public final class AABB implements Iterable<Block> {
 
     final World world;
     final Vector lowerBound, upperBound;

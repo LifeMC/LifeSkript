@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
  * @author Peter Güttinger
  */
 @SuppressFBWarnings("ES_COMPARING_STRINGS_WITH_EQ")
-public class Documentation {
+public final class Documentation {
 
     public final static boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
     private static final ArrayList<Pattern> validation = new ArrayList<>();

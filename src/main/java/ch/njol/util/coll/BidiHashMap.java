@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * @author Peter Güttinger
  */
-public class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, T2> {
+public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMap<T1, T2> {
 
     private static final long serialVersionUID = -9011678701069901061L;
 

@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class BlockSphereIterator extends CheckedIterator<Block> {
+public final class BlockSphereIterator extends CheckedIterator<Block> {
 
     public BlockSphereIterator(final Location center, final double radius) {
         super(new AABB(center, radius + 0.5001, radius + 0.5001, radius + 0.5001).iterator(), new NullableChecker<Block>() {

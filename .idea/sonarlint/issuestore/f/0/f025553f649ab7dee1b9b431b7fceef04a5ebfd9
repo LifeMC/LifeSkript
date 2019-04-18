@@ -1,0 +1,12 @@
+
+Ssquid:S2629o"7Use the built-in formatting to construct this argument.(º£ïèþÿÿÿÿ
+<squid:S2629À"$Invoke method(s) only conditionally.(‘èÞ»
+jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(¬ø§ó
+osquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(è‰Ûýÿÿÿÿ
+jsquid:ModifiersOrderCheck-"EReorder the modifiers to comply with the Java Language Specification.(¦‹²˜
+osquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(Û®”øÿÿÿÿ
+vsquid:S2293Ì"YReplace the type specification in this constructor call with the diamond operator ("<>").(³†ÃÛûÿÿÿÿ
+vsquid:S2293Ó"YReplace the type specification in this constructor call with the diamond operator ("<>").(·Êõžùÿÿÿÿ
+Qsquid:S1118&":Add a private constructor to hide the implicit public one.(ËÏßÆ
+}squid:S1845/"aRename field "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(ŠÚ€ˆÿÿÿÿÿ
+squid:S1845ö"bRename method "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(‡¤÷ùýÿÿÿÿ

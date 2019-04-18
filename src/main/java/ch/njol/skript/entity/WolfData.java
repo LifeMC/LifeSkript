@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class WolfData extends EntityData<Wolf> {
+public final class WolfData extends EntityData<Wolf> {
     static {
         EntityData.register(WolfData.class, "wolf", Wolf.class, 1, "angry wolf", "wolf", "peaceful wolf", "wild wolf", "tamed wolf");
     }
@@ -121,7 +121,7 @@ public class WolfData extends EntityData<Wolf> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Wolf> getSuperType() {
         return new WolfData();
     }
 

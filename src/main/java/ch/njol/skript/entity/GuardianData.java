@@ -26,7 +26,7 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import org.bukkit.entity.Guardian;
 
-public class GuardianData extends EntityData<Guardian> {
+public final class GuardianData extends EntityData<Guardian> {
 
     static {
         if (Skript.classExists("org.bukkit.entity.Guardian")) {

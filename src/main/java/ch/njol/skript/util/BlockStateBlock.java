@@ -40,7 +40,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 @NonNullByDefault(false)
-public class BlockStateBlock implements Block {
+public final class BlockStateBlock implements Block {
 
     final BlockState state;
     private final boolean delayChanges;

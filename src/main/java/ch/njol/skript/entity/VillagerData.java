@@ -33,7 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class VillagerData extends EntityData<Villager> {
+public final class VillagerData extends EntityData<Villager> {
     static {
         // professions in order!
         // FARMER(0), LIBRARIAN(1), PRIEST(2), BLACKSMITH(3), BUTCHER(4);
@@ -119,7 +119,7 @@ public class VillagerData extends EntityData<Villager> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Villager> getSuperType() {
         return new VillagerData();
     }
 

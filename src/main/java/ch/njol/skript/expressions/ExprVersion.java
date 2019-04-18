@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The version of Bukkit, Minecraft or Skript respectively.")
 @Examples({"message \"This server is running Minecraft %minecraft version% on Bukkit %bukkit version%\"", "message \"This server is powered by Skript %skript version%\""})
 @Since("2.0")
-public class ExprVersion extends SimpleExpression<String> {
+public final class ExprVersion extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprVersion.class, String.class, ExpressionType.SIMPLE, "(0¦[craft]bukkit|1¦minecraft|2¦skript)( |-)version");

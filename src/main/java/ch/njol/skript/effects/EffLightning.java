@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Strike lightning at a given location. Can use 'ligning effect' to create a lightning that does not harm entities or start fires.")
 @Examples({"strike lightning at the player", "strike lightning effect at the victim"})
 @Since("1.4")
-public class EffLightning extends Effect {
+public final class EffLightning extends Effect {
 
     static {
         Skript.registerEffect(EffLightning.class, "(create|strike) lightning(1¦[ ]effect|) %directions% %locations%");

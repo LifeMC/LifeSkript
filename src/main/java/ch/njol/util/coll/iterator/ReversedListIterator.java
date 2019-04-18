@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
 /**
  * @author Peter Güttinger
  */
-public class ReversedListIterator<T> implements ListIterator<T> {
+public final class ReversedListIterator<T> implements ListIterator<T> {
 
     private final ListIterator<T> iter;
 

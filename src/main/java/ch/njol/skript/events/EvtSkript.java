@@ -40,7 +40,7 @@ import java.util.Collection;
  * @author Peter Güttinger
  */
 @SuppressWarnings("unchecked")
-public class EvtSkript extends SelfRegisteringSkriptEvent {
+public final class EvtSkript extends SelfRegisteringSkriptEvent {
     private final static Collection<Trigger> start = new ArrayList<>(), stop = new ArrayList<>();
 
     static {

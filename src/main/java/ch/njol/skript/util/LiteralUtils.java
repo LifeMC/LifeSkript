@@ -31,7 +31,9 @@ import ch.njol.skript.lang.UnparsedLiteral;
  * making it easier to deal with {@link UnparsedLiteral}
  * objects.
  */
-public class LiteralUtils {
+public final class LiteralUtils {
+
+    private LiteralUtils() { throw new UnsupportedOperationException(); }
 
     /**
      * Checks an {@link Expression} for {@link UnparsedLiteral} objects

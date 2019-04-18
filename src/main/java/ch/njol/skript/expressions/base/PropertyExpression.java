@@ -25,16 +25,13 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Converter;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.lang.SyntaxElement;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.registrations.Converters;
-import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 
 /**
  * Represents an expression which represents a property of another one. Remember to set the expression with {@link #setExpr(Expression)} in
- * {@link SyntaxElement#init(Expression[], int, Kleenean, ParseResult) init()}.
+ * {@link ch.njol.skript.lang.SyntaxElement#init(Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult) init()}.
  *
  * @author Peter Güttinger
  * @see SimplePropertyExpression

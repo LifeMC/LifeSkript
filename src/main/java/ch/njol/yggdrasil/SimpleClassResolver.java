@@ -7,7 +7,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class SimpleClassResolver implements ClassResolver {
+public final class SimpleClassResolver implements ClassResolver {
 
     private final BidiMap<Class<?>, String> classes = new BidiHashMap<>();
 

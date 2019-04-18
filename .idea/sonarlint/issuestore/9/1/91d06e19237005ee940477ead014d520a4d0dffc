@@ -1,0 +1,13 @@
+
+¤%squid:RedundantThrowsDeclarationCheckô"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+usquid:S2293s"YReplace the type specification in this constructor call with the diamond operator ("<>").(¹°øüÿÿÿÿ
+vsquid:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(—§ÑÄıÿÿÿÿ
+qsquid:S2293ç"YReplace the type specification in this constructor call with the diamond operator ("<>").(™æƒå
+qsquid:S2293È"YReplace the type specification in this constructor call with the diamond operator ("<>").(ğÓ†
+qsquid:S2293Í"YReplace the type specification in this constructor call with the diamond operator ("<>").(şçâ×
+=squid:S1452·"&Remove usage of generic wildcard type.(İù°j
+asquid:HiddenFieldCheckD":Rename "single" which hides the field declared at line 49.(ª™ñüÿÿÿÿ
+Nsquid:S2589="7Remove this expression which always evaluates to "true"(‡ÿ…
+>squid:S1168æ"&Return an empty array instead of null.(¥¹ï
+>squid:S1168ë"&Return an empty array instead of null.(¥¹ï
+>squid:S1168î"&Return an empty array instead of null.(¥¹ï

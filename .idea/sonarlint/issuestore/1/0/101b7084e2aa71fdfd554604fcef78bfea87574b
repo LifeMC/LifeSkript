@@ -1,0 +1,8 @@
+
+jsquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(½‚Ù
+psquid:S22938"YReplace the type specification in this constructor call with the diamond operator ("<>").(½‚Ù
+Msquid:S2696Z"6Make the enclosing method "static" or remove this set.(åœ¯¦
+Msquid:S2696["6Make the enclosing method "static" or remove this set.(ËÕÈ¥
+csquid:CallToDeprecatedMethodh"6Remove this use of "getTargetBlock"; it is deprecated.(ê¿…üÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(ÎËÉùÿÿÿÿ
+wsquid:S001157"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(šŒ“²ûÿÿÿÿ

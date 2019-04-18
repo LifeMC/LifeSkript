@@ -1,0 +1,5 @@
+
+Nsquid:S1854~"7Remove this useless assignment to local variable "rti".(ŒÒ€Ö
+psquid:S2293P"YReplace the type specification in this constructor call with the diamond operator ("<>").(ù¶ƒÈ
+=squid:S1604"(Make this anonymous inner class a lambda(Î ’
+Hsquid:S1905M",Remove this unnecessary cast to "Converter".(àƒÔøÿÿÿÿ

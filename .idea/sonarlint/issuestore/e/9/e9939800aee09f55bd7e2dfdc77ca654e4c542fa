@@ -1,0 +1,21 @@
+
+„ squid:ForLoopCounterChangedCheckh"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+„ squid:ForLoopCounterChangedCheckq"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+„ squid:ForLoopCounterChangedCheckw"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+„ squid:ForLoopCounterChangedCheck|"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+osquid:ModifiersOrderCheck("EReorder the modifiers to comply with the Java Language Specification.(¬ĞüÈûÿÿÿÿ
+osquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(Ãåêÿÿÿÿÿ
+osquid:ModifiersOrderCheck*"EReorder the modifiers to comply with the Java Language Specification.(¼‰¾€ùÿÿÿÿ
+jsquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(³Ü’
+osquid:ModifiersOrderCheck,"EReorder the modifiers to comply with the Java Language Specification.(€Ã÷®ùÿÿÿÿ
+osquid:ModifiersOrderCheck-"EReorder the modifiers to comply with the Java Language Specification.(úšÎ÷ÿÿÿÿÿ
+osquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(Ä®×Ëüÿÿÿÿ
+osquid:ModifiersOrderCheck/"EReorder the modifiers to comply with the Java Language Specification.(æ´İ­ûÿÿÿÿ
+osquid:ModifiersOrderCheck1"EReorder the modifiers to comply with the Java Language Specification.(³Œ²ûÿÿÿÿ
+usquid:S2293)"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ãåêÿÿÿÿÿ
+Rsquid:S1133—"5Do not forget to remove this deprecated code someday.(¾ìŸúûÿÿÿÿ
+Rsquid:S1133Ä"5Do not forget to remove this deprecated code someday.(ŒÖÉ¦ıÿÿÿÿ
+fsquid:S00100›"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ ¦^
+gsquid:S00100º"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜áÎ
+=squid:S1604"(Make this anonymous inner class a lambda(íî‡Ë
+asquid:S3358Ô"DExtract this nested ternary operation into an independent statement.(êèƒ÷úÿÿÿÿ

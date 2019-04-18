@@ -49,7 +49,7 @@ import java.util.NoSuchElementException;
 @Description({"All items in an inventory. Useful for looping or storing in a list variable.", "Please note that the positions of the items in the inventory are not saved, only their order is preserved."})
 @Examples({"loop all items in the player's inventory:", "	loop-item is enchanted", "	remove loop-item from the player", "set {inventory.%player%} to items in the player's inventory"})
 @Since("2.0")
-public class ExprItemsIn extends SimpleExpression<Slot> {
+public final class ExprItemsIn extends SimpleExpression<Slot> {
     static {
         Skript.registerExpression(ExprItemsIn.class, Slot.class, ExpressionType.PROPERTY, "[all] items (in|of|contained in|out of) (|1¦inventor(y|ies)) %inventories%");
     }

@@ -31,7 +31,7 @@ import java.util.NoSuchElementException;
  *
  * @author Peter Güttinger
  */
-public class CombinedIterator<T> implements Iterator<T> {
+public final class CombinedIterator<T> implements Iterator<T> {
 
     private final Iterator<? extends Iterable<T>> iterators;
     private final boolean removable;

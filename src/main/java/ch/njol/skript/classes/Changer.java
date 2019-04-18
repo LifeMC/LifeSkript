@@ -21,7 +21,6 @@
 
 package ch.njol.skript.classes;
 
-import ch.njol.skript.classes.data.DefaultChangers;
 import ch.njol.skript.lang.Expression;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -29,10 +28,10 @@ import org.eclipse.jdt.annotation.Nullable;
  * An interface to declare changeable values. All Expressions implement something similar like this by default, but refuse any change if {@link Expression#acceptChange(ChangeMode)}
  * isn't overridden.
  * <p>
- * Some useful Changers can be found in {@link DefaultChangers}
+ * Some useful Changers can be found in {@link ch.njol.skript.classes.data.DefaultChangers}
  *
  * @author Peter Güttinger
- * @see DefaultChangers
+ * @see ch.njol.skript.classes.data.DefaultChangers
  * @see Expression
  */
 public interface Changer<T> {

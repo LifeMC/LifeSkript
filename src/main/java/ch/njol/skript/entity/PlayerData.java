@@ -104,7 +104,7 @@ public final class PlayerData extends EntityData<Player> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Player> getSuperType() {
         return new PlayerData();
     }
 

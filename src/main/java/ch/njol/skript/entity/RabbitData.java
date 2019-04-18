@@ -26,7 +26,7 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import org.bukkit.entity.Rabbit;
 
-public class RabbitData extends EntityData<Rabbit> {
+public final class RabbitData extends EntityData<Rabbit> {
 
     static {
         if (Skript.classExists("org.bukkit.entity.Rabbit")) {

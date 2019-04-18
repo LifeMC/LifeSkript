@@ -32,7 +32,7 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("resource")
-public class YggdrasilTest {
+public final class YggdrasilTest {
 
     public final static PETest1 PET1_3 = new PETest1("PET1_3");
     static final Yggdrasil y = new Yggdrasil();

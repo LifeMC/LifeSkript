@@ -402,8 +402,8 @@ public final class StringUtils {
 
     public static boolean contains(final String haystack, final String needle, final boolean caseSensitive) {
         if (caseSensitive)
-            return haystack.contains(needle);
-        return haystack.toLowerCase().contains(needle.toLowerCase());
+            return haystack.trim().contains(needle.trim());
+        return haystack.toLowerCase().trim().contains(needle.toLowerCase().trim());
     }
 
     public static String replace(final String haystack, final String needle, final String replacement, final boolean caseSensitive) {

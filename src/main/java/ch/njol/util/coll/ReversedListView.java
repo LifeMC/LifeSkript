@@ -28,7 +28,7 @@ import java.util.*;
 /**
  * @author Peter Güttinger
  */
-public class ReversedListView<T> implements List<T> {
+public final class ReversedListView<T> implements List<T> {
 
     private final List<T> list;
 

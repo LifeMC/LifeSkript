@@ -24,7 +24,6 @@ package ch.njol.skript.lang.function;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.config.SectionNode;
-import ch.njol.skript.effects.EffReturn;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.function.Functions.FunctionData;
 import ch.njol.skript.lang.util.SimpleEvent;
@@ -59,7 +58,7 @@ public final class ScriptFunction<T> extends Function<T> {
     }
 
     /**
-     * Should only be called by {@link EffReturn}.
+     * Should only be called by {@link ch.njol.skript.effects.EffReturn}.
      *
      * @param e
      * @param value

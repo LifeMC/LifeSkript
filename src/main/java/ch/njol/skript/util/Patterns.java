@@ -21,11 +21,6 @@
 
 package ch.njol.skript.util;
 
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.lang.SyntaxElement;
-import ch.njol.util.Kleenean;
-
 /**
  * A helper class useful when a expression/condition/effect/etc. needs to associate additional data with each pattern.
  *
@@ -55,7 +50,7 @@ public final class Patterns<T> {
     }
 
     /**
-     * @param matchedPattern The pattern to get the data to as given in {@link SyntaxElement#init(Expression[], int, Kleenean, ParseResult)}
+     * @param matchedPattern The pattern to get the data to as given in {@link ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)}
      * @return The info associated with the matched pattern
      * @throws ClassCastException If the item in the source array is not of the requested type
      */

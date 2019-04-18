@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Checks whether the weather in a world is of a specific type.", "<i>I welcome any ideas how to write this condition differently.</i>"})
 @Examples({"is thundering", "is raining in \"world\" or \"world2\""})
 @Since("1.0")
-public class CondWeather extends Condition {
+public final class CondWeather extends Condition {
     static {
         Skript.registerCondition(CondWeather.class, "is %weathertypes% [in %worlds%]");
     }

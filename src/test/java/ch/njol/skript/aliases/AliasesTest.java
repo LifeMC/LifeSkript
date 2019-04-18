@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Güttinger
  */
-public class AliasesTest {
+public final class AliasesTest {
     static {
         BukkitLoggerFilter.addFilter(record -> {
             if (record == null)

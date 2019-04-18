@@ -1,0 +1,7 @@
+
+jsquid:ModifiersOrderCheck$"EReorder the modifiers to comply with the Java Language Specification.(øèû½
+osquid:ModifiersOrderCheck%"EReorder the modifiers to comply with the Java Language Specification.(àáËàüÿÿÿÿ
+[squid:S4351j"?Refactor this method so that its argument is of type 'Version'.(Å‘Œˆüÿÿÿÿ
+lsquid:S39810"UThe length of "version" is always ">=0", so update this test to either "==0" or ">0".(ì»šĞ
+\squid:S3358“"DExtract this nested ternary operation into an independent statement.(¦âÂ©
+2squid:S1700&"Rename field "version"(·¨öİûÿÿÿÿ

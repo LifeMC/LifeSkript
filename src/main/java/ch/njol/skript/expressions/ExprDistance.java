@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The distance between two points.")
 @Examples({"distance between the player and {%player%.home} is smaller than 20:", "	message \"You're very close to your home!\""})
 @Since("1.0")
-public class ExprDistance extends SimpleExpression<Double> {
+public final class ExprDistance extends SimpleExpression<Double> {
     static {
         Skript.registerExpression(ExprDistance.class, Double.class, ExpressionType.COMBINED, "[the] distance between %location% and %location%");
     }

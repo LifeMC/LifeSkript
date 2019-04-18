@@ -1,0 +1,61 @@
+
+[squid:S2184"FCast one of the operands of this multiplication operation to a "long".(¾‹
+Ssquid:S16596"7Declare "MAX_CLASS_CODENAME_LENGTH" on a separate line.(éÔıãÿÿÿÿÿ
+Hsquid:S16597",Declare "MAX_VALUE_SIZE" on a separate line.(¶Ûßúùÿÿÿÿ
+Hsquid:S1659:",Declare "OLD_TABLE_NAME" on a separate line.(©›àéşÿÿÿÿ
+osquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(¾õ”ïúÿÿÿÿ
+jsquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(ÃšâÉ
+jsquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(¬‹åƒ
+jsquid:ModifiersOrderCheck="EReorder the modifiers to comply with the Java Language Specification.(„óî
+osquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(¼ò«Œúÿÿÿÿ
+]squid:S1193†"@Replace the usage of the "instanceof" operator by a catch block.(î€ı†ıÿÿÿÿ
+psquid:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûÊÒ
+_$squid:AssignmentInSubExpressionCheck„".Extract the assignment out of this expression.(‰²äŠ
+zsquid:S4144ó"]Update this method so that its implementation is not identical to "requiresFile" on line 622.(š»¨Œûÿÿÿÿ
+r
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
+r
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
+fsquid:HiddenFieldChecky"DRename "monitor_interval" which hides the field declared at line 70.(º±æÚ
+Xsquid:HiddenFieldCheck"6Rename "db" which hides the field declared at line 67.(‰±ÕŒ
+[squid:HiddenFieldCheck"6Rename "db" which hides the field declared at line 67.(¯ˆ¹–úÿÿÿÿ
+[squid:HiddenFieldCheck"6Rename "db" which hides the field declared at line 67.(¯ˆ¹–úÿÿÿÿ
+Ysquid:HiddenFieldCheckÆ"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+Ysquid:HiddenFieldCheckß"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+Ysquid:HiddenFieldCheckˆ"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+gsquid:HiddenFieldCheck›"?Rename "deleteQuery" which hides the field declared at line 92.(ï”Š‘ûÿÿÿÿ
+asquid:HiddenFieldCheck¡">Rename "writeQuery" which hides the field declared at line 85.(¦ÜÉ¾
+Ysquid:HiddenFieldCheck¶"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+`squid:HiddenFieldCheckÆ"=Rename "lastRowID" which hides the field declared at line 78.(Áá
+csquid:HiddenFieldCheckÍ"@Rename "monitorQuery" which hides the field declared at line 99.(ˆÜ‹È
+isquid:HiddenFieldCheckä"GRename "monitorCleanUpQuery" which hides the field declared at line 76.(†Ï†?
+Xsquid:HiddenFieldCheck"8Rename "type" which hides the field declared at line 69.(áß²Ú
+Xsquid:HiddenFieldCheck"8Rename "type" which hides the field declared at line 69.(áß²Ú
+Rsquid:S1141“"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141â"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141é"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141ğ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141ö"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1133Ë"5Do not forget to remove this deprecated code someday.(”ô÷½ıÿÿÿÿ
+Vsquid:MissingDeprecatedCheckË"(Add the missing @deprecated Javadoc tag.(”ô÷½ıÿÿÿÿ
+asquid:CallToDeprecatedMethod¥"8Remove this use of "oldLoadVariables"; it is deprecated.(¦°Íë
+Dsquid:S00108")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+Dsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Dsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Dsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Dsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
+Gsquid:S00108å")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+Gsquid:S00108ì")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+Gsquid:S00108ó")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+Gsquid:S00108ù")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+=squid:S1604"(Make this anonymous inner class a lambda(°©Ä±
+=squid:S1604"(Make this anonymous inner class a lambda(°©Ä±
+=squid:S1604"(Make this anonymous inner class a lambda(°©Ä±
+Lsquid:S1854¦"5Remove this useless assignment to local variable "i".(˜²
+Osquid:S1854"5Remove this useless assignment to local variable "i".(Ã È‰üÿÿÿÿ
+Osquid:S1854"5Remove this useless assignment to local variable "s".(ä™ıÿÿÿÿ
+Osquid:S1854"5Remove this useless assignment to local variable "i".(Ã È‰üÿÿÿÿ
+xsquid:S00116E"[Rename this field "monitor_interval" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾çÉÌøÿÿÿÿ
+rsquid:S00115="ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(„óî
+isquid:S00117y"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º±æÚ

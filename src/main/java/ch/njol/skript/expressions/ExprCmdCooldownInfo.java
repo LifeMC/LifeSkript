@@ -50,7 +50,7 @@ import java.util.UUID;
 @Examples({"command /home:", "\tcooldown: 10 seconds", "\tcooldown message: You last teleported home %elapsed time% ago, you may teleport home again in %remaining time%", "\ttrigger:", "\t\tteleport player to {home::%player%}"
 })
 @Since("2.2-Fixes-V10b")
-public class ExprCmdCooldownInfo extends SimpleExpression<Object> {
+public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
 
     static {
         Skript.registerExpression(ExprCmdCooldownInfo.class, Object.class, ExpressionType.SIMPLE, "[the] (0¦remaining [time]|1¦elapsed [time]|2¦cooldown [time] [length]|3¦last usage [date]|4¦cooldown bypass perm[ission]) [of] [the] [(cooldown|wait)] [((of|for)[the] [current] command)]");

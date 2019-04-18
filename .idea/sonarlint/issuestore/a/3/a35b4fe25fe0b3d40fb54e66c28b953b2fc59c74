@@ -1,0 +1,7 @@
+
+Lsquid:S20659"0Remove the "transient" modifier from this field.(óŒÊ»øÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheck¼"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìàÌ
+]squid:HiddenFieldCheck·"5Rename "c" which hides the field declared at line 53.(Ã¼áÄúÿÿÿÿ
+]squid:HiddenFieldCheckÀ"5Rename "c" which hides the field declared at line 53.(Ã¼áÄúÿÿÿÿ
+Nsquid:S2589@"7Remove this expression which always evaluates to "true"( ™„

@@ -40,7 +40,7 @@ public class ScheduledEvent extends Event {
         EventValues.registerEventValue(ScheduledEvent.class, World.class, new Getter<World, ScheduledEvent>() {
             @Override
             @Nullable
-            public World get(final ScheduledEvent e) {
+            public final World get(final ScheduledEvent e) {
                 return e.getWorld();
             }
         }, 0, "There's no world in a periodic event if no world is given in the event (e.g. like 'every hour in \"world\"')", ScheduledNoWorldEvent.class);

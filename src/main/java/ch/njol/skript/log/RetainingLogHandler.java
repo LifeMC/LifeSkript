@@ -32,7 +32,7 @@ import java.util.logging.Level;
 /**
  * @author Peter Güttinger
  */
-public class RetainingLogHandler extends LogHandler {
+public final class RetainingLogHandler extends LogHandler {
 
     private final Deque<LogEntry> log = new LinkedList<>();
     boolean printedErrorOrLog;

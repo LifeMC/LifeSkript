@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 /**
  * @author Peter Güttinger
  */
-public class Language {
+public final class Language {
 
     /**
      * Some flags

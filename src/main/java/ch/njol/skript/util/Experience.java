@@ -27,7 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class Experience implements YggdrasilSerializable {
+public final class Experience implements YggdrasilSerializable {
 
     private final int xp;
 

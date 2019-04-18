@@ -1,0 +1,14 @@
+
+jsquid:ModifiersOrderCheck&"EReorder the modifiers to comply with the Java Language Specification.(³¾§†
+ksquid:ModifiersOrderCheckÜ"EReorder the modifiers to comply with the Java Language Specification.(¾®…ˆ
+psquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(”ŽÝ§
+usquid:S2293("YReplace the type specification in this constructor call with the diamond operator ("<>").(þ¿ŽÍûÿÿÿÿ
+Fsquid:S1905®")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheck‡".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
+osquid:ModifiersOrderCheck("EReorder the modifiers to comply with the Java Language Specification.(þ¿ŽÍûÿÿÿÿ
+psquid:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(³¾§†
+d$squid:AssignmentInSubExpressionCheck«".Extract the assignment out of this expression.(…áºÉþÿÿÿÿ
+=squid:S1452}"&Remove usage of generic wildcard type.(ÅÉ¶Î
+_$squid:AssignmentInSubExpressionCheck˜".Extract the assignment out of this expression.(±Ô¼Ð
+jsquid:ModifiersOrderCheck'"EReorder the modifiers to comply with the Java Language Specification.(”ŽÝ§
+=squid:S1452}"&Remove usage of generic wildcard type.(ÅÉ¶Î

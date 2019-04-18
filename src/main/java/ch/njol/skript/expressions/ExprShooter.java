@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The shooter of a projectile.")
 @Examples({"shooter is a skeleton"})
 @Since("1.3.7")
-public class ExprShooter extends PropertyExpression<Projectile, LivingEntity> {
+public final class ExprShooter extends PropertyExpression<Projectile, LivingEntity> {
     static {
         Skript.registerExpression(ExprShooter.class, LivingEntity.class, ExpressionType.SIMPLE, "[the] shooter [of %projectile%]");
     }

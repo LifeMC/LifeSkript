@@ -1,0 +1,5 @@
+
+osquid:ModifiersOrderCheck#"EReorder the modifiers to comply with the Java Language Specification.(÷ŽÿÕýÿÿÿÿ
+…"squid:ClassVariableVisibilityCheck'"RMake events a static final constant or non-public and provide accessors if needed.(’º©’ÿÿÿÿÿ
+Ssquid:S25898"7Remove this expression which always evaluates to "true"(‡ÂÈãúÿÿÿÿ
+Nsquid:S2589:"7Remove this expression which always evaluates to "true"(½Œ’è

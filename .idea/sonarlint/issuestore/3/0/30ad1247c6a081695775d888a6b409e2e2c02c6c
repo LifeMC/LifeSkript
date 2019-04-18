@@ -1,0 +1,12 @@
+
+:squid:S16594"#Declare "BLOCK" on a separate line.(ð´þø
+8squid:S16594"!Declare "ANY" on a separate line.(ð´þø
+8squid:S11704"!Make this final field static too.(ð´þø
+8squid:S11704"!Make this final field static too.(ð´þø
+8squid:S11704"!Make this final field static too.(ð´þø
+=squid:S1604"(Make this anonymous inner class a lambda(‰®®ë
+Xsquid:S3358"DExtract this nested ternary operation into an independent statement.(½¨€n
+[squid:S3358N"DExtract this nested ternary operation into an independent statement.(Ï”„Ç
+fsquid:S001164"NRename this field "SKY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
+hsquid:S001164"PRename this field "BLOCK" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
+fsquid:S001164"NRename this field "ANY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø

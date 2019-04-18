@@ -29,7 +29,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Güttinger
  */
-public class NounTest {
+public final class NounTest {
 
     @Test
     public void testGetPlural() {

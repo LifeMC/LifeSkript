@@ -1,0 +1,8 @@
+
+jsquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(›ãÃÌ
+Hsquid:S14447"1Make this "public static lastSpawned" field final(¢”µè
+Rsquid:S2696X"6Make the enclosing method "static" or remove this set.(—ôŠÂþÿÿÿÿ
+Msquid:S2696h"6Make the enclosing method "static" or remove this set.(ŒÛž£
+Msquid:S2696m"6Make the enclosing method "static" or remove this set.(ŒÛž£
+Msquid:S2696t"6Make the enclosing method "static" or remove this set.(ŒÛž£
+Msquid:S2696{"6Make the enclosing method "static" or remove this set.(ŒÛž£

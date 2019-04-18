@@ -28,7 +28,7 @@ package ch.njol.yggdrasil;
  *
  * @author Peter Güttinger
  */
-public class YggdrasilException extends RuntimeException {
+public final class YggdrasilException extends RuntimeException {
     private static final long serialVersionUID = -6130660396780458226L;
 
     public YggdrasilException(final String message) {

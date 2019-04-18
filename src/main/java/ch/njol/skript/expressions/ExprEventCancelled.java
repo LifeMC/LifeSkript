@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @NoDoc
-public class ExprEventCancelled extends SimpleExpression<Boolean> {
+public final class ExprEventCancelled extends SimpleExpression<Boolean> {
     static {
         Skript.registerExpression(ExprEventCancelled.class, Boolean.class, ExpressionType.SIMPLE, "[is] event cancelled");
     }

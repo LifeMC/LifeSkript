@@ -31,7 +31,7 @@ import java.util.logging.Level;
 /**
  * @author Peter Güttinger
  */
-public class ParseLogHandler extends LogHandler {
+public final class ParseLogHandler extends LogHandler {
 
     private final List<LogEntry> log = new ArrayList<>();
     boolean printedErrorOrLog;

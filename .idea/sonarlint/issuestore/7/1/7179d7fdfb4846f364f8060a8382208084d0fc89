@@ -1,0 +1,8 @@
+
+ksquid:S2975ó"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(≥‰ ú
+psquid:S2293+"YReplace the type specification in this constructor call with the diamond operator ("<>").(ê√©¥
+psquid:S2293/"YReplace the type specification in this constructor call with the diamond operator ("<>").(ê√©¥
+vsquid:S2293ò"YReplace the type specification in this constructor call with the diamond operator ("<>").(òô‚Ò˘ˇˇˇˇ
+\squid:HiddenFieldCheck≥"9Rename "other" which hides the field declared at line 36.(ô≠àﬁ
+Vsquid:S2259["?A "NullPointerException" could be thrown; "m" is nullable here.(˝úÑÃ
+`squid:S1182ó"HUse super.clone() to create and seed the cloned instance to be returned.(≥‰ ú

@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The <a href='../classes/#damagecause'>damage cause</a> of a damage event. Please click on the link for more information.")
 @Examples("damage cause is lava, fire or burning")
 @Since("2.0")
-public class ExprDamageCause extends EventValueExpression<DamageCause> {
+public final class ExprDamageCause extends EventValueExpression<DamageCause> {
     static {
         Skript.registerExpression(ExprDamageCause.class, DamageCause.class, ExpressionType.SIMPLE, "[the] damage (cause|type)");
     }

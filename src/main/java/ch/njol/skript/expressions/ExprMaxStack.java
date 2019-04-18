@@ -35,7 +35,7 @@ import org.bukkit.inventory.ItemStack;
 @Description("The maximum stack size of the specified material, e.g. 64 for torches, 16 for buckets, and 1 for swords.")
 @Examples("send \"You can only pick up %max stack size of player's tool% of %type of (player's tool)%\" to player")
 @Since("2.1")
-public class ExprMaxStack extends SimplePropertyExpression<ItemStack, Integer> {
+public final class ExprMaxStack extends SimplePropertyExpression<ItemStack, Integer> {
     static {
         register(ExprMaxStack.class, Integer.class, "max[imum] stack[[ ]size]", "itemstack");
     }

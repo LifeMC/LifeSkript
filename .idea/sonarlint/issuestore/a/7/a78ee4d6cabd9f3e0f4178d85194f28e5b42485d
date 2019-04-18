@@ -1,0 +1,11 @@
+
+£%squid:RedundantThrowsDeclarationCheckN"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+_squid:CallToDeprecatedMethod6"2Remove this use of "getBalance"; it is deprecated.(ÄÛ¼Æøÿÿÿÿ
+csquid:CallToDeprecatedMethodS"6Remove this use of "withdrawPlayer"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
+_squid:CallToDeprecatedMethodS"2Remove this use of "getBalance"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
+_squid:CallToDeprecatedMethod["2Remove this use of "getBalance"; it is deprecated.(§Œ½¨øÿÿÿÿ
+]squid:CallToDeprecatedMethod]"5Remove this use of "depositPlayer"; it is deprecated.(Ê°À
+csquid:CallToDeprecatedMethod_"6Remove this use of "withdrawPlayer"; it is deprecated.(ñâşôÿÿÿÿÿ
+]squid:CallToDeprecatedMethodc"5Remove this use of "depositPlayer"; it is deprecated.(¶åª¿
+^squid:CallToDeprecatedMethodf"6Remove this use of "withdrawPlayer"; it is deprecated.(¡È€
+=squid:S1168H"&Return an empty array instead of null.(¥¹ï

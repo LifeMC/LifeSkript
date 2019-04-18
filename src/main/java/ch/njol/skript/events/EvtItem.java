@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class EvtItem extends SkriptEvent {
+public final class EvtItem extends SkriptEvent {
     private final static boolean hasConsumeEvent = Skript.classExists("org.bukkit.event.player.PlayerItemConsumeEvent");
 
     static {

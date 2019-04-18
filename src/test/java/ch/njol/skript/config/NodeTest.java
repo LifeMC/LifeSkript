@@ -30,7 +30,7 @@ import static org.junit.Assert.assertArrayEquals;
  * @author Peter Güttinger
  */
 @SuppressWarnings("null")
-public class NodeTest {
+public final class NodeTest {
 
     @Test
     public void splitLineTest() {

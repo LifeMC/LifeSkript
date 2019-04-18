@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Peter Güttinger
  */
-public class FlatFileStorageTest {
+public final class FlatFileStorageTest {
 
     @Test
     public void testHexCoding() {

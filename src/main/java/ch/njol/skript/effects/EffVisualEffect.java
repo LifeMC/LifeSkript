@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Plays a <a href='../classes/#visualeffect'>visual effect</a> at a given location or on a given entity.", "Please note that some effects can only be played on entities, e..g wolf hearts or the hurt effect, and that these are always visible to all players."})
 @Examples({"play wolf hearts on the clicked wolf", "show mob spawner flames at the targeted block to the player"})
 @Since("2.1")
-public class EffVisualEffect extends Effect {
+public final class EffVisualEffect extends Effect {
     static {
         Skript.registerEffect(EffVisualEffect.class, "(play|show) %visualeffects% (on|%directions%) %entities/locations% [to %-players%]");
     }

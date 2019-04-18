@@ -48,7 +48,7 @@ import java.lang.reflect.Array;
 @Description("Holds the entity that was spawned most recently with the <a href='../effects/#EffSpawn'>spawn effect</a>, or shot with the <a href='../effects/#EffShoot'>shoot effect</a>. " + "Please note that even though you can spawn multiple mobs simultaneously (e.g. with 'spawn 5 creepers'), only the last spawned mob is saved and can be used. " + "If you spawn an entity and shoot a projectile you can however access both.")
 @Examples({"spawn a priest", "set {%spawned priest%.healer} to true", "shoot an arrow from the last spawned entity", "ignite the shot projectile"})
 @Since("1.3 (spawned entity), 2.0 (shot entity)")
-public class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
+public final class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
     static {
         Skript.registerExpression(ExprLastSpawnedEntity.class, Entity.class, ExpressionType.SIMPLE, "[the] [last[ly]] (0¦spawned|1¦shot) %*entitydata%");
     }

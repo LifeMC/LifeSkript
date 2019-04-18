@@ -1,7 +1,7 @@
 
-isquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(úÂ n
-jsquid:ModifiersOrderCheck;"EReorder the modifiers to comply with the Java Language Specification.(ê‡÷­
-osquid:S22938"YReplace the type specification in this constructor call with the diamond operator ("<>").(úÂ n
-Rsquid:S2696l"6Make the enclosing method "static" or remove this set.(‘÷¹¨úÿÿÿÿ
-dsquid:CallToDeprecatedMethod5"7Remove this use of "PlayerChatEvent"; it is deprecated.(€…šÂùÿÿÿÿ
-^squid:CallToDeprecatedMethodM"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÊÌ‡~
+dsquid:CallToDeprecatedMethodS"7Remove this use of "PlayerChatEvent"; it is deprecated.(€…šÂùÿÿÿÿ
+osquid:S22932"YReplace the type specification in this constructor call with the diamond operator ("<>").(úÂ n
+isquid:ModifiersOrderCheck2"EReorder the modifiers to comply with the Java Language Specification.(úÂ n
+Rsquid:S2696e"6Make the enclosing method "static" or remove this set.(‘÷¹¨úÿÿÿÿ
+^squid:CallToDeprecatedMethodE"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÊÌ‡~
+jsquid:ModifiersOrderCheck3"EReorder the modifiers to comply with the Java Language Specification.(ê‡÷­

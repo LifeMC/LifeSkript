@@ -1,0 +1,8 @@
+
+psquid:S2293A"YReplace the type specification in this constructor call with the diamond operator ("<>").(á‹µ
+psquid:S2293E"YReplace the type specification in this constructor call with the diamond operator ("<>").(öüáÑ
+_squid:S2583r"CChange this condition so that it does not always evaluate to "true"(Ø®äàøÿÿÿÿ
+Zsquid:S2583T"CChange this condition so that it does not always evaluate to "true"(Øïöş
+=squid:S1168@"&Return an empty array instead of null.(¥¹ï
+=squid:S1168I"&Return an empty array instead of null.(¥¹ï
+[squid:S3358T"DExtract this nested ternary operation into an independent statement.(Øïöş

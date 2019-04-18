@@ -51,7 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set the fuel slot of the clicked block to a lava bucket", "set the block's ore slot to 64 iron ore", "give the result of the block to the player", "clear the result slot of the block"})
 @Since("1.0")
 @Events({"smelt", "fuel burn"})
-public class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
+public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
     private final static int ORE = 0, FUEL = 1, RESULT = 2;
     private final static String[] slotNames = {"ore", "fuel", "result"};
 

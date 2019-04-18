@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Grant/revoke a user operator status.")
 @Examples({"op the player", "deop all players"})
 @Since("1.0")
-public class EffOp extends Effect {
+public final class EffOp extends Effect {
 
     static {
         Skript.registerEffect(EffOp.class, "[de[-]]op %offlineplayers%");

@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The <a href='../classes/#chunk'>chunk</a> a block, location or entity is in")
 @Examples("add the chunk at the player to {protected chunks::*}")
 @Since("2.0")
-public class ExprChunk extends PropertyExpression<Location, Chunk> {
+public final class ExprChunk extends PropertyExpression<Location, Chunk> {
 
     static {
         Skript.registerExpression(ExprChunk.class, Chunk.class, ExpressionType.PROPERTY, "[the] chunk[s] (of|%-directions%) %locations%", "%locations%'[s] chunk[s]");

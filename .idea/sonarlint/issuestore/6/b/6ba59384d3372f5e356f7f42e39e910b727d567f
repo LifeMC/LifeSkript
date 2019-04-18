@@ -1,7 +1,5 @@
 
-Esquid:S4274Á"(Replace this assert with a proper check.(æ‹‹½ÿÿÿÿÿ
-dsquid:CallToDeprecatedMethodA"7Remove this use of "PlayerChatEvent"; it is deprecated.(è»“ùÿÿÿÿ
-Esquid:S4274À"(Replace this assert with a proper check.(·½¹³úÿÿÿÿ
-_squid:CallToDeprecatedMethodP"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÓÁÇ™
-_squid:CallToDeprecatedMethodH"7Remove this use of "PlayerChatEvent"; it is deprecated.(×ş­
->squid:S1168»"&Return an empty array instead of null.(¥¹ï
+=squid:S1168V"&Return an empty array instead of null.(¥¹ï
+_squid:CallToDeprecatedMethod{"7Remove this use of "PlayerChatEvent"; it is deprecated.(×ş­
+dsquid:CallToDeprecatedMethodt"7Remove this use of "PlayerChatEvent"; it is deprecated.(è»“ùÿÿÿÿ
+`squid:CallToDeprecatedMethodƒ"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÓÁÇ™

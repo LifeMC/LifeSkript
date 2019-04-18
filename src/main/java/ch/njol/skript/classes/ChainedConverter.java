@@ -21,7 +21,6 @@
 
 package ch.njol.skript.classes;
 
-import ch.njol.skript.registrations.Converters;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -31,7 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @param <M> the middle type, i.e. the type the first converter converts to and the second converter comverts from.
  * @param <T> same as Converter's <T> (to)
  * @author Peter Güttinger
- * @see Converters#registerConverter(Class, Class, Converter)
+ * @see ch.njol.skript.registrations.Converters#registerConverter(Class, Class, Converter)
  * @see Converter
  */
 public final class ChainedConverter<F, M, T> implements Converter<F, T> {

@@ -52,7 +52,7 @@ import java.util.NoSuchElementException;
 @Description("Items or blocks of a specific type, useful for looping.")
 @Examples({"loop items of type ore and log:", "	block contains loop-item", "	message \"Theres at least one %loop-item% in this block\"", "drop all blocks at the player # drops one of every block at the player"})
 @Since("")
-public class ExprItems extends SimpleExpression<ItemStack> {
+public final class ExprItems extends SimpleExpression<ItemStack> {
 
     static {
         Skript.registerExpression(ExprItems.class, ItemStack.class, ExpressionType.COMBINED, "[(all|every)] item(s|[ ]types)", "items of type[s] %itemtypes%", "[(all|every)] block(s|[ ]types)", "blocks of type[s] %itemtypes%");

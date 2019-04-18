@@ -45,7 +45,7 @@ import java.util.Map;
 @Description("Checks whether an item is enchanted.")
 @Examples({"tool of the player is enchanted with efficiency 2", "helm, chestplate, leggings or boots are enchanted"})
 @Since("1.4.6")
-public class CondIsEnchanted extends Condition {
+public final class CondIsEnchanted extends Condition {
 
     static {
         Skript.registerCondition(CondIsEnchanted.class, "%itemtypes% (is|are) enchanted [with %-enchantmenttype%]", "%itemtypes% (isn't|is not|aren't|are not) enchanted [with %-enchantmenttype%]");

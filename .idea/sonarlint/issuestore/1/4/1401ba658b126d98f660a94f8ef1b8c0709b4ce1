@@ -1,14 +1,14 @@
 
-<squid:S1659j" Declare "to" on a separate line.(‹×¶œúÿÿÿÿ
-osquid:ModifiersOrderCheck\"EReorder the modifiers to comply with the Java Language Specification.(ìµ«ıÿÿÿÿ
-jsquid:ModifiersOrderCheckc"EReorder the modifiers to comply with the Java Language Specification.(ê‡÷­
-usquid:S2293\"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìµ«ıÿÿÿÿ
-qsquid:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ÿ¸ÂÕ
-_$squid:AssignmentInSubExpressionChecká".Extract the assignment out of this expression.(Ÿ¸ÂÕ
-Ssquid:S2696è"6Make the enclosing method "static" or remove this set.(‘÷¹¨úÿÿÿÿ
-]squid:CallToDeprecatedMethod€"/Remove this use of "getData"; it is deprecated.(…‡»ÿşÿÿÿÿ
-fsquid:CallToDeprecatedMethod’"8Remove this use of "getBlockTypeIdAt"; it is deprecated.(àÈ¯Ïúÿÿÿÿ
-fsquid:CallToDeprecatedMethod”"8Remove this use of "getBlockTypeIdAt"; it is deprecated.(ÏàÇ›ùÿÿÿÿ
-Vsquid:CallToDeprecatedMethod•"-Remove this use of "getId"; it is deprecated.(¨…ç˜
-Vsquid:CallToDeprecatedMethodœ"-Remove this use of "getId"; it is deprecated.(¬›ÙÎ
-h squid:LabelsShouldNotBeUsedCheck";Refactor the code to remove this label and the need for it.(Õ¤¼ç
+:squid:S1659" Declare "to" on a separate line.(‹×¶œúÿÿÿÿ
+\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Ÿ¸ÂÕ
+jsquid:ModifiersOrderCheckU"EReorder the modifiers to comply with the Java Language Specification.(ê‡÷­
+fsquid:CallToDeprecatedMethodŒ"8Remove this use of "getBlockTypeIdAt"; it is deprecated.(àÈ¯Ïúÿÿÿÿ
+fsquid:CallToDeprecatedMethod"8Remove this use of "getBlockTypeIdAt"; it is deprecated.(ÏàÇ›ùÿÿÿÿ
+Ssquid:S2696à"6Make the enclosing method "static" or remove this set.(‘÷¹¨úÿÿÿÿ
+Vsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(¨…ç˜
+Zsquid:CallToDeprecatedMethod"/Remove this use of "getData"; it is deprecated.(…‡»ÿşÿÿÿÿ
+Vsquid:CallToDeprecatedMethod–"-Remove this use of "getId"; it is deprecated.(¬›ÙÎ
+osquid:ModifiersOrderCheckT"EReorder the modifiers to comply with the Java Language Specification.(ìµ«ıÿÿÿÿ
+nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ÿ¸ÂÕ
+usquid:S2293T"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìµ«ıÿÿÿÿ
+q squid:LabelsShouldNotBeUsedCheck";Refactor the code to remove this label and the need for it.(¶å‹Œûÿÿÿÿ8ì¥„Û¢-

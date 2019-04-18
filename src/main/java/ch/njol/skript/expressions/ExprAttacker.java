@@ -49,7 +49,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on damage:", "	attacker is a player", "	health of attacker is less than or equal to 2", "	damage victim by 1 heart"})
 @Since("1.3")
 @Events({"damage", "death", "destroy"})
-public class ExprAttacker extends SimpleExpression<Entity> {
+public final class ExprAttacker extends SimpleExpression<Entity> {
     static {
         Skript.registerExpression(ExprAttacker.class, Entity.class, ExpressionType.SIMPLE, "[the] (attacker|damager)");
     }

@@ -1,0 +1,6 @@
+
+=squid:S1659ò" Declare "d2" on a separate line.(ÛêÔıÿÿÿÿ
+osquid:ModifiersOrderCheck""EReorder the modifiers to comply with the Java Language Specification.(‘³ƒ½ıÿÿÿÿ
+p
+squid:S135ó"YReduce the total number of break and continue statements in this loop to use at most one.(€ˆ›—
+^squid:S3457Š"AFormat specifiers should be used instead of string concatenation.(Åë‘úÿÿÿÿ

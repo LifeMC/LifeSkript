@@ -35,7 +35,7 @@ import java.util.Locale;
 /**
  * @author Peter Güttinger
  */
-public class Option<T> {
+public final class Option<T> {
 
     public final String key;
     private final Converter<String, ? extends T> parser;

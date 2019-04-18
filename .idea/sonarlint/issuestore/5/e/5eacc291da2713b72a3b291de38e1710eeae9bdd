@@ -1,97 +1,96 @@
 
-jsquid:S1871£"MThis branch's code block is the same as the block for the branch on line 289.(êõ±§şÿÿÿÿ
-[squid:S2629Ü
-"7Use the built-in formatting to construct this argument.(‹ÀÛ¹şÿÿÿÿ8§¸ŒÎ¢-
-Bsquid:S00108‡")Either remove or fill this block of code.(ë±şö
-Bsquid:S3010³"%Remove this assignment of "instance".(ñõîÙşÿÿÿÿ
-@squid:S1604ü"(Make this anonymous inner class a lambda(‚öáÚ
-=squid:S1452Û"&Remove usage of generic wildcard type.(ÌÆŞ#
-psquid:ModifiersOrderCheck”"EReorder the modifiers to comply with the Java Language Specification.(âÌ¬Èÿÿÿÿÿ
-Esquid:S1604Ì"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-Rsquid:S1141‹"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Gsquid:S1066Ó"/Merge this if statement with the enclosing one.(–ûé¼
->squid:S1452×"&Remove usage of generic wildcard type.(Ô¹££
-Bsquid:S00108Ş")Either remove or fill this block of code.(ÛÑ«
-qsquid:S2293Œ	"YReplace the type specification in this constructor call with the diamond operator ("<>").(Èæ¥ª
-]squid:S2147û"ECombine this catch with the one at line 761, which has the same body.(ùÓ‰
-Lsquid:S1133’"5Do not forget to remove this deprecated code someday.(’ì®B
-Ssquid:S2696š"6Make the enclosing method "static" or remove this set.(–€îğûÿÿÿÿ
-ksquid:ModifiersOrderChecká"EReorder the modifiers to comply with the Java Language Specification.(ûÎü³
-¤%squid:RedundantThrowsDeclarationCheckª"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ˆˆöŒıÿÿÿÿ
-\squid:S2589ß"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-jsquid:S1871÷"MThis branch's code block is the same as the block for the branch on line 243.(§÷ËÅüÿÿÿÿ
-Esquid:S1604Ú"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-]squid:S2147Í"ECombine this catch with the one at line 715, which has the same body.(ùÓ‰
-ksquid:ModifiersOrderCheck“"EReorder the modifiers to comply with the Java Language Specification.(şª·ô
-qsquid:S2293Ü"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷ãµò
-Esquid:S1604Ÿ"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-Csquid:S1452±"&Remove usage of generic wildcard type.(üáıÿÿÿÿ
-Lsquid:S1066—"/Merge this if statement with the enclosing one.(óäÙµúÿÿÿÿ
-\squid:S2589ô"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
-Rsquid:S1141Ú"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-¤%squid:RedundantThrowsDeclarationCheckË"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(à©Ã¾ÿÿÿÿÿ
-psquid:S2293•"YReplace the type specification in this constructor call with the diamond operator ("<>").(•…é
-Rsquid:S1141æ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Nsquid:S2696Ó"6Make the enclosing method "static" or remove this set.(ôÒÍÅ
-\squid:S2589Æ"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-%squid:RedundantThrowsDeclarationCheck"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(Ş„6
-\squid:S2589Æ"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-Ssquid:S2696Û"6Make the enclosing method "static" or remove this set.(ã‹œ½şÿÿÿÿ
-Nsquid:S2696›"6Make the enclosing method "static" or remove this set.(¼âº
-@squid:S1604½"(Make this anonymous inner class a lambda(šû£‰
-Esquid:S1604Ø"(Make this anonymous inner class a lambda(ºÖ…¯øÿÿÿÿ
-Hsquid:S1659Á"0Declare "m_finished_loading" on a separate line.(”º©—
-psquid:ModifiersOrderCheckø	"EReorder the modifiers to comply with the Java Language Specification.(‡À»¤øÿÿÿÿ
-qsquid:S2293ü"YReplace the type specification in this constructor call with the diamond operator ("<>").(öÆçÔ
-=squid:S1452Û"&Remove usage of generic wildcard type.(ÌÆŞ#
-ksquid:ModifiersOrderCheck¿"EReorder the modifiers to comply with the Java Language Specification.(ÑŞôŞ
-vsquid:S2293”"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌ¬Èÿÿÿÿÿ
-psquid:ModifiersOrderCheck¬"EReorder the modifiers to comply with the Java Language Specification.(¸÷Ìÿÿÿÿÿ
-]squid:S2147æ"ECombine this catch with the one at line 740, which has the same body.(ùÓ‰
-qsquid:S2293“"YReplace the type specification in this constructor call with the diamond operator ("<>").(şª·ô
-jsquid:ModifiersOrderCheck³"EReorder the modifiers to comply with the Java Language Specification.(ô¢³[
-psquid:ModifiersOrderCheckÀ"EReorder the modifiers to comply with the Java Language Specification.(¶®Êˆşÿÿÿÿ
-Esquid:S1604‘"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-Xsquid:S2184 "@Cast one of the operands of this integer division to a "double".(Ó§³
-ksquid:ModifiersOrderCheckí"EReorder the modifiers to comply with the Java Language Specification.(¹êÏ“
-Gsquid:S00108Ü")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
-psquid:ModifiersOrderCheckÀ"EReorder the modifiers to comply with the Java Language Specification.(î£Óøÿÿÿÿ
-@squid:S1604©"(Make this anonymous inner class a lambda(Ó¢ç
-Esquid:S1185"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
-=squid:S1452µ"&Remove usage of generic wildcard type.(ãÙ¿K
-Rsquid:S1141ä"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-hsquid:S2583³"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
-d$squid:AssignmentInSubExpressionCheckŒ".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
-ksquid:ModifiersOrderCheckº"EReorder the modifiers to comply with the Java Language Specification.(×µÌ€
-Gsquid:S2093ä"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-Nsquid:S2696Ù"6Make the enclosing method "static" or remove this set.(äÏ˜„
->squid:S1452‘	"&Remove usage of generic wildcard type.(åÌÔß
-@squid:S1604º"(Make this anonymous inner class a lambda(×µÌ€
-\squid:S2589ô"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
-Esquid:S1604·"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-\squid:S2589ß"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-Csquid:S1452¹"&Remove usage of generic wildcard type.(®˜òÉùÿÿÿÿ
-qsquid:S2293Ï"YReplace the type specification in this constructor call with the diamond operator ("<>").(±¾Âá
-Nsquid:S2696÷"6Make the enclosing method "static" or remove this set.(â¸“€
-psquid:ModifiersOrderCheck‡"EReorder the modifiers to comply with the Java Language Specification.(ËÈˆ»úÿÿÿÿ
-Nsquid:S2696½"6Make the enclosing method "static" or remove this set.(ÿ”ÿ¢
-Rsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141Ê"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Gsquid:S1604Ü"(Make this anonymous inner class a lambda(÷ãµò8‡ŒÎ¢-
-¡%squid:RedundantThrowsDeclarationCheck°"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
-jsquid:ModifiersOrderCheck•"EReorder the modifiers to comply with the Java Language Specification.(•…é
-ksquid:ModifiersOrderCheck¤"EReorder the modifiers to comply with the Java Language Specification.(Ü±¸³
-ksquid:ModifiersOrderCheckª"EReorder the modifiers to comply with the Java Language Specification.(Ğ»‘¦
-qsquid:S2293Ÿ"YReplace the type specification in this constructor call with the diamond operator ("<>").(‹·ØÇ
->squid:S1452×"&Remove usage of generic wildcard type.(Ô¹££
-ksquid:ModifiersOrderCheck¯"EReorder the modifiers to comply with the Java Language Specification.(à˜Èš
-Gsquid:S00108")Either remove or fill this block of code.(­Ä¸üÿÿÿÿ
-Esquid:S1604°"(Make this anonymous inner class a lambda(°²ŒĞıÿÿÿÿ
-Esquid:S1604¬"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-qsquid:S2293¿"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÑŞôŞ
-Esquid:S1604»"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
-qsquid:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûÎü³
-hsquid:S2583"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
-qsquid:S2293¬"YReplace the type specification in this constructor call with the diamond operator ("<>").(²³’
-qsquid:S2293í"YReplace the type specification in this constructor call with the diamond operator ("<>").(¹êÏ“
-Esquid:S1604Ï"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Lsquid:S1066«"/Merge this if statement with the enclosing one.(óäÙµúÿÿÿÿ
+Ksquid:S2696"6Make the enclosing method "static" or remove this set.(¼âº
+=squid:S1604"(Make this anonymous inner class a lambda(×µÌ€
+[squid:S2629ª"7Use the built-in formatting to construct this argument.(‹ÀÛ¹şÿÿÿÿ8§¸ŒÎ¢-
+ksquid:ModifiersOrderCheck—"EReorder the modifiers to comply with the Java Language Specification.(ûÎü³
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Rsquid:S1141‚"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Psquid:S2696"6Make the enclosing method "static" or remove this set.(–€îğûÿÿÿÿ
+Zsquid:S2147"ECombine this catch with the one at line 377, which has the same body.(ùÓ‰
+hsquid:S2583ƒ"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
+¤%squid:RedundantThrowsDeclarationCheck‚"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ˆˆöŒıÿÿÿÿ
+>squid:S1452¬"&Remove usage of generic wildcard type.(Ô¹££
+Zsquid:S2147"ECombine this catch with the one at line 356, which has the same body.(ùÓ‰
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+hsquid:S2583˜"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
+ksquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(à˜Èš
+Gsquid:S1659r"0Declare "m_finished_loading" on a separate line.(”º©—
+=squid:S1604"(Make this anonymous inner class a lambda(‚öáÚ
+qsquid:S2293˜"YReplace the type specification in this constructor call with the diamond operator ("<>").(şª·ô
+Nsquid:S2696±	"6Make the enclosing method "static" or remove this set.(ÿ”ÿ¢
+qsquid:S2293Ì"YReplace the type specification in this constructor call with the diamond operator ("<>").(öÆçÔ
+\squid:S2589«"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
+Esquid:S1185£"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
+Nsquid:S2696ñ"6Make the enclosing method "static" or remove this set.(ôÒÍÅ
+\squid:S2589«"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
+psquid:ModifiersOrderCheckœ"EReorder the modifiers to comply with the Java Language Specification.(¶®Êˆşÿÿÿÿ
+Ssquid:S2696ù"6Make the enclosing method "static" or remove this set.(ã‹œ½şÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+qsquid:S2293—"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûÎü³
+Csquid:S1452“"&Remove usage of generic wildcard type.(®˜òÉùÿÿÿÿ
+qsquid:S2293³"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷ãµò
+ksquid:ModifiersOrderCheck©"EReorder the modifiers to comply with the Java Language Specification.(×µÌ€
+psquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‡À»¤øÿÿÿÿ
+>squid:S1452á"&Remove usage of generic wildcard type.(åÌÔß
+Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+=squid:S1452²"&Remove usage of generic wildcard type.(ÌÆŞ#
+\squid:S2589Õ"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
+Rsquid:S1141¶"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+jsquid:S1871¼"MThis branch's code block is the same as the block for the branch on line 997.(êõ±§şÿÿÿÿ
+=squid:S1604"(Make this anonymous inner class a lambda(Ó¢ç
+osquid:ModifiersOrderCheckq"EReorder the modifiers to comply with the Java Language Specification.(î£Óøÿÿÿÿ
+psquid:ModifiersOrderCheck–"EReorder the modifiers to comply with the Java Language Specification.(¸÷Ìÿÿÿÿÿ
+Dsquid:S1066"/Merge this if statement with the enclosing one.(–ûé¼
+Dsquid:S1604"(Make this anonymous inner class a lambda(÷ãµò8‡ŒÎ¢-
+ksquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¹êÏ“
+%squid:RedundantThrowsDeclarationCheckõ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(Ş„6
+d$squid:AssignmentInSubExpressionCheckê".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
+jsquid:ModifiersOrderCheck“"EReorder the modifiers to comply with the Java Language Specification.(ô¢³[
+jsquid:ModifiersOrderCheckš"EReorder the modifiers to comply with the Java Language Specification.(•…é
+Bsquid:S1604"(Make this anonymous inner class a lambda(°²ŒĞıÿÿÿÿ
+\squid:S2589Â"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
+Nsquid:S2696÷"6Make the enclosing method "static" or remove this set.(äÏ˜„
+=squid:S1452"&Remove usage of generic wildcard type.(ãÙ¿K
+Lsquid:S1133÷"5Do not forget to remove this deprecated code someday.(’ì®B
+Gsquid:S2093‚"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(¹êÏ“
+ksquid:ModifiersOrderCheck‹"EReorder the modifiers to comply with the Java Language Specification.(Ğ»‘¦
+Bsquid:S3010±"%Remove this assignment of "instance".(ñõîÙşÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+>squid:S1452¬"&Remove usage of generic wildcard type.(Ô¹££
+@squid:S1604Ö"(Make this anonymous inner class a lambda(šû£‰
+gsquid:S1871"MThis branch's code block is the same as the block for the branch on line 949.(§÷ËÅüÿÿÿÿ
+qsquid:S2293›"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÑŞôŞ
+psquid:ModifiersOrderCheck™"EReorder the modifiers to comply with the Java Language Specification.(âÌ¬Èÿÿÿÿÿ
+ksquid:ModifiersOrderCheck˜"EReorder the modifiers to comply with the Java Language Specification.(şª·ô
+Bsquid:S1604"(Make this anonymous inner class a lambda(ºÖ…¯øÿÿÿÿ
+Csquid:S1452‹"&Remove usage of generic wildcard type.(üáıÿÿÿÿ
+Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheck "mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(à©Ã¾ÿÿÿÿÿ
+qsquid:S2293¤"YReplace the type specification in this constructor call with the diamond operator ("<>").(±¾Âá
+Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+¡%squid:RedundantThrowsDeclarationCheck®"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
+Nsquid:S2696÷"6Make the enclosing method "static" or remove this set.(â¸“€
+\squid:S2589Â"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
+ksquid:ModifiersOrderCheck…"EReorder the modifiers to comply with the Java Language Specification.(Ü±¸³
+qsquid:S2293Ü"YReplace the type specification in this constructor call with the diamond operator ("<>").(Èæ¥ª
+ksquid:ModifiersOrderCheck›"EReorder the modifiers to comply with the Java Language Specification.(ÑŞôŞ
+qsquid:S2293÷"YReplace the type specification in this constructor call with the diamond operator ("<>").(‹·ØÇ
+qsquid:S2293„"YReplace the type specification in this constructor call with the diamond operator ("<>").(²³’
+osquid:ModifiersOrderChecks"EReorder the modifiers to comply with the Java Language Specification.(ËÈˆ»úÿÿÿÿ
+Xsquid:S2184´"@Cast one of the operands of this integer division to a "double".(Ó§³
+=squid:S1452²"&Remove usage of generic wildcard type.(ÌÆŞ#
+Zsquid:S2147"ECombine this catch with the one at line 331, which has the same body.(ùÓ‰
+psquid:S2293š"YReplace the type specification in this constructor call with the diamond operator ("<>").(•…é
+vsquid:S2293™"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌ¬Èÿÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Rsquid:S1141£"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+\squid:S2589Õ"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ô´‘¹ûÿÿÿÿ
+Nsquid:S00108")Either remove or fill this block of code.(É·í¯üÿÿÿÿ8ô§„Û¢-
+Hsquid:S00108¥")Either remove or fill this block of code.(éúá)8ô§„Û¢-
+Esquid:S00108")Either remove or fill this block of code.(éúá)8ô§„Û¢-
+Ksquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ8ô§„Û¢-

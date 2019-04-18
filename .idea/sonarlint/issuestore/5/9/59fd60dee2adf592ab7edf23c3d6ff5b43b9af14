@@ -1,0 +1,6 @@
+
+P"squid:SwitchLastCaseIsDefaultCheck?""Add a default case to this switch.(­ספמ
+P"squid:SwitchLastCaseIsDefaultCheckO""Add a default case to this switch.(­ספמ
+bsquid:S1301?"KReplace this "switch" statement by "if" statements to increase readability.(­ספמ
+bsquid:S1301O"KReplace this "switch" statement by "if" statements to increase readability.(­ספמ
+=squid:S1168E"&Return an empty array instead of null.(¥¹ן

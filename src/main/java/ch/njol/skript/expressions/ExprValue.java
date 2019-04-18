@@ -35,7 +35,7 @@ import java.lang.reflect.Array;
 /**
  * @author Peter Güttinger
  */
-public class ExprValue extends SimpleExpression<Unit> {
+public final class ExprValue extends SimpleExpression<Unit> {
 //	static { // REMIND add this (>2.0)
 //		Skript.registerExpression(ExprValue.class, Unit.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "%~number% %*unit%");
 //	}

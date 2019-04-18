@@ -52,7 +52,7 @@ import java.util.List;
 @Examples({"clear drops", "remove 4 planks from the drops"})
 @Since("1.0")
 @Events("death")
-public class ExprDrops extends SimpleExpression<ItemStack> {
+public final class ExprDrops extends SimpleExpression<ItemStack> {
     private final static ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
 
     static {

@@ -31,7 +31,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Peter Güttinger
  */
-public class RegexMessage extends Message {
+public final class RegexMessage extends Message {
 
     /**
      * A pattern that doesn't match anything

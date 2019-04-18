@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 @Description("Checks whether a player is sprinting")
 @Examples("player is not sprinting")
 @Since("1.4.4")
-public class CondIsSprinting extends PropertyCondition<Player> {
+public final class CondIsSprinting extends PropertyCondition<Player> {
     static {
         register(CondIsSprinting.class, "sprinting", "players");
     }

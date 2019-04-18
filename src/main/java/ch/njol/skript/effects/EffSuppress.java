@@ -35,7 +35,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Suppress warnings or errors.", "Note: Don't forgot the stop suppressing!", "If you forgot, all warnings after effect are suppressed!"})
 @Examples({"on load:", "\tstart suppressing warnings", "\tthrow new warning \"never™\"", "\tstop suppressing warnings"})
 @Since("2.2-Fixes-V11")
-public class EffSuppress extends Effect {
+public final class EffSuppress extends Effect {
     static {
         Skript.registerEffect(EffSuppress.class, "start [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");
         Skript.registerEffect(EffStopSuppress.class, "stop [the] (suppressing|hiding|disabling|blocking) [of] [the] (0¦warnings|1¦errors) [because] [of] [due to] [%-strings%]");

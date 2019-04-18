@@ -130,7 +130,7 @@ public final class XpOrbData extends EntityData<ExperienceOrb> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<ExperienceOrb> getSuperType() {
         return new XpOrbData();
     }
 

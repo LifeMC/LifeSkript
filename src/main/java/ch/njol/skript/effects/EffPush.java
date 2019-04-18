@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Push entities around.")
 @Examples({"push the player upwards", "push the victim downwards at speed 0.5"})
 @Since("1.4.6")
-public class EffPush extends Effect {
+public final class EffPush extends Effect {
     static {
         Skript.registerEffect(EffPush.class, "(push|thrust) %entities% %direction% [(at|with) (speed|velocity|force) %-number%]");
     }

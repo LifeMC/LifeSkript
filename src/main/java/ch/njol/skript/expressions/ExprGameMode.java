@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("The gamemode of a player.")
 @Examples({"player's gamemode is survival", "set the player's gamemode to creative"})
 @Since("1.0")
-public class ExprGameMode extends PropertyExpression<Player, GameMode> {
+public final class ExprGameMode extends PropertyExpression<Player, GameMode> {
 
     static {
         Skript.registerExpression(ExprGameMode.class, GameMode.class, ExpressionType.PROPERTY, "[the] game[ ]mode of %players%", "%players%'[s] game[ ]mode");

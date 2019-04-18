@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 @Description("Checks whether a player is sneaking")
 @Examples({"# prevent mobs from seeing sneaking players if they are at least 4 meters apart", "on target:", "	target is sneaking", "	distance of target and the entity is bigger than 4", "	cancel the event"})
 @Since("1.4.4")
-public class CondIsSneaking extends PropertyCondition<Player> {
+public final class CondIsSneaking extends PropertyCondition<Player> {
 
     static {
         register(CondIsSneaking.class, "sneaking", "players");

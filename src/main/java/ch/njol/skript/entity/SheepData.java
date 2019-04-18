@@ -37,7 +37,7 @@ import java.util.Arrays;
 /**
  * @author Peter Güttinger
  */
-public class SheepData extends EntityData<Sheep> {
+public final class SheepData extends EntityData<Sheep> {
     static {
         EntityData.register(SheepData.class, "sheep", Sheep.class, 1, "unsheared sheep", "sheep", "sheared sheep");
     }
@@ -172,7 +172,7 @@ public class SheepData extends EntityData<Sheep> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Sheep> getSuperType() {
         return new SheepData();
     }
 

@@ -1,0 +1,12 @@
+
+usquid:S2293U"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÔÀäÊşÿÿÿÿ
+psquid:S2293d"YReplace the type specification in this constructor call with the diamond operator ("<>").(‹é£Ã
+psquid:S2293v"YReplace the type specification in this constructor call with the diamond operator ("<>").(êè¦
+vsquid:S2293™"YReplace the type specification in this constructor call with the diamond operator ("<>").(Å¿ğûÿÿÿÿ
+^$squid:AssignmentInSubExpressionCheckY".Extract the assignment out of this expression.(¯–»Ò
+\squid:HiddenFieldCheck£"9Rename "types" which hides the field declared at line 62.(ı‚ĞĞ
+\squid:CallToDeprecatedMethod"1Remove this use of "getTypeId"; it is deprecated.(§µ±Ğúÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Å¿ğûÿÿÿÿ
+squid:S1186q"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¦³üëûÿÿÿÿ
+squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¦³üëûÿÿÿÿ
+\squid:S3358¤"DExtract this nested ternary operation into an independent statement.(®µàÒ

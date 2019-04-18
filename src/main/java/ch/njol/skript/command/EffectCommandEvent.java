@@ -27,7 +27,7 @@ import org.bukkit.event.HandlerList;
 /**
  * @author Peter Güttinger
  */
-public class EffectCommandEvent extends CommandEvent {
+public final class EffectCommandEvent extends CommandEvent {
 
     // Bukkit stuff
     private final static HandlerList handlers = new HandlerList();

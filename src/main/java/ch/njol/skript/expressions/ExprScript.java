@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on script load:", "	set {running.%script%} to true", "on script unload:", "	set {running.%script%} to false"})
 @Since("2.0")
 @Events("Script Load/Unload")
-public class ExprScript extends SimpleExpression<String> {
+public final class ExprScript extends SimpleExpression<String> {
     static {
         Skript.registerExpression(ExprScript.class, String.class, ExpressionType.SIMPLE, "[the] script[['s] name]", "name of [the] script");
     }

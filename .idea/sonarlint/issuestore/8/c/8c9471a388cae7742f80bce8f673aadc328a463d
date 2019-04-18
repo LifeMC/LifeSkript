@@ -1,0 +1,20 @@
+
+U"squid:SwitchLastCaseIsDefaultCheck1""Add a default case to this switch.(©Øûºûÿÿÿÿ
+V"squid:SwitchLastCaseIsDefaultCheckÂ""Add a default case to this switch.(©Øûºûÿÿÿÿ
+V"squid:SwitchLastCaseIsDefaultCheckŠ""Add a default case to this switch.(©Øûºûÿÿÿÿ
+osquid:ModifiersOrderCheck,"EReorder the modifiers to comply with the Java Language Specification.(öæÇÛùÿÿÿÿ
+osquid:ModifiersOrderChecku"EReorder the modifiers to comply with the Java Language Specification.(ö™¹Äûÿÿÿÿ
+ksquid:ModifiersOrderCheck„"EReorder the modifiers to comply with the Java Language Specification.(‹Ä¬Ş
+psquid:ModifiersOrderCheck™"EReorder the modifiers to comply with the Java Language Specification.(‘‰«Ùûÿÿÿÿ
+psquid:ModifiersOrderCheck¯"EReorder the modifiers to comply with the Java Language Specification.(“¼”úşÿÿÿÿ
+ksquid:ModifiersOrderCheckù"EReorder the modifiers to comply with the Java Language Specification.(şè»Ä
+t
+squid:S135L"YReduce the total number of break and continue statements in this loop to use at most one.(Ì¶ñÛüÿÿÿÿ
+esquid:CallToDeprecatedMethodó"7Remove this use of "updateInventory"; it is deprecated.(‰”éÕùÿÿÿÿ
+_squid:CallToDeprecatedMethod"1Remove this use of "setTypeId"; it is deprecated.(ó¾ˆ©ùÿÿÿÿ
+=squid:S1168<"&Return an empty array instead of null.(¥¹ï
+=squid:S1168?"&Return an empty array instead of null.(¥¹ï
+=squid:S1168z"&Return an empty array instead of null.(¥¹ï
+>squid:S1168‹"&Return an empty array instead of null.(¥¹ï
+>squid:S1168µ"&Return an empty array instead of null.(¥¹ï
+>squid:S1168ÿ"&Return an empty array instead of null.(÷é¶Ú

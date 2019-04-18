@@ -31,7 +31,7 @@ import java.util.logging.Level;
 /**
  * @author Peter Güttinger
  */
-public class LogEntry {
+public final class LogEntry {
 
     private final static String skriptLogPackageName = "" + SkriptLogger.class.getPackage().getName();
     public final Level level;

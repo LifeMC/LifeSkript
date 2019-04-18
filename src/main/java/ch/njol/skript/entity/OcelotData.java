@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class OcelotData extends EntityData<Ocelot> {
+public final class OcelotData extends EntityData<Ocelot> {
     static {
         EntityData.register(OcelotData.class, "ocelot", Ocelot.class, 1, "wild ocelot", "ocelot", "cat");
     }

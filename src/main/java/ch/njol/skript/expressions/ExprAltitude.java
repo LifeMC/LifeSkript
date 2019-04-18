@@ -35,7 +35,7 @@ import org.bukkit.Location;
 @Description("Effectively an alias of 'y-<a href='#ExprCoordinate'>coordinate</a> of …', it represents the height of some object above bedrock.")
 @Examples({"on damage:", "	altitude of the attacker is higher that the altitude of the victim", "	set damage to damage * 1.2"})
 @Since("1.4.3")
-public class ExprAltitude extends SimplePropertyExpression<Location, Double> {
+public final class ExprAltitude extends SimplePropertyExpression<Location, Double> {
     static {
         register(ExprAltitude.class, Double.class, "altitude[s]", "locations");
     }

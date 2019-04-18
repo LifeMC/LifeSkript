@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Peter Güttinger
  */
-public class Math2Test {
+public final class Math2Test {
 
     private final static int RANDOM_NUMBERS = 10000;
 

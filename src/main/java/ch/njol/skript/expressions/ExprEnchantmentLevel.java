@@ -45,7 +45,7 @@ import java.util.Map;
 @Description("The level of a particular <a href='../classes/#enchantment'>enchantment</a> on an item")
 @Examples({"player' tool is a sword of sharpness:", "	message \"You have a sword of sharpness %level of sharpness of the player's tool% equipped\""})
 @Since("2.0")
-public class ExprEnchantmentLevel extends PropertyExpression<ItemType, Integer> {
+public final class ExprEnchantmentLevel extends PropertyExpression<ItemType, Integer> {
     static {
         Skript.registerExpression(ExprEnchantmentLevel.class, Integer.class, ExpressionType.PROPERTY, "[the] (%-enchantment% level|level of [[the] enchant[ment]] %-enchantment%) o(f|n) %itemtypes%", "%itemtypes%'[s] (%-enchantment% level|level of [[the] enchant[ment]] %-enchantment%)");
     }

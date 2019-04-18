@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * @author Peter Güttinger
  */
-public class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
+public final class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 
     final static long[] times = {50L, 1000L, 1000L * 60L, 1000L * 60L * 60L, 1000L * 60L * 60L * 24L};
     final static HashMap<String, Long> parseValues = new HashMap<>();

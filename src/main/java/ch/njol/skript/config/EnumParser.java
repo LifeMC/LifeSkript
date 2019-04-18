@@ -30,7 +30,7 @@ import java.util.Locale;
 /**
  * @author Peter Güttinger
  */
-public class EnumParser<E extends Enum<E>> implements Converter<String, E> {
+public final class EnumParser<E extends Enum<E>> implements Converter<String, E> {
 
     private final Class<E> enumType;
     @Nullable

@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.NonNull;
 @Description("The yaw or pitch of a location. You likely won't need this expression ever if you don't know what this means.")
 @Examples("log \"%player%: %location of player%, %player's yaw%, %player's pitch%\" to \"playerlocs.log\"")
 @Since("2.0")
-public class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
+public final class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 
     public static final boolean randomSK = true;
 

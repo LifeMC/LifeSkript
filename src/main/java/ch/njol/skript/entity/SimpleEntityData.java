@@ -239,7 +239,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Entity> getSuperType() {
         return new SimpleEntityData(info);
     }
 

@@ -21,9 +21,6 @@
 
 package ch.njol.skript.doc;
 
-import ch.njol.skript.lang.SkriptEvent;
-import ch.njol.skript.lang.SkriptEventInfo;
-
 import java.lang.annotation.*;
 
 /**
@@ -34,7 +31,7 @@ import java.lang.annotation.*;
 @Documented
 public @interface Events {
     /**
-     * A list of {@link SkriptEventInfo#getName() name(s)} of {@link SkriptEvent events} this expression is useful for.
+     * A list of {@link ch.njol.skript.lang.SkriptEventInfo#getName() name(s)} of {@link ch.njol.skript.lang.SkriptEvent events} this expression is useful for.
      */
     String[] value();
 }

@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
  *
  * @author Peter Güttinger
  */
-public class EnumerationIterable<T> implements Iterable<T> {
+public final class EnumerationIterable<T> implements Iterable<T> {
 
     @Nullable
     final Enumeration<? extends T> e;

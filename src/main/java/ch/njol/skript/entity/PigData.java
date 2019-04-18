@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public class PigData extends EntityData<Pig> {
+public final class PigData extends EntityData<Pig> {
     static {
         register(PigData.class, "pig", Pig.class, 1, "unsaddled pig", "pig", "saddled pig");
     }
@@ -96,7 +96,7 @@ public class PigData extends EntityData<Pig> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Pig> getSuperType() {
         return new PigData();
     }
 

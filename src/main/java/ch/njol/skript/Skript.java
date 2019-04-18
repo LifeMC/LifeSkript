@@ -23,9 +23,6 @@ package ch.njol.skript;
 
 import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.bukkitutil.Workarounds;
-import ch.njol.skript.classes.ClassInfo;
-import ch.njol.skript.classes.Comparator;
-import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.data.*;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.doc.Documentation;
@@ -34,14 +31,11 @@ import ch.njol.skript.expressions.ExprEntities;
 import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Functions;
-import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.skript.registrations.Comparators;
 import ch.njol.skript.registrations.Converters;
-import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Closeable;
@@ -86,7 +80,7 @@ import java.util.zip.ZipFile;
  * <b>Skript</b> - A Bukkit plugin to modify how Minecraft behaves without having to write a single line of code (You'll likely be writing some code though if you're reading this
  * =P)
  * <p>
- * Use this class to extend this plugin's functionality by adding more {@link Condition conditions}, {@link Effect effects}, {@link SimpleExpression expressions}, etc.
+ * Use this class to extend this plugin's functionality by adding more {@link Condition conditions}, {@link Effect effects}, {@link ch.njol.skript.lang.util.SimpleExpression expressions}, etc.
  * <p>
  * If your plugin.yml contains <tt>'depend: [Skript]'</tt> then your plugin will not start at all if Skript is not present. Add <tt>'softdepend: [Skript]'</tt> to your plugin.yml
  * if you want your plugin to work even if Skript isn't present, but want to make sure that Skript gets loaded before your plugin.
@@ -102,10 +96,10 @@ import java.util.zip.ZipFile;
  * @see #registerEffect(Class, String...)
  * @see #registerExpression(Class, Class, ExpressionType, String...)
  * @see #registerEvent(String, Class, Class, String...)
- * @see EventValues#registerEventValue(Class, Class, Getter, int)
- * @see Classes#registerClass(ClassInfo)
- * @see Comparators#registerComparator(Class, Class, Comparator)
- * @see Converters#registerConverter(Class, Class, Converter)
+ * @see ch.njol.skript.registrations.EventValues#registerEventValue(Class, Class, Getter, int)
+ * @see Classes#registerClass(ch.njol.skript.classes.ClassInfo)
+ * @see ch.njol.skript.registrations.Comparators#registerComparator(Class, Class, ch.njol.skript.classes.Comparator)
+ * @see Converters#registerConverter(Class, Class, ch.njol.skript.classes.Converter)
  */
 public final class Skript extends JavaPlugin implements Listener {
 

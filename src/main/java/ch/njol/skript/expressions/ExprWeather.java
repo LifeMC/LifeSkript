@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"set weather to clear", "weather in \"world\" is rainy"})
 @Since("1.0")
 @Events("weather change")
-public class ExprWeather extends PropertyExpression<World, WeatherType> {
+public final class ExprWeather extends PropertyExpression<World, WeatherType> {
     static {
         Skript.registerExpression(ExprWeather.class, WeatherType.class, ExpressionType.PROPERTY, "[the] weather [(in|of) %worlds%]", "%worlds%'[s] weather");
     }

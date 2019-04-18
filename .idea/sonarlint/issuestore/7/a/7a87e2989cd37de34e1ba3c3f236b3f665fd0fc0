@@ -1,0 +1,20 @@
+
+osquid:ModifiersOrderCheck1"EReorder the modifiers to comply with the Java Language Specification.(ä‚óıÿÿÿÿ
+jsquid:ModifiersOrderCheck2"EReorder the modifiers to comply with the Java Language Specification.(İ×¥¬
+osquid:ModifiersOrderCheck3"EReorder the modifiers to comply with the Java Language Specification.(Õ®ûÿÿÿÿÿ
+usquid:S22931"YReplace the type specification in this constructor call with the diamond operator ("<>").(ä‚óıÿÿÿÿ
+psquid:S2293N"YReplace the type specification in this constructor call with the diamond operator ("<>").(¡İ »
+r
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(øº•—úÿÿÿÿ
+[squid:S2583Ğ"CChange this condition so that it does not always evaluate to "true"(‚÷û§
+Ssquid:S2589w"7Remove this expression which always evaluates to "true"(»°ÿÿÿÿÿÿ
+Rsquid:S1133Å"5Do not forget to remove this deprecated code someday.(¼Êİîúÿÿÿÿ
+Vsquid:MissingDeprecatedCheckÅ"(Add the missing @deprecated Javadoc tag.(¼Êİîúÿÿÿÿ
+^squid:CallToDeprecatedMethod"8Remove this use of "getOfflinePlayer"; it is deprecated.(×”ÎÕ
+_squid:CallToDeprecatedMethod|"8Remove this use of "getOfflinePlayer"; it is deprecated.(¹–Å6
+dsquid:CallToDeprecatedMethodä"6Remove this use of "getPlayerExact"; it is deprecated.(§ Ÿóùÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Õ®ûÿÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(üü¥µıÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ñ‹àøşÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ñ‹àøşÿÿÿÿ
+Bsquid:S1604"(Make this anonymous inner class a lambda(Ñ‹àøşÿÿÿÿ

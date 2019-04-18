@@ -49,7 +49,7 @@ import java.util.Iterator;
 @Description("All blocks in a sphere around a center, mostly useful for looping.")
 @Examples("loop blocks in radius 5 around the player:")
 @Since("1.0")
-public class ExprBlockSphere extends SimpleExpression<Block> {
+public final class ExprBlockSphere extends SimpleExpression<Block> {
     static {
         Skript.registerExpression(ExprBlockSphere.class, Block.class, ExpressionType.COMBINED, "(all|the|) blocks in radius %number% [(of|around) %location%]", "(all|the|) blocks around %location% in radius %number%");
     }

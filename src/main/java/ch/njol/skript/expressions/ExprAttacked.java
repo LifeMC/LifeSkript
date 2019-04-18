@@ -49,7 +49,7 @@ import java.lang.reflect.Array;
 @Examples({"on damage:", "	victim is a creeper", "	damage the attacked by 1 heart"})
 @Since("1.3")
 @Events({"damage", "death"})
-public class ExprAttacked extends SimpleExpression<Entity> {
+public final class ExprAttacked extends SimpleExpression<Entity> {
     static {
         Skript.registerExpression(ExprAttacked.class, Entity.class, ExpressionType.SIMPLE, "[the] (attacked|damaged|victim) [<(.+)>]");
     }

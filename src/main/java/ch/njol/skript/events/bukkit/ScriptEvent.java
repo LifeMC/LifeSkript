@@ -27,7 +27,7 @@ import org.bukkit.event.HandlerList;
 /**
  * @author Peter Güttinger
  */
-public class ScriptEvent extends Event {
+public final class ScriptEvent extends Event {
 
     // Bukkit stuff
     private final static HandlerList handlers = new HandlerList();

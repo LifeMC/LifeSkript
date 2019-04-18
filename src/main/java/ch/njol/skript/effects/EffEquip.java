@@ -50,7 +50,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Equips a player with some given armor. This will replace any armor that the player is wearing.")
 @Examples({"equip player with diamond helmet", "equip player with all diamond armor"})
 @Since("1.0")
-public class EffEquip extends Effect implements Testable {
+public final class EffEquip extends Effect implements Testable {
     private final static boolean supportsHorses = Skript.classExists("org.bukkit.entity.Horse");
 
     static {

@@ -28,7 +28,7 @@ import ch.njol.util.StringUtils;
  *
  * @author Peter Güttinger
  */
-public class PluralizingArgsMessage extends Message {
+public final class PluralizingArgsMessage extends Message {
 
     public PluralizingArgsMessage(final String key) {
         super(key);

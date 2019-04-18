@@ -102,7 +102,7 @@ public final class DroppedItemData extends EntityData<Item> {
     }
 
     @Override
-    public EntityData getSuperType() {
+    public EntityData<Item> getSuperType() {
         return new DroppedItemData();
     }
 

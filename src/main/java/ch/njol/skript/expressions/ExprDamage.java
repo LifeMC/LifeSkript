@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"increase the damage by 2"})
 @Since("1.3.5")
 @Events("damage")
-public class ExprDamage extends SimpleExpression<Double> {
+public final class ExprDamage extends SimpleExpression<Double> {
     static {
         Skript.registerExpression(ExprDamage.class, Double.class, ExpressionType.SIMPLE, "[the] damage");
     }

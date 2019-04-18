@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Kicks a player from the server.")
 @Examples({"on place of TNT, lava, or obsidian:", "	kick the player due to \"You may not place %block%!\"", "	cancel the event"})
 @Since("1.0")
-public class EffKick extends Effect {
+public final class EffKick extends Effect {
     static {
         Skript.registerEffect(EffKick.class, "kick %players% [(by reason of|because [of]|on account of|due to) %-string%]");
     }

@@ -1,81 +1,69 @@
 
-xsquid:S2293Ã
-"YReplace the type specification in this constructor call with the diamond operator ("<>").(••Ú¡8¾åæÏ¢-
-rsquid:S00115o"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ãÍã¦
-Œ squid:ForLoopCounterChangedCheckş"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheck´"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
+}squid:S2293è"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÇÛ“éüÿÿÿÿ8ş®õÍ¢-
+}squid:S2293Ö
+"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ø€…®ıÿÿÿÿ8ş®õÍ¢-
+Jsquid:S1452Ë"&Remove usage of generic wildcard type.(«šğ›ıÿÿÿÿ8ş®õÍ¢-
+}squid:S2293«"YReplace the type specification in this constructor call with the diamond operator ("<>").(«¨Ÿıÿÿÿÿ8¾åæÏ¢-
+¥%squid:RedundantThrowsDeclarationCheck‹"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
+}squid:S2293’"YReplace the type specification in this constructor call with the diamond operator ("<>").(ñ“ùÿÿÿÿ8ş®õÍ¢-
+qsquid:ModifiersOrderCheckU"EReorder the modifiers to comply with the Java Language Specification.(áÓ‡Ş8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheckß"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck³"XRefactor the code in order to not assign to this loop counter from within the loop body.(«®²ı8ş®õÍ¢-
+rsquid:S00115F"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ãÍã¦
+Csquid:S1659™"Declare "y" on a separate line.(¦½½«ûÿÿÿÿ8ş®õÍ¢-
 o
-squid:S128­	"LEnd this switch case with an unconditional break, return or throw statement.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
-Esquid:S1452š"&Remove usage of generic wildcard type.(¥şÜ8ş®õÍ¢-
-Qsquid:S1199­"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ8ş®õÍ¢-
-¥%squid:RedundantThrowsDeclarationCheckö
-"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
-?squid:S1659«" Declare "i2" on a separate line.(ÅåÍ¢8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheckâ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
-}squid:S2293„
-"YReplace the type specification in this constructor call with the diamond operator ("<>").(«¨Ÿıÿÿÿÿ8¾åæÏ¢-
-Jsquid:S1452Œ"&Remove usage of generic wildcard type.(«šğ›ıÿÿÿÿ8ş®õÍ¢-
-}squid:S2293¾"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô¸‹òøÿÿÿÿ8ş®õÍ¢-
-«%squid:RedundantThrowsDeclarationCheckì
-"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
-Ä%squid:RedundantThrowsDeclarationCheckì
-"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
-Qsquid:S1199­	"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
-ysquid:S00115n"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Á¸¤­8ş®õÍ¢-
-ssquid:S00100¥"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´İıúÿÿÿÿ8¾åæÏ¢-
-…"squid:ClassVariableVisibilityCheck|"PMake mark a static final constant or non-public and provide accessors if needed.(ÛÂ¼›8ş®õÍ¢-
-Csquid:S1659Ù"Declare "y" on a separate line.(¦½½«ûÿÿÿÿ8ş®õÍ¢-
-w
-squid:S135­"YReduce the total number of break and continue statements in this loop to use at most one.(Õãµª8¾åæÏ¢-
-Qsquid:S1199Ã"-Extract this nested code block into a method.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
-|squid:S2293t"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ø€…®ıÿÿÿÿ8ş®õÍ¢-
-Ä%squid:RedundantThrowsDeclarationCheckŞ"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(ö×äÂÿÿÿÿÿ8ş®õÍ¢-
-¿%squid:RedundantThrowsDeclarationCheckö
-"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheck¼
-"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
-}squid:S2293î"YReplace the type specification in this constructor call with the diamond operator ("<>").(ó´Ìüÿÿÿÿ8ş®õÍ¢-
-Isquid:S1659ƒ
-"+Declare "optionalLevel" on a separate line.(éüîl8¾åæÏ¢-
-t squid:LabelsShouldNotBeUsedCheck×";Refactor the code to remove this label and the need for it.(ñâûıùÿÿÿÿ8ş®õÍ¢-
-isquid:S2147ÿ"ECombine this catch with the one at line 259, which has the same body.(éáåøÿÿÿÿ8ş®õÍ¢-
-}squid:S2293Ó"YReplace the type specification in this constructor call with the diamond operator ("<>").(ñ“ùÿÿÿÿ8ş®õÍ¢-
-Lsquid:S1199¯"-Extract this nested code block into a method.(Ãáœ8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheck "XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
-}squid:S2293ê
-"YReplace the type specification in this constructor call with the diamond operator ("<>").(• ›úÿÿÿÿ8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheckó"XRefactor the code in order to not assign to this loop counter from within the loop body.(«®²ı8ş®õÍ¢-
-j
-squid:S128¯"LEnd this switch case with an unconditional break, return or throw statement.(Ãáœ8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
-rsquid:ModifiersOrderCheckŒ"EReorder the modifiers to comply with the Java Language Specification.(çşÙ–8ş®õÍ¢-
-wsquid:ModifiersOrderCheckİ
-"EReorder the modifiers to comply with the Java Language Specification.(ë™ıøÿÿÿÿ8¾åæÏ¢-
-t squid:LabelsShouldNotBeUsedCheckÕ";Refactor the code to remove this label and the need for it.(ŸÎÒèüÿÿÿÿ8ş®õÍ¢-
-}squid:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÇÛ“éüÿÿÿÿ8ş®õÍ¢-
-¦%squid:RedundantThrowsDeclarationCheckö
-"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
-xsquid:S2293‚
-"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûõ´†8¾åæÏ¢-
-Csquid:S1659¯"Declare "j" on a separate line.(á”æåşÿÿÿÿ8ş®õÍ¢-
-rsquid:ModifiersOrderCheckÌ
-"EReorder the modifiers to comply with the Java Language Specification.(„Œëí8¾åæÏ¢-
-isquid:S2147Ç"ECombine this catch with the one at line 843, which has the same body.(éáåøÿÿÿÿ8ş®õÍ¢-
-ª%squid:RedundantThrowsDeclarationCheckì
-"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
-o
-squid:S128Ã"LEnd this switch case with an unconditional break, return or throw statement.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
-xsquid:S2293º"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÕÕù¯8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheck¸
-"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8ğÜåÏ¢-
-Lsquid:S1199è"-Extract this nested code block into a method.(Úœ©Ÿ8¾åæÏ¢-
+squid:S128†
+"LEnd this switch case with an unconditional break, return or throw statement.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
+Lsquid:S1199Â	"-Extract this nested code block into a method.(Úœ©Ÿ8¾åæÏ¢-
+fsquid:S2147"ECombine this catch with the one at line 728, which has the same body.(éáåøÿÿÿÿ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckĞ"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8ğÜåÏ¢-
+¿%squid:RedundantThrowsDeclarationCheck‹"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
+¦%squid:RedundantThrowsDeclarationCheck‹"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(³Í¿ç8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheckç"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheck¥"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
+ª%squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck•"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
+Lsquid:S1199‰	"-Extract this nested code block into a method.(Ãáœ8¾åæÏ¢-
+Qsquid:S1199	"-Extract this nested code block into a method.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
+?squid:S1659…	" Declare "i2" on a separate line.(ÅåÍ¢8¾åæÏ¢-
+Ä%squid:RedundantThrowsDeclarationCheckã"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(ö×äÂÿÿÿÿÿ8ş®õÍ¢-
 |
-squid:S135Ö"YReduce the total number of break and continue statements in this loop to use at most one.(—–ŠŠúÿÿÿÿ8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheck©
-"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8¾åæÏ¢-
-Jsquid:S1452"&Remove usage of generic wildcard type.(İêé™ûÿÿÿÿ8ş®õÍ¢-
-Csquid:S3398"$Move this method into "ParseResult".(Æªê²8°ÊäÏ¢-
-}squid:S2293¬"YReplace the type specification in this constructor call with the diamond operator ("<>").(ğôÛ²ÿÿÿÿÿ8ş®õÍ¢-
-rsquid:ModifiersOrderCheckÍ
-"EReorder the modifiers to comply with the Java Language Specification.(áÓ‡Ş8¾åæÏ¢-
-}squid:S2293ó"YReplace the type specification in this constructor call with the diamond operator ("<>").(áÛğøÿÿÿÿ8ş®õÍ¢-
+squid:S135–"YReduce the total number of break and continue statements in this loop to use at most one.(—–ŠŠúÿÿÿÿ8ş®õÍ¢-
+ssquid:S00100ÿ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´İıúÿÿÿÿ8¾åæÏ¢-
+Qsquid:S1199†
+"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
+xsquid:S2293ú"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÕÕù¯8ş®õÍ¢-
+gsquid:S2147"FCombine this catch with the one at line 1132, which has the same body.(éáåøÿÿÿÿ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckƒ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
+wsquid:ModifiersOrderCheckõ
+"EReorder the modifiers to comply with the Java Language Specification.(ë™ıøÿÿÿÿ8¾åæÏ¢-
+|squid:S2293V"YReplace the type specification in this constructor call with the diamond operator ("<>").(• ›úÿÿÿÿ8¾åæÏ¢-
+w
+squid:S135‡	"YReduce the total number of break and continue statements in this loop to use at most one.(Õãµª8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck¹"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
+}squid:S2293ş"YReplace the type specification in this constructor call with the diamond operator ("<>").(ô¸‹òøÿÿÿÿ8ş®õÍ¢-
+xsquid:S2293ê"YReplace the type specification in this constructor call with the diamond operator ("<>").(••Ú¡8¾åæÏ¢-
+qsquid:ModifiersOrderCheckO"EReorder the modifiers to comply with the Java Language Specification.(çşÙ–8ş®õÍ¢-
+o
+squid:S128	"LEnd this switch case with an unconditional break, return or throw statement.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
+Ä%squid:RedundantThrowsDeclarationCheck"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheckã"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
+«%squid:RedundantThrowsDeclarationCheck"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(åªÍûÿÿÿÿ8¾åæÏ¢-
+}squid:S2293º"YReplace the type specification in this constructor call with the diamond operator ("<>").(ó´Ìüÿÿÿÿ8ş®õÍ¢-
+j
+squid:S128‰	"LEnd this switch case with an unconditional break, return or throw statement.(Ãáœ8¾åæÏ¢-
+Csquid:S1659î"Declare "j" on a separate line.(á”æåşÿÿÿÿ8ş®õÍ¢-
+Esquid:S1452€"&Remove usage of generic wildcard type.(¥şÜ8ş®õÍ¢-
+}squid:S2293ë"YReplace the type specification in this constructor call with the diamond operator ("<>").(ğôÛ²ÿÿÿÿÿ8ş®õÍ¢-
+ysquid:S00115E"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Á¸¤­8ş®õÍ¢-
+Jsquid:S1452É"&Remove usage of generic wildcard type.(İêé™ûÿÿÿÿ8ş®õÍ¢-
+Qsquid:S1199ì"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ8ş®õÍ¢-
+†"squid:ClassVariableVisibilityCheckŞ
+"PMake mark a static final constant or non-public and provide accessors if needed.(ÛÂ¼›8ş®õÍ¢-
+Csquid:S3398’"$Move this method into "ParseResult".(Æªê²8°ÊäÏ¢-
+xsquid:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûõ´†8¾åæÏ¢-
+qsquid:ModifiersOrderCheckT"EReorder the modifiers to comply with the Java Language Specification.(„Œëí8¾åæÏ¢-
+Isquid:S1659ª"+Declare "optionalLevel" on a separate line.(éüîl8¾åæÏ¢-
+xsquid:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(“Š‚¡8®§„Û¢-
+o squid:LabelsShouldNotBeUsedCheck±";Refactor the code to remove this label and the need for it.(’ìğÆ8®§„Û¢-
+n squid:LabelsShouldNotBeUsedCheck”";Refactor the code to remove this label and the need for it.(àÏÅ)8®§„Û¢-

@@ -21,17 +21,14 @@
 
 package ch.njol.skript.classes;
 
-import ch.njol.skript.classes.data.DefaultComparators;
-import ch.njol.skript.registrations.Comparators;
-
 /**
  * Used to compare two objects of a different or the same type.
  *
  * @param <T1> ,
  * @param <T2> the types to compare
  * @author Peter Güttinger
- * @see Comparators#registerComparator(Class, Class, Comparator)
- * @see DefaultComparators
+ * @see ch.njol.skript.registrations.Comparators#registerComparator(Class, Class, Comparator)
+ * @see ch.njol.skript.classes.data.DefaultComparators
  */
 public interface Comparator<T1, T2> {
 

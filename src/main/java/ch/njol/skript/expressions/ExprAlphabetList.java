@@ -43,7 +43,7 @@ import java.util.Arrays;
 @Description("Sorts given strings in alphabetical order.")
 @Examples({"set {list::*} to alphabetically sorted {list::*}"})
 @Since("2.2-Fixes-V9c")
-public class ExprAlphabetList extends SimpleExpression<String> {
+public final class ExprAlphabetList extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprAlphabetList.class, String.class, ExpressionType.COMBINED, "alphabetically sorted %strings%");

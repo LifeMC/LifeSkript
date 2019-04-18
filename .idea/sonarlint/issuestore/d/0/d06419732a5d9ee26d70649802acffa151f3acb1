@@ -1,0 +1,33 @@
+
+Lsquid:S2065S"0Remove the "transient" modifier from this field.(Ä®ñ—ûÿÿÿÿ
+Gsquid:S2065U"0Remove the "transient" modifier from this field.(â¾‘
+Lsquid:S2065V"0Remove the "transient" modifier from this field.(†ø¨¥ıÿÿÿÿ
+Gsquid:S2065Y"0Remove the "transient" modifier from this field.(Îœ¸
+<squid:S1659A"%Declare "CONSOLE" on a separate line.(ĞÊÕä
+9squid:S1659A""Declare "BOTH" on a separate line.(ĞÊÕä
+osquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(‘Á®Çùÿÿÿÿ
+osquid:ModifiersOrderCheck@"EReorder the modifiers to comply with the Java Language Specification.(”ì“àùÿÿÿÿ
+jsquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(ĞÊÕä
+usquid:S2293T"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŒÒ£ºúÿÿÿÿ
+psquid:S2293U"YReplace the type specification in this constructor call with the diamond operator ("<>").(â¾‘
+usquid:S2293V"YReplace the type specification in this constructor call with the diamond operator ("<>").(†ø¨¥ıÿÿÿÿ
+psquid:S2293m"YReplace the type specification in this constructor call with the diamond operator ("<>").(ò„·¢
+usquid:S2293p"YReplace the type specification in this constructor call with the diamond operator ("<>").(±¼ë¼ıÿÿÿÿ
+usquid:S2293w"YReplace the type specification in this constructor call with the diamond operator ("<>").(²Ê®çúÿÿÿÿ
+vsquid:S2293¯"YReplace the type specification in this constructor call with the diamond operator ("<>").(å¬’üÿÿÿÿ
+qsquid:S2293Í"YReplace the type specification in this constructor call with the diamond operator ("<>").(€ıÙ
+qsquid:S2293â"YReplace the type specification in this constructor call with the diamond operator ("<>").(€ıÙ
+>squid:S1452Š"&Remove usage of generic wildcard type.(ÙíÏÆ
+isquid:HiddenFieldCheckŠ"ARename "bukkitCommand" which hides the field declared at line 83.(­Àª¬üÿÿÿÿ
+^squid:HiddenFieldCheckÇ";Rename "aliases" which hides the field declared at line 71.(Öÿ¦ç
+^squid:HiddenFieldCheckİ";Rename "aliases" which hides the field declared at line 71.(¨ı¥É
+`squid:HiddenFieldCheck"8Rename "name" which hides the field declared at line 66.(×å—òşÿÿÿÿ
+`squid:HiddenFieldCheck—"8Rename "name" which hides the field declared at line 66.(×å—òşÿÿÿÿ
+_squid:HiddenFieldCheck©"<Rename "cooldown" which hides the field declared at line 75.(ã¼–÷
+_squid:HiddenFieldCheck³"<Rename "cooldown" which hides the field declared at line 75.(ã¼–÷
+lsquid:S2445“"O"commandMap" is a method parameter, and should not be used for synchronization.(¢Ù‹øÿÿÿÿ
+lsquid:S2445©"O"commandMap" is a method parameter, and should not be used for synchronization.(¢Ù‹øÿÿÿÿ
+h squid:LabelsShouldNotBeUsedCheck¸";Refactor the code to remove this label and the need for it.(êÅ®
+Psquid:S1172à"3Remove this unused method parameter "commandLabel".(‰¤¡´üÿÿÿÿ
+Zsquid:S00107h"BConstructor has 15 parameters, which is greater than 7 authorized.(Œ”‚Œ
+Bsquid:S1604"(Make this anonymous inner class a lambda(±İøÿÿÿÿ

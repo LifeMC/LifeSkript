@@ -37,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"# use the exp bar as mana", "on rightclick with a blaze rod:", "	player's level progress is larger than 0.2", "	shoot a fireball from the player", "	reduce the player's level progress by 0.2", "every 2 seconds:", "	loop all players:", "		level progress of loop-player is smaller than 0.9:", "			increase level progress of the loop-player by 0.1", "		else:", "			set level progress of the loop-player to 0.99", "on xp spawn:", "	cancel event"})
 @Since("2.0")
 @Events("level change")
-public class ExprLevelProgress extends SimplePropertyExpression<Player, Float> {
+public final class ExprLevelProgress extends SimplePropertyExpression<Player, Float> {
     static {
         register(ExprLevelProgress.class, Float.class, "level progress", "players");
     }
