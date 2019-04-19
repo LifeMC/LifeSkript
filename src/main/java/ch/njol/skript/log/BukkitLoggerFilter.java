@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -39,7 +39,7 @@ import java.util.logging.Filter;
  */
 public final class BukkitLoggerFilter {
 
-    private final static LoggerFilter filter = new LoggerFilter(SkriptLogger.LOGGER);
+    private static final LoggerFilter filter = new LoggerFilter(SkriptLogger.LOGGER);
 
     static {
         Skript.closeOnDisable(filter);
@@ -50,7 +50,7 @@ public final class BukkitLoggerFilter {
      *
      * @param f A filter to filter log messages
      */
-    public static void addFilter(final Filter f) {
+    public static final void addFilter(final Filter f) {
         filter.addFilter(f);
     }
 

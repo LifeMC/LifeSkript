@@ -42,18 +42,18 @@ public final class Language {
     /**
      * Some flags
      */
-    public final static int F_PLURAL = 1, F_DEFINITE_ARTICLE = 2, F_INDEFINITE_ARTICLE = 4;
+    public static final int F_PLURAL = 1, F_DEFINITE_ARTICLE = 2, F_INDEFINITE_ARTICLE = 4;
 
     /**
      * masks out article flags - useful if the article has been added already (e.g. by an adjective)
      */
-    public final static int NO_ARTICLE_MASK = ~(F_DEFINITE_ARTICLE | F_INDEFINITE_ARTICLE);
-    final static HashMap<String, String> english = new HashMap<>();
+    public static final int NO_ARTICLE_MASK = ~(F_DEFINITE_ARTICLE | F_INDEFINITE_ARTICLE);
+    static final HashMap<String, String> english = new HashMap<>();
     private static final HashMap<Plugin, Version> langVersion = new HashMap<>();
     @SuppressWarnings("null")
-    private final static Pattern listSplitPattern = Pattern.compile("\\s*,\\s*");
-    private final static List<LanguageChangeListener> listeners = new ArrayList<>();
-    private final static int[] priorityStartIndices = new int[LanguageListenerPriority.values().length];
+    private static final Pattern listSplitPattern = Pattern.compile("\\s*,\\s*");
+    private static final List<LanguageChangeListener> listeners = new ArrayList<>();
+    private static final int[] priorityStartIndices = new int[LanguageListenerPriority.values().length];
     /**
      * May be null.
      */
@@ -105,7 +105,7 @@ public final class Language {
         return get_i("" + key.toLowerCase(Locale.ENGLISH));
     }
 
-    public static void missingEntryError(final String key) {
+    public static final void missingEntryError(final String key) {
         if (!Skript.debug() || !Skript.testing())
             return;
         Skript.warning("Missing entry '" + key.toLowerCase(Locale.ENGLISH) + "' in the default english language file");
@@ -167,7 +167,7 @@ public final class Language {
         return english.containsKey(key.toLowerCase(Locale.ENGLISH));
     }
 
-    public static void loadDefault(final SkriptAddon addon) {
+    public static final void loadDefault(final SkriptAddon addon) {
         if (addon.getLanguageFileDirectory() == null)
             return;
         final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang");
@@ -270,7 +270,7 @@ public final class Language {
         }
     }
 
-    private static void validateLocalized() {
+    private static final void validateLocalized() {
         final HashMap<String, String> loc = localized;
         if (loc == null) {
             assert false;
@@ -288,7 +288,7 @@ public final class Language {
             Skript.warning("The localized language file(s) has/ve superfluous entries: " + StringUtils.join(s, ", "));
     }
 
-    private static void removeIgnored(final Set<String> keys) {
+    private static final void removeIgnored(final Set<String> keys) {
         keys.removeIf(s -> s.startsWith(Noun.GENDERS_SECTION));
     }
 
@@ -301,11 +301,11 @@ public final class Language {
      *
      * @param l
      */
-    public static void addListener(final LanguageChangeListener l) {
+    public static final void addListener(final LanguageChangeListener l) {
         addListener(l, LanguageListenerPriority.NORMAL);
     }
 
-    public static void addListener(final LanguageChangeListener l, final LanguageListenerPriority priority) {
+    public static final void addListener(final LanguageChangeListener l, final LanguageListenerPriority priority) {
         assert priority != null;
         listeners.add(priorityStartIndices[priority.ordinal()], l);
         for (int i = priority.ordinal() + 1; i < LanguageListenerPriority.values().length; i++)

@@ -41,7 +41,7 @@ public abstract class TriggerItem implements Debuggable {
     /**
      * how much to indent each level
      */
-    private final static String indent = "  ";
+    private static final String indent = "  ";
     @Nullable
     protected TriggerSection parent;
     @Nullable

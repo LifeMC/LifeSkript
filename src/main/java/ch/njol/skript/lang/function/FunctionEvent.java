@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -27,7 +27,7 @@ import org.bukkit.event.HandlerList;
 public final class FunctionEvent extends Event {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     public static HandlerList getHandlerList() {
         return handlers;

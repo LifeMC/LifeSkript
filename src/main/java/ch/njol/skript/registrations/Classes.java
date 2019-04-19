@@ -57,16 +57,16 @@ import java.util.regex.Pattern;
  */
 public final class Classes {
 
-    private final static List<ClassInfo<?>> tempClassInfos = new ArrayList<>();
-    private final static HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<>();
-    private final static HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>();
-    private final static HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>();
+    private static final List<ClassInfo<?>> tempClassInfos = new ArrayList<>();
+    private static final HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<>();
+    private static final HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>();
+    private static final HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>();
     /**
      * consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */
-    private final static byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
+    private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
     @SuppressWarnings("null")
-    private final static Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
     @Nullable
     private static ClassInfo<?>[] classInfos;
 
@@ -90,7 +90,7 @@ public final class Classes {
         tempClassInfos.add(info);
     }
 
-    public static void onRegistrationsStop() {
+    public static final void onRegistrationsStop() {
 
         sortClassInfos();
 
@@ -118,7 +118,7 @@ public final class Classes {
      * Sorts the class infos according to sub/superclasses and relations set with {@link ClassInfo#before(String...)} and {@link ClassInfo#after(String...)}.
      */
     @SuppressFBWarnings("LI_LAZY_INIT_STATIC")
-    private static void sortClassInfos() {
+    private static final void sortClassInfos() {
         assert classInfos == null;
 
         // merge before, after & sub/supertypes in after
@@ -210,7 +210,7 @@ public final class Classes {
 
     }
 
-    private static void checkAllowClassInfoInteraction() {
+    private static final void checkAllowClassInfoInteraction() {
         if (Skript.isAcceptRegistrations())
             throw new IllegalStateException("Cannot use classinfos until registration is over");
     }

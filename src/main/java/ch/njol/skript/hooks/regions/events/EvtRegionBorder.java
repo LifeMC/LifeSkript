@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -51,9 +51,9 @@ import java.util.Set;
  * @author Peter Güttinger
  */
 public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
-    private final static Collection<Trigger> triggers = new ArrayList<>();
+    private static final Collection<Trigger> triggers = new ArrayList<>();
     // even WorldGuard doesn't have events, and this way all region plugins are supported for sure.
-    private final static EventExecutor ee = new EventExecutor() {
+    private static final EventExecutor ee = new EventExecutor() {
         @Nullable
         Event last;
 
@@ -100,7 +100,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
     @Nullable
     private Literal<Region> regions;
 
-    static void callEvent(final Region r, final PlayerMoveEvent me, final boolean enter) {
+    static final void callEvent(final Region r, final PlayerMoveEvent me, final boolean enter) {
         final Player p = me.getPlayer();
         assert p != null;
         final RegionBorderEvent e = new RegionBorderEvent(r, p, enter);
@@ -112,7 +112,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
         me.setCancelled(e.isCancelled());
     }
 
-    private static void register() {
+    private static final void register() {
         if (registered)
             return;
         Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {

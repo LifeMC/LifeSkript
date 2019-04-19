@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -32,8 +32,8 @@ import java.util.HashMap;
 public final class Adjective extends Message {
 
     // at least in German adjectives behave differently with a definite article. Cases are still not supported though and will likely never be.
-    private final static int DEFINITE_ARTICLE = -100;
-    private final static String DEFINITE_ARTICLE_TOKEN = "+";
+    private static final int DEFINITE_ARTICLE = -100;
+    private static final String DEFINITE_ARTICLE_TOKEN = "+";
 
     private final HashMap<Integer, String> genders = new HashMap<>();
     @Nullable

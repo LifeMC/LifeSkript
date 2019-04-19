@@ -34,16 +34,16 @@ import java.util.*;
  */
 public final class Noun extends Message {
 
-    public final static String GENDERS_SECTION = "genders.";
+    public static final String GENDERS_SECTION = "genders.";
 
     // TODO remove NO_GENDER and add boolean/flag uncountable (e.g. Luft: 'die Luft', aber nicht 'eine Luft')
-    public final static int PLURAL = -2, NO_GENDER = -3; // -1 is sometimes used as 'not set'
-    public final static String PLURAL_TOKEN = "x", NO_GENDER_TOKEN = "-";
-    final static HashMap<String, Integer> genders = new HashMap<>();
-    final static List<String> indefiniteArticles = new ArrayList<>(3);
-    final static List<String> definiteArticles = new ArrayList<>(3);
-    final static List<String> localIndefiniteArticles = new ArrayList<>(3);
-    final static List<String> localDefiniteArticles = new ArrayList<>(3);
+    public static final int PLURAL = -2, NO_GENDER = -3; // -1 is sometimes used as 'not set'
+    public static final String PLURAL_TOKEN = "x", NO_GENDER_TOKEN = "-";
+    static final HashMap<String, Integer> genders = new HashMap<>();
+    static final List<String> indefiniteArticles = new ArrayList<>(3);
+    static final List<String> definiteArticles = new ArrayList<>(3);
+    static final List<String> localIndefiniteArticles = new ArrayList<>(3);
+    static final List<String> localDefiniteArticles = new ArrayList<>(3);
     static String definitePluralArticle = "";
     static String localDefinitePluralArticle = "";
 

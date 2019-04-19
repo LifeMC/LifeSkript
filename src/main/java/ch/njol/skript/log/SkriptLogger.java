@@ -38,12 +38,12 @@ import java.util.logging.Logger;
 public final class SkriptLogger {
 
     @SuppressWarnings("null")
-    public final static Level SEVERE = Level.SEVERE;
+    public static final Level SEVERE = Level.SEVERE;
     @SuppressWarnings("null")
-    public final static Level DEBUG = Level.INFO;
+    public static final Level DEBUG = Level.INFO;
     @SuppressWarnings("null")
-    public final static Logger LOGGER = Bukkit.getServer() != null ? Bukkit.getLogger() : Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); // cannot use Bukkit in tests
-    private final static HandlerList handlers = new HandlerList();
+    public static final Logger LOGGER = Bukkit.getServer() != null ? Bukkit.getLogger() : Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); // cannot use Bukkit in tests
+    private static final HandlerList handlers = new HandlerList();
     static boolean debug;
     @Nullable
     private static Node node;
@@ -101,7 +101,7 @@ public final class SkriptLogger {
         return h;
     }
 
-    static void removeHandler(final LogHandler h) {
+    static final void removeHandler(final LogHandler h) {
         if (!handlers.contains(h))
             return;
         if (!h.equals(handlers.remove())) {
@@ -125,7 +125,7 @@ public final class SkriptLogger {
         return null;
     }
 
-    public static void setVerbosity(final Verbosity v) {
+    public static final void setVerbosity(final Verbosity v) {
         verbosity = v;
         if (v.compareTo(Verbosity.DEBUG) >= 0)
             debug = true;
@@ -136,7 +136,7 @@ public final class SkriptLogger {
         return node;
     }
 
-    public static void setNode(final @Nullable Node node) {
+    public static final void setNode(final @Nullable Node node) {
         SkriptLogger.node = node == null || node.getParent() == null ? null : node;
     }
 
@@ -158,11 +158,11 @@ public final class SkriptLogger {
      * @see Skript#logVeryHigh()
      * @see Skript#debug()
      */
-    public static void log(final Level level, final String message) {
+    public static final void log(final Level level, final String message) {
         log(new LogEntry(level, message, node));
     }
 
-    public static void log(final @Nullable LogEntry entry) {
+    public static final void log(final @Nullable LogEntry entry) {
         if (entry == null)
             return;
         if (Skript.testing() && node != null && node.debug())
@@ -192,15 +192,15 @@ public final class SkriptLogger {
         LOGGER.log(entry.getLevel(), format(entry));
     }
 
-    public static void suppressWarnings(final boolean suppressWarnings) {
+    public static final void suppressWarnings(final boolean suppressWarnings) {
         SkriptLogger.suppressWarnings = suppressWarnings;
     }
 
-    public static void suppressErrors(final boolean suppressErrors) {
+    public static final void suppressErrors(final boolean suppressErrors) {
         SkriptLogger.suppressErrors = suppressErrors;
     }
 
-    public static void startSuppressing() {
+    public static final void startSuppressing() {
         suppressed = new ArrayList<>();
         suppressing = true;
     }
@@ -213,7 +213,7 @@ public final class SkriptLogger {
         return suppressed;
     }
 
-    public static void cleanSuppressState() {
+    public static final void cleanSuppressState() {
         suppressed = null;
     }
 
@@ -221,7 +221,7 @@ public final class SkriptLogger {
         return "[Skript] " + entry.getMessage();
     }
 
-    public static void logAll(final Iterable<LogEntry> entries) {
+    public static final void logAll(final Iterable<LogEntry> entries) {
         for (final LogEntry entry : entries) {
             if (entry == null)
                 continue;
@@ -229,7 +229,7 @@ public final class SkriptLogger {
         }
     }
 
-    public static void logTracked(final Level level, final String message, final ErrorQuality quality) {
+    public static final void logTracked(final Level level, final String message, final ErrorQuality quality) {
         log(new LogEntry(level, quality.quality(), message, node, true));
     }
 

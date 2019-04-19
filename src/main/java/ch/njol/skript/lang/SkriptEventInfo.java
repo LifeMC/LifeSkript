@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -32,7 +32,7 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
     /**
      * Use this as {@link #description(String...)} to prevent warnings about missing documentation.
      */
-    public final static String[] NO_DOC = new String[0];
+    public static final String[] NO_DOC = new String[0];
     public final String name;
 
     private final String id;

@@ -40,9 +40,9 @@ import java.util.Map;
  */
 public final class Comparators {
 
-    public final static Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<>();
-    private final static Map<Pair<Class<?>, Class<?>>, Comparator<?, ?>> comparatorsQuickAccess = new HashMap<>();
-    private final static java.util.Comparator<Object> javaComparator = (o1, o2) -> compare(o1, o2).getRelation();
+    public static final Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<>();
+    private static final Map<Pair<Class<?>, Class<?>>, Comparator<?, ?>> comparatorsQuickAccess = new HashMap<>();
+    private static final java.util.Comparator<Object> javaComparator = (o1, o2) -> compare(o1, o2).getRelation();
 
     private Comparators() {
         throw new UnsupportedOperationException();
@@ -142,7 +142,7 @@ public final class Comparators {
         return null;
     }
 
-    private final static class ConvertedComparator<T1, T2> implements Comparator<T1, T2> {
+    private static final class ConvertedComparator<T1, T2> implements Comparator<T1, T2> {
 
         @SuppressWarnings("rawtypes")
         private final Comparator c;

@@ -60,10 +60,10 @@ import java.util.Map.Entry;
  */
 public final class Variable<T> implements Expression<T> {
 
-    public final static String LOCAL_VARIABLE_TOKEN = "_";
-    private final static String SINGLE_SEPARATOR_CHAR = ":";
-    public final static String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
-    private final static boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
+    public static final String LOCAL_VARIABLE_TOKEN = "_";
+    private static final String SINGLE_SEPARATOR_CHAR = ":";
+    public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
+    private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
     final Class<? extends T>[] types;
     final boolean local;
     /**

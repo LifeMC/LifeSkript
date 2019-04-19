@@ -36,7 +36,7 @@ import java.util.Locale;
 public class Message {
 
     // this is most likely faster than registering a listener for each Message
-    final static Collection<Message> messages = new ArrayList<>(50);
+    static final Collection<Message> messages = new ArrayList<>(50);
     static boolean firstChange = true;
 
     static {

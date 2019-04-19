@@ -76,13 +76,13 @@ public final class SkriptParser {
     @SuppressWarnings("null")
     public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(and|n?or)\\s+|\\s*,\\s*", Pattern.CASE_INSENSITIVE);
     @SuppressWarnings("null")
-    private final static Pattern varPattern = Pattern.compile("((the )?var(iable)? )?\\{([^{}]|%\\{|}%)+}", Pattern.CASE_INSENSITIVE);
+    private static final Pattern varPattern = Pattern.compile("((the )?var(iable)? )?\\{([^{}]|%\\{|}%)+}", Pattern.CASE_INSENSITIVE);
     private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
     private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
     @SuppressWarnings("null")
     private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*)\\)");
-    private final static Message m_quotes_error = new Message("skript.quotes error");
-    private final static Message m_brackets_error = new Message("skript.brackets error");
+    private static final Message m_quotes_error = new Message("skript.quotes error");
+    private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
     public final ParseContext context;
     private final String expr;
@@ -1394,7 +1394,7 @@ public final class SkriptParser {
 
     }
 
-    private final static class ExprInfo {
+    private static final class ExprInfo {
         final ClassInfo<?>[] classes;
         final boolean[] isPlural;
         boolean isOptional;

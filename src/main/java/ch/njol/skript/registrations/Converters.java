@@ -38,7 +38,7 @@ import java.util.*;
 public final class Converters {
 
     private static final List<ConverterInfo<?, ?>> converters = new ArrayList<>(50);
-    private final static Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<>();
+    private static final Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<>();
 
     private Converters() {
         throw new UnsupportedOperationException();
@@ -74,7 +74,7 @@ public final class Converters {
     }
 
     // REMIND how to manage overriding of converters? - shouldn't actually matter
-    public static void createMissingConverters() {
+    public static final void createMissingConverters() {
         for (int i = 0; i < converters.size(); i++) {
             final ConverterInfo<?, ?> info = converters.get(i);
             for (int j = 0; j < converters.size(); j++) {// not from j = i+1 since new converters get added during the loops

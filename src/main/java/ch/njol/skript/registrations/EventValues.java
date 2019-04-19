@@ -35,9 +35,9 @@ import java.util.List;
  */
 public final class EventValues {
 
-    private final static List<EventValueInfo<?, ?>> defaultEventValues = new ArrayList<>(30);
-    private final static List<EventValueInfo<?, ?>> futureEventValues = new ArrayList<>();
-    private final static List<EventValueInfo<?, ?>> pastEventValues = new ArrayList<>();
+    private static final List<EventValueInfo<?, ?>> defaultEventValues = new ArrayList<>(30);
+    private static final List<EventValueInfo<?, ?>> futureEventValues = new ArrayList<>();
+    private static final List<EventValueInfo<?, ?>> pastEventValues = new ArrayList<>();
 
     private EventValues() {
     }
@@ -217,7 +217,7 @@ public final class EventValues {
         return getEventValueGetter(e, c, -1, false) != null || getEventValueGetter(e, c, 1, false) != null;
     }
 
-    private final static class EventValueInfo<E extends Event, T> {
+    private static final class EventValueInfo<E extends Event, T> {
 
         public final Class<E> event;
         public final Class<T> c;

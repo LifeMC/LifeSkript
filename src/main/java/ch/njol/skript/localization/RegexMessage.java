@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -37,7 +37,7 @@ public final class RegexMessage extends Message {
      * A pattern that doesn't match anything
      */
     @SuppressWarnings("null")
-    public final static Pattern nop = Pattern.compile("(?!)");
+    public static final Pattern nop = Pattern.compile("(?!)");
     private final String prefix, suffix;
     private final int flags;
     @Nullable

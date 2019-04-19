@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -45,13 +45,13 @@ import java.util.regex.Pattern;
  */
 public final class Functions {
 
-    public final static String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
-    final static Map<String, JavaFunction<?>> javaFunctions = new HashMap<>();
-    final static Map<String, FunctionData> functions = new HashMap<>();
+    public static final String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
+    static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>();
+    static final Map<String, FunctionData> functions = new HashMap<>();
     @SuppressWarnings("null")
-    private final static Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
+    private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
-    private final static Collection<FunctionReference<?>> toValidate = new ArrayList<>();
+    private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>();
     @Nullable
     public static ScriptFunction<?> currentFunction;
 
@@ -74,7 +74,7 @@ public final class Functions {
         return function;
     }
 
-    static void registerCaller(final FunctionReference<?> r) {
+    static final void registerCaller(final FunctionReference<?> r) {
         final FunctionData d = functions.get(r.functionName);
         assert d != null;
         d.calls.add(r);
@@ -201,7 +201,7 @@ public final class Functions {
         return r;
     }
 
-    public static void validateFunctions() {
+    public static final void validateFunctions() {
         for (final FunctionReference<?> c : toValidate)
             c.validateFunction(false);
         toValidate.clear();
@@ -210,7 +210,7 @@ public final class Functions {
     /**
      * Clears all function calls and removes script functions.
      */
-    public static void clearFunctions() {
+    public static final void clearFunctions() {
         final Iterator<FunctionData> iter = functions.values().iterator();
         while (iter.hasNext()) {
             final FunctionData d = iter.next();
@@ -229,7 +229,7 @@ public final class Functions {
         return javaFunctions.values();
     }
 
-    final static class FunctionData {
+    static final class FunctionData {
         final Function<?> function;
         final Collection<FunctionReference<?>> calls = new ArrayList<>();
 

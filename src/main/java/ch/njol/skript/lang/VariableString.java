@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  */
 public final class VariableString implements Expression<String> {
 
-    public final static Map<String, Pattern> variableNames = new HashMap<>();
+    public static final Map<String, Pattern> variableNames = new HashMap<>();
     private final String orig;
 
     @Nullable
@@ -245,7 +245,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @SuppressWarnings("null")
-    private static void checkVariableConflicts(final String name, final StringMode mode, final @Nullable Iterable<Object> string) {
+    private static final void checkVariableConflicts(final String name, final StringMode mode, final @Nullable Iterable<Object> string) {
         if (mode != StringMode.VARIABLE_NAME || variableNames.containsKey(name))
             return;
         if (name.startsWith("%")) {// inside the if to only print this message once per variable
@@ -579,7 +579,7 @@ public final class VariableString implements Expression<String> {
         return this;
     }
 
-    private final static class ExpressionInfo {
+    private static final class ExpressionInfo {
         final Expression<?> expr;
         int flags;
         boolean toChatStyle;
