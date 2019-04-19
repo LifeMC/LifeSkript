@@ -115,7 +115,6 @@ public final class Skript extends JavaPlugin implements Listener {
     // ================ PLUGIN ================
     public final static Message m_invalid_reload = new Message("skript.invalid reload"),
             m_finished_loading = new Message("skript.finished loading");
-    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", Skript.getLatestVersion(), Skript.getVersion());
     public final static String SCRIPTSFOLDER = "scripts";
     /**
      * A small value, useful for comparing doubles or floats.
@@ -170,6 +169,7 @@ public final class Skript extends JavaPlugin implements Listener {
     static boolean runningCraftBukkit;
     @Nullable
     private static Version version;
+    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", Skript.getLatestVersion(), Skript.getVersion());
     public final static UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -1120,22 +1120,22 @@ public final class Skript extends JavaPlugin implements Listener {
 
             });
 
-			Bukkit.getPluginManager().registerEvents(new Listener() {
-				@EventHandler
-				public final void onJoin(final PlayerJoinEvent e) {
-					if (e.getPlayer().hasPermission("skript.admin")) {
-						new Task(Skript.this, 0) {
-							@Override
-							public final void run() {
+            Bukkit.getPluginManager().registerEvents(new Listener() {
+                @EventHandler
+                public final void onJoin(final PlayerJoinEvent e) {
+                    if (e.getPlayer().hasPermission("skript.admin")) {
+                        new Task(Skript.this, 0) {
+                            @Override
+                            public final void run() {
                                 final Player p = e.getPlayer();
                                 assert p != null;
                                 if (updateAvailable)
                                     info(p, "" + m_update_available);
-							}
-						};
-					}
-				}
-			}, this);
+                            }
+                        };
+                    }
+                }
+            }, this);
 
             latestVersion = getInstance().getDescription().getVersion();
 

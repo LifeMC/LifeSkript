@@ -47,8 +47,8 @@ import java.util.Collection;
  * @author Peter Güttinger
  */
 public final class SkriptCommand implements CommandExecutor {
+    public final static Message m_running_latest_version = new Message("updater.running latest version");
     private final static String NODE = "skript command";
-
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
     private final static CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")
@@ -57,7 +57,6 @@ public final class SkriptCommand implements CommandExecutor {
 //					.add("delete", "Deletes a variable")
 //					.add("find", "Find variables")
     ).add("help");
-
     private final static ArgsMessage m_reloading = new ArgsMessage(NODE + ".reload.reloading");
     private final static ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
     private final static ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
@@ -66,8 +65,6 @@ public final class SkriptCommand implements CommandExecutor {
     private final static File[] EMPTY_FILE_ARRAY = new File[0];
     private final static ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private final static ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
-
-    public final static Message m_running_latest_version = new Message("updater.running latest version");
 
     private static void reloading(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : Language.format(NODE + ".reload." + what, args);

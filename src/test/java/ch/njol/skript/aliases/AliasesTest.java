@@ -21,7 +21,6 @@
 
 package ch.njol.skript.aliases;
 
-import ch.njol.skript.log.BukkitLoggerFilter;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
@@ -34,11 +33,13 @@ import static org.junit.Assert.assertEquals;
  */
 public final class AliasesTest {
     static {
+        /*
         BukkitLoggerFilter.addFilter(record -> {
             if (record == null)
                 return false;
             return record.getMessage() == null || !record.getMessage().startsWith("[Skript] Missing entry");
         });
+        */
     }
 
     @Test

@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class ExprPotionEffect extends SimpleExpression<PotionEffect> {
     //static {
-        // REMIND create
+    // REMIND create
 //		Skript.registerExpression(ExprPotionEffect.class, PotionEffect.class, ExpressionType.COMBINED,"(|1¦extended) [potion [of]] %potioneffect%");
     //}
 

@@ -45,13 +45,13 @@ public abstract class Node {
     @Nullable
     protected SectionNode parent;
 
-//	protected Node() {
+    //	protected Node() {
 //		key = null;
 //		debug = false;
 //		lineNum = -1;
 //		SkriptLogger.setNode(this);
 //	}
-protected Config config;
+    protected Config config;
 
     protected Node(final Config c) {
         key = null;

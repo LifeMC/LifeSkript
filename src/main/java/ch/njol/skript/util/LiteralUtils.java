@@ -33,7 +33,9 @@ import ch.njol.skript.lang.UnparsedLiteral;
  */
 public final class LiteralUtils {
 
-    private LiteralUtils() { throw new UnsupportedOperationException(); }
+    private LiteralUtils() {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Checks an {@link Expression} for {@link UnparsedLiteral} objects
