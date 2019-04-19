@@ -66,7 +66,7 @@ public final class EffCancelEvent extends Effect {
             return false;
         }
         if (ScriptLoader.isCurrentEvent(PlayerLoginEvent.class)) {
-            Skript.error("A connect event cannot be cancelled, but the player may be kicked ('kick player by reason of \"...\"')", ErrorQuality.SEMANTIC_ERROR);
+            Skript.error("A connect event cannot be cancelled, but the player may be kicked ('kick player because of \"...\"')", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         cancel = matchedPattern == 0;
@@ -75,16 +75,13 @@ public final class EffCancelEvent extends Effect {
             Skript.error("The cancel event effect only usable in a event", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
-        for (final Class<? extends Event> e : es) {
-            if (Cancellable.class.isAssignableFrom(e) || InventoryInteractEvent.class.isAssignableFrom(e) || PlayerInteractEvent.class.isAssignableFrom(e) || BlockCanBuildEvent.class.isAssignableFrom(e) || PlayerDropItemEvent.class.isAssignableFrom(e)) {
-                return true;
-            } else {
-                Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
-                return false;
-            }
+        final Class<? extends Event> e = es[0];
+        if (Cancellable.class.isAssignableFrom(e) || InventoryInteractEvent.class.isAssignableFrom(e) || PlayerInteractEvent.class.isAssignableFrom(e) || BlockCanBuildEvent.class.isAssignableFrom(e) || PlayerDropItemEvent.class.isAssignableFrom(e)) {
+            return true;
+        } else {
+            Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
+            return false;
         }
-        Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
-        return false;
     }
 
     @Override

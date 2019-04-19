@@ -32,10 +32,7 @@ import org.bukkit.plugin.Plugin;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Peter Güttinger
@@ -43,7 +40,7 @@ import java.util.Set;
 // REMIND support more plugins?
 public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 
-    public static final Collection<RegionsPlugin<?>> plugins = new ArrayList<>(2);
+    public static final List<RegionsPlugin<?>> plugins = new ArrayList<>(2);
 
     static {
         Variables.yggdrasil.registerClassResolver(new ClassResolver() {
@@ -88,8 +85,8 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 
     @Nullable
     public static Region getRegion(final World world, final String name) {
-        for (final RegionsPlugin<?> pl : plugins) {
-            return pl.getRegion_i(world, name);
+        if (!plugins.isEmpty()) {
+            return plugins.get(0).getRegion_i(world, name);
         }
         return null;
     }
