@@ -281,6 +281,7 @@ public final class DefaultFunctions {
                     carry = (value - v) * relations[i];
                     final int field = fields[i];
                     if (field != Calendar.ZONE_OFFSET || field != Calendar.DST_OFFSET || !Double.isNaN(v))
+                        //noinspection MagicConstant
                         c.set(field, v);
                 }
                 return new Date[]{new Date(c.getTimeInMillis())};

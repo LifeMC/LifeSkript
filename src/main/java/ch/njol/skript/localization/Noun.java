@@ -107,7 +107,8 @@ public final class Noun extends Message {
         if (gender == PLURAL) {
             if ((flags & Language.F_DEFINITE_ARTICLE) != 0)
                 return definitePluralArticle + " ";
-        } else if (gender == NO_GENDER) {
+        } else //noinspection StatementWithEmptyBody
+            if (gender == NO_GENDER) {
             // nothing
         } else if ((flags & Language.F_DEFINITE_ARTICLE) != 0) {
             if (gender < 0 || gender >= definiteArticles.size()) {
@@ -320,10 +321,9 @@ public final class Noun extends Message {
 
     public String toString(final int flags) {
         validate();
-        final StringBuilder b = new StringBuilder();
-        b.append(getArticleWithSpace(flags));
-        b.append((flags & Language.F_PLURAL) != 0 ? plural : singular);
-        return "" + b.toString();
+        final String b = getArticleWithSpace(flags) +
+                ((flags & Language.F_PLURAL) != 0 ? plural : singular);
+        return "" + b;
     }
 
     public String withAmount(final double amount) {
@@ -353,24 +353,22 @@ public final class Noun extends Message {
 
     public String toString(final Adjective a, final int flags) {
         validate();
-        final StringBuilder b = new StringBuilder();
-        b.append(getArticleWithSpace(flags));
-        b.append(a.toString(gender, flags));
-        b.append(" ");
-        b.append((flags & Language.F_PLURAL) != 0 ? plural : singular);
-        return "" + b.toString();
+        String b = getArticleWithSpace(flags) +
+                a.toString(gender, flags) +
+                " " +
+                ((flags & Language.F_PLURAL) != 0 ? plural : singular);
+        return "" + b;
     }
 
     public String toString(final Adjective[] adjectives, final int flags, final boolean and) {
         validate();
         if (adjectives.length == 0)
             return toString(flags);
-        final StringBuilder b = new StringBuilder();
-        b.append(getArticleWithSpace(flags));
-        b.append(Adjective.toString(adjectives, getGender(), flags, and));
-        b.append(" ");
-        b.append(toString(flags));
-        return "" + b.toString();
+        String b = getArticleWithSpace(flags) +
+                Adjective.toString(adjectives, getGender(), flags, and) +
+                " " +
+                toString(flags);
+        return "" + b;
     }
 
     public String getSingular() {

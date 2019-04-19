@@ -188,7 +188,7 @@ public final class FunctionReference<T> {
                 b.append(", ");
             b.append(parameters[i].toString(e, debug));
         }
-        return "" + b.append(")");
+        return b.append(")").toString();
     }
 
 }
