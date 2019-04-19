@@ -169,7 +169,7 @@ public final class Skript extends JavaPlugin implements Listener {
     static boolean runningCraftBukkit;
     @Nullable
     private static Version version;
-    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", Skript.getLatestVersion(), Skript.getVersion());
+    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[] { Skript.getLatestVersion(), Skript.getVersion().toString() });
     public final static UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable

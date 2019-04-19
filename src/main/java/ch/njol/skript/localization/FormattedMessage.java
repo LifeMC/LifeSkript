@@ -23,11 +23,16 @@ package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
 
+import org.eclipse.jdt.annotation.Nullable;
 import java.util.IllegalFormatException;
+import java.util.function.Supplier;
 
 public final class FormattedMessage extends Message {
 
-    private final Object[] args;
+    private final @Nullable Object[] args;
+
+    private final @Nullable
+    Supplier<Object[]> supplier;
 
     /**
      * @param key
@@ -37,13 +42,24 @@ public final class FormattedMessage extends Message {
         super(key);
         assert args.length > 0;
         this.args = args;
+        supplier = null;
+    }
+
+    /**
+     * @param key
+     * @param args An array of Objects to replace into the format message, e.g. {@link java.util.concurrent.atomic.AtomicReference}s.
+     */
+    public FormattedMessage(final String key, final Supplier<Object[]> args) {
+        super(key);
+        this.args = null;
+        supplier = args;
     }
 
     @Override
     public String toString() {
         try {
             final String val = getValue();
-            return val == null ? key : "" + String.format(val, args);
+            return val == null ? key : "" + String.format(val, args != null ? args : supplier.get());
         } catch (final IllegalFormatException e) {
             final String m = "The formatted message '" + key + "' uses an illegal format: " + e.getLocalizedMessage();
             Skript.adminBroadcast("<red>" + m);
