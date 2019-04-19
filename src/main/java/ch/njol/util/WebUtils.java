@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -64,7 +64,7 @@ public final class WebUtils {
      *                     request to the address.
      */
     @Nullable
-    public static String getResponse(final String address) throws IOException {
+    public static final String getResponse(final String address) throws IOException {
 
         return getResponse(address, "application/json; charset=utf-8");
 
@@ -84,7 +84,7 @@ public final class WebUtils {
      *                     request to the address.
      */
     @Nullable
-    public static String getResponse(final String address, final String contentType) throws IOException {
+    public static final String getResponse(final String address, final String contentType) throws IOException {
 
         String response = null;
 

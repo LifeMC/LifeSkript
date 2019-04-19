@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -70,16 +70,16 @@ public enum Tag {
     /**
      * primitive tags are between these value
      */
-    public final static int MIN_PRIMITIVE = T_BYTE.tag, MAX_PRIMITIVE = T_BOOLEAN.tag;
+    public static final int MIN_PRIMITIVE = T_BYTE.tag, MAX_PRIMITIVE = T_BOOLEAN.tag;
 
     /**
      * primitive tags are between these value
      */
-    public final static int MIN_WRAPPER = T_BYTE_OBJ.tag, MAX_WRAPPER = T_BOOLEAN_OBJ.tag;
-    private final static Map<Class<?>, Tag> types = new HashMap<>();
-    private final static Tag[] byID = new Tag[256];
-    private final static Map<String, Tag> byName = new HashMap<>();
-    private final static HashMap<Class<?>, Tag> wrapperTypes = new HashMap<>();
+    public static final int MIN_WRAPPER = T_BYTE_OBJ.tag, MAX_WRAPPER = T_BOOLEAN_OBJ.tag;
+    private static final Map<Class<?>, Tag> types = new HashMap<>();
+    private static final Tag[] byID = new Tag[256];
+    private static final Map<String, Tag> byName = new HashMap<>();
+    private static final HashMap<Class<?>, Tag> wrapperTypes = new HashMap<>();
 
     static {
         for (final Tag t : Tag.values()) {

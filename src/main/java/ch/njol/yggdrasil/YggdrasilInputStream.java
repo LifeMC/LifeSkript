@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -240,7 +240,7 @@ public abstract class YggdrasilInputStream implements Closeable {
         return o;
     }
 
-//	private final static class Validation implements Comparable<Validation> {
+//	private static final class Validation implements Comparable<Validation> {
 //		private final ObjectInputValidation v;
 //		private final int prio;
 //

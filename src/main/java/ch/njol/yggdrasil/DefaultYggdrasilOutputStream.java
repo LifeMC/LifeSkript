@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -24,6 +24,7 @@ package ch.njol.yggdrasil;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import static ch.njol.yggdrasil.Tag.*;
@@ -31,7 +32,7 @@ import static ch.njol.yggdrasil.Tag.*;
 public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 
     @SuppressWarnings("null")
-    private final static Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     private final OutputStream out;
 

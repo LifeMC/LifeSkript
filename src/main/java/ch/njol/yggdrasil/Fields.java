@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -35,7 +35,7 @@ import java.util.*;
 @NotThreadSafe
 public final class Fields implements Iterable<FieldContext> {
 
-    private final static Map<Class<?>, Collection<Field>> cache = new HashMap<>();
+    private static final Map<Class<?>, Collection<Field>> cache = new HashMap<>();
     @Nullable
     private final Yggdrasil yggdrasil;
 
@@ -104,7 +104,7 @@ public final class Fields implements Iterable<FieldContext> {
      * @return All non-static and non-transient fields of the given class and its superclasses
      * @throws NotSerializableException If a field occurs more than once (i.e. if a class has a field with the same name as a field in one of its superclasses)
      */
-    public static Collection<Field> getFields(final Class<?> c) throws NotSerializableException {
+    public static final Collection<Field> getFields(final Class<?> c) throws NotSerializableException {
         Collection<Field> fields = cache.get(c);
         if (fields != null)
             return fields;
@@ -270,7 +270,7 @@ public final class Fields implements Iterable<FieldContext> {
      * @author Peter Güttinger
      */
     @NotThreadSafe
-    public final static class FieldContext {
+    public static final class FieldContext {
 
         final String id;
 

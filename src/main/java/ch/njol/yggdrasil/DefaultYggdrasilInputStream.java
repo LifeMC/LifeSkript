@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Array;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ import static ch.njol.yggdrasil.Tag.T_REFERENCE;
 public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
 
     @SuppressWarnings("null")
-    private final static Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = StandardCharsets.UTF_8;
     final InputStream in;
     private final short version;
     private final List<String> readShortStrings = new ArrayList<>();

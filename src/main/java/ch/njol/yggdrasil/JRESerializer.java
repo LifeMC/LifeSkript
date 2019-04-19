@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -29,10 +29,10 @@ import java.util.*;
 
 public final class JRESerializer extends YggdrasilSerializer<Object> {
 
-    private final static Class<?>[] supportedClasses = {ArrayList.class, LinkedList.class, HashSet.class, HashMap.class, UUID.class
+    private static final Class<?>[] supportedClasses = {ArrayList.class, LinkedList.class, HashSet.class, HashMap.class, UUID.class
     };
 
-    private final static Set<Class<?>> set = new HashSet<>(Arrays.asList(supportedClasses));
+    private static final Set<Class<?>> set = new HashSet<>(Arrays.asList(supportedClasses));
 
     @Override
     @Nullable

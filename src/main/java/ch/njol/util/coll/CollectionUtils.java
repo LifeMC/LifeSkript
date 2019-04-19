@@ -33,7 +33,7 @@ import java.util.Map.Entry;
  */
 public final class CollectionUtils {
 
-    private final static Random random = new Random();
+    private static final Random random = new Random();
 
     private CollectionUtils() {
         throw new UnsupportedOperationException();

@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2013-2014 Peter Güttinger
+ * Copyright 2013-2019 Peter Güttinger and contributors
  *
  */
 
@@ -72,12 +72,12 @@ public final class Yggdrasil {
      * <p>
      * hex: 0x59676700
      */
-    public final static int MAGIC_NUMBER = ('Y' << 24) + ('g' << 16) + ('g' << 8);
+    public static final int MAGIC_NUMBER = ('Y' << 24) + ('g' << 16) + ('g' << 8);
 
     /**
      * latest protocol version
      */
-    public final static short LATEST_VERSION = 1; // version 2 is only one minor change currently
+    public static final short LATEST_VERSION = 1; // version 2 is only one minor change currently
 
     public final short version;
 

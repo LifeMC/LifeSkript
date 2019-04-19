@@ -31,13 +31,13 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
 
-    public final static String[] EMPTY_STRING_ARRAY = new String[0];
+    public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     private StringUtils() {
         throw new UnsupportedOperationException();
     }
 
-    public static void checkIndices(final String s, final int start, final int end) {
+    public static final void checkIndices(final String s, final int start, final int end) {
         if (start < 0 || end > s.length())
             throw new StringIndexOutOfBoundsException("invalid start/end indices " + start + "," + end + " for string \"" + s + "\" (length " + s.length() + ")");
     }

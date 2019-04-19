@@ -28,7 +28,7 @@ import java.util.Iterator;
  */
 public final class EmptyIterable<T> implements Iterable<T> {
 
-    public final static EmptyIterable<Object> instance = new EmptyIterable<>();
+    public static final EmptyIterable<Object> instance = new EmptyIterable<>();
 
     @SuppressWarnings("unchecked")
     public static <T> EmptyIterable<T> get() {
