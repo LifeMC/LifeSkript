@@ -203,11 +203,11 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void printDownloadLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> info(Bukkit.getConsoleSender(), getDownloadLink()));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info(getDownloadLink()));
     }
 
     public static final void printIssuesLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> info(Bukkit.getConsoleSender(), "Please report all issues you encounter to the issues page: " + ISSUES_LINK));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
     @Nullable
@@ -428,20 +428,20 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     // TODO localise Infinity, -Infinity, NaN (and decimal point?)
-    public static String toString(final double n) {
+    public static final String toString(final double n) {
         return StringUtils.toString(n, SkriptConfig.numberAccuracy.value());
     }
 
     /**
      * Creates a new Thread and sets its UncaughtExceptionHandler. The Thread is not started automatically.
      */
-    public static Thread newThread(final Runnable r, final String name) {
+    public static final Thread newThread(final Runnable r, final String name) {
         final Thread t = new Thread(r, name);
         t.setUncaughtExceptionHandler(UEH);
         return t;
     }
 
-    public static boolean isAcceptRegistrations() {
+    public static final boolean isAcceptRegistrations() {
         return acceptRegistrations;
     }
 
@@ -466,7 +466,7 @@ public final class Skript extends JavaPlugin implements Listener {
      *
      * @param p The plugin
      */
-    public static SkriptAddon registerAddon(final JavaPlugin p) {
+    public static final SkriptAddon registerAddon(final JavaPlugin p) {
         checkAcceptRegistrations();
         if (addons.containsKey(p.getName()))
             throw new IllegalArgumentException("The addon " + p.getName() + " is already registered!");
@@ -478,24 +478,24 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     @Nullable
-    public static SkriptAddon getAddon(final JavaPlugin p) {
+    public static final SkriptAddon getAddon(final JavaPlugin p) {
         return addons.get(p.getName());
     }
 
     @Nullable
-    public static SkriptAddon getAddon(final String name) {
+    public static final SkriptAddon getAddon(final String name) {
         return addons.get(name);
     }
 
     @SuppressWarnings("null")
-    public static Collection<SkriptAddon> getAddons() {
+    public static final Collection<SkriptAddon> getAddons() {
         return Collections.unmodifiableCollection(addons.values());
     }
 
     /**
      * @return A {@link SkriptAddon} representing Skript.
      */
-    public static SkriptAddon getAddonInstance() {
+    public static final SkriptAddon getAddonInstance() {
         final SkriptAddon a = addon;
         if (a == null)
             return addon = new SkriptAddon(Skript.getInstance()).setLanguageFileDirectory("lang");
@@ -509,7 +509,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param condition The condition's class
      * @param patterns  Skript patterns to match this condition
      */
-    public static <E extends Condition> void registerCondition(final Class<E> condition, final String... patterns) throws IllegalArgumentException {
+    public static final <E extends Condition> void registerCondition(final Class<E> condition, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, condition);
         conditions.add(info);
@@ -522,7 +522,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param effect   The effect's class
      * @param patterns Skript patterns to match this effect
      */
-    public static <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
+    public static final <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, effect);
         effects.add(info);
@@ -531,15 +531,15 @@ public final class Skript extends JavaPlugin implements Listener {
 
     // ================ EXPRESSIONS ================
 
-    public static Collection<SyntaxElementInfo<? extends Statement>> getStatements() {
+    public static final Collection<SyntaxElementInfo<? extends Statement>> getStatements() {
         return statements;
     }
 
-    public static Collection<SyntaxElementInfo<? extends Condition>> getConditions() {
+    public static final Collection<SyntaxElementInfo<? extends Condition>> getConditions() {
         return conditions;
     }
 
-    public static Collection<SyntaxElementInfo<? extends Effect>> getEffects() {
+    public static final Collection<SyntaxElementInfo<? extends Effect>> getEffects() {
         return effects;
     }
 
@@ -552,7 +552,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param patterns   Skript patterns that match this expression
      * @throws IllegalArgumentException if returnType is not a normal class
      */
-    public static <E extends Expression<T>, T> void registerExpression(final Class<E> c, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
+    public static final <E extends Expression<T>, T> void registerExpression(final Class<E> c, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
             throw new IllegalArgumentException("returnType must be a normal type");
@@ -564,13 +564,13 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     @SuppressWarnings("null")
-    public static Iterator<ExpressionInfo<?, ?>> getExpressions() {
+    public static final Iterator<ExpressionInfo<?, ?>> getExpressions() {
         return expressions.iterator();
     }
 
     // ================ EVENTS ================
 
-    public static Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
+    public static final Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
         return new CheckedIterator<>(getExpressions(), i -> {
             if (i == null || i.returnType == Object.class)
                 return true;
@@ -594,7 +594,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
      */
     @SuppressWarnings({"unchecked"})
-    public static <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
+    public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
         checkAcceptRegistrations();
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, CollectionUtils.array(event));
         events.add(r);
@@ -610,14 +610,14 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param patterns Skript patterns to match this event
      * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
      */
-    public static <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, final String... patterns) {
+    public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, final String... patterns) {
         checkAcceptRegistrations();
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, events);
         Skript.events.add(r);
         return r;
     }
 
-    public static Collection<SkriptEventInfo<?>> getEvents() {
+    public static final Collection<SkriptEventInfo<?>> getEvents() {
         return events;
     }
 
@@ -630,7 +630,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param command
      * @return Whether the command was run
      */
-    public static boolean dispatchCommand(final CommandSender sender, final String command) {
+    public static final boolean dispatchCommand(final CommandSender sender, final String command) {
         try {
             if (sender instanceof Player) {
                 final PlayerCommandPreprocessEvent e = new PlayerCommandPreprocessEvent((Player) sender, "/" + command);
@@ -653,27 +653,27 @@ public final class Skript extends JavaPlugin implements Listener {
 
     // ================ LOGGING ================
 
-    public static boolean logNormal() {
+    public static final boolean logNormal() {
         return SkriptLogger.log(Verbosity.NORMAL);
     }
 
-    public static boolean logHigh() {
+    public static final boolean logHigh() {
         return SkriptLogger.log(Verbosity.HIGH);
     }
 
-    public static boolean logVeryHigh() {
+    public static final boolean logVeryHigh() {
         return SkriptLogger.log(Verbosity.VERY_HIGH);
     }
 
-    public static boolean debug() {
+    public static final boolean debug() {
         return SkriptLogger.debug();
     }
 
-    public static boolean testing() {
+    public static final boolean testing() {
         return debug() || Skript.class.desiredAssertionStatus();
     }
 
-    public static boolean log(final Verbosity minVerb) {
+    public static final boolean log(final Verbosity minVerb) {
         return SkriptLogger.log(minVerb);
     }
 
@@ -726,19 +726,19 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param info Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
-    public static RuntimeException exception(final String... info) {
+    public static final RuntimeException exception(final String... info) {
         return exception(null, info);
     }
 
-    public static RuntimeException exception(final @Nullable Throwable cause, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final String... info) {
         return exception(cause, null, null, info);
     }
 
-    public static RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
         return exception(cause, thread, null, info);
     }
 
-    public static RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
         return exception(cause, null, item, info);
     }
 
@@ -749,7 +749,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param info  Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
-    public static RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
+    public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
 
         logEx();
         logEx("[Skript] Severe Error:");
@@ -879,12 +879,12 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     @SuppressWarnings("null")
-    public static File getPluginFile() {
+    public static final File getPluginFile() {
         return getInstance().getFile();
     }
 
     @SuppressWarnings("null")
-    public static ClassLoader getBukkitClassLoader() {
+    public static final ClassLoader getBukkitClassLoader() {
         return getInstance().getClassLoader();
     }
 

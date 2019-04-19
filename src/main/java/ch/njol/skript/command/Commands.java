@@ -34,6 +34,7 @@ import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.BukkitLoggerFilter;
+import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
@@ -71,6 +72,8 @@ import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static ch.njol.skript.Skript.*;
 
 //TODO option to disable replacement of <color>s in command arguments?
 
@@ -259,10 +262,19 @@ public final class Commands { //NOSONAR
         final boolean wasLocal = Language.setUseLocal(false);
         try {
             command = "" + command.substring(SkriptConfig.effectCommandToken.value().length()).trim();
+            if (command.isEmpty()) {
+                info(sender, "Please enter a effect, expression or condition");
+                return true;
+            }
             final RetainingLogHandler log = SkriptLogger.startRetainingLog();
             try {
                 ScriptLoader.setCurrentEvent("effect command", EffectCommandEvent.class);
-                final Effect e = Effect.parse(command, null);
+                Effect e = Effect.parse(command, null);
+                if (e == null) {
+                    // Send return value of the expression or condition
+                    log.clear(); // Clear the first error
+                    e = Effect.parse("send \"%"+command.replace("\"", "\"\"")+"%\" to me", null);
+                }
                 ScriptLoader.deleteCurrentEvent();
 
                 if (e != null) {
@@ -271,14 +283,21 @@ public final class Commands { //NOSONAR
 
                     sender.sendMessage(ChatColor.GRAY + "executing '" + ChatColor.stripColor(command) + "'");
                     if (SkriptConfig.logPlayerCommands.value() && !(sender instanceof ConsoleCommandSender))
-                        Skript.info(sender.getName() + " issued effect command: " + command);
+                        info(sender.getName() + " issued effect command: " + command);
                     TriggerItem.walk(e, new EffectCommandEvent(sender, command));
                 } else {
                     if (sender == Bukkit.getConsoleSender()) // log as SEVERE instead of INFO like printErrors below
-                        SkriptLogger.LOGGER.severe("Error in: " + ChatColor.stripColor(command));
+                        error("Error in: " + ChatColor.stripColor(command));
                     else
-                        sender.sendMessage(ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
-                    log.printErrors(sender, "(No specific information is available)");
+                        info(sender,ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
+                    if (log.getFirstError("").message.contains("Can't understand this expression"))
+                        log.clear();
+                    for (final LogEntry error : log.getErrors()) {
+                        if (error.getMessage().trim().isEmpty())
+                            continue;
+                        error.setMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(error.getMessage()));
+                    }
+                    log.printErrors(sender, (sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles("(No specific information is available)"));
                 }
             } finally {
                 log.stop();
@@ -485,7 +504,7 @@ public final class Commands { //NOSONAR
         registerCommand(c);
 
         if (Skript.logVeryHigh() && !Skript.debug())
-            Skript.info("registered command " + desc);
+            info("registered command " + desc);
         currentArguments = null;
         return c;
     }
