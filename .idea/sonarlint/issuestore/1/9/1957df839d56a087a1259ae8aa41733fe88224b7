@@ -1,6 +1,6 @@
 
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‘³ƒ½ύÿÿÿÿ
 =squid:S1659ς" Declare "d2" on a separate line.(ΫκΤύÿÿÿÿ
-osquid:ModifiersOrderCheck""EReorder the modifiers to comply with the Java Language Specification.(‘³ƒ½ύÿÿÿÿ
+^squid:S3457"AFormat specifiers should be used instead of string concatenation.(Ελ‘ϊÿÿÿÿ
 p
 squid:S135σ"YReduce the total number of break and continue statements in this loop to use at most one.(€›—
-^squid:S3457"AFormat specifiers should be used instead of string concatenation.(Ελ‘ϊÿÿÿÿ

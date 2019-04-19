@@ -1,11 +1,9 @@
 
-psquid:S2293."YReplace the type specification in this constructor call with the diamond operator ("<>").(§ş¹í
-Bsquid:S1452j"&Remove usage of generic wildcard type.(ƒ•×íøÿÿÿÿ
-Bsquid:S1452Q"&Remove usage of generic wildcard type.(ø¹Èıÿÿÿÿ
-osquid:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(ã¢§e
-Bsquid:S1452z"&Remove usage of generic wildcard type.(ûòàşÿÿÿÿ
-4squid:S2386."Make this member "protected".(§ş¹í
-msquid:S00100x"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆº“°8ã¦„Û¢-
-rsquid:S00100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûòàşÿÿÿÿ8ã¦„Û¢-
-msquid:S00100}"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×®Ë8ã¦„Û¢-
-lsquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üê±|8ã¦„Û¢-
+msquid:S00100u"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆº“°8ã¦„Û¢-
+Bsquid:S1452g"&Remove usage of generic wildcard type.(ƒ•×íøÿÿÿÿ
+msquid:S00100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×®Ë8ã¦„Û¢-
+Bsquid:S1452N"&Remove usage of generic wildcard type.(ø¹Èıÿÿÿÿ
+Bsquid:S1452w"&Remove usage of generic wildcard type.(ûòàşÿÿÿÿ
+lsquid:S00100|"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üê±|8ã¦„Û¢-
+rsquid:S00100w"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûòàşÿÿÿÿ8¾™ß§£-
+;squid:S2386+"Make this member "protected".(ÃöÃõ8¾™ß§£-

@@ -1,12 +1,10 @@
 
-Ssquid:S2629o"7Use the built-in formatting to construct this argument.(º£ïèşÿÿÿÿ
-<squid:S2629À"$Invoke method(s) only conditionally.(‘èŞ»
-jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(¬ø§ó
-osquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(è‰Ûıÿÿÿÿ
-jsquid:ModifiersOrderCheck-"EReorder the modifiers to comply with the Java Language Specification.(¦‹²˜
-osquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(Û®”øÿÿÿÿ
-vsquid:S2293Ì"YReplace the type specification in this constructor call with the diamond operator ("<>").(³†ÃÛûÿÿÿÿ
-vsquid:S2293Ó"YReplace the type specification in this constructor call with the diamond operator ("<>").(·Êõùÿÿÿÿ
 Qsquid:S1118&":Add a private constructor to hide the implicit public one.(ËÏßÆ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¦‹²˜
+Qsquid:S2629"7Use the built-in formatting to construct this argument.(º£ïèşÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Û®”øÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(è‰Ûıÿÿÿÿ
+9squid:S2629"$Invoke method(s) only conditionally.(‘èŞ»
 }squid:S1845/"aRename field "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(ŠÚ€ˆÿÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¬ø§ó
 squid:S1845ö"bRename method "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(‡¤÷ùıÿÿÿÿ

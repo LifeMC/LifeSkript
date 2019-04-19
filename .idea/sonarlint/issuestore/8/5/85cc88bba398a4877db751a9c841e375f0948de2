@@ -1,5 +1,3 @@
 
-isquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(«”šM
-jsquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(ó±Ü°
-osquid:S22934"YReplace the type specification in this constructor call with the diamond operator ("<>").(«”šM
-Bsquid:S1604"(Make this anonymous inner class a lambda(üü¥µıÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ó±Ü°
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ñÔ”şÿÿÿÿ

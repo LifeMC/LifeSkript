@@ -1,6 +1,5 @@
 
-[squid:HiddenFieldCheckZ":Rename "colors" which hides the field declared at line 46.(´ä±#
-esquid:HiddenFieldCheck]">Rename "adjectives" which hides the field declared at line 50.(½“Ûïûÿÿÿÿ
-ssquid:CallToDeprecatedMethodŠ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(›ËÁı
-=squid:S1604"(Make this anonymous inner class a lambda(ğÉ¶¦
 `squid:S3358@"DExtract this nested ternary operation into an independent statement.(è£¬¤úÿÿÿÿ
+ssquid:CallToDeprecatedMethodŠ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(›ËÁı
+[squid:HiddenFieldCheckZ":Rename "colors" which hides the field declared at line 45.(´ä±#
+esquid:HiddenFieldCheck]">Rename "adjectives" which hides the field declared at line 49.(½“Ûïûÿÿÿÿ

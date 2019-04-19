@@ -1,31 +1,16 @@
 
-7squid:S1659Ê"Declare "n" on a separate line.(­ğı›
-osquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(»§õ øÿÿÿÿ
-jsquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(“Ü‚û
-osquid:ModifiersOrderCheck7"EReorder the modifiers to comply with the Java Language Specification.(ĞìÒ®øÿÿÿÿ
-isquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(´ÏúC
-osquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(Ù÷Šµıÿÿÿÿ
-jsquid:ModifiersOrderCheckS"EReorder the modifiers to comply with the Java Language Specification.(¢ììÂ
-usquid:S22937"YReplace the type specification in this constructor call with the diamond operator ("<>").(ĞìÒ®øÿÿÿÿ
-osquid:S22938"YReplace the type specification in this constructor call with the diamond operator ("<>").(´ÏúC
-vsquid:S2293Ü"YReplace the type specification in this constructor call with the diamond operator ("<>").(àà¯ãÿÿÿÿÿ
-vsquid:S2293Ş"YReplace the type specification in this constructor call with the diamond operator ("<>").(Í™û“ıÿÿÿÿ
-qsquid:S2293à"YReplace the type specification in this constructor call with the diamond operator ("<>").(³óßø
-vsquid:S2293â"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ë‡Úûÿÿÿÿ
-qsquid:S2293í"YReplace the type specification in this constructor call with the diamond operator ("<>").(¤ÌÇš
-qsquid:S2293ğ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¢ÇÏ¶
-qsquid:S2293ò"YReplace the type specification in this constructor call with the diamond operator ("<>").(†¥åÁ
-qsquid:S2293ô"YReplace the type specification in this constructor call with the diamond operator ("<>").(«Êä×
-Osquid:S2589µ"7Remove this expression which always evaluates to "true"(à‘¦ö
-Osquid:S2589ş"7Remove this expression which always evaluates to "true"(à‘¦ö
-g squid:LabelsShouldNotBeUsedCheckÂ";Refactor the code to remove this label and the need for it.(àÏÅ)
-lsquid:S00100¨"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Òøøÿÿÿÿ
-Tsquid:S2259"?A "NullPointerException" could be thrown; "m" is nullable here.(¬á†¯
-Ysquid:S2259"?A "NullPointerException" could be thrown; "m" is nullable here.(Ú‰Ãùÿÿÿÿ
-ysquid:S1845¨"\Rename method "A" to prevent any misunderstanding/clash with method "a" defined on line 290.(Òøøÿÿÿÿ
-ysquid:S1845´"\Rename method "a" to prevent any misunderstanding/clash with method "A" defined on line 302.(ËÓ¾şÿÿÿÿ
-|squid:S1845·"dRename method "random" to prevent any misunderstanding/clash with field "random" defined on line 56.(¶ßÅõ
-=squid:S1604"(Make this anonymous inner class a lambda(íî‡Ë
-Bsquid:S1604"(Make this anonymous inner class a lambda(šŸşûÿÿÿÿ
-=squid:S1604"(Make this anonymous inner class a lambda(õ™Ş
-asquid:S3358á"DExtract this nested ternary operation into an independent statement.(ÿİÃƒÿÿÿÿÿ
+lsquid:S00100§"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Òøøÿÿÿÿ
+7squid:S1659É"Declare "n" on a separate line.(­ğı›
+gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‚ó¨
+Osquid:S2589ı"7Remove this expression which always evaluates to "true"(à‘¦ö
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÆÌÏêùÿÿÿÿ
+ysquid:S1845§"\Rename method "A" to prevent any misunderstanding/clash with method "a" defined on line 283.(Òøøÿÿÿÿ
+|squid:S1845¶"dRename method "random" to prevent any misunderstanding/clash with field "random" defined on line 52.(¶ßÅõ
+g squid:LabelsShouldNotBeUsedCheckÁ";Refactor the code to remove this label and the need for it.(àÏÅ)
+Osquid:S2589´"7Remove this expression which always evaluates to "true"(à‘¦ö
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ù÷Šµıÿÿÿÿ
+ysquid:S1845³"\Rename method "a" to prevent any misunderstanding/clash with method "A" defined on line 295.(ËÓ¾şÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¢ììÂ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(“Ü‚û
+asquid:S3358à"DExtract this nested ternary operation into an independent statement.(ÿİÃƒÿÿÿÿÿ
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(»§õ øÿÿÿÿ8áœß§£-

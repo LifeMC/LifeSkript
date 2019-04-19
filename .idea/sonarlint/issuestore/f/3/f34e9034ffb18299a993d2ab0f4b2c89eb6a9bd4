@@ -1,5 +1,4 @@
 
+=squid:S1168Y"&Return an empty array instead of null.(¥¹ï
 £%squid:RedundantThrowsDeclarationCheck]"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
 Ksquid:S1066a"/Merge this if statement with the enclosing one.(×Ùüÿÿÿÿ
-=squid:S1168Y"&Return an empty array instead of null.(¥¹ï
-Bsquid:S1604"(Make this anonymous inner class a lambda(¼Õñõùÿÿÿÿ

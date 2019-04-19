@@ -1,9 +1,9 @@
 
-osquid:ModifiersOrderCheck3"EReorder the modifiers to comply with the Java Language Specification.(ÂÓ…ñüÿÿÿÿ
-\squid:HiddenFieldCheckR":Rename "reason" which hides the field declared at line 59.(žäºü
-`squid:S1134g"DTake the required action to fix the issue indicated by this comment.(’¸”øøÿÿÿÿ
-Ysquid:CallToDeprecatedMethodk"1Remove this use of "setBanned"; it is deprecated.(²†áé
 ^squid:CallToDeprecatedMethodu"1Remove this use of "setBanned"; it is deprecated.(±¸¿ªûÿÿÿÿ
-`squid:CallToDeprecatedMethod†"8Remove this use of "getOfflinePlayer"; it is deprecated.(áŠÅ\
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÂÓ…ñüÿÿÿÿ
 Ysquid:CallToDeprecatedMethod†"1Remove this use of "setBanned"; it is deprecated.(áŠÅ\
+`squid:CallToDeprecatedMethod†"8Remove this use of "getOfflinePlayer"; it is deprecated.(áŠÅ\
+\squid:HiddenFieldCheckR":Rename "reason" which hides the field declared at line 59.(žäºü
+Ysquid:CallToDeprecatedMethodk"1Remove this use of "setBanned"; it is deprecated.(²†áé
 wsquid:S001153"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÂÓ…ñüÿÿÿÿ
+`squid:S1134g"DTake the required action to fix the issue indicated by this comment.(’¸”øøÿÿÿÿ

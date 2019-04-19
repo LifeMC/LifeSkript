@@ -1,7 +1,7 @@
 
+8squid:S1659"#Declare "LOOPS" on a separate line.(Ëê‹«
 ƒ squid:ForLoopCounterChangedChecko"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
-:squid:S1659-"#Declare "LOOPS" on a separate line.(Ëê‹«
-Asquid:S1659-"*Declare "CONDITIONALS" on a separate line.(Ëê‹«
-jsquid:ModifiersOrderCheck-"EReorder the modifiers to comply with the Java Language Specification.(Ëê‹«
-osquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(‚ŒÛûÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‚ŒÛûÿÿÿÿ
 Zsquid:S3358q"DExtract this nested ternary operation into an independent statement.(–ôÙ+
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ëê‹«
+?squid:S1659"*Declare "CONDITIONALS" on a separate line.(Ëê‹«

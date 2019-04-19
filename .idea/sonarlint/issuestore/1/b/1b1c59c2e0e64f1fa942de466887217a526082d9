@@ -1,16 +1,14 @@
 
-Ysquid:CallToDeprecatedMethodZ"1Remove this use of "getTypeId"; it is deprecated.(úñ»
-\squid:CallToDeprecatedMethodX"/Remove this use of "getData"; it is deprecated.(«·ğÿÿÿÿÿ
-^squid:CallToDeprecatedMethod]"1Remove this use of "getTypeId"; it is deprecated.(íâïÜøÿÿÿÿ
-Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ
-=squid:S1604"(Make this anonymous inner class a lambda(Û¦Ò¦
-bsquid:CallToDeprecatedMethodb"5Remove this use of "PaintingEvent"; it is deprecated.(Š‹£×ıÿÿÿÿ
 Tsquid:CallToDeprecatedMethodc"-Remove this use of "getId"; it is deprecated.(¿Ån
 Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ
-bsquid:CallToDeprecatedMethod:":Remove this use of "PaintingPlaceEvent"; it is deprecated.(¬”Ÿö
-Wsquid:CallToDeprecatedMethod^"/Remove this use of "getData"; it is deprecated.(ôãç
 Ksquid:S1066O"/Merge this if statement with the enclosing one.(—Éïİşÿÿÿÿ
-gsquid:CallToDeprecatedMethod8":Remove this use of "PaintingBreakEvent"; it is deprecated.(×ï†Òıÿÿÿÿ
-^squid:CallToDeprecatedMethodW"1Remove this use of "getTypeId"; it is deprecated.(Íëµ‚ıÿÿÿÿ
-=squid:S1604"(Make this anonymous inner class a lambda(Û¦Ò¦
 _squid:CallToDeprecatedMethod["2Remove this use of "getRawData"; it is deprecated.(³İ°¼úÿÿÿÿ
+Wsquid:CallToDeprecatedMethod^"/Remove this use of "getData"; it is deprecated.(ôãç
+bsquid:CallToDeprecatedMethodb"5Remove this use of "PaintingEvent"; it is deprecated.(Š‹£×ıÿÿÿÿ
+Ysquid:CallToDeprecatedMethodZ"1Remove this use of "getTypeId"; it is deprecated.(úñ»
+^squid:CallToDeprecatedMethod]"1Remove this use of "getTypeId"; it is deprecated.(íâïÜøÿÿÿÿ
+^squid:CallToDeprecatedMethodW"1Remove this use of "getTypeId"; it is deprecated.(Íëµ‚ıÿÿÿÿ
+gsquid:CallToDeprecatedMethod8":Remove this use of "PaintingBreakEvent"; it is deprecated.(×ï†Òıÿÿÿÿ
+bsquid:CallToDeprecatedMethod:":Remove this use of "PaintingPlaceEvent"; it is deprecated.(¬”Ÿö
+\squid:CallToDeprecatedMethodX"/Remove this use of "getData"; it is deprecated.(«·ğÿÿÿÿÿ
+Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ

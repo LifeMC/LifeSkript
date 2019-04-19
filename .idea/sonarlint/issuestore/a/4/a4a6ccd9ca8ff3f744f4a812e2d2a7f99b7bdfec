@@ -1,12 +1,10 @@
 
-vsquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(ı­©Ùüÿÿÿÿ8˜éÌÌ¢-
-Xsquid:S11188":Add a private constructor to hide the implicit public one.(«ˆé›8˜éÌÌ¢-
-~squid:S00115:"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ı­©Ùüÿÿÿÿ8˜éÌÌ¢-
-vsquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(©µğùÿÿÿÿ8˜éÌÌ¢-
-wsquid:S2293;"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÀÛõõ8×§„Û¢-
 w
 squid:S135›"YReduce the total number of break and continue statements in this loop to use at most one.(È£ˆ´8×§„Û¢-
+‰squid:S1845"hRename method "generate" to prevent any misunderstanding/clash with field "generate" defined on line 58.(â¡»§ùÿÿÿÿ8×§„Û¢-
 n squid:LabelsShouldNotBeUsedCheckš";Refactor the code to remove this label and the need for it.(–‹L8×§„Û¢-
-‹squid:S1845C"hRename method "generate" to prevent any misunderstanding/clash with field "generate" defined on line 59.(â¡»§ùÿÿÿÿ8×§„Û¢-
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ı­©Ùüÿÿÿÿ8˜éÌÌ¢-
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(©µğùÿÿÿÿ8˜éÌÌ¢-
 Isquid:S00108¸")Either remove or fill this block of code.(ç¤Ğ¾8×§„Û¢-
-Dsquid:S1604"(Make this anonymous inner class a lambda(¡Á´8×§„Û¢-
+|squid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ı­©Ùüÿÿÿÿ8˜éÌÌ¢-
+]squid:S11188":Add a private constructor to hide the implicit public one.(¡Å•ùÿÿÿÿ8˜éÌÌ¢-

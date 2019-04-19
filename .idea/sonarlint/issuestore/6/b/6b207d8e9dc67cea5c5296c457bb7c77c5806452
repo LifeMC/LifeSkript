@@ -1,6 +1,5 @@
 
-psquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(…á€µ
 Esquid:S1199¨"-Extract this nested code block into a method.(Â÷şœ
+ksquid:S001007"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§¥şüÿÿÿÿ
 Jsquid:S1199¹"-Extract this nested code block into a method.(ìã©‘ùÿÿÿÿ
 [squid:S2583¿"DChange this condition so that it does not always evaluate to "false"(¶Šq
-ksquid:S001007"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§¥şüÿÿÿÿ

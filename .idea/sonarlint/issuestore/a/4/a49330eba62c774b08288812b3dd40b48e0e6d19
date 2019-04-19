@@ -1,5 +1,5 @@
 
-£%squid:RedundantThrowsDeclarationCheckU"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(¡ºÄô
-jsquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(Öñ≈ø
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Öñ≈ø
 =squid:S1168Q"&Return an empty array instead of null.(•πÔç
+£%squid:RedundantThrowsDeclarationCheckU"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(¡ºÄô
 `squid:S3358?"DExtract this nested ternary operation into an independent statement.(∫ﬂòª¯ˇˇˇˇ

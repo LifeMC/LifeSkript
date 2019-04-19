@@ -1,8 +1,8 @@
 
-jsquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(€§Ì§
 t
 squid:S135M"YReduce the total number of break and continue statements in this loop to use at most one.(É Ğıúÿÿÿÿ
+rsquid:S001156"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(€§Ì§
+Zsquid:CallToDeprecatedMethod"1Remove this use of "getTypeId"; it is deprecated.(¸°ú§
 Hsquid:S4524€"+Move this default to the end of the switch.(İ–Ò˜ÿÿÿÿÿ
 Zsquid:CallToDeprecatedMethodP"-Remove this use of "getId"; it is deprecated.(öŸôÌıÿÿÿÿ
-Zsquid:CallToDeprecatedMethod"1Remove this use of "getTypeId"; it is deprecated.(¸°ú§
-rsquid:S001156"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(€§Ì§
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(€§Ì§

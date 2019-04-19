@@ -1,15 +1,12 @@
 
-\squid:HiddenFieldCheckn"5Rename "t" which hides the field declared at line 61.(™ô³ôüÿÿÿÿ
+gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(€ÂŸ0
+Jsquid:S2065"0Remove the "transient" modifier from this field.(ĞŒßñÿÿÿÿÿ
+Jsquid:S2696"6Make the enclosing method "static" or remove this set.(ŒÅó%
 r
 squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
-psquid:ModifiersOrderCheckÂ"EReorder the modifiers to comply with the Java Language Specification.(ò©ëªıÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Û¬Å£şÿÿÿÿ
-Msquid:S2696 "6Make the enclosing method "static" or remove this set.(ŒÅó%
-isquid:ModifiersOrderCheck3"EReorder the modifiers to comply with the Java Language Specification.(€ÂŸ0
-jsquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(îåÌü
-Lsquid:S2065@"0Remove the "transient" modifier from this field.(ĞŒßñÿÿÿÿÿ
-osquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(–‡™ïüÿÿÿÿ
-vsquid:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(Éææšùÿÿÿÿ
-Xsquid:HiddenFieldCheck"8Rename "tick" which hides the field declared at line 60.(À›¥è
-psquid:S22934"YReplace the type specification in this constructor call with the diamond operator ("<>").(îåÌü
-Bsquid:S1604"(Make this anonymous inner class a lambda(¾ï‡úÿÿÿÿ
+a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Û¬Å£şÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ò©ëªıÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(é³êÈşÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(–‡™ïüÿÿÿÿ
+Zsquid:HiddenFieldCheck"5Rename "t" which hides the field declared at line 61.(™ô³ôüÿÿÿÿ
+osquid:S3824"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(Í‡Ï°ûÿÿÿÿ8è•ß§£-

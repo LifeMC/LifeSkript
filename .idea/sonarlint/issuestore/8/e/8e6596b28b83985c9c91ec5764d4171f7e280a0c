@@ -1,6 +1,3 @@
 
-Ksquid:S1066j"/Merge this if statement with the enclosing one.(е…їЄяяяяя
-psquid:S2293e"YReplace the type specification in this constructor call with the diamond operator ("<>").(ўмЧЭ
-usquid:S2293u"YReplace the type specification in this constructor call with the diamond operator ("<>").(‰ҐДцщяяяя
-Zsquid:S25838"CChange this condition so that it does not always evaluate to "true"(ЃехС
 Zsquid:S2583/"CChange this condition so that it does not always evaluate to "true"(ЃехС
+Zsquid:S25838"CChange this condition so that it does not always evaluate to "true"(ЃехС

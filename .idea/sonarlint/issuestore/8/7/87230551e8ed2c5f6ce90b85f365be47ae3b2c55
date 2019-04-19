@@ -1,5 +1,4 @@
 
-vsquid:S2293Ω"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷âÌÅ˛ˇˇˇˇ
-Qsquid:S3516Å"9Refactor this method to not always return the same value.(ÌÏÑË
->squid:S1168Ë"&Return an empty array instead of null.(•πÔç
->squid:S1452…"&Remove usage of generic wildcard type.(Ï€Øç
+>squid:S1452«"&Remove usage of generic wildcard type.(Ï€Øç
+Qsquid:S3516ˇ"9Refactor this method to not always return the same value.(ÌÏÑË
+>squid:S1168Ê"&Return an empty array instead of null.(•πÔç

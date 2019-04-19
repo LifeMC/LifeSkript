@@ -1,23 +1,19 @@
 
-osquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(®ğæ†ÿÿÿÿÿ
-jsquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(È±ñ•
-jsquid:ModifiersOrderCheck;"EReorder the modifiers to comply with the Java Language Specification.(¹Ç««
-usquid:S2293@"YReplace the type specification in this constructor call with the diamond operator ("<>").(ııÙîüÿÿÿÿ
-psquid:S2293`"YReplace the type specification in this constructor call with the diamond operator ("<>").(°ŸâÏ
-Gsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-Gsquid:S2093ì"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-m
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(¤—
-Osquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-^squid:CallToDeprecatedMethod"3Remove this use of "deserialize"; it is deprecated.(ğáÊÃüÿÿÿÿ
 g squid:LabelsShouldNotBeUsedCheck";Refactor the code to remove this label and the need for it.(àÏÅ)
+p
+squid:S135“"YReduce the total number of break and continue statements in this loop to use at most one.(¤—
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(È±ñ•
+=squid:S1168l"&Return an empty array instead of null.(¥¹ï
+jsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Îà
+asquid:CallToDeprecatedMethod¯"3Remove this use of "deserialize"; it is deprecated.(ğáÊÃüÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¹Ç««
+Rsquid:S1141˜"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Bsquid:S00108œ")Either remove or fill this block of code.(Çìƒ¡
 8squid:S1170A"!Make this final field static too.(˜ì¶â
 =squid:S1168c"&Return an empty array instead of null.(¥¹ï
-=squid:S1168l"&Return an empty array instead of null.(¥¹ï
-?squid:S00108")Either remove or fill this block of code.(Çìƒ¡
->squid:S00108")Either remove or fill this block of code.(éúá)
-~squid:S00116A"fRename this field "REQUIRED_CHANGES_FOR_RESAVE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ì¶â
 jsquid:S00117‹"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óóï÷
 osquid:S00117Œ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÉµËüÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(®ğæ†ÿÿÿÿÿ
+~squid:S00116A"fRename this field "REQUIRED_CHANGES_FOR_RESAVE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜ì¶â
 jsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş¾£ñ
-jsquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Îà
+†squid:S4087õ"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(¢¿ˆşÿÿÿÿÿ8¶‹ß§£-

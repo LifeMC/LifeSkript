@@ -1,13 +1,12 @@
 
-Gsquid:S2065o"0Remove the "transient" modifier from this field.(¸‹…¢
-jsquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(ĞÒõÄ
-psquid:ModifiersOrderCheckö"EReorder the modifiers to comply with the Java Language Specification.(µ‡æ¶ÿÿÿÿÿ
-psquid:S2293)"YReplace the type specification in this constructor call with the diamond operator ("<>").(ĞÒõÄ
-`squid:HiddenFieldCheck~"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
-asquid:HiddenFieldCheck‹"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
-asquid:HiddenFieldCheck¬"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
-Nsquid:S2589|"7Remove this expression which always evaluates to "true"(½æ„–
-Msquid:S1133İ"5Do not forget to remove this deprecated code someday.(›ËÁı
-Qsquid:MissingDeprecatedCheckİ"(Add the missing @deprecated Javadoc tag.(›ËÁı
-squid:S1186¥"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‹ªÉ·ÿÿÿÿÿ
-Esquid:S2387o"."info" is the name of a field in "EntityData".(¸‹…¢
+Esquid:S2065"0Remove the "transient" modifier from this field.(¸‹…¢
+^squid:HiddenFieldCheck"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
+^squid:HiddenFieldCheck"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŞŞ¢ê
+^squid:HiddenFieldCheck"9Rename "info" which hides the field declared at line 110.(ò¯¬ùÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(µ‡æ¶ÿÿÿÿÿ
+Nsquid:MissingDeprecatedCheck"(Add the missing @deprecated Javadoc tag.(›ËÁı
+Jsquid:S1133"5Do not forget to remove this deprecated code someday.(›ËÁı
+Csquid:S2387"."info" is the name of a field in "EntityData".(¸‹…¢
+›squid:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‹ªÉ·ÿÿÿÿÿ
+Lsquid:S2589"7Remove this expression which always evaluates to "true"(½æ„–

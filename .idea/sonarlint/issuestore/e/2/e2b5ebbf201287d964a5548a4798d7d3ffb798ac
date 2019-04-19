@@ -1,9 +1,7 @@
 
-§%squid:RedundantThrowsDeclarationCheckt"qRemove the declaration of thrown exception 'java.util.regex.PatternSyntaxException' which is a runtime exception.(›ŸØïýÿÿÿÿ
-usquid:S22934"YReplace the type specification in this constructor call with the diamond operator ("<>").(…¥Üéüÿÿÿÿ
-Csquid:S1452ƒ"&Remove usage of generic wildcard type.(ÒøÇôøÿÿÿÿ
 >squid:S1452ˆ"&Remove usage of generic wildcard type.(ŒÔ¶‹
+>squid:S1452’"&Remove usage of generic wildcard type.(µºŸÌ
+§%squid:RedundantThrowsDeclarationCheckt"qRemove the declaration of thrown exception 'java.util.regex.PatternSyntaxException' which is a runtime exception.(›ŸØïýÿÿÿÿ
+Csquid:S1452ƒ"&Remove usage of generic wildcard type.(ÒøÇôøÿÿÿÿ
+>squid:S1452’"&Remove usage of generic wildcard type.(µºŸÌ
 >squid:S1452ù"&Remove usage of generic wildcard type.(çõ€…
->squid:S1452’"&Remove usage of generic wildcard type.(µºŸÌ
->squid:S1452’"&Remove usage of generic wildcard type.(µºŸÌ
-vsquid:S2293Ã"YReplace the type specification in this constructor call with the diamond operator ("<>").(ížÆÉúÿÿÿÿ

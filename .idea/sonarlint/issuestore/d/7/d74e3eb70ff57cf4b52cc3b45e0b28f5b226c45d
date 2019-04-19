@@ -1,5 +1,5 @@
 
-osquid:ModifiersOrderCheck,"EReorder the modifiers to comply with the Java Language Specification.(ç·Ùþúÿÿÿÿ
+wsquid:S00115,"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ç·Ùþúÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ç·Ùþúÿÿÿÿ
 asquid:HiddenFieldCheckc":Rename "parent" which hides the field declared at line 45.(‰šåÓÿÿÿÿÿ
 Nsquid:S2589A"7Remove this expression which always evaluates to "true"(Öãªò
-wsquid:S00115,"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ç·Ùþúÿÿÿÿ

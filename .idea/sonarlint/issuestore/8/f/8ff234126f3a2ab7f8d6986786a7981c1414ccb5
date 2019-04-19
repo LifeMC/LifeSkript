@@ -1,8 +1,6 @@
 
-psquid:S2293“"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûœ†i
 =squid:S1168b"&Return an empty array instead of null.(¥¹ï
 ¤%squid:RedundantThrowsDeclarationCheck‹"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
->squid:S1168‚"&Return an empty array instead of null.(¥¹ï
-psquid:S2293“"YReplace the type specification in this constructor call with the diamond operator ("<>").(ûœ†i
 >squid:S1168…"&Return an empty array instead of null.(¥¹ï
+>squid:S1168‚"&Return an empty array instead of null.(¥¹ï
 Msquid:S00108F")Either remove or fill this block of code.(½Ş÷Åøÿÿÿÿ8À¡„Û¢-

@@ -1,14 +1,11 @@
 
-jsquid:ModifiersOrderCheck&"EReorder the modifiers to comply with the Java Language Specification.(³¾§†
-ksquid:ModifiersOrderCheckÜ"EReorder the modifiers to comply with the Java Language Specification.(¾®…ˆ
-psquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(”İ§
-usquid:S2293("YReplace the type specification in this constructor call with the diamond operator ("<>").(ş¿Íûÿÿÿÿ
-Fsquid:S1905®")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheck‡".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
-osquid:ModifiersOrderCheck("EReorder the modifiers to comply with the Java Language Specification.(ş¿Íûÿÿÿÿ
-psquid:S2293&"YReplace the type specification in this constructor call with the diamond operator ("<>").(³¾§†
-d$squid:AssignmentInSubExpressionCheck«".Extract the assignment out of this expression.(…áºÉşÿÿÿÿ
-=squid:S1452}"&Remove usage of generic wildcard type.(ÅÉ¶Î
-_$squid:AssignmentInSubExpressionCheck˜".Extract the assignment out of this expression.(±Ô¼Ğ
-jsquid:ModifiersOrderCheck'"EReorder the modifiers to comply with the Java Language Specification.(”İ§
-=squid:S1452}"&Remove usage of generic wildcard type.(ÅÉ¶Î
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŞïÉ¶üÿÿÿÿ
+\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(±Ô¼Ğ
+a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(…áºÉşÿÿÿÿ
+a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
+;squid:S1452"&Remove usage of generic wildcard type.(ÅÉ¶Î
+Csquid:S1905")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.( Üè
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶©šø
+;squid:S1452"&Remove usage of generic wildcard type.(ÅÉ¶Î
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¾®…ˆ

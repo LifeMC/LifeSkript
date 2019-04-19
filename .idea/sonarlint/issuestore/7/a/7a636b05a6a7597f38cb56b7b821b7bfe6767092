@@ -1,29 +1,21 @@
 
-dsquid:HiddenFieldCheck¹"<Rename "newState" which hides the field declared at line 46.(‹‡û…þÿÿÿÿ
 dsquid:HiddenFieldCheckÅ"<Rename "newState" which hides the field declared at line 46.(‹‡û…þÿÿÿÿ
-dsquid:HiddenFieldCheckÑ"<Rename "newState" which hides the field declared at line 46.(‹‡û…þÿÿÿÿ
-\squid:CallToDeprecatedMethodS"/Remove this use of "getData"; it is deprecated.(‘ý§Úúÿÿÿÿ
-_squid:CallToDeprecatedMethodY"2Remove this use of "setRawData"; it is deprecated.(Ä›˜àýÿÿÿÿ
-Zsquid:CallToDeprecatedMethod"/Remove this use of "setData"; it is deprecated.(À—­Îýÿÿÿÿ
-Ysquid:CallToDeprecatedMethod~"1Remove this use of "getTypeId"; it is deprecated.(÷¦Õ
 `squid:CallToDeprecatedMethod±"2Remove this use of "setRawData"; it is deprecated.(Ä›˜àýÿÿÿÿ
-Usquid:CallToDeprecatedMethod"/Remove this use of "setData"; it is deprecated.(²ã´
 Zsquid:CallToDeprecatedMethod»"1Remove this use of "setTypeId"; it is deprecated.(§–ã›
-_squid:CallToDeprecatedMethod¼"1Remove this use of "getTypeId"; it is deprecated.( éÎ„üÿÿÿÿ
-Wsquid:CallToDeprecatedMethod"1Remove this use of "setTypeId"; it is deprecated.(ŠÏÚÑ
-Zsquid:CallToDeprecatedMethodÇ"1Remove this use of "setTypeId"; it is deprecated.(§–ã›
 _squid:CallToDeprecatedMethodÈ"1Remove this use of "getTypeId"; it is deprecated.( éÎ„üÿÿÿÿ
-Wsquid:CallToDeprecatedMethod"1Remove this use of "setTypeId"; it is deprecated.(²ãáÿ
-Zsquid:CallToDeprecatedMethodÓ"1Remove this use of "setTypeId"; it is deprecated.(§–ã›
-`squid:CallToDeprecatedMethodÔ"2Remove this use of "setRawData"; it is deprecated.(Ä›˜àýÿÿÿÿ
-Ysquid:CallToDeprecatedMethodÕ"1Remove this use of "getTypeId"; it is deprecated.(ÕØªp
+_squid:CallToDeprecatedMethod¼"1Remove this use of "getTypeId"; it is deprecated.( éÎ„üÿÿÿÿ
 Zsquid:CallToDeprecatedMethodÕ"2Remove this use of "getRawData"; it is deprecated.(ÕØªp
-]squid:CallToDeprecatedMethod"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
-Bsquid:S1604"(Make this anonymous inner class a lambda(Ž±Ýøÿÿÿÿ
+_squid:CallToDeprecatedMethodY"2Remove this use of "setRawData"; it is deprecated.(Ä›˜àýÿÿÿÿ
+Ysquid:CallToDeprecatedMethod~"1Remove this use of "getTypeId"; it is deprecated.(÷¦Õ
+Zsquid:CallToDeprecatedMethodÇ"1Remove this use of "setTypeId"; it is deprecated.(§–ã›
+dsquid:HiddenFieldCheckÑ"<Rename "newState" which hides the field declared at line 46.(‹‡û…þÿÿÿÿ
+Ysquid:CallToDeprecatedMethodÕ"1Remove this use of "getTypeId"; it is deprecated.(ÕØªp
+Zsquid:CallToDeprecatedMethodÓ"1Remove this use of "setTypeId"; it is deprecated.(§–ã›
+dsquid:HiddenFieldCheck¹"<Rename "newState" which hides the field declared at line 46.(‹‡û…þÿÿÿÿ
+\squid:CallToDeprecatedMethodS"/Remove this use of "getData"; it is deprecated.(‘ý§Úúÿÿÿÿ
+`squid:CallToDeprecatedMethodÔ"2Remove this use of "setRawData"; it is deprecated.(Ä›˜àýÿÿÿÿ
+csquid:CallToDeprecatedMethod["/Remove this use of "setData"; it is deprecated.(»òÆ÷üÿÿÿÿ8Äœß§£-
+dsquid:CallToDeprecatedMethod³"/Remove this use of "setData"; it is deprecated.(úõ£þÿÿÿÿ8Äœß§£-
+fsquid:CallToDeprecatedMethod¾"1Remove this use of "setTypeId"; it is deprecated.(²ï°Èüÿÿÿÿ8Äœß§£-
+asquid:CallToDeprecatedMethodÊ"1Remove this use of "setTypeId"; it is deprecated.(æ“ã×8Äœß§£-
+msquid:CallToDeprecatedMethod×"8Remove this use of "setTypeIdAndData"; it is deprecated.(ÜëÙÒúÿÿÿÿ8Äœß§£-

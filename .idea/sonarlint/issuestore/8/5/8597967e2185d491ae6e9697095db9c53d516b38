@@ -1,4 +1,4 @@
 
-squid:S2637Q"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(•πÔç
 =squid:S1168Q"&Return an empty array instead of null.(•πÔç
 rsquid:S00115/"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¶⁄ ¬
+squid:S2637Q"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(•πÔç

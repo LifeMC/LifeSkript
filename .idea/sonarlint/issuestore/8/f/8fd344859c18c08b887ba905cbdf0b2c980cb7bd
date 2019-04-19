@@ -1,5 +1,4 @@
 
-Fsquid:S1066l"/Merge this if statement with the enclosing one.(Ñç¾À
-vsquid:S2293£"YReplace the type specification in this constructor call with the diamond operator ("<>").(–²Çşÿÿÿÿ
-fsquid:HiddenFieldCheckP"?Rename "returnTypes" which hides the field declared at line 49.(è›Œ¯ùÿÿÿÿ
 >squid:S1168"&Return an empty array instead of null.(¥¹ï
+fsquid:HiddenFieldCheckP"?Rename "returnTypes" which hides the field declared at line 49.(è›Œ¯ùÿÿÿÿ
+Fsquid:S1066l"/Merge this if statement with the enclosing one.(Ñç¾À

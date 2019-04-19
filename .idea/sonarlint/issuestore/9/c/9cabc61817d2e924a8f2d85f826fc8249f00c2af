@@ -1,19 +1,19 @@
 
-P"squid:SwitchLastCaseIsDefaultCheckQ""Add a default case to this switch.(¬£Ãæ
->squid:S16596""Declare "DOWN" on a separate line.( ıîÿÿÿÿÿ
-:squid:S16597"#Declare "NORTH" on a separate line.(œ£ƒ»
-:squid:S16597"#Declare "SOUTH" on a separate line.(œ£ƒ»
-9squid:S16597""Declare "EAST" on a separate line.(œ£ƒ»
-9squid:S16597""Declare "WEST" on a separate line.(œ£ƒ»
 ?squid:S16598"(Declare "NORTH_EAST" on a separate line.(¯ñ¶“
 ?squid:S16598"(Declare "NORTH_WEST" on a separate line.(¯ñ¶“
-?squid:S16598"(Declare "SOUTH_EAST" on a separate line.(¯ñ¶“
-?squid:S16598"(Declare "SOUTH_WEST" on a separate line.(¯ñ¶“
-osquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(ˆ÷”»øÿÿÿÿ
-osquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.( ıîÿÿÿÿÿ
+P"squid:SwitchLastCaseIsDefaultCheckQ""Add a default case to this switch.(¬£Ãæ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.( ıîÿÿÿÿÿ
+\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
 Ysquid:HiddenFieldCheck”"7Rename "yaw" which hides the field declared at line 75.(œ¬™?
+?squid:S16598"(Declare "SOUTH_EAST" on a separate line.(¯ñ¶“
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ˆ÷”»øÿÿÿÿ
+9squid:S16597""Declare "WEST" on a separate line.(œ£ƒ»
+?squid:S16598"(Declare "SOUTH_WEST" on a separate line.(¯ñ¶“
+\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
+:squid:S16597"#Declare "NORTH" on a separate line.(œ£ƒ»
+\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
+:squid:S16597"#Declare "SOUTH" on a separate line.(œ£ƒ»
+9squid:S16597""Declare "EAST" on a separate line.(œ£ƒ»
 asquid:HiddenFieldCheck³">Rename "relativeTo" which hides the field declared at line 73.(ƒ©ö®
-\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
-\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
-\squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’
+>squid:S16596""Declare "DOWN" on a separate line.( ıîÿÿÿÿÿ
 \squid:S3358´"DExtract this nested ternary operation into an independent statement.(µ’

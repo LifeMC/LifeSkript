@@ -1,13 +1,7 @@
 
-jsquid:ModifiersOrderCheckM"EReorder the modifiers to comply with the Java Language Specification.(ÞÏÂ®
-jsquid:ModifiersOrderCheckR"EReorder the modifiers to comply with the Java Language Specification.(„ õó
-usquid:S2293V"YReplace the type specification in this constructor call with the diamond operator ("<>").(è²Ûµúÿÿÿÿ
-psquid:S2293W"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÉÔÉ˜
->squid:S1452Á"&Remove usage of generic wildcard type.(‡ÎÝ•
-Gsquid:S2093’"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-Gsquid:S2093š"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-asquid:S2583Ž"DChange this condition so that it does not always evaluate to "false"(…¥€²ÿÿÿÿÿ
-Tsquid:S2589§"7Remove this expression which always evaluates to "true"(†­Çýÿÿÿÿ
-dsquid:S00112Ã"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
-Zsquid:S2147"ECombine this catch with the one at line 187, which has the same body.(¿Âû§
-Zsquid:S2147"ECombine this catch with the one at line 338, which has the same body.(à¯òÅ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(„ õó
+dsquid:S00112Á"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÞÏÂ®
+asquid:S2583Œ"DChange this condition so that it does not always evaluate to "false"(…¥€²ÿÿÿÿÿ
+Tsquid:S2589¥"7Remove this expression which always evaluates to "true"(†­Çýÿÿÿÿ
+>squid:S1452¿"&Remove usage of generic wildcard type.(‡ÎÝ•

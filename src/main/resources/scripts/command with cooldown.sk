@@ -1,4 +1,4 @@
-﻿# This command allows everyone to get infinite cakes
+# This command allows everyone to get infinite cakes
 # but the command has a cooldown of one minute (per player)
 command /cake:
 	description: Recieve a cake, but you can only do this once per minute!

@@ -34,9 +34,9 @@ import static org.junit.Assert.assertEquals;
 @SuppressWarnings("resource")
 public final class YggdrasilTest {
 
-    public final static PETest1 PET1_3 = new PETest1("PET1_3");
+    public static final PETest1 PET1_3 = new PETest1("PET1_3");
     static final Yggdrasil y = new Yggdrasil();
-    final static String modifiedClassID = "something random";
+    static final String modifiedClassID = "something random";
     static Class<?> currentModifiedClass = UnmodifiedClass.class;
 
     static {
@@ -80,7 +80,7 @@ public final class YggdrasilTest {
     };
 
     @SuppressWarnings("null")
-    private static byte[] save(final @Nullable Object o) throws IOException {
+    private static final byte[] save(final @Nullable Object o) throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final YggdrasilOutputStream s = y.newOutputStream(out);
         s.writeObject(o);
@@ -100,7 +100,7 @@ public final class YggdrasilTest {
 //	}
 
     @Nullable
-    private static Object load(final byte[] d) throws IOException {
+    private static final Object load(final byte[] d) throws IOException {
         final YggdrasilInputStream l = y.newInputStream(new ByteArrayInputStream(d));
         return l.readObject();
     }
@@ -111,7 +111,7 @@ public final class YggdrasilTest {
 //		return l.readObject();
 //	}
 
-    private static boolean equals(final @Nullable Object o1, final @Nullable Object o2) {
+    private static final boolean equals(final @Nullable Object o1, final @Nullable Object o2) {
         if (o1 == null || o2 == null)
             return o1 == o2;
         if (o1.getClass() != o2.getClass())
@@ -140,14 +140,14 @@ public final class YggdrasilTest {
         }
     }
 
-//	private final static class CollectionTests {
+//	private static final class CollectionTests {
 //		Collection<?> al = new ArrayList<>(Arrays.asList(1, 2, 3)),
 //				hs = new HashSet<>(Arrays.asList(1, 2, 3, 3, 4)),
 //				ll = new LinkedList<>(Arrays.asList(4, 3, 2, 1));
 //		Map<?, ?> hm = new HashMap<>();
 //	}
 
-    private static String toString(final @Nullable Object o) {
+    private static final String toString(final @Nullable Object o) {
         if (o == null)
             return "null";
         if (o.getClass().isArray()) {
@@ -180,7 +180,7 @@ public final class YggdrasilTest {
 //	}
 
     @SuppressWarnings("EmptyMethod")
-    private static void print(final @Nullable Object o, final byte[] d) {
+    private static final void print(final @Nullable Object o, final byte[] d) {
 		/*
 		System.out.print(o);
 		System.out.print(": ");
@@ -253,9 +253,9 @@ public final class YggdrasilTest {
 
     @YggdrasilID("PETest1")
     private static class PETest1 extends PseudoEnum<PETest1> {
-        public final static PETest1 PET1_0 = new PETest1("PET1_0 #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶");
-        public final static PETest2 PET2_2 = new PETest2("PET2_2");
-        public final static PETest1 PET1_2 = new PETest1("PET1_2") {
+        public static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶");
+        public static final PETest2 PET2_2 = new PETest2("PET2_2");
+        public static final PETest1 PET1_2 = new PETest1("PET1_2") {
         };
 
         protected PETest1(final String name) {
@@ -264,14 +264,14 @@ public final class YggdrasilTest {
 
         @YggdrasilID("PETest2")
         public static class PETest2 extends PETest1 {
-            public final static PETest2 PET2_0 = new PETest2("PET2_0");
-            public final static PETest2 PET2_1 = new PETest2("PET2_1") {
+            public static final PETest2 PET2_0 = new PETest2("PET2_0");
+            public static final PETest2 PET2_1 = new PETest2("PET2_1") {
                 @Override
                 public String toString() {
                     return "PET2_1!!!";
                 }
             };
-            public final static PETest1 PET1_1 = new PETest1("PET1_1");
+            public static final PETest1 PET1_1 = new PETest1("PET1_1");
 
             protected PETest2(final String name) {
                 super(name);
@@ -282,7 +282,7 @@ public final class YggdrasilTest {
     }
 
     @YggdrasilID("TestClass1")
-    private final static class TestClass1 implements YggdrasilSerializable {
+    private static final class TestClass1 implements YggdrasilSerializable {
         @Nullable
         private final String blah;
 
@@ -325,8 +325,8 @@ public final class YggdrasilTest {
     }
 
     @YggdrasilID("TestClass2")
-    private final static class TestClass2 implements YggdrasilExtendedSerializable {
-        private final static int DEFAULT = 5;
+    private static final class TestClass2 implements YggdrasilExtendedSerializable {
+        private static final int DEFAULT = 5;
         private final int someFinalInt;
         private transient boolean ok;
 
@@ -384,7 +384,7 @@ public final class YggdrasilTest {
         }
     }
 
-    private final static class UnmodifiedClass implements YggdrasilSerializable {
+    private static final class UnmodifiedClass implements YggdrasilSerializable {
         final int unchanged;
 
         @SuppressWarnings("unused")
@@ -397,7 +397,7 @@ public final class YggdrasilTest {
         }
     }
 
-    private final static class ModifiedClass implements YggdrasilSerializable {
+    private static final class ModifiedClass implements YggdrasilSerializable {
         @YggdrasilID("unchanged")
         final int changed;
 

@@ -44,17 +44,13 @@ public final class SkriptTest {
     @SuppressWarnings("null")
     private static final Player njol = createMock(Player.class);
 
-    static {
-
-    }
-
     @Test
     public void testVersion() {
         Assert.assertNotNull(Skript.getLatestVersion());
     }
 
     //	@Test
-    public static void main() {
+    public static final void main() {
         new Thread(() -> {
 //				org.bukkit.craftbukkit.Main.main(new String[] {"-nojline"});
         }).start();
@@ -70,7 +66,7 @@ public final class SkriptTest {
         }, 2);
     }
 
-    static void test() {
+    static final void test() {
 
         final Trigger t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player"));
         assert t != null;
@@ -79,7 +75,7 @@ public final class SkriptTest {
     }
 
     @SuppressWarnings("null")
-    private static SectionNode nodeFromString(final String s) {
+    private static final SectionNode nodeFromString(final String s) {
         try {
             return new Config(s, "test.sk", true, false, ":").getMainNode();//.getNode(0);
         } catch (final IOException e) {

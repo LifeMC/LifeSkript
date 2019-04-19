@@ -1,8 +1,5 @@
 
-usquid:S2293."YReplace the type specification in this constructor call with the diamond operator ("<>").(Òåëøúÿÿÿÿ
-vsquid:S2293¦"YReplace the type specification in this constructor call with the diamond operator ("<>").(ƒ³…øÿÿÿÿ
+gsquid:S00100Š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã€â
 p
 squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(êø­Š
-bsquid:HiddenFieldCheckR";Rename "nodeMap" which hides the field declared at line 51.(ÅØğäşÿÿÿÿ
-gsquid:S00100Š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã€â
-Bsquid:S1604"(Make this anonymous inner class a lambda(áåäøÿÿÿÿ
+bsquid:HiddenFieldCheckR";Rename "nodeMap" which hides the field declared at line 50.(ÅØğäşÿÿÿÿ

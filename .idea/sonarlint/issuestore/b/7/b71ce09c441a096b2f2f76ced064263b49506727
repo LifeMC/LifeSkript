@@ -1,11 +1,8 @@
 
-\squid:S3358“"DExtract this nested ternary operation into an independent statement.(¾‚”’
-qsquid:S2293­"YReplace the type specification in this constructor call with the diamond operator ("<>").(­¡ÎÄ
-–squid:S1845_"zRename method "getNearbyEntities" to prevent any misunderstanding/clash with field "getNearbyEntities" defined on line 64.(ë™Ýšÿÿÿÿÿ
-Jsquid:S1444A".Make this "public static hardFail" field final(ä€À˜ÿÿÿÿÿ
-osquid:ModifiersOrderCheck?"EReorder the modifiers to comply with the Java Language Specification.(À¢êƒùÿÿÿÿ
-‡"squid:ClassVariableVisibilityCheckA"TMake hardFail a static final constant or non-public and provide accessors if needed.(ä€À˜ÿÿÿÿÿ
-wsquid:S00115?"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(À¢êƒùÿÿÿÿ
-=squid:S1604"(Make this anonymous inner class a lambda(š±–ê
-qsquid:S2293å"YReplace the type specification in this constructor call with the diamond operator ("<>").(š±–ê
 osquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(ä€À˜ÿÿÿÿÿ
+wsquid:S00115?"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(À¢êƒùÿÿÿÿ
+Jsquid:S1444A".Make this "public static hardFail" field final(ä€À˜ÿÿÿÿÿ
+–squid:S1845_"zRename method "getNearbyEntities" to prevent any misunderstanding/clash with field "getNearbyEntities" defined on line 63.(ë™Ýšÿÿÿÿÿ
+\squid:S3358“"DExtract this nested ternary operation into an independent statement.(¾‚”’
+‡"squid:ClassVariableVisibilityCheckA"TMake hardFail a static final constant or non-public and provide accessors if needed.(ä€À˜ÿÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(À¢êƒùÿÿÿÿ

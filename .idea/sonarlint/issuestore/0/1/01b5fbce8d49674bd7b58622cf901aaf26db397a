@@ -1,14 +1,13 @@
 
-osquid:ModifiersOrderCheck1"EReorder the modifiers to comply with the Java Language Specification.(Õ££¼øÿÿÿÿ
-osquid:ModifiersOrderCheck2"EReorder the modifiers to comply with the Java Language Specification.(°ÔŠ×ÿÿÿÿÿ
-Fsquid:S1066?"/Merge this if statement with the enclosing one.(õ©óà
-^$squid:AssignmentInSubExpressionCheck?".Extract the assignment out of this expression.(õ©óà
-\squid:HiddenFieldCheck–"9Rename "types" which hides the field declared at line 57.(÷«Ïø
-Msquid:S1133¤"5Do not forget to remove this deprecated code someday.(›ËÁý
-Qsquid:MissingDeprecatedCheck¤"(Add the missing @deprecated Javadoc tag.(›ËÁý
-Zsquid:CallToDeprecatedMethodY"2Remove this use of "getBlockId"; it is deprecated.(Û“ÂÎ
-\squid:CallToDeprecatedMethodY"4Remove this use of "getBlockData"; it is deprecated.(Û“ÂÎ
-Zsquid:CallToDeprecatedMethodb"2Remove this use of "getBlockId"; it is deprecated.(¸éªø
 \squid:CallToDeprecatedMethodb"4Remove this use of "getBlockData"; it is deprecated.(¸éªø
+Zsquid:CallToDeprecatedMethodY"2Remove this use of "getBlockId"; it is deprecated.(Û“ÂÎ
+Fsquid:S1066?"/Merge this if statement with the enclosing one.(£·÷â
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Õ££¼øÿÿÿÿ
+\squid:CallToDeprecatedMethodY"4Remove this use of "getBlockData"; it is deprecated.(Û“ÂÎ
+Msquid:S1133¢"5Do not forget to remove this deprecated code someday.(›ËÁý
+Qsquid:MissingDeprecatedCheck¢"(Add the missing @deprecated Javadoc tag.(›ËÁý
+\squid:HiddenFieldCheck–"9Rename "types" which hides the field declared at line 56.(÷«Ïø
+Zsquid:CallToDeprecatedMethodb"2Remove this use of "getBlockId"; it is deprecated.(¸éªø
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(°ÔŠ×ÿÿÿÿÿ
 asquid:CallToDeprecatedMethodu"9Remove this use of "spawnFallingBlock"; it is deprecated.(¹˜Çò
-=squid:S1604"(Make this anonymous inner class a lambda(õ©óà
+^$squid:AssignmentInSubExpressionCheck?".Extract the assignment out of this expression.(£·÷â

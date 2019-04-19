@@ -1,13 +1,8 @@
 
-<squid:S1659¤"Declare "s" on a separate line.(¡¢âÂùÿÿÿÿ
-osquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(÷’ô÷ıÿÿÿÿ
-usquid:S22938"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷’ô÷ıÿÿÿÿ
 `squid:HiddenFieldChecki"9Rename "third" which hides the field declared at line 69.(î«üøÿÿÿÿ
-Ysquid:HiddenFieldCheckr"8Rename "comp" which hides the field declared at line 73.(ä¿Ã
-asquid:HiddenFieldCheck†"9Rename "third" which hides the field declared at line 69.(¶èŒúÿÿÿÿ
 asquid:HiddenFieldCheckß"9Rename "third" which hides the field declared at line 69.(î«üøÿÿÿÿ
+<squid:S1659¤"Declare "s" on a separate line.(¡¢âÂùÿÿÿÿ
+asquid:HiddenFieldCheck†"9Rename "third" which hides the field declared at line 69.(¶èŒúÿÿÿÿ
 asquid:HiddenFieldCheckê"9Rename "third" which hides the field declared at line 69.(î«üøÿÿÿÿ
-Csquid:S1172„"+Remove this unused method parameter "expr".(¾ßŒæ
-=squid:S1604"(Make this anonymous inner class a lambda(Ç•ØØ
-Bsquid:S1604"(Make this anonymous inner class a lambda(ÒÆĞ°üÿÿÿÿ
-<squid:S1604"(Make this anonymous inner class a lambda(üïK
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŸèØíùÿÿÿÿ
+Ysquid:HiddenFieldCheckr"8Rename "comp" which hides the field declared at line 73.(ä¿Ã

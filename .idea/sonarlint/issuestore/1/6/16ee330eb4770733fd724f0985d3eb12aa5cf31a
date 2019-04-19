@@ -1,9 +1,6 @@
 
-<squid:S1604"(Make this anonymous inner class a lambda(¿‘É5
-=squid:S1604"(Make this anonymous inner class a lambda(Å½ø¦
-<squid:S1604"(Make this anonymous inner class a lambda(¿‘É5
-=squid:S1452g"&Remove usage of generic wildcard type.(ÎœŽ
-=squid:S1452c"&Remove usage of generic wildcard type.(¯å³¾
-=squid:S1452R"&Remove usage of generic wildcard type.(ÌŽÇÏ
 8squid:S1214#""Move constants to a class or enum.(ˆ¤Ò{
+=squid:S1452R"&Remove usage of generic wildcard type.(ÌŽÇÏ
+=squid:S1452g"&Remove usage of generic wildcard type.(ÎœŽ
 Bsquid:S1452N"&Remove usage of generic wildcard type.(ð¿¨ýÿÿÿÿ
+=squid:S1452c"&Remove usage of generic wildcard type.(¯å³¾

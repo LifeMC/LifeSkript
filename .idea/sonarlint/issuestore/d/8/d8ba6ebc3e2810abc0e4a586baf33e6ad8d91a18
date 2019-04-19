@@ -1,6 +1,6 @@
 
-Lsquid:S14440"6Make this "public static lastExecuteState" field final(˜ê_
-Nsquid:S14442"7Make this "public static lastExecuteErrors" field final(Ÿ¨ŒÎ
-Msquid:S2696W"6Make the enclosing method "static" or remove this set.(å¸ÕÃ
 Rsquid:S2696Z"6Make the enclosing method "static" or remove this set.(İ«ËÚùÿÿÿÿ
+Nsquid:S14442"7Make this "public static lastExecuteErrors" field final(Ÿ¨ŒÎ
+Lsquid:S14440"6Make this "public static lastExecuteState" field final(˜ê_
+Msquid:S2696W"6Make the enclosing method "static" or remove this set.(å¸ÕÃ
 ‰"squid:ClassVariableVisibilityCheck0"\Make lastExecuteState a static final constant or non-public and provide accessors if needed.(˜ê_

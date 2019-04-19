@@ -1,4 +1,4 @@
-﻿#
+#
 # A simple message of the day script.
 # The MOTD can be set with the /setmotd command,
 # and it will be sent to each player when they log in

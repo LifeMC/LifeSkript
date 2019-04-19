@@ -1,39 +1,32 @@
 
-Fsquid:S1066¼"/Merge this if statement with the enclosing one.(’Ä·8
+>squid:S1168É"&Return an empty array instead of null.(¥¹ï
+ksquid:S2975“"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒÎÒš
+<squid:S1659w" Declare "it" on a separate line.(…ª¬…ıÿÿÿÿ
+Zsquid:CallToDeprecatedMethod¸"1Remove this use of "getTypeId"; it is deprecated.(Óı¥Õ
+Ysquid:CallToDeprecatedMethodo"1Remove this use of "getTypeId"; it is deprecated.(ÈÛ·¢
 Wsquid:CallToDeprecatedMethodÀ"/Remove this use of "getData"; it is deprecated.(ª§è.
+Zsquid:CallToDeprecatedMethod“"1Remove this use of "getTypeId"; it is deprecated.(½œµè
+gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‰×­t
+p
+squid:S135Ù"YReduce the total number of break and continue statements in this loop to use at most one.(ãÇâ‡
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ØâÑÄıÿÿÿÿ
 _squid:CallToDeprecatedMethodŠ"1Remove this use of "getTypeId"; it is deprecated.(””û½ÿÿÿÿÿ
 `squid:HiddenFieldCheck¨"8Rename "meta" which hides the field declared at line 69.(¨Ğ‘ªùÿÿÿÿ
-qsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ãêÚ
-vsquid:S2293Ö"YReplace the type specification in this constructor call with the diamond operator ("<>").(ø°®ûÿÿÿÿ
-osquid:S2293>"YReplace the type specification in this constructor call with the diamond operator ("<>").(€À»E
-Zsquid:CallToDeprecatedMethod¸"1Remove this use of "getTypeId"; it is deprecated.(Óı¥Õ
-[squid:HiddenFieldCheck¤"8Rename "item" which hides the field declared at line 80.(Õ§÷ê
 Gsquid:S2065A"0Remove the "transient" modifier from this field.( •¯
 Gsquid:S2065F"0Remove the "transient" modifier from this field.(å¨øÒ
-psquid:S2293f"YReplace the type specification in this constructor call with the diamond operator ("<>").(ñ£´“
-Qsquid:MissingDeprecatedCheckÇ"(Add the missing @deprecated Javadoc tag.(å“Æ„
->squid:S1168Ï"&Return an empty array instead of null.(¥¹ï
->squid:S1168É"&Return an empty array instead of null.(¥¹ï
-qsquid:S2293”"YReplace the type specification in this constructor call with the diamond operator ("<>").(÷‡§Ç
-<squid:S1659w" Declare "it" on a separate line.(…ª¬…ıÿÿÿÿ
-p
-squid:S135Ø"YReduce the total number of break and continue statements in this loop to use at most one.(ãÇâ‡
-Msquid:S1133Ç"5Do not forget to remove this deprecated code someday.(å“Æ„
-Zsquid:CallToDeprecatedMethod“"1Remove this use of "getTypeId"; it is deprecated.(½œµè
-isquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(‰×­t
-g squid:LabelsShouldNotBeUsedCheckŞ";Refactor the code to remove this label and the need for it.(àÏÅ)
-vsquid:S2293€"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ş«Ãäøÿÿÿÿ
 Ysquid:CallToDeprecatedMethodÀ"1Remove this use of "getTypeId"; it is deprecated.(ª§è.
-osquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(×ØÄ™şÿÿÿÿ
-\squid:HiddenFieldCheck"9Rename "block" which hides the field declared at line 80.(úÌæ•
-?squid:S1659Q"#Declare "block" on a separate line.(Ä²äÂüÿÿÿÿ
-ksquid:S2975’"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒÎÒš
-Ysquid:CallToDeprecatedMethodo"1Remove this use of "getTypeId"; it is deprecated.(ÈÛ·¢
-wsquid:S001158"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ØâÑÄıÿÿÿÿ
-fsquid:S00100ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦öùT
-`squid:HiddenFieldCheckë"8Rename "item" which hides the field declared at line 80.(Ã×¤Æúÿÿÿÿ
-`squid:S1182’"HUse super.clone() to create and seed the cloned instance to be returned.(ÒÎÒš
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(×ØÄ™şÿÿÿÿ
 g squid:LabelsShouldNotBeUsedCheck¶";Refactor the code to remove this label and the need for it.(àÏÅ)
-<squid:S1604"(Make this anonymous inner class a lambda(ÏµŸk
+Qsquid:MissingDeprecatedCheckÇ"(Add the missing @deprecated Javadoc tag.(å“Æ„
+Fsquid:S1066½"/Merge this if statement with the enclosing one.(’Ä·8
+`squid:S1182“"HUse super.clone() to create and seed the cloned instance to be returned.(ÒÎÒš
+Msquid:S1133Ç"5Do not forget to remove this deprecated code someday.(å“Æ„
+[squid:HiddenFieldCheck¥"8Rename "item" which hides the field declared at line 80.(Õ§÷ê
+fsquid:S00100ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦öùT
+?squid:S1659Q"#Declare "block" on a separate line.(Ä²äÂüÿÿÿÿ
 Wsquid:CallToDeprecatedMethodo"/Remove this use of "getData"; it is deprecated.(ÈÛ·¢
-osquid:ModifiersOrderCheck8"EReorder the modifiers to comply with the Java Language Specification.(ØâÑÄıÿÿÿÿ
+g squid:LabelsShouldNotBeUsedCheckŞ";Refactor the code to remove this label and the need for it.(àÏÅ)
+usquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ØâÑÄıÿÿÿÿ
+`squid:HiddenFieldCheckë"8Rename "item" which hides the field declared at line 80.(Ã×¤Æúÿÿÿÿ
+>squid:S1168Ï"&Return an empty array instead of null.(¥¹ï
+\squid:HiddenFieldCheck"9Rename "block" which hides the field declared at line 80.(úÌæ•

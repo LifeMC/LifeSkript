@@ -1,29 +1,19 @@
 
-osquid:ModifiersOrderCheck)"EReorder the modifiers to comply with the Java Language Specification.(Õ§Ÿúÿÿÿÿ
-zsquid:S1845^"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 41.(š´Ç
-psquid:S4144ù"YUpdate this method so that its implementation is not identical to "toString" on line 282.(ˆ„ºq
-‚squid:S2234ú"eParameters to getArticleWithSpace have the same names but not the same order as the method arguments.(æª„íüÿÿÿÿ
-qsquid:S2293Ş"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÛĞ¤
-usquid:S2293+"YReplace the type specification in this constructor call with the diamond operator ("<>").(ïÚõ³ÿÿÿÿÿ
-;squid:S1659^"$Declare "plural" on a separate line.(š´Ç
-=squid:S1604"(Make this anonymous inner class a lambda(íî‡Ë
-osquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(ïÚõ³ÿÿÿÿÿ
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(‘¦ä’ÿÿÿÿÿ
-<squid:S1659‰"Declare "c" on a separate line.(­†ıÿÿÿÿ
-psquid:S2293/"YReplace the type specification in this constructor call with the diamond operator ("<>").(¿«ò
-jsquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(‹µ·ó
-psquid:S2293,"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŞÔêÕ
-Dsquid:S1659*"-Declare "NO_GENDER_TOKEN" on a separate line.(…ÈÄ¥
-^squid:S1134"DTake the required action to fix the issue indicated by this comment.(ë¤Äøÿÿÿÿ
-jsquid:ModifiersOrderCheck&"EReorder the modifiers to comply with the Java Language Specification.(Ãİà
-jsquid:ModifiersOrderCheck-"EReorder the modifiers to comply with the Java Language Specification.(Òï”¥
-jsquid:ModifiersOrderCheck/"EReorder the modifiers to comply with the Java Language Specification.(¿«ò
-psquid:S2293."YReplace the type specification in this constructor call with the diamond operator ("<>").(‹µ·ó
-qsquid:S2293†"YReplace the type specification in this constructor call with the diamond operator ("<>").(£ò¾±
-jsquid:ModifiersOrderCheck,"EReorder the modifiers to comply with the Java Language Specification.(ŞÔêÕ
-jsquid:ModifiersOrderCheck*"EReorder the modifiers to comply with the Java Language Specification.(…ÈÄ¥
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(“ëøî
 asquid:S3358"DExtract this nested ternary operation into an independent statement.(Ğà¹ÿÿÿÿÿ
-psquid:S2293-"YReplace the type specification in this constructor call with the diamond operator ("<>").(Òï”¥
-Csquid:S1659)"'Declare "NO_GENDER" on a separate line.(Õ§Ÿúÿÿÿÿ
+zsquid:S1845]"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 40.(š´Ç
+Bsquid:S1659"-Declare "NO_GENDER_TOKEN" on a separate line.(…ÈÄ¥
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŞßÂ£ûÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(…ÈÄ¥
+t
+squid:S135:"YReduce the total number of break and continue statements in this loop to use at most one.(‘¦ä’ÿÿÿÿÿ
+;squid:S1659]"$Declare "plural" on a separate line.(š´Ç
+<squid:S1659‰"Declare "c" on a separate line.(­†ıÿÿÿÿ
+Asquid:S1659"'Declare "NO_GENDER" on a separate line.(Õ§Ÿúÿÿÿÿ
 asquid:S3358²"DExtract this nested ternary operation into an independent statement.(âÑÏÆùÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ù¹”­ùÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ãİà
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(™—‚Úÿÿÿÿÿ
+gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(µ¦’
+psquid:S4144ó"YUpdate this method so that its implementation is not identical to "toString" on line 277.(ˆ„ºq
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Õ§Ÿúÿÿÿÿ8«ß§£-

@@ -1,61 +1,34 @@
 
 Rsquid:S1141³"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Isquid:S1068l"-Remove this unused "verbosity" private field.(Ô›Ì”ıÿÿÿÿ
-jsquid:ModifiersOrderCheckM"EReorder the modifiers to comply with the Java Language Specification.(åİ§
-osquid:ModifiersOrderCheckL"EReorder the modifiers to comply with the Java Language Specification.(±ˆã‰şÿÿÿÿ
-usquid:S2293Y"YReplace the type specification in this constructor call with the diamond operator ("<>").(ìëìúÿÿÿÿ
-psquid:S2293O"YReplace the type specification in this constructor call with the diamond operator ("<>").(Åôâ
-usquid:S2293Q"YReplace the type specification in this constructor call with the diamond operator ("<>").(ç â°úÿÿÿÿ
-jsquid:ModifiersOrderCheckK"EReorder the modifiers to comply with the Java Language Specification.(Îß¦º
-osquid:ModifiersOrderCheckN"EReorder the modifiers to comply with the Java Language Specification.(Ë³Ü×şÿÿÿÿ
-psquid:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(ˆßÀÈ
-osquid:ModifiersOrderCheckl"EReorder the modifiers to comply with the Java Language Specification.(Ô›Ì”ıÿÿÿÿ
-psquid:S2293:"YReplace the type specification in this constructor call with the diamond operator ("<>").(ü ĞÆ
-osquid:ModifiersOrderCheckT"EReorder the modifiers to comply with the Java Language Specification.(ëÉÆÎøÿÿÿÿ
-osquid:ModifiersOrderCheck<"EReorder the modifiers to comply with the Java Language Specification.(Ü‰šÅûÿÿÿÿ
-osquid:ModifiersOrderCheckR"EReorder the modifiers to comply with the Java Language Specification.(¸ßÍöıÿÿÿÿ
-psquid:S2293;"YReplace the type specification in this constructor call with the diamond operator ("<>").(”ßê„
-usquid:S2293N"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ë³Ü×şÿÿÿÿ
-usquid:S2293R"YReplace the type specification in this constructor call with the diamond operator ("<>").(¸ßÍöıÿÿÿÿ
-jsquid:ModifiersOrderCheckP"EReorder the modifiers to comply with the Java Language Specification.(‡ïûñ
-usquid:S2293<"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ü‰šÅûÿÿÿÿ
-usquid:S2293J"YReplace the type specification in this constructor call with the diamond operator ("<>").(Íû—–ÿÿÿÿÿ
-jsquid:ModifiersOrderCheckO"EReorder the modifiers to comply with the Java Language Specification.(Åôâ
-osquid:ModifiersOrderCheckJ"EReorder the modifiers to comply with the Java Language Specification.(Íû—–ÿÿÿÿÿ
-psquid:S2293b"YReplace the type specification in this constructor call with the diamond operator ("<>").(îù¬
-jsquid:ModifiersOrderCheckD"EReorder the modifiers to comply with the Java Language Specification.(×Ÿ®
-usquid:S2293L"YReplace the type specification in this constructor call with the diamond operator ("<>").(±ˆã‰şÿÿÿÿ
-jsquid:ModifiersOrderCheckI"EReorder the modifiers to comply with the Java Language Specification.(ˆßÀÈ
-osquid:ModifiersOrderCheckQ"EReorder the modifiers to comply with the Java Language Specification.(ç â°úÿÿÿÿ
-psquid:S2293D"YReplace the type specification in this constructor call with the diamond operator ("<>").(×Ÿ®
-jsquid:ModifiersOrderCheckS"EReorder the modifiers to comply with the Java Language Specification.(ƒÚòÑ
-psquid:S2293K"YReplace the type specification in this constructor call with the diamond operator ("<>").(Îß¦º
-osquid:ModifiersOrderCheckZ"EReorder the modifiers to comply with the Java Language Specification.(ı·×şÿÿÿÿ
-psquid:S2293H"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÄúÒ
-jsquid:ModifiersOrderCheckV"EReorder the modifiers to comply with the Java Language Specification.(ÿëù´
-jsquid:ModifiersOrderCheckb"EReorder the modifiers to comply with the Java Language Specification.(îù¬
-jsquid:ModifiersOrderCheckH"EReorder the modifiers to comply with the Java Language Specification.(çÄúÒ
-psquid:S2293M"YReplace the type specification in this constructor call with the diamond operator ("<>").(åİ§
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÇèÁ³
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(–Œˆ‹
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¤º­úÿÿÿÿ
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ü²º—ÿÿÿÿÿ8â¨„Û¢-
 Rsquid:S1141œ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-jsquid:ModifiersOrderCheck;"EReorder the modifiers to comply with the Java Language Specification.(”ßê„
-osquid:ModifiersOrderCheckY"EReorder the modifiers to comply with the Java Language Specification.(ìëìúÿÿÿÿ
-jsquid:ModifiersOrderCheck0"EReorder the modifiers to comply with the Java Language Specification.(Ø÷ëî
 Rsquid:S1141¥"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-psquid:S2293P"YReplace the type specification in this constructor call with the diamond operator ("<>").(‡ïûñ
-qsquid:ModifiersOrderCheck5"EReorder the modifiers to comply with the Java Language Specification.(˜Ä†´8â¨„Û¢-
-qsquid:ModifiersOrderCheck6"EReorder the modifiers to comply with the Java Language Specification.(èŠ“Ñ8â¨„Û¢-
-vsquid:ModifiersOrderCheck7"EReorder the modifiers to comply with the Java Language Specification.(š—§‹øÿÿÿÿ8â¨„Û¢-
-vsquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(õÎà”øÿÿÿÿ8â¨„Û¢-
-qsquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(ü ĞÆ8â¨„Û¢-
-vsquid:ModifiersOrderCheck_"EReorder the modifiers to comply with the Java Language Specification.(äÇáÏûÿÿÿÿ8â¨„Û¢-
-qsquid:ModifiersOrderChecka"EReorder the modifiers to comply with the Java Language Specification.(™“ Œ8â¨„Û¢-
-wsquid:S22935"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜Ä†´8â¨„Û¢-
-wsquid:S22936"YReplace the type specification in this constructor call with the diamond operator ("<>").(èŠ“Ñ8â¨„Û¢-
-|squid:S22937"YReplace the type specification in this constructor call with the diamond operator ("<>").(š—§‹øÿÿÿÿ8â¨„Û¢-
-wsquid:S2293U"YReplace the type specification in this constructor call with the diamond operator ("<>").(é„ƒŸ8â¨„Û¢-
-|squid:S2293_"YReplace the type specification in this constructor call with the diamond operator ("<>").(äÇáÏûÿÿÿÿ8â¨„Û¢-
-Dsquid:S1604"(Make this anonymous inner class a lambda(Ø÷ëî8â¨„Û¢-
-Isquid:S1604"(Make this anonymous inner class a lambda(Ü‰šÅûÿÿÿÿ8â¨„Û¢-
-Isquid:S1604"(Make this anonymous inner class a lambda(ı·×şÿÿÿÿ8â¨„Û¢-
-Dsquid:S1604"(Make this anonymous inner class a lambda(îù¬8â¨„Û¢-
-Isquid:S1604"(Make this anonymous inner class a lambda(Ô›Ì”ıÿÿÿÿ8â¨„Û¢-
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¡Ø‰¶øÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ğé”
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(çúöšùÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ìİ­¢
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(÷¦Êèşÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(£Óç”
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÊÓ·Æ
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(õÎà”øÿÿÿÿ8â¨„Û¢-
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¹Ú³Ûùÿÿÿÿ
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Â¶¡·8â¨„Û¢-
+gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(—Ãëu
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(™“ Œ8â¨„Û¢-
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(º®ÔŸøÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÚÉµ’
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(œš‰Ä
+Isquid:S1068l"-Remove this unused "verbosity" private field.(÷¦Êèşÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ì™¸Şÿÿÿÿÿ
+tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¼è™ÿÿÿÿÿ8â¨„Û¢-
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‹ıŒ‡8â¨„Û¢-
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(À« ‹øÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(—„ğĞøÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ñ×½ß
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ùÔÎ•8â¨„Û¢-
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ƒË·ª
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(×àø«øÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ƒË²åÿÿÿÿÿ

@@ -1,4 +1,4 @@
-﻿command /eval <text>:
+command /eval <text>:
 	description: Evaluates the given effect.
 	usage: /eval <effect>
 	executable by: players and console

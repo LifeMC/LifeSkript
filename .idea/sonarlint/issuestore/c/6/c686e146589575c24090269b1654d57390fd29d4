@@ -1,72 +1,69 @@
 
-=squid:S16592"&Declare "wallSign" on a separate line.(€›ÚÌ
-=squid:S1659ä" Declare "b2" on a separate line.(øÂ†Ğüÿÿÿÿ
-=squid:S1659å" Declare "m2" on a separate line.(­¬×çüÿÿÿÿ
-jsquid:ModifiersOrderCheck+"EReorder the modifiers to comply with the Java Language Specification.(Ô¨°Ê
-osquid:ModifiersOrderCheck."EReorder the modifiers to comply with the Java Language Specification.(ÓÆŞúÿÿÿÿ
-osquid:ModifiersOrderCheck1"EReorder the modifiers to comply with the Java Language Specification.(ª×ùÜÿÿÿÿÿ
-osquid:ModifiersOrderCheck4"EReorder the modifiers to comply with the Java Language Specification.(½ıï³şÿÿÿÿ
-osquid:ModifiersOrderCheck7"EReorder the modifiers to comply with the Java Language Specification.(âË•ùÿÿÿÿ
-osquid:ModifiersOrderCheck:"EReorder the modifiers to comply with the Java Language Specification.(ÅçÇ“ıÿÿÿÿ
-jsquid:ModifiersOrderCheck="EReorder the modifiers to comply with the Java Language Specification.(ãà”Ó
-jsquid:ModifiersOrderCheck@"EReorder the modifiers to comply with the Java Language Specification.(¸™¹ì
-osquid:ModifiersOrderCheckA"EReorder the modifiers to comply with the Java Language Specification.(ÕàÂŸÿÿÿÿÿ
-osquid:ModifiersOrderCheckD"EReorder the modifiers to comply with the Java Language Specification.(×ó¿‰øÿÿÿÿ
-jsquid:ModifiersOrderCheckH"EReorder the modifiers to comply with the Java Language Specification.(”Úâ†
-jsquid:ModifiersOrderCheckJ"EReorder the modifiers to comply with the Java Language Specification.(ñÛ†
-Ksquid:S1066|"/Merge this if statement with the enclosing one.(›è»Âşÿÿÿÿ
-Lsquid:S1066‘"/Merge this if statement with the enclosing one.(±ı†™ÿÿÿÿÿ
-Lsquid:S1066ô"/Merge this if statement with the enclosing one.(ÕÎĞ™ùÿÿÿÿ
-p
-squid:S135É"YReduce the total number of break and continue statements in this loop to use at most one.(Úôœ©
-Usquid:CallToDeprecatedMethodM"-Remove this use of "getId"; it is deprecated.(´ığ
+fsquid:CallToDeprecatedMethodË"8Remove this use of "setTypeIdAndData"; it is deprecated.(Á®×²ûÿÿÿÿ
+`squid:CallToDeprecatedMethod˜"2Remove this use of "getNewData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+Vsquid:CallToDeprecatedMethod¦"-Remove this use of "getId"; it is deprecated.(¦«›Ã
+Zsquid:CallToDeprecatedMethodQ"-Remove this use of "getId"; it is deprecated.(ıÓìäùÿÿÿÿ
+`squid:CallToDeprecatedMethodÌ"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(âË•ùÿÿÿÿ
 Usquid:CallToDeprecatedMethodN"-Remove this use of "getId"; it is deprecated.(Ôó–Î
+_squid:CallToDeprecatedMethod¨"1Remove this use of "getTypeId"; it is deprecated.(©³©¨ùÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÕàÂŸÿÿÿÿÿ
+Vsquid:CallToDeprecatedMethodã"-Remove this use of "getId"; it is deprecated.(îŒ˜«
+`squid:CallToDeprecatedMethodÒ"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÓÆŞúÿÿÿÿ
+[squid:CallToDeprecatedMethodÄ"-Remove this use of "getId"; it is deprecated.(¡È¿Šøÿÿÿÿ
+asquid:CallToDeprecatedMethodò"8Remove this use of "setTypeIdAndData"; it is deprecated.(ñ¨ïŸ
+Vsquid:CallToDeprecatedMethodã"-Remove this use of "getId"; it is deprecated.(îŒ˜«
+;squid:S1659"&Declare "wallSign" on a separate line.(€›ÚÌ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÅçÇ“ıÿÿÿÿ
+asquid:CallToDeprecatedMethodñ"8Remove this use of "setTypeIdAndData"; it is deprecated.(–†Áİ
+_squid:CallToDeprecatedMethod"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+`squid:CallToDeprecatedMethodä"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+=squid:S1659à" Declare "b2" on a separate line.(øÂ†Ğüÿÿÿÿ
+Xsquid:CallToDeprecatedMethod©"/Remove this use of "getData"; it is deprecated.(¶Š¿Ÿ
+=squid:S1659á" Declare "m2" on a separate line.(­¬×çüÿÿÿÿ
+_squid:CallToDeprecatedMethodá"1Remove this use of "getTypeId"; it is deprecated.(­¬×çüÿÿÿÿ
+fsquid:CallToDeprecatedMethodœ"8Remove this use of "setTypeIdAndData"; it is deprecated.(®å³üÿÿÿÿ
+Vsquid:CallToDeprecatedMethodã"-Remove this use of "getId"; it is deprecated.(îŒ˜«
+Tsquid:CallToDeprecatedMethodT"-Remove this use of "getId"; it is deprecated.(î‘¦$
+Zsquid:CallToDeprecatedMethodX"-Remove this use of "getId"; it is deprecated.(…§¡ıÿÿÿÿ
+`squid:CallToDeprecatedMethodù"8Remove this use of "setTypeIdAndData"; it is deprecated.(š“I
+Vsquid:CallToDeprecatedMethod¦"-Remove this use of "getId"; it is deprecated.(¦«›Ã
+`squid:CallToDeprecatedMethod±"8Remove this use of "setTypeIdAndData"; it is deprecated.(íÙâx
+_squid:CallToDeprecatedMethodÉ"1Remove this use of "getTypeId"; it is deprecated.(ü§ûªúÿÿÿÿ
+fsquid:CallToDeprecatedMethodÑ"8Remove this use of "setTypeIdAndData"; it is deprecated.(óœÊ„ûÿÿÿÿ
+]squid:CallToDeprecatedMethod˜"/Remove this use of "getData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(½ıï³şÿÿÿÿ
+_squid:CallToDeprecatedMethod·"1Remove this use of "getTypeId"; it is deprecated.(©…äÊÿÿÿÿÿ
+Vsquid:CallToDeprecatedMethodã"-Remove this use of "getId"; it is deprecated.(îŒ˜«
+fsquid:CallToDeprecatedMethodê"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
+Vsquid:CallToDeprecatedMethodÚ"-Remove this use of "getId"; it is deprecated.(ò…Ä
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ãà”Ó
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ñÛ†
+Xsquid:CallToDeprecatedMethodã"/Remove this use of "getData"; it is deprecated.(îŒ˜«
+Zsquid:CallToDeprecatedMethod§"1Remove this use of "getTypeId"; it is deprecated.(Äâ¸
+Usquid:CallToDeprecatedMethodU"-Remove this use of "getId"; it is deprecated.(ŒÃŞé
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(×ó¿‰øÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ô¨°Ê
+esquid:CallToDeprecatedMethodv"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
+]squid:CallToDeprecatedMethod´"/Remove this use of "getData"; it is deprecated.(¹ĞŸÎüÿÿÿÿ
+Usquid:CallToDeprecatedMethodM"-Remove this use of "getId"; it is deprecated.(´ığ
 Usquid:CallToDeprecatedMethodO"-Remove this use of "getId"; it is deprecated.(Ì–ä·
 Zsquid:CallToDeprecatedMethodP"-Remove this use of "getId"; it is deprecated.(Åş€Ùÿÿÿÿÿ
-Zsquid:CallToDeprecatedMethodQ"-Remove this use of "getId"; it is deprecated.(ıÓìäùÿÿÿÿ
+`squid:CallToDeprecatedMethod’"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ª×ùÜÿÿÿÿÿ
+`squid:CallToDeprecatedMethod²"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+`squid:CallToDeprecatedMethod½"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
+Zsquid:CallToDeprecatedMethodÏ"1Remove this use of "getTypeId"; it is deprecated.(Öˆç
+fsquid:CallToDeprecatedMethod¡"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
+fsquid:CallToDeprecatedMethod¼"8Remove this use of "setTypeIdAndData"; it is deprecated.(”óó€øÿÿÿÿ
+_squid:CallToDeprecatedMethodá"1Remove this use of "getTypeId"; it is deprecated.(­¬×çüÿÿÿÿ
+Xsquid:CallToDeprecatedMethodã"/Remove this use of "getData"; it is deprecated.(îŒ˜«
+_squid:CallToDeprecatedMethodˆ"1Remove this use of "getTypeId"; it is deprecated.(±¬¨ÿÿÿÿÿ
+fsquid:CallToDeprecatedMethod‰"8Remove this use of "setTypeIdAndData"; it is deprecated.(®å³üÿÿÿÿ
+p
+squid:S135Å"YReduce the total number of break and continue statements in this loop to use at most one.(Úôœ©
 Zsquid:CallToDeprecatedMethodR"-Remove this use of "getId"; it is deprecated.(ÿä²¢şÿÿÿÿ
-Tsquid:CallToDeprecatedMethodT"-Remove this use of "getId"; it is deprecated.(î‘¦$
-Usquid:CallToDeprecatedMethodU"-Remove this use of "getId"; it is deprecated.(ŒÃŞé
-Zsquid:CallToDeprecatedMethodX"-Remove this use of "getId"; it is deprecated.(…§¡ıÿÿÿÿ
-esquid:CallToDeprecatedMethodv"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
-^squid:CallToDeprecatedMethod|"1Remove this use of "getTypeId"; it is deprecated.(›è»Âşÿÿÿÿ
-`squid:CallToDeprecatedMethod€"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-_squid:CallToDeprecatedMethodŠ"1Remove this use of "getTypeId"; it is deprecated.(±¬¨ÿÿÿÿÿ
-fsquid:CallToDeprecatedMethod‹"8Remove this use of "setTypeIdAndData"; it is deprecated.(®å³üÿÿÿÿ
-`squid:CallToDeprecatedMethod•"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-fsquid:CallToDeprecatedMethod "8Remove this use of "setTypeIdAndData"; it is deprecated.(®å³üÿÿÿÿ
-fsquid:CallToDeprecatedMethod¥"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
-Vsquid:CallToDeprecatedMethodª"-Remove this use of "getId"; it is deprecated.(¦«›Ã
-Vsquid:CallToDeprecatedMethodª"-Remove this use of "getId"; it is deprecated.(¦«›Ã
-Zsquid:CallToDeprecatedMethod«"1Remove this use of "getTypeId"; it is deprecated.(Äâ¸
-_squid:CallToDeprecatedMethod¬"1Remove this use of "getTypeId"; it is deprecated.(©³©¨ùÿÿÿÿ
-Xsquid:CallToDeprecatedMethod­"/Remove this use of "getData"; it is deprecated.(¶Š¿Ÿ
-`squid:CallToDeprecatedMethodµ"8Remove this use of "setTypeIdAndData"; it is deprecated.(íÙâx
-`squid:CallToDeprecatedMethod¶"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-]squid:CallToDeprecatedMethod¸"/Remove this use of "getData"; it is deprecated.(¹ĞŸÎüÿÿÿÿ
-_squid:CallToDeprecatedMethod»"1Remove this use of "getTypeId"; it is deprecated.(©…äÊÿÿÿÿÿ
-fsquid:CallToDeprecatedMethodÀ"8Remove this use of "setTypeIdAndData"; it is deprecated.(”óó€øÿÿÿÿ
-`squid:CallToDeprecatedMethodÁ"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-[squid:CallToDeprecatedMethodÈ"-Remove this use of "getId"; it is deprecated.(¡È¿Šøÿÿÿÿ
-_squid:CallToDeprecatedMethodÍ"1Remove this use of "getTypeId"; it is deprecated.(ü§ûªúÿÿÿÿ
-fsquid:CallToDeprecatedMethodÏ"8Remove this use of "setTypeIdAndData"; it is deprecated.(Á®×²ûÿÿÿÿ
-`squid:CallToDeprecatedMethodĞ"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-Zsquid:CallToDeprecatedMethodÓ"1Remove this use of "getTypeId"; it is deprecated.(Öˆç
-fsquid:CallToDeprecatedMethodÕ"8Remove this use of "setTypeIdAndData"; it is deprecated.(óœÊ„ûÿÿÿÿ
-`squid:CallToDeprecatedMethodÖ"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-Vsquid:CallToDeprecatedMethodŞ"-Remove this use of "getId"; it is deprecated.(ò…Ä
-_squid:CallToDeprecatedMethodå"1Remove this use of "getTypeId"; it is deprecated.(­¬×çüÿÿÿÿ
-_squid:CallToDeprecatedMethodå"1Remove this use of "getTypeId"; it is deprecated.(­¬×çüÿÿÿÿ
-Vsquid:CallToDeprecatedMethodç"-Remove this use of "getId"; it is deprecated.(îŒ˜«
-Vsquid:CallToDeprecatedMethodç"-Remove this use of "getId"; it is deprecated.(îŒ˜«
-Xsquid:CallToDeprecatedMethodç"/Remove this use of "getData"; it is deprecated.(îŒ˜«
-Vsquid:CallToDeprecatedMethodç"-Remove this use of "getId"; it is deprecated.(îŒ˜«
-Vsquid:CallToDeprecatedMethodç"-Remove this use of "getId"; it is deprecated.(îŒ˜«
-Xsquid:CallToDeprecatedMethodç"/Remove this use of "getData"; it is deprecated.(îŒ˜«
-`squid:CallToDeprecatedMethodè"8Remove this use of "setTypeIdAndData"; it is deprecated.(¤áÙ0
-fsquid:CallToDeprecatedMethodî"8Remove this use of "setTypeIdAndData"; it is deprecated.(Ô¥¤ øÿÿÿÿ
-asquid:CallToDeprecatedMethodö"8Remove this use of "setTypeIdAndData"; it is deprecated.(–†Áİ
-asquid:CallToDeprecatedMethod÷"8Remove this use of "setTypeIdAndData"; it is deprecated.(ñ¨ïŸ
-`squid:CallToDeprecatedMethodÿ"8Remove this use of "setTypeIdAndData"; it is deprecated.(š“I
-`squid:CallToDeprecatedMethod"2Remove this use of "getNewData"; it is deprecated.(æÑ§îÿÿÿÿÿ
-]squid:CallToDeprecatedMethod"/Remove this use of "getData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¸™¹ì
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(”Úâ†
+esquid:CallToDeprecatedMethod{"1Remove this use of "getTypeId"; it is deprecated.(ê‘½ƒıÿÿÿÿ8ˆœß§£-

@@ -1,11 +1,9 @@
 
-8squid:S16595"!Declare "end" on a separate line.(î¾£Ø
+[squid:S3358<"DExtract this nested ternary operation into an independent statement.(ÜÄ¬È
+[squid:S3358<"DExtract this nested ternary operation into an independent statement.(ÜÄ¬È
+[squid:S3358;"DExtract this nested ternary operation into an independent statement.(×ÌÉ¡
+[squid:S3358;"DExtract this nested ternary operation into an independent statement.(×ÌÉ¡
 7squid:S1659M" Declare "i2" on a separate line.(ßŞªõ
-psquid:S2293;"YReplace the type specification in this constructor call with the diamond operator ("<>").(¹Ùã…
-usquid:S2293<"YReplace the type specification in this constructor call with the diamond operator ("<>").(à…·ûÿÿÿÿ
-[squid:S3358;"DExtract this nested ternary operation into an independent statement.(¹Ùã…
-[squid:S3358;"DExtract this nested ternary operation into an independent statement.(¹Ùã…
-[squid:S3358;"DExtract this nested ternary operation into an independent statement.(¹Ùã…
-`squid:S3358<"DExtract this nested ternary operation into an independent statement.(à…·ûÿÿÿÿ
-`squid:S3358<"DExtract this nested ternary operation into an independent statement.(à…·ûÿÿÿÿ
-`squid:S3358<"DExtract this nested ternary operation into an independent statement.(à…·ûÿÿÿÿ
+8squid:S16595"!Declare "end" on a separate line.(î¾£Ø
+[squid:S3358;"DExtract this nested ternary operation into an independent statement.(×ÌÉ¡
+[squid:S3358<"DExtract this nested ternary operation into an independent statement.(ÜÄ¬È

@@ -1,7 +1,4 @@
 
-jsquid:ModifiersOrderCheck'"EReorder the modifiers to comply with the Java Language Specification.(æõñ®
-Dsquid:S1066"/Merge this if statement with the enclosing one.(¦ÇÚ
+Fsquid:S10661"/Merge this if statement with the enclosing one.(¦ÇÚ
 Fsquid:S1066B"/Merge this if statement with the enclosing one.(à÷¿¤
-psquid:S2293'"YReplace the type specification in this constructor call with the diamond operator ("<>").(æõñ®
-=squid:S1604"(Make this anonymous inner class a lambda(íî‡Ë
-squid:S1186t"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¸—´àÿÿÿÿÿ
+hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ß©ºş
