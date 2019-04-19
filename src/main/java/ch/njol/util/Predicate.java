@@ -19,7 +19,7 @@
 
 package ch.njol.util;
 
-import javax.annotation.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger

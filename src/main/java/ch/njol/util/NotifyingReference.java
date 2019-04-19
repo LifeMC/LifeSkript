@@ -13,16 +13,16 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter G�ttinger
+ * Copyright 2011-2013 Peter Güttinger
  *
  */
 
 package ch.njol.util;
 
-import javax.annotation.Nullable;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * @author Peter G�ttinger
+ * @author Peter Güttinger
  */
 public final class NotifyingReference<V> {
     private final boolean notifyAll;
