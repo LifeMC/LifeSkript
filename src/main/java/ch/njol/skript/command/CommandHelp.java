@@ -39,10 +39,10 @@ import static org.bukkit.ChatColor.RESET;
  */
 public final class CommandHelp {
 
-    private final static String DEFAULTENTRY = "description";
+    private static final String DEFAULTENTRY = "description";
 
-    private final static ArgsMessage m_invalid_argument = new ArgsMessage("commands.invalid argument");
-    private final static Message m_usage = new Message("commands.usage");
+    private static final ArgsMessage m_invalid_argument = new ArgsMessage("commands.invalid argument");
+    private static final Message m_usage = new Message("commands.usage");
     private final String argsColor;
     private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<>();
     private String command;

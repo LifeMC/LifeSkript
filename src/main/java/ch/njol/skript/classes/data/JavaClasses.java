@@ -44,7 +44,7 @@ import java.io.StreamCorruptedException;
  */
 public final class JavaClasses {
 
-    public final static int VARIABLENAME_NUMBERACCURACY = 8;
+    public static final int VARIABLENAME_NUMBERACCURACY = 8;
 
     static {
         Classes.registerClass(new ClassInfo<>(Object.class, "object").user("objects?").name("Object").description("The supertype of all types, meaning that if %object% is used in e.g. a condition it will accept all kinds of expressions.").usage("").examples("").since("1.0"));

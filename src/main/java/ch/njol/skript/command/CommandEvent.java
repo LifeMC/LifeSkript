@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public class CommandEvent extends Event {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
     private final CommandSender sender;
     private final String command;
     @Nullable

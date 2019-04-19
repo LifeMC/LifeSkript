@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -42,7 +42,7 @@ import java.util.Arrays;
  * @author Peter Güttinger
  */
 public final class ThrownPotionData extends EntityData<ThrownPotion> {
-    private final static Adjective m_adjective = new Adjective("entities.thrown potion.adjective");
+    private static final Adjective m_adjective = new Adjective("entities.thrown potion.adjective");
 
     static {
         register(ThrownPotionData.class, "thrown potion", ThrownPotion.class, "thrown potion");

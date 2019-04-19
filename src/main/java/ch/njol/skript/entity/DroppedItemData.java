@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -39,7 +39,7 @@ import java.util.Arrays;
  * @author Peter Güttinger
  */
 public final class DroppedItemData extends EntityData<Item> {
-    private final static Adjective m_adjective = new Adjective("entities.dropped item.adjective");
+    private static final Adjective m_adjective = new Adjective("entities.dropped item.adjective");
 
     static {
         register(DroppedItemData.class, "dropped item", Item.class, "dropped item");

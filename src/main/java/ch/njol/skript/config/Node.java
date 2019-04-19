@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 public abstract class Node {
 
     @SuppressWarnings("null")
-    private final static Pattern linePattern = Pattern.compile("^((?:[^#]|##)*)(\\s*#(?!#).*)$");
+    private static final Pattern linePattern = Pattern.compile("^((?:[^#]|##)*)(\\s*#(?!#).*)$");
     protected final int lineNum;
     private final boolean debug;
     @Nullable

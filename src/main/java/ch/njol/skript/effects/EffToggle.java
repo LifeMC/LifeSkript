@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4")
 public final class EffToggle extends Effect {
     // TODO !Update with every version [blocks]
-    private final static byte[] bitFlags = new byte[Skript.MAXBLOCKID + 1];
+    private static final byte[] bitFlags = new byte[Skript.MAXBLOCKID + 1];
 
     static {
         Skript.registerEffect(EffToggle.class, "(close|turn off|de[-]activate) %blocks%", "(toggle|switch) [[the] state of] %blocks%", "(open|turn on|activate) %blocks%");

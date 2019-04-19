@@ -59,39 +59,39 @@ public final class Aliases { //NOSONAR
     /**
      * Note to self: never use this, use {@link #getAlias_i(String)} instead.
      */
-    private final static HashMap<String, ItemType> aliases_english = new HashMap<>(10000);
-    private final static HashMap<String, ItemType> aliases_localised = new HashMap<>(1000);
-    private final static HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
-    private final static HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);
+    private static final HashMap<String, ItemType> aliases_english = new HashMap<>(10000);
+    private static final HashMap<String, ItemType> aliases_localised = new HashMap<>(1000);
+    private static final HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
+    private static final HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);
     // this is not an alias!
-    private final static ItemType everything = new ItemType();
-    private final static Message m_brackets_error = new Message("aliases.brackets error");
-    private final static ArgsMessage m_invalid_brackets = new ArgsMessage("aliases.invalid brackets");
-    private final static ArgsMessage m_empty_alias = new ArgsMessage("aliases.empty alias");
-    private final static ArgsMessage m_unknown_variation = new ArgsMessage("aliases.unknown variation");
-    private final static Message m_starting_with_number = new Message("aliases.starting with number");
-    private final static Message m_missing_aliases = new Message("aliases.missing aliases");
-    private final static Message m_empty_string = new Message("aliases.empty string");
-    private final static ArgsMessage m_invalid_item_data = new ArgsMessage("aliases.invalid item data");
-    private final static ArgsMessage m_invalid_id = new ArgsMessage("aliases.invalid id");
-    private final static Message m_invalid_block_data = new Message("aliases.invalid block data");
-    private final static ArgsMessage m_invalid_item_type = new ArgsMessage("aliases.invalid item type");
-    private final static ArgsMessage m_out_of_data_range = new ArgsMessage("aliases.out of data range");
-    private final static Message m_invalid_range = new Message("aliases.invalid range");
-    private final static ArgsMessage m_invalid_section = new ArgsMessage("aliases.invalid section");
-    private final static ArgsMessage m_section_not_found = new ArgsMessage("aliases.section not found");
-    private final static ArgsMessage m_not_a_section = new ArgsMessage("aliases.not a section");
-    private final static Message m_unexpected_non_variation_section = new Message("aliases.unexpected non-variation section");
-    private final static Message m_unexpected_section = new Message("aliases.unexpected section");
-    private final static ArgsMessage m_loaded_x_aliases_from = new ArgsMessage("aliases.loaded x aliases from");
-    private final static ArgsMessage m_loaded_x_aliases = new ArgsMessage("aliases.loaded x aliases");
+    private static final ItemType everything = new ItemType();
+    private static final Message m_brackets_error = new Message("aliases.brackets error");
+    private static final ArgsMessage m_invalid_brackets = new ArgsMessage("aliases.invalid brackets");
+    private static final ArgsMessage m_empty_alias = new ArgsMessage("aliases.empty alias");
+    private static final ArgsMessage m_unknown_variation = new ArgsMessage("aliases.unknown variation");
+    private static final Message m_starting_with_number = new Message("aliases.starting with number");
+    private static final Message m_missing_aliases = new Message("aliases.missing aliases");
+    private static final Message m_empty_string = new Message("aliases.empty string");
+    private static final ArgsMessage m_invalid_item_data = new ArgsMessage("aliases.invalid item data");
+    private static final ArgsMessage m_invalid_id = new ArgsMessage("aliases.invalid id");
+    private static final Message m_invalid_block_data = new Message("aliases.invalid block data");
+    private static final ArgsMessage m_invalid_item_type = new ArgsMessage("aliases.invalid item type");
+    private static final ArgsMessage m_out_of_data_range = new ArgsMessage("aliases.out of data range");
+    private static final Message m_invalid_range = new Message("aliases.invalid range");
+    private static final ArgsMessage m_invalid_section = new ArgsMessage("aliases.invalid section");
+    private static final ArgsMessage m_section_not_found = new ArgsMessage("aliases.section not found");
+    private static final ArgsMessage m_not_a_section = new ArgsMessage("aliases.not a section");
+    private static final Message m_unexpected_non_variation_section = new Message("aliases.unexpected non-variation section");
+    private static final Message m_unexpected_section = new Message("aliases.unexpected section");
+    private static final ArgsMessage m_loaded_x_aliases_from = new ArgsMessage("aliases.loaded x aliases from");
+    private static final ArgsMessage m_loaded_x_aliases = new ArgsMessage("aliases.loaded x aliases");
     @SuppressWarnings("null")
-    private final static Pattern numberWordPattern = Pattern.compile("\\d+\\s+.+");
-    private final static RegexMessage p_any = new RegexMessage("aliases.any", "", " (.+)", Pattern.CASE_INSENSITIVE);
-    private final static Message m_any = new Message("aliases.any-skp");
-    private final static RegexMessage p_every = new RegexMessage("aliases.every", "", " (.+)", Pattern.CASE_INSENSITIVE);
-    private final static RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
-    private final static RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern numberWordPattern = Pattern.compile("\\d+\\s+.+");
+    private static final RegexMessage p_any = new RegexMessage("aliases.any", "", " (.+)", Pattern.CASE_INSENSITIVE);
+    private static final Message m_any = new Message("aliases.any-skp");
+    private static final RegexMessage p_every = new RegexMessage("aliases.every", "", " (.+)", Pattern.CASE_INSENSITIVE);
+    private static final RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
+    private static final RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
     static String itemSingular = "item";
     static String itemPlural = "items";
     @Nullable
@@ -713,7 +713,7 @@ public final class Aliases { //NOSONAR
         return t;
     }
 
-    public static void clear() {
+    public static final void clear() {
         aliases_english.clear();
         aliases_localised.clear();
         materialNames_english.clear();
@@ -721,7 +721,7 @@ public final class Aliases { //NOSONAR
     }
 
     @SuppressWarnings("null")
-    public static void load() {
+    public static final void load() {
 
         final boolean wasLocal = Language.isUsingLocal();
         try {
@@ -833,8 +833,8 @@ public final class Aliases { //NOSONAR
 
     }
 
-    final static class Variations extends HashMap<String, HashMap<String, ItemType>> {
-        private final static long serialVersionUID = -139481665727386819L;
+    static final class Variations extends HashMap<String, HashMap<String, ItemType>> {
+        private static final long serialVersionUID = -139481665727386819L;
     }
 
 }

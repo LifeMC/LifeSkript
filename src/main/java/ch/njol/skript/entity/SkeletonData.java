@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class SkeletonData extends EntityData<Skeleton> {
-    private final static boolean hasWither = Skript.methodExists(Skeleton.class, "getSkeletonType");
+    private static final boolean hasWither = Skript.methodExists(Skeleton.class, "getSkeletonType");
 
     static {
         if (hasWither)

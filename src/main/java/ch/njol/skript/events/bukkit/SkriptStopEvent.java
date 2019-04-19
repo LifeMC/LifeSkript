@@ -32,7 +32,7 @@ import org.bukkit.event.HandlerList;
 public final class SkriptStopEvent extends Event {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     public static HandlerList getHandlerList() {
         return handlers;

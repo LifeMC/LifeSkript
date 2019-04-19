@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -38,9 +38,9 @@ import java.util.*;
  */
 public final class PlayerUtils {
 
-    final static Set<Player> inviUpdate = new HashSet<>();
+    static final Set<Player> inviUpdate = new HashSet<>();
     // created when first used
-    final static Task task = new Task(Skript.getInstance(), 1, 1) {
+    static final Task task = new Task(Skript.getInstance(), 1, 1) {
         @SuppressWarnings("deprecation")
         @Override
         public void run() {
@@ -54,7 +54,7 @@ public final class PlayerUtils {
             inviUpdate.clear();
         }
     };
-    private final static boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
+    private static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
     @Nullable
     private static Method getOnlinePlayers;
 
@@ -62,7 +62,7 @@ public final class PlayerUtils {
         throw new UnsupportedOperationException();
     }
 
-    public static void updateInventory(final @Nullable Player p) {
+    public static final void updateInventory(final @Nullable Player p) {
         if (p != null)
             inviUpdate.add(p);
     }

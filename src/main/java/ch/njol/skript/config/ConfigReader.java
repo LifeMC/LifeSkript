@@ -35,7 +35,7 @@ import java.nio.charset.Charset;
 public final class ConfigReader extends BufferedReader {
 
     @SuppressWarnings("null")
-    public final static Charset UTF_8 = Charset.forName("UTF-8");
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
 
     @Nullable
     private String line;

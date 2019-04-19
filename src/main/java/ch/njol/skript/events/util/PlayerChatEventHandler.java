@@ -35,13 +35,13 @@ import org.bukkit.plugin.EventExecutor;
 @SuppressWarnings("deprecation")
 public final class PlayerChatEventHandler {
 
-    public final static boolean usesAsyncEvent = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent");
+    public static final boolean usesAsyncEvent = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent");
 
     private PlayerChatEventHandler() {
         throw new UnsupportedOperationException();
     }
 
-    public static void registerChatEvent(final EventPriority priority, final EventExecutor executor, final boolean ignoreCancelled) {
+    public static final void registerChatEvent(final EventPriority priority, final EventExecutor executor, final boolean ignoreCancelled) {
         if (Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent"))
             Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
             }, priority, executor, Skript.getInstance(), ignoreCancelled);

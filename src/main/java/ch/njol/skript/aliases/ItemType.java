@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2014 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -53,9 +53,9 @@ import java.util.Map.Entry;
 public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemStack>, YggdrasilExtendedSerializable {
 
     // 1.4.5
-    public final static boolean itemMetaSupported = Skript.classExists("org.bukkit.inventory.meta.ItemMeta");
-    private final static Message m_named = new Message("aliases.named");
-    private final static Random random = new Random();
+    public static final boolean itemMetaSupported = Skript.classExists("org.bukkit.inventory.meta.ItemMeta");
+    private static final Message m_named = new Message("aliases.named");
+    private static final Random random = new Random();
     /**
      * Note to self: use {@link #add_(ItemData)} to add item datas, don't add them directly to this list.
      */
@@ -128,7 +128,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
             enchantments = new HashMap<>(i.enchantments);
     }
 
-    private static void unsetItemMetaEnchs(final @Nullable ItemMeta meta) {
+    private static final void unsetItemMetaEnchs(final @Nullable ItemMeta meta) {
         if (meta == null)
             return;
         for (final Enchantment e : meta.getEnchants().keySet())

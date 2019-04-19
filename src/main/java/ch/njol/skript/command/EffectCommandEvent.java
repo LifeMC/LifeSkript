@@ -30,7 +30,7 @@ import org.bukkit.event.HandlerList;
 public final class EffectCommandEvent extends CommandEvent {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     public EffectCommandEvent(final CommandSender sender, final String command) {
         super(sender, command, new String[0]);

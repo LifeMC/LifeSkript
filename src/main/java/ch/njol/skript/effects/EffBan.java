@@ -48,7 +48,7 @@ import java.util.Date;
 @Since("1.4, 2.1.1 (ban reason)")
 public final class EffBan extends Effect {
 
-    public final static boolean hasBanList = Skript.classExists("org.bukkit.BanList");
+    public static final boolean hasBanList = Skript.classExists("org.bukkit.BanList");
 
     static {
         Skript.registerEffect(EffBan.class, "ban %strings/offlineplayers% [(by reason of|because [of]|on account of|due to) %-string%]", "unban %strings/offlineplayers%", "ban %players% by IP [(by reason of|because [of]|on account of|due to) %-string%]", "unban %players% by IP", "IP(-| )ban %players% [(by reason of|because [of]|on account of|due to) %-string%]", "(IP(-| )unban|un[-]IP[-]ban) %players%");

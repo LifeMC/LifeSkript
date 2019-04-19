@@ -32,7 +32,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class XpOrbData extends EntityData<ExperienceOrb> {
-    private final static ArgsMessage format = new ArgsMessage("entities.xp-orb.format");
+    private static final ArgsMessage format = new ArgsMessage("entities.xp-orb.format");
 
     static {
         register(XpOrbData.class, "xporb", ExperienceOrb.class, "xp-orb");

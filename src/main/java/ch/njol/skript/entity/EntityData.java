@@ -57,14 +57,14 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 public abstract class EntityData<E extends Entity> implements SyntaxElement, YggdrasilExtendedSerializable {// TODO extended horse support, zombie villagers // REMIND unit
 
-    public final static String LANGUAGE_NODE = "entities";
+    public static final String LANGUAGE_NODE = "entities";
 
-    public final static Message m_age_pattern = new Message(LANGUAGE_NODE + ".age pattern");
-    public final static Adjective m_baby = new Adjective(LANGUAGE_NODE + ".age adjectives.baby"),
+    public static final Message m_age_pattern = new Message(LANGUAGE_NODE + ".age pattern");
+    public static final Adjective m_baby = new Adjective(LANGUAGE_NODE + ".age adjectives.baby"),
             m_adult = new Adjective(LANGUAGE_NODE + ".age adjectives.adult");
 
     // must be here to be initialised before 'new SimpleLiteral' is called in the register block below
-    private final static List<EntityDataInfo<?>> infos = new ArrayList<>();
+    private static final List<EntityDataInfo<?>> infos = new ArrayList<>();
 
     public static final Serializer<EntityData> serializer = new Serializer<EntityData>() {
         @Override
@@ -131,7 +131,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             return false;
         }
     };
-    private final static Player[] EMPTY_PLAYER_ARRAY = new Player[0];
+    private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
 
     static {
         Classes.registerClass(new ClassInfo<>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
@@ -486,7 +486,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return false;
     }
 
-    private final static class EntityDataInfo<T extends EntityData<?>> extends SyntaxElementInfo<T> implements LanguageChangeListener {
+    private static final class EntityDataInfo<T extends EntityData<?>> extends SyntaxElementInfo<T> implements LanguageChangeListener {
         final String codeName;
         final String[] codeNames;
         final int defaultName;

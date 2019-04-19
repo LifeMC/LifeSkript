@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -46,8 +46,8 @@ import java.util.Iterator;
  * @author Peter Güttinger
  */
 public final class FallingBlockData extends EntityData<FallingBlock> {
-    private final static Message m_not_a_block_error = new Message("entities.falling block.not a block error");
-    private final static Adjective m_adjective = new Adjective("entities.falling block.adjective");
+    private static final Message m_not_a_block_error = new Message("entities.falling block.not a block error");
+    private static final Adjective m_adjective = new Adjective("entities.falling block.adjective");
 
     static {
         register(FallingBlockData.class, "falling block", FallingBlock.class, "falling block");

@@ -38,7 +38,7 @@ import java.util.List;
  */
 public final class SimpleEntityData extends EntityData<Entity> {
 
-    private final static List<SimpleEntityDataInfo> types = new ArrayList<>();
+    private static final List<SimpleEntityDataInfo> types = new ArrayList<>();
 
     static {
         types.add(new SimpleEntityDataInfo("arrow", Arrow.class));
@@ -243,7 +243,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
         return new SimpleEntityData(info);
     }
 
-    public final static class SimpleEntityDataInfo {
+    public static final class SimpleEntityDataInfo {
         final String codeName;
         final Class<? extends Entity> c;
         final boolean isSupertype;

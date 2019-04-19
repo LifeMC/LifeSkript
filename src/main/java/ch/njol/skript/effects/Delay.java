@@ -53,7 +53,7 @@ import java.util.WeakHashMap;
 @Since("1.4")
 public final class Delay extends Effect {
     @SuppressWarnings("null")
-    final static Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>());
+    static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>());
 
     static {
         Skript.registerEffect(Delay.class, "(wait|halt) [for] %timespan%");
@@ -66,7 +66,7 @@ public final class Delay extends Effect {
         return delayed.contains(e);
     }
 
-    public static void addDelayedEvent(final Event event) {
+    public static final void addDelayedEvent(final Event event) {
         delayed.add(event);
     }
 

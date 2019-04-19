@@ -73,7 +73,7 @@ public final class ProjectileUtils {
         }
     }
 
-    public static void setShooter(final Projectile p, final @Nullable Object shooter) {
+    public static final void setShooter(final Projectile p, final @Nullable Object shooter) {
         try {
             setShooter.invoke(p, shooter);
         } catch (final IllegalAccessException e) {

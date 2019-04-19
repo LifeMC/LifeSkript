@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class DefaultChangers { //NOSONAR
 
-    public final static Changer<Entity> entityChanger = new Changer<Entity>() {
+    public static final Changer<Entity> entityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")
         @Override
         @Nullable
@@ -114,7 +114,7 @@ public final class DefaultChangers { //NOSONAR
         }
     };
 
-    public final static Changer<Player> playerChanger = new Changer<Player>() {
+    public static final Changer<Player> playerChanger = new Changer<Player>() {
         @Override
         @Nullable
         public Class<?>[] acceptChange(final ChangeMode mode) {
@@ -129,7 +129,7 @@ public final class DefaultChangers { //NOSONAR
         }
     };
 
-    public final static Changer<Entity> nonLivingEntityChanger = new Changer<Entity>() {
+    public static final Changer<Entity> nonLivingEntityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")
         @Override
         @Nullable
@@ -150,7 +150,7 @@ public final class DefaultChangers { //NOSONAR
         }
     };
 
-    public final static Changer<Item> itemChanger = new Changer<Item>() {
+    public static final Changer<Item> itemChanger = new Changer<Item>() {
         @SuppressWarnings("unchecked")
         @Override
         @Nullable
@@ -172,7 +172,7 @@ public final class DefaultChangers { //NOSONAR
         }
     };
 
-    public final static Changer<Inventory> inventoryChanger = new Changer<Inventory>() {
+    public static final Changer<Inventory> inventoryChanger = new Changer<Inventory>() {
         @SuppressWarnings("unchecked")
         @Override
         @Nullable
@@ -246,7 +246,7 @@ public final class DefaultChangers { //NOSONAR
         }
     };
 
-    public final static Changer<Block> blockChanger = new Changer<Block>() {
+    public static final Changer<Block> blockChanger = new Changer<Block>() {
         @SuppressWarnings("unchecked")
         @Override
         @Nullable

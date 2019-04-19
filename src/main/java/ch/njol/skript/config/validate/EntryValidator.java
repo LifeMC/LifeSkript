@@ -44,7 +44,7 @@ public class EntryValidator implements NodeValidator {
         this.setter = setter;
     }
 
-    public static void notAnEntryError(final Node node) {
+    public static final void notAnEntryError(final Node node) {
         SkriptLogger.setNode(node);
         Skript.error("'" + node.getKey() + "' is not an entry (like 'name " + node.getConfig().getSeparator() + " value')");
     }

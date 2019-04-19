@@ -52,7 +52,7 @@ public final class Workarounds {
         throw new UnsupportedOperationException();
     }
 
-    public static void init() {
+    public static final void init() {
         // Exception Catching
         final Thread.UncaughtExceptionHandler handler = (t, e) -> {
             System.err.println("Uncaught exception in thread \"" + t.getName() + "\"");

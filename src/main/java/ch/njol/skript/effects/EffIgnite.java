@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"ignite the player", "extinguish the player"})
 @Since("1.4")
 public final class EffIgnite extends Effect {
-    private final static int DEFAULT_DURATION = 8 * 20; // default is 8 seconds for lava and fire, I didn't test other sources
+    private static final int DEFAULT_DURATION = 8 * 20; // default is 8 seconds for lava and fire, I didn't test other sources
 
     static {
         Skript.registerEffect(EffIgnite.class, "(ignite|set fire to) %entities% [for %-timespan%]", "(set|light) %entities% on fire [for %-timespan%]", "extinguish %entities%");

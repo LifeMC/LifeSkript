@@ -80,18 +80,18 @@ import java.util.regex.Pattern;
 @SuppressWarnings("deprecation")
 public final class Commands { //NOSONAR
 
-    public final static ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
-    public final static Message m_correct_usage = new Message("commands.correct usage");
-    public final static Message m_internal_error = new Message("commands.internal error");
+    public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
+    public static final Message m_correct_usage = new Message("commands.correct usage");
+    public static final Message m_internal_error = new Message("commands.internal error");
 
-    private final static Map<String, ScriptCommand> commands = new HashMap<>();
-    private final static SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
+    private static final Map<String, ScriptCommand> commands = new HashMap<>();
+    private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
-    private final static Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
+    private static final Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
     @SuppressWarnings("null")
-    private final static Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
+    private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
     @Nullable
-    private final static Listener pre1_3chatListener = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
+    private static final Listener pre1_3chatListener = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
         public void onPlayerChat(final PlayerChatEvent e) {
@@ -102,7 +102,7 @@ public final class Commands { //NOSONAR
         }
     };
     @Nullable
-    private final static Listener post1_3chatListener = !Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
+    private static final Listener post1_3chatListener = !Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
         public void onPlayerChat(final AsyncPlayerChatEvent e) {
@@ -129,12 +129,12 @@ public final class Commands { //NOSONAR
         }
     };
     @SuppressWarnings("null")
-    private final static Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
+    private static final Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
     @Nullable
     public static List<Argument<?>> currentArguments;
     static boolean suppressUnknownCommandMessage;
-    private final static Listener commandListener = new Listener() {
+    private static final Listener commandListener = new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
@@ -188,7 +188,7 @@ public final class Commands { //NOSONAR
     }
 
     @SuppressWarnings("unchecked")
-    private static void init() {
+    private static final void init() {
         try {
             if (Bukkit.getPluginManager() instanceof SimplePluginManager) {
                 final Field commandMapField = SimplePluginManager.class.getDeclaredField("commandMap");
@@ -490,7 +490,7 @@ public final class Commands { //NOSONAR
         return c;
     }
 
-    public static void registerCommand(final ScriptCommand command) {
+    public static final void registerCommand(final ScriptCommand command) {
         final ScriptCommand existingCommand = commands.get(command.getLabel());
         if (existingCommand != null && existingCommand.getLabel().equals(command.getLabel())) {
             final File f = existingCommand.getScript();
@@ -526,7 +526,7 @@ public final class Commands { //NOSONAR
         return numCommands;
     }
 
-    public static void registerListeners() {
+    public static final void registerListeners() {
         if (!registeredListeners) {
             Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
             Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
@@ -534,7 +534,7 @@ public final class Commands { //NOSONAR
         }
     }
 
-    public static void clearCommands() {
+    public static final void clearCommands() {
         final SimpleCommandMap commandMap = Commands.commandMap;
         if (commandMap != null) {
             final Map<String, Command> cmKnownCommands = Commands.cmKnownCommands;
@@ -552,7 +552,7 @@ public final class Commands { //NOSONAR
     /**
      * copied from CraftBukkit (org.bukkit.craftbukkit.help.CommandAliasHelpTopic)
      */
-    public final static class CommandAliasHelpTopic extends HelpTopic {
+    public static final class CommandAliasHelpTopic extends HelpTopic {
 
         private final String aliasFor;
         private final HelpMap helpMap;

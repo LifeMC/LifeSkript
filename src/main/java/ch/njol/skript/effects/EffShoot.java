@@ -50,7 +50,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"shoot an arrow", "make the player shoot a creeper at speed 10", "shoot a pig from the creeper"})
 @Since("1.4")
 public final class EffShoot extends Effect {
-    private final static Double DEFAULT_SPEED = 5.;
+    private static final Double DEFAULT_SPEED = 5.;
     @Nullable
     public static Entity lastSpawned;
 

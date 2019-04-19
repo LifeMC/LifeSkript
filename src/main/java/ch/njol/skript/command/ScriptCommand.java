@@ -60,9 +60,9 @@ import java.util.Map.Entry;
  * @author Peter Güttinger
  */
 public final class ScriptCommand implements CommandExecutor {
-    public final static Message m_executable_by_players = new Message("commands.executable by players");
-    public final static Message m_executable_by_console = new Message("commands.executable by console");
-    public final static int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
+    public static final Message m_executable_by_players = new Message("commands.executable by players");
+    public static final Message m_executable_by_console = new Message("commands.executable by console");
+    public static final int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
     final String name;
     final String usage;
     final Trigger trigger;

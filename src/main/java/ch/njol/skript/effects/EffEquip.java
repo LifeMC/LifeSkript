@@ -51,7 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"equip player with diamond helmet", "equip player with all diamond armor"})
 @Since("1.0")
 public final class EffEquip extends Effect implements Testable {
-    private final static boolean supportsHorses = Skript.classExists("org.bukkit.entity.Horse");
+    private static final boolean supportsHorses = Skript.classExists("org.bukkit.entity.Horse");
 
     static {
         Skript.registerEffect(EffEquip.class, "equip [%livingentity%] with %itemtypes%", "make %livingentity% wear %itemtypes%");

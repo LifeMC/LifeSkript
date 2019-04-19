@@ -46,7 +46,7 @@ public final class SectionValidator implements NodeValidator {
         super();
     }
 
-    public static void notASectionError(final Node node) {
+    public static final void notASectionError(final Node node) {
         SkriptLogger.setNode(node);
         Skript.error("'" + node.getKey() + "' is not a section (like 'name:', followed by one or more indented lines)");
     }
@@ -122,7 +122,7 @@ public final class SectionValidator implements NodeValidator {
         return this;
     }
 
-    private final static class NodeInfo {
+    private static final class NodeInfo {
         public final NodeValidator v;
         public final boolean optional;
 

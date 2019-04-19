@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -47,7 +47,7 @@ import java.util.Collection;
  */
 public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
     static final Collection<Trigger> triggers = new ArrayList<>();
-    private final static EventExecutor executor = (listener, e) -> {
+    private static final EventExecutor executor = (listener, e) -> {
         if (e == null)
             return;
 
@@ -92,7 +92,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
     }
 
     @SuppressWarnings("unchecked")
-    private static void registerExecutor() {
+    private static final void registerExecutor() {
         if (registeredExecutor)
             return;
         for (final Class<? extends Event> c : new Class[]{BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class})

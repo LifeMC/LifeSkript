@@ -29,7 +29,7 @@ import org.bukkit.event.HandlerList;
 public final class ScheduledNoWorldEvent extends ScheduledEvent {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     public ScheduledNoWorldEvent() {
         super(null);

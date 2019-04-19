@@ -91,7 +91,7 @@ public final class EvtDamage extends SkriptEvent {
         return true;
     }
 
-//	private final static WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
+//	private static final WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {

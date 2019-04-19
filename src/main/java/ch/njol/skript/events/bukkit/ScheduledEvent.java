@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("unchecked")
 public class ScheduledEvent extends Event {
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
     static {
         EventValues.registerEventValue(ScheduledEvent.class, World.class, new Getter<World, ScheduledEvent>() {

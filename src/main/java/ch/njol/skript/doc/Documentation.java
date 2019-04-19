@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -55,16 +55,16 @@ import java.util.regex.Pattern;
 @SuppressFBWarnings("ES_COMPARING_STRINGS_WITH_EQ")
 public final class Documentation {
 
-    public final static boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
+    public static final boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
     private static final ArrayList<Pattern> validation = new ArrayList<>();
-    private final static String[] urls = {"expressions", "effects", "conditions"};
+    private static final String[] urls = {"expressions", "effects", "conditions"};
 
     static {
         validation.add(Pattern.compile("<" + "(?!a href='|/a>|br ?/|/?(i|b|u|code|pre|ul|li|em)>)"));
         validation.add(Pattern.compile("(?<!</a|'|br ?/|/?(i|b|u|code|pre|ul|li|em))" + ">"));
     }
 
-    public static void generate() {
+    public static final void generate() {
         if (!generate)
             return;
         try {
@@ -77,7 +77,7 @@ public final class Documentation {
         }
     }
 
-    private static void asSql(final PrintWriter pw) {
+    private static final void asSql(final PrintWriter pw) {
         pw.println("-- syntax elements");
 //		pw.println("DROP TABLE IF EXISTS syntax_elements;");
         pw.println("CREATE TABLE IF NOT EXISTS syntax_elements (" + "id VARCHAR(20) NOT NULL PRIMARY KEY," + "name VARCHAR(100) NOT NULL," + "type ENUM('condition','effect','expression','event') NOT NULL," + "patterns VARCHAR(2000) NOT NULL," + "description VARCHAR(2000) NOT NULL," + "examples VARCHAR(2000) NOT NULL," + "since VARCHAR(100) NOT NULL" + ");");
@@ -181,7 +181,7 @@ public final class Documentation {
         return s;
     }
 
-    private static void insertSyntaxElement(final PrintWriter pw, final SyntaxElementInfo<?> info, final String type) {
+    private static final void insertSyntaxElement(final PrintWriter pw, final SyntaxElementInfo<?> info, final String type) {
         if (info.c.getAnnotation(NoDoc.class) != null)
             return;
         if (info.c.getAnnotation(Name.class) == null || info.c.getAnnotation(Description.class) == null || info.c.getAnnotation(Examples.class) == null || info.c.getAnnotation(Since.class) == null) {
@@ -198,7 +198,7 @@ public final class Documentation {
         insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = TRIM(LEADING '\n' FROM CONCAT(patterns, '\n', '" + escapeSQL(patterns) + "'))", escapeHTML("" + info.c.getSimpleName()), escapeHTML(info.c.getAnnotation(Name.class).value()), type, patterns, desc, escapeHTML(StringUtils.join(info.c.getAnnotation(Examples.class).value(), "\n")), since);
     }
 
-    private static void insertEvent(final PrintWriter pw, final SkriptEventInfo<?> info) {
+    private static final void insertEvent(final PrintWriter pw, final SkriptEventInfo<?> info) {
         if (info.getDescription() == SkriptEventInfo.NO_DOC)
             return;
         if (info.getDescription() == null || info.getExamples() == null || info.getSince() == null) {
@@ -221,7 +221,7 @@ public final class Documentation {
         insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = '" + escapeSQL(patterns) + "'", escapeHTML(info.getId()), escapeHTML(info.getName()), "event", patterns, desc, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
     }
 
-    private static void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
+    private static final void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
         if (Objects.equals(info.getDocName(), ClassInfo.NO_DOC))
             return;
         if (info.getDocName() == null || info.getDescription() == null || info.getUsage() == null || info.getExamples() == null || info.getSince() == null) {
@@ -239,7 +239,7 @@ public final class Documentation {
         insertOnDuplicateKeyUpdate(pw, "classes", "id, name, description, patterns, `usage`, examples, since", "patterns = TRIM(LEADING '\n' FROM CONCAT(patterns, '\n', '" + escapeSQL(patterns) + "'))", escapeHTML(info.getCodeName()), escapeHTML(info.getDocName()), desc, patterns, usage, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
     }
 
-    private static void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
+    private static final void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
         final StringBuilder params = new StringBuilder();
         for (final Parameter<?> p : func.getParameters()) {
             if (params.length() != 0)
@@ -255,13 +255,13 @@ public final class Documentation {
         replaceInto(pw, "functions", "name, parameters, description, examples, since", escapeHTML(func.getName()), escapeHTML(params.toString()), desc, escapeHTML(StringUtils.join(func.getExamples(), "\n")), since);
     }
 
-    private static void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
+    private static final void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
         for (int i = 0; i < values.length; i++)
             values[i] = escapeSQL("" + values[i]);
         pw.println("INSERT INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "') ON DUPLICATE KEY UPDATE " + update + ";");
     }
 
-    private static void replaceInto(final PrintWriter pw, final String table, final String fields, final String... values) {
+    private static final void replaceInto(final PrintWriter pw, final String table, final String fields, final String... values) {
         for (int i = 0; i < values.length; i++)
             values[i] = escapeSQL("" + values[i]);
         pw.println("REPLACE INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "');");

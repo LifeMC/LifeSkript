@@ -30,7 +30,7 @@ import org.bukkit.event.HandlerList;
 public final class ScriptCommandEvent extends CommandEvent {
 
     // Bukkit stuff
-    private final static HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
     private final ScriptCommand skriptCommand;
     private boolean cooldownCancelled;
 

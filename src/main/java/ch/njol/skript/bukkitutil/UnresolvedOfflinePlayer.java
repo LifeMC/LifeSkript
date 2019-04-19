@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -46,9 +46,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 
-    final static BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<>();
-    final static AtomicBoolean threadStarted = new AtomicBoolean();
-    final static Thread resolverThread = Skript.newThread(() -> {
+    static final BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<>();
+    static final AtomicBoolean threadStarted = new AtomicBoolean();
+    static final Thread resolverThread = Skript.newThread(() -> {
         while (Bukkit.getServer() != null && Skript.getInstance().isEnabled()) {
             try {
                 final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
