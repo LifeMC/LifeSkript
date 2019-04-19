@@ -26,7 +26,6 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
 import ch.njol.skript.util.FileUtils;
-import ch.njol.skript.util.Timespan;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -88,9 +87,9 @@ public final class SkriptConfig {
     // Disable warnings options
     //static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
     //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
-        //final Task ct = Updater.checkerTask;
-        //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
-        //ct.setNextExecution(t.getTicks_i());
+    //final Task ct = Updater.checkerTask;
+    //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
+    //ct.setNextExecution(t.getTicks_i());
     //});
     //static final Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
     @SuppressWarnings("null")

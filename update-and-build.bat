@@ -1,6 +1,7 @@
 @echo off
+chcp 65001 > nul
 @setlocal enableextensions
 @cd /d "%~dp0"
-mvn -e -DcompilerArgument=-O clean install package -U
+call mvn -e -DcompilerArgument=-O clean install package -U
 pause
 cmd /k

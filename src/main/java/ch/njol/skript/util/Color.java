@@ -50,14 +50,6 @@ public enum Color implements YggdrasilSerializable {
 
     DARK_PURPLE(DyeColor.PURPLE, ChatColor.DARK_PURPLE, org.bukkit.Color.fromRGB(0x7F3FB2)), LIGHT_PURPLE(DyeColor.MAGENTA, ChatColor.LIGHT_PURPLE, org.bukkit.Color.fromRGB(0xB24CD8));
 
-    private static final DyeColor getSilver() {
-        try {
-            return DyeColor.SILVER;
-        } catch (final NoSuchFieldError tw) {
-            return DyeColor.valueOf("GRAY");
-        }
-    }
-
     static final Map<String, Color> byName = new HashMap<>();
     static final Map<String, Color> byEnglishName = new HashMap<>();
     private static final String LANGUAGE_NODE = "colors";
@@ -93,11 +85,18 @@ public enum Color implements YggdrasilSerializable {
     private final org.bukkit.Color bukkit;
     @Nullable
     Adjective adjective;
-
     Color(final DyeColor wool, final ChatColor chat, final org.bukkit.Color bukkit) {
         this.wool = wool;
         this.chat = chat;
         this.bukkit = bukkit;
+    }
+
+    private static final DyeColor getSilver() {
+        try {
+            return DyeColor.SILVER;
+        } catch (final NoSuchFieldError tw) {
+            return DyeColor.valueOf("GRAY");
+        }
     }
 
     @Nullable

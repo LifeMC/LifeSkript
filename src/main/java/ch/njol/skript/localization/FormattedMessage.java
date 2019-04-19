@@ -22,14 +22,15 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
-
 import org.eclipse.jdt.annotation.Nullable;
+
 import java.util.IllegalFormatException;
 import java.util.function.Supplier;
 
 public final class FormattedMessage extends Message {
 
-    private final @Nullable Object[] args;
+    private final @Nullable
+    Object[] args;
 
     private final @Nullable
     Supplier<Object[]> supplier;

@@ -37,12 +37,12 @@ public final class LogEntry {
     public final Level level;
     public final int quality;
     public final String message;
-    public String waitingMessage;
     @Nullable
     public final Node node;
     @Nullable
     private final String from;
     private final boolean tracked;
+    public String waitingMessage;
 
     public LogEntry(final Level level, final String message) {
         this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, SkriptLogger.getNode());

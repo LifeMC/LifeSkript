@@ -20,6 +20,7 @@
 package ch.njol.util;
 
 import org.eclipse.jdt.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.Locale;
 

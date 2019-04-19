@@ -44,11 +44,6 @@ public final class SkriptTest {
     @SuppressWarnings("null")
     private static final Player njol = createMock(Player.class);
 
-    @Test
-    public void testVersion() {
-        Assert.assertNotNull(Skript.getLatestVersion());
-    }
-
     //	@Test
     public static final void main() {
         new Thread(() -> {
@@ -82,6 +77,11 @@ public final class SkriptTest {
             assert false : e;
             return null;
         }
+    }
+
+    @Test
+    public void testVersion() {
+        Assert.assertNotNull(Skript.getLatestVersion());
     }
 
 }

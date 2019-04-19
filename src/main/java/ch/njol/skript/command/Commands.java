@@ -273,7 +273,7 @@ public final class Commands { //NOSONAR
                 if (e == null) {
                     // Send return value of the expression or condition
                     log.clear(); // Clear the first error
-                    e = Effect.parse("send \"%"+command.replace("\"", "\"\"")+"%\" to me", null);
+                    e = Effect.parse("send \"%" + command.replace("\"", "\"\"") + "%\" to me", null);
                 }
                 ScriptLoader.deleteCurrentEvent();
 
@@ -289,7 +289,7 @@ public final class Commands { //NOSONAR
                     if (sender == Bukkit.getConsoleSender()) // log as SEVERE instead of INFO like printErrors below
                         error("Error in: " + ChatColor.stripColor(command));
                     else
-                        info(sender,ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
+                        info(sender, ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
                     if (log.getFirstError("").message.contains("Can't understand this expression"))
                         log.clear();
                     for (final LogEntry error : log.getErrors()) {

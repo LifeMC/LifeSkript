@@ -109,20 +109,20 @@ public final class Noun extends Message {
                 return definitePluralArticle + " ";
         } else //noinspection StatementWithEmptyBody
             if (gender == NO_GENDER) {
-            // nothing
-        } else if ((flags & Language.F_DEFINITE_ARTICLE) != 0) {
-            if (gender < 0 || gender >= definiteArticles.size()) {
-                assert false : gender;
-                return "";
+                // nothing
+            } else if ((flags & Language.F_DEFINITE_ARTICLE) != 0) {
+                if (gender < 0 || gender >= definiteArticles.size()) {
+                    assert false : gender;
+                    return "";
+                }
+                return definiteArticles.get(gender) + " ";
+            } else if ((flags & Language.F_INDEFINITE_ARTICLE) != 0) {
+                if (gender < 0 || gender >= indefiniteArticles.size()) {
+                    assert false : gender;
+                    return "";
+                }
+                return indefiniteArticles.get(gender) + " ";
             }
-            return definiteArticles.get(gender) + " ";
-        } else if ((flags & Language.F_INDEFINITE_ARTICLE) != 0) {
-            if (gender < 0 || gender >= indefiniteArticles.size()) {
-                assert false : gender;
-                return "";
-            }
-            return indefiniteArticles.get(gender) + " ";
-        }
         return "";
     }
 

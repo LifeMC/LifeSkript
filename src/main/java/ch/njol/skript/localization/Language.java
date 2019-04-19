@@ -186,7 +186,7 @@ public final class Language {
         }
         final String v = en.get("version");
         //if (v == null)
-            //Skript.warning("Missing version in english.lang");
+        //Skript.warning("Missing version in english.lang");
         langVersion.put(addon.plugin, v == null ? Skript.getVersion() : new Version(v));
         en.remove("version");
         english.putAll(en);
