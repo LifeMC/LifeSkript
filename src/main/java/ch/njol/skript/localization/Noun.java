@@ -319,11 +319,10 @@ public final class Noun extends Message {
         return getArticleWithSpace(getGender(), flags);
     }
 
-    public String toString(final int flags) {
+    public final String toString(final int flags) {
         validate();
-        final String b = getArticleWithSpace(flags) +
+        return getArticleWithSpace(flags) +
                 ((flags & Language.F_PLURAL) != 0 ? plural : singular);
-        return "" + b;
     }
 
     public String withAmount(final double amount) {
@@ -351,24 +350,22 @@ public final class Noun extends Message {
         return Skript.toString(amount) + " " + (amount == 1 ? singular : plural);
     }
 
-    public String toString(final Adjective a, final int flags) {
+    public final String toString(final Adjective a, final int flags) {
         validate();
-        String b = getArticleWithSpace(flags) +
+        return getArticleWithSpace(flags) +
                 a.toString(gender, flags) +
                 " " +
                 ((flags & Language.F_PLURAL) != 0 ? plural : singular);
-        return "" + b;
     }
 
-    public String toString(final Adjective[] adjectives, final int flags, final boolean and) {
+    public final String toString(final Adjective[] adjectives, final int flags, final boolean and) {
         validate();
         if (adjectives.length == 0)
             return toString(flags);
-        String b = getArticleWithSpace(flags) +
+        return getArticleWithSpace(flags) +
                 Adjective.toString(adjectives, getGender(), flags, and) +
                 " " +
                 toString(flags);
-        return "" + b;
     }
 
     public String getSingular() {

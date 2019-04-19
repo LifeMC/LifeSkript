@@ -150,12 +150,10 @@ public final class FallingBlockData extends EntityData<FallingBlock> {
         final ItemType[] types = this.types;
         if (types == null)
             return super.toString(flags);
-        final StringBuilder b = new StringBuilder();
-        b.append(Noun.getArticleWithSpace(types[0].getTypes().get(0).getGender(), flags));
-        b.append(m_adjective.toString(types[0].getTypes().get(0).getGender(), flags));
-        b.append(" ");
-        b.append(Classes.toString(types, flags & Language.NO_ARTICLE_MASK, false));
-        return "" + b.toString();
+        return Noun.getArticleWithSpace(types[0].getTypes().get(0).getGender(), flags) +
+                m_adjective.toString(types[0].getTypes().get(0).getGender(), flags) +
+                " " +
+                Classes.toString(types, flags & Language.NO_ARTICLE_MASK, false);
     }
 
     //		return ItemType.serialize(types);
