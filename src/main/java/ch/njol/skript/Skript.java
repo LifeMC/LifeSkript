@@ -31,6 +31,7 @@ import ch.njol.skript.expressions.ExprEntities;
 import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Functions;
+import ch.njol.skript.localization.FormattedMessage;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
@@ -49,9 +50,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
@@ -112,6 +115,7 @@ public final class Skript extends JavaPlugin implements Listener {
     // ================ PLUGIN ================
     public final static Message m_invalid_reload = new Message("skript.invalid reload"),
             m_finished_loading = new Message("skript.finished loading");
+    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", Skript.getLatestVersion(), Skript.getVersion());
     public final static String SCRIPTSFOLDER = "scripts";
     /**
      * A small value, useful for comparing doubles or floats.
@@ -1116,29 +1120,22 @@ public final class Skript extends JavaPlugin implements Listener {
 
             });
 
-			/*
 			Bukkit.getPluginManager().registerEvents(new Listener() {
 				@EventHandler
-				public void onJoin(final PlayerJoinEvent e) {
+				public final void onJoin(final PlayerJoinEvent e) {
 					if (e.getPlayer().hasPermission("skript.admin")) {
 						new Task(Skript.this, 0) {
 							@Override
-							public void run() {
-								Updater.stateLock.readLock().lock();
-								try {
-									final Player p = e.getPlayer();
-									assert p != null;
-									if ((Updater.state == UpdateState.CHECKED_FOR_UPDATE || Updater.state == UpdateState.DOWNLOAD_ERROR) && Updater.latest.get() != null)
-										info(p, "" + Updater.m_update_available);
-								} finally {
-									Updater.stateLock.readLock().unlock();
-								}
+							public final void run() {
+                                final Player p = e.getPlayer();
+                                assert p != null;
+                                if (updateAvailable)
+                                    info(p, "" + m_update_available);
 							}
 						};
 					}
 				}
 			}, this);
-			*/
 
             latestVersion = getInstance().getDescription().getVersion();
 
