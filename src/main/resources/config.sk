@@ -36,29 +36,7 @@ language: english
 # If you want to translate Skript to your language please read the readme.txt located in the /lang/ folder in the jar
 # (open the jar as zip or rename it to Skript.zip to access it)
 
-
-check for new version: false
-# Whether Skript should check for whether a new version of Skript is available when the server starts.
-# If this is set to true Skript will announce a new version to all players with the "skript.admin" permission.
-# If set to false you can still check for a new version with '/skript update check'.
-# Please note that Skript will not detect beta releases even if you are running one as they are not necessarily stable.
-
-update check interval: 0 hours
-# If 'check for new version' is enabled, this sets how often to check for a new update.
-# A first check will always be made when the server starts, after that checks will be made in intervals set by this option.
-# Set this to 0 to disable repeated checks, in which case only one check will be made when the server starts.
-# Please note that this option is currently the only means of making Skript check for an update more than once,
-# as '/skript update check' does only display the results of the last check if a check has been made before.
-
-automatically download new version: false
-# Whether Skript should automatically download & install the newest version if one is available.
-# I suggest to disable this feature if your server restarts automatically as you likely won't be informed
-# of any incompatibilities of your scripts and the newest version of Skript.
-# If you disable this you can still use '/skript update download' to make Skript download the newest version.
-# If you're concerned about changes use '/skript update changes' for a full list of changes since your current version.
-
-
-enable effect commands: false
+enable effect commands: true
 effect command token: !
 # If 'enable effect commands' is set to true, chat messages starting with the 'effect command token' will be interpreted as effects and executed.
 # The token can be longer than a single character, but it should not start with '/' as that starts a command.
