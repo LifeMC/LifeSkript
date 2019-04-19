@@ -181,6 +181,7 @@ public final class SkriptAddon {
      * @return The jar file of the plugin. The first invocation of this method uses reflection to invoke the protected method {@link JavaPlugin#getFile()} to get the plugin's jar
      * file. The file is then cached and returned upon subsequent calls to this method to reduce usage of reflection.
      */
+    @SuppressWarnings("JavadocReference")
     @Nullable
     public File getFile() {
         if (file != null)

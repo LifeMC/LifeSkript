@@ -220,6 +220,7 @@ public final class Functions {
                 d.calls.clear();
         }
         assert toValidate.isEmpty() : toValidate;
+        //noinspection RedundantOperationOnEmptyContainer
         toValidate.clear();
     }
 

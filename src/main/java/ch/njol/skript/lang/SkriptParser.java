@@ -125,7 +125,7 @@ public final class SkriptParser {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
+    public static final <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
         expr = "" + expr.trim();
         if (expr.isEmpty())
             return null;
@@ -138,7 +138,7 @@ public final class SkriptParser {
      * Can print an error.
      */
     @Nullable
-    public static <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
+    public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
         expr = "" + expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
@@ -159,7 +159,7 @@ public final class SkriptParser {
     }
 
     @Nullable
-    public static <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
+    public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
         expr = "" + expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
@@ -184,7 +184,7 @@ public final class SkriptParser {
      * Prints errors
      */
     @Nullable
-    private static <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
+    private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
         if (varPattern.matcher(expr).matches())
             return Variable.newInstance("" + expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
         return null;
@@ -193,7 +193,7 @@ public final class SkriptParser {
     /**
      * Prints parse errors (i.e. must start a ParseLog before calling this method)
      */
-    public static boolean parseArguments(final String args, final ScriptCommand command, final ScriptCommandEvent event) {
+    public static final boolean parseArguments(final String args, final ScriptCommand command, final ScriptCommandEvent event) {
         final SkriptParser parser = new SkriptParser(args, PARSE_LITERALS, ParseContext.COMMAND);
         final ParseResult res = parser.parse_i(command.getPattern(), 0, 0);
         if (res == null)
@@ -216,7 +216,7 @@ public final class SkriptParser {
      * Prints parse errors (i.e. must start a ParseLog before calling this method)
      */
     @Nullable
-    public static ParseResult parse(final String text, final String pattern) {
+    public static final ParseResult parse(final String text, final String pattern) {
         return new SkriptParser(text, PARSE_LITERALS, ParseContext.COMMAND).parse_i(pattern, 0, 0);
     }
 
@@ -326,7 +326,7 @@ public final class SkriptParser {
 //	}
 
     @Nullable
-    public static NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent(final String event, final String defaultError) {
+    public static final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent(final String event, final String defaultError) {
         final RetainingLogHandler log = SkriptLogger.startRetainingLog();
         try {
             final NonNullPair<SkriptEventInfo<?>, SkriptEvent> e = new SkriptParser(event, PARSE_LITERALS, ParseContext.EVENT).parseEvent();
@@ -352,7 +352,7 @@ public final class SkriptParser {
      * @return The index of the next bracket
      * @throws MalformedPatternException If the group is not closed
      */
-    private static int nextBracket(final String pattern, final char closingBracket, final char openingBracket, final int start, final boolean isGroup) throws MalformedPatternException {
+    static final int nextBracket(final String pattern, final char closingBracket, final char openingBracket, final int start, final boolean isGroup) throws MalformedPatternException {
         int n = 0;
         for (int i = start; i < pattern.length(); i++) {
             if (pattern.charAt(i) == '\\') {
@@ -381,7 +381,7 @@ public final class SkriptParser {
      * @param from    The index to start searching from
      * @return The next index where the character occurs unescaped or -1 if it doesn't occur.
      */
-    private static int nextUnescaped(final String pattern, final char c, final int from) {
+    private static final int nextUnescaped(final String pattern, final char c, final int from) {
         for (int i = from; i < pattern.length(); i++) {
             if (pattern.charAt(i) == '\\') {
                 i++;
@@ -399,7 +399,7 @@ public final class SkriptParser {
      * @param c       The character to search for
      * @return The number of unescaped occurrences of the given character
      */
-    private static int countUnescaped(final String pattern, final char c) {
+    private static final int countUnescaped(final String pattern, final char c) {
         return countUnescaped(pattern, c, 0, pattern.length());
     }
 
@@ -412,7 +412,7 @@ public final class SkriptParser {
      * @param c       The character to search for
      * @return The number of unescaped occurrences of the given character
      */
-    private static int countUnescaped(final String pattern, final char c, final int start, final int end) {
+    private static final int countUnescaped(final String pattern, final char c, final int start, final int end) {
         assert start >= 0 && start <= end && end <= pattern.length() : start + ", " + end + "; " + pattern.length();
         int r = 0;
         for (int i = start; i < end; i++) {
@@ -433,7 +433,7 @@ public final class SkriptParser {
      * @param from Index after the starting quote
      * @return Index of the end quote
      */
-    private static int nextQuote(final String s, final int from) {
+    private static final int nextQuote(final String s, final int from) {
         for (int i = from; i < s.length(); i++) {
             if (s.charAt(i) == '"') {
                 if (i == s.length() - 1 || s.charAt(i + 1) != '"')
@@ -448,7 +448,7 @@ public final class SkriptParser {
      * @param cs
      * @return "not an x" or "neither an x, a y nor a z"
      */
-    public static String notOfType(final Class<?>... cs) {
+    public static final String notOfType(final Class<?>... cs) {
         if (cs.length == 1) {
             final Class<?> c = cs[0];
             assert c != null;
@@ -474,7 +474,7 @@ public final class SkriptParser {
      * @param cs
      * @return "not an x" or "neither an x, a y nor a z"
      */
-    public static String notOfType(final ClassInfo<?>... cs) {
+    public static final String notOfType(final ClassInfo<?>... cs) {
         if (cs.length == 1) {
             return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
         } else {
@@ -500,7 +500,7 @@ public final class SkriptParser {
      * @return The next index (can be expr.length()), or -1 if an invalid string, variable or bracket is found or if <tt>i >= expr.length()</tt>.
      * @throws StringIndexOutOfBoundsException if <tt>i < 0</tt>
      */
-    public static int next(final String expr, final int i, final ParseContext context) {
+    public static final int next(final String expr, final int i, final ParseContext context) {
         if (i >= expr.length())
             return -1;
         if (i < 0)
@@ -524,7 +524,7 @@ public final class SkriptParser {
         return i + 1;
     }
 
-    private static int getGroupLevel(final String pattern, final int j) {
+    private static final int getGroupLevel(final String pattern, final int j) {
         assert j >= 0 && j <= pattern.length() : j + "; " + pattern;
         int level = 0;
         for (int i = 0; i < j; i++) {
@@ -549,7 +549,7 @@ public final class SkriptParser {
      * @return The pattern with %codenames% and a boolean array that contains whetehr the expressions are plural or not
      */
     @Nullable
-    public static NonNullPair<String, boolean[]> validatePattern(final String pattern) {
+    public static final NonNullPair<String, boolean[]> validatePattern(final String pattern) {
         final List<Boolean> ps = new ArrayList<>();
         int groupLevel = 0, optionalLevel = 0;
         final Deque<Character> groups = new LinkedList<>();
@@ -619,12 +619,12 @@ public final class SkriptParser {
     }
 
     @Nullable
-    private static NonNullPair<String, boolean[]> error(final String error) {
+    private static final NonNullPair<String, boolean[]> error(final String error) {
         Skript.error("Invalid pattern: " + error);
         return null;
     }
 
-    public static boolean validateLine(final String line) {
+    public static final boolean validateLine(final String line) {
         if (StringUtils.count(line, '"') % 2 != 0) {
             Skript.error(m_quotes_error.toString());
             return false;
@@ -638,7 +638,7 @@ public final class SkriptParser {
         return true;
     }
 
-    private static ExprInfo getExprInfo(final String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+    private static final ExprInfo getExprInfo(final String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
         ExprInfo r = exprInfoCache.get(s);
         if (r == null) {
             r = createExprInfo(s);
@@ -648,7 +648,7 @@ public final class SkriptParser {
         return r;
     }
 
-    private static ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+    private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
         final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
         r.isOptional = s.startsWith("-");
         if (r.isOptional)
@@ -681,7 +681,7 @@ public final class SkriptParser {
     }
 
     @Nullable
-    private <T extends SyntaxElement> T parse(final Iterator<? extends SyntaxElementInfo<? extends T>> source) {
+    private final <T extends SyntaxElement> T parse(final Iterator<? extends SyntaxElementInfo<? extends T>> source) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             while (source.hasNext()) {
@@ -739,7 +739,7 @@ public final class SkriptParser {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Nullable
-    private <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
+    private final <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
         assert types.length > 0;
         assert types.length == 1 || !CollectionUtils.contains(types, Object.class);
         if (expr.isEmpty())
@@ -833,14 +833,14 @@ public final class SkriptParser {
         }
     }
 
-    private SkriptParser suppressMissingAndOrWarnings() {
+    private final SkriptParser suppressMissingAndOrWarnings() {
         suppressMissingAndOrWarnings = true;
         return this;
     }
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
+    public final <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
         if (expr.length() == 0)
             return null;
 
@@ -1032,7 +1032,7 @@ public final class SkriptParser {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
+    public final <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
         if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
             return null;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
@@ -1104,7 +1104,7 @@ public final class SkriptParser {
     }
 
     @Nullable
-    private NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent() {
+    private final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent() {
         assert context == ParseContext.EVENT;
         assert flags == PARSE_LITERALS;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();

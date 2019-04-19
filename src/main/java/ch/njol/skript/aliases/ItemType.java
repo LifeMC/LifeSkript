@@ -654,6 +654,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return item;
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public ItemType clone() {
         return new ItemType(this);

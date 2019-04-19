@@ -158,6 +158,7 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
         return data.equals(other.data);
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public EntityType clone() {
         return new EntityType(this);

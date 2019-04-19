@@ -124,6 +124,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
     /**
      * @return a shallow copy of this pair
      */
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Pair<T1, T2> clone() {
         return new Pair<>(this);

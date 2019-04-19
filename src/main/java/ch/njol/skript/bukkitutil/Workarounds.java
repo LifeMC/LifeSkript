@@ -53,6 +53,7 @@ public final class Workarounds {
     }
 
     public static void init() {
+        /* only for running static initializer without Class#forName */
     }
 
 }

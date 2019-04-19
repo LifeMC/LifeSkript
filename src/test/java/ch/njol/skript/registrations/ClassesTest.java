@@ -69,6 +69,11 @@ import ch.njol.skript.util.Time;
 import ch.njol.skript.util.Timeperiod;
 import ch.njol.skript.util.Timespan;
 import ch.njol.skript.util.WeatherType;
+
+import ch.njol.skript.entity.*;
+import ch.njol.skript.util.*;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Snowball;
 */
 
 /**
@@ -130,9 +135,9 @@ public final class ClassesTest {
 	}
 	*/
 
+	/*
     @org.junit.Test
     public void testClasses() {
-		/*
 		final Object[] random = {
 				// Java
 				(byte) 127, (short) 2000, -1600000, 1L << 40, -1.5f, 13.37,
@@ -153,7 +158,7 @@ public final class ClassesTest {
 		for (final Object o : random) {
 			Classes.serialize(o); // includes a deserialisation test
 		}
-		*/
     }
+	*/
 
 }
