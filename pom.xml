@@ -45,10 +45,6 @@
             <url>http://repo.techcable.net/content/repositories/public</url>
         </repository>
         <repository>
-            <id>spigot-repo</id>
-            <url>http://hub.spigotmc.org/nexus/content/groups/public</url>
-        </repository>
-        <repository>
             <id>lifemc-repo</id>
             <url>http://lifemcserver.com</url>
         </repository>
@@ -102,7 +98,7 @@
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
-            <artifactId>Vault</artifactId>
+            <artifactId>vault-plugin</artifactId>
             <version>1.7.1</version>
             <scope>provided</scope>
             <exclusions>
@@ -237,7 +233,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.5.2</version>
+                                    <version>3.0.5</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -328,6 +324,26 @@
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
             </plugin>
         </plugins>
         <pluginManagement>

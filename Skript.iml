@@ -33,7 +33,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.yaml:snakeyaml:1.15" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: patpeter:sqlibrary:7.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.milkbowl.vault:VaultAPI:1.7" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: net.milkbowl.vault:Vault:1.7.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: net.milkbowl.vault:vault-plugin:1.7.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sk89q:worldguard:6.1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sk89q:worldedit:6.1.9" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.ryanhamshire:griefprevention:13.9.1" level="project" />
