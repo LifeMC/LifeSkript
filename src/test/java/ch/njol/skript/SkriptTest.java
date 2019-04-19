@@ -28,6 +28,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -44,6 +46,11 @@ public final class SkriptTest {
 
     static {
 
+    }
+
+    @Test
+    public void testVersion() {
+        Assert.assertNotNull(Skript.getLatestVersion());
     }
 
     //	@Test
