@@ -179,7 +179,13 @@ public final class DefaultComparators {
     static {
         // to fix comparisons of eggs, arrows, etc. (e.g. 'projectile is an arrow')
         // TODO !Update with every version [entities]
-        entityMaterials.put(Boat.class, Material.BOAT);
+        if (Skript.classExists("org.bukkit.entity.Boat")) {
+            try {
+                entityMaterials.put(Boat.class, Material.BOAT);
+            } catch (final NoSuchFieldError ignored) {
+                /* ignored */
+            }
+        }
         entityMaterials.put(Painting.class, Material.PAINTING);
         entityMaterials.put(Arrow.class, Material.ARROW);
         entityMaterials.put(Egg.class, Material.EGG);
@@ -199,17 +205,16 @@ public final class DefaultComparators {
         if (Skript.classExists("org.bukkit.entity.Firework"))
             entityMaterials.put(Firework.class, Material.FIREWORK);
         if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
-            entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
-            entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
+            entityMaterials.put(org.bukkit.entity.minecart.StorageMinecart.class, Material.STORAGE_MINECART);
+            entityMaterials.put(org.bukkit.entity.minecart.PoweredMinecart.class, Material.POWERED_MINECART);
             entityMaterials.put(RideableMinecart.class, Material.MINECART);
             entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
             entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
-            entityMaterials.put(Minecart.class, Material.MINECART);
         } else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
             entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
             entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
-            entityMaterials.put(Minecart.class, Material.MINECART);
         }
+        entityMaterials.put(Minecart.class, Material.MINECART);
     }
 
     static {

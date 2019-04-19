@@ -29,7 +29,7 @@ import java.util.LinkedList;
 /**
  * @author Peter Güttinger
  */
-public final class HandlerList implements Iterable<LogHandler> {
+public class HandlerList implements Iterable<LogHandler> {
 
     private final LinkedList<LogHandler> list = new LinkedList<>();
 

@@ -22,6 +22,7 @@
 package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.util.EmptyStacktraceException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Event.Result;
@@ -55,6 +56,8 @@ public final class Workarounds {
     public static final void init() {
         // Exception Catching
         final Thread.UncaughtExceptionHandler handler = (t, e) -> {
+            if (e instanceof EmptyStacktraceException)
+                return;
             System.err.println("Uncaught exception in thread \"" + t.getName() + "\"");
             e.printStackTrace();
         };

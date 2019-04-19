@@ -55,7 +55,8 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
         assert name != null;
         assert patterns != null && patterns.length > 0;
         assert c != null;
-        assert events != null && events.length > 0;
+        //skript-mirror
+        //assert events != null && events.length > 0;
 
         for (int i = 0; i < events.length; i++) {
             for (int j = i + 1; j < events.length; j++) {
