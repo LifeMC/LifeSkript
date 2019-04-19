@@ -36,7 +36,7 @@ import java.util.Locale;
 public class Message {
 
     // this is most likely faster than registering a listener for each Message
-    static final Collection<Message> messages = new ArrayList<>(50);
+    static final Collection<Message> messages = new ArrayList<>(100);
     static boolean firstChange = true;
 
     static {
@@ -74,7 +74,7 @@ public class Message {
     @Override
     public String toString() {
         validate();
-        return value == null ? key : "" + value;
+        return value == null ? key : value;
     }
 
     /**

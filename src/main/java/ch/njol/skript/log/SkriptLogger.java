@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static ch.njol.skript.Skript.SKRIPT_PREFIX_CONSOLE;
+
 /**
  * @author Peter Güttinger
  */
@@ -218,7 +220,7 @@ public final class SkriptLogger {
     }
 
     public static String format(final LogEntry entry) {
-        return "[Skript] " + entry.getMessage();
+        return SKRIPT_PREFIX_CONSOLE + entry.getMessage();
     }
 
     public static final void logAll(final Iterable<LogEntry> entries) {

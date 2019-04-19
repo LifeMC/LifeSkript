@@ -73,6 +73,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.fusesource.jansi</groupId>
+            <artifactId>jansi</artifactId>
+            <version>1.18</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>patpeter</groupId>
             <artifactId>sqlibrary</artifactId>
             <version>7.1</version>

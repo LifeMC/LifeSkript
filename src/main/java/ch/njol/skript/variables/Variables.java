@@ -421,7 +421,7 @@ public final class Variables {
                 for (final VariablesStorage s : storages)
                     s.allLoaded();
 
-                Skript.debug("Variables set. Queue size = " + queue.size());
+                Skript.debug("Variables set. Queue size is " + queue.size());
 
                 return n;
             } finally {

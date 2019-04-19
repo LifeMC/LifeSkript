@@ -48,6 +48,7 @@ import ch.njol.util.coll.iterator.EnumerationIterable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -58,6 +59,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
+import org.fusesource.jansi.Ansi;
 
 import java.io.File;
 import java.io.IOException;
@@ -149,6 +151,7 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
     public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
+    public static final String SKRIPT_PREFIX_CONSOLE = classExists("org.fusesource.jansi.Ansi") ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : SKRIPT_PREFIX;
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
@@ -200,11 +203,11 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void printDownloadLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> info(getDownloadLink()));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info(Bukkit.getConsoleSender(), getDownloadLink()));
     }
 
     public static final void printIssuesLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info(Bukkit.getConsoleSender(), "Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
     @Nullable
@@ -818,8 +821,23 @@ public final class Skript extends JavaPlugin implements Listener {
             SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
     }
 
-    public static final void info(final CommandSender sender, final String info) {
-        sender.sendMessage(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(info));
+    public static final void info(final CommandSender sender, final String message) {
+        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(message));
+    }
+
+    public static final void warningWithPrefix(final String message) {
+        warning(SKRIPT_PREFIX_CONSOLE + Utils.replaceEnglishChatStyles(message));
+    }
+
+    public static final void debugWithPrefix(final String message) {
+        debug(SKRIPT_PREFIX_CONSOLE + Utils.replaceEnglishChatStyles(message));
+    }
+
+    public static final void severe(final String message, final Throwable... errors) {
+        error(message);
+        if (errors != null)
+            for(final Throwable tw : errors)
+                exception(tw);
     }
 
     /**
@@ -857,7 +875,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void error(final CommandSender sender, final String error) {
-        sender.sendMessage(SKRIPT_PREFIX + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
+        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
     }
 
     @SuppressWarnings("null")
@@ -984,7 +1002,7 @@ public final class Skript extends JavaPlugin implements Listener {
             Commands.registerListeners();
 
             if (logNormal())
-                info(" " + Language.get("skript.copyright"));
+                info(Language.get("skript.copyright"));
 
             final long tick = testing() ? Bukkit.getWorlds().get(0).getFullTime() : 0;
             Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
@@ -1100,8 +1118,8 @@ public final class Skript extends JavaPlugin implements Listener {
 
                 Bukkit.getScheduler().runTask(getInstance(), () -> {
 
-                    Skript.info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
-                    Skript.info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
+                    info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
+                    info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
 
                 });
 
@@ -1116,7 +1134,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
                     if (!classExists("com.lifespigot.Main") || !ExprEntities.getNearbyEntities) { // If not using LifeSpigot or not supports getNearbyEntities
 
-                        Skript.warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
+                        warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or update to newer versions. Report this if it is a bug.");
 
                     }
 
@@ -1166,7 +1184,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> warningWithPrefix("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
                         printDownloadLink();
                         updateAvailable = true;
                         latestVersion = latest;
@@ -1179,11 +1197,11 @@ public final class Skript extends JavaPlugin implements Listener {
                 } catch (final Throwable tw) {
                     if (!isEnabled())
                         return;
-                    Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().severe("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                    Bukkit.getScheduler().runTask(getInstance(), () -> error("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
                     if (Skript.logHigh()) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().log(Level.SEVERE, "[Skript] Unable to check updates", tw));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> severe("[Skript] Unable to check updates", tw));
                     }
                     printDownloadLink();
                 }
@@ -1204,20 +1222,20 @@ public final class Skript extends JavaPlugin implements Listener {
         disabled = true;
 
         if (Skript.logHigh())
-            getLogger().info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
+            info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
         EvtSkript.onSkriptStop();
 
         if (Skript.logHigh())
-            getLogger().info("Disabling scripts..");
+            info("Disabling scripts..");
         disableScripts();
 
         if (Skript.logHigh())
-            getLogger().info("Unregistering tasks and event listeners..");
+            info("Unregistering tasks and event listeners..");
         Bukkit.getScheduler().cancelTasks(this);
         HandlerList.unregisterAll((JavaPlugin) this);
 
         if (Skript.logHigh())
-            getLogger().info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
+            info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
         for (final Closeable c : closeOnDisable) {
             try {
                 c.close();

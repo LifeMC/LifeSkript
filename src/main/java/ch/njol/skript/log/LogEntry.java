@@ -37,6 +37,7 @@ public final class LogEntry {
     public final Level level;
     public final int quality;
     public final String message;
+    public String waitingMessage;
     @Nullable
     public final Node node;
     @Nullable
@@ -77,7 +78,7 @@ public final class LogEntry {
     }
 
     static String findCaller() {
-        final StackTraceElement[] es = new Exception().getStackTrace();
+        final StackTraceElement[] es = new Throwable().getStackTrace();
         for (int i = 0; i < es.length; i++) {
             if (!es[i].getClassName().startsWith(skriptLogPackageName))
                 continue;
@@ -103,6 +104,10 @@ public final class LogEntry {
         return toString();
     }
 
+    public void setMessage(final String message) {
+        waitingMessage = message;
+    }
+
     void discarded(final String info) {
         if (tracked)
             SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Exception().getStackTrace()[1] + "; " + info);
@@ -115,6 +120,8 @@ public final class LogEntry {
 
     @Override
     public String toString() {
+        if (waitingMessage != null)
+            return waitingMessage;
         final Node n = node;
         if (n == null || level.intValue() < Level.WARNING.intValue())
             return message;
