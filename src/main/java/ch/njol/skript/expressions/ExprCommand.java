@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events("command")
 public final class ExprCommand extends SimpleExpression<String> {
-    private final static int FULL = 0, LABEL = 1, ARGS = 2;
+    private static final int FULL = 0, LABEL = 1, ARGS = 2;
 
     static {
         Skript.registerExpression(ExprCommand.class, String.class, ExpressionType.SIMPLE, "[the] (full|complete|whole) command", "[the] command [label]", "[the] arguments");

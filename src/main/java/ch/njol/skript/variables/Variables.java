@@ -59,31 +59,31 @@ import java.util.regex.Pattern;
  */
 public final class Variables {
 
-    public final static short YGGDRASIL_VERSION = 1;
-    public final static Yggdrasil yggdrasil = new Yggdrasil(YGGDRASIL_VERSION);
+    public static final short YGGDRASIL_VERSION = 1;
+    public static final Yggdrasil yggdrasil = new Yggdrasil(YGGDRASIL_VERSION);
     static final List<VariablesStorage> storages = new ArrayList<>();
     /**
      * Stores loaded variables while variable storages are loaded.
      * <p>
      * Access must be synchronised.
      */
-    final static SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>());
-    final static BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
-    private final static String configurationSerializablePrefix = "ConfigurationSerializable_";
+    static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>());
+    static final BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
+    private static final String configurationSerializablePrefix = "ConfigurationSerializable_";
     @SuppressWarnings("null")
-    private final static Pattern variableNameSplitPattern = Pattern.compile(Pattern.quote(Variable.SEPARATOR));
-    private final static ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
+    private static final Pattern variableNameSplitPattern = Pattern.compile(Pattern.quote(Variable.SEPARATOR));
+    private static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
     /**
      * must be locked with {@link #variablesLock}.
      */
-    private final static VariablesMap variables = new VariablesMap();
+    private static final VariablesMap variables = new VariablesMap();
     /**
      * Not accessed concurrently
      */
-    private final static WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
+    private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
     private static final int MAX_CONFLICT_WARNINGS = 50;
     static volatile boolean closed;
-    private final static Thread saveThread = Skript.newThread(new Runnable() {
+    private static final Thread saveThread = Skript.newThread(new Runnable() {
         @Override
         public void run() {
             while (!closed) {
@@ -308,7 +308,7 @@ public final class Variables {
      * @param name  The variable's name. Can be a "list variable::*" (<tt>value</tt> must be <tt>null</tt> in this case)
      * @param value The variable's value. Use <tt>null</tt> to delete the variable.
      */
-    public static void setVariable(final String name, @Nullable Object value, final @Nullable Event e, final boolean local) {
+    public static final void setVariable(final String name, @Nullable Object value, final @Nullable Event e, final boolean local) {
         if (value != null) {
             assert !name.endsWith("::*");
             final ClassInfo<?> ci = Classes.getSuperClassInfo(value.getClass());
@@ -329,7 +329,7 @@ public final class Variables {
         }
     }
 
-    static void setVariable(final String name, @Nullable final Object value) {
+    static final void setVariable(final String name, @Nullable final Object value) {
         try {
             variablesLock.writeLock().lock();
             variables.setVariable(name, value);
@@ -440,11 +440,11 @@ public final class Variables {
         return Classes.serialize(value);
     }
 
-    private static void saveVariableChange(final String name, final @Nullable Object value) {
+    private static final void saveVariableChange(final String name, final @Nullable Object value) {
         queue.add(serialize(name, value));
     }
 
-    public static void close() {
+    public static final void close() {
         while (!queue.isEmpty()) {
             try {
                 Thread.sleep(10);

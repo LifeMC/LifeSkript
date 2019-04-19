@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public final class ExceptionUtils {
 
-    private final static String IO_NODE = "io exceptions";
+    private static final String IO_NODE = "io exceptions";
 
     private ExceptionUtils() {
         throw new UnsupportedOperationException();

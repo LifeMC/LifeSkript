@@ -50,19 +50,19 @@ import java.util.UUID;
  */
 public final class DatabaseStorage extends VariablesStorage {
 
-    public final static int MAX_VARIABLE_NAME_LENGTH = 380, // MySQL: 767 bytes max; cannot set max bytes, only max characters
+    public static final int MAX_VARIABLE_NAME_LENGTH = 380, // MySQL: 767 bytes max; cannot set max bytes, only max characters
             MAX_CLASS_CODENAME_LENGTH = 50, // checked when registering a class
             MAX_VALUE_SIZE = 10000;
 
-    private final static String TABLE_NAME = "variables21",
+    private static final String TABLE_NAME = "variables21",
             OLD_TABLE_NAME = "variables";
 
-    private final static String SELECT_ORDER = "name, type, value, rowid";
-    private final static String guid = "" + UUID.randomUUID().toString();
+    private static final String SELECT_ORDER = "name, type, value, rowid";
+    private static final String guid = "" + UUID.randomUUID().toString();
     /**
      * The delay between transactions in milliseconds.
      */
-    private final static long TRANSACTION_DELAY = 500;
+    private static final long TRANSACTION_DELAY = 500;
     @SuppressWarnings("null")
     final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
@@ -113,7 +113,7 @@ public final class DatabaseStorage extends VariablesStorage {
         synchronized (db) {
             final Plugin p = Bukkit.getPluginManager().getPlugin("SQLibrary");
             if (!(p instanceof SQLibrary)) {
-                Skript.error("You need the plugin SQLibrary in order to use a database with Skript. You can download the latest version from http://dev.bukkit.org/projects/sqlibrary/files");
+                Skript.error("You need the plugin SQLibrary in order to use a database with Skript. You can download the latest version from https://dev.bukkit.org/projects/sqlibrary/files");
                 return false;
             }
 
@@ -569,7 +569,7 @@ public final class DatabaseStorage extends VariablesStorage {
 //		}
     }
 
-//	private final static class VariableInfo {
+//	private static final class VariableInfo {
 //		final String name;
 //		final byte[] value;
 //		final ClassInfo<?> ci;
@@ -581,7 +581,7 @@ public final class DatabaseStorage extends VariablesStorage {
 //		}
 //	}
 
-//	final static LinkedList<VariableInfo> syncDeserializing = new LinkedList<VariableInfo>();
+//	static final LinkedList<VariableInfo> syncDeserializing = new LinkedList<VariableInfo>();
 
     @Deprecated
     private void oldLoadVariables(final ResultSet r, final boolean hadNewTable) throws SQLException {
@@ -704,7 +704,7 @@ public final class DatabaseStorage extends VariablesStorage {
 //		}
     }
 
-//	private final static class OldVariableInfo {
+//	private static final class OldVariableInfo {
 //		final String name;
 //		final String value;
 //		final ClassInfo<?> ci;
@@ -716,7 +716,7 @@ public final class DatabaseStorage extends VariablesStorage {
 //		}
 //	}
 
-//	final static LinkedList<OldVariableInfo> oldSyncDeserializing = new LinkedList<OldVariableInfo>();
+//	static final LinkedList<OldVariableInfo> oldSyncDeserializing = new LinkedList<OldVariableInfo>();
 
     void sqlException(final SQLException e) {
         Skript.error("database error: " + e.getLocalizedMessage());

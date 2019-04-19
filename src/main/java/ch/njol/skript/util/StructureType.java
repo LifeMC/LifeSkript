@@ -49,7 +49,7 @@ public enum StructureType {
     /**
      * lazy
      */
-    final static Map<Pattern, StructureType> parseMap = new HashMap<>();
+    static final Map<Pattern, StructureType> parseMap = new HashMap<>();
 
     static {
         Language.addListener(parseMap::clear);

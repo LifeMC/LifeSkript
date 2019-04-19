@@ -45,19 +45,19 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
-    final static Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
-    private final static List<Trigger> selfRegisteredTriggers = new ArrayList<>();
+    static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
+    private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>();
     /**
      * Stores which events are currently registered with Bukkit
      */
-    private final static Set<Class<? extends Event>> registeredEvents = new HashSet<>();
-    private final static Listener listener = new Listener() {
+    private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
+    private static final Listener listener = new Listener() {
     };
     @Nullable
     static Event last;
     static long startTrigger;
     private static long startEvent;
-    final static EventExecutor ee = new EventExecutor() {
+    static final EventExecutor ee = new EventExecutor() {
         @Override
         public void execute(final @Nullable Listener l, final @Nullable Event e) {
             if (e == null)
@@ -112,7 +112,7 @@ public final class SkriptEventHandler {
         };
     }
 
-    static void check(final Event e) {
+    static final void check(final Event e) {
         Iterator<Trigger> ts = getTriggers(e.getClass());
         if (!ts.hasNext())
             return;
@@ -152,7 +152,7 @@ public final class SkriptEventHandler {
         logEventEnd();
     }
 
-    public static void logEventStart(final Event e) {
+    public static final void logEventStart(final Event e) {
         if (!Skript.logVeryHigh())
             return;
         startEvent = System.nanoTime();
@@ -160,26 +160,26 @@ public final class SkriptEventHandler {
         Skript.info("== " + e.getClass().getName() + " ==");
     }
 
-    public static void logEventEnd() {
+    public static final void logEventEnd() {
         if (!Skript.logVeryHigh())
             return;
         Skript.info("== took " + 1. * (System.nanoTime() - startEvent) / 1000000. + " milliseconds ==");
     }
 
-    public static void logTriggerStart(final Trigger t) {
+    public static final void logTriggerStart(final Trigger t) {
         if (!Skript.logVeryHigh())
             return;
         Skript.info("# " + t.getName());
         startTrigger = System.nanoTime();
     }
 
-    public static void logTriggerEnd(final Trigger t) {
+    public static final void logTriggerEnd(final Trigger t) {
         if (!Skript.logVeryHigh())
             return;
         Skript.info("# " + t.getName() + " took " + 1. * (System.nanoTime() - startTrigger) / 1000000. + " milliseconds");
     }
 
-    static void addTrigger(final Class<? extends Event>[] events, final Trigger trigger) {
+    static final void addTrigger(final Class<? extends Event>[] events, final Trigger trigger) {
         for (final Class<? extends Event> e : events) {
             List<Trigger> ts = triggers.computeIfAbsent(e, k -> new ArrayList<>());
             ts.add(trigger);
@@ -191,7 +191,7 @@ public final class SkriptEventHandler {
      *
      * @param t Trigger that has already been registered to its event
      */
-    public static void addSelfRegisteringTrigger(final Trigger t) {
+    public static final void addSelfRegisteringTrigger(final Trigger t) {
         assert t.getEvent() instanceof SelfRegisteringSkriptEvent;
         selfRegisteredTriggers.add(t);
     }
@@ -231,7 +231,7 @@ public final class SkriptEventHandler {
         return info;
     }
 
-    static void removeAllTriggers() {
+    static final void removeAllTriggers() {
         triggers.clear();
         for (final Trigger t : selfRegisteredTriggers)
             ((SelfRegisteringSkriptEvent) t.getEvent()).unregisterAll();
@@ -240,7 +240,7 @@ public final class SkriptEventHandler {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    static void registerBukkitEvents() {
+    static final void registerBukkitEvents() {
         for (final Class<? extends Event> e : triggers.keySet()) {
             assert e != null;
             if (!containsSuperclass((Set) registeredEvents, e)) { // I just love Java's generics
@@ -267,14 +267,14 @@ public final class SkriptEventHandler {
         return false;
     }
 
-//	private final static void unregisterEvents() {
+//	private static final final void unregisterEvents() {
 //		for (final Iterator<Class<? extends Event>> i = registeredEvents.iterator(); i.hasNext();) {
 //			if (unregisterEvent(i.next()))
 //				i.remove();
 //		}
 //	}
 //
-//	private final static boolean unregisterEvent(Class<? extends Event> event) {
+//	private static final boolean unregisterEvent(Class<? extends Event> event) {
 //		try {
 //			Method m = null;
 //			while (m == null) {

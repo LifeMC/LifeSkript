@@ -47,9 +47,9 @@ import java.util.regex.PatternSyntaxException;
  */
 public abstract class VariablesStorage implements Closeable {
 
-    private final static int QUEUE_SIZE = 1000, FIRST_WARNING = 300;
-    private final static int WARNING_INTERVAL = 10;
-    private final static int ERROR_INTERVAL = 10;
+    private static final int QUEUE_SIZE = 1000, FIRST_WARNING = 300;
+    private static final int WARNING_INTERVAL = 10;
+    private static final int ERROR_INTERVAL = 10;
     protected final String databaseName;
     /**
      * Must be locked after {@link Variables#getReadLock()} (if that lock is used at all)

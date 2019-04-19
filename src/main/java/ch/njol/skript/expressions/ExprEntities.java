@@ -60,7 +60,7 @@ import java.util.*;
 @Since("1.2.1")
 public final class ExprEntities extends SimpleExpression<Entity> {
     // World#getNearbyEntities only available on 1.8 and above.
-    public final static boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
+    public static final boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
     // We don't want to try the World#getNearbyEntities method everytime in case of a fail.
     public volatile static boolean hardFail;
 

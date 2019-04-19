@@ -38,7 +38,7 @@ public enum WeatherType {
 
     CLEAR, RAIN, THUNDER;
 
-    final static Map<String, WeatherType> byName = new HashMap<>();
+    static final Map<String, WeatherType> byName = new HashMap<>();
 
     static {
         Language.addListener(() -> {

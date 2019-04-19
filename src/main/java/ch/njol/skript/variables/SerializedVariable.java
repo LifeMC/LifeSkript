@@ -36,7 +36,7 @@ public final class SerializedVariable {
         this.value = value;
     }
 
-    public final static class Value {
+    public static final class Value {
         public final String type;
         public final byte[] data;
 

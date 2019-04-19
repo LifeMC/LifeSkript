@@ -56,21 +56,21 @@ public final class Direction implements YggdrasilRobustSerializable {
     /**
      * A direction that doesn't point anywhere, i.e. equal to 'at'.
      */
-    public final static Direction ZERO = new Direction(new double[]{0, 0, 0});
+    public static final Direction ZERO = new Direction(new double[]{0, 0, 0});
     /**
      * A direction that points in the direction of the object(s) passed to the various <tt>getDirection</tt> methods.
      */
-    public final static Direction IDENTITY = new Direction(0, 0, 1);
+    public static final Direction IDENTITY = new Direction(0, 0, 1);
 
-    public final static BlockFace BF_X = findFace(1, 0, 0), BF_Y = findFace(0, 1, 0), BF_Z = findFace(0, 0, 1);
-    public final static Noun m_meter = new Noun("directions.meter");
+    public static final BlockFace BF_X = findFace(1, 0, 0), BF_Y = findFace(0, 1, 0), BF_Z = findFace(0, 0, 1);
+    public static final Noun m_meter = new Noun("directions.meter");
     /**
      * Use this as pitch to force a horizontal direction
      */
-    public final static double IGNORE_PITCH = 0xF1A7; // FLAT
-    private final static Message m_at = new Message("directions.at");
-    private final static Message[] absoluteDirections = new Message[6];
-    private final static Message[] relativeDirections = new Message[6];
+    public static final double IGNORE_PITCH = 0xF1A7; // FLAT
+    private static final Message m_at = new Message("directions.at");
+    private static final Message[] absoluteDirections = new Message[6];
+    private static final Message[] relativeDirections = new Message[6];
 
     static {
         final String[] rd = {"front", "behind", "left", "right", "above", "below"};
@@ -259,7 +259,7 @@ public final class Direction implements YggdrasilRobustSerializable {
         return b.toString();
     }
 
-    private static void toString(final StringBuilder b, final double d, final Message direction, final Message oppositeDirection, final boolean prependAnd) {
+    private static final void toString(final StringBuilder b, final double d, final Message direction, final Message oppositeDirection, final boolean prependAnd) {
         if (d == 0)
             return;
         if (prependAnd)

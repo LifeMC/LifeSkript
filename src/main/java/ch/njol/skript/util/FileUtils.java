@@ -36,7 +36,7 @@ import java.util.Collection;
  */
 public final class FileUtils {
 
-    private final static SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    private static final SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     private FileUtils() {
     }
@@ -76,7 +76,7 @@ public final class FileUtils {
         return to;
     }
 
-    public static void copy(final File from, final File to) throws IOException {
+    public static final void copy(final File from, final File to) throws IOException {
         java.nio.file.Files.copy(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
     }
 
@@ -113,7 +113,7 @@ public final class FileUtils {
      * @param file The file to save to. Will be replaced if it exists, or created if it doesn't.
      * @throws IOException
      */
-    public static void save(final InputStream in, final File file) throws IOException {
+    public static final void save(final InputStream in, final File file) throws IOException {
         file.getParentFile().mkdirs();
         try (FileOutputStream out = new FileOutputStream(file)) {
             final byte[] buffer = new byte[16 * 1024];

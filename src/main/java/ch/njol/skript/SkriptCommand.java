@@ -47,31 +47,31 @@ import java.util.Collection;
  * @author Peter Güttinger
  */
 public final class SkriptCommand implements CommandExecutor {
-    public final static Message m_running_latest_version = new Message("updater.running latest version");
-    private final static String NODE = "skript command";
+    public static final Message m_running_latest_version = new Message("updater.running latest version");
+    private static final String NODE = "skript command";
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
-    private final static CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")
+    private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")
             //			).add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
 //					.add("set", "Creates a new variable or changes an existing one")
 //					.add("delete", "Deletes a variable")
 //					.add("find", "Find variables")
     ).add("help");
-    private final static ArgsMessage m_reloading = new ArgsMessage(NODE + ".reload.reloading");
-    private final static ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
-    private final static ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
+    private static final ArgsMessage m_reloading = new ArgsMessage(NODE + ".reload.reloading");
+    private static final ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
+    private static final ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
     @SuppressWarnings("unused")
-    private final static ArgsMessage m_changes_title = new ArgsMessage(NODE + ".update.changes.title");
-    private final static File[] EMPTY_FILE_ARRAY = new File[0];
-    private final static ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
-    private final static ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
+    private static final ArgsMessage m_changes_title = new ArgsMessage(NODE + ".update.changes.title");
+    private static final File[] EMPTY_FILE_ARRAY = new File[0];
+    private static final ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
+    private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
 
-    private static void reloading(final CommandSender sender, String what, final Object... args) {
+    private static final void reloading(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : Language.format(NODE + ".reload." + what, args);
         Skript.info(sender, StringUtils.fixCapitalization(m_reloading.toString(what)));
     }
 
-    private static void reloaded(final CommandSender sender, final RedirectingLogHandler r, String what, final Object... args) {
+    private static final void reloaded(final CommandSender sender, final RedirectingLogHandler r, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : PluralizingArgsMessage.format(Language.format(NODE + ".reload." + what, args));
         if (r.numErrors() == 0)
             Skript.info(sender, StringUtils.fixCapitalization(PluralizingArgsMessage.format(m_reloaded.toString(what))));
@@ -79,18 +79,18 @@ public final class SkriptCommand implements CommandExecutor {
             Skript.error(sender, StringUtils.fixCapitalization(PluralizingArgsMessage.format(m_reload_error.toString(what, r.numErrors()))));
     }
 
-    private static void info(final CommandSender sender, String what, final Object... args) {
+    private static final void info(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
         Skript.info(sender, StringUtils.fixCapitalization(what));
     }
 
     @SuppressWarnings("unused")
-    private static void message(final CommandSender sender, String what, final Object... args) {
+    private static final void message(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
         Skript.message(sender, StringUtils.fixCapitalization(what));
     }
 
-    private static void error(final CommandSender sender, String what, final Object... args) {
+    private static final void error(final CommandSender sender, String what, final Object... args) {
         what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
         Skript.error(sender, StringUtils.fixCapitalization(what));
     }

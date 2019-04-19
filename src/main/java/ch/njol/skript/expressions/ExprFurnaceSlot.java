@@ -52,8 +52,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 @Events({"smelt", "fuel burn"})
 public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
-    private final static int ORE = 0, FUEL = 1, RESULT = 2;
-    private final static String[] slotNames = {"ore", "fuel", "result"};
+    private static final int ORE = 0, FUEL = 1, RESULT = 2;
+    private static final String[] slotNames = {"ore", "fuel", "result"};
 
     static {
         register(ExprFurnaceSlot.class, Slot.class, "(" + ORE + "¦ore|" + FUEL + "¦fuel|" + RESULT + "¦result)[s] [slot[s]]", "blocks");

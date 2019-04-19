@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -34,7 +34,7 @@ import java.util.TreeMap;
 
 final class VariablesMap {
 
-    final static Comparator<String> variableNameComparator = (s1, s2) -> {
+    static final Comparator<String> variableNameComparator = (s1, s2) -> {
         if (s1 == null)
             return s2 == null ? 0 : -1;
         if (s2 == null)

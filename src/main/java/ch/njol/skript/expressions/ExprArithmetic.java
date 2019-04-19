@@ -48,7 +48,7 @@ import java.lang.reflect.Array;
 @Since("1.4.2")
 public final class ExprArithmetic extends SimpleExpression<Number> {
 
-    private final static Patterns<Operator> patterns = new Patterns<>(new Object[][]{
+    private static final Patterns<Operator> patterns = new Patterns<>(new Object[][]{
 
             {"%number%[ ]+[ ]%number%", Operator.PLUS}, {"%number%[ ]-[ ]%number%", Operator.MINUS},
 

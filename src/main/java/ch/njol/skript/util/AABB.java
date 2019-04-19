@@ -43,7 +43,7 @@ public final class AABB implements Iterable<Block> {
     final World world;
     final Vector lowerBound, upperBound;
 
-    //	private final static Vector EPSILON = new Vector(Skript.EPSILON, Skript.EPSILON, Skript.EPSILON);
+    //	private static final Vector EPSILON = new Vector(Skript.EPSILON, Skript.EPSILON, Skript.EPSILON);
 
     @SuppressWarnings("null")
     public AABB(final Location l1, final Location l2) {

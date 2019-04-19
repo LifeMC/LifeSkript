@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
  */
 public final class Version implements Serializable, Comparable<Version> {
     @SuppressWarnings("null")
-    public final static Pattern versionPattern = Pattern.compile("(\\d+)\\.(\\d+)(?:\\.(\\d+))?\\s*(.*)");
-    private final static long serialVersionUID = 8687040355286333293L;
+    public static final Pattern versionPattern = Pattern.compile("(\\d+)\\.(\\d+)(?:\\.(\\d+))?\\s*(.*)");
+    private static final long serialVersionUID = 8687040355286333293L;
     private final int[] version = new int[3];
     /**
      * Everything after the version, e.g. "alpha", "b", "rc 1", "build 2314", "-SNAPSHOT" etc. or null if nothing.

@@ -49,11 +49,11 @@ import java.util.regex.Pattern;
  */
 public final class Utils {
 
-    public final static Random random = new Random();
-    final static ChatColor[] styles = {ChatColor.BOLD, ChatColor.ITALIC, ChatColor.STRIKETHROUGH, ChatColor.UNDERLINE, ChatColor.MAGIC, ChatColor.RESET};
-    final static Map<String, String> chat = new HashMap<>();
-    final static Map<String, String> englishChat = new HashMap<>();
-    private final static String[][] plurals = {
+    public static final Random random = new Random();
+    static final ChatColor[] styles = {ChatColor.BOLD, ChatColor.ITALIC, ChatColor.STRIKETHROUGH, ChatColor.UNDERLINE, ChatColor.MAGIC, ChatColor.RESET};
+    static final Map<String, String> chat = new HashMap<>();
+    static final Map<String, String> englishChat = new HashMap<>();
+    private static final String[][] plurals = {
 
             {"fe", "ves"},// most -f words' plurals can end in -fs as well as -ves
 
@@ -79,7 +79,7 @@ public final class Utils {
             {"", "s"},
     };
     @SuppressWarnings("null")
-    private final static Pattern stylePattern = Pattern.compile("<([^<>]+)>");
+    private static final Pattern stylePattern = Pattern.compile("<([^<>]+)>");
 
     static {
         Language.addListener(() -> {
@@ -95,7 +95,7 @@ public final class Utils {
         });
     }
 
-//	public final static class AmountResponse {
+//	public static final class AmountResponse {
 //		public final String s;
 //		public final int amount;
 //		public final boolean every;
@@ -125,7 +125,7 @@ public final class Utils {
 //		}
 //	}
 //
-//	public final static AmountResponse getAmountWithEvery(final String s) {
+//	public static final AmountResponse getAmountWithEvery(final String s) {
 //		if (s.matches("\\d+ of (all|every) .+")) {
 //			return new AmountResponse("" + s.split(" ", 4)[3], Utils.parseInt("" + s.split(" ", 2)[0]), true);
 //		} else if (s.matches("\\d+ of .+")) {

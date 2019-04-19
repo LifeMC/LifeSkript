@@ -35,15 +35,15 @@ import java.util.regex.Pattern;
  */
 public final class Time implements YggdrasilSerializable {
 
-    private final static int TICKS_PER_HOUR = 1000, TICKS_PER_DAY = 24 * TICKS_PER_HOUR;
-    private final static double TICKS_PER_MINUTE = 1000. / 60;
+    private static final int TICKS_PER_HOUR = 1000, TICKS_PER_DAY = 24 * TICKS_PER_HOUR;
+    private static final double TICKS_PER_MINUTE = 1000. / 60;
     /**
      * 0 ticks == 6:00
      */
-    private final static int HOUR_ZERO = 6 * TICKS_PER_HOUR;
-    private final static Message m_error_24_hours = new Message("time.errors.24 hours");
-    private final static Message m_error_12_hours = new Message("time.errors.12 hours");
-    private final static Message m_error_60_minutes = new Message("time.errors.60 minutes");
+    private static final int HOUR_ZERO = 6 * TICKS_PER_HOUR;
+    private static final Message m_error_24_hours = new Message("time.errors.24 hours");
+    private static final Message m_error_12_hours = new Message("time.errors.12 hours");
+    private static final Message m_error_60_minutes = new Message("time.errors.60 minutes");
     private final int time;
 
     public Time() {

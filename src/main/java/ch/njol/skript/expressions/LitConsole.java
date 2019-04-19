@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.3.1")
 public final class LitConsole extends SimpleLiteral<ConsoleCommandSender> {
     @SuppressWarnings("null")
-    private final static ConsoleCommandSender console = Bukkit.getConsoleSender();
+    private static final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
     static {
         Skript.registerExpression(LitConsole.class, ConsoleCommandSender.class, ExpressionType.SIMPLE, "[the] (console|server)");

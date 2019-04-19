@@ -61,20 +61,20 @@ import java.util.regex.Matcher;
  */
 public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
-    public final static List<Loop> currentLoops = new ArrayList<>();
-    final static HashMap<String, String> currentOptions = new HashMap<>();
-    private final static Message m_no_errors = new Message("skript.no errors"),
+    public static final List<Loop> currentLoops = new ArrayList<>();
+    static final HashMap<String, String> currentOptions = new HashMap<>();
+    private static final Message m_no_errors = new Message("skript.no errors"),
             m_no_scripts = new Message("skript.no scripts");
-    private final static PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
-    private final static Map<String, ItemType> currentAliases = new HashMap<>();
+    private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
+    private static final Map<String, ItemType> currentAliases = new HashMap<>();
     /**
      * must be synchronized
      */
-    private final static ScriptInfo loadedScripts = new ScriptInfo();
+    private static final ScriptInfo loadedScripts = new ScriptInfo();
     /**
      * Filter for enabled scripts & folders.
      */
-    private final static FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
+    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -105,19 +105,19 @@ public final class ScriptLoader {
      * @param events
      */
     @SafeVarargs
-    public static void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
+    public static final void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
         currentEventName = name;
         currentEvents = events;
         hasDelayBefore = Kleenean.FALSE;
     }
 
-    public static void deleteCurrentEvent() {
+    public static final void deleteCurrentEvent() {
         currentEventName = null;
         currentEvents = null;
         hasDelayBefore = Kleenean.FALSE;
     }
 
-//	private final static class SerializedScript {
+//	private static final class SerializedScript {
 //		public SerializedScript() {}
 //
 //		public final List<Trigger> triggers = new ArrayList<Trigger>();

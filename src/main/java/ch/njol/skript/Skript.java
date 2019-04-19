@@ -113,9 +113,9 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final String ISSUES_LINK = "https://github.com/LifeMC/LifeSkript/issues/";
 
     // ================ PLUGIN ================
-    public final static Message m_invalid_reload = new Message("skript.invalid reload"),
+    public static final Message m_invalid_reload = new Message("skript.invalid reload"),
             m_finished_loading = new Message("skript.finished loading");
-    public final static String SCRIPTSFOLDER = "scripts";
+    public static final String SCRIPTSFOLDER = "scripts";
     /**
      * A small value, useful for comparing doubles or floats.
      * <p>
@@ -133,32 +133,32 @@ public final class Skript extends JavaPlugin implements Listener {
      *
      * @see #EPSILON_MULT
      */
-    public final static double EPSILON = 1e-10;
+    public static final double EPSILON = 1e-10;
     /**
      * A value a bit larger than 1
      *
      * @see #EPSILON
      */
-    public final static double EPSILON_MULT = 1.00001;
+    public static final double EPSILON_MULT = 1.00001;
     /**
      * The maximum ID a block can have in Minecraft.
      */
-    public final static int MAXBLOCKID = 255;
+    public static final int MAXBLOCKID = 255;
     /**
      * The maximum data value of Minecraft, i.e. Short.MAX_VALUE - Short.MIN_VALUE.
      */
-    public final static int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
+    public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
     public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
     @SuppressWarnings("null")
-    private final static Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
-    private final static HashMap<String, SkriptAddon> addons = new HashMap<>();
-    private final static Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(100);
-    private final static Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(100);
-    private final static Collection<SyntaxElementInfo<? extends Statement>> statements = new ArrayList<>(100);
-    private final static List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
-    private final static int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
-    private final static Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
-    private final static String EXCEPTION_PREFIX = "#!#! ";
+    private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
+    private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
+    private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(100);
+    private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(100);
+    private static final Collection<SyntaxElementInfo<? extends Statement>> statements = new ArrayList<>(100);
+    private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
+    private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
+    private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
+    private static final String EXCEPTION_PREFIX = "#!#! ";
     @Nullable
     static Skript instance;
     static boolean disabled;
@@ -169,8 +169,8 @@ public final class Skript extends JavaPlugin implements Listener {
     static boolean runningCraftBukkit;
     @Nullable
     private static Version version;
-    public final static FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[] { Skript.getLatestVersion(), Skript.getVersion().toString() });
-    public final static UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
+    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[] { Skript.getLatestVersion(), Skript.getVersion().toString() });
+    public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
     private static SkriptAddon addon;
@@ -181,34 +181,34 @@ public final class Skript extends JavaPlugin implements Listener {
         instance = this;
     }
 
-    public static Skript getInstance() {
+    public static final Skript getInstance() {
         final Skript i = instance;
         if (i == null)
             throw new IllegalStateException("Can't get Skript instance because it was null!");
         return i;
     }
 
-    public static Version getVersion() {
+    public static final Version getVersion() {
         final Version v = version;
         if (v == null)
             throw new IllegalStateException("Can't get Skript version because it was null!");
         return v;
     }
 
-    public static String getDownloadLink() {
+    public static final String getDownloadLink() {
         return "You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK;
     }
 
-    public static void printDownloadLink() {
+    public static final void printDownloadLink() {
         Bukkit.getScheduler().runTask(getInstance(), () -> info(getDownloadLink()));
     }
 
-    public static void printIssuesLink() {
+    public static final void printIssuesLink() {
         Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
     @Nullable
-    public static String getLatestVersion() {
+    public static final String getLatestVersion() {
         try {
             return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
         } catch (final Throwable tw) {
@@ -216,14 +216,14 @@ public final class Skript extends JavaPlugin implements Listener {
         }
     }
 
-    public static Version getMinecraftVersion() {
+    public static final Version getMinecraftVersion() {
         return minecraftVersion;
     }
 
     /**
      * @return Whether this server is running CraftBukkit
      */
-    public static boolean isRunningCraftBukkit() {
+    public static final boolean isRunningCraftBukkit() {
         return runningCraftBukkit;
     }
 
@@ -232,15 +232,15 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * @return Whether this server is running Minecraft <tt>major.minor</tt> <b>or higher</b>
      */
-    public static boolean isRunningMinecraft(final int major, final int minor) {
+    public static final boolean isRunningMinecraft(final int major, final int minor) {
         return minecraftVersion.compareTo(major, minor) >= 0;
     }
 
-    public static boolean isRunningMinecraft(final int major, final int minor, final int revision) {
+    public static final boolean isRunningMinecraft(final int major, final int minor, final int revision) {
         return minecraftVersion.compareTo(major, minor, revision) >= 0;
     }
 
-    public static boolean isRunningMinecraft(final Version v) {
+    public static final boolean isRunningMinecraft(final Version v) {
         return minecraftVersion.compareTo(v) >= 0;
     }
 
@@ -252,7 +252,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @deprecated use {@link #classExists(String)}
      */
     @Deprecated
-    public static boolean supports(final String className) {
+    public static final boolean supports(final String className) {
         return classExists(className);
     }
 
@@ -263,7 +263,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given class exists.
      */
     @SuppressWarnings({"null", "unused"})
-    public static boolean classExists(final String className) {
+    public static final boolean classExists(final String className) {
         if (className == null)
             return false;
         try {
@@ -284,7 +284,7 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     @Nullable
     @SuppressWarnings({"null", "unused"})
-    public static Class<?> classForName(final String className) {
+    public static final Class<?> classForName(final String className) {
         if (className == null)
             return null;
         try {
@@ -303,7 +303,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given method exists.
      */
     @SuppressWarnings("null")
-    public static boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
+    public static final boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -326,7 +326,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given method exists.
      */
     @SuppressWarnings("null")
-    public static boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+    public static final boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -345,7 +345,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given field exists.
      */
     @SuppressWarnings("null")
-    public static boolean fieldExists(final Class<?> c, final String fieldName) {
+    public static final boolean fieldExists(final Class<?> c, final String fieldName) {
         if (c == null || fieldName == null)
             return false;
         try {
@@ -359,7 +359,7 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Clears triggers, commands, functions and variable names
      */
-    static void disableScripts() {
+    static final void disableScripts() {
         VariableString.variableNames.clear();
         SkriptEventHandler.removeAllTriggers();
         Commands.clearCommands();
@@ -371,7 +371,7 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Prints errors from reloading the config & scripts
      */
-    static void reload() {
+    static final void reload() {
         disableScripts();
         reloadMainConfig();
         reloadAliases();
@@ -381,7 +381,7 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Prints errors
      */
-    static void reloadScripts() {
+    static final void reloadScripts() {
         disableScripts();
         ScriptLoader.loadScripts();
     }
@@ -389,14 +389,14 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Prints errors
      */
-    static void reloadMainConfig() {
+    static final void reloadMainConfig() {
         SkriptConfig.load();
     }
 
     /**
      * Prints errors
      */
-    static void reloadAliases() {
+    static final void reloadAliases() {
         Aliases.clear();
         Aliases.load();
     }
@@ -410,15 +410,15 @@ public final class Skript extends JavaPlugin implements Listener {
      *
      * @param closeable
      */
-    public static void closeOnDisable(final Closeable closeable) {
+    public static final void closeOnDisable(final Closeable closeable) {
         closeOnDisable.add(closeable);
     }
 
-    public static void outdatedError() {
+    public static final void outdatedError() {
         error("Skript v" + getInstance().getDescription().getVersion() + " is not fully compatible with Bukkit " + Bukkit.getVersion() + ". Some feature(s) will be broken until you update Skript.");
     }
 
-    public static void outdatedError(final Exception e) {
+    public static final void outdatedError(final Exception e) {
         outdatedError();
         if (testing())
             e.printStackTrace();
@@ -442,14 +442,14 @@ public final class Skript extends JavaPlugin implements Listener {
         return acceptRegistrations;
     }
 
-    public static void checkAcceptRegistrations() {
+    public static final void checkAcceptRegistrations() {
         if (!acceptRegistrations)
             throw new SkriptAPIException("Registering is disabled after initialisation!");
     }
 
     // ================ CONDITIONS & EFFECTS ================
 
-    static void stopAcceptingRegistrations() {
+    static final void stopAcceptingRegistrations() {
         acceptRegistrations = false;
 
         Converters.createMissingConverters();
@@ -674,7 +674,7 @@ public final class Skript extends JavaPlugin implements Listener {
         return SkriptLogger.log(minVerb);
     }
 
-    public static void debug(final String info) {
+    public static final void debug(final String info) {
         if (!debug())
             return;
         SkriptLogger.log(SkriptLogger.DEBUG, info);
@@ -684,7 +684,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @see SkriptLogger#log(Level, String)
      */
     @SuppressWarnings("null")
-    public static void info(final String info) {
+    public static final void info(final String info) {
         SkriptLogger.log(Level.INFO, info);
     }
 
@@ -692,7 +692,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @see SkriptLogger#log(Level, String)
      */
     @SuppressWarnings("null")
-    public static void warning(final String warning) {
+    public static final void warning(final String warning) {
         SkriptLogger.log(Level.WARNING, warning);
     }
 
@@ -700,7 +700,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @see SkriptLogger#log(Level, String)
      */
     @SuppressWarnings("null")
-    public static void error(final @Nullable String error) {
+    public static final void error(final @Nullable String error) {
         if (error != null)
             SkriptLogger.log(Level.SEVERE, error);
     }
@@ -713,7 +713,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param error
      * @param quality
      */
-    public static void error(final String error, final ErrorQuality quality) {
+    public static final void error(final String error, final ErrorQuality quality) {
         SkriptLogger.log(new LogEntry(SkriptLogger.SEVERE, quality, error));
     }
 
@@ -809,16 +809,16 @@ public final class Skript extends JavaPlugin implements Listener {
         return new EmptyStacktraceException();
     }
 
-    static void logEx() {
+    static final void logEx() {
         SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX);
     }
 
-    static void logEx(final String... lines) {
+    static final void logEx(final String... lines) {
         for (final String line : lines)
             SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
     }
 
-    public static void info(final CommandSender sender, final String info) {
+    public static final void info(final CommandSender sender, final String info) {
         sender.sendMessage(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(info));
     }
 
@@ -827,7 +827,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param permission
      * @see #adminBroadcast(String)
      */
-    public static void broadcast(final String message, final String permission) {
+    public static final void broadcast(final String message, final String permission) {
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), permission);
     }
 
@@ -842,7 +842,7 @@ public final class Skript extends JavaPlugin implements Listener {
 //		});
 //	}
 
-    public static void adminBroadcast(final String message) {
+    public static final void adminBroadcast(final String message) {
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
     }
 
@@ -852,11 +852,11 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param sender
      * @param info
      */
-    public static void message(final CommandSender sender, final String info) {
+    public static final void message(final CommandSender sender, final String info) {
         sender.sendMessage(Utils.replaceEnglishChatStyles(info));
     }
 
-    public static void error(final CommandSender sender, final String error) {
+    public static final void error(final CommandSender sender, final String error) {
         sender.sendMessage(SKRIPT_PREFIX + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
     }
 

@@ -46,7 +46,7 @@ import java.util.Locale;
 @Examples({"set chestplate of the player to a diamond chestplate", "helmet of player is neither a helmet nor air # player is wearing a block, e.g. from another plugin"})
 @Since("1.0")
 public final class ExprArmorSlot extends SimplePropertyExpression<LivingEntity, Slot> {
-    private final static EquipSlot[] slots = {EquipSlot.BOOTS, EquipSlot.LEGGINGS, EquipSlot.CHESTPLATE, EquipSlot.HELMET};
+    private static final EquipSlot[] slots = {EquipSlot.BOOTS, EquipSlot.LEGGINGS, EquipSlot.CHESTPLATE, EquipSlot.HELMET};
 
     static {
         register(ExprArmorSlot.class, Slot.class, "(0¦boot[s]|0¦shoe[s]|1¦leg[ging][s]|2¦chestplate[s]|3¦helm[et][s]) [slot]", "livingentities");

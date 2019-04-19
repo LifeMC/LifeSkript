@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2013 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-Fixes-V9c")
 public final class ExprStringCase extends SimpleExpression<String> {
 
-    private final static int UPPER = 0, LOWER = 1;
+    private static final int UPPER = 0, LOWER = 1;
 
     static {
         Skript.registerExpression(ExprStringCase.class, String.class, ExpressionType.SIMPLE, "%string% in (0¦upper|1¦lower) case", "capitalized %string%");

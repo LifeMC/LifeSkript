@@ -49,14 +49,14 @@ import java.util.regex.Pattern;
 public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings("null")
-    public final static Charset UTF_8 = Charset.forName("UTF-8");
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
     @SuppressWarnings("null")
-    private final static Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
+    private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
     /**
      * Use with find()
      */
     @SuppressWarnings("null")
-    private final static Pattern containsWhitespace = Pattern.compile("\\s");
+    private static final Pattern containsWhitespace = Pattern.compile("\\s");
     final AtomicInteger changes = new AtomicInteger(0);
     /**
      * A Lock on this object must be acquired after connectionLock (if that lock is used) (and thus also after {@link Variables#getReadLock()}).
@@ -109,7 +109,7 @@ public final class FlatFileStorage extends VariablesStorage {
         return r.toArray(new String[0]);
     }
 
-    private static void writeCSV(final PrintWriter pw, final String... values) {
+    private static final void writeCSV(final PrintWriter pw, final String... values) {
         assert values.length == 3; // name, type, value
         for (int i = 0; i < values.length; i++) {
             if (i != 0)

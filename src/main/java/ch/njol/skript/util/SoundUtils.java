@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -29,7 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class SoundUtils {
 
-    private final static EnumUtils<Sound> util = new EnumUtils<>(Sound.class, "sounds");
+    private static final EnumUtils<Sound> util = new EnumUtils<>(Sound.class, "sounds");
 
     static {
         assert false;

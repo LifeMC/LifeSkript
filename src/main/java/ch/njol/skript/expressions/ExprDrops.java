@@ -53,7 +53,7 @@ import java.util.List;
 @Since("1.0")
 @Events("death")
 public final class ExprDrops extends SimpleExpression<ItemStack> {
-    private final static ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
+    private static final ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
 
     static {
         Skript.registerExpression(ExprDrops.class, ItemStack.class, ExpressionType.SIMPLE, "[the] drops");

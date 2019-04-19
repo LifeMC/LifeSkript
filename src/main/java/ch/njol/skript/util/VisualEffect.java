@@ -15,7 +15,7 @@
  *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011, 2012 Peter Güttinger
+ * Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -52,10 +52,10 @@ import java.util.List;
  * @author Peter Güttinger
  */
 public final class VisualEffect implements SyntaxElement, YggdrasilSerializable {
-    final static List<Type> types = new ArrayList<>(Type.values().length);
-    final static Noun[] names = new Noun[Type.values().length];
-    private final static String LANGUAGE_NODE = "visual effects";
-    private final static String TYPE_ID = "VisualEffect.Type";
+    static final List<Type> types = new ArrayList<>(Type.values().length);
+    static final Noun[] names = new Noun[Type.values().length];
+    private static final String LANGUAGE_NODE = "visual effects";
+    private static final String TYPE_ID = "VisualEffect.Type";
     @Nullable
     static SyntaxElementInfo<VisualEffect> info;
 

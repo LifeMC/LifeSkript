@@ -37,11 +37,11 @@ import java.util.regex.Pattern;
  */
 public final class EnchantmentType implements YggdrasilSerializable {
 
-    final static Map<Enchantment, String> enchantmentNames = new HashMap<>();
-    final static Map<String, Enchantment> enchantmentPatterns = new HashMap<>();
-    private final static String LANGUAGE_NODE = "enchantments";
+    static final Map<Enchantment, String> enchantmentNames = new HashMap<>();
+    static final Map<String, Enchantment> enchantmentPatterns = new HashMap<>();
+    private static final String LANGUAGE_NODE = "enchantments";
     @SuppressWarnings("null")
-    private final static Pattern pattern = Pattern.compile(".+ \\d+");
+    private static final Pattern pattern = Pattern.compile(".+ \\d+");
 
     static {
         Language.addListener(() -> {

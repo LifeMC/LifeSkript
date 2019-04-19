@@ -45,19 +45,19 @@ import java.util.Locale;
 @SuppressWarnings("unused")
 public final class SkriptConfig {
 
-    public final static Option<String> language = new Option<>("language", "english").optional(true).setter(s -> {
+    public static final Option<String> language = new Option<>("language", "english").optional(true).setter(s -> {
         if (!Language.load(s)) {
             Skript.error("No language file found for '" + s + "'!");
         }
     });
-    public final static Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", false);
-    public final static Option<String> effectCommandToken = new Option<>("effect command token", "!");
-    public final static Option<Boolean> allowOpsToUseEffectCommands = new Option<>("allow ops to use effect commands", true);
+    public static final Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", false);
+    public static final Option<String> effectCommandToken = new Option<>("effect command token", "!");
+    public static final Option<Boolean> allowOpsToUseEffectCommands = new Option<>("allow ops to use effect commands", true);
     // everything handled by Variables
-    public final static OptionSection databases = new OptionSection("databases");
-    public final static Option<Boolean> usePlayerUUIDsInVariableNames = new Option<>("use player UUIDs in variable names", false);
-    public final static Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
-    public final static Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
+    public static final OptionSection databases = new OptionSection("databases");
+    public static final Option<Boolean> usePlayerUUIDsInVariableNames = new Option<>("use player UUIDs in variable names", false);
+    public static final Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
+    public static final Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
         try {
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
@@ -65,47 +65,47 @@ public final class SkriptConfig {
             return EventPriority.NORMAL;
         }
     });
-    public final static Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
+    public static final Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
      * Maximum number of digits to display after the period for floats and doubles
      */
-    public final static Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
-    public final static Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
-    public final static Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
-    public final static Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
-    public final static Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", true);
-    public final static Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", true);
-    public final static Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);
-    public final static Option<Boolean> disableStartingWithExpressionWarnings = new Option<>("disable variable name starting with expression warnings", false);
-    public final static Option<Boolean> disableStartStopEventWarnings = new Option<>("disable start stop event warnings", false);
-    public final static Option<Boolean> disableTooLongDelayWarnings = new Option<>("disable too long delay warnings", false);
-    public final static Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
-    public final static Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
-    public final static Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
+    public static final Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
+    public static final Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
+    public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
+    public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
+    public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", true);
+    public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", true);
+    public static final Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);
+    public static final Option<Boolean> disableStartingWithExpressionWarnings = new Option<>("disable variable name starting with expression warnings", false);
+    public static final Option<Boolean> disableStartStopEventWarnings = new Option<>("disable start stop event warnings", false);
+    public static final Option<Boolean> disableTooLongDelayWarnings = new Option<>("disable too long delay warnings", false);
+    public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
+    public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
+    public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
     static final Collection<Config> configs = new ArrayList<>();
-    final static Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
+    static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
 
     // Disable warnings options
-    final static Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
-    final static Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
+    static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
+    static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
         //final Task ct = Updater.checkerTask;
         //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
         //ct.setNextExecution(t.getTicks_i());
     });
-    final static Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
+    static final Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
     @SuppressWarnings("null")
-    private final static DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-    private final static Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, s -> {
+    private static final DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+    private static final Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, s -> {
         try {
             if ("default".equalsIgnoreCase(s))
                 return null;
             return new SimpleDateFormat(s);
         } catch (final IllegalArgumentException e) {
-            Skript.error("'" + s + "' is not a valid date format. Please refer to http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html for instructions on the format.");
+            Skript.error("'" + s + "' is not a valid date format. Please refer to https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html for instructions on the format.");
         }
         return null;
     });
-    private final static Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
+    private static final Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable
     static Config mainConfig;
 

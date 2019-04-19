@@ -36,8 +36,8 @@ import java.util.Locale;
 public class EquipmentSlot extends Slot {
 
     // according to mcstats there are only 2 servers running 1.2.5 or 1.3.1 respectively
-//	public final static Version EQUIPMENT_VERSION = new Version(1,4,5);
-//	public final static boolean SUPPORTS_EQUIPMENT = Skript.isRunningMinecraft(EQUIPMENT_VERSION);
+//	public static final Version EQUIPMENT_VERSION = new Version(1,4,5);
+//	public static final boolean SUPPORTS_EQUIPMENT = Skript.isRunningMinecraft(EQUIPMENT_VERSION);
 
     private final EntityEquipment e;
     private final EquipSlot slot;
