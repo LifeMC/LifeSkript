@@ -634,8 +634,8 @@ public final class Skript extends JavaPlugin implements Listener {
                     return false;
                 return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
             }
-        } catch (final Exception ex) {
-            ex.printStackTrace(); // just like Bukkit
+        } catch (final Throwable tw) {
+            Skript.exception(tw, "Error occurred when executing command " + command);
             return false;
         }
     }

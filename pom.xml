@@ -199,7 +199,6 @@
                     <include>plugin.yml</include>
                     <include>version</include>
                     <include>config.sk</include>
-                    <include>features.sk</include>
                     <include>lang/*</include>
                 </includes>
             </resource>
@@ -213,7 +212,6 @@
                     <exclude>plugin.yml</exclude>
                     <exclude>version</exclude>
                     <exclude>config.sk</exclude>
-                    <exclude>features.sk</exclude>
                     <exclude>lang/*</exclude>
                 </excludes>
             </resource>
