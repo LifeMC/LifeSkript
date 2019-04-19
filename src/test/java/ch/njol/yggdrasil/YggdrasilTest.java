@@ -179,6 +179,7 @@ public final class YggdrasilTest {
 //		}
 //	}
 
+    @SuppressWarnings("EmptyMethod")
     private static void print(final @Nullable Object o, final byte[] d) {
 		/*
 		System.out.print(o);

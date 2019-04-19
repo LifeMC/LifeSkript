@@ -163,6 +163,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     // any Objects
 
+    @SuppressWarnings("EmptyMethod")
     protected abstract void writeObjectEnd() throws IOException;
 
     @SuppressWarnings({"rawtypes", "unchecked", "unused", "null"})

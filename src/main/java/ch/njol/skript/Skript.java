@@ -195,12 +195,16 @@ public final class Skript extends JavaPlugin implements Listener {
         return v;
     }
 
+    public static String getDownloadLink() {
+        return "You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK;
+    }
+
     public static void printDownloadLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] You can download the latest Skript version here: " + LATEST_VERSION_DOWNLOAD_LINK));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info(getDownloadLink()));
     }
 
     public static void printIssuesLink() {
-        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] Please report all issues you encounter to the issues page: " + ISSUES_LINK));
+        Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
     @Nullable
@@ -1129,8 +1133,10 @@ public final class Skript extends JavaPlugin implements Listener {
                             public final void run() {
                                 final Player p = e.getPlayer();
                                 assert p != null;
-                                if (updateAvailable)
+                                if (updateAvailable) {
                                     info(p, "" + m_update_available);
+                                    info(p, getDownloadLink());
+                                }
                             }
                         };
                     }
@@ -1160,14 +1166,14 @@ public final class Skript extends JavaPlugin implements Listener {
                     if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().warning("[Skript] A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
                         printDownloadLink();
                         updateAvailable = true;
                         latestVersion = latest;
                     } else {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> Bukkit.getLogger().info("[Skript] You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> info("You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
                         printIssuesLink();
                     }
                 } catch (final Throwable tw) {

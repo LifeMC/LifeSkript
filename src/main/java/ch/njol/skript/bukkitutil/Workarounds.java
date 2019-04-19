@@ -53,7 +53,44 @@ public final class Workarounds {
     }
 
     public static void init() {
-        /* only for running static initializer without Class#forName */
+        // Exception Catching
+        final Thread.UncaughtExceptionHandler handler = (t, e) -> {
+            System.err.println("Uncaught exception in thread \"" + t.getName() + "\"");
+            e.printStackTrace();
+        };
+
+        // Default Handler
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
+        // Current Thread
+        Thread.currentThread().setUncaughtExceptionHandler(handler);
+
+        // Server Thread
+        Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Thread.currentThread().setUncaughtExceptionHandler(handler));
+
+        /* System properties */
+
+        // UTF-8 Fixes
+        System.setProperty("file.encoding", "UTF-8");
+
+        System.setProperty("sun.jnu.encoding", "UTF-8");
+
+        System.setProperty("sun.stderr.encoding", "UTF-8");
+        System.setProperty("sun.stdout.encoding", "UTF-8");
+
+        // Language Fix
+        System.setProperty("user.language", "EN");
+
+        // Country Fix
+        System.setProperty("user.country", "US");
+
+        // Keep Alive Fix
+        System.setProperty("paper.playerconnection.keepalive", "120");
+
+        // LifeSkript
+        System.setProperty("using.lifeskript", "true");
+
+        /* System properties */
     }
 
 }

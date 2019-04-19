@@ -33,7 +33,7 @@ import java.lang.reflect.Method;
 /**
  * @author Peter Güttinger
  */
-@SuppressWarnings("null")
+@SuppressWarnings({"null", "CanBeFinal"})
 public final class ProjectileUtils {
 
     private static Method getShooter;
