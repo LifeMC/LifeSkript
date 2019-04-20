@@ -1,4 +1,14 @@
 Manifest-Version: 1.0
+Implementation-Title: Skript
+Implementation-Version: ${project.version}
 Main-Class: ch.njol.skript.SkriptCLI
+Sealed: true
+Automatic-Module-Name: ch.njol.skript
+Specification-Vendor: Skript Team
+Specification-Title: Skript
+Implementation-Vendor: Skript Team
+Specification-Version: ${project.version}
+
+Name: ch/njol/
 Sealed: true
 

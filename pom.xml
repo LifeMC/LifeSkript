@@ -34,29 +34,29 @@
     <repositories>
         <repository>
             <id>njol-repo</id>
-            <url>http://maven.njol.ch/repo</url>
+            <url>https://maven.njol.ch/repo/</url>
         </repository>
         <repository>
             <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo</url>
+            <url>https://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>techcable-repo</id>
-            <url>http://repo.techcable.net/content/repositories/public</url>
+            <url>https://repo.techcable.net/content/repositories/public/</url>
         </repository>
         <repository>
             <id>lifemc-repo</id>
-            <url>http://lifemcserver.com</url>
+            <url>https://lifemcserver.com</url>
         </repository>
         <repository>
             <id>vault-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+            <url>https://nexus.hc.to/content/repositories/pub_releases/</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>lifemc-repo</id>
-            <url>http://lifemcserver.com</url>
+            <url>https://lifemcserver.com/</url>
         </pluginRepository>
     </pluginRepositories>
     <dependencies>
@@ -296,7 +296,7 @@
                     <dependency>
                         <groupId>org.eclipse.jdt.core.compiler</groupId>
                         <artifactId>ecj</artifactId>
-                        <version>4.11</version>
+                        <version>4.12M1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -321,6 +321,36 @@
                             <include>ch.njol:yggdrasil</include>
                         </includes>
                     </artifactSet>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Manifest-Version>1.0</Manifest-Version>
+                            <Implementation-Title>Skript</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Main-Class>ch.njol.skript.SkriptCLI</Main-Class>
+                            <Sealed>true</Sealed>
+                            <Automatic-Module-Name>ch.njol.skript</Automatic-Module-Name>
+                            <Specification-Vendor>Skript Team</Specification-Vendor>
+                            <Specification-Title>Skript</Specification-Title>
+                            <Implementation-Vendor>Skript Team</Implementation-Vendor>
+                            <Specification-Version>${project.version}</Specification-Version>
+
+                            <Name>ch/njol</Name>
+                            <Sealed>true</Sealed>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -428,10 +458,19 @@
                                     <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 </manifest>
                                 <manifestEntries>
-                                    <mode>development</mode>
-                                    <url>${project.url}</url>
-                                    <name>ch/njol/skript</name>
-                                    <sealed>true</sealed>
+                                    <Manifest-Version>1.0</Manifest-Version>
+                                    <Implementation-Title>Skript</Implementation-Title>
+                                    <Implementation-Version>${project.version}</Implementation-Version>
+                                    <Main-Class>ch.njol.skript.SkriptCLI</Main-Class>
+                                    <Sealed>true</Sealed>
+                                    <Automatic-Module-Name>ch.njol.skript</Automatic-Module-Name>
+                                    <Specification-Vendor>Skript Team</Specification-Vendor>
+                                    <Specification-Title>Skript</Specification-Title>
+                                    <Implementation-Vendor>Skript Team</Implementation-Vendor>
+                                    <Specification-Version>${project.version}</Specification-Version>
+
+                                    <Name>ch/njol</Name>
+                                    <Sealed>true</Sealed>
                                 </manifestEntries>
                             </archive>
                         </configuration>

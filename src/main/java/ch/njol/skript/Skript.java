@@ -176,7 +176,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static boolean first;
     private static ServerPlatform serverPlatform;
     private static Boolean hasJLineSupport = null;
-    private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal"));
+    private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     @Nullable
     private static Version version;
     public static final Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
