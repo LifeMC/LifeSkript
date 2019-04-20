@@ -50,7 +50,9 @@
         </repository>
         <repository>
             <id>vault-repo</id>
-            <url>https://nexus.hc.to/content/repositories/pub_releases/</url>
+            <!-- Let's Encrypt and CloudFlare gives free SSL certificates and it's 2019 but vault's repo don't have an
+                    valid SSL certificate, interesting. -->
+            <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
         </repository>
     </repositories>
     <pluginRepositories>
