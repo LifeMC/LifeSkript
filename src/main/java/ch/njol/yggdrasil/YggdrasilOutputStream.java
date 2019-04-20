@@ -93,6 +93,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     // Enum
 
+    @SuppressWarnings("EmptyMethod")
     protected abstract void writeArrayEnd() throws IOException;
 
     private void writeArray(final Object array) throws IOException {

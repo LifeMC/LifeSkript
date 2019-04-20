@@ -134,7 +134,7 @@ public final class FlatFileStorage extends VariablesStorage {
         int unsuccessful = 0;
         final StringBuilder invalid = new StringBuilder();
 
-        Version varVersion = Skript.getVersion(); // will be set later
+        Version varVersion; // will be set later
 
         final Version v2_0_beta3 = new Version(2, 0, "beta 3");
         boolean update2_0_beta3 = false;
@@ -142,7 +142,7 @@ public final class FlatFileStorage extends VariablesStorage {
         boolean update2_1 = false;
 
         try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8))) {
-            String line = null;
+            String line;
             int lineNum = 0;
             while ((line = r.readLine()) != null) {
                 lineNum++;

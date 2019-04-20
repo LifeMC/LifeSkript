@@ -522,7 +522,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         final ClassInfo<?> c = Classes.getClassInfoNoError(type);
                         @SuppressWarnings("unused")
                         Serializer<?> s;
-                        if (c == null || (s = c.getSerializer()) == null) {
+                        if (c == null || c.getSerializer() == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
                             continue;
                         }

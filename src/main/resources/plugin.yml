@@ -29,6 +29,7 @@ website: https://github.com/LifeMC/LifeSkript
 main: ch.njol.skript.Skript
 
 version: ${project.version}
+api-version: '1.8'
 
 commands:
   skript:

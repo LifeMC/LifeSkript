@@ -86,7 +86,7 @@ public final class WebUtils {
     @Nullable
     public static final String getResponse(final String address, final String contentType) throws IOException {
 
-        String response = null;
+        String response;
 
         BufferedInputStream in = null;
         BufferedReader br = null;

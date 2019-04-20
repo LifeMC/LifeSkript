@@ -48,7 +48,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     /**
      * Only ItemType may set this directly.
      */
-    int typeid = -1;
+    int typeid;
 
     public ItemData(final int typeid) {
         this.typeid = typeid;

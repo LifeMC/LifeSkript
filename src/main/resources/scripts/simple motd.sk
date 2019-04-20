@@ -8,6 +8,8 @@
 # This not sets the server MOTD in the server list!
 # This script is only for sending MOTD to joined players.
 
+# MOTD's meaning is = (M)essage (O)f (T)he (D)ay
+
 command /setmotd <text>:
 	permission: skript.setmotd
 	description: Sets message of the day

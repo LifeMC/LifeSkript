@@ -18,7 +18,7 @@
 # These plurals are both used by Skript when displaying items, e.g. 2 logs will be displayed as '2 logs',
 # while 1 log will be displayed as '1 log', but are also used when parsing, i.e. you can write '1 log' or '2 logs' and both is understood.
 # Aliases should also have a gender, which can be defined by adding '@<gender>' after the alias, e.g. 'emerald¦s @an' ('@a' can be omitted as it's the default).
-# - English genders are 'a' and 'an', and German genders are 'n', 'm', and 'f' (these are all defined in the respectile language file).
+# - English genders are 'a' and 'an', and German genders are 'n', 'm', and 'f' (these are all defined in the respective language file).
 # All languages can use the special genders 'x' and '-' for plural and no gender respectively, e.g. 'leaves @x' or 'air @-'.
 #
 # Sometimes you want to make a part of an alias optional, e.g. in 'wooden door',
@@ -37,7 +37,7 @@
 # But this can be shortened by using variations:
 #	{tree type}: # name of the variation
 #		regular = :0 # list values here. these have the same syntax as aliases, i.e. they can have ids and data/data ranges,
-#		redwood = :1 # but you usally only need the data, which is done by typing a colon with no id in front of it.
+#		redwood = :1 # but you usually only need the data, which is done by typing a colon with no id in front of it.
 #		birch = :2
 #	{tree type} wood = 17           # this is resolved to: wood = 17, regular wood = 17:0, redwood wood = 17:1 and birch wood = 17:2
 #	sapling of {tree type} tree = 6 # you can put a variation anywhere in an alias, it doesn't need to be at the beginning.
@@ -54,7 +54,7 @@
 #	cauldron item = 380
 #	cauldron = 118, 380
 # This way if you 'give a cauldron to the player' the player will not actually be given the items of the 'cauldron' alias,
-# but the items of the 'cauldron item' alias, causing the player to always recieve the correct cauldron item.
+# but the items of the 'cauldron item' alias, causing the player to always receive the correct cauldron item.
 # The same applies to setting blocks, though it usually doesn't matter as items are ignored when setting blocks.
 # It does matter for e.g. water though:
 #	water = 8, 9

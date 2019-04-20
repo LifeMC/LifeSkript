@@ -505,7 +505,6 @@ public final class Commands { //NOSONAR
 
         if (Skript.logVeryHigh() && !Skript.debug())
             info("registered command " + desc);
-        currentArguments = null;
         return c;
     }
 

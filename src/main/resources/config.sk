@@ -58,7 +58,7 @@ allow ops to use effect commands: true
 
 
 player variable fix: true
-#Whether to enable the player variable fix if a player has rejoined and was reciding inside a variable.
+#Whether to enable the player variable fix if a player has rejoined and was receding inside a variable.
 #Player objects inside a variable(list or normal) are not updated to the new player object
 #A server creates whenever a player rejoins. 
 #Basicly the variable holds the old player object when a player has rejoined thus rendering the variable kinda broken.
@@ -71,6 +71,7 @@ use player UUIDs in variable names: false
 # {home.e5240337-a4a2-39dd-8ed9-e5ce729a8522} instead of {home.njol}.
 # Please note that if this setting is changed old variables WILL NOT be renamed automatically.
 # If you are using Skript first time, you should make this true. Only one reason for making default value "false" is the compatibility.
+# Also, make this true if your server have "online-mode=true" in server.properties
 
 
 date format: default
