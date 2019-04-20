@@ -81,11 +81,11 @@ public final class Variables {
      * Not accessed concurrently
      */
     private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
-    private static final int MAX_CONFLICT_WARNINGS = 50;
+    private static final int MAX_CONFLICT_WARNINGS = 30;
     static volatile boolean closed;
     private static final Thread saveThread = Skript.newThread(new Runnable() {
         @Override
-        public void run() {
+        public final void run() {
             while (!closed) {
                 try {
                     final SerializedVariable v = queue.take();
@@ -96,6 +96,7 @@ public final class Variables {
                         }
                     }
                 } catch (final InterruptedException ignored) {
+                    /* ignored */
                 }
             }
         }

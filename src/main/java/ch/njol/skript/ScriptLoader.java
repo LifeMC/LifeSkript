@@ -124,11 +124,11 @@ public final class ScriptLoader {
 //		public final List<ScriptCommand> commands = new ArrayList<ScriptCommand>();
 //	}
 
-    public static Map<String, ItemType> getScriptAliases() {
+    public static final Map<String, ItemType> getScriptAliases() {
         return currentAliases;
     }
 
-    static ScriptInfo loadScripts() {
+    static final ScriptInfo loadScripts() {
         final File scriptsFolder = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
         if (!scriptsFolder.isDirectory())
             scriptsFolder.mkdirs();
