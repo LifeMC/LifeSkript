@@ -1013,7 +1013,9 @@ public final class Skript extends JavaPlugin implements Listener {
                             final Path filePath = startupScript.toPath();
                             final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
                             if (contents.contains("java") && contents.contains("-jar ")) {
-                                final String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                                String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                                if (afterJar.contains(System.lineSeparator()))
+                                    afterJar = afterJar.split(System.lineSeparator())[0];
                                 String stripColor = afterJar;
                                 // Strip color is required for not showing strange characters on log when using jansi colors
                                 if (!afterJar.contains("--log-strip-color")) {
