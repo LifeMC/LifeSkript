@@ -200,6 +200,7 @@
                 <includes>
                     <include>plugin.yml</include>
                     <include>version</include>
+                    <include>META-INF/*</include>
                     <include>config.sk</include>
                     <include>lang/*</include>
                 </includes>
@@ -213,6 +214,7 @@
                 <excludes>
                     <exclude>plugin.yml</exclude>
                     <exclude>version</exclude>
+                    <exclude>META-INF/*</exclude>
                     <exclude>config.sk</exclude>
                     <exclude>lang/*</exclude>
                 </excludes>

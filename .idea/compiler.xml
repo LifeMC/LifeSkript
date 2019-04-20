@@ -20,5 +20,6 @@
   </component>
   <component name="EclipseCompilerSettings">
     <option name="PROCEED_ON_ERROR" value="false" />
+    <option name="ECJ_TOOL_PATH" value="$MAVEN_REPOSITORY$/org/eclipse/jdt/core/compiler/ecj/4.12M1/ecj-4.12M1.jar" />
   </component>
 </project>
