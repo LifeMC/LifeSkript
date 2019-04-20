@@ -125,6 +125,10 @@ case sensitive: false
 # This e.g. applies to the effect 'replace' and the conditions 'contains' and 'is/is not'.
 # Variable names are case-insensitive irrespective of this setting.
 
+allow function calls before definitions: true
+# Whether scripts should be allowed to call functions that are not yet loaded.
+# If enabled, functions existence are checked after loading ALL scripts.
+
 disable documentation generation: false
 # Change to true for disabling documentation generation at startup.
 # I don't recommend you to touch this settings but you're free to change.

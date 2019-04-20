@@ -71,6 +71,7 @@ public final class SkriptConfig {
     public static final Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
     public static final Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
     public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
+    public final static Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
     public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
     public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", true);
     public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", true);
@@ -81,6 +82,8 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
+    public final static Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
+            .optional(true);
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
 

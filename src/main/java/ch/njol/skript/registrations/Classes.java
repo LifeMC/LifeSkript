@@ -23,6 +23,7 @@ package ch.njol.skript.registrations;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.Converter.ConverterInfo;
@@ -121,6 +122,9 @@ public final class Classes {
     private static final void sortClassInfos() {
         assert classInfos == null;
 
+        if (SkriptConfig.addonSafetyChecks.value())
+            removeNullElements();
+
         // merge before, after & sub/supertypes in after
         for (final ClassInfo<?> ci : tempClassInfos) {
             final Set<String> before = ci.before();
@@ -208,6 +212,11 @@ public final class Classes {
             Skript.info("All registered classes in order: " + b.toString());
         }
 
+    }
+
+    @SuppressWarnings({"null", "unused"})
+    private final static void removeNullElements() {
+        tempClassInfos.removeIf(ci -> ci.getC() == null);
     }
 
     private static final void checkAllowClassInfoInteraction() {

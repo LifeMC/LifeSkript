@@ -28,6 +28,7 @@ import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
@@ -48,6 +49,7 @@ public final class Functions {
     public static final String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
     static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>();
     static final Map<String, FunctionData> functions = new HashMap<>();
+    private static final List<FunctionReference<?>> postCheckNeeded = new ArrayList<>();
     @SuppressWarnings("null")
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
@@ -222,6 +224,28 @@ public final class Functions {
         assert toValidate.isEmpty() : toValidate;
         //noinspection RedundantOperationOnEmptyContainer
         toValidate.clear();
+    }
+
+    public static final void addPostCheck(final FunctionReference<?> ref) {
+        postCheckNeeded.add(ref);
+    }
+
+    public static final void postCheck() {
+        if (postCheckNeeded.isEmpty())
+            return;
+
+        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+        for (final FunctionReference<?> ref : postCheckNeeded) {
+            final Function<?> func = getFunction(ref.functionName);
+            if (func == null) {
+                Skript.error("The function '" + ref.functionName + "' does not exist");
+                log.printError();
+            }
+        }
+        log.printLog();
+
+        postCheckNeeded.clear();
+        log.stop();
     }
 
     @SuppressWarnings("null")

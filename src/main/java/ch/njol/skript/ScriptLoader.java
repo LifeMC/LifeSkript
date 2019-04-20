@@ -157,7 +157,7 @@ public final class ScriptLoader {
             Skript.info(m_scripts_loaded.toString(i.files, i.triggers, i.commands, start.difference(new Date())));
 
         SkriptEventHandler.registerBukkitEvents();
-
+        Functions.postCheck(); // Check that all functions which are called exist.
         return i;
     }
 
@@ -184,6 +184,7 @@ public final class ScriptLoader {
             if (wasLocal)
                 Language.setUseLocal(true);
         }
+        Functions.postCheck(); // Check that all functions which are called exist.
         return i;
     }
 
@@ -212,7 +213,7 @@ public final class ScriptLoader {
         }
 
         SkriptEventHandler.registerBukkitEvents();
-
+        Functions.postCheck(); // Check that all functions which are called exist.
         return i;
     }
 

@@ -24,6 +24,7 @@ package ch.njol.skript.lang;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.command.Argument;
@@ -1048,12 +1049,6 @@ public final class SkriptParser {
                 return null;
             }
             final String functionName = "" + m.group(1);
-            final Function<?> function = Functions.getFunction(functionName);
-            if (function == null) {
-                Skript.error("The function '" + functionName + "' does not exist");
-                log.printError();
-                return null;
-            }
             final String args = m.group(2);
             final Expression<?>[] params;
             if (args.length() != 0) {
@@ -1075,6 +1070,14 @@ public final class SkriptParser {
             } else {
                 params = new Expression[0];
             }
+
+            final Function<?> function = Functions.getFunction(functionName);
+            if (function == null && !SkriptConfig.allowFunctionsBeforeDefs.value()) {
+                Skript.error("The function '" + functionName + "' does not exist");
+                log.printError();
+                return null;
+            }
+
 //			final List<Expression<?>> params = new ArrayList<Expression<?>>();
 //			if (args.length() != 0) {
 //				final int p = 0;
@@ -1092,7 +1095,10 @@ public final class SkriptParser {
 //				}
 //			}
             @SuppressWarnings("null") final FunctionReference<T> e = new FunctionReference<>(functionName, SkriptLogger.getNode(), ScriptLoader.currentScript != null ? ScriptLoader.currentScript.getFile() : null, types, params);//.toArray(new Expression[params.size()]));
-            if (!e.validateFunction(true)) {
+
+            if (SkriptConfig.allowFunctionsBeforeDefs.value()) {
+                Functions.addPostCheck(e); // Query function for post-checking
+            } else if (!e.validateFunction(true)) {
                 log.printError();
                 return null;
             }

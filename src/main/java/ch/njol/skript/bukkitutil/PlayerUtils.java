@@ -67,11 +67,24 @@ public final class PlayerUtils {
             inviUpdate.add(p);
     }
 
+    private static boolean cached;
+
     @SuppressWarnings({"null", "unchecked"})
     public static Collection<? extends Player> getOnlinePlayers() {
         if (hasCollecionGetOnlinePlayers) {
             return Bukkit.getOnlinePlayers();
         } else {
+            // Return directly to improve performance and fix some bugs
+            // Hope everything goes well and it works. :C
+            if (cached) {
+                return Bukkit.getOnlinePlayers();
+            } else {
+                // Is running minecraft mehod checks if version is - at least - >= given version.
+                cached = Skript.isRunningMinecraft(1, 7, 10);
+                if (cached)
+                    return Bukkit.getOnlinePlayers();
+            }
+            // Handle other versions here
             if (getOnlinePlayers == null) {
                 try {
                     getOnlinePlayers = Bukkit.class.getDeclaredMethod("getOnlinePlayers");
@@ -90,9 +103,9 @@ public final class PlayerUtils {
             } catch (final IllegalAccessException | IllegalArgumentException e) {
                 Skript.outdatedError(e);
             } catch (final InvocationTargetException e) {
-                Skript.exception(e);
+                throw Skript.exception(e);
             }
-            return Collections.emptyList();
+            throw new EmptyStackException();
         }
     }
 
