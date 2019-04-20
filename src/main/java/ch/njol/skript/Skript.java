@@ -68,6 +68,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -78,6 +81,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import static ch.njol.skript.bukkitutil.Workarounds.getOriginalProperty;
 
 // TODO meaningful error if someone uses an %expression with percent signs% outside of text or a variable
 
@@ -151,7 +156,6 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
     public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
-    public static final String SKRIPT_PREFIX_CONSOLE = classExists("org.fusesource.jansi.Ansi") ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : SKRIPT_PREFIX;
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
@@ -169,10 +173,17 @@ public final class Skript extends JavaPlugin implements Listener {
     @Nullable
     static String latestVersion;
     static Version minecraftVersion = new Version(666);
-    static boolean runningCraftBukkit;
+    private static boolean first;
+    private static ServerPlatform serverPlatform;
+    private static Boolean hasJLineSupport = null;
+    private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal"));
     @Nullable
     private static Version version;
-    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[] { Skript.getLatestVersion(), Skript.getVersion().toString() });
+    public static final Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
+    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
+    private static final boolean isCraftBukkit = classExists("org.bukkit.craftbukkit.CraftServer") || craftbukkitMain != null;
+    static final boolean runningCraftBukkit = isCraftBukkit;
+    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{Skript.getLatestVersion(), Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -182,6 +193,54 @@ public final class Skript extends JavaPlugin implements Listener {
         if (instance != null)
             throw new IllegalStateException("Cannot create multiple instances of Skript!");
         instance = this;
+    }
+
+    /**
+     * Checks if a CraftBukkit server has JLine support.
+     * Calculates once; returns cached value afterwards.
+     *
+     * @return Returns true if the server has JLine support,
+     * and currently enabled.
+     */
+    public static final boolean hasJLineSupport() {
+        if (hasJLineSupport != null)
+            return hasJLineSupport;
+        try {
+            if (Skript.testing()) {
+                if (isUnsupportedTerminal)
+                    debug("Unsupported terminal");
+                if (craftbukkitMain == null)
+                    debug("Null craftbukkit main");
+                if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useJline").get(null))
+                    debug("False useJline");
+                if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useConsole").get(null))
+                    debug("No console");
+            }
+            return hasJLineSupport = !isUnsupportedTerminal && craftbukkitMain != null && (boolean) craftbukkitMain.getField("useJline").get(null) && (boolean) craftbukkitMain.getField("useConsole").get(null);
+        } catch (final ClassCastException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException | NullPointerException e) {
+            throw Skript.exception(e);
+        }
+    }
+
+    public static final ServerPlatform getServerPlatform() {
+        if (serverPlatform != null)
+            return serverPlatform;
+        if (classExists("net.glowstone.GlowServer")) {
+            return ServerPlatform.GLOWSTONE; // Glowstone has timings too, so must check for it first
+        } else if (classExists("com.lifespigot.Main")) {
+            return ServerPlatform.LIFE_SPIGOT; // LifeSpigot is a fork of Paper, so check it first.
+        } else if (classExists("net.techcable.tacospigot.TacoSpigotConfig")) {
+            return ServerPlatform.BUKKIT_TACO; // TacoSpigot also is a fork of Paper, so check before Paper.
+        } else if (classExists("co.aikar.timings.Timings") || classExists("org.github.paperspigot.PaperSpigotConfig")) {
+            return ServerPlatform.BUKKIT_PAPER; // Could be Sponge, but it doesn't work at all at the moment
+        } else if (classExists("org.spigotmc.SpigotConfig")) {
+            return ServerPlatform.BUKKIT_SPIGOT;
+        } else if (isCraftBukkit) {
+            // At some point, CraftServer got removed or moved
+            return ServerPlatform.BUKKIT_CRAFTBUKKIT;
+        } else { // Probably some ancient Bukkit implementation
+            return ServerPlatform.BUKKIT_UNKNOWN;
+        }
     }
 
     public static final Skript getInstance() {
@@ -250,7 +309,7 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Used to test whether certain Bukkit features are supported.
      *
-     * @param className
+     * @param className The {@link Class#getCanonicalName() canonical name} of the class
      * @return Whether the given class exists.
      * @deprecated use {@link #classExists(String)}
      */
@@ -781,12 +840,16 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx();
         logEx("Version Information:");
         logEx("  Skript: " + getVersion() + (updateAvailable ? " (update available)" : " (latest)"));
-        logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")");
+        logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : "".trim()));
         logEx("  Minecraft: " + getMinecraftVersion());
         logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
-        logEx("  OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
+        logEx("  OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
         logEx();
-        logEx("Running CraftBukkit: " + runningCraftBukkit);
+        logEx("Server platform: " + getServerPlatform().name + (getServerPlatform().supported ? "".trim() : " (unsupported)"));
+        if (!getServerPlatform().works) {
+            logEx();
+            logEx("Your server platform is not tested with Skript. Use at your own risk.");
+        }
         logEx();
         logEx("Current node: " + SkriptLogger.getNode());
         logEx("Current item: " + (item == null ? "not available" : item.toString(null, true)));
@@ -804,7 +867,22 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx();
         logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
         logEx();
-        logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1));
+        logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + getOriginalProperty("user.language") + "-" + getOriginalProperty("user.country") + ")");
+        logEx("Encoding: " + "file = " + getOriginalProperty("file.encoding") + " , jnu = " + getOriginalProperty("sun.jnu.encoding") + " , stderr = " + getOriginalProperty("sun.stderr.encoding") + " , stdout = " + getOriginalProperty("sun.stdout.encoding"));
+        logEx();
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        int i = 0;
+        for(final SkriptAddon addon : addons.values()) {
+            stringBuilder.append(addon.getName());
+            if (i < addons.size())
+                stringBuilder.append(", ");
+            i++;
+        }
+
+        final String addonList = stringBuilder.toString();
+        if (!addonList.isEmpty())
+            logEx("Skript Addons: " + addonList);
         logEx();
         logEx("End of Error.");
         logEx();
@@ -836,7 +914,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final void severe(final String message, final Throwable... errors) {
         error(message);
         if (errors != null)
-            for(final Throwable tw : errors)
+            for (final Throwable tw : errors)
                 exception(tw);
     }
 
@@ -898,6 +976,66 @@ public final class Skript extends JavaPlugin implements Listener {
                 return;
             }
 
+            if (!first) {
+                first = true;
+                try {
+                    // Get server directory / folder
+                    final File serverDirectory = Skript.getInstance().getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+
+                    // Flag to track changes and warn the user
+                    boolean madeChanges = false;
+
+                    // Find and detect paper file and automatically disable velocity warnings
+                    final File paperFile = new File(serverDirectory, "paper.yml");
+                    if (paperFile.exists()) {
+                        final Path filePath = paperFile.toPath();
+                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                        // See: https://github.com/LifeMC/LifeSkript/issues/25
+                        final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
+                        if (!contents.equalsIgnoreCase(replacedContents)) {
+                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                            madeChanges = true;
+                        }
+                    }
+
+                    // Find the startup script and automatically add log strip color option
+                    final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
+                            name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
+                    );
+
+                    if (startupScripts != null) {
+                        for(final File startupScript : startupScripts) {
+                            final Path filePath = startupScript.toPath();
+                            final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                            if (contents.contains("java") && contents.contains("-jar ")) {
+                                final String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                                String stripColor = afterJar;
+                                // Strip color is required for not showing strange characters on log when using jansi colors
+                                if (!afterJar.contains("--log-strip-color")) {
+                                    stripColor += " --log-strip-color";
+                                }
+                                final String replacedContents = contents.replace(afterJar, stripColor);
+                                if (!contents.equalsIgnoreCase(replacedContents)) {
+                                    Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                                    madeChanges = true;
+                                }
+                            }
+                        }
+                    }
+
+                    // Warn the user that server needs a restart
+                    if (madeChanges)
+                        info("Automatically made some compatibility settings. Restart your server to apply them.");
+                } catch (final IOException e) {
+                    //Skript.exception(e);
+                }
+            }
+
             //System.setOut(new FilterPrintStream(System.out));
 
             Language.loadDefault(getAddonInstance());
@@ -905,7 +1043,7 @@ public final class Skript extends JavaPlugin implements Listener {
             Workarounds.init();
 
             version = new Version("" + getDescription().getVersion());
-            runningCraftBukkit = Bukkit.getServer().getClass().getName().equals("org.bukkit.craftbukkit.CraftServer"); //NOSONAR
+            //runningCraftBukkit = craftbukkitMain != null; //NOSONAR
             final String bukkitV = Bukkit.getBukkitVersion();
             final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
             if (!m.find()) {
@@ -1208,9 +1346,7 @@ public final class Skript extends JavaPlugin implements Listener {
             });
 
         } catch (final Throwable tw) {
-
             exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
-
         }
 
     }

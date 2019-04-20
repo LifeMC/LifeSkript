@@ -31,6 +31,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static ch.njol.skript.Skript.classExists;
+
 /**
  * Workarounds for Minecraft & Bukkit quirks
  *
@@ -39,14 +44,24 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public final class Workarounds {
 
     static {
-        // allows to properly remove a player's tool in right click events
-        Bukkit.getPluginManager().registerEvents(new Listener() {
-            @EventHandler(priority = EventPriority.HIGHEST)
-            public void onInteract(final PlayerInteractEvent e) {
-                if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
-                    e.setUseItemInHand(Result.DENY);
-            }
-        }, Skript.getInstance());
+        if (classExists("org.bukkit.Bukkit") && Bukkit.getServer() != null) {
+            // allows to properly remove a player's tool in right click events
+            Bukkit.getPluginManager().registerEvents(new Listener() {
+                @EventHandler(priority = EventPriority.HIGHEST)
+                public void onInteract(final PlayerInteractEvent e) {
+                    if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
+                        e.setUseItemInHand(Result.DENY);
+                }
+            }, Skript.getInstance());
+        }
+    }
+
+    private static final Map<String, String> oldValues =
+            new HashMap<>();
+
+    public static final String getOriginalProperty(final String key) {
+        final String value = oldValues.get(key);
+        return value != null ? value : System.getProperty(key);
     }
 
     private Workarounds() {
@@ -74,23 +89,32 @@ public final class Workarounds {
         /* System properties */
 
         // UTF-8 Fixes
+        oldValues.put("file.encoding", System.getProperty("file.encoding"));
         System.setProperty("file.encoding", "UTF-8");
 
+        oldValues.put("sun.jnu.encoding", System.getProperty("sun.jnu.encoding"));
         System.setProperty("sun.jnu.encoding", "UTF-8");
 
+        oldValues.put("sun.stderr.encoding", System.getProperty("sun.stderr.encoding"));
         System.setProperty("sun.stderr.encoding", "UTF-8");
+
+        oldValues.put("sun.stdout.encoding", System.getProperty("sun.stdout.encoding"));
         System.setProperty("sun.stdout.encoding", "UTF-8");
 
         // Language Fix
+        oldValues.put("user.language", System.getProperty("user.language"));
         System.setProperty("user.language", "EN");
 
         // Country Fix
+        oldValues.put("user.country", System.getProperty("user.country"));
         System.setProperty("user.country", "US");
 
         // Keep Alive Fix
+        oldValues.put("paper.playerconnection.keepalive", System.getProperty("paper.playerconnection.keepalive"));
         System.setProperty("paper.playerconnection.keepalive", "120");
 
         // LifeSkript
+        oldValues.put("using.lifeskript", System.getProperty("using.lifeskript"));
         System.setProperty("using.lifeskript", "true");
 
         /* System properties */
