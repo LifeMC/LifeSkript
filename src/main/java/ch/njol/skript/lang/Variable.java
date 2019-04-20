@@ -101,7 +101,7 @@ public final class Variable<T> implements Expression<T> {
      * @param printErrors       Whether to print errors when they are encountered
      * @return true if the name is valid, false otherwise.
      */
-    public static boolean isValidVariableName(String name, final boolean allowListVariable, final boolean printErrors) {
+    public static final boolean isValidVariableName(String name, final boolean allowListVariable, final boolean printErrors) {
         name = name.startsWith(LOCAL_VARIABLE_TOKEN) ? "" + name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : "" + name.trim();
         if (!allowListVariable && name.contains(SEPARATOR)) {
             if (printErrors)
@@ -134,7 +134,7 @@ public final class Variable<T> implements Expression<T> {
      * Prints errors
      */
     @Nullable
-    public static <T> Variable<T> newInstance(String name, final Class<? extends T>[] types) {
+    public static final <T> Variable<T> newInstance(String name, final Class<? extends T>[] types) {
 //		if (name.startsWith(LOCAL_VARIABLE_TOKEN) && name.contains(SEPARATOR)) {
 //			Skript.error("Local variables cannot be lists, i.e. must not contain the separator '" + SEPARATOR + "' (error in variable {" + name + "})");
 //			return null;
@@ -148,7 +148,7 @@ public final class Variable<T> implements Expression<T> {
         return new Variable<>(vs, types, name.startsWith(LOCAL_VARIABLE_TOKEN), name.endsWith(SEPARATOR + "*"), null);
     }
 
-    public static boolean isIndexLoop(final String s) {
+    public static final boolean isIndexLoop(final String s) {
         return "index".equalsIgnoreCase(s);
     }
 

@@ -416,9 +416,20 @@ public final class ScriptLoader {
                         deleteCurrentEvent();
 
                         continue;
-                    } else if (event.toLowerCase().startsWith("function ")) {
+                    } else if (event.toLowerCase().startsWith("function ") || event.startsWith("func ") || event.startsWith("fun ")) { // Allow kotlin and javascript style function prefixes
 
                         setCurrentEvent("function", FunctionEvent.class);
+
+                        // Allows to define functions with kotlin style:
+                        // fun myFunction():
+                        //     broadcast "Yey!"
+                        if (!event.toLowerCase().startsWith("function ")) {
+                            if (event.startsWith("func ")) {
+                                node.setKey(event.replaceFirst("func", "function"));
+                            } else {
+                                node.setKey(event.replaceFirst("fun", "function"));
+                            }
+                        }
 
                         final Function<?> func = Functions.loadFunction(node);
                         if (func != null) {

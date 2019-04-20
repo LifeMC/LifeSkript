@@ -110,6 +110,15 @@ public abstract class Node {
         return key;
     }
 
+    /**
+     * Sets the key of this node. Not to be used normally.
+     *
+     * @param key The new key of this node.
+     */
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
     public final Config getConfig() {
         return config;
     }

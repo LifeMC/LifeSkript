@@ -90,7 +90,7 @@ public final class VariableString implements Expression<String> {
      * Prints errors
      */
     @Nullable
-    public static VariableString newInstance(final String s) {
+    public static final VariableString newInstance(final String s) {
         return newInstance(s, StringMode.MESSAGE);
     }
 
@@ -101,7 +101,7 @@ public final class VariableString implements Expression<String> {
      * @param withQuotes Whether s must be surrounded by double quotes or not
      * @return Whether the string is quoted correctly
      */
-    public static boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
+    public static final boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
         if (withQuotes && (!s.startsWith("\"") || !s.endsWith("\"")))
             return false;
         boolean quote = false;
@@ -123,7 +123,7 @@ public final class VariableString implements Expression<String> {
      * @param surroundingQuotes Whether the string has quotes at the start & end that should be removed
      * @return The string with double quotes replaced with signle ones and optionally with removed surrounding quotes.
      */
-    public static String unquote(final String s, final boolean surroundingQuotes) {
+    public static final String unquote(final String s, final boolean surroundingQuotes) {
         assert isQuotedCorrectly(s, surroundingQuotes);
         if (surroundingQuotes)
             return "" + s.substring(1, s.length() - 1).replace("\"\"", "\"");
@@ -138,7 +138,7 @@ public final class VariableString implements Expression<String> {
      * @return A new VariableString instance
      */
     @Nullable
-    public static VariableString newInstance(final String orig, final StringMode mode) {
+    public static final VariableString newInstance(final String orig, final StringMode mode) {
         if (!isQuotedCorrectly(orig, false))
             return null;
         final int n = StringUtils.count(orig, '%');
@@ -297,7 +297,7 @@ public final class VariableString implements Expression<String> {
      * @param start Index after the opening bracket
      * @return The next closing curly bracket
      */
-    public static int nextVariableBracket(final String s, final int start) {
+    public static final int nextVariableBracket(final String s, final int start) {
         int n = 0;
         for (int i = start; i < s.length(); i++) {
             if (s.charAt(i) == '}') {
@@ -311,7 +311,7 @@ public final class VariableString implements Expression<String> {
         return -1;
     }
 
-    public static VariableString[] makeStrings(final String[] args) {
+    public static final VariableString[] makeStrings(final String[] args) {
         VariableString[] strings = new VariableString[args.length];
         int j = 0;
         for (final String arg : args) {
@@ -330,7 +330,7 @@ public final class VariableString implements Expression<String> {
      * @return a new array containing all newly created VariableStrings, or null if one is invalid
      */
     @Nullable
-    public static VariableString[] makeStringsFromQuoted(final List<String> args) {
+    public static final VariableString[] makeStringsFromQuoted(final List<String> args) {
         final VariableString[] strings = new VariableString[args.size()];
         for (int i = 0; i < args.size(); i++) {
             assert args.get(i).startsWith("\"") && args.get(i).endsWith("\"");
@@ -343,7 +343,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @Nullable
-    private static ChatColor getLastColor(final CharSequence s) {
+    private static final ChatColor getLastColor(final CharSequence s) {
         for (int i = s.length() - 2; i >= 0; i--) {
             if (s.charAt(i) == ChatColor.COLOR_CHAR) {
                 final ChatColor c = ChatColor.getByChar(s.charAt(i + 1));
@@ -355,7 +355,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Expression<T> setStringMode(final Expression<T> e, final StringMode mode) {
+    public static final <T> Expression<T> setStringMode(final Expression<T> e, final StringMode mode) {
         if (e instanceof ExpressionList) {
             final Expression<?>[] ls = ((ExpressionList<?>) e).getExpressions();
             for (int i = 0; i < ls.length; i++) {
