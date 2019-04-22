@@ -41,7 +41,8 @@ public final class AliasesTest {
         });
     }
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void testNames() {
         final ItemType t = new ItemType();
         t.add(new ItemData(0));

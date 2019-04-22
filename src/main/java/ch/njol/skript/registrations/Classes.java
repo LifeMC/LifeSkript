@@ -695,7 +695,8 @@ public final class Classes {
         }
     }
 
-    private static boolean equals(final @Nullable Object o, final @Nullable Object d) {
+    @SuppressWarnings("unused")
+	private static boolean equals(final @Nullable Object o, final @Nullable Object d) {
         if (o instanceof Chunk) { // CraftChunk does neither override equals nor is it a "coordinate-specific singleton" like Block
             if (!(d instanceof Chunk))
                 return false;

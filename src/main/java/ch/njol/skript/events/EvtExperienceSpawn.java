@@ -47,7 +47,8 @@ import java.util.Collection;
  */
 public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
     static final Collection<Trigger> triggers = new ArrayList<>();
-    private static final EventExecutor executor = (listener, e) -> {
+    @SuppressWarnings("null")
+	private static final EventExecutor executor = (listener, e) -> {
         if (e == null)
             return;
 

@@ -49,7 +49,7 @@ import org.bukkit.inventory.PlayerInventory;
 /**
  * @author Peter Güttinger
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultConverters {
 
     static {

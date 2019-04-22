@@ -521,6 +521,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     } else {
                         final ClassInfo<?> c = Classes.getClassInfoNoError(type);
                         @SuppressWarnings("unused")
+						final
                         Serializer<?> s;
                         if (c == null || c.getSerializer() == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
@@ -635,7 +636,8 @@ public final class DatabaseStorage extends VariablesStorage {
             }
         };
 
-        final SQLException e = Task.callSync(() -> {
+        @SuppressWarnings("null")
+		final SQLException e = Task.callSync(() -> {
             try {
                 while (r.next()) {
                     int i = 1;
@@ -659,7 +661,8 @@ public final class DatabaseStorage extends VariablesStorage {
 //					if (s.mustSyncDeserialization()) {
 //						oldSyncDeserializing.add(new OldVariableInfo(name, value, c));
 //					} else {
-                        final Object d = s.deserialize(value);
+                        @SuppressWarnings("deprecation")
+						final Object d = s.deserialize(value);
                         if (d == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database, because '" + value + "' cannot be parsed as a " + type);
                             continue;

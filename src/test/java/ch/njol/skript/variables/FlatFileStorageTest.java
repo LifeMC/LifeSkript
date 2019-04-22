@@ -32,7 +32,8 @@ import static org.junit.Assert.assertEquals;
  */
 public final class FlatFileStorageTest {
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void testHexCoding() {
         final byte[] bytes = {-0x80, -0x50, -0x01, 0x00, 0x01, 0x44, 0x7F};
         final String string = "80B0FF0001447F";
@@ -40,7 +41,7 @@ public final class FlatFileStorageTest {
         assert Arrays.equals(bytes, FlatFileStorage.decode(string)) : Arrays.toString(bytes) + " != " + Arrays.toString(FlatFileStorage.decode(string));
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "static-method"})
     @Test
     public void testCSV() {
         final String[][] vs = {{"", ""}, {",", "", ""}, {",,", "", "", ""}, {"a", "a"}, {"a,", "a", ""}, {",a", "", "a"}, {",a,", "", "a", ""}, {" , a , ", "", "a", ""}, {"a,b,c", "a", "b", "c"}, {" a , b , c ", "a", "b", "c"},

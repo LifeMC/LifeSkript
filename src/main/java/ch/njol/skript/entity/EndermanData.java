@@ -82,7 +82,8 @@ public final class EndermanData extends EntityData<Enderman> {
 
     }
 
-    @Override
+    @SuppressWarnings({"deprecation", "null"})
+	@Override
     public boolean match(final Enderman entity) {
         return hand == null || SimpleExpression.check(hand, t -> t != null && t.isOfType(entity.getCarriedMaterial().getItemTypeId(), entity.getCarriedMaterial().getData()), false, false);
     }

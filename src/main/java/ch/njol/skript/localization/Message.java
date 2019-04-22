@@ -71,7 +71,8 @@ public class Message {
     /**
      * @return The value of this message in the current language
      */
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public String toString() {
         validate();
         return value == null ? key : value;

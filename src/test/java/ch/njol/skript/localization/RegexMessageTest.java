@@ -28,8 +28,9 @@ import org.junit.Test;
  */
 public final class RegexMessageTest {
 
-    @Test
-    public void test() {
+    @SuppressWarnings("static-method")
+	@Test
+    public void testRegexMessage() {
 
         final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};
 

@@ -59,7 +59,8 @@ public final class Workarounds {
     private static final Map<String, String> oldValues =
             new HashMap<>();
 
-    public static final String getOriginalProperty(final String key) {
+    @SuppressWarnings("null")
+	public static final String getOriginalProperty(final String key) {
         final String value = oldValues.get(key);
         return value != null ? value : System.getProperty(key);
     }

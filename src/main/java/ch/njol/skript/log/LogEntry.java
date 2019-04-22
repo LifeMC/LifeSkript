@@ -42,6 +42,7 @@ public final class LogEntry {
     @Nullable
     private final String from;
     private final boolean tracked;
+    @Nullable
     public String waitingMessage;
 
     public LogEntry(final Level level, final String message) {
@@ -68,7 +69,8 @@ public final class LogEntry {
         this(level, quality, message, node, false);
     }
 
-    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
+    @SuppressWarnings("null")
+	public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
         this.level = level;
         this.quality = quality;
         this.message = message;

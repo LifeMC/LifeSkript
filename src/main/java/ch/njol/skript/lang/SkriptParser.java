@@ -86,7 +86,7 @@ public final class SkriptParser {
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
     public final ParseContext context;
-    private final String expr;
+    final String expr;
     private final int flags;
     private boolean suppressMissingAndOrWarnings;
 
@@ -400,7 +400,7 @@ public final class SkriptParser {
      * @param c       The character to search for
      * @return The number of unescaped occurrences of the given character
      */
-    private static final int countUnescaped(final String pattern, final char c) {
+    static final int countUnescaped(final String pattern, final char c) {
         return countUnescaped(pattern, c, 0, pattern.length());
     }
 
@@ -1155,9 +1155,6 @@ public final class SkriptParser {
      */
     @Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
-
-        if (pattern == null)
-            return null;
 
         ParseResult res;
         int end, i2;

@@ -79,7 +79,8 @@ public final class SkriptTest {
         }
     }
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void testVersion() {
         Assert.assertNotNull(Skript.getLatestVersion());
     }

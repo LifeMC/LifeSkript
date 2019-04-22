@@ -63,7 +63,8 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     @SuppressWarnings("null")
     private transient World[] worlds;
 
-    private static final void registerListener() {
+    @SuppressWarnings("null")
+	private static final void registerListener() {
         if (taskID != -1)
             return;
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), () -> {

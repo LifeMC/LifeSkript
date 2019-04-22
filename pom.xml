@@ -252,7 +252,7 @@
                 <directory>./</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>gpl.txt</include>
+                    <include>LICENSE</include>
                 </includes>
             </resource>
         </resources>

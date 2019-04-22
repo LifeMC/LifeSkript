@@ -1,8 +1,9 @@
 DELEGATES_PREFERENCE=delegateValidatorList
 USER_BUILD_PREFERENCE=enabledBuildValidatorList
 USER_MANUAL_PREFERENCE=enabledManualValidatorList
-USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.2.701.v201707142105
+USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.2.701.v201810290944
 eclipse.preferences.version=1
 override=true
 suspend=false
+vals/org.eclipse.wst.xml.core.xml/global=TF03
 vf.version=3

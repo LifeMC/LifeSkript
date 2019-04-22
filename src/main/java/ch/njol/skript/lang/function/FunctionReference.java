@@ -181,7 +181,8 @@ public final class FunctionReference<T> {
         return function.returnType.getC();
     }
 
-    public String toString(@Nullable final Event e, final boolean debug) {
+    @SuppressWarnings("null")
+	public String toString(@Nullable final Event e, final boolean debug) {
         final StringBuilder b = new StringBuilder(functionName + "(");
         for (int i = 0; i < parameters.length; i++) {
             if (i != 0)

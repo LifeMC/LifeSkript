@@ -90,7 +90,8 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
         return r.toArray(new ItemStack[0]);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     @Nullable
     public Iterator<ItemStack> iterator(final Event e) {
         Iterator<ItemStack> iter;

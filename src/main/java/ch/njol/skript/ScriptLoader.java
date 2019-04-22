@@ -217,7 +217,7 @@ public final class ScriptLoader {
         return i;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     public static ScriptInfo loadScript(final File f) {
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
@@ -341,7 +341,8 @@ public final class ScriptLoader {
                                 Skript.error("Invalid line in variables section");
                                 continue;
                             }
-                            String name = n.getKey().toLowerCase(Locale.ENGLISH);
+                            @SuppressWarnings("null")
+							String name = n.getKey().toLowerCase(Locale.ENGLISH);
                             if (name.startsWith("{") && name.endsWith("}"))
                                 name = "" + name.substring(1, name.length() - 1);
                             final String var = name;

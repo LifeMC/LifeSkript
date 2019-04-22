@@ -30,8 +30,9 @@ import static org.junit.Assert.assertEquals;
 
 public final class ReversedListViewTest {
 
-    @Test
-    public void test() {
+    @SuppressWarnings("static-method")
+	@Test
+    public void testReversedListView() {
 
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1, 1, 2, 4, 7));
         final ReversedListView<Integer> reverse = new ReversedListView<>(list);

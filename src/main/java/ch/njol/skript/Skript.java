@@ -174,12 +174,12 @@ public final class Skript extends JavaPlugin implements Listener {
     static String latestVersion;
     static Version minecraftVersion = new Version(666);
     private static boolean first;
-    private static ServerPlatform serverPlatform;
-    private static Boolean hasJLineSupport = null;
+    private static @Nullable ServerPlatform serverPlatform;
+    private static @Nullable Boolean hasJLineSupport = null;
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     @Nullable
     private static Version version;
-    public static final Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
+    public static final @Nullable Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     private static final boolean isCraftBukkit = classExists("org.bukkit.craftbukkit.CraftServer") || craftbukkitMain != null;
     static final boolean runningCraftBukkit = isCraftBukkit;
@@ -202,7 +202,8 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Returns true if the server has JLine support,
      * and currently enabled.
      */
-    public static final boolean hasJLineSupport() {
+    @SuppressWarnings("null")
+	public static final boolean hasJLineSupport() {
         if (hasJLineSupport != null)
             return hasJLineSupport;
         try {
@@ -911,7 +912,8 @@ public final class Skript extends JavaPlugin implements Listener {
         debug(SKRIPT_PREFIX_CONSOLE + Utils.replaceEnglishChatStyles(message));
     }
 
-    public static final void severe(final String message, final Throwable... errors) {
+    @SuppressWarnings("null")
+	public static final void severe(final String message, final Throwable... errors) {
         error(message);
         if (errors != null)
             for (final Throwable tw : errors)

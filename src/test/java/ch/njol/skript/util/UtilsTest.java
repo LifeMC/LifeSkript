@@ -36,7 +36,7 @@ import static org.junit.Assert.assertEquals;
 public final class UtilsTest {
 
     @Test
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "static-method"})
     public void testPlural() {
 
         final String[][] strings = {{"house", "houses"}, {"cookie", "cookies"}, {"creeper", "creepers"}, {"cactus", "cacti"}, {"rose", "roses"}, {"dye", "dyes"}, {"name", "names"}, {"ingot", "ingots"}, {"derp", "derps"}, {"sheep", "sheep"}, {"choir", "choirs"}, {"man", "men"}, {"child", "children"}, {"hoe", "hoes"}, {"toe", "toes"}, {"hero", "heroes"}, {"kidney", "kidneys"}, {"anatomy", "anatomies"}, {"axe", "axes"}, {"elf", "elfs"}, {"knife", "knives"}, {"shelf", "shelfs"},
@@ -50,7 +50,7 @@ public final class UtilsTest {
     }
 
     @Test
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "static-method"})
     public void testSuperClass() {
 
         final Class<?>[][] classes = {{Object.class, Object.class}, {String.class, String.class}, {String.class, Object.class, Object.class}, {Object.class, String.class, Object.class}, {String.class, String.class, String.class}, {Object.class, String.class, Object.class, String.class, Object.class}, {Double.class, Integer.class, Number.class}, {UnknownHostException.class, FileNotFoundException.class, IOException.class}, {SortedMap.class, TreeMap.class, SortedMap.class}, {LinkedList.class, ArrayList.class, AbstractList.class}, {List.class, Set.class, Collection.class}, {ArrayList.class, Set.class, Collection.class},

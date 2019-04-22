@@ -37,7 +37,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @param name The unique name of this constant.
      * @throws IllegalArgumentException If the given name is already in use.
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "cast"})
     protected PseudoEnum(final String name) throws IllegalArgumentException {
         this.name = name;
         info = (Info<T>) getInfo(getClass());

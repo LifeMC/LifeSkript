@@ -98,7 +98,8 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //				}
 //			}
         if (!itemTypeTriggers.isEmpty()) {
-            final int id = getOnBlock(to);
+            @SuppressWarnings("null")
+			final int id = getOnBlock(to);
             if (id == 0)
                 return;
             final List<Trigger> ts = itemTypeTriggers.get(id);
@@ -213,7 +214,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
             for (final ItemData d : t) {
                 if (d.getId() > Skript.MAXBLOCKID)
                     continue;
-                List<Trigger> ts = itemTypeTriggers.computeIfAbsent(d.getId(), k -> new ArrayList<>());
+                final List<Trigger> ts = itemTypeTriggers.computeIfAbsent(d.getId(), k -> new ArrayList<>());
                 ts.add(trigger);
             }
         }

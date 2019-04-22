@@ -32,7 +32,8 @@ import static org.junit.Assert.assertArrayEquals;
 @SuppressWarnings("null")
 public final class NodeTest {
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void splitLineTest() {
 
         final String[][] data = {{"", "", ""}, {"ab", "ab", ""}, {"ab#", "ab", "#"}, {"ab##", "ab#", ""}, {"ab###", "ab#", "#"}, {"#ab", "", "#ab"}, {"ab#cd", "ab", "#cd"}, {"ab##cd", "ab#cd", ""}, {"ab###cd", "ab#", "#cd"}, {"######", "###", ""}, {"#######", "###", "#"}, {"#### # ####", "## ", "# ####"}, {"##### ####", "##", "# ####"}, {"#### #####", "## ##", "#"}, {"#########", "####", "#"}, {"a##b#c##d#e", "a#b", "#c##d#e"}, {" a ## b # c ## d # e ", " a # b ", "# c ## d # e "},

@@ -77,10 +77,10 @@ public final class Math2Test {
         return r;
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "static-method"})
     @SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY")
     @Test
-    public void test() {
+    public void testMath() {
 
         final int[] ints = a(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);
         final long[] longs = a(Long.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);

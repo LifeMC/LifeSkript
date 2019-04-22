@@ -51,7 +51,8 @@ public final class ThrownPotionData extends EntityData<ThrownPotion> {
     @Nullable
     private ItemType[] types;
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected boolean init(final Literal<?>[] exprs, final int matchedPattern, final ParseResult parseResult) {
         if (exprs.length > 0 && exprs[0] != null) {
             //noinspection RedundantCast

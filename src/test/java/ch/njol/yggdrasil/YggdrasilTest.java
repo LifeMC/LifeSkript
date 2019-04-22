@@ -210,7 +210,8 @@ public final class YggdrasilTest {
         }
     }
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void keepReferencesTest() throws IOException {
         //System.out.println();
         final Object ref = new Object();
@@ -224,7 +225,8 @@ public final class YggdrasilTest {
         assert ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2) : ms;
     }
 
-    @Test
+    @SuppressWarnings("static-method")
+	@Test
     public void renameTest() throws IOException {
         //System.out.println();
         currentModifiedClass = UnmodifiedClass.class;

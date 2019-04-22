@@ -75,7 +75,8 @@ public final class SheepData extends EntityData<Sheep> {
         }
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public boolean match(final Sheep entity) {
         return (sheared == 0 || entity.isSheared() == (sheared == 1)) && (colors == null || SimpleExpression.check(colors, c -> c != null && entity.getColor() == c.getWoolColor(), false, false));
     }
