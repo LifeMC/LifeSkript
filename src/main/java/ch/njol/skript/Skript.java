@@ -900,7 +900,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void info(final CommandSender sender, final String message) {
-        sender.sendMessage(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message));
+        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(message));
     }
 
     @SuppressWarnings("null")
@@ -946,7 +946,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void error(final CommandSender sender, final String error) {
-        sender.sendMessage(SKRIPT_PREFIX + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
+        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
     }
 
     @SuppressWarnings("null")
