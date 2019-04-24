@@ -48,7 +48,6 @@ import ch.njol.util.coll.iterator.EnumerationIterable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -901,15 +900,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void info(final CommandSender sender, final String message) {
-        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(message));
-    }
-
-    public static final void warningWithPrefix(final String message) {
-        warning(SKRIPT_PREFIX_CONSOLE + Utils.replaceEnglishChatStyles(message));
-    }
-
-    public static final void debugWithPrefix(final String message) {
-        debug(SKRIPT_PREFIX_CONSOLE + Utils.replaceEnglishChatStyles(message));
+        sender.sendMessage(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message));
     }
 
     @SuppressWarnings("null")
@@ -955,7 +946,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void error(final CommandSender sender, final String error) {
-        sender.sendMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
+        sender.sendMessage(SKRIPT_PREFIX + ChatColor.DARK_RED + Utils.replaceEnglishChatStyles(error));
     }
 
     @SuppressWarnings("null")
@@ -1326,7 +1317,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> warningWithPrefix("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
                         printDownloadLink();
                         updateAvailable = true;
                         latestVersion = latest;
