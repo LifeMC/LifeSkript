@@ -129,7 +129,9 @@ public final class SkriptAddon {
                                 if (!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from a addon)
                                     Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
                                 } else {
-                                    if (Skript.debug()) {
+                                    // Probably Skript is running ona unsupported or half supported server version,
+                                    // if user is not debugging or testing then just ignore that class.
+                                    if (Skript.testing() || Skript.debug()) {
                                         Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
                                     }
                                 }
@@ -142,7 +144,7 @@ public final class SkriptAddon {
                             Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
                             unloadableClasses.incrementAndGet();
                         } catch (final LinkageError le) {
-                            if (Skript.debug()) {
+                            if (Skript.testing() || Skript.debug()) {
                                 Skript.exception(le, "Cannot load class " + c + " from " + this);
                             }
                             unloadableClasses.incrementAndGet();

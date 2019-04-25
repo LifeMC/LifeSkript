@@ -810,24 +810,27 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
     public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
-
         logEx();
         logEx("[Skript] Severe Error:");
+        logEx();
         logEx(info);
         logEx();
         logEx("If you're developing a java add-on for Skript this likely means that you have done something wrong.");
         logEx("If you're a server admin however please go to " + ISSUES_LINK);
         logEx("and check whether this issue has already been reported.");
+        logEx();
         logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
         logEx("and describe what you did before it happened and/or what you think caused the error.");
+        logEx();
         logEx("If you think that it's a trigger that's causing the error please post the trigger as well.");
         logEx("By following this guide fixing the error should be easy and done fast.");
-
+        logEx();
+        logEx("If you want to fix this error yourself, remove -ea java argument, lower the verbosity or remove the problematic addons.");
         logEx();
         logEx("Stack trace:");
         if (cause == null || cause.getStackTrace().length == 0) {
             logEx("  warning: no/empty exception given, dumping current stack trace instead");
-            cause = new Exception(cause);
+            cause = new Throwable(cause);
         }
         boolean first = true;
         while (cause != null) {
@@ -837,7 +840,6 @@ public final class Skript extends JavaPlugin implements Listener {
             cause = cause.getCause();
             first = false;
         }
-
         logEx();
         logEx("Version Information:");
         logEx("  Skript: " + getVersion() + (updateAvailable ? " (update available)" : " (latest)"));
@@ -872,7 +874,6 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx("Encoding: " + "file = " + getOriginalProperty("file.encoding") + " , jnu = " + getOriginalProperty("sun.jnu.encoding") + " , stderr = " + getOriginalProperty("sun.stderr.encoding") + " , stdout = " + getOriginalProperty("sun.stdout.encoding"));
         logEx();
         final StringBuilder stringBuilder = new StringBuilder();
-
         int i = 0;
         for(final SkriptAddon addon : addons.values()) {
             stringBuilder.append(addon.getName());
@@ -880,14 +881,12 @@ public final class Skript extends JavaPlugin implements Listener {
                 stringBuilder.append(", ");
             i++;
         }
-
         final String addonList = stringBuilder.toString();
         if (!addonList.isEmpty())
             logEx("Skript Addons: " + addonList);
         logEx();
         logEx("End of Error.");
         logEx();
-
         return new EmptyStacktraceException();
     }
 
@@ -1083,7 +1082,9 @@ public final class Skript extends JavaPlugin implements Listener {
                         }
                     }
                     info("Successfully generated the config, the example scripts and the aliases files.");
-                } catch (final ZipException ignored) {
+                } catch (final ZipException e) {
+                    if (Skript.logVeryHigh())
+                        Skript.exception(e);
                 } catch (final IOException e) {
                     error("Error generating the default files: " + ExceptionUtils.toString(e));
                 } finally {
