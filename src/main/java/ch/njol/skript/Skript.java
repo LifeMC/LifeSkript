@@ -1038,7 +1038,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
             Workarounds.init();
 
-            version = new Version("" + getDescription().getVersion());
+            version = new Version(getDescription().getVersion());
             //runningCraftBukkit = craftbukkitMain != null; //NOSONAR
             final String bukkitV = Bukkit.getBukkitVersion();
             final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
@@ -1046,7 +1046,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 Skript.error("The Bukkit version '" + bukkitV + "' does not contain a version number which is required for Skript to enable or disable certain features. " + "Skript will still work, but you might get random errors if you use features that are not available in your version of Bukkit.");
                 minecraftVersion = new Version(666, 0, 0);
             } else {
-                minecraftVersion = new Version("" + m.group());
+                minecraftVersion = new Version(m.group());
             }
 
             if (!getDataFolder().isDirectory())
@@ -1149,7 +1149,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     try {
                         try (JarFile jar = new JarFile(getPluginFile())) {
                             for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
-                                if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count("" + e.getName(), '/') <= 5) {
+                                if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
                                     final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
                                     try {
                                         final Class<?> hook = Class.forName(c, true, getBukkitClassLoader());
@@ -1286,7 +1286,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                 final Player p = e.getPlayer();
                                 assert p != null;
                                 if (updateAvailable) {
-                                    info(p, "" + m_update_available);
+                                    info(p, m_update_available.toString());
                                     info(p, getDownloadLink());
                                 }
                             }

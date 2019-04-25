@@ -74,7 +74,7 @@ public final class ScriptLoader {
     /**
      * Filter for enabled scripts & folders.
      */
-    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase("" + f.getName(), ".sk")) && !f.getName().startsWith("-");
+    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase(f.getName(), ".sk")) && !f.getName().startsWith("-");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -344,14 +344,14 @@ public final class ScriptLoader {
                             @SuppressWarnings("null")
 							String name = n.getKey().toLowerCase(Locale.ENGLISH);
                             if (name.startsWith("{") && name.endsWith("}"))
-                                name = "" + name.substring(1, name.length() - 1);
+                                name = name.substring(1, name.length() - 1);
                             final String var = name;
                             name = StringUtils.replaceAll(name, "%(.+)?%", m -> {
                                 if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
                                     Skript.error("'" + var + "' is not a valid name for a default variable");
                                     return null;
                                 }
-                                final ClassInfo<?> ci = Classes.getClassInfoFromUserInput("" + m.group(1));
+                                final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(m.group(1));
                                 if (ci == null) {
                                     Skript.error("Can't understand the type '" + m.group(1) + "'");
                                     return null;
@@ -447,7 +447,7 @@ public final class ScriptLoader {
                         Skript.info("loading trigger '" + event + "'");
 
                     if (StringUtils.startsWithIgnoreCase(event, "on "))
-                        event = "" + event.substring("on ".length());
+                        event = event.substring("on ".length());
 
                     event = replaceOptions(event);
 
@@ -458,7 +458,7 @@ public final class ScriptLoader {
                     if (Skript.debug() || node.debug())
                         Skript.debug(event + " (" + parsedEvent.getSecond().toString(null, true) + "):");
 
-                    setCurrentEvent("" + parsedEvent.getFirst().getName().toLowerCase(Locale.ENGLISH), parsedEvent.getFirst().events);
+                    setCurrentEvent(parsedEvent.getFirst().getName().toLowerCase(Locale.ENGLISH), parsedEvent.getFirst().events);
                     final Trigger trigger;
                     try {
                         trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
@@ -607,7 +607,7 @@ public final class ScriptLoader {
             SkriptLogger.setNode(n);
             if (n instanceof SimpleNode) {
                 final SimpleNode e = (SimpleNode) n;
-                final String s = replaceOptions("" + e.getKey());
+                final String s = replaceOptions(e.getKey());
                 if (!SkriptParser.validateLine(s))
                     continue;
                 final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
@@ -619,12 +619,12 @@ public final class ScriptLoader {
                 if (stmt instanceof Delay)
                     hasDelayBefore = Kleenean.TRUE;
             } else if (n instanceof SectionNode) {
-                String name = replaceOptions("" + n.getKey());
+                String name = replaceOptions(n.getKey());
                 if (!SkriptParser.validateLine(name))
                     continue;
 
                 if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
-                    final String l = "" + name.substring("loop ".length());
+                    final String l = name.substring("loop ".length());
                     final RetainingLogHandler h = SkriptLogger.startRetainingLog();
                     Expression<?> loopedExpr;
                     try {
@@ -650,7 +650,7 @@ public final class ScriptLoader {
                     if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
                         hasDelayBefore = Kleenean.UNKNOWN;
                 } else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
-                    final String l = "" + name.substring("while ".length());
+                    final String l = name.substring("while ".length());
                     final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
                     if (c == null)
                         continue;
@@ -676,7 +676,7 @@ public final class ScriptLoader {
                         Skript.error("'else if' has to be placed just after another 'if' or 'else if' section");
                         continue;
                     }
-                    name = "" + name.substring("else if ".length());
+                    name = name.substring("else if ".length());
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
                     if (cond == null)
                         continue;
@@ -688,7 +688,7 @@ public final class ScriptLoader {
                     hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore.and(Kleenean.UNKNOWN)));
                 } else {
                     if (StringUtils.startsWithIgnoreCase(name, "if "))
-                        name = "" + name.substring(3);
+                        name = name.substring(3);
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
                     if (cond == null)
                         continue;
@@ -708,7 +708,7 @@ public final class ScriptLoader {
         SkriptLogger.setNode(node);
 
         if (Skript.debug())
-            indentation = "" + indentation.substring(0, indentation.length() - 4);
+            indentation = indentation.substring(0, indentation.length() - 4);
 
         return items;
     }
@@ -727,7 +727,7 @@ public final class ScriptLoader {
             return null;
         }
         if (event.toLowerCase().startsWith("on "))
-            event = "" + event.substring("on ".length());
+            event = event.substring("on ".length());
 
         final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
         if (parsedEvent == null) {
