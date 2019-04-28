@@ -59,7 +59,7 @@ public final class Aliases { //NOSONAR
     /**
      * Note to self: never use this, use {@link #getAlias_i(String)} instead.
      */
-    private static final HashMap<String, ItemType> aliases_english = new HashMap<>(10000);
+    private static final HashMap<String, ItemType> aliases_english = new HashMap<>(12584);
     private static final HashMap<String, ItemType> aliases_localised = new HashMap<>(1000);
     private static final HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
     private static final HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);

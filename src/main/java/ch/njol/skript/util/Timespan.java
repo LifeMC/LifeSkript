@@ -71,7 +71,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     }
 
     @Nullable
-    public static Timespan parse(final String s) {
+    public static final Timespan parse(final String s) {
         if (s.isEmpty())
             return null;
         long t = 0;
@@ -148,20 +148,20 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
      * I only keep this to allow for older addons to still work. / Mirre
      */
     @Deprecated
-    public static Timespan fromTicks(final int ticks) {
+    public static final Timespan fromTicks(final int ticks) {
         return new Timespan(ticks * 50L);
     }
 
-    public static Timespan fromTicks_i(final long ticks) {
+    public static final Timespan fromTicks_i(final long ticks) {
         return new Timespan(ticks * 50L);
     }
 
-    public static String toString(final long millis) {
+    public static final String toString(final long millis) {
         return toString(millis, 0);
     }
 
     @SuppressWarnings("null")
-    public static String toString(final long millis, final int flags) {
+    public static final String toString(final long millis, final int flags) {
         for (int i = 0; i < simpleValues.length - 1; i++) {
             if (millis >= simpleValues[i].getSecond()) {
                 final double second = 1. * (millis % simpleValues[i].getSecond()) / simpleValues[i + 1].getSecond();
@@ -175,7 +175,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
         return toString(1. * millis / simpleValues[simpleValues.length - 1].getSecond(), simpleValues[simpleValues.length - 1], flags);
     }
 
-    private static String toString(final double amount, final NonNullPair<Noun, Long> p, final int flags) {
+    private static final String toString(final double amount, final NonNullPair<Noun, Long> p, final int flags) {
         return p.getFirst().withAmount(amount, flags);
     }
 
