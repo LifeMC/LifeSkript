@@ -115,9 +115,9 @@ public final class Skript extends JavaPlugin implements Listener {
 
     // ================ CONSTANTS ================
 
-    public static final String LATEST_VERSION_DOWNLOAD_LINK = "https://github.com/LifeMC/LifeSkript/releases/latest/";
+    public static final String LATEST_VERSION_DOWNLOAD_LINK = "https://github.com/LifeMC/LifeSkript/releases";
 
-    public static final String ISSUES_LINK = "https://github.com/LifeMC/LifeSkript/issues/";
+    public static final String ISSUES_LINK = "https://github.com/LifeMC/LifeSkript/issues";
 
     // ================ PLUGIN ================
     public static final Message m_invalid_reload = new Message("skript.invalid reload"),
