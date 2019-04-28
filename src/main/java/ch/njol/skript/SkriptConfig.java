@@ -87,7 +87,6 @@ public final class SkriptConfig {
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
 
-    // Disable warnings options
     //static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
     //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
     //final Task ct = Updater.checkerTask;
@@ -110,8 +109,6 @@ public final class SkriptConfig {
     private static final Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable
     static Config mainConfig;
-
-    // Disable warnings options
 
     private SkriptConfig() {
         throw new UnsupportedOperationException();

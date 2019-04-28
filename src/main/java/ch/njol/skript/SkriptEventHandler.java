@@ -59,7 +59,7 @@ public final class SkriptEventHandler {
     private static long startEvent;
     static final EventExecutor ee = new EventExecutor() {
         @Override
-        public void execute(final @Nullable Listener l, final @Nullable Event e) {
+        public final void execute(final @Nullable Listener l, final @Nullable Event e) {
             if (e == null)
                 return;
             if (last == e) // an event is received multiple times if multiple superclasses of it are registered
@@ -73,7 +73,7 @@ public final class SkriptEventHandler {
         throw new UnsupportedOperationException();
     }
 
-    private static Iterator<Trigger> getTriggers(final Class<? extends Event> event) {
+    private static final Iterator<Trigger> getTriggers(final Class<? extends Event> event) {
         return new Iterator<Trigger>() {
             @Nullable
             private Class<?> e = event;
@@ -117,7 +117,9 @@ public final class SkriptEventHandler {
         if (!ts.hasNext())
             return;
 
-        if (Skript.logVeryHigh()) {
+        final boolean logVeryHigh = Skript.logVeryHigh();
+
+        if (logVeryHigh) {
             boolean hasTrigger = false;
             while (ts.hasNext()) {
                 if (ts.next().getEvent().check(e)) {
@@ -144,12 +146,15 @@ public final class SkriptEventHandler {
             final Trigger t = ts.next();
             if (!t.getEvent().check(e))
                 continue;
-            logTriggerStart(t);
+            if (logVeryHigh)
+                logTriggerStart(t);
             t.execute(e);
-            logTriggerEnd(t);
+            if (logVeryHigh)
+                logTriggerEnd(t);
         }
 
-        logEventEnd();
+        if (logVeryHigh)
+            logEventEnd();
     }
 
     public static final void logEventStart(final Event e) {
@@ -196,7 +201,7 @@ public final class SkriptEventHandler {
         selfRegisteredTriggers.add(t);
     }
 
-    static ScriptInfo removeTriggers(final File script) {
+    static final ScriptInfo removeTriggers(final File script) {
         final ScriptInfo info = new ScriptInfo();
         info.files = 1;
 
@@ -257,7 +262,7 @@ public final class SkriptEventHandler {
         }
     }
 
-    public static boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
+    public static final boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
         if (classes.contains(c))
             return true;
         for (final Class<?> cl : classes) {

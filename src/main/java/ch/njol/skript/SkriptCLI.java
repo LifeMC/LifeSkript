@@ -21,11 +21,13 @@
 
 package ch.njol.skript;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * This class does not serve much use (only an easter egg for now), but may be of use in the future. The JVM will refuse to run a class that has a superclass outside of the current classpath, hence the creation of this class.
  */
 public final class SkriptCLI {
-    public static final void main(final String... args) {
+    public static final void main(final @Nullable String[] args) {
         // Use of Skript's internal logging methods create classpath errors.
         System.out.println("[Skript] Skript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java. ");
         System.out.println("[Skript] Skript is *not* a standalone application, and we don't understand why you'd try to see if it was.");
