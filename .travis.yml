@@ -1,7 +1,14 @@
+sudo: false
 language: java
-
 jdk:
   - oraclejdk8
   - openjdk-ea
-
-script: "mvn --batch-mode -e -DcompilerArgument=-O clean install package"
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
+cache:
+  directories:
+    - "$HOME/.m2"
+install: "/bin/true"
+script:
+  - mvn --batch-mode -e -B -DcompilerArgument=-O clean install package
