@@ -1,9 +1,8 @@
 sudo: false
 language: java
-dist: xenial
 jdk:
   - oraclejdk8
-  - openjdk11
+  - openjdk-ea
 matrix:
   allow_failures:
     - jdk: openjdk-ea
