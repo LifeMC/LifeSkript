@@ -207,7 +207,7 @@ public final class Skript extends JavaPlugin implements Listener {
         if (hasJLineSupport != null)
             return hasJLineSupport;
         try {
-            if (Skript.testing()) {
+            if (Skript.testing() && Skript.debug()) {
                 if (isUnsupportedTerminal)
                     debug("Unsupported terminal");
                 if (craftbukkitMain == null)
@@ -223,6 +223,21 @@ public final class Skript extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Gets the {@link ServerPlatform} of the server that Skript currently
+     * runs on.
+     *
+     * It returns {@link ServerPlatform#BUKKIT_UNKNOWN} when we can't detect
+     * the server platform / software.
+     *
+     * It checks all popular platforms and performs some checks, but anyway,
+     * the returned value may be incorrect.
+     *
+     * Also, it returns a cached value after the first call. The first call is
+     * probably made by Skript itself.
+     *
+     * @return The {@link ServerPlatform} of the server that Skript currently runs on.
+     */
     public static final ServerPlatform getServerPlatform() {
         if (serverPlatform != null)
             return serverPlatform;
@@ -232,7 +247,7 @@ public final class Skript extends JavaPlugin implements Listener {
             return ServerPlatform.LIFE_SPIGOT; // LifeSpigot is a fork of Paper, so check it first.
         } else if (classExists("net.techcable.tacospigot.TacoSpigotConfig")) {
             return ServerPlatform.BUKKIT_TACO; // TacoSpigot also is a fork of Paper, so check before Paper.
-        } else if (classExists("co.aikar.timings.Timings") || classExists("org.github.paperspigot.PaperSpigotConfig")) {
+        } else if (classExists("co.aikar.timings.Timings") || classExists("org.github.paperspigot.PaperSpigotConfig") || classExists("com.github.paperspigot.PaperSpigotConfig")) {
             return ServerPlatform.BUKKIT_PAPER; // Could be Sponge, but it doesn't work at all at the moment
         } else if (classExists("org.spigotmc.SpigotConfig")) {
             return ServerPlatform.BUKKIT_SPIGOT;
@@ -263,13 +278,29 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final void printDownloadLink() {
+        if (!Skript.getInstance().isEnabled())
+            return;
         Bukkit.getScheduler().runTask(getInstance(), () -> info(getDownloadLink()));
     }
 
     public static final void printIssuesLink() {
+        if (!Skript.getInstance().isEnabled())
+            return;
         Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
     }
 
+    /**
+     * Gets the latest version of the Skript. It only
+     * returns the latest version of the <b>this implementation of Skript.</b>
+     *
+     * So, if you forked the project, or using another implementation, this method
+     * may return a incorrect value.
+     *
+     * Also, this method does not throw any exceptions and may return null when
+     * web server is down or there is no internet connection.
+     *
+     * @return The latest version of the Skript for <b>this implementation of Skript.</b>
+     */
     @Nullable
     public static final String getLatestVersion() {
         try {
@@ -279,12 +310,30 @@ public final class Skript extends JavaPlugin implements Listener {
         }
     }
 
+    /**
+     * Returns the version that this server is running, but you don't generally need this method, use {@link Skript#classExists(String)} or
+     * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
+     *
+     * The result produced by {@link Skript#classExists(String)} or {@link Skript#methodExists(Class, String, Class[])}
+     * is more accurate because who knows the server is not running a custom implementation which includes
+     * certain features in old versions, or does not include a feature in a new version?
+     *
+     * @return The version that this server is running as a {@link Version} object.
+     *
+     * @see Skript#isRunningMinecraft(int, int)
+     * @see Skript#classExists(String)
+     * @see Skript#methodExists(Class, String, Class[])
+     */
     public static final Version getMinecraftVersion() {
         return minecraftVersion;
     }
 
     /**
-     * @return Whether this server is running CraftBukkit
+     * Returns whatever this server is running CraftBukkit or CraftBukkit based server implementation.
+     *
+     * @return Whatever this server is running CraftBukkit or CraftBukkit based server implementation.
+     *
+     * @see Skript#getServerPlatform()
      */
     public static final boolean isRunningCraftBukkit() {
         return runningCraftBukkit;
@@ -293,16 +342,58 @@ public final class Skript extends JavaPlugin implements Listener {
     // ================ CONSTANTS, OPTIONS & OTHER ================
 
     /**
-     * @return Whether this server is running Minecraft <tt>major.minor</tt> <b>or higher</b>
+     * Returns whatever this server is running the given Minecraft <tt>major.minor</tt> <b>or higher</b>
+     * version, but you don't generally need this method, use {@link Skript#classExists(String)} or
+     * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
+     *
+     * The result produced by {@link Skript#classExists(String)} or {@link Skript#methodExists(Class, String, Class[])}
+     * is more accurate because who knows the server is not running a custom implementation which includes
+     * certain features in old versions, or does not include a feature in a new version?
+     *
+     * @return Whatever this server is running Minecraft <tt>major.minor</tt> <b>or higher</b>
+     *
+     * @see Skript#isRunningMinecraft(int, int)
+     * @see Skript#classExists(String)
+     * @see Skript#methodExists(Class, String, Class[])
      */
     public static final boolean isRunningMinecraft(final int major, final int minor) {
         return minecraftVersion.compareTo(major, minor) >= 0;
     }
 
+    /**
+     * Returns whatever this server is running the given Minecraft <tt>major.minor.revision</tt> <b>or higher</b>
+     * version, but you don't generally need this method, use {@link Skript#classExists(String)} or
+     * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
+     *
+     * The result produced by {@link Skript#classExists(String)} or {@link Skript#methodExists(Class, String, Class[])}
+     * is more accurate because who knows the server is not running a custom implementation which includes
+     * certain features in old versions, or does not include a feature in a new version?
+     *
+     * @return Whatever this server is running Minecraft <tt>major.minor.revision</tt> <b>or higher</b>
+     *
+     * @see Skript#isRunningMinecraft(int, int)
+     * @see Skript#classExists(String)
+     * @see Skript#methodExists(Class, String, Class[])
+     */
     public static final boolean isRunningMinecraft(final int major, final int minor, final int revision) {
         return minecraftVersion.compareTo(major, minor, revision) >= 0;
     }
 
+    /**
+     * Returns whatever this server is running the given <b>exact</b> Minecraft version,
+     * but you don't generally need this method, use {@link Skript#classExists(String)} or
+     * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
+     *
+     * The result produced by {@link Skript#classExists(String)} or {@link Skript#methodExists(Class, String, Class[])}
+     * is more accurate because who knows the server is not running a custom implementation which includes
+     * certain features in old versions, or does not include a feature in a new version?
+     *
+     * @return Whatever this server is running the given <b>exact</b> Minecraft version.
+     *
+     * @see Skript#isRunningMinecraft(int, int)
+     * @see Skript#classExists(String)
+     * @see Skript#methodExists(Class, String, Class[])
+     */
     public static final boolean isRunningMinecraft(final Version v) {
         return minecraftVersion.compareTo(v) >= 0;
     }
@@ -330,9 +421,15 @@ public final class Skript extends JavaPlugin implements Listener {
         if (className == null)
             return false;
         try {
-            Class.forName(className);
+            // Don't initialize the class just for checking if it exists.
+            ClassLoader classLoader = Skript.class.getClassLoader();
+            if (classLoader == null)
+                classLoader = ClassLoader.getSystemClassLoader();
+            Class.forName(className, /* initialize: */ false, classLoader);
             return true;
         } catch (final ClassNotFoundException e) {
+            if (Skript.testing() && Skript.debug())
+                debug("The class \"" + className + "\" does not exist in classpath.");
             return false;
         }
     }
@@ -730,7 +827,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final boolean testing() {
-        return debug() || Skript.class.desiredAssertionStatus();
+        return /*debug() || */Skript.class.desiredAssertionStatus();
     }
 
     public static final boolean log(final Verbosity minVerb) {
@@ -815,6 +912,9 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx();
         logEx(info);
         logEx();
+        logEx("Something went horribly wrong with Skript.");
+        logEx("This issue is NOT your fault! You probably can't fix it yourself, either.");
+        logEx();
         logEx("If you're developing a java add-on for Skript this likely means that you have done something wrong.");
         logEx("If you're a server admin however please go to " + ISSUES_LINK);
         logEx("and check whether this issue has already been reported.");
@@ -822,10 +922,10 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
         logEx("and describe what you did before it happened and/or what you think caused the error.");
         logEx();
-        logEx("If you think that it's a trigger that's causing the error please post the trigger as well.");
+        logEx("If you think that it's a code that's causing the error please post the code as well.");
         logEx("By following this guide fixing the error should be easy and done fast.");
         logEx();
-        logEx("If you want to fix this error yourself, remove -ea java argument, lower the verbosity or remove the problematic addons.");
+        logEx("Also removing the -ea java argument, lowering the verbosity or removing the problematic addons may help.");
         logEx();
         logEx("Stack trace:");
         if (cause == null || cause.getStackTrace().length == 0) {
@@ -996,13 +1096,17 @@ public final class Skript extends JavaPlugin implements Listener {
                             name.toLowerCase(Locale.ENGLISH).trim()
                                     .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
                                     || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
                                     .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
                                     || name.toLowerCase(Locale.ENGLISH).trim()
                                     .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
                     );
 
                     if (startupScripts != null) {
-                        for(final File startupScript : startupScripts) {
+                        for (final File startupScript : startupScripts) {
                             final Path filePath = startupScript.toPath();
                             final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
                             if (contents.contains("java") && contents.contains("-jar ")) {
@@ -1026,8 +1130,8 @@ public final class Skript extends JavaPlugin implements Listener {
                     // Warn the user that server needs a restart
                     if (madeChanges)
                         info("Automatically made some compatibility settings. Restart your server to apply them.");
-                } catch (final IOException e) {
-                    //Skript.exception(e);
+                } catch (final Throwable tw) {
+                    //Skript.exception(tw);
                 }
             }
 
@@ -1310,8 +1414,10 @@ public final class Skript extends JavaPlugin implements Listener {
 
                     final String latest = getLatestVersion();
 
-                    if (latest == null)
+                    if (latest == null) {
+                        warning("Can't check for updates, probably you don't have internet connection, or the web server is down?");
                         return;
+                    }
 
                     final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
                     final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "".trim()).trim();
@@ -1332,11 +1438,11 @@ public final class Skript extends JavaPlugin implements Listener {
                 } catch (final Throwable tw) {
                     if (!isEnabled())
                         return;
-                    Bukkit.getScheduler().runTask(getInstance(), () -> error("[Skript] Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                    Bukkit.getScheduler().runTask(getInstance(), () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
                     if (Skript.logHigh()) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> severe("[Skript] Unable to check updates", tw));
+                        Bukkit.getScheduler().runTask(getInstance(), () -> severe(SKRIPT_PREFIX_CONSOLE + "Unable to check updates", tw));
                     }
                     printDownloadLink();
                 }

@@ -22,9 +22,9 @@ author of the Skript and don't know everything about Skript.
 # Versioning System
 * Stable Releases: No suffix. Just (generally) a major version. (like V10, V11 etc.)
 * Beta Releases (tested): Stable version + A suffix from alphabet. (like V10b, V10c etc.)
-* Nightly Builds (untested): Not available via official download. Clone this repo and build yourself.
+* Nightly Builds (untested): Not available via official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
 
-Note: Latest stable release contains all commits that contains "hotfix".
+Note: Some releases may also contain hotfixes or backports from newer releases or commits.
 
 # Download Links
 You can download latest release from here:<br />
