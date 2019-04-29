@@ -19,5 +19,5 @@ on break of bookshelf:
 	cancel event
 	# Set block  to air, like minecraft.
 	set block to air
-	# Drop the breaked block. (bookshelf)
+	# Drop the broken block. (bookshelf)
 	drop event-block

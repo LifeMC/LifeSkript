@@ -42,7 +42,7 @@ Some useful links maybe help you.
 
 ## Github Links
 - Bensku's Fork (1.9 or above): https://github.com/SkriptLang/Skript
-- Mirreski's Repo (it's also abondoned i think): https://github.com/Mirreski/Skript
+- Mirreski's Repo (it's also abandoned i think): https://github.com/Mirreski/Skript
 - Njol's Original Repo (abandoned, read-only): https://github.com/Njol/Skript
 
 ## Documentation
