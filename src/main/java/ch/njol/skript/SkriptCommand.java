@@ -1,6 +1,8 @@
 package ch.njol.skript;
 
 import ch.njol.skript.ScriptLoader.ScriptInfo;
+import ch.njol.skript.agent.TrackerAgent;
+import ch.njol.skript.agent.defaults.TaskTrackerAgent;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
@@ -13,6 +15,7 @@ import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.util.StringUtils;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +23,11 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /*
  *   This file is part of Skript.
@@ -51,7 +58,7 @@ public final class SkriptCommand implements CommandExecutor {
     private static final String NODE = "skript command";
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
-    private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")
+    private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")).add(new CommandHelp("track", Color.DARK_RED).add("delays").add("variables").add("loops")).add(new CommandHelp("untrack", Color.DARK_RED).add("delays").add("variables").add("loops")
             //			).add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
 //					.add("set", "Creates a new variable or changes an existing one")
 //					.add("delete", "Deletes a variable")
@@ -125,6 +132,9 @@ public final class SkriptCommand implements CommandExecutor {
         });
     }
 
+    private static final List<TrackerAgent> registeredTrackers =
+            new ArrayList<>();
+
     @SuppressWarnings("null")
     @Override
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
@@ -176,10 +186,11 @@ public final class SkriptCommand implements CommandExecutor {
                     }
                 }
             } else if ("enable".equalsIgnoreCase(args[0])) {
-                if ("all".equals(args[1])) {
+                if ("all".equalsIgnoreCase(args[1])) {
                     try {
                         info(sender, "enable.all.enabling");
                         final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EMPTY_FILE_ARRAY);
+                        //noinspection ConstantConditions
                         assert files != null;
                         ScriptLoader.loadScripts(files);
                         if (r.numErrors() == 0) {
@@ -241,7 +252,7 @@ public final class SkriptCommand implements CommandExecutor {
                     }
                 }
             } else if ("disable".equalsIgnoreCase(args[0])) {
-                if ("all".equals(args[1])) {
+                if ("all".equalsIgnoreCase(args[1])) {
                     Skript.disableScripts();
                     try {
                         toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), false);
@@ -290,12 +301,53 @@ public final class SkriptCommand implements CommandExecutor {
                     }
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
-                if ("check".equals(args[1])) {
+                if ("check".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("changes".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("download".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
+                }
+            } else if ("track".equalsIgnoreCase(args[0]) || "untrack".equalsIgnoreCase(args[0])) {
+                if ("delays".equalsIgnoreCase(args[1])) {
+                    if ("track".equalsIgnoreCase(args[0])) {
+                        long limit = 0L;
+                        TimeUnit unit = TimeUnit.NANOSECONDS;
+
+                        for (final TrackerAgent agent : registeredTrackers)
+                            if (agent instanceof TaskTrackerAgent)
+                                if (((TaskTrackerAgent) agent).out == sender) {
+                                    /* TODO This just a experimental agent & tracker & debugger system
+                                        and it's not localized, i'm too lazy to localize and i don't know german language
+                                        but it should be done at some point. */
+                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a delay tracker!");
+                                    return true;
+                                }
+
+                        registeredTrackers.add(
+                                new TaskTrackerAgent(sender, limit, unit).registerTracker()
+                        );
+                        sender.sendMessage(ChatColor.GREEN + "Registered the delay tracker for you!");
+                    } else {
+                        boolean hasTracker = false;
+                        for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
+                            final TrackerAgent agent = it.next();
+                            if (agent instanceof TaskTrackerAgent)
+                                if (((TaskTrackerAgent) agent).out == sender) {
+                                    agent.unregisterTracker();
+                                    it.remove();
+                                    hasTracker = true;
+                                }
+                        }
+                        if (hasTracker)
+                            sender.sendMessage(ChatColor.RED + "Unregistered your delay tracker!");
+                        else
+                            sender.sendMessage(ChatColor.DARK_RED + "You don't have an active delay tracker!");
+                    }
+                } else if ("variables".equalsIgnoreCase(args[1])) {
+                    // TODO
+                } else if ("loops".equalsIgnoreCase(args[1])) {
+                    // TODO
                 }
             } else if ("help".equalsIgnoreCase(args[0])) {
                 skriptCommandHelp.showHelp(sender);

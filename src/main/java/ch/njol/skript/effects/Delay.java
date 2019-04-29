@@ -12,7 +12,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Skript.  If not, see <https://www.gnu.org/licenses/>.
+ *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Copyright 2011-2019 Peter Güttinger and contributors
@@ -24,6 +24,9 @@ package ch.njol.skript.effects;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.agent.SkriptAgent;
+import ch.njol.skript.agent.events.end.DelayEndEvent;
+import ch.njol.skript.agent.events.start.DelayStartEvent;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -88,18 +91,24 @@ public final class Delay extends Effect {
     @Nullable
     protected TriggerItem walk(final Event e) {
         debug(e, true);
-        final long start = Skript.debug() ? System.nanoTime() : 0;
+        final Timespan duration = this.duration.getSingle(e);
+        if (duration == null)
+            return null;
         final TriggerItem next = getNext();
         if (next != null) {
             delayed.add(e);
-            final Timespan d = duration.getSingle(e);
-            if (d == null)
-                return null;
+            final boolean trackingEnabled = SkriptAgent.isTrackingEnabled();
+            final long start = Skript.debug() ? System.nanoTime() : 0L;
+            if (trackingEnabled)
+                SkriptAgent.throwEvent(new DelayStartEvent(duration));
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
                 if (Skript.debug())
                     Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
+                final long startTime = trackingEnabled ? System.nanoTime() : 0L;
                 TriggerItem.walk(next, e);
-            }, d.getTicks_i());
+                if (trackingEnabled)
+                    SkriptAgent.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
+            }, duration.getTicks_i());
         }
         return null;
     }

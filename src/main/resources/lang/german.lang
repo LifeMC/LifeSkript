@@ -74,7 +74,17 @@ skript command:
 			check: Überprüft, ob eine neue Version von Skript verfügbar ist
 			changes: Listet alle Änderungen seit der aktuellen Version auf (auf englisch)
 			download: Lädt die neueste Version herunter
-	
+        track:
+			description: Aktivieren Sie die Nachverfolgung bestimmter Funktionen für Debugging-Zwecke
+			delays: Aktiviert die Nachverfolgung von Verzögerungen (wait-Anweisungen)
+			variables: Aktiviert die Nachverfolgung für Variablenänderungen (nützlich, um keine Werte zu erkennen)
+			loops: Aktiviert das Tracking für Loops (nützlich für die Erkennung von Verzögerungen)
+		untrack:
+			description: Deaktivieren Sie die Verfolgung bestimmter Funktionen
+			delays: Deaktiviert die Nachverfolgung für Verzögerungen (wait-Anweisungen)
+			variables: Deaktiviert die Nachverfolgung für Variablenänderungen
+			loops: Deaktiviert die Nachverfolgung für Loops
+
 	invalid script: Das Skript <grey>'<gold>%s<grey>'<red> konnte nicht gefunden werden.
 	invalid folder: Der Ordner <grey>'<gold>%s<grey>'<red> konnte nicht gefunden werden.
 	reload:

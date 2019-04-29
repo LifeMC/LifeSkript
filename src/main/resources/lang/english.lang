@@ -72,7 +72,17 @@ skript command:
 			check: Checks for a new version
 			changes: Lists all changes since the current version
 			download: Download the newest version
-	
+		track:
+			description: Enable tracking of certain feature for debugging purposes
+			delays: Enables tracking for Delays (wait statements)
+			variables: Enables tracking for Variable Changes (useful for spotting none values)
+			loops: Enables tracking for Loops (useful for spotting lag)
+		untrack:
+			description: Disable tracking of certain feature
+			delays: Disables tracking for Delays (wait statements)
+			variables: Disables tracking for Variable Changes
+			loops: Disables tracking for Loops
+
 	invalid script: Can't find the script <grey>'<gold>%s<grey>'<red> in the scripts folder!
 	invalid folder: Can't find the folder <grey>'<gold>%s<grey>'<red> in the scripts folder!
 	reload:
