@@ -453,7 +453,7 @@ public final class Aliases { //NOSONAR
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
         for (final Material m : Material.values()) {
             if (materialNames.get(m.getId()) == null) {
-                materialNames.put(m.getId(), new MaterialName(m.getId(), "" + m.toString().toLowerCase().replace('_', ' '), "" + m.toString().toLowerCase().replace('_', ' '), 0));
+                materialNames.put(m.getId(), new MaterialName(m.getId(), m.toString().toLowerCase().replace('_', ' '), m.toString().toLowerCase().replace('_', ' '), 0));
                 missing.append(m.getId()).append(", ");
                 r++;
             }

@@ -77,7 +77,7 @@ public final class Argument<T> {
             if (def.startsWith("%") && def.endsWith("%")) {
                 final RetainingLogHandler log = SkriptLogger.startRetainingLog();
                 try {
-                    d = new SkriptParser("" + def.substring(1, def.length() - 1), SkriptParser.PARSE_EXPRESSIONS, ParseContext.COMMAND).parseExpression(type.getC());
+                    d = new SkriptParser(def.substring(1, def.length() - 1), SkriptParser.PARSE_EXPRESSIONS, ParseContext.COMMAND).parseExpression(type.getC());
                     if (d == null) {
                         log.printErrors("Can't understand this expression: " + def + "");
                         return null;
@@ -91,7 +91,7 @@ public final class Argument<T> {
                 try {
                     if (type.getC() == String.class) {
                         if (def.startsWith("\"") && def.endsWith("\""))
-                            d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
+                            d = (Expression<? extends T>) VariableString.newInstance(def.substring(1, def.length() - 1));
                         else
                             d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                     } else {
