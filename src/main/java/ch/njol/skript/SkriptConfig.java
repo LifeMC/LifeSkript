@@ -115,9 +115,12 @@ public final class SkriptConfig {
     }
 
     public static String formatDate(final long timestamp) {
-        final DateFormat f = dateFormat.value();
-        synchronized (f) {
-            return "" + f.format(timestamp);
+        final DateFormat format = dateFormat.value();
+        assert format != null;
+
+        //noinspection SynchronizationOnLocalVariableOrMethodParameter
+        synchronized (format) {
+            return "" + format.format(timestamp);
         }
     }
 
@@ -136,6 +139,7 @@ public final class SkriptConfig {
             final File configFile = new File(Skript.getInstance().getDataFolder(), "config.sk");
             if (oldConfigFile.exists()) {
                 if (!configFile.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
                     oldConfigFile.renameTo(configFile);
                     Skript.info("[1.3] Renamed your 'config.cfg' to 'config.sk' to match the new format");
                 } else {
