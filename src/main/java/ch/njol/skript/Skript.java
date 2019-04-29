@@ -1508,7 +1508,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                         if (e.getName().endsWith(".class")) {
                             try {
-                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(this));
+                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(instance));
                                 for (final Field f : c.getDeclaredFields()) {
                                     if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
                                         if (Modifier.isFinal(f.getModifiers())) {
@@ -1532,14 +1532,14 @@ public final class Skript extends JavaPlugin implements Listener {
                                     continue;
                                 // Only log in debug otherwise, an interesting
                                 // error occured because we already skip general errors
-                                if (Skript.debug())
+                                if (testing() || debug())
                                     tw.printStackTrace();
                             }
                         }
                     }
                 }
             } catch (final Throwable ex) {
-                if (testing() || Skript.logHigh())
+                if (testing() || logHigh())
                     ex.printStackTrace();
             }
         }, "Skript cleanup thread");
