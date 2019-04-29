@@ -166,8 +166,11 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
     private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
     private static final String EXCEPTION_PREFIX = "#!#! ";
+    /**
+     * use {@link Skript#getInstance()} for asserted access
+     */
     @Nullable
-    static Skript instance;
+    public static Skript instance;
     static boolean disabled;
     static boolean updateAvailable;
     @Nullable
@@ -1054,9 +1057,13 @@ public final class Skript extends JavaPlugin implements Listener {
         return getInstance().getFile();
     }
 
-    @SuppressWarnings("null")
     public static final ClassLoader getBukkitClassLoader() {
-        return getInstance().getClassLoader();
+        return getBukkitClassLoader(getInstance());
+    }
+
+    @SuppressWarnings("null")
+    public static final ClassLoader getBukkitClassLoader(final Skript instance) {
+        return instance.getClassLoader();
     }
 
     @Override
@@ -1485,6 +1492,10 @@ public final class Skript extends JavaPlugin implements Listener {
 
         // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
         // async to not slow down server reload, delayed to not slow down server shutdown
+        final Skript instance = this;
+        // we are saving instance because in lambda we can't access it
+        // and using getInstance method causes IllegalStateException since
+        // we are un setting fields, we also unset the instance field.
         final Thread t = newThread(() -> {
             try {
                 Thread.sleep(10000);
@@ -1497,7 +1508,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                         if (e.getName().endsWith(".class")) {
                             try {
-                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader());
+                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(instance));
                                 for (final Field f : c.getDeclaredFields()) {
                                     if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
                                         if (Modifier.isFinal(f.getModifiers())) {
@@ -1507,15 +1518,28 @@ public final class Skript extends JavaPlugin implements Listener {
                                         f.set(null, null);
                                     }
                                 }
-                            } catch (final Throwable ex) {
-                                if (testing() || Skript.logHigh())
-                                    ex.printStackTrace();
+                            } catch (final Throwable tw) {
+                                // If Vault or WorldGuard is not available
+                                if (tw instanceof NoClassDefFoundError)
+                                    continue;
+                                // If we can't set fields (e.g if it's final
+                                // and we are on Java 9 or above )
+                                if (tw instanceof IllegalAccessException)
+                                    continue;
+                                // Happens when classes trying to register
+                                // expressions etc. when disabling.
+                                if (tw instanceof SkriptAPIException)
+                                    continue;
+                                // Only log in debug otherwise, an interesting
+                                // error occured because we already skip general errors
+                                if (testing() || debug())
+                                    tw.printStackTrace();
                             }
                         }
                     }
                 }
             } catch (final Throwable ex) {
-                if (testing() || Skript.logHigh())
+                if (testing() || logHigh())
                     ex.printStackTrace();
             }
         }, "Skript cleanup thread");

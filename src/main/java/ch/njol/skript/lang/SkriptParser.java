@@ -746,7 +746,7 @@ public final class SkriptParser {
         if (expr.isEmpty())
             return null;
         if (context != ParseContext.COMMAND && expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length())
-            return new SkriptParser(this, "" + expr.substring(1, expr.length() - 1)).parseSingleExpr(allowUnparsedLiteral, error, types);
+            return new SkriptParser(this, expr.substring(1, expr.length() - 1)).parseSingleExpr(allowUnparsedLiteral, error, types);
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             if (context == ParseContext.DEFAULT || context == ParseContext.EVENT) {
@@ -776,7 +776,7 @@ public final class SkriptParser {
             if ((flags & PARSE_EXPRESSIONS) != 0) {
                 final Expression<?> e;
                 if (expr.startsWith("\"") && expr.endsWith("\"") && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
-                    e = VariableString.newInstance("" + expr.substring(1, expr.length() - 1));
+                    e = VariableString.newInstance(expr.substring(1, expr.length() - 1));
                 } else {
                     e = SkriptParser.<Expression<?>>parse(expr, (Iterator) Skript.getExpressions(types), null);
                 }

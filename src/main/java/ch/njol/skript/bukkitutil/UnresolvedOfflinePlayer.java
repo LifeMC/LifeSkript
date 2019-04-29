@@ -54,6 +54,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             try {
                 final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 
+                //noinspection ConstantConditions
+                // See: https://github.com/LifeMC/LifeSkript/issues/4
                 if (p == null)
                     continue;
 
@@ -69,7 +71,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
                             action.run();
                         }
 
-                Thread.sleep(100L);
+                if (toResolve.isEmpty())
+                    Thread.sleep(1000L);
             } catch (final InterruptedException e) {
                 //Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
                 break;
@@ -162,7 +165,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     @SuppressWarnings("null")
     public boolean isOnline() {
         // Don't resolve just to check the online status. Try to get online player version.
-        return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.isOnline() : getPlayer() != null;
+        return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.isOnline() : getPlayer() != null && getPlayer().isOnline();
     }
 
     /**
