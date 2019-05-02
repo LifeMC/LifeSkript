@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/out</output-path>
     <root id="archive" name="Skript.jar">
       <element id="module-output" name="Skript" />
+      <element id="file-copy" path="$PROJECT_DIR$/README.md" />
+      <element id="file-copy" path="$PROJECT_DIR$/LICENSE" />
     </root>
   </artifact>
 </component>

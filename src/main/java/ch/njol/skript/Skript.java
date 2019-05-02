@@ -116,7 +116,6 @@ public final class Skript extends JavaPlugin implements Listener {
     // ================ CONSTANTS ================
 
     public static final String LATEST_VERSION_DOWNLOAD_LINK = "https://github.com/LifeMC/LifeSkript/releases";
-
     public static final String ISSUES_LINK = "https://github.com/LifeMC/LifeSkript/issues";
 
     // ================ PLUGIN ================
@@ -196,6 +195,28 @@ public final class Skript extends JavaPlugin implements Listener {
         if (instance != null)
             throw new IllegalStateException("Cannot create multiple instances of Skript!");
         instance = this;
+    }
+
+    /**
+     * Checks if the current server has Skript add-ons loaded.
+     * Add-ons are plugins that adds new expressions, conditions, events etc.
+     *
+     * While add-ons provide nice & cool new features, add-ons may
+     * cause errors because they interact with Skript, and some of them
+     * even uses reflection to alter how Skript works.
+     *
+     * So, in fact, servers with add-ons are not using vanilla Skript.
+     *
+     * @return True if this server has at least one {@link SkriptAddon}.
+     */
+    public static final boolean hasAddons() {
+        if (addons.isEmpty())
+            return false;
+        for(final SkriptAddon addon : addons.values())
+            // Skript also registers itself as an add-on.
+            if (!(addon.plugin instanceof Skript))
+                return true;
+        return false;
     }
 
     /**
@@ -571,7 +592,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * <p>
      * All registered Closeables will be closed after all scripts have been stopped.
      *
-     * @param closeable
+     * @param closeable The closeable to close when disabling the plugin.
      */
     public static final void closeOnDisable(final Closeable closeable) {
         closeOnDisable.add(closeable);
@@ -786,8 +807,8 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Dispatches a command with calling command events
      *
-     * @param sender
-     * @param command
+     * @param sender The sender of the command.
+     * @param command The command to run.
      * @return Whether the command was run
      */
     public static final boolean dispatchCommand(final CommandSender sender, final String command) {
@@ -873,8 +894,8 @@ public final class Skript extends JavaPlugin implements Listener {
      * parsing) to log
      * errors with a specific {@link ErrorQuality}.
      *
-     * @param error
-     * @param quality
+     * @param error The error to log.
+     * @param quality The {@link ErrorQuality}.
      */
     public static final void error(final String error, final ErrorQuality quality) {
         SkriptLogger.log(new LogEntry(SkriptLogger.SEVERE, quality, error));
@@ -912,14 +933,12 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
         logEx();
         logEx("[Skript] Severe Error:");
-        logEx();
         logEx(info);
         logEx();
         logEx("Something went horribly wrong with Skript.");
         logEx("This issue is NOT your fault! You probably can't fix it yourself, either.");
         logEx();
-        logEx("If you're developing a java add-on for Skript this likely means that you have done something wrong.");
-        logEx("If you're a server admin however please go to " + ISSUES_LINK);
+        logEx("If you're a server admin please go to " + ISSUES_LINK);
         logEx("and check whether this issue has already been reported.");
         logEx();
         logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
@@ -928,8 +947,11 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx("If you think that it's a code that's causing the error please post the code as well.");
         logEx("By following this guide fixing the error should be easy and done fast.");
         logEx();
-        logEx("Also removing the -ea java argument, lowering the verbosity or removing the problematic addons may help.");
-        logEx();
+        // Print hint message only if the at least one condition in the hint message is met.
+        if (Skript.testing() || Skript.logHigh() || Skript.hasAddons()) {
+            logEx("Also removing the -ea java argument, lowering the verbosity or removing the problematic addons may help.");
+            logEx();
+        }
         logEx("Stack trace:");
         if (cause == null || cause.getStackTrace().length == 0) {
             logEx("  warning: no/empty exception given, dumping current stack trace instead");
@@ -961,6 +983,7 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx("Current item: " + (item == null ? "not available" : item.toString(null, true)));
         if (item != null && item.getTrigger() != null) {
             final Trigger trigger = item.getTrigger();
+            //noinspection ConstantConditions
             if (trigger != null) {
                 final File script = trigger.getScript();
                 logEx("Current trigger: " + trigger.toString(null, true) + " (" + (script == null ? "null" : script.getName()) + ", line " + trigger.getLineNumber() + ")");
@@ -978,7 +1001,9 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx();
         final StringBuilder stringBuilder = new StringBuilder();
         int i = 0;
-        for(final SkriptAddon addon : addons.values()) {
+        for (final SkriptAddon addon : addons.values()) {
+            if (addon.plugin instanceof Skript)
+                continue;
             stringBuilder.append(addon.getName());
             if (i < addons.size())
                 stringBuilder.append(", ");
@@ -1015,8 +1040,9 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * @param message
-     * @param permission
+     * @param message Message to broadcast.
+     * @param permission Permission to see the message.
+     *
      * @see #adminBroadcast(String)
      */
     public static final void broadcast(final String message, final String permission) {
@@ -1041,8 +1067,8 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Similar to {@link #info(CommandSender, String)} but no [Skript] prefix is added.
      *
-     * @param sender
-     * @param info
+     * @param sender Receiver of the message.
+     * @param info Message to send the sender.
      */
     public static final void message(final CommandSender sender, final String info) {
         sender.sendMessage(Utils.replaceEnglishChatStyles(info));
@@ -1080,7 +1106,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 first = true;
                 try {
                     // Get server directory / folder
-                    final File serverDirectory = Skript.getInstance().getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                    final File serverDirectory = this.getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
                     // Flag to track changes and warn the user
                     boolean madeChanges = false;
@@ -1160,6 +1186,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
 
             if (!getDataFolder().isDirectory())
+                //noinspection ResultOfMethodCallIgnored
                 getDataFolder().mkdirs();
 
             final File scripts = new File(getDataFolder(), SCRIPTSFOLDER);
@@ -1362,7 +1389,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
 
-                Bukkit.getScheduler().runTask(getInstance(), () -> {
+                Bukkit.getScheduler().runTask(this, () -> {
 
                     info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
                     info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
@@ -1374,7 +1401,7 @@ public final class Skript extends JavaPlugin implements Listener {
             if (!isEnabled())
                 return;
 
-            Bukkit.getScheduler().runTask(getInstance(), () -> {
+            Bukkit.getScheduler().runTask(this, () -> {
 
                 if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
 
@@ -1407,14 +1434,14 @@ public final class Skript extends JavaPlugin implements Listener {
                 }
             }, this);
 
-            latestVersion = getInstance().getDescription().getVersion();
+            latestVersion = this.getDescription().getVersion();
 
             if (!isEnabled())
                 return;
 
-            Bukkit.getScheduler().runTaskAsynchronously(getInstance(), () -> {
+            Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
                 try {
-                    final String current = getInstance().getDescription().getVersion();
+                    final String current = this.getDescription().getVersion();
 
                     if (current == null || current.length() < 1)
                         return;
@@ -1432,24 +1459,24 @@ public final class Skript extends JavaPlugin implements Listener {
                     if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
+                        Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
                         printDownloadLink();
                         updateAvailable = true;
                         latestVersion = latest;
                     } else {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> info("You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
+                        Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
                         printIssuesLink();
                     }
                 } catch (final Throwable tw) {
                     if (!isEnabled())
                         return;
-                    Bukkit.getScheduler().runTask(getInstance(), () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                    Bukkit.getScheduler().runTask(this, () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
                     if (Skript.logHigh()) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(getInstance(), () -> severe(SKRIPT_PREFIX_CONSOLE + "Unable to check updates", tw));
+                        Bukkit.getScheduler().runTask(this, () -> severe(SKRIPT_PREFIX_CONSOLE + "Unable to check updates", tw));
                     }
                     printDownloadLink();
                 }
@@ -1489,6 +1516,8 @@ public final class Skript extends JavaPlugin implements Listener {
                 Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
             }
         }
+        if (Skript.debug())
+            Skript.debug("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
 
         // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
         // async to not slow down server reload, delayed to not slow down server shutdown
@@ -1538,9 +1567,9 @@ public final class Skript extends JavaPlugin implements Listener {
                         }
                     }
                 }
-            } catch (final Throwable ex) {
+            } catch (final Throwable tw) {
                 if (testing() || logHigh())
-                    ex.printStackTrace();
+                    tw.printStackTrace();
             }
         }, "Skript cleanup thread");
         t.setPriority(Thread.MIN_PRIORITY);

@@ -236,9 +236,9 @@ public final class Config {
 
     private void load(final Class<?> c, final @Nullable Object o, final String path) {
         for (final Field f : c.getDeclaredFields()) {
-            f.setAccessible(true);
             if (o != null || Modifier.isStatic(f.getModifiers())) {
                 try {
+                    f.setAccessible(true);
                     if (OptionSection.class.isAssignableFrom(f.getType())) {
                         final Object p = f.get(o);
                         @NonNull final Class<?> pc = p.getClass();
@@ -246,7 +246,9 @@ public final class Config {
                     } else if (Option.class.isAssignableFrom(f.getType())) {
                         ((Option<?>) f.get(o)).set(this, path);
                     }
-                } catch (final IllegalArgumentException | IllegalAccessException e) {
+                } catch (final Throwable tw) {
+                    if (Skript.testing() && Skript.debug())
+                        Skript.exception(tw, "Error when setting field \"" + f.getName() + "\"" + " in class \"" + c.getCanonicalName() + "\"");
                     assert false;
                 }
             }

@@ -82,7 +82,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
-    public final static Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
+    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
@@ -228,8 +228,8 @@ public final class SkriptConfig {
 
 //			if (!keepConfigsLoaded.value())
 //				mainConfig = null;
-        } catch (final RuntimeException e) {
-            Skript.exception(e, "An error occurred while loading the config");
+        } catch (final Throwable tw) {
+            Skript.exception(tw, "An error occurred while loading the config");
             return false;
         }
         return true;
