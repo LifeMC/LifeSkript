@@ -310,7 +310,10 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final void printIssuesLink() {
         if (!Skript.getInstance().isEnabled())
             return;
-        Bukkit.getScheduler().runTask(getInstance(), () -> info("Please report all issues you encounter to the issues page: " + ISSUES_LINK));
+        Bukkit.getScheduler().runTask(getInstance(), () -> {
+            info("Please report all issues you encounter to the issues page:");
+            info(ISSUES_LINK);
+        });
     }
 
     /**
@@ -1459,14 +1462,14 @@ public final class Skript extends JavaPlugin implements Listener {
                     if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It's highly recommended to upgrade to the latest skript version. (you are using Skript " + current + ")"));
+                        Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
                         printDownloadLink();
                         updateAvailable = true;
                         latestVersion = latest;
                     } else {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version (" + latest + ") of the Skript. No new updates available. Thanks for using Skript!"));
+                        Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version of Skript."));
                         printIssuesLink();
                     }
                 } catch (final Throwable tw) {
