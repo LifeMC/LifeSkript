@@ -5,6 +5,8 @@
 /target
 /out
 /dep
+/bin
 
 # Idea personal files
 /dictionaries
+workspace.xml
