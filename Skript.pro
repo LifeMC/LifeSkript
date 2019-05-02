@@ -1,7 +1,9 @@
 -injars 'target\Skript.jar'
 -outjars 'target\Skript-optimized (EXPERIMENTAL).jar'
 
+# If building with Java 9 or higher, change this to JMods directory.
 -libraryjars '<java.home>\lib\rt.jar'
+
 -libraryjars '<user.home>\.m2\repository\org\bukkit\bukkit\1.8.8-R0.1-SNAPSHOT\bukkit-1.8.8-R0.1-SNAPSHOT.jar'
 -libraryjars '<user.home>\.m2\repository\org\fusesource\jansi\jansi\1.18\jansi-1.18.jar'
 -libraryjars '<user.home>\.m2\repository\org\eclipse\jdt.annotation\1.1.0\jdt.annotation-1.1.0.jar'
