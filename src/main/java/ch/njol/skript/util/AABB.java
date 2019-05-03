@@ -106,7 +106,7 @@ public final class AABB implements Iterable<Block> {
     }
 
     /**
-     * Returns an iterator which iterates over all blocks that are in this AABB
+     * Returns an iterator that iterates over all blocks that are in this AABB
      */
     @Override
     public Iterator<Block> iterator() {

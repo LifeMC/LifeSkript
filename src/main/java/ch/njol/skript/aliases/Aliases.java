@@ -405,7 +405,7 @@ public final class Aliases { //NOSONAR
     }
 
     /**
-     * Gets the custom name of of a material, or the default if none is set.
+     * Gets the custom name of a material, or the default if none is set.
      *
      * @param id
      * @param data
@@ -569,7 +569,7 @@ public final class Aliases { //NOSONAR
     /**
      * Prints errors.
      *
-     * @param s       The string holding the type, can be either a number or an alias, plus an optional data part. Case does not matter.
+     * @param s       The string holding the type, can be either a number, or an alias, plus an optional data part. Case does not matter.
      * @param t       The ItemType to add the parsed ItemData(s) to (i.e. this ItemType will be modified)
      * @param isAlias Whether this type is parsed for an alias.
      * @return The given item type or null if the input couldn't be parsed.

@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
+import static kotlin.test.AssertionsKt.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -52,7 +53,7 @@ public final class FlatFileStorageTest {
                 {"\"\t\0\"", "\t\0"},
         };
         for (final String[] v : vs) {
-            assert Arrays.equals(Arrays.copyOfRange(v, 1, v.length), FlatFileStorage.splitCSV(v[0])) : v[0] + ": " + Arrays.toString(Arrays.copyOfRange(v, 1, v.length)) + " != " + Arrays.toString(FlatFileStorage.splitCSV(v[0]));
+            assertTrue(Arrays.equals(Arrays.copyOfRange(v, 1, v.length), FlatFileStorage.splitCSV(v[0])), v[0] + ": " + Arrays.toString(Arrays.copyOfRange(v, 1, v.length)) + " != " + Arrays.toString(FlatFileStorage.splitCSV(v[0])));
         }
     }
 

@@ -23,7 +23,7 @@
 package ch.njol.skript;
 
 /**
- * Represents all server platforms that Skript runs on. Only some of the
+ * Represents all server platforms that Skript runs on. Only some
  * platforms are "officially" supported, though.
  */
 public enum ServerPlatform {
@@ -71,23 +71,25 @@ public enum ServerPlatform {
      */
     LIFE_SPIGOT("LifeSpigot", true, true);
 
-    public String name;
-    public boolean works;
-    public boolean supported;
+    public String platformName;
+
+    public boolean isWorking;
+    public boolean isSupported;
 
     /**
      * Represents a server platform.
      *
-     * @param name Display name for platform.
-     * @param works If the platform usually works.
-     * @param supported If the platform is supported.
+     * @param platformName Display name for platform.
+     * @param isWorking If the platform usually works.
+     * @param isSupported If the platform is supported.
      */
-    ServerPlatform(final String name, final boolean works, final boolean supported) {
-        if (supported && !works)
+    ServerPlatform(final String platformName, final boolean isWorking, final boolean isSupported) {
+        if (isSupported && !isWorking)
             throw new IllegalArgumentException();
-        this.name = name;
-        this.works = works;
-        this.supported = supported;
+
+        this.platformName = platformName;
+        this.isWorking = isWorking;
+        this.isSupported = isSupported;
     }
 
 }

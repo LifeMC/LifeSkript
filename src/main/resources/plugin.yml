@@ -31,7 +31,7 @@ main: ch.njol.skript.Skript
 version: ${project.version}
 
 # This fork of Skript is only tested on 1.7.10-1.8.8
-# (or 1.8.9? spigot 1.8.9 does not exists :p)
+# (or 1.8.9? Spigot 1.8.9 does not exist :p)
 api-version: '1.8.8'
 
 commands:

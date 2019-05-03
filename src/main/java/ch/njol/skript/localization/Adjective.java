@@ -79,7 +79,7 @@ public final class Adjective extends Message {
             final int c2 = v.indexOf('@', c + 1);
             final int d = v.indexOf(':', c + 1);
             if (d == -1 || d > c2) {
-                Skript.error("Missing colon (:) to separate the gender in the adjective '" + key + "' in the " + Language.getName() + " language file at index " + c + ": " + v);
+                Skript.error("Missing colon (:) to separate the gender in the adjective '" + key + "' in the " + Language.getName() + " language file at the index " + c + ": " + v);
                 return;
             }
             final String gender = v.substring(c + 1, d);

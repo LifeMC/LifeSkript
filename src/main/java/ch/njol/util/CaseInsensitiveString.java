@@ -28,7 +28,7 @@ import java.io.Serializable;
 import java.util.Locale;
 
 /**
- * A string which is compared ignoring it's case.
+ * A string, but it is compared ignoring its case.
  *
  * @author Peter Güttinger
  */

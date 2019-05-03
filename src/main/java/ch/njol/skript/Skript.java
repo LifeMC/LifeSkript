@@ -238,7 +238,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final boolean hasAddons() {
         if (addons.isEmpty())
             return false;
-        for(final SkriptAddon addon : addons.values())
+        for (final SkriptAddon addon : addons.values())
             // Skript also registers itself as an add-on.
             if (!(addon.plugin instanceof Skript))
                 return true;
@@ -425,7 +425,7 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
         } catch (final Throwable tw) {
-            if (handler != null && tw != null)
+            if (handler != null)
                 handler.accept(tw);
             return null;
         }
@@ -544,7 +544,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given class exists.
      */
     @SuppressWarnings({"null", "unused"})
-    public static final boolean classExists(final String className) {
+    public static final boolean classExists(final @Nullable String className) {
         if (className == null)
             return false;
         try {
@@ -571,7 +571,7 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     @Nullable
     @SuppressWarnings({"null", "unused"})
-    public static final Class<?> classForName(final String className) {
+    public static final Class<?> classForName(final @Nullable String className) {
         if (className == null)
             return null;
         try {
@@ -592,7 +592,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given method exists.
      */
     @SuppressWarnings("null")
-    public static final boolean methodExists(final Class<?> c, final String methodName, final Class<?>... parameterTypes) {
+    public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>... parameterTypes) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -617,7 +617,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given method exists.
      */
     @SuppressWarnings("null")
-    public static final boolean methodExists(final Class<?> c, final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+    public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -638,7 +638,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return Whether the given field exists.
      */
     @SuppressWarnings("null")
-    public static final boolean fieldExists(final Class<?> c, final String fieldName) {
+    public static final boolean fieldExists(final @Nullable Class<?> c, final @Nullable String fieldName) {
         if (c == null || fieldName == null)
             return false;
         try {
@@ -1081,8 +1081,8 @@ public final class Skript extends JavaPlugin implements Listener {
         logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
         logEx("  OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
         logEx();
-        logEx("Server platform: " + getServerPlatform().name + (getServerPlatform().supported ? "".trim() : " (unsupported)"));
-        if (!getServerPlatform().works) {
+        logEx("Server platform: " + getServerPlatform().platformName + (getServerPlatform().isSupported ? "".trim() : " (unsupported)"));
+        if (!getServerPlatform().isWorking) {
             logEx();
             logEx("Your server platform is not tested with Skript. Use at your own risk.");
         }

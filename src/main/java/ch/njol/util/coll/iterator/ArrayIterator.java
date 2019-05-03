@@ -66,7 +66,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
     }
 
     /**
-     * not supported by arrays.
+     * Not supported by arrays.
      *
      * @throws UnsupportedOperationException always
      */

@@ -52,8 +52,8 @@ public interface Changer<T> {
 
     /**
      * @param what  The objects to change
-     * @param delta An array with one or more instances of one or more of the the classes returned by {@link #acceptChange(ChangeMode)} for the given change mode (null for
-     *              {@link ChangeMode#DELETE} and {@link ChangeMode#RESET}). <b>This can be a Object[], thus casting is not allowed.</b>
+     * @param delta An array with one or more instances of one or more of the classes returned by {@link #acceptChange(ChangeMode)} for the given change mode (null for
+     *              {@link ChangeMode#DELETE} and {@link ChangeMode#RESET}). <b>This can be an Object[], thus casting is not allowed.</b>
      * @param mode
      * @throws UnsupportedOperationException (optional) if this method was called on an unsupported ChangeMode.
      */
