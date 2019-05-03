@@ -711,10 +711,10 @@ public final class Skript extends JavaPlugin implements Listener {
         error("Skript v" + getInstance().getDescription().getVersion() + " is not fully compatible with Bukkit " + Bukkit.getVersion() + ". Some feature(s) will be broken until you update Skript.");
     }
 
-    public static final void outdatedError(final Exception e) {
+    public static final void outdatedError(final Throwable tw) {
         outdatedError();
         if (testing())
-            e.printStackTrace();
+            tw.printStackTrace();
     }
 
     // TODO localise Infinity, -Infinity, NaN (and decimal point?)

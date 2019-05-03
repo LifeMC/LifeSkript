@@ -22,6 +22,8 @@
 
 package ch.njol.skript.lang;
 
+import java.util.Objects;
+
 public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
 
     public final Class<T> returnType;
@@ -31,4 +33,18 @@ public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElem
         this.returnType = returnType;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ExpressionInfo<?, ?> that = (ExpressionInfo<?, ?>) o;
+
+        return Objects.equals(returnType, that.returnType);
+    }
+
+    @Override
+    public int hashCode() {
+        return returnType != null ? returnType.hashCode() : 0;
+    }
 }

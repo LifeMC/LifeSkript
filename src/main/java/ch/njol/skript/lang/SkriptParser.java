@@ -188,7 +188,7 @@ public final class SkriptParser {
     @Nullable
     private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
         if (varPattern.matcher(expr).matches())
-            return Variable.newInstance("" + expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
+            return Variable.newInstance(expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
         return null;
     }
 

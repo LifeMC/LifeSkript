@@ -84,6 +84,7 @@ public abstract class VariablesStorage implements Closeable {
                     else
                         save(var.name, null, null);
                 } catch (final InterruptedException ignored) {
+                    break; // Server probably shutting down.
                 }
             }
         }, "Skript variable save thread for database '" + name + "'");
@@ -262,6 +263,7 @@ public abstract class VariablesStorage implements Closeable {
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException ignored) {
+                break; // Assume all variables are saved
             }
         }
         closed = true;

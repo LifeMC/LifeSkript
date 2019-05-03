@@ -25,6 +25,8 @@ package ch.njol.skript.command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 
+import java.util.Objects;
+
 /**
  * @author Peter Güttinger
  */
@@ -66,4 +68,18 @@ public final class ScriptCommandEvent extends CommandEvent {
         return handlers;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ScriptCommandEvent that = (ScriptCommandEvent) o;
+
+        return Objects.equals(skriptCommand, that.skriptCommand);
+    }
+
+    @Override
+    public int hashCode() {
+        return skriptCommand != null ? skriptCommand.hashCode() : 0;
+    }
 }

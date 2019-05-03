@@ -71,10 +71,10 @@ public enum ServerPlatform {
      */
     LIFE_SPIGOT("LifeSpigot", true, true);
 
-    public String platformName;
+    public final String platformName;
 
-    public boolean isWorking;
-    public boolean isSupported;
+    public final boolean isWorking;
+    public final boolean isSupported;
 
     /**
      * Represents a server platform.

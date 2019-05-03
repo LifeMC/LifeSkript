@@ -33,6 +33,7 @@ import ch.njol.skript.variables.Variables;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 /**
@@ -160,4 +161,30 @@ public final class Argument<T> {
         return single;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Argument<?> argument = (Argument<?>) o;
+
+        if (single != argument.single) return false;
+        if (index != argument.index) return false;
+        if (optional != argument.optional) return false;
+        if (!Objects.equals(name, argument.name)) return false;
+        if (!Objects.equals(def, argument.def)) return false;
+
+        return Objects.equals(type, argument.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (def != null ? def.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (single ? 1 : 0);
+        result = 31 * result + index;
+        result = 31 * result + (optional ? 1 : 0);
+        return result;
+    }
 }
