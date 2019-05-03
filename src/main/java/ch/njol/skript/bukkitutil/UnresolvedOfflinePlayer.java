@@ -51,7 +51,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     static final AtomicBoolean threadStarted = new AtomicBoolean();
     @SuppressWarnings("deprecation")
 	static final Thread resolverThread = Skript.newThread(() -> {
-        while (Bukkit.getServer() != null && Skript.getInstance().isEnabled()) {
+        while (Skript.isSkriptRunning()) {
             try {
                 final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 

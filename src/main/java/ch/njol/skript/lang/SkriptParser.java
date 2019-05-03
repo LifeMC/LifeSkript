@@ -1156,10 +1156,8 @@ public final class SkriptParser {
      */
     @Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
-
         ParseResult res;
         int end, i2;
-
         while (j < pattern.length()) {
             switch (pattern.charAt(j)) {
                 case '[': {
@@ -1196,7 +1194,7 @@ public final class SkriptParser {
                                         try {
                                             mark = Integer.parseInt(pattern.substring(j + 1, j2));
                                             j = j2;
-                                        } catch (final NumberFormatException e) { /* skipped */ }
+                                        } catch (final NumberFormatException ignored) { /* skipped */ }
                                     }
                                 }
                                 res = parse_i(pattern, i, j + 1);

@@ -118,12 +118,13 @@ public final class Commands { //NOSONAR
             } else {
                 final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
                 try {
-                    while (true) {
+                    while (Skript.isSkriptRunning()) {
                         try {
                             if (f.get())
                                 e.setCancelled(true);
                             break;
                         } catch (final InterruptedException ignored) {
+							break;
                         }
                     }
                 } catch (final ExecutionException e1) {

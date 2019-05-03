@@ -1,15 +1,42 @@
+<!--
+  ~
+  ~     This file is part of Skript.
+  ~
+  ~    Skript is free software: you can redistribute it and/or modify
+  ~    it under the terms of the GNU General Public License as published by
+  ~    the Free Software Foundation, either version 3 of the License, or
+  ~    (at your option) any later version.
+  ~
+  ~    Skript is distributed in the hope that it will be useful,
+  ~    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~    GNU General Public License for more details.
+  ~
+  ~    You should have received a copy of the GNU General Public License
+  ~    along with Skript. If not, see <https://www.gnu.org/licenses/>.
+  ~
+  ~
+  ~   Copyright 2011-2019 Peter Güttinger and contributors
+  ~
+  -->
+
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>ch.njol</groupId>
     <artifactId>Skript</artifactId>
     <version>2.2-Fixes-V13</version>
+
     <name>Skript</name>
+
     <description>Skript is a Bukkit/Spigot plugin which allows server admins to customize their server easily, but
         without the hassle of programming a plugin or asking/paying someone to program a plugin for them.
     </description>
+
     <url>https://github.com/LifeMC/LifeSkript</url>
+
     <licenses>
         <license>
             <name>GNU General Public License 3.0</name>
@@ -17,50 +44,88 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <inceptionYear>2011</inceptionYear>
+
     <scm>
         <developerConnection>scm:git:git://github.com/LifeMC/LifeSkript.git</developerConnection>
         <connection>scm:git:git://github.com/LifeMC/LifeSkript.git</connection>
         <url>https://github.com/LifeMC/LifeSkript</url>
     </scm>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/LifeMC/LifeSkript/issues</url>
     </issueManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
     <repositories>
         <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>central-snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>https://repository.apache.org/content/groups/snapshots/</url>
+        </repository>
+        <repository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+        <repository>
+            <id>caseif-repo</id>
+            <name>Backup Bukkit Repository</name>
+            <url>https://repo.caseif.net/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <name>JitPack Repository</name>
+            <url>https://jitpack.io/</url>
+        </repository>
+        <repository>
             <id>njol-repo</id>
+            <name>Njol's Repository</name>
             <url>https://maven.njol.ch/repo/</url>
         </repository>
         <repository>
             <id>sk89q-repo</id>
+            <name>sk89q's Repository</name>
             <url>https://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>techcable-repo</id>
+            <name>Backup Bukkit Repository</name>
             <url>https://repo.techcable.net/content/repositories/public/</url>
         </repository>
         <repository>
             <id>lifemc-repo</id>
-            <url>https://lifemcserver.com</url>
+            <name>Most Important Repository</name> <!-- :P -->
+            <url>https://www.lifemcserver.com/</url>
         </repository>
         <repository>
             <id>vault-repo</id>
+            <name>Unsecure Vault-API Repository</name>
             <!-- Let's Encrypt and CloudFlare gives free SSL certificates and it's 2019 but vault's repo don't have an
                     valid SSL certificate, interesting. -->
             <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>lifemc-repo</id>
-            <url>https://lifemcserver.com/</url>
+            <name>Most Important Repository</name> <!-- :P -->
+            <url>https://www.lifemcserver.com/</url>
         </pluginRepository>
     </pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -208,6 +273,30 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>1.3.31</version>
+            <!-- Currently we are not using kotlin in runtime. -->
+            <scope>compile</scope>
+            <!-- We are already excluding this in runtime with maven
+             shade plugin. -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>annotations</artifactId>
+                    <groupId>org.jetbrains</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-common</artifactId>
+            <version>1.3.31</version>
+            <!-- Currently we are not using kotlin in runtime. -->
+            <scope>compile</scope>
+            <!-- We are already excluding this in runtime with maven
+             shade plugin. -->
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13-beta-2</version>
@@ -219,8 +308,31 @@
             <version>4.0.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test-junit</artifactId>
+            <version>1.3.31</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>annotations</artifactId>
+                    <groupId>org.jetbrains</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>kotlin-stdlib-common</artifactId>
+                    <groupId>org.jetbrains.kotlin</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+
         <finalName>${project.artifactId}</finalName>
         <resources>
             <resource>
@@ -257,6 +369,14 @@
                 </includes>
             </resource>
         </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources/</directory>
+                <filtering>false</filtering>
+            </testResource>
+        </testResources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -284,7 +404,7 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>display-dependency-updates</goal>
                             <goal>display-plugin-updates</goal>
@@ -297,10 +417,57 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>1.3.31</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>process-test-sources</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <useFile>false</useFile>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                        <arg>-Xjvm-default=compatibility</arg>
+                        <!-- It creates a runtime overhead,
+                            we already have compile time null-safety. -->
+                        <arg>-Xno-param-assertions</arg>
+                        <arg>-Xno-call-assertions</arg>
+                    </args>
+                    <!-- Target and arguments same as with javac. -->
+                    <jvmTarget>1.8</jvmTarget>
+                    <javacOptions>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <!-- It's a runtime property - passed optionally -->
+                        <javacOption>${compilerArgument}</javacOption>
+                    </javacOptions>
+                    <!-- Strictly define language and api version. -->
+                    <languageVersion>1.3</languageVersion>
+                    <apiVersion>1.3</apiVersion>
+                    <!-- Hacky way to fix build warning in tests. -->
+                    <annotationProcessors />
+                    <annotationProcessorPaths />
+                    <annotationProcessorArgs />
                 </configuration>
             </plugin>
             <plugin>
@@ -349,10 +516,28 @@
                     <createDependencyReducedPom>true</createDependencyReducedPom>
                     <artifactSet>
                         <includes>
+                            <include>ch.njol:skript</include>
                             <include>ch.njol:utils</include>
                             <include>ch.njol:yggdrasil</include>
                         </includes>
+                        <excludes>
+                            <!-- Exclude kotlin as it is not required in runtime for now. -->
+                            <exclude>org.jetbrains.kotlin:kotlin-stdlib-jdk8</exclude>
+                            <exclude>org.jetbrains.kotlin:kotlin-stdlib-common</exclude>
+                        </excludes>
                     </artifactSet>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                                <!-- We are not using kotlin in runtime for now. -->
+                                <exclude>META-INF/*.kotlin_module</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
             </plugin>
             <plugin>
@@ -363,7 +548,7 @@
                     <archive>
                         <index>true</index>
                         <manifest>
-                            <addClasspath>true</addClasspath>
+                            <addClasspath>false</addClasspath>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
@@ -373,6 +558,7 @@
                             <Implementation-Version>${project.version}</Implementation-Version>
                             <Main-Class>ch.njol.skript.SkriptCLI</Main-Class>
                             <Sealed>true</Sealed>
+                            <Built-By>Skript Team</Built-By>
                             <Automatic-Module-Name>ch.njol.skript</Automatic-Module-Name>
                             <Specification-Vendor>Skript Team</Specification-Vendor>
                             <Specification-Title>Skript</Specification-Title>
@@ -395,8 +581,12 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <useFile>true</useFile>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -405,54 +595,60 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>3.0.0-M1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7.1</version>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings
-                    only. It has no influence on the Maven build itself. -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            org.apache.maven.plugins
-                                        </groupId>
-                                        <artifactId>
-                                            maven-compiler-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [3.8,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>compile</goal>
-                                            <goal>testCompile</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
+
     <profiles>
+        <!--This plugin's configuration is used to store Eclipse m2e settings
+          only. It has no influence on the Maven build itself. -->
+        <profile>
+            <id>only-eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <version>1.0.0</version>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>
+                                                    org.apache.maven.plugins
+                                                </groupId>
+                                                <artifactId>
+                                                    maven-compiler-plugin
+                                                </artifactId>
+                                                <versionRange>
+                                                    [3.8,)
+                                                </versionRange>
+                                                <goals>
+                                                    <goal>compile</goal>
+                                                    <goal>testCompile</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore/>
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
         <profile>
             <id>build</id>
             <activation>
@@ -485,7 +681,7 @@
                             <archive>
                                 <index>true</index>
                                 <manifest>
-                                    <addClasspath>true</addClasspath>
+                                    <addClasspath>false</addClasspath>
                                     <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                                     <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 </manifest>
@@ -495,6 +691,7 @@
                                     <Implementation-Version>${project.version}</Implementation-Version>
                                     <Main-Class>ch.njol.skript.SkriptCLI</Main-Class>
                                     <Sealed>true</Sealed>
+                                    <Built-By>Skript Team</Built-By>
                                     <Automatic-Module-Name>ch.njol.skript</Automatic-Module-Name>
                                     <Specification-Vendor>Skript Team</Specification-Vendor>
                                     <Specification-Title>Skript</Specification-Title>
@@ -549,6 +746,7 @@
             </build>
         </profile>
     </profiles>
+
     <distributionManagement>
         <repository>
             <id>njol-repo</id>

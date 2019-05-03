@@ -22,6 +22,8 @@
 
 package ch.njol.util;
 
+import ch.njol.skript.Skript;
+import ch.njol.skript.bukkitutil.Workarounds;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.BufferedInputStream;
@@ -36,12 +38,18 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 /**
- * An utility class about Web.
+ * A utility class about Web.
  *
  * @author TheDGOfficial
  * @since 2.2-Fixes-V10b
  */
 public final class WebUtils {
+
+    /**
+     * The current chrome user agent.
+     */
+    public static final String USER_AGENT =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
 
     /**
      * Static magic.
@@ -66,9 +74,7 @@ public final class WebUtils {
      */
     @Nullable
     public static final String getResponse(final String address) throws IOException {
-
         return getResponse(address, "application/json; charset=utf-8");
-
     }
 
     /**
@@ -86,6 +92,7 @@ public final class WebUtils {
      */
     @Nullable
     public static final String getResponse(final String address, final String contentType) throws IOException {
+        Workarounds.initIfNotAlready();
 
         String response;
 
@@ -93,37 +100,35 @@ public final class WebUtils {
         BufferedReader br = null;
 
         try {
-
             final URL url = new URL(address);
             final URLConnection con = url.openConnection();
 
             con.setAllowUserInteraction(false);
+
             con.setDoOutput(false);
             con.setUseCaches(false);
+
             con.setRequestProperty("Method", "GET");
+
             con.setRequestProperty("Charset", "UTF-8");
             con.setRequestProperty("Encoding", "UTF-8");
-            con.setRequestProperty("Content-Type", contentType);
+
+            con.setRequestProperty("Content-Type", contentType.trim());
             con.setRequestProperty("Accept", "*/*");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36");
-            con.setRequestProperty("Referer", "https://www.lifemcserver.com/forum/");
+
+            con.setRequestProperty("User-Agent", USER_AGENT.trim());
+            con.setRequestProperty("Referer", Skript.LATEST_VERSION_DOWNLOAD_LINK.replace("/releases", "".trim()).trim());
 
             in = new BufferedInputStream(con.getInputStream());
 
             final String encoding = con.getContentEncoding();
 
             if (encoding != null) {
-
                 if ("gzip".equalsIgnoreCase(encoding)) {
-
                     in = new BufferedInputStream(new GZIPInputStream(in));
-
                 } else if ("deflate".equalsIgnoreCase(encoding)) {
-
                     in = new BufferedInputStream(new InflaterInputStream(in, new Inflater(true)));
-
                 }
-
             }
 
             final StringBuilder responseBody = new StringBuilder(4096);
@@ -132,10 +137,7 @@ public final class WebUtils {
             String line;
 
             while ((line = br.readLine()) != null) {
-
-                responseBody.append(line.trim());
-                responseBody.append("\n");
-
+                responseBody.append(line.trim()).append("\n");
             }
 
             in.close();
@@ -146,28 +148,20 @@ public final class WebUtils {
 
             response = responseBody.toString();
 
+            //noinspection ConstantConditions
             if (response != null) {
-
                 response = response.trim();
-
             }
 
             return response;
-
         } finally {
-
             if (in != null) {
-
                 in.close();
-
             }
 
             if (br != null) {
-
                 br.close();
-
             }
-
         }
 
     }

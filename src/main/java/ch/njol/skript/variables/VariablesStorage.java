@@ -244,13 +244,10 @@ public abstract class VariablesStorage implements Closeable {
                 Skript.error("Skript cannot save any variables to the database '" + databaseName + "'. The server will hang and may crash if no more variables can be saved.");
                 lastError = System.currentTimeMillis();
             }
-            while (true) {
-                try {
-                    // REMIND add repetitive error and/or stop saving variables altogether?
-                    changesQueue.put(var);
-                    break;
-                } catch (final InterruptedException ignored) {
-                }
+            try {
+                changesQueue.put(var);
+            } catch (final InterruptedException ignored) {
+                /* ignored */
             }
         }
     }

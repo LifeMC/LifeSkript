@@ -81,7 +81,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
                 if (midnight)
                     i.lastTick -= 24000;
                 final int startIndex = i.currentIndex;
-                while (true) {
+                while (Skript.isSkriptRunning()) {
                     final EvtAtTime next = i.list.get(i.currentIndex);
                     final int nextTick = midnight && next.tick > 12000 ? next.tick - 24000 : next.tick;
                     if (i.lastTick < nextTick && nextTick <= tick) {

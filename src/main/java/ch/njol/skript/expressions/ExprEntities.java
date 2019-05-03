@@ -250,7 +250,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
                 @Override
                 @Nullable
                 protected Entity getNext() {
-                    while (true) {
+                    while (Skript.isSkriptRunning()) {
                         while (curIter == null || !curIter.hasNext()) {
                             w++;
                             if (w == ws.length)
@@ -265,6 +265,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
                             }
                         }
                     }
+                    return null;
                 }
             };
         }

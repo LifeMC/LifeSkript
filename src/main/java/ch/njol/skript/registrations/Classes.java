@@ -51,6 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -68,7 +69,7 @@ public final class Classes {
      */
     private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
     @SuppressWarnings("null")
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = StandardCharsets.UTF_8;
     @Nullable
     private static ClassInfo<?>[] classInfos;
 

@@ -20,18 +20,12 @@
  *
  */
 
-package ch.njol.skript.doc;
-
-import java.lang.annotation.*;
+package ch.njol.skript.doc
 
 /**
- * Prevents warnings about missing documentation.
- *
  * @author Peter Güttinger
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface NoDoc {
-
-}
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+annotation class Description(@JvmField vararg val value: String)

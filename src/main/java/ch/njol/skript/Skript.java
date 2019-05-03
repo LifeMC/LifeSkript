@@ -73,6 +73,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Filter;
@@ -185,6 +186,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final @Nullable Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     private static final boolean isCraftBukkit = classExists("org.bukkit.craftbukkit.CraftServer") || craftbukkitMain != null;
+    public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
     static final boolean runningCraftBukkit = isCraftBukkit;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{Skript.getLatestVersion(), Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
@@ -196,6 +198,29 @@ public final class Skript extends JavaPlugin implements Listener {
         if (instance != null)
             throw new IllegalStateException("Cannot create multiple instances of Skript!");
         instance = this;
+    }
+
+    /**
+     * Checks if the Bukkit (and server) is loaded, enabled and working
+     * correctly. You should use this method when doing Bukkit operations
+     * within a method callable from tests, or outside of Bukkit.
+     *
+     * @return True if the Bukkit (and server) is loaded, enabled and
+     * working correctly.
+     */
+    public static final boolean isBukkitRunning() {
+        return usingBukkit && Bukkit.getServer() != null;
+    }
+
+    /**
+     * Checks if the Skript and Bukkit is running correctly.
+     *
+     * @see Skript#isBukkitRunning()
+     *
+     * @return True if the Skript and Bukkit is running correctly.
+     */
+    public static final boolean isSkriptRunning() {
+        return isBukkitRunning() && Skript.instance != null && Skript.instance.isEnabled();
     }
 
     /**
@@ -322,18 +347,86 @@ public final class Skript extends JavaPlugin implements Listener {
      * returns the latest version of the <b>this implementation of Skript.</b>
      *
      * So, if you forked the project, or using another implementation, this method
-     * may return a incorrect value.
+     * may return an incorrect value. (it doesn't exist another forks at all)
      *
      * Also, this method does not throw any exceptions and may return null when
      * web server is down or there is no internet connection.
      *
+     * This method must NOT be called from main server thread, becuase it makes
+     * blocking web connection. If using outside of Bukkit, it don't cares.
+     *
+     * Currently loading of Skript class outside of Bukkit already causes
+     * classpath errors, so be familiar.
+     *
      * @return The latest version of the Skript for <b>this implementation of Skript.</b>
+     *
+     * @see Skript#getLatestVersion(Consumer)
      */
     @Nullable
     public static final String getLatestVersion() {
+        return getLatestVersion((e) -> {});
+    }
+
+    /**
+     * Gets the latest version of the Skript. It only
+     * returns the latest version of the <b>this implementation of Skript.</b>
+     *
+     * So, if you forked the project, or using another implementation, this method
+     * may return an incorrect value. (it doesn't exist another forks at all)
+     *
+     * Also, this method does not throw any exceptions and may return null when
+     * web server is down or there is no internet connection.
+     *
+     * This method must NOT be called from main server thread, becuase it makes
+     * blocking web connection. If using outside of Bukkit, it don't cares.
+     *
+     * Currently loading of Skript class outside of Bukkit already causes
+     * classpath errors, so be familiar.
+     *
+     * @param handler The error handler. It's accept method will be called
+     *                when an error occurs. Null return value also indicates an error.
+     *
+     * @return The latest version of the Skript for <b>this implementation of Skript.</b>
+     */
+    @Nullable
+    public static final String getLatestVersion(final Consumer<Throwable> handler) {
+        return getLatestVersion(handler, true);
+    }
+
+    /**
+     * Gets the latest version of the Skript. It only
+     * returns the latest version of the <b>this implementation of Skript.</b>
+     *
+     * So, if you forked the project, or using another implementation, this method
+     * may return an incorrect value. (it doesn't exist another forks at all)
+     *
+     * Also, this method does not throw any exceptions and may return null when
+     * web server is down or there is no internet connection.
+     *
+     * This method must NOT be called from main server thread, becuase it makes
+     * blocking web connection. If using outside of Bukkit, it don't cares.
+     *
+     * Currently loading of Skript class outside of Bukkit already causes
+     * classpath errors, so be familiar.
+     *
+     * @param handler The error handler. It's accept method will be called
+     *                when an error occurs. Null return value also indicates an error.
+     *
+     * @param checkThread Pass false to disable checking for Bukkit server
+     *                    main thread. It checks by default for preventing freezes.
+     *
+     * @return The latest version of the Skript for <b>this implementation of Skript.</b>
+     */
+    @Nullable
+    public static final String getLatestVersion(final Consumer<Throwable> handler,
+                                                final boolean checkThread) {
+        if (checkThread && classExists("org.bukkit.Bukkit") && Bukkit.isPrimaryThread())
+            throw new SkriptAPIException("This method must be called asynchronously!");
         try {
             return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
         } catch (final Throwable tw) {
+            if (handler != null && tw != null)
+                handler.accept(tw);
             return null;
         }
     }
@@ -441,6 +534,12 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Tests whether a given class exists in the classpath.
      *
+     * Constantly calling this method does not cache values -
+     * preferably assign the result to a static final variable.
+     *
+     * If null name is passed, the result will always be false.
+     * No actual checks performed with null name. It just returns false.
+     *
      * @param className The {@link Class#getCanonicalName() canonical name} of the class
      * @return Whether the given class exists.
      */
@@ -485,6 +584,8 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Tests whether a method exists in the given class.
      *
+     * Save the result to a static final variable for maximum performance.
+     *
      * @param c              The class
      * @param methodName     The name of the method
      * @param parameterTypes The parameter types of the method
@@ -507,6 +608,8 @@ public final class Skript extends JavaPlugin implements Listener {
      * <p>
      * Note that this method doesn't work properly if multiple methods with the same name and parameters exist but have different return types.
      *
+     * Save the result to a static final variable for maximum performance.
+     *
      * @param c              The class
      * @param methodName     The name of the method
      * @param parameterTypes The parameter types of the method
@@ -527,6 +630,8 @@ public final class Skript extends JavaPlugin implements Listener {
 
     /**
      * Tests whether a field exists in the given class.
+     *
+     * Save the result to a static final variable for maximum performance.
      *
      * @param c         The class
      * @param fieldName The name of the field
@@ -641,7 +746,6 @@ public final class Skript extends JavaPlugin implements Listener {
         acceptRegistrations = false;
 
         Converters.createMissingConverters();
-
         Classes.onRegistrationsStop();
     }
 
@@ -1451,6 +1555,10 @@ public final class Skript extends JavaPlugin implements Listener {
                         return;
 
                     final String latest = getLatestVersion();
+
+                    if (!isEnabled())
+                        return;
+                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info("".trim()));
 
                     if (latest == null) {
                         warning("Can't check for updates, probably you don't have internet connection, or the web server is down?");

@@ -93,16 +93,12 @@ public abstract class Task implements Runnable, Closeable {
         }
         final Future<T> f = Bukkit.getScheduler().callSyncMethod(p, c);
         try {
-            while (true) {
-                try {
-                    return f.get();
-                } catch (final InterruptedException ignored) {
-                }
-            }
+            return f.get();
         } catch (final ExecutionException e) {
             Skript.exception(e);
-        } catch (final CancellationException | ThreadDeath ignored) {
-        } // server shutting down
+        } catch (final InterruptedException | CancellationException | ThreadDeath ignored) {
+			// server shutting down
+        }
         return null;
     }
 

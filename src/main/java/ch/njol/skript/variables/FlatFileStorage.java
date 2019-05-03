@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -50,7 +51,7 @@ import java.util.regex.Pattern;
 public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings("null")
-    public static final Charset UTF_8 = Charset.forName("UTF-8");
+    public static final Charset UTF_8 = StandardCharsets.UTF_8;
     @SuppressWarnings("null")
     private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
     /**
