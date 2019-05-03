@@ -14,7 +14,7 @@ Step by step:
 You must fill the pull request template before publishing pull request.
 We review your pull request and merge to master or another target branch if we found great.
 
-Don't be fear, we are all kind & formal here. Just open a issue if you are not knowing how to fix it, if you know how to fix it,
+Don't be fear, we are all kind & formal here. Just open an issue if you are not know how to fix it, if you know how to fix it,
 Then just follow the above guide and open a pull request. If your pull request merged, you can now a Contributor. Congratulations!
 
 **Also read the <a href="https://github.com/LifeMC/LifeSkript/blob/master/PROJECT_PREFERENCES.md">project preferences</a> before making any contribution!**

@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -50,6 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -63,11 +65,11 @@ public final class Classes {
     private static final HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>();
     private static final HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>();
     /**
-     * consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
+     * Consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */
     private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
     @SuppressWarnings("null")
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = StandardCharsets.UTF_8;
     @Nullable
     private static ClassInfo<?>[] classInfos;
 
@@ -314,7 +316,7 @@ public final class Classes {
      * As the name implies
      *
      * @param name
-     * @return the class info or null if the name was not recognised
+     * @return the class info or null if the name was not recognized
      */
     @Nullable
     public static ClassInfo<?> getClassInfoFromUserInput(String name) {
@@ -671,12 +673,10 @@ public final class Classes {
 
         assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
 
-        try {
-            final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout);
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        try(final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout)) {
             yout.writeObject(o);
             yout.flush();
-            yout.close();
             final byte[] r = bout.toByteArray();
             final byte[] start = getYggdrasilStart(ci);
             for (int i = 0; i < start.length; i++)

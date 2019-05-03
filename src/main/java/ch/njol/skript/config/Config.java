@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -236,9 +237,9 @@ public final class Config {
 
     private void load(final Class<?> c, final @Nullable Object o, final String path) {
         for (final Field f : c.getDeclaredFields()) {
-            f.setAccessible(true);
             if (o != null || Modifier.isStatic(f.getModifiers())) {
                 try {
+                    f.setAccessible(true);
                     if (OptionSection.class.isAssignableFrom(f.getType())) {
                         final Object p = f.get(o);
                         @NonNull final Class<?> pc = p.getClass();
@@ -246,8 +247,9 @@ public final class Config {
                     } else if (Option.class.isAssignableFrom(f.getType())) {
                         ((Option<?>) f.get(o)).set(this, path);
                     }
-                } catch (final IllegalArgumentException | IllegalAccessException e) {
-                    assert false;
+                } catch (final Throwable tw) {
+                    if (Skript.testing())
+                        Skript.exception(tw, "Error when setting field \"" + f.getName() + "\"" + " in class \"" + c.getCanonicalName() + "\" (path: \"" + path + "\", object: \"" + (o != null ? o : "null") + "\")");
                 }
             }
         }

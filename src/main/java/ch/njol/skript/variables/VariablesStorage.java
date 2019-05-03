@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -83,6 +84,7 @@ public abstract class VariablesStorage implements Closeable {
                     else
                         save(var.name, null, null);
                 } catch (final InterruptedException ignored) {
+                    break; // Server probably shutting down.
                 }
             }
         }, "Skript variable save thread for database '" + name + "'");
@@ -243,13 +245,10 @@ public abstract class VariablesStorage implements Closeable {
                 Skript.error("Skript cannot save any variables to the database '" + databaseName + "'. The server will hang and may crash if no more variables can be saved.");
                 lastError = System.currentTimeMillis();
             }
-            while (true) {
-                try {
-                    // REMIND add repetitive error and/or stop saving variables altogether?
-                    changesQueue.put(var);
-                    break;
-                } catch (final InterruptedException ignored) {
-                }
+            try {
+                changesQueue.put(var);
+            } catch (final InterruptedException ignored) {
+                /* ignored */
             }
         }
     }
@@ -264,6 +263,7 @@ public abstract class VariablesStorage implements Closeable {
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException ignored) {
+                break; // Assume all variables are saved
             }
         }
         closed = true;

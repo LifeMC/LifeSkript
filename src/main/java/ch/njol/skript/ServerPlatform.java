@@ -1,28 +1,29 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
 package ch.njol.skript;
 
 /**
- * Represents all server platforms that Skript runs on. Only some of the
+ * Represents all server platforms that Skript runs on. Only some
  * platforms are "officially" supported, though.
  */
 public enum ServerPlatform {
@@ -70,23 +71,25 @@ public enum ServerPlatform {
      */
     LIFE_SPIGOT("LifeSpigot", true, true);
 
-    public String name;
-    public boolean works;
-    public boolean supported;
+    public final String platformName;
+
+    public final boolean isWorking;
+    public final boolean isSupported;
 
     /**
      * Represents a server platform.
      *
-     * @param name Display name for platform.
-     * @param works If the platform usually works.
-     * @param supported If the platform is supported.
+     * @param platformName Display name for platform.
+     * @param isWorking If the platform usually works.
+     * @param isSupported If the platform is supported.
      */
-    ServerPlatform(final String name, final boolean works, final boolean supported) {
-        if (supported && !works)
+    ServerPlatform(final String platformName, final boolean isWorking, final boolean isSupported) {
+        if (isSupported && !isWorking)
             throw new IllegalArgumentException();
-        this.name = name;
-        this.works = works;
-        this.supported = supported;
+
+        this.platformName = platformName;
+        this.isWorking = isWorking;
+        this.isSupported = isSupported;
     }
 
 }

@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a issue for a bug report.
+about: Create an issue for a bug report.
 
 ---
 

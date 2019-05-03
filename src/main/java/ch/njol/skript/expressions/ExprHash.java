@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -35,6 +36,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -45,11 +47,13 @@ import java.security.NoSuchAlgorithmException;
 @Description({"Hashes the given text using the MD5 algorithm. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an MD5 hash is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though which can easily crack short or insecure passwords."})
 @Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} to hashed text-argument", "command /login <text>:", "	trigger:", "		{password.%player%} is hashed text-argument:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
 @Since("2.0")
+/* FIXME Actually support new algorithms, SHA1 for now will be great,
+   MD5 is not fine in 2019 because it crackable easily. */
 public final class ExprHash extends PropertyExpression<String, String> {
     @Nullable
-    static final MessageDigest md5;
+    static final MessageDigest algorithm;
     @SuppressWarnings("null")
-    private static final Charset UTF_8 = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     static {
         Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
@@ -57,7 +61,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
 
     static {
         try {
-            md5 = MessageDigest.getInstance("MD5");
+            algorithm = MessageDigest.getInstance("MD5");
         } catch (final NoSuchAlgorithmException e) {
             throw new InternalError("JVM does not adhere to Java specifications");
         }
@@ -75,7 +79,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        if (md5 == null) {
+        if (algorithm == null) {
             Skript.error("The Java Virtual Machine running on this server does not support the MD5 algorithm, thus you cannot use the 'hash' expression.");
             return false;
         }
@@ -86,10 +90,10 @@ public final class ExprHash extends PropertyExpression<String, String> {
     @SuppressWarnings("null")
     @Override
     protected String[] get(final Event e, final String[] source) {
-        assert md5 != null;
+        assert algorithm != null;
         final String[] r = new String[source.length];
         for (int i = 0; i < r.length; i++)
-            r[i] = toHex(md5.digest(source[i].getBytes(UTF_8)));
+            r[i] = toHex(algorithm.digest(source[i].getBytes(UTF_8)));
         return r;
     }
 

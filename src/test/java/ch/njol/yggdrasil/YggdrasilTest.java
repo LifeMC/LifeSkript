@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -29,7 +30,12 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
+import static kotlin.test.AssertionsKt.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("resource")
 public final class YggdrasilTest {
@@ -173,9 +179,9 @@ public final class YggdrasilTest {
 //			System.out.println(o + ": " + d);
 //			System.out.println();
 //			final Object l = loadXML(d);
-//			assert equals(o, l) : toString(o) + " <> " + toString(l);
+//			assertEquals(o, l, toString(o) + " <> " + toString(l));
 //			final String d2 = saveXML(l);
-//			assert equals(d, d2) : toString(o) + "\n" + toString(d) + " <>\n" + toString(d2);
+//			assertEquals(d, d2, toString(o) + "\n" + toString(d) + " <>\n" + toString(d2));
 //		}
 //	}
 
@@ -204,9 +210,9 @@ public final class YggdrasilTest {
             final byte[] d = save(o);
             print(o, d);
             final Object l = load(d);
-            assert equals(o, l) : o.getClass().getName() + ": " + toString(o) + " <> " + toString(l);
+            assertTrue(equals(o, l), o.getClass().getName() + ": " + toString(o) + " <> " + toString(l));
             final byte[] d2 = save(l);
-            assert equals(d, d2) : o.getClass().getName() + ": " + toString(o) + "\n" + toString(d) + " <>\n" + toString(d2);
+            assertTrue(equals(d, d2), o.getClass().getName() + ": " + toString(o) + "\n" + toString(d) + " <>\n" + toString(d2));
         }
     }
 
@@ -222,7 +228,7 @@ public final class YggdrasilTest {
         final byte[] md = save(m);
         print(m, md);
         @SuppressWarnings("unchecked") final Map<Integer, Object> ms = (Map<Integer, Object>) load(md);
-        assert ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2) : ms;
+        assertTrue(ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2), String.valueOf(ms));
     }
 
     @SuppressWarnings("static-method")
@@ -235,7 +241,7 @@ public final class YggdrasilTest {
         print(o1, d1);
         currentModifiedClass = ModifiedClass.class;
         final ModifiedClass o2 = (ModifiedClass) load(d1);
-        assert o2 != null;
+        assertNotNull(o2);
         assertEquals(o1.unchanged, o2.changed);
 
         currentModifiedClass = ModifiedClass.class;
@@ -244,7 +250,7 @@ public final class YggdrasilTest {
         print(o3, d3);
         currentModifiedClass = UnmodifiedClass.class;
         final UnmodifiedClass o4 = (UnmodifiedClass) load(d3);
-        assert o4 != null;
+        assertNotNull(o4);
         assertEquals(o3.changed, o4.unchanged);
     }
 
@@ -338,7 +344,7 @@ public final class YggdrasilTest {
         }
 
         TestClass2(final int what) {
-            assert what != DEFAULT;
+            assertNotEquals(DEFAULT, what);
             someFinalInt = what;
             ok = true;
         }
@@ -351,10 +357,10 @@ public final class YggdrasilTest {
         @Override
         public void deserialize(final Fields fields) throws StreamCorruptedException, NotSerializableException {
             fields.setFields(this);
-            assert !ok;
+            assertFalse(ok);
             if (someFinalInt != DEFAULT)
                 ok = true;
-            assert ok;
+            assertTrue(ok);
         }
 
         @Override

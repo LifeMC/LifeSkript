@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -114,7 +115,7 @@ public final class ScriptCommand implements CommandExecutor {
         this.cooldownStorage = cooldownStorage;
 
         // remove aliases that are the same as the command
-        aliases.removeIf(s -> s.equalsIgnoreCase(label));
+        aliases.removeIf(s -> s.equals(label));
         this.aliases = aliases;
         activeAliases = new ArrayList<>(aliases);
 
@@ -146,8 +147,8 @@ public final class ScriptCommand implements CommandExecutor {
             bukkitCommand.setUsage(usage);
             bukkitCommand.setExecutor(this);
             return bukkitCommand;
-        } catch (final Exception e) {
-            Skript.outdatedError(e);
+        } catch (final Throwable tw) {
+            Skript.outdatedError(tw);
             throw new EmptyStacktraceException();
         }
     }
@@ -473,4 +474,51 @@ public final class ScriptCommand implements CommandExecutor {
         return trigger.getScript();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ScriptCommand that = (ScriptCommand) o;
+
+        if (executableBy != that.executableBy) return false;
+        if (!Objects.equals(name, that.name)) return false;
+        if (!Objects.equals(usage, that.usage)) return false;
+        if (!Objects.equals(trigger, that.trigger)) return false;
+        if (!Objects.equals(label, that.label)) return false;
+        if (!Objects.equals(aliases, that.aliases)) return false;
+        if (!Objects.equals(permission, that.permission)) return false;
+        if (!Objects.equals(permissionMessage, that.permissionMessage))
+            return false;
+        if (!Objects.equals(description, that.description)) return false;
+        if (!Objects.equals(cooldown, that.cooldown)) return false;
+        if (!Objects.equals(cooldownMessage, that.cooldownMessage))
+            return false;
+        if (!Objects.equals(cooldownBypass, that.cooldownBypass))
+            return false;
+        if (!Objects.equals(cooldownStorage, that.cooldownStorage))
+            return false;
+        if (!Objects.equals(pattern, that.pattern)) return false;
+        return Objects.equals(arguments, that.arguments);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (usage != null ? usage.hashCode() : 0);
+        result = 31 * result + (trigger != null ? trigger.hashCode() : 0);
+        result = 31 * result + executableBy;
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        result = 31 * result + (aliases != null ? aliases.hashCode() : 0);
+        result = 31 * result + (permission != null ? permission.hashCode() : 0);
+        result = 31 * result + (permissionMessage != null ? permissionMessage.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (cooldown != null ? cooldown.hashCode() : 0);
+        result = 31 * result + (cooldownMessage != null ? cooldownMessage.hashCode() : 0);
+        result = 31 * result + (cooldownBypass != null ? cooldownBypass.hashCode() : 0);
+        result = 31 * result + (cooldownStorage != null ? cooldownStorage.hashCode() : 0);
+        result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
+        result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
+        return result;
+    }
 }

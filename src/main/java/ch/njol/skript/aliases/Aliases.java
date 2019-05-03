@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -404,7 +405,7 @@ public final class Aliases { //NOSONAR
     }
 
     /**
-     * Gets the custom name of of a material, or the default if none is set.
+     * Gets the custom name of a material, or the default if none is set.
      *
      * @param id
      * @param data
@@ -568,7 +569,7 @@ public final class Aliases { //NOSONAR
     /**
      * Prints errors.
      *
-     * @param s       The string holding the type, can be either a number or an alias, plus an optional data part. Case does not matter.
+     * @param s       The string holding the type, can be either a number, or an alias, plus an optional data part. Case does not matter.
      * @param t       The ItemType to add the parsed ItemData(s) to (i.e. this ItemType will be modified)
      * @param isAlias Whether this type is parsed for an alias.
      * @return The given item type or null if the input couldn't be parsed.

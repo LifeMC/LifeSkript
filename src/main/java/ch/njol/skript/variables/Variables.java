@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -157,7 +158,7 @@ public final class Variables {
 
         // reports once per second how many variables were loaded. Useful to make clear that Skript is still doing something if it's loading many variables
         final Thread loadingLoggerThread = Skript.newThread(() -> {
-            while (true) {
+            while (Skript.isSkriptRunning()) {
                 try {
                     Thread.sleep(Skript.logHigh() ? 1000 : Skript.logNormal() ? 3000 : 5000); // low verbosity won't disable these messages, but makes them more rare
                 } catch (final InterruptedException e) {
@@ -450,6 +451,7 @@ public final class Variables {
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException ignored) {
+                break;
             }
         }
         closed = true;

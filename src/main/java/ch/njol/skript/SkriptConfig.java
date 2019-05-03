@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -82,7 +83,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
-    public final static Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
+    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
@@ -228,8 +229,8 @@ public final class SkriptConfig {
 
 //			if (!keepConfigsLoaded.value())
 //				mainConfig = null;
-        } catch (final RuntimeException e) {
-            Skript.exception(e, "An error occurred while loading the config");
+        } catch (final Throwable tw) {
+            Skript.exception(tw, "An error occurred while loading the config");
             return false;
         }
         return true;

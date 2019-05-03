@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -378,7 +379,7 @@ public final class BukkitClasses {
             }
         }).changer(DefaultChangers.inventoryChanger));
 
-        Classes.registerClass(new ClassInfo<>(Player.class, "player").user("players?").name("Player").description("A player. Depending on whether a player is online or offline several actions can be performed with them, " + "though you won't get any errors when using effects that only work if the player is online (e.g. changing his inventory) on an offline player.", "You have two possibilities to use players as command arguments: &lt;player&gt; and &lt;offline player&gt;. " + "The first requires that the player is online and also accepts only part of the name, " + "while the latter doesn't require that the player is online, but the player's name has to be entered exactly.").usage("").examples("").since("1.0").defaultExpression(new EventValueExpression<>(Player.class)).after("string", "world").parser(new Parser<Player>() {
+        Classes.registerClass(new ClassInfo<>(Player.class, "player").user("players?").name("Player").description("A player. Depending on whether a player is online or offline several actions can be performed with them, " + "though you won't get any errors when using effects that only work if the player is online (e.g. changing his inventory) on an offline player.", "You have two possibilities to use players as command arguments: &lt;player&gt; and &lt;offline player&gt;. " + "The first requires that the player is online and accepts only part of the name, " + "while the latter doesn't require that the player is online, but the player's name has to be entered exactly.").usage("").examples("").since("1.0").defaultExpression(new EventValueExpression<>(Player.class)).after("string", "world").parser(new Parser<Player>() {
             @Override
             @Nullable
             public Player parse(final String s, final ParseContext context) {

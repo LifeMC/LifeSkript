@@ -16,18 +16,18 @@ Requirements for running Skript is:
 I've only created this fork for my old 1.7.10 server, so don't expect too much. I will back-port and/or make some sort of bug fixes and features but nothing too much.
 
 # Issues and Pull Requests
-Feel free to report all issues, make pull requests etc. but i can't guarantee these issues will be fixed because i'm not the original
+Feel free to report all issues, make pull requests etc. but I can't guarantee these issues will be fixed because i'm not the original
 author of the Skript and don't know everything about Skript.
 
 # Versioning System
 * Stable Releases: No suffix. Just (generally) a major version. (like V10, V11 etc.)
 * Beta Releases (tested): Stable version + A suffix from alphabet. (like V10b, V10c etc.)
-* Nightly Builds (untested): Not available via official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
+* Nightly Builds (untested): Not available via the official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
 
 Note: Some releases may also contain hotfixes or backports from newer releases or commits.
 
 # Download Links
-You can download latest release from here:<br />
+You can download the latest release from here:<br />
 https://github.com/LifeMC/LifeSkript/releases/latest/
 
 If you want to use dev versions or your custom version, you should clone the repo and compile yourself.<br />
@@ -42,7 +42,7 @@ Some useful links maybe help you.
 
 ## Github Links
 - Bensku's Fork (1.9 or above): https://github.com/SkriptLang/Skript
-- Mirreski's Repo (it's also abandoned i think): https://github.com/Mirreski/Skript
+- Mirreski's Repo (it's also abandoned I think): https://github.com/Mirreski/Skript
 - Njol's Original Repo (abandoned, read-only): https://github.com/Njol/Skript
 
 ## Documentation

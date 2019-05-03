@@ -1,21 +1,22 @@
 /*
- *   This file is part of Skript.
  *
- *  Skript is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *     This file is part of Skript.
  *
- *  Skript is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with Skript. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -187,7 +188,7 @@ public final class SkriptParser {
     @Nullable
     private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
         if (varPattern.matcher(expr).matches())
-            return Variable.newInstance("" + expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
+            return Variable.newInstance(expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
         return null;
     }
 
@@ -1155,10 +1156,8 @@ public final class SkriptParser {
      */
     @Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
-
         ParseResult res;
         int end, i2;
-
         while (j < pattern.length()) {
             switch (pattern.charAt(j)) {
                 case '[': {
@@ -1195,7 +1194,7 @@ public final class SkriptParser {
                                         try {
                                             mark = Integer.parseInt(pattern.substring(j + 1, j2));
                                             j = j2;
-                                        } catch (final NumberFormatException e) { /* skipped */ }
+                                        } catch (final NumberFormatException ignored) { /* skipped */ }
                                     }
                                 }
                                 res = parse_i(pattern, i, j + 1);

@@ -29,7 +29,10 @@ website: https://github.com/LifeMC/LifeSkript
 main: ch.njol.skript.Skript
 
 version: ${project.version}
-api-version: '1.8'
+
+# This fork of Skript is only tested on 1.7.10-1.8.8
+# (or 1.8.9? Spigot 1.8.9 does not exist :p)
+api-version: '1.8.8'
 
 commands:
   skript:
@@ -38,7 +41,8 @@ commands:
     permission: skript.admin
     usage: /skript help
 
-soft-depend: [SQLibrary, Vault, WorldGuard, WorldEdit, Residence, Factions, ASkyBlock, NoCheatPlus, GriefPrevention, PreciousStones]
+# Load Skript after some plugins just for safety and interactions with these plugins.
+soft-depend: [SQLibrary, Vault, WorldGuard, WorldEdit, IConomy, Residence, ChestShop, Factions, ASkyBlock, NoCheatPlus, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
 
 permissions:
   skript.*:

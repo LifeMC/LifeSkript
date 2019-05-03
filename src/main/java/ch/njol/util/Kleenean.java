@@ -1,19 +1,22 @@
 /*
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *     This file is part of Skript.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *    Skript is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    Skript is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- * Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
@@ -42,7 +45,7 @@ public enum Kleenean {
      * @param b
      * @return <tt>b ? TRUE : FALSE</tt>
      */
-    public static Kleenean get(final boolean b) {
+    public static final Kleenean get(final boolean b) {
         return b ? TRUE : FALSE;
     }
 
@@ -50,7 +53,7 @@ public enum Kleenean {
      * @param i
      * @return <tt>i > 0 ? TRUE : i < 0 ? FALSE : UNKNOWN</tt>
      */
-    public static Kleenean get(final int i) {
+    public static final Kleenean get(final int i) {
         return i > 0 ? TRUE : i < 0 ? FALSE : UNKNOWN;
     }
 
@@ -58,7 +61,7 @@ public enum Kleenean {
      * @param d
      * @return <tt>return d > 0 ? TRUE : d < 0 ? FALSE : UNKNOWN</tt>
      */
-    public static Kleenean get(final double d) {
+    public static final Kleenean get(final double d) {
         return d > 0 ? TRUE : d < 0 ? FALSE : UNKNOWN;
     }
 

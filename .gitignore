@@ -8,5 +8,5 @@
 /bin
 
 # Idea personal files
-/dictionaries
+.idea/dictionaries
 workspace.xml
