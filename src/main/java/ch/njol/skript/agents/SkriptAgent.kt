@@ -49,8 +49,6 @@ class SkriptAgent
  */
 @SafeVarargs
 internal constructor(
-        // Instance Specific Implementation
-
         /**
          * The skript addon that this agent is connected.
          */
@@ -60,6 +58,7 @@ internal constructor(
          */
         val handler: Consumer<AgentEvent>, @Nullable vararg events: Class<out AgentEvent>
 ) {
+
     /**
      * The all agent event listeners for this agent.
      */

@@ -30,7 +30,7 @@ import org.bukkit.event.HandlerList
  *
  * It extends bukkit's event, but it's not used.
  *
- * @since 2.2-V13
+ * @since 2.2-V13b
  */
 abstract class AgentEvent : Event() {
 

@@ -25,7 +25,7 @@ package ch.njol.skript.agents
 /**
  * A tracker agent, tracks some data.
  *
- * @since 2.2-V13
+ * @since 2.2-V13b
  */
 interface TrackerAgent {
 
