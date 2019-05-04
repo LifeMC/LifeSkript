@@ -20,30 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.defaults;
+package ch.njol.skript.agents.events.start
 
-import ch.njol.skript.agents.TrackerAgent;
+import ch.njol.skript.agents.AgentEvent
 
-public class ResolverTrackerAgent implements TrackerAgent {
-    /**
-     * Registers this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public ResolverTrackerAgent registerTracker() {
-        return this;
-    }
-
-    /**
-     * Unregisters this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public ResolverTrackerAgent unregisterTracker() {
-        return this;
-    }
-}
+class UnresolvedPlayerEvent : AgentEvent()

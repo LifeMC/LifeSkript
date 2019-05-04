@@ -20,9 +20,28 @@
  *
  */
 
-package ch.njol.skript.agents.events.start;
+package ch.njol.skript.agents.defaults
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.TrackerAgent
 
-public class UnresolvedPlayerEvent extends AgentEvent {
+class VariableTrackerAgent : TrackerAgent {
+    /**
+     * Registers this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    override fun registerTracker(): VariableTrackerAgent {
+        return this
+    }
+
+    /**
+     * Unregisters this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    override fun unregisterTracker(): VariableTrackerAgent {
+        return this
+    }
 }

@@ -20,9 +20,28 @@
  *
  */
 
-package ch.njol.skript.agents.events.end;
+package ch.njol.skript.agents.defaults
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.TrackerAgent
 
-public class FunctionEndEvent extends AgentEvent {
+class ResolverTrackerAgent : TrackerAgent {
+    /**
+     * Registers this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    override fun registerTracker(): ResolverTrackerAgent {
+        return this
+    }
+
+    /**
+     * Unregisters this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    override fun unregisterTracker(): ResolverTrackerAgent {
+        return this
+    }
 }

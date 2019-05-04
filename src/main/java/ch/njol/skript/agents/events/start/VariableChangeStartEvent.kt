@@ -20,29 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents;
+package ch.njol.skript.agents.events.start
 
-/**
- * A tracker agent, tracks some data.
- *
- * @since 2.2-V13
- */
-public interface TrackerAgent {
+import ch.njol.skript.agents.AgentEvent
 
-    /**
-     * Registers this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    TrackerAgent registerTracker();
-
-    /**
-     * Unregisters this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    TrackerAgent unregisterTracker();
-
-}
+class VariableChangeStartEvent : AgentEvent()

@@ -20,30 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.defaults;
+package ch.njol.skript.agents.events.end
 
-import ch.njol.skript.agents.TrackerAgent;
+import ch.njol.skript.agents.AgentEvent
 
-public class FunctionTrackerAgent implements TrackerAgent {
-    /**
-     * Registers this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public FunctionTrackerAgent registerTracker() {
-        return this;
-    }
-
-    /**
-     * Unregisters this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public FunctionTrackerAgent unregisterTracker() {
-        return this;
-    }
-}
+class WhileLoopEndEvent : AgentEvent()

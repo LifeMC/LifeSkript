@@ -20,9 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.events.end;
+package ch.njol.skript.agents.events.end
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.AgentEvent
 
-public class ResolvedPlayerEvent extends AgentEvent {
-}
+class FunctionEndEvent : AgentEvent()

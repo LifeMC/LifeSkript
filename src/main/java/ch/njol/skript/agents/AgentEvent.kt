@@ -20,10 +20,10 @@
  *
  */
 
-package ch.njol.skript.agents;
+package ch.njol.skript.agents
 
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+import org.bukkit.event.Event
+import org.bukkit.event.HandlerList
 
 /**
  * Represents a skript debugger event.
@@ -32,14 +32,15 @@ import org.bukkit.event.HandlerList;
  *
  * @since 2.2-V13
  */
-public abstract class AgentEvent extends Event {
+abstract class AgentEvent : Event() {
 
     /**
      * Triggers before executing the event.
      *
      * @param on The debugger that listens this event.
      */
-    public void beforeExecuting(final SkriptAgent on) {}
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected fun beforeExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {}
 
     /**
      * Runs this event on a skript debugger agent.
@@ -49,13 +50,13 @@ public abstract class AgentEvent extends Event {
      *
      * @param on The skript debugger agent.
      */
-    public final void execute(final SkriptAgent on) {
-        beforeExecuting(on);
+    fun execute(on: SkriptAgent) {
+        beforeExecuting(on)
 
-        assert on.hasListener(this.getClass());
-        on.handler.accept(this);
+        assert(on.hasListener(this.javaClass))
+        on.handler.accept(this)
 
-        afterExecuting(on);
+        afterExecuting(on)
     }
 
     /**
@@ -63,17 +64,17 @@ public abstract class AgentEvent extends Event {
      *
      * @param on The debugger that listens this event.
      */
-    public void afterExecuting(final SkriptAgent on) {}
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected fun afterExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {}
 
     /**
      * This method is not supported and always throw an exception.
      *
      * @return No return value for you!
      */
-    @Override
-    @Deprecated
-    public final HandlerList getHandlers() {
-        throw new UnsupportedOperationException();
+    @Deprecated("This method is not supported and always throw an exception.")
+    override fun getHandlers(): HandlerList {
+        throw UnsupportedOperationException()
     }
 
 }

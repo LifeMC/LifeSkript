@@ -20,9 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.events.start;
+package ch.njol.skript.agents.events.start
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.AgentEvent
 
-public class FunctionStartEvent extends AgentEvent {
-}
+class ForLoopStartEvent : AgentEvent()

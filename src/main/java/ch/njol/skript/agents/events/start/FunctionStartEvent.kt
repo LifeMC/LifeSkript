@@ -20,30 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.defaults;
+package ch.njol.skript.agents.events.start
 
-import ch.njol.skript.agents.TrackerAgent;
+import ch.njol.skript.agents.AgentEvent
 
-public class VariableTrackerAgent implements TrackerAgent {
-    /**
-     * Registers this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public VariableTrackerAgent registerTracker() {
-        return this;
-    }
-
-    /**
-     * Unregisters this tracker.
-     *
-     * @return This tracker, useful
-     * for chaining.
-     */
-    @Override
-    public VariableTrackerAgent unregisterTracker() {
-        return this;
-    }
-}
+class FunctionStartEvent : AgentEvent()

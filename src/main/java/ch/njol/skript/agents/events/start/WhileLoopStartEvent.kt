@@ -20,9 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.events.end;
+package ch.njol.skript.agents.events.start
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.AgentEvent
 
-public class ForLoopEndEvent extends AgentEvent {
-}
+class WhileLoopStartEvent : AgentEvent()

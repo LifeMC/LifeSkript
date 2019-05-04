@@ -20,9 +20,8 @@
  *
  */
 
-package ch.njol.skript.agents.events.start;
+package ch.njol.skript.agents.events.end
 
-import ch.njol.skript.agents.AgentEvent;
+import ch.njol.skript.agents.AgentEvent
 
-public class ForLoopStartEvent extends AgentEvent {
-}
+class ResolvedPlayerEvent : AgentEvent()

@@ -186,12 +186,6 @@ B
 .factorypath,2\9\291674f484b4fb856478f72b85c844a725bc7d66
 c
 3src/main/java/ch/njol/skript/lang/SkriptParser.java,8\c\8c197bb2bc4b83590b782b14159c5450c2be0d7c
-9
-	build.bat,2\8\282119df8cfcad4c8c8421ba30fdcdf8793f5f82
-G
-build-with-warnings.bat,9\e\9e4bacf1fce499ec77d687c62ed1750b3cd62362
-H
-build-with-mvn-debug.bat,1\f\1f70b74419d23d744ae811b74083407aa3884c05
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 f
@@ -1162,10 +1156,6 @@ Z
 0.settings/org.eclipse.ltk.core.refactoring.prefs,1\7\176a824b032bd3f87a8c809f86ce0c82071807e3
 b
 2.settings/edu.umd.cs.findbugs.plugin.eclipse.prefs,e\5\e56c2c474723aca9ced42e15a37c3eb6bfda4502
-@
-purge-caches.bat,6\f\6f50fffafe4fd03e5b72459149cc533405f249d9
-D
-update-and-build.bat,7\3\739037be7b883351d31a8434386fb3e299431e1d
 F
 PROJECT_PREFERENCES.md,2\8\286eaecd3e42a6efae0262d2746442a267edc6bd
 a

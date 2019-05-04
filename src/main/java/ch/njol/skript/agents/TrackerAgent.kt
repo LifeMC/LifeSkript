@@ -20,9 +20,29 @@
  *
  */
 
-package ch.njol.skript.agents.events.end;
+package ch.njol.skript.agents
 
-import ch.njol.skript.agents.AgentEvent;
+/**
+ * A tracker agent, tracks some data.
+ *
+ * @since 2.2-V13
+ */
+interface TrackerAgent {
 
-public class WhileLoopEndEvent extends AgentEvent {
+    /**
+     * Registers this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    fun registerTracker(): TrackerAgent
+
+    /**
+     * Unregisters this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    fun unregisterTracker(): TrackerAgent
+
 }
