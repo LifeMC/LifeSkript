@@ -23,8 +23,8 @@
 package ch.njol.skript;
 
 import ch.njol.skript.ScriptLoader.ScriptInfo;
-import ch.njol.skript.agent.TrackerAgent;
-import ch.njol.skript.agent.defaults.TaskTrackerAgent;
+import ch.njol.skript.agents.TrackerAgent;
+import ch.njol.skript.agents.defaults.TaskTrackerAgent;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
