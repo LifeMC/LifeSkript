@@ -20,28 +20,28 @@
  *
  */
 
-package ch.njol.skript.agents.events.start;
+package ch.njol.skript.agents.defaults
 
-import ch.njol.skript.agents.AgentEvent;
-import ch.njol.skript.util.Timespan;
+import ch.njol.skript.agents.TrackerAgent
 
-/**
- * Occurs when a delay event is queued.
- *
- * @since 2.2-V13
- */
-public class DelayStartEvent extends AgentEvent {
-
+class FunctionTrackerAgent : TrackerAgent {
     /**
-     * the duration of the delay
+     * Registers this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
      */
-    public final Timespan duration;
-
-    /**
-     * only for internal use
-     */
-    public DelayStartEvent(final Timespan duration) {
-        this.duration = duration;
+    override fun registerTracker(): FunctionTrackerAgent {
+        return this
     }
 
+    /**
+     * Unregisters this tracker.
+     *
+     * @return This tracker, useful
+     * for chaining.
+     */
+    override fun unregisterTracker(): FunctionTrackerAgent {
+        return this
+    }
 }

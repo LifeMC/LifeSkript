@@ -20,10 +20,10 @@
  *
  */
 
-package ch.njol.skript.agents.events.end;
+package ch.njol.skript.agents.events.end
 
-import ch.njol.skript.agents.AgentEvent;
-import ch.njol.skript.util.Timespan;
+import ch.njol.skript.agents.AgentEvent
+import ch.njol.skript.util.Timespan
 
 /**
  * Occurs when a next trigger of a delayed event is
@@ -31,36 +31,24 @@ import ch.njol.skript.util.Timespan;
  *
  * @since 2.2-V13
  */
-public class DelayEndEvent extends AgentEvent {
-
-    /**
-     * the duration of the delay
-     */
-    public final Timespan duration;
-
-    /**
-     * start time of the next trigger
-     *
-     * stored in nanoseconds
-     * provided by {@link System#nanoTime()}
-     */
-    public final long startTime;
-
-    /**
-     * end time of the next trigger
-     *
-     * stored in nanoseconds
-     * provided by {@link System#nanoTime()}
-     */
-    public final long endTime;
-
-    /**
-     * only for internal use
-     */
-    public DelayEndEvent(final Timespan duration, final long startTime, final long endTime) {
-        this.duration = duration;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
-}
+class DelayEndEvent
+(
+        /**
+         * the duration of the delay
+         */
+        @JvmField val duration: Timespan,
+        /**
+         * start time of the next trigger
+         *
+         * stored in nanoseconds
+         * provided by [System.nanoTime]
+         */
+        @JvmField val startTime: Long,
+        /**
+         * end time of the next trigger
+         *
+         * stored in nanoseconds
+         * provided by [System.nanoTime]
+         */
+        @JvmField val endTime: Long
+) : AgentEvent()
