@@ -20,13 +20,12 @@
  *
  */
 
+@file:JvmName("TaskTrackerAgent")
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
 import ch.njol.skript.Skript.SKRIPT_PREFIX
-import ch.njol.skript.agents.AgentEvent
-import ch.njol.skript.agents.SkriptAgent
-import ch.njol.skript.agents.TrackerAgent
+import ch.njol.skript.agents.*
 import ch.njol.skript.agents.events.end.DelayEndEvent
 import ch.njol.skript.agents.events.start.DelayStartEvent
 import org.bukkit.command.CommandSender
@@ -41,7 +40,7 @@ import java.util.function.Consumer
  *
  * @since 2.2-V13b
  */
-class TaskTrackerAgent
+data class TaskTrackerAgent
 
 /**
  * Creates a new TaskTrackerAgent for given out.
@@ -91,7 +90,7 @@ class TaskTrackerAgent
      */
     override fun registerTracker(): TaskTrackerAgent {
         assert(agent == null)
-        agent = SkriptAgent.registerAgent(Skript.getAddonInstance(), Consumer<AgentEvent> { event ->
+        agent = registerAgent(Skript.getAddonInstance(), Consumer<AgentEvent> { event ->
             if (event is DelayEndEvent) {
                 if (event.endTime - event.startTime > unit.toNanos(limit))
                     out.sendMessage(SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Waited for " + event.duration.milliSeconds + " ms, after that ran a task which is completed in " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms.")
@@ -111,7 +110,7 @@ class TaskTrackerAgent
      */
     override fun unregisterTracker(): TaskTrackerAgent {
         assert(agent != null)
-        SkriptAgent.unregisterAgent(agent)
+        unregisterAgent(agent)
         agent = null
         return this
     }

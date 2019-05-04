@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("DelayStartEvent")
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
@@ -28,9 +29,9 @@ import ch.njol.skript.util.Timespan
 /**
  * Occurs when a delay event is queued.
  *
- * @since 2.2-V13
+ * @since 2.2-V13b
  */
-class DelayStartEvent
+data class DelayStartEvent
 (
         /**
          * the duration of the delay

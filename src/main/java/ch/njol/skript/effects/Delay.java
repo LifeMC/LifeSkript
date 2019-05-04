@@ -25,7 +25,7 @@ package ch.njol.skript.effects;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
-import ch.njol.skript.agents.SkriptAgent;
+import ch.njol.skript.agents.SkriptAgentKt;
 import ch.njol.skript.agents.events.end.DelayEndEvent;
 import ch.njol.skript.agents.events.start.DelayStartEvent;
 import ch.njol.skript.doc.Description;
@@ -98,17 +98,17 @@ public final class Delay extends Effect {
         final TriggerItem next = getNext();
         if (next != null) {
             delayed.add(e);
-            final boolean trackingEnabled = SkriptAgent.isTrackingEnabled();
+            final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
             final long start = Skript.debug() ? System.nanoTime() : 0L;
             if (trackingEnabled)
-                SkriptAgent.throwEvent(new DelayStartEvent(duration));
+                SkriptAgentKt.throwEvent(new DelayStartEvent(duration));
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
                 if (Skript.debug())
                     Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
                 TriggerItem.walk(next, e);
                 if (trackingEnabled)
-                    SkriptAgent.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
+                    SkriptAgentKt.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
             }, duration.getTicks_i());
         }
         return null;

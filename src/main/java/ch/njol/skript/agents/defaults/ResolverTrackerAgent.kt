@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("ResolverTrackerAgent")
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.agents.TrackerAgent

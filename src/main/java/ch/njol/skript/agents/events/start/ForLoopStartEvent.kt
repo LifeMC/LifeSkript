@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("ForLoopStartEvent")
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent

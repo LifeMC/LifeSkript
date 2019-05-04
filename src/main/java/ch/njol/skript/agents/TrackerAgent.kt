@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("TrackerAgent")
 package ch.njol.skript.agents
 
 /**

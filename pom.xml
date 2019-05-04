@@ -538,6 +538,13 @@
                             </excludes>
                         </filter>
                     </filters>
+                    <relocations>
+                        <!-- For the future - Don't share the Kotlin library with other plugins -->
+                        <relocation>
+                            <pattern>org.jetbrains.kotlin</pattern>
+                            <shadedPattern>ch.njol.skript.libraries.kotlin</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
             <plugin>

@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("DelayEndEvent")
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
@@ -29,9 +30,9 @@ import ch.njol.skript.util.Timespan
  * Occurs when a next trigger of a delayed event is
  * completed.
  *
- * @since 2.2-V13
+ * @since 2.2-V13b
  */
-class DelayEndEvent
+data class DelayEndEvent
 (
         /**
          * the duration of the delay

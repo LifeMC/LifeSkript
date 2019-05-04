@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("AgentEvent")
 package ch.njol.skript.agents
 
 import org.bukkit.event.Event

@@ -20,6 +20,7 @@
  *
  */
 
+@file:JvmName("ForLoopEndEvent")
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
