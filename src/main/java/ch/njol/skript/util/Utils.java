@@ -37,10 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -88,9 +85,9 @@ public final class Utils {
             chat.clear();
             for (final ChatColor style : styles) {
                 for (final String s : Language.getList("chat styles." + style.name())) {
-                    chat.put(s.toLowerCase(), style.toString());
+                    chat.put(s.toLowerCase(Locale.ENGLISH), style.toString());
                     if (english)
-                        englishChat.put(s.toLowerCase(), style.toString());
+                        englishChat.put(s.toLowerCase(Locale.ENGLISH), style.toString());
                 }
             }
         });
@@ -238,7 +235,7 @@ public final class Utils {
         for (final String[] p : plurals) {
             if (s.endsWith(p[1]))
                 return new NonNullPair<>(s.substring(0, s.length() - p[1].length()) + p[0], Boolean.TRUE);
-            if (s.endsWith(p[1].toUpperCase()))
+            if (s.endsWith(p[1].toUpperCase(Locale.ENGLISH)))
                 return new NonNullPair<>(s.substring(0, s.length() - p[1].length()) + p[0].toUpperCase(), Boolean.TRUE);
         }
         return new NonNullPair<>(s, Boolean.FALSE);
@@ -395,7 +392,7 @@ public final class Utils {
             @SuppressWarnings("null") final Color c = Color.byName("" + m1.group(1));
             if (c != null)
                 return c.getChat();
-            final String f = chat.get(m1.group(1).toLowerCase());
+            final String f = chat.get(m1.group(1).toLowerCase(Locale.ENGLISH));
             if (f != null)
                 return f;
             return "" + m1.group();
@@ -419,7 +416,7 @@ public final class Utils {
             @SuppressWarnings("null") final Color c = Color.byEnglishName("" + m1.group(1));
             if (c != null)
                 return c.getChat();
-            final String f = englishChat.get(m1.group(1).toLowerCase());
+            final String f = englishChat.get(m1.group(1).toLowerCase(Locale.ENGLISH));
             if (f != null)
                 return f;
             return "" + m1.group();

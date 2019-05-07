@@ -60,7 +60,7 @@ public final class SkriptAddon {
     /**
      * Package-private constructor. Use {@link Skript#registerAddon(JavaPlugin)} to get a SkriptAddon for your plugin.
      *
-     * @param p
+     * @param p The plugin that this add-on refers to.
      */
     SkriptAddon(final JavaPlugin p) {
         plugin = p;
@@ -106,6 +106,8 @@ public final class SkriptAddon {
      */
     public SkriptAddon loadClasses(String basePackage, final String... subPackages) throws IOException {
         assert subPackages != null;
+        //noinspection AssertWithSideEffects
+        assert getFile() != null;
         try (JarFile jar = new JarFile(getFile())) {
             for (int i = 0; i < subPackages.length; i++)
                 subPackages[i] = subPackages[i].replace('.', '/') + "/";
@@ -121,6 +123,9 @@ public final class SkriptAddon {
                     }
                     if (load) {
                         final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
+                        // TODO Actually test this - it might break some things.
+                        //if (c.contains("$"))
+                            //Skript.debug("Skipping loading of \"" + c + "\", it contains illegal characters, probably a lambda or such.");
                         try {
                             Class.forName(c, true, plugin.getClass().getClassLoader());
                             loadedClasses.incrementAndGet(); // successfully loaded
@@ -138,9 +143,6 @@ public final class SkriptAddon {
                                 }
                             }
                             unloadableClasses.incrementAndGet();
-                        } catch (final ClassNotFoundException ex) {
-                            Skript.exception(ex, "Cannot load class " + c + " from " + this);
-                            unloadableClasses.incrementAndGet();
                         } catch (final ExceptionInInitializerError err) {
                             Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
                             unloadableClasses.incrementAndGet();
@@ -149,7 +151,12 @@ public final class SkriptAddon {
                                 Skript.exception(le, "Cannot load class " + c + " from " + this);
                             }
                             unloadableClasses.incrementAndGet();
+                        } catch (final Throwable ex) {
+                            // Catch any other exceptions.
+                            Skript.exception(ex, "Cannot load class " + c + " from " + this);
+                            unloadableClasses.incrementAndGet();
                         }
+
                     }
                 }
             }

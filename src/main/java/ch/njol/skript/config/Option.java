@@ -102,6 +102,11 @@ public final class Option<T> {
         }
     }
 
+    public final void setValue(final T value) {
+        this.value = String.valueOf(value);
+        this.parsedValue = value;
+    }
+
     protected void onValueChange() {
         if (setter != null)
             setter.set(parsedValue);

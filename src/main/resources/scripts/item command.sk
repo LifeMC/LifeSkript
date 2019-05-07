@@ -48,7 +48,6 @@ command /item2 <items>:
 			else:
 				message "You don't have permission to spawn <red>%loop-item%<reset>!"
 
-
 command /give <item types> to <player>:
 	description: Give someone else some items
 	usage: /give <item(s)> to <player>

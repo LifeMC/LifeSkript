@@ -33,6 +33,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,6 +135,10 @@ public final class Workarounds {
         // LifeSkript
         oldValues.put("using.lifeskript", System.getProperty("using.lifeskript"));
         System.setProperty("using.lifeskript", "true");
+
+        // Change Some Default Settings
+        URLConnection.setDefaultAllowUserInteraction(false);
+        HttpURLConnection.setFollowRedirects(true);
 
         /* System properties */
     }

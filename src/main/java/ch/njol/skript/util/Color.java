@@ -31,6 +31,7 @@ import org.bukkit.DyeColor;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -72,9 +73,9 @@ public enum Color implements YggdrasilSerializable {
             for (final Color c : values()) {
                 final String[] names = Language.getList(LANGUAGE_NODE + "." + c.name() + ".names");
                 for (final String name : names) {
-                    byName.put(name.toLowerCase(), c);
+                    byName.put(name.toLowerCase(Locale.ENGLISH), c);
                     if (english)
-                        byEnglishName.put(name.toLowerCase(), c);
+                        byEnglishName.put(name.toLowerCase(Locale.ENGLISH), c);
                 }
                 c.adjective = new Adjective(LANGUAGE_NODE + "." + c.name() + ".adjective");
             }
@@ -102,12 +103,12 @@ public enum Color implements YggdrasilSerializable {
 
     @Nullable
     public static Color byName(final String name) {
-        return byName.get(name.toLowerCase());
+        return byName.get(name.toLowerCase(Locale.ENGLISH));
     }
 
     @Nullable
     public static Color byEnglishName(final String name) {
-        return byEnglishName.get(name.toLowerCase());
+        return byEnglishName.get(name.toLowerCase(Locale.ENGLISH));
     }
 
     @Nullable

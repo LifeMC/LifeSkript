@@ -70,7 +70,7 @@ public final class Variable<T> implements Expression<T> {
     /**
      * The name of this variable, excluding the local variable token, but including the list variable token '::*'.
      */
-    private final VariableString name;
+    public final VariableString name;
     private final Class<T> superType;
     private final boolean list;
     @Nullable
@@ -301,7 +301,7 @@ public final class Variable<T> implements Expression<T> {
     @Override
     public Iterator<T> iterator(final Event e) {
         if (!list)
-            throw new SkriptAPIException("");
+            throw new SkriptAPIException("Looping a non-list variable");
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
         final Object val = Variables.getVariable(name + "*", e, local);
         if (val == null)

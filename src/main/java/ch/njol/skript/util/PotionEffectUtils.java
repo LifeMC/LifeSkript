@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionType;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -51,7 +52,7 @@ public final class PotionEffectUtils {
                 final String[] ls = Language.getList("potions." + t.getName());
                 names[t.getId()] = ls[0];
                 for (final String l : ls) {
-                    types.put(l.toLowerCase(), t);
+                    types.put(l.toLowerCase(Locale.ENGLISH), t);
                 }
             }
         });
@@ -73,7 +74,7 @@ public final class PotionEffectUtils {
 
     @Nullable
     public static PotionEffectType parseType(final String s) {
-        return types.get(s.toLowerCase());
+        return types.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     @SuppressWarnings("null")

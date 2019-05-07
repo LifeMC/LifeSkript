@@ -30,6 +30,7 @@ import org.bukkit.command.CommandSender;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map.Entry;
 
 import static org.bukkit.ChatColor.GRAY;
@@ -119,7 +120,7 @@ public final class CommandHelp {
             showHelp(sender);
             return false;
         }
-        final Object help = arguments.get(args[index].toLowerCase());
+        final Object help = arguments.get(args[index].toLowerCase(Locale.ENGLISH));
         if (help == null && wildcardArg == null) {
             showHelp(sender, m_invalid_argument.toString(argsColor + args[index]));
             return false;

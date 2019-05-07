@@ -41,10 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -320,8 +317,8 @@ public final class Aliases { //NOSONAR
             final String s = "" + e.getKey().trim().replaceAll("\\s+", " ");
             final NonNullPair<String, Integer> g = Noun.stripGender(s, "" + e.getKey());
             final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-            final String lcs = p.getFirst().toLowerCase();
-            final String lcp = p.getSecond().toLowerCase();
+            final String lcs = p.getFirst().toLowerCase(Locale.ENGLISH);
+            final String lcp = p.getSecond().toLowerCase(Locale.ENGLISH);
             if (numberWordPattern.matcher(lcs).matches() || numberWordPattern.matcher(lcp).matches()) {
                 if (!printedStartingWithNumberError) {
                     Skript.error(m_starting_with_number.toString());
@@ -448,13 +445,14 @@ public final class Aliases { //NOSONAR
     /**
      * @return how many ids are missing an alias, including the 'any id' (-1)
      */
-    static int addMissingMaterialNames() {
+	@SuppressWarnings("null")
+	static int addMissingMaterialNames() {
         final HashMap<Integer, MaterialName> materialNames = getMaterialNames();
         int r = 0;
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
         for (final Material m : Material.values()) {
             if (materialNames.get(m.getId()) == null) {
-                materialNames.put(m.getId(), new MaterialName(m.getId(), m.toString().toLowerCase().replace('_', ' '), m.toString().toLowerCase().replace('_', ' '), 0));
+                materialNames.put(m.getId(), new MaterialName(m.getId(), m.toString().toLowerCase(Locale.ENGLISH).replace('_', ' '), m.toString().toLowerCase(Locale.ENGLISH).replace('_', ' '), 0));
                 missing.append(m.getId()).append(", ");
                 r++;
             }
@@ -530,8 +528,8 @@ public final class Aliases { //NOSONAR
                 t.setAmount(1);
         }
 
-        final String lc = s.toLowerCase();
-        final String of = Language.getSpaced("enchantments.of").toLowerCase();
+        final String lc = s.toLowerCase(Locale.ENGLISH);
+        final String of = Language.getSpaced("enchantments.of").toLowerCase(Locale.ENGLISH);
         int c = -1;
         outer:
         while ((c = lc.indexOf(of, c + 1)) != -1) {
@@ -645,7 +643,7 @@ public final class Aliases { //NOSONAR
     @Nullable
     private static ItemType getAlias(final String s) {
         ItemType i;
-        String lc = "" + s.toLowerCase();
+        String lc = "" + s.toLowerCase(Locale.ENGLISH);
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
             lc = "" + m.group(m.groupCount());
@@ -752,14 +750,14 @@ public final class Aliases { //NOSONAR
                     final NonNullPair<String, Integer> g = Noun.stripGender(s, "item");
                     itemGender = Noun.getGenderID(g.getSecond());
                     final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-                    itemSingular = "" + p.getFirst().toLowerCase();
-                    itemPlural = "" + p.getSecond().toLowerCase();
+                    itemSingular = "" + p.getFirst().toLowerCase(Locale.ENGLISH);
+                    itemPlural = "" + p.getSecond().toLowerCase(Locale.ENGLISH);
                 }, false).addEntry("block", s -> {
                     final NonNullPair<String, Integer> g = Noun.stripGender(s, "block");
                     blockGender = Noun.getGenderID(g.getSecond());
                     final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-                    blockSingular = "" + p.getFirst().toLowerCase();
-                    blockPlural = "" + p.getSecond().toLowerCase();
+                    blockSingular = "" + p.getFirst().toLowerCase(Locale.ENGLISH);
+                    blockPlural = "" + p.getSecond().toLowerCase(Locale.ENGLISH);
                 }, false).setAllowUndefinedSections(true));
 
                 for (final Node node : aliasConfig.getMainNode()) {

@@ -27,6 +27,7 @@ import ch.njol.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author Peter Güttinger
@@ -68,7 +69,7 @@ public final class EnumUtils<E extends Enum<E>> {
                 final String[] ls = Language.getList(languageNode + "." + e.name());
                 names[e.ordinal()] = ls[0];
                 for (final String l : ls)
-                    parseMap.put(l.toLowerCase(), e);
+                    parseMap.put(l.toLowerCase(Locale.ENGLISH), e);
             }
         }
     }
@@ -76,7 +77,7 @@ public final class EnumUtils<E extends Enum<E>> {
     @Nullable
     public E parse(final String s) {
         validate(false);
-        return parseMap.get(s.toLowerCase());
+        return parseMap.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     @SuppressWarnings("null")

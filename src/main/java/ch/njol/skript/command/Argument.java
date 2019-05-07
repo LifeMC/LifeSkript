@@ -67,7 +67,7 @@ public final class Argument<T> {
         this.optional = optional;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public static <T> Argument<T> newInstance(@Nullable final String name, final ClassInfo<T> type, final @Nullable String def, final int index, final boolean single, final boolean forceOptional) {
         if (name != null && !Variable.isValidVariableName(name, false, false)) {
@@ -162,11 +162,11 @@ public final class Argument<T> {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final @Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Argument<?> argument = (Argument<?>) o;
+        final Argument<?> argument = (Argument<?>) o;
 
         if (single != argument.single) return false;
         if (index != argument.index) return false;
@@ -177,7 +177,8 @@ public final class Argument<T> {
         return Objects.equals(type, argument.type);
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (def != null ? def.hashCode() : 0);

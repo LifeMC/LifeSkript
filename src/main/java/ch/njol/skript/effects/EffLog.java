@@ -40,6 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Level;
 
 /**
@@ -83,7 +84,7 @@ public final class EffLog extends AsyncEffect {
         for (final String message : messages.getArray(e)) {
             if (files != null) {
                 for (String s : files.getArray(e)) {
-                    s = s.toLowerCase();
+                    s = s.toLowerCase(Locale.ENGLISH);
                     if (!s.endsWith(".log"))
                         s += ".log";
                     if ("server.log".equals(s)) {

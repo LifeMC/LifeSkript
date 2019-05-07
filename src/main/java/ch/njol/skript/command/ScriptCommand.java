@@ -105,7 +105,7 @@ public final class ScriptCommand implements CommandExecutor {
     public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
         Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
         this.name = name;
-        label = "" + name.toLowerCase();
+        label = "" + name.toLowerCase(Locale.ENGLISH);
         this.permission = permission;
         this.permissionMessage = permissionMessage == null ? new SimpleLiteral<>(Language.get("commands.no permission message"), false) : permissionMessage;
 
@@ -280,7 +280,7 @@ public final class ScriptCommand implements CommandExecutor {
                 aliases.remove(label);
             final Iterator<String> as = activeAliases.iterator();
             while (as.hasNext()) {
-                final String lowerAlias = as.next().toLowerCase();
+                final String lowerAlias = as.next().toLowerCase(Locale.ENGLISH);
                 if (knownCommands.containsKey(lowerAlias) && (aliases == null || !aliases.contains(lowerAlias))) {
                     as.remove();
                     continue;
@@ -475,11 +475,11 @@ public final class ScriptCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final @Nullable Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ScriptCommand that = (ScriptCommand) o;
+        final ScriptCommand that = (ScriptCommand) o;
 
         if (executableBy != that.executableBy) return false;
         if (!Objects.equals(name, that.name)) return false;
@@ -502,7 +502,8 @@ public final class ScriptCommand implements CommandExecutor {
         return Objects.equals(arguments, that.arguments);
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (usage != null ? usage.hashCode() : 0);

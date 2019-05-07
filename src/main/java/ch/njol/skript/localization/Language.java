@@ -196,7 +196,7 @@ public final class Language {
     }
 
     public static boolean load(String name) {
-        name = "" + name.toLowerCase();
+        name = "" + name.toLowerCase(Locale.ENGLISH);
         if ("english".equals(name))
             return true;
         localized = new HashMap<>();

@@ -232,19 +232,19 @@ public final class Noun extends Message {
     }
 
     public static boolean isIndefiniteArticle(final String s) {
-        return indefiniteArticles.contains(s.toLowerCase());
+        return indefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH));
     }
 
     public static boolean isLocalIndefiniteArticle(final String s) {
-        return localIndefiniteArticles.contains(s.toLowerCase());
+        return localIndefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH));
     }
 
     public static boolean isDefiniteArticle(final String s) {
-        return definiteArticles.contains(s.toLowerCase()) || definitePluralArticle.equalsIgnoreCase(s);
+        return definiteArticles.contains(s.toLowerCase(Locale.ENGLISH)) || definitePluralArticle.equalsIgnoreCase(s);
     }
 
     public static boolean isLocalDefiniteArticle(final String s) {
-        return localDefiniteArticles.contains(s.toLowerCase()) || localDefinitePluralArticle.equalsIgnoreCase(s);
+        return localDefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH)) || localDefinitePluralArticle.equalsIgnoreCase(s);
     }
 
     public static String toString(final String singular, final String plural, final int gender, final int flags) {

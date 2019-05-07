@@ -67,7 +67,7 @@ public final class DatabaseStorage extends VariablesStorage {
     @SuppressWarnings("null")
     final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
-    long monitor_interval;
+    long monitorInterval;
     /**
      * Params: rowID
      * <p>
@@ -123,7 +123,7 @@ public final class DatabaseStorage extends VariablesStorage {
             if (monitor_changes == null || monitor_interval == null)
                 return false;
             monitor = monitor_changes;
-            this.monitor_interval = monitor_interval.getMilliSeconds();
+            this.monitorInterval = monitor_interval.getMilliSeconds();
 
             final Database db;
             try {
@@ -231,12 +231,15 @@ public final class DatabaseStorage extends VariablesStorage {
                             final Database db1 = DatabaseStorage.this.db.get();
                             if (db1 != null)
                                 db1.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
-                        } catch (final SQLException ignored) {
+                        } catch (final SQLException e) {
+                            if (Skript.testing() || Skript.debug())
+                                Skript.exception(e);
                         }
                     }
                     try {
-                        Thread.sleep(1000 * 10);
+                        db.wait(1000L * 10L);
                     } catch (final InterruptedException ignored) {
+                        break;
                     }
                 }
             }, "Skript database '" + databaseName + "' connection keep-alive thread").start();
@@ -273,7 +276,7 @@ public final class DatabaseStorage extends VariablesStorage {
         if (monitor) {
             Skript.newThread(() -> {
                 try { // variables were just downloaded, not need to check for modifications straight away
-                    Thread.sleep(monitor_interval);
+                    Thread.sleep(monitorInterval);
                 } catch (final InterruptedException ignored) {
                 }
 
@@ -281,12 +284,12 @@ public final class DatabaseStorage extends VariablesStorage {
                 final int WARING_INTERVAL = 10;
 
                 while (!closed) {
-                    final long next = System.currentTimeMillis() + monitor_interval;
+                    final long next = System.currentTimeMillis() + monitorInterval;
                     checkDatabase();
                     final long now = System.currentTimeMillis();
                     if (next < now && lastWarning + WARING_INTERVAL * 1000 < now) {
                         // TODO don't print this message when Skript loads (because scripts are loaded after variables and take some time)
-                        Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitor_interval) / 1000. + "s, monitor interval = " + monitor_interval / 1000. + "s). " + "Please increase your monitor interval or reduce usage of variables. " + "(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
+                        Skript.warning("Cannot load variables from the database fast enough (loading took " + (now - next + monitorInterval) / 1000. + "s, monitor interval = " + monitorInterval / 1000. + "s). " + "Please increase your monitor interval or reduce usage of variables. " + "(this warning will be repeated at most once every " + WARING_INTERVAL + " seconds)");
                         lastWarning = now;
                     }
                     while (System.currentTimeMillis() < next) {
@@ -345,7 +348,7 @@ public final class DatabaseStorage extends VariablesStorage {
     /**
      * (Re)creates prepared statements as they get closed as well when closing the connection
      *
-     * @return
+     * @return True on success, false if an error is occurred and reported.
      */
     private boolean prepareQueries() {
         synchronized (db) {
@@ -419,7 +422,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     assert writeQuery != null;
                     writeQuery.setString(i++, name);
                     writeQuery.setString(i++, type);
-                    writeQuery.setBytes(i++, value); // SQLite desn't support setBlob
+                    writeQuery.setBytes(i++, value); // SQLite doesn't support setBlob
                     writeQuery.setString(i++, guid);
                     writeQuery.executeUpdate();
                 }
@@ -475,7 +478,7 @@ public final class DatabaseStorage extends VariablesStorage {
             }
 
             if (!closed) { // Skript may have been disabled in the meantime // TODO not fixed
-                new Task(Skript.getInstance(), (long) Math.ceil(2. * monitor_interval / 50) + 100, true) { // 2 times the interval + 5 seconds
+                new Task(Skript.getInstance(), (long) Math.ceil(2. * monitorInterval / 50) + 100, true) { // 2 times the interval + 5 seconds
                     @Override
                     public void run() {
                         try {
@@ -644,7 +647,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     int i = 1;
                     final String name = r.getString(i++);
                     if (name == null) {
-                        Skript.error("Variable with NULL name found in the database, ignoring it");
+                        Skript.error("Variable with The NULL name found in the database, ignoring it");
                         continue;
                     }
                     final String type = r.getString(i++);
