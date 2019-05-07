@@ -32,24 +32,23 @@ import ch.njol.skript.util.Timespan
  *
  * @since 2.2-V13b
  */
-data class DelayEndEvent
-(
-        /**
-         * the duration of the delay
-         */
-        @JvmField val duration: Timespan,
-        /**
-         * start time of the next trigger
-         *
-         * stored in nanoseconds
-         * provided by [System.nanoTime]
-         */
-        @JvmField val startTime: Long,
-        /**
-         * end time of the next trigger
-         *
-         * stored in nanoseconds
-         * provided by [System.nanoTime]
-         */
-        @JvmField val endTime: Long
+data class DelayEndEvent(
+    /**
+     * The duration of the delay
+     */
+    @JvmField val duration: Timespan,
+    /**
+     * Start time of the next trigger
+     *
+     * Stored in nanoseconds
+     * provided by [System.nanoTime]
+     */
+    @JvmField val startTime: Long,
+    /**
+     * End time of the next trigger
+     *
+     * Stored in nanoseconds
+     * provided by [System.nanoTime]
+     */
+    @JvmField val endTime: Long
 ) : AgentEvent()

@@ -80,7 +80,7 @@ date format: default
 # The format is that of Java's SimpleDateFormat as defined here: http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
 # some examples:
 #  d/M/yyyy h:mm a => 15/7/2012 8:53 PM
-#  dd.MM.yyyy, HH:mm => 16.03.2013, 09:33
+#  dd.MM.yyyy HH:mm => 16.03.2013 09:33
 
 
 verbosity: normal
@@ -89,10 +89,10 @@ verbosity: normal
 # The highest you should go is very high, which prints quite a lot of useful information,
 # including how much time each trigger takes to execute.
 # Only use debug if you're programming an add-on for Skript, but even then you might usually not need it.
-
+# Note: Debug verbosity has also some side effects and bugs, use it only for testing purposes!
 
 plugin priority: highest
-# Allowed values: lowest, low, normal, high, highest
+# Allowed values: lowest, low, normal, high, highest, monitor
 # Change this if you encounter problems with other plugins, e.g.:
 # - cancelled events: The event is cancelled by another plugin, but Skript handles the event nonetheless => increase priority
 #                    (e.g. WorldGuard cancels events if a player doesn't have permission for the given region,
@@ -113,6 +113,9 @@ number accuracy: 2
 # Zeroes will never be displayed at all, so this setting only applies to numbers that actually have a decimal part with one or more non-zero digits.
 # Money bypasses this setting and is displayed as configured in your economy plugin if you have one.
 
+allow scripts from subfolders: true
+# If true, skript will also load scripts from any subfolder below scripts directory.
+# Changing this to false may improve performance if you have many folders / files that are not scripts.
 
 maximum target block distance: 100
 # How far to search for a player's targeted block in blocks/meters.
@@ -133,33 +136,42 @@ disable documentation generation: false
 # Change to true for disabling documentation generation at startup.
 # I don't recommend you to touch this settings but you're free to change.
 
-disable variable will not be saved warnings: true
-#Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
-
+disable variable will not be saved warnings: false
+# Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
+# Only recommended to disable if it is spamming, but rather than that, you should fix the issue instead of suppressing.
 
 disable expression is already a text warnings: false
 # Disables the "... is already a text, so you should not put it in one" warnings.
+# You should remove redundant %% used to make string conversions to fix these warnings.
 
 disable start stop event warnings: false
 # Disables the "Server start/stop events are actually called when Skript is started or stopped." warnings.
+# While generally on load and on disable is recommended, you can also use on server start or stop events as you wish.
 
 disable too long delay warnings: false
 # Disables the "Delays greater than one day are not persistent ..." warnings.
+# If you are making a thing like waiting 31 days then removing vip status from player, switch to a cooldown / date based
+# system or just use existing plugins, i don't know too much but plugins like vipzero exists for a very long time.
 
 disable delays in functions causes function to return instantly warnings: false
 # Disables the "Delays in functions causes function to return instantly, this may cause bugs ..." warnings.
+# You should really not use wait statements in functions as they are buggy.
 
 disable variable conflict warnings: false
 # Disables warnings of potential variable name conflicts if set to true.
 # I recommend to not touch this option, but if you do so you should at least set it back to false
 # whenever you create new scripts with new variables.
 
-
 disable variable name starting with expression warnings: false
 # Disables the "Starting a variable's name with an expression is discouraged" warning.
 # I recommend to not touch this option, but if you do so you should at least set it back to false
 # whenever you create new scripts with new variables.
 
+
+warn when using none values in strings: false
+# If this option is true, skript sends a warning message to console
+# That indicating a variable is none, or an expression is returned none when converting to string.
+# It usually happens by a bug. You should set a default value in such situation.
 
 # ==== Variables ====
 
@@ -209,7 +221,7 @@ databases:
 		# Where to save the variables to. For a CSV file, the file extension '.csv' is recommended, but not required, but SQLite database files must end in '.db' (SQLibrary forces this).
 		# The file path can either be absolute (e.g. 'C:\whatever\...' [Windows] or '/usr/whatever/...' [Unix]), or relative to the server directory (e.g. './plugins/Skript/...').
 		
-		backup interval: 4 hours
+		backup interval: 2 hours
 		# Creates a backup of the file every so often. This can be useful if you ever want to revert variables to an older state.
 		# Variables are saved constantly no matter what is set here, thus a server crash will never make you loose any variables.
 		# Set this to 0 to disable this feature.
@@ -243,7 +255,7 @@ databases:
 		file: ./plugins/Skript/variables.db
 		# SQLite databases must end in '.db'
     	
-		backup interval: 0 # 0 = don't create backups
+		backup interval: 2 hours
 		monitor changes: false
 		monitor interval: 20 seconds
 	
@@ -258,7 +270,7 @@ databases:
 		
 		file: ./plugins/Skript/variables.csv
 		
-		backup interval: 4 hours
+		backup interval: 2 hours
 	
 	# PS: If you don't want some variables to be saved in any database (e.g. variables that contain an %entity% which usually despawn when the server is shut down)
 	# you can modify the last database's pattern to not match all variables, e.g. use '(?!x_).*' to match all variables that don't start with 'x_'.

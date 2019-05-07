@@ -23,6 +23,9 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.agents.SkriptAgentKt;
+import ch.njol.skript.agents.events.end.ForLoopEndEvent;
+import ch.njol.skript.agents.events.start.ForLoopStartEvent;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -55,6 +58,8 @@ public final class ExprNumbers extends SimpleExpression<Number> {
     }
 
     boolean integer;
+    boolean isInLoop;
+
     @SuppressWarnings("null")
     private Expression<Number> start, end;
 
@@ -75,13 +80,15 @@ public final class ExprNumbers extends SimpleExpression<Number> {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         start = matchedPattern == 0 ? (Expression<Number>) exprs[0] : new SimpleLiteral<>(1, false);
         end = (Expression<Number>) exprs[1 - matchedPattern];
+        isInLoop = isInLoop();
         if (end instanceof Literal) {
             final int amount = ((Literal<Number>) end).getSingle().intValue();
-            if (amount == 0 && isInLoop()) {
+            if (amount == 0 && isInLoop) {
                 Skript.warning("Looping zero times makes the code inside of the loop useless");
-            } else if (amount == 1 && isInLoop()) {
+                return false;
+            } else if (amount == 1 && isInLoop) {
                 Skript.warning("Since you're looping exactly one time, you could simply remove the loop instead");
-            } else if (amount < 0 && isInLoop()) {
+            } else if (amount < 0 && isInLoop) {
                 Skript.error("Looping a negative amount of times is impossible");
                 return false;
             }
@@ -117,14 +124,26 @@ public final class ExprNumbers extends SimpleExpression<Number> {
             final double max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
             double i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
 
+            long startTime;
+            long endTime;
+
             @Override
             public boolean hasNext() {
-                return i <= max;
+                final boolean hasNext = i <= max;
+                if (!hasNext && integer && isInLoop && SkriptAgentKt.isTrackingEnabled()) {
+                    endTime = System.nanoTime();
+                    SkriptAgentKt.throwEvent(new ForLoopEndEvent((int) max, startTime, endTime));
+                }
+                return hasNext;
             }
 
             @SuppressWarnings("null")
             @Override
             public Number next() {
+                if (integer && isInLoop && i == 1 && SkriptAgentKt.isTrackingEnabled()) {
+                    startTime = System.nanoTime();
+                    SkriptAgentKt.throwEvent(new ForLoopStartEvent((int) max));
+                }
                 if (!hasNext())
                     throw new NoSuchElementException();
                 if (integer)

@@ -24,5 +24,21 @@
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
+import ch.njol.skript.lang.Variable
 
-class VariableChangeStartEvent : AgentEvent()
+/**
+ * Occurs when a variable change effect is
+ * started to execute.
+ *
+ * @since 2.2-V13b
+ */
+data class VariableChangeStartEvent(
+    /**
+     * The variable being changed.
+     */
+    @JvmField val variable: Variable<*>,
+	/**
+	 * The new value of the variable.
+	 */
+	@JvmField val newValue: Array<Any?>?
+) : AgentEvent()

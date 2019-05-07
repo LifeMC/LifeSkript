@@ -14,6 +14,9 @@ not: not
 neither: neither
 nor: nor
 
+# What null (nothing) should show up as in a string/text
+none: <none>
+
 genders:
 	0:
 		id: a
@@ -234,6 +237,7 @@ enchantments:
 		unknown_enchant_62: Lure
 		lure: Lure
 		unknown_enchant_8: Depth Strider
+		depth_strider: Depth Strider
 
 # -- Potion Effects --
 potions:
@@ -503,6 +507,9 @@ entities:
 	human:
 		name: human¦s
 		pattern: human(|1¦s)
+	monster:
+		name: monster¦s
+		pattern: monster(|1¦s)
 	arrow:
 		name: arrow¦s @an
 		pattern: arrow(|1¦s)

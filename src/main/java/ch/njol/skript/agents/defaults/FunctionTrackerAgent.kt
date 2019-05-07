@@ -23,9 +23,35 @@
 @file:JvmName("FunctionTrackerAgent")
 package ch.njol.skript.agents.defaults
 
+import ch.njol.skript.Skript
+import ch.njol.skript.agents.SkriptAgent
 import ch.njol.skript.agents.TrackerAgent
+import ch.njol.skript.agents.events.end.FunctionEndEvent
+import ch.njol.skript.agents.events.start.FunctionStartEvent
+import ch.njol.skript.agents.registerAgent
+import ch.njol.skript.agents.unregisterAgent
+import org.bukkit.command.CommandSender
+import java.util.concurrent.TimeUnit
+import java.util.function.Consumer
 
-class FunctionTrackerAgent : TrackerAgent {
+data class FunctionTrackerAgent(
+    /**
+     * The out, we report statistics to it.
+     */
+    @JvmField val out: CommandSender
+) : TrackerAgent {
+
+    /**
+     * The skript agent we registered.
+     */
+    @JvmField var agent: SkriptAgent? = null
+
+    init {
+        // Sanity checks
+        @Suppress("SENSELESS_COMPARISON")
+        assert(out != null)
+    }
+
     /**
      * Registers this tracker.
      *
@@ -33,6 +59,14 @@ class FunctionTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun registerTracker(): FunctionTrackerAgent {
+        assert(agent == null)
+        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+            when (event) {
+                is FunctionEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The function \"" + event.function.name + "\" took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
+                is FunctionStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The function \"" + event.function.name + "\" is running now...")
+                else -> assert(false) { event.javaClass.name }
+            }
+        }, FunctionStartEvent::class.java, FunctionEndEvent::class.java)
         return this
     }
 
@@ -43,6 +77,9 @@ class FunctionTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun unregisterTracker(): FunctionTrackerAgent {
+        assert(agent != null)
+        unregisterAgent(agent)
+        agent = null
         return this
     }
 }

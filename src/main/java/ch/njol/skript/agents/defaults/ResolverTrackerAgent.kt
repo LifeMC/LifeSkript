@@ -23,9 +23,34 @@
 @file:JvmName("ResolverTrackerAgent")
 package ch.njol.skript.agents.defaults
 
+import ch.njol.skript.Skript
+import ch.njol.skript.agents.SkriptAgent
 import ch.njol.skript.agents.TrackerAgent
+import ch.njol.skript.agents.events.end.ResolvedPlayerEvent
+import ch.njol.skript.agents.events.start.UnresolvedPlayerEvent
+import ch.njol.skript.agents.registerAgent
+import ch.njol.skript.agents.unregisterAgent
+import org.bukkit.command.CommandSender
+import java.util.function.Consumer
 
-class ResolverTrackerAgent : TrackerAgent {
+data class ResolverTrackerAgent(
+    /**
+     * The out, we report statistics to it.
+     */
+    @JvmField val out: CommandSender
+) : TrackerAgent {
+
+    /**
+     * The skript agent we registered.
+     */
+    @JvmField var agent: SkriptAgent? = null
+
+    init {
+        // Sanity checks
+        @Suppress("SENSELESS_COMPARISON")
+        assert(out != null)
+    }
+
     /**
      * Registers this tracker.
      *
@@ -33,6 +58,14 @@ class ResolverTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun registerTracker(): ResolverTrackerAgent {
+        assert(agent == null)
+        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+            when (event) {
+                is UnresolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Unresolved player added to queue: " + event.player.name)
+                is ResolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Unresolved player \"" + event.player.name + "\" is now resolved.")
+                else -> assert(false) { event.javaClass.name }
+            }
+        }, UnresolvedPlayerEvent::class.java, ResolvedPlayerEvent::class.java)
         return this
     }
 
@@ -43,6 +76,9 @@ class ResolverTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun unregisterTracker(): ResolverTrackerAgent {
+        assert(agent != null)
+        unregisterAgent(agent)
+        agent = null
         return this
     }
 }

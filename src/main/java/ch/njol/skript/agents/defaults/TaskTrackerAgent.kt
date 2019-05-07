@@ -25,9 +25,12 @@ package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
 import ch.njol.skript.Skript.SKRIPT_PREFIX
-import ch.njol.skript.agents.*
+import ch.njol.skript.agents.SkriptAgent
+import ch.njol.skript.agents.TrackerAgent
 import ch.njol.skript.agents.events.end.DelayEndEvent
 import ch.njol.skript.agents.events.start.DelayStartEvent
+import ch.njol.skript.agents.registerAgent
+import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
@@ -50,19 +53,26 @@ data class TaskTrackerAgent
  * @param unit The unit of the limit parameter.
  */
 @JvmOverloads constructor(
-        /**
-         * The out, we report statistics to it.
-         */
-        @JvmField val out: CommandSender,
-        /**
-         * The minimum limit and its unit that
-         * considered as a long time.
-         */
-        @JvmField val limit: Long, @JvmField val unit: TimeUnit = TimeUnit.SECONDS
+    /**
+     * The out, we report statistics to it.
+     */
+    @JvmField val out: CommandSender,
+
+    /**
+     * The minimum limit and its unit that
+     * considered as a long time.
+     */
+    @JvmField val limit: Long,
+
+    /**
+     * The time unit specifies the
+     * unit is used in limit variable.
+     */
+    @JvmField val unit: TimeUnit = TimeUnit.SECONDS
 ) : TrackerAgent {
 
     /**
-     * The agent
+     * The skript agent we registered.
      */
     @JvmField var agent: SkriptAgent? = null
 
@@ -90,12 +100,12 @@ data class TaskTrackerAgent
      */
     override fun registerTracker(): TaskTrackerAgent {
         assert(agent == null)
-        agent = registerAgent(Skript.getAddonInstance(), Consumer<AgentEvent> { event ->
+        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
             if (event is DelayEndEvent) {
                 if (event.endTime - event.startTime > unit.toNanos(limit))
                     out.sendMessage(SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Waited for " + event.duration.milliSeconds + " ms, after that ran a task which is completed in " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms.")
             } else if (event is DelayStartEvent) {
-                out.sendMessage(SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Waiting for " + event.duration.milliSeconds + " milliseconds..")
+                out.sendMessage(SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Waiting for " + event.duration.milliSeconds + " milliseconds...")
             } else
                 assert(false) { event.javaClass.name }
         }, DelayStartEvent::class.java, DelayEndEvent::class.java)

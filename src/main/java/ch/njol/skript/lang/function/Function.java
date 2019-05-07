@@ -22,6 +22,9 @@
 
 package ch.njol.skript.lang.function;
 
+import ch.njol.skript.agents.SkriptAgentKt;
+import ch.njol.skript.agents.events.end.FunctionEndEvent;
+import ch.njol.skript.agents.events.start.FunctionStartEvent;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.util.coll.CollectionUtils;
 import org.eclipse.jdt.annotation.Nullable;
@@ -105,7 +108,14 @@ public abstract class Function<T> {
                 return null;
             ps[i] = val;
         }
+        final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
+        if (trackingEnabled)
+            SkriptAgentKt.throwEvent(new FunctionStartEvent(this, params));
+        final long startTime = System.nanoTime();
         final T[] r = execute(e, ps);
+        final long endTime = System.nanoTime();
+        if (trackingEnabled)
+            SkriptAgentKt.throwEvent(new FunctionEndEvent(this, params, startTime, endTime));
         assert returnType == null ? r == null : r == null || (r.length <= 1 || !single) && !CollectionUtils.contains(r, null) && returnType.getC().isAssignableFrom(r.getClass().getComponentType()) : this + "; " + Arrays.toString(r);
         return r == null || r.length > 0 ? r : null;
     }

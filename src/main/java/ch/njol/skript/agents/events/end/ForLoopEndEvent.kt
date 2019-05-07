@@ -25,4 +25,25 @@ package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
 
-class ForLoopEndEvent : AgentEvent()
+data class ForLoopEndEvent(
+    /**
+     * How many times loop will execute?
+     */
+    @JvmField val times: Int,
+
+    /**
+     * The start time of the loop.
+     *
+     * Stored in nanoseconds
+     * provided by [System.nanoTime]
+     */
+    @JvmField val startTime: Long,
+
+    /**
+     * The end time of the loop.
+     *
+     * Stored in nanoseconds
+     * provided by [System.nanoTime]
+     */
+    @JvmField val endTime: Long
+) : AgentEvent()

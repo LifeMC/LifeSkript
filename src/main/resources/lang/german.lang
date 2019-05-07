@@ -12,6 +12,9 @@ not: nicht
 neither: weder
 nor: noch
 
+# What null (nothing) should show up as in a string/text
+none: <nichts>
+
 genders:
 	0:
 		id: n
@@ -236,6 +239,7 @@ enchantments:
 		unknown_enchant_62: des Köders, Köder
 		lure: des Köders, Köder
 		unknown_enchant_8: des Wasserläufers, Wasserläufer
+		depth_strider: Tiefenschreiter
 
 # -- Potion Effects --
 potions:
@@ -503,6 +507,9 @@ entities:
 	human:
 		name: Mensch¦en @m
 		pattern: Mensch[en]
+	monster:
+		name: monster¦s
+		pattern: monster(|1¦s)
 	arrow:
 		name: Pfeil¦e @m
 		pattern: Pfeil[e]

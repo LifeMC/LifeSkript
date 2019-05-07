@@ -24,5 +24,53 @@
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
+import ch.njol.skript.lang.function.Function
 
-class FunctionEndEvent : AgentEvent()
+data class FunctionEndEvent(
+    /**
+     * The function ended executing.
+     */
+    @JvmField val function: Function<*>,
+
+    /**
+     * The arguments used to execute function.
+     */
+    @JvmField val arguments: Array<Array<Any>>,
+
+    /**
+     * The start time of the function.
+     * Determined by nanoseconds, provided by
+     * [java.lang.System.nanoTime].
+     */
+    @JvmField val startTime: Long,
+
+    /**
+     * The end time of the function.
+     * Determined by nanoseconds, provided by
+     * [java.lang.System.nanoTime].
+     */
+    @JvmField val endTime: Long
+) : AgentEvent() {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FunctionEndEvent
+
+        if (function != other.function) return false
+        if (!arguments.contentDeepEquals(other.arguments)) return false
+        if (startTime != other.startTime) return false
+        if (endTime != other.endTime) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = function.hashCode()
+        result = 31 * result + arguments.contentDeepHashCode()
+        result = 31 * result + startTime.hashCode()
+        result = 31 * result + endTime.hashCode()
+        return result
+    }
+}

@@ -74,7 +74,7 @@ fun registerAgent(addon: SkriptAddon,
  */
 fun hasAgent(addon: SkriptAddon): Boolean {
     for (agent in agents) {
-        if (agent.addon == addon || agent.addon == addon) {
+        if (agent.addon == addon) {
             return true
         }
     }

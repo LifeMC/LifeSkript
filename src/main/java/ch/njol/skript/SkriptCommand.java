@@ -24,7 +24,9 @@ package ch.njol.skript;
 
 import ch.njol.skript.ScriptLoader.ScriptInfo;
 import ch.njol.skript.agents.TrackerAgent;
+import ch.njol.skript.agents.defaults.LoopTrackerAgent;
 import ch.njol.skript.agents.defaults.TaskTrackerAgent;
+import ch.njol.skript.agents.defaults.VariableTrackerAgent;
 import ch.njol.skript.command.CommandHelp;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
@@ -318,8 +320,8 @@ public final class SkriptCommand implements CommandExecutor {
                         for (final TrackerAgent agent : registeredTrackers)
                             if (agent instanceof TaskTrackerAgent)
                                 if (((TaskTrackerAgent) agent).out == sender) {
-                                    /* TODO This just a experimental agent & tracker & debugger system
-                                        and it's not localized, i'm too lazy to localize and i don't know german language
+                                    /* TODO This just an experimental agent & tracker & debugger system
+                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
                                         but it should be done at some point. */
                                     sender.sendMessage(ChatColor.DARK_RED + "You already have a delay tracker!");
                                     return true;
@@ -346,9 +348,69 @@ public final class SkriptCommand implements CommandExecutor {
                             sender.sendMessage(ChatColor.DARK_RED + "You don't have an active delay tracker!");
                     }
                 } else if ("variables".equalsIgnoreCase(args[1])) {
-                    // TODO
+                    if ("track".equalsIgnoreCase(args[0])) {
+                        for (final TrackerAgent agent : registeredTrackers)
+                            if (agent instanceof VariableTrackerAgent)
+                                if (((VariableTrackerAgent) agent).out == sender) {
+                                    /* TODO This just an experimental agent & tracker & debugger system
+                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
+                                        but it should be done at some point. */
+                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a variable tracker!");
+                                    return true;
+                                }
+
+                        registeredTrackers.add(
+                                new VariableTrackerAgent(sender).registerTracker()
+                        );
+                        sender.sendMessage(ChatColor.GREEN + "Registered the variable tracker for you!");
+                    } else {
+                        boolean hasTracker = false;
+                        for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
+                            final TrackerAgent agent = it.next();
+                            if (agent instanceof VariableTrackerAgent)
+                                if (((VariableTrackerAgent) agent).out == sender) {
+                                    agent.unregisterTracker();
+                                    it.remove();
+                                    hasTracker = true;
+                                }
+                        }
+                        if (hasTracker)
+                            sender.sendMessage(ChatColor.RED + "Unregistered your variable tracker!");
+                        else
+                            sender.sendMessage(ChatColor.DARK_RED + "You don't have an active variable tracker!");
+                    }
                 } else if ("loops".equalsIgnoreCase(args[1])) {
-                    // TODO
+                    if ("track".equalsIgnoreCase(args[0])) {
+                        for (final TrackerAgent agent : registeredTrackers)
+                            if (agent instanceof LoopTrackerAgent)
+                                if (((LoopTrackerAgent) agent).out == sender) {
+                                    /* TODO This just an experimental agent & tracker & debugger system
+                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
+                                        but it should be done at some point. */
+                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a loop tracker!");
+                                    return true;
+                                }
+
+                        registeredTrackers.add(
+                                new LoopTrackerAgent(sender).registerTracker()
+                        );
+                        sender.sendMessage(ChatColor.GREEN + "Registered the loop tracker for you!");
+                    } else {
+                        boolean hasTracker = false;
+                        for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
+                            final TrackerAgent agent = it.next();
+                            if (agent instanceof LoopTrackerAgent)
+                                if (((LoopTrackerAgent) agent).out == sender) {
+                                    agent.unregisterTracker();
+                                    it.remove();
+                                    hasTracker = true;
+                                }
+                        }
+                        if (hasTracker)
+                            sender.sendMessage(ChatColor.RED + "Unregistered your loop tracker!");
+                        else
+                            sender.sendMessage(ChatColor.DARK_RED + "You don't have an active loop tracker!");
+                    }
                 }
             } else if ("help".equalsIgnoreCase(args[0])) {
                 skriptCommandHelp.showHelp(sender);

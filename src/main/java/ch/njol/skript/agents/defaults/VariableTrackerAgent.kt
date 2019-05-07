@@ -23,9 +23,39 @@
 @file:JvmName("VariableTrackerAgent")
 package ch.njol.skript.agents.defaults
 
+import ch.njol.skript.Skript
+import ch.njol.skript.SkriptConfig
+import ch.njol.skript.agents.SkriptAgent
 import ch.njol.skript.agents.TrackerAgent
+import ch.njol.skript.agents.events.end.VariableChangeEndEvent
+import ch.njol.skript.agents.registerAgent
+import ch.njol.skript.agents.unregisterAgent
+import org.bukkit.command.CommandSender
+import java.util.function.Consumer
 
-class VariableTrackerAgent : TrackerAgent {
+data class VariableTrackerAgent(
+    /**
+     * The out, we report statistics to it.
+     */
+    @JvmField val out: CommandSender
+) : TrackerAgent {
+
+    /**
+     * The skript agent we registered.
+     */
+    @JvmField var agent: SkriptAgent? = null
+
+    /**
+     * Whatever we enabled none warnings or not.
+     */
+    @JvmField var flag: Boolean = false
+
+    init {
+        // Sanity checks
+        @Suppress("SENSELESS_COMPARISON")
+        assert(out != null)
+    }
+
     /**
      * Registers this tracker.
      *
@@ -33,6 +63,19 @@ class VariableTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun registerTracker(): VariableTrackerAgent {
+        assert(agent == null)
+        if (!flag && !SkriptConfig.warnWhenUsingNoneValues.value()) {
+            flag = true
+            SkriptConfig.warnWhenUsingNoneValues.setValue(true)
+        }
+        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+            if (event is VariableChangeEndEvent) {
+                val value = event.newValue
+                if (value == null)
+                    out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Variable " + event.variable.name + " is set to a none value!")
+            } else
+                assert(false) { event.javaClass.name }
+        }, VariableChangeEndEvent::class.java)
         return this
     }
 
@@ -43,6 +86,13 @@ class VariableTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun unregisterTracker(): VariableTrackerAgent {
+        assert(agent != null)
+        if (flag && SkriptConfig.warnWhenUsingNoneValues.value()) {
+            flag = false
+            SkriptConfig.warnWhenUsingNoneValues.setValue(false)
+        }
+        unregisterAgent(agent)
+        agent = null
         return this
     }
 }

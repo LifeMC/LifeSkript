@@ -23,9 +23,37 @@
 @file:JvmName("LoopTrackerAgent")
 package ch.njol.skript.agents.defaults
 
+import ch.njol.skript.Skript
+import ch.njol.skript.agents.SkriptAgent
 import ch.njol.skript.agents.TrackerAgent
+import ch.njol.skript.agents.events.end.ForLoopEndEvent
+import ch.njol.skript.agents.events.end.WhileLoopEndEvent
+import ch.njol.skript.agents.events.start.ForLoopStartEvent
+import ch.njol.skript.agents.events.start.WhileLoopStartEvent
+import ch.njol.skript.agents.registerAgent
+import ch.njol.skript.agents.unregisterAgent
+import org.bukkit.command.CommandSender
+import java.util.concurrent.TimeUnit
+import java.util.function.Consumer
 
-class LoopTrackerAgent : TrackerAgent {
+data class LoopTrackerAgent(
+    /**
+     * The out, we report statistics to it.
+     */
+    @JvmField val out: CommandSender
+) : TrackerAgent {
+
+    /**
+     * The skript agent we registered.
+     */
+    @JvmField var agent: SkriptAgent? = null
+
+    init {
+        // Sanity checks
+        @Suppress("SENSELESS_COMPARISON")
+        assert(out != null)
+    }
+
     /**
      * Registers this tracker.
      *
@@ -33,6 +61,16 @@ class LoopTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun registerTracker(): LoopTrackerAgent {
+        assert(agent == null)
+        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+            when (event) {
+                is ForLoopEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
+                is ForLoopStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times now...")
+                is WhileLoopEndEvent -> out.sendMessage("")
+                is WhileLoopStartEvent -> out.sendMessage("")
+                else -> assert(false) { event.javaClass.name }
+            }
+        }, ForLoopStartEvent::class.java, ForLoopEndEvent::class.java, WhileLoopStartEvent::class.java, WhileLoopEndEvent::class.java)
         return this
     }
 
@@ -43,6 +81,9 @@ class LoopTrackerAgent : TrackerAgent {
      * for chaining.
      */
     override fun unregisterTracker(): LoopTrackerAgent {
+        assert(agent != null)
+        unregisterAgent(agent)
+        agent = null
         return this
     }
 }

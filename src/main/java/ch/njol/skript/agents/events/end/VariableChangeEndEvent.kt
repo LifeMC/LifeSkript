@@ -24,5 +24,21 @@
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
+import ch.njol.skript.lang.Variable
 
-class VariableChangeEndEvent : AgentEvent()
+/**
+ * Occurs when a variable change effect is
+ * ended, and thus variable is changed.
+ *
+ * @since 2.2-V13b
+ */
+data class VariableChangeEndEvent(
+    /**
+     * The variable being changed.
+     */
+    @JvmField val variable: Variable<*>,
+	/**
+	 * The new value of the variable.
+	 */
+	@JvmField val newValue: Array<Any?>?
+) : AgentEvent()
