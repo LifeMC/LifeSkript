@@ -571,7 +571,7 @@ public final class Classes {
             if (SkriptConfig.warnWhenUsingNoneValues.value()) {
                 final Node node = SkriptLogger.getNode();
                 if (node != null)
-                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (" + node.getConfig().getFileName() + ", line " + node.getLine() + ") [key: " + node.getKey() + "]");
+                    Skript.warning("Usage of none is detected - probably some variable or expression returned null");
                 else
                     Skript.warning("Usage of none is detected - probably some variable or expression returned null (no information available)");
             }
@@ -579,13 +579,8 @@ public final class Classes {
         }
         if (o.getClass().isArray()) {
             if (((Object[]) o).length == 0) {
-                if (SkriptConfig.warnWhenUsingNoneValues.value()) {
-                    final Node node = SkriptLogger.getNode();
-                    if (node != null)
-                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (" + node.getConfig().getFileName() + ", line " + node.getLine() + ") [key: " + node.getKey() + ", type: " + o.getClass().getCanonicalName() + "]");
-                    else
-                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (type: " + o.getClass().getCanonicalName() + ")");
-                }
+                if (SkriptConfig.warnWhenUsingNoneValues.value())
+                    Skript.warning("Usage of none is detected - probably some list variable or expression is empty (type: " + o.getClass().getCanonicalName() + ")");
                 return Language.get("none");
             }
             final StringBuilder b = new StringBuilder();

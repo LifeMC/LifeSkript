@@ -51,7 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
     static {
-        Skript.registerExpression(ExprFoodLevel.class, Float.class, ExpressionType.PROPERTY, "[the] (food|hunger)[[ ](level|met(er|re)|bar)] [of %player%]", "%player%'[s] (food|hunger)[[ ](level|met(er|re)|bar)]");
+        Skript.registerExpression(ExprFoodLevel.class, Float.class, ExpressionType.PROPERTY, "[the] (food|hunger)[[ ](level|met(er|re)|bar)] [of %player%]", "%player%'[s] (food|hunger)[[ ](level|met(er|re)|bar)]", "feed [the] %player%");
     }
 
     @SuppressWarnings({"unchecked", "null"})

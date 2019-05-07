@@ -1132,7 +1132,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (addon.plugin instanceof Skript)
                     continue;
                 stringBuilder.append(addon.getName());
-                if (i < addons.size())
+                if (i <= addons.size())
                     stringBuilder.append(", ");
                 i++;
             }
@@ -1162,8 +1162,14 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     static final void logEx(final String... lines) {
-        for (final String line : lines)
-            SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
+        if (lines == null || lines.length < 1)
+            return;
+        if (lines.length == 1)
+            SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + lines[0]);
+        else {
+            for (final String line : lines)
+                SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
+        }
     }
 
     public static final void info(final CommandSender sender, final String message) {
@@ -1299,7 +1305,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                 }
                                 String replacedContents = contents.replace(afterJar, stripColor);
                                 if (!contents.equalsIgnoreCase(replacedContents)) {
-                                    String beforeJar = contents.substring(contents.lastIndexOf("-jar") - 5).trim();
+                                    String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
                                     if (beforeJar.contains(System.lineSeparator()))
                                         beforeJar = beforeJar.split(System.lineSeparator())[0];
                                     String fileEncoding = beforeJar;
@@ -1599,15 +1605,15 @@ public final class Skript extends JavaPlugin implements Listener {
                             warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
                         } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
                             // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
-                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot does NOT break some plugins. Also find another download link.
+                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot does NOT break some plugins that work on Spigot.
                             if (Skript.logHigh()) {
                                 info("We recommend using TacoSpigot over Spigot on 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
-                                info("You can get TacoSpigot 1.8.8 from: https://www.lifemcserver.com/TacoSpigot.jar");
+                                info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
                             }
                         } else {
                             // PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
                             warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
-                            warning("You can get TacoSpigot 1.8.8 from: https://www.lifemcserver.com/TacoSpigot.jar");
+                            warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
                         }
                     }
                 }
@@ -1637,60 +1643,61 @@ public final class Skript extends JavaPlugin implements Listener {
             if (!isEnabled())
                 return;
 
-            final Thread t = newThread(() -> {
-                try {
-                    final String current = this.getDescription().getVersion();
+            if (SkriptConfig.checkForNewVersion.value()) {
+                final Thread t = newThread(() -> {
+                    try {
+                        final String current = this.getDescription().getVersion();
 
-                    if (current == null || current.length() < 1)
-                        return;
+                        if (current == null || current.length() < 1)
+                            return;
 
-                    final String latest = getLatestVersion();
+                        final String latest = getLatestVersion();
 
-                    if (!isEnabled())
-                        return;
-                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
-
-                    if (latest == null) {
-                        Bukkit.getScheduler().runTask(this, () -> warning("Can't check for updates, probably you don't have internet connection, or the web server is down?"));
-                        return;
-                    }
-
-                    final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "").trim();
-                    final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "").trim();
-
-                    if (!latestTrimmed.equals(currentTrimmed)) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
+                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+
+                        if (latest == null) {
+                            Bukkit.getScheduler().runTask(this, () -> warning("Can't check for updates, probably you don't have internet connection, or the web server is down?"));
+                            return;
+                        }
+
+                        final String latestTrimmed = latest.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "").trim();
+                        final String currentTrimmed = current.trim().toLowerCase(Locale.ENGLISH).replaceAll("\\s+", "").trim();
+
+                        if (!latestTrimmed.equals(currentTrimmed)) {
+                            if (!isEnabled())
+                                return;
+                            Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
+                            Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
+                            updateAvailable = true;
+                            latestVersion = latest;
+                        } else {
+                            if (!isEnabled())
+                                return;
+                            Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version of Skript."));
+                            Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
+                        }
+                    } catch (final Throwable tw) {
+                        if (!isEnabled())
+                            return;
+                        Bukkit.getScheduler().runTask(this, () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                        if (Skript.logHigh()) {
+                            if (!isEnabled())
+                                return;
+                            Bukkit.getScheduler().runTask(this, () -> severe(SKRIPT_PREFIX_CONSOLE + "Unable to check updates", tw));
+                        }
                         Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
-                        updateAvailable = true;
-                        latestVersion = latest;
-                    } else {
-                        if (!isEnabled())
-                            return;
-                        Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version of Skript."));
-                        Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
                     }
-                } catch (final Throwable tw) {
-                    if (!isEnabled())
-                        return;
-                    Bukkit.getScheduler().runTask(this, () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
-                    if (Skript.logHigh()) {
-                        if (!isEnabled())
-                            return;
-                        Bukkit.getScheduler().runTask(this, () -> severe(SKRIPT_PREFIX_CONSOLE + "Unable to check updates", tw));
-                    }
-                    Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
-                }
-            }, "Skript update checker thread");
+                }, "Skript update checker thread");
 
-            // Not slow down the server, it's just an updater!
-            // TODO Also add updater config options back and allow user to disable updates,
-            // and maybe updater can also be rewrited with proper OOP and Java usage, with checking updates from github
-            // instead, just in case the web site is down.
-            t.setPriority(Thread.MIN_PRIORITY);
-            t.setDaemon(true);
-            t.start();
+                // Not slow down the server, it's just an updater!
+                // and maybe updater can also be rewrited with proper OOP and Java usage, with checking updates from github
+                // instead, just in case the web site is down.
+                t.setPriority(Thread.MIN_PRIORITY);
+                t.setDaemon(true);
+                t.start();
+            }
 
         } catch (final Throwable tw) {
             exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");

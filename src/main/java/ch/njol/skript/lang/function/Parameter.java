@@ -46,7 +46,7 @@ public final class Parameter<T> {
     final boolean isNone;
 
     @SuppressWarnings("null")
-    public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
+    public Parameter(final @Nullable String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
         this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;
@@ -55,7 +55,7 @@ public final class Parameter<T> {
     }
 
     @SuppressWarnings("null")
-    public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
+    public Parameter(final @Nullable String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
         this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;

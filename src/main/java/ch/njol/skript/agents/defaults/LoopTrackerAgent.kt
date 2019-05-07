@@ -66,6 +66,7 @@ data class LoopTrackerAgent(
             when (event) {
                 is ForLoopEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
                 is ForLoopStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times now...")
+                // TODO Implement the while tracker
                 is WhileLoopEndEvent -> out.sendMessage("")
                 is WhileLoopStartEvent -> out.sendMessage("")
                 else -> assert(false) { event.javaClass.name }

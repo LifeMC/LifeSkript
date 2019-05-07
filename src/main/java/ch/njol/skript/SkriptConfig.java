@@ -83,7 +83,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
-    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", false)
+    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
     /**
      * False by default - Use /sk track variables to enable in runtime.
@@ -93,8 +93,8 @@ public final class SkriptConfig {
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
 
-    //static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", false);
-    //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(0)).setter(t -> {
+    static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", true);
+    //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(15, TimeUnit.MINUTES));//.setter(t -> {
     //final Task ct = Updater.checkerTask;
     //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
     //ct.setNextExecution(t.getTicks_i());

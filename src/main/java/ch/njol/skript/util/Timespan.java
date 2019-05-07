@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Peter Güttinger
@@ -70,6 +71,10 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
         if (millis < 0)
             throw new IllegalArgumentException("millis must be >= 0");
         this.millis = millis;
+    }
+
+    public Timespan(final long time, final TimeUnit unit) {
+        this(unit.toMillis(time));
     }
 
     @Nullable

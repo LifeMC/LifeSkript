@@ -36,6 +36,11 @@ language: english
 # If you want to translate Skript to your language please read the readme.txt located in the /lang/ folder in the jar
 # (open the jar as zip or rename it to Skript.zip to access it)
 
+check for new version: true
+# Whatever Skript should check for a new version of Skript is available when the server starts.
+# If this set to false, the update checking is disabled and not possible at all. You can however check manually :P
+# Setting to false is only recommended if you stuck to some old version of Skript for reasons, or the updater is broken.
+
 enable effect commands: true
 effect command token: !
 # If 'enable effect commands' is set to true, chat messages starting with the 'effect command token' will be interpreted as effects and executed.
