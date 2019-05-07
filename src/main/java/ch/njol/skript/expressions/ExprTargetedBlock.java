@@ -53,6 +53,7 @@ import java.util.WeakHashMap;
 @Examples({"# A command to set the block a player looks at to a specific type:", "command /setblock <material>:", "    trigger:", "        set targeted block to argument"})
 @Since("1.0")
 public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
+    // FIXME Add this method to LifeSpigot, it seems to be added in 1.8, backport it.
     public static final boolean set = Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class);
     private static final WeakHashMap<Player, Block> targetedBlocks = new WeakHashMap<>();
     @Nullable

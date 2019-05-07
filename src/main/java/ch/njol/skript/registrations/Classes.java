@@ -30,8 +30,10 @@ import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.Converter.ConverterInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.Serializer;
+import ch.njol.skript.config.Node;
 import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.StringMode;
@@ -321,7 +323,7 @@ public final class Classes {
     @Nullable
     public static ClassInfo<?> getClassInfoFromUserInput(String name) {
         checkAllowClassInfoInteraction();
-        name = "" + name.toLowerCase();
+        name = "" + name.toLowerCase(Locale.ENGLISH);
         for (final ClassInfo<?> ci : getClassInfos()) {
             final Pattern[] uip = ci.getUserInputPatterns();
             if (uip == null)
@@ -565,11 +567,27 @@ public final class Classes {
 
     private static <T> String toString(final @Nullable T o, final StringMode mode, final int flags) {
         assert flags == 0 || mode == StringMode.MESSAGE;
-        if (o == null)
-            return "<none>";
+        if (o == null) {
+            if (SkriptConfig.warnWhenUsingNoneValues.value()) {
+                final Node node = SkriptLogger.getNode();
+                if (node != null)
+                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (" + node.getConfig().getFileName() + ", line " + node.getLine() + ") [key: " + node.getKey() + "]");
+                else
+                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (no information available)");
+            }
+            return Language.get("none");
+        }
         if (o.getClass().isArray()) {
-            if (((Object[]) o).length == 0)
-                return "<none>";
+            if (((Object[]) o).length == 0) {
+                if (SkriptConfig.warnWhenUsingNoneValues.value()) {
+                    final Node node = SkriptLogger.getNode();
+                    if (node != null)
+                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (" + node.getConfig().getFileName() + ", line " + node.getLine() + ") [key: " + node.getKey() + ", type: " + o.getClass().getCanonicalName() + "]");
+                    else
+                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (type: " + o.getClass().getCanonicalName() + ")");
+                }
+                return Language.get("none");
+            }
             final StringBuilder b = new StringBuilder();
             boolean first = true;
             for (final Object i : (Object[]) o) {

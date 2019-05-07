@@ -23,6 +23,9 @@
 package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.agents.SkriptAgentKt;
+import ch.njol.skript.agents.events.end.ResolvedPlayerEvent;
+import ch.njol.skript.agents.events.start.UnresolvedPlayerEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -55,8 +58,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             try {
                 final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
 
-                //noinspection ConstantConditions
                 // See: https://github.com/LifeMC/LifeSkript/issues/4
+                //noinspection ConstantConditions
                 if (p == null)
                     continue;
 
@@ -71,6 +74,9 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
                             p.actionQueue.remove(action);
                             action.run();
                         }
+
+                if (SkriptAgentKt.isTrackingEnabled())
+                    SkriptAgentKt.throwEvent(new ResolvedPlayerEvent(p));
 
                 if (toResolve.isEmpty())
                     Thread.sleep(1000L);
@@ -106,6 +112,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
         }
         this.name = name;
         toResolve.add(this); // Try to resolve on a background thread, if possible.
+        if (SkriptAgentKt.isTrackingEnabled())
+            SkriptAgentKt.throwEvent(new UnresolvedPlayerEvent(this));
     }
 
     /**

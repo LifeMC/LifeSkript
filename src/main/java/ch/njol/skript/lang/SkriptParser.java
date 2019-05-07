@@ -111,7 +111,7 @@ public final class SkriptParser {
     public SkriptParser(final String expr, final int flags, final ParseContext context) {
         assert expr != null;
         assert (flags & ALL_FLAGS) != 0;
-        this.expr = "" + expr.trim();
+        this.expr =  expr.trim();
         this.flags = flags;
         this.context = context;
     }
@@ -128,7 +128,7 @@ public final class SkriptParser {
     @SuppressWarnings("unchecked")
     @Nullable
     public static final <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
-        expr = "" + expr.trim();
+        expr =  expr.trim();
         if (expr.isEmpty())
             return null;
         return new UnparsedLiteral(expr).getConvertedExpression(context, c);
@@ -141,7 +141,7 @@ public final class SkriptParser {
      */
     @Nullable
     public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
-        expr = "" + expr.trim();
+        expr =  expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
             return null;
@@ -162,7 +162,7 @@ public final class SkriptParser {
 
     @Nullable
     public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
-        expr = "" + expr.trim();
+        expr =  expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
             return null;
@@ -185,7 +185,8 @@ public final class SkriptParser {
     /**
      * Prints errors
      */
-    @Nullable
+    @SuppressWarnings("null")
+	@Nullable
     private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
         if (varPattern.matcher(expr).matches())
             return Variable.newInstance(expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
@@ -280,12 +281,12 @@ public final class SkriptParser {
 //					if (!m.lookingAt())
 //						return null;
 //				}
-//				t = new SkriptParser("" + expr.substring(start + 1, end - 1), flags, context).parseObjectExpression();
+//				t = new SkriptParser( expr.substring(start + 1, end - 1), flags, context).parseObjectExpression();
 //			} else {
 //				m.region(start, expr.length());
 //				last = !m.find();
 //				final String sub = last ? expr.substring(start) : expr.substring(start, m.start());
-//				t = new SkriptParser("" + sub, flags, context).parseSingleExpr(Object.class);
+//				t = new SkriptParser( sub, flags, context).parseSingleExpr(Object.class);
 //			}
 //			if (t == null)
 //				return null;
@@ -468,7 +469,7 @@ public final class SkriptParser {
                 assert c != null;
                 b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
             }
-            return "" + b.toString();
+            return  b.toString();
         }
     }
 
@@ -490,7 +491,7 @@ public final class SkriptParser {
                 }
                 b.append(cs[k].getName().withIndefiniteArticle());
             }
-            return "" + b.toString();
+            return  b.toString();
         }
     }
 
@@ -598,7 +599,7 @@ public final class SkriptParser {
                 final int j = pattern.indexOf('%', i + 1);
                 if (j == -1)
                     return error("Missing end sign '%' of expression. Escape the percent sign to match a literal '%': '\\%'");
-                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + pattern.substring(i + 1, j));
+                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( pattern.substring(i + 1, j));
                 final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(p.getFirst());
                 if (ci == null)
                     return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
@@ -617,7 +618,7 @@ public final class SkriptParser {
         final boolean[] plurals = new boolean[ps.size()];
         for (int i = 0; i < plurals.length; i++)
             plurals[i] = ps.get(i);
-        return new NonNullPair<>("" + b.toString(), plurals);
+        return new NonNullPair<>( b.toString(), plurals);
     }
 
     @Nullable
@@ -646,7 +647,6 @@ public final class SkriptParser {
             r = createExprInfo(s);
             exprInfoCache.put(s, r);
         }
-
         return r;
     }
 
@@ -654,28 +654,28 @@ public final class SkriptParser {
         final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
         r.isOptional = s.startsWith("-");
         if (r.isOptional)
-            s = "" + s.substring(1);
+            s =  s.substring(1);
         if (s.startsWith("*")) {
-            s = "" + s.substring(1);
+            s =  s.substring(1);
             r.flagMask &= ~PARSE_EXPRESSIONS;
         } else if (s.startsWith("~")) {
-            s = "" + s.substring(1);
+            s =  s.substring(1);
             r.flagMask &= ~PARSE_LITERALS;
         }
         if (!r.isOptional) {
             r.isOptional = s.startsWith("-");
             if (r.isOptional)
-                s = "" + s.substring(1);
+                s =  s.substring(1);
         }
         final int a = s.indexOf('@');
         if (a != -1) {
             r.time = Integer.parseInt(s.substring(a + 1));
-            s = "" + s.substring(0, a);
+            s =  s.substring(0, a);
         }
         final String[] classes = s.split("/");
         assert classes.length == r.classes.length;
         for (int i = 0; i < classes.length; i++) {
-            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + classes[i]);
+            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( classes[i]);
             r.classes[i] = Classes.getClassInfo(p.getFirst());
             r.isPlural[i] = p.getSecond();
         }
@@ -897,7 +897,7 @@ public final class SkriptParser {
                 if (expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length()) {
                     log.clear();
                     log.printLog();
-                    return new SkriptParser(this, "" + expr.substring(1, expr.length() - 1)).parseExpression(types);
+                    return new SkriptParser(this,  expr.substring(1, expr.length() - 1)).parseExpression(types);
                 }
                 if (isObject && (flags & PARSE_LITERALS) != 0) { // single expression - can return an UnparsedLiteral now
                     log.clear();
@@ -921,7 +921,7 @@ public final class SkriptParser {
                     if (b == 0 && a == pieces.size()) // i.e. the whole expression - already tried to parse above
                         continue;
                     final int x = pieces.get(b)[0], y = pieces.get(b + a - 1)[1];
-                    final String subExpr = "" + expr.substring(x, y).trim();
+                    final String subExpr =  expr.substring(x, y).trim();
                     assert subExpr.length() < expr.length() : subExpr;
 
                     final Expression<? extends T> t;
@@ -968,11 +968,11 @@ public final class SkriptParser {
 //				final Expression<? extends T> t;
 //				if (context != ParseContext.COMMAND && (start < expr.length() && expr.charAt(start) == '(' || end - 1 > 0 && expr.charAt(end - 1) == ')')) {
 //					if (start < expr.length() && expr.charAt(start) == '(' && end - 1 > 0 && expr.charAt(end - 1) == ')' && next(expr, start, context) == end)
-//						t = new SkriptParser(lastExpr = "" + expr.substring(start + 1, end - 1), flags, context).parseExpression(types);
+//						t = new SkriptParser(lastExpr =  expr.substring(start + 1, end - 1), flags, context).parseExpression(types);
 //					else
 //						t = null;
 //				} else {
-//					t = new SkriptParser(lastExpr = "" + expr.substring(start, end), flags, context).parseSingleExpr(types);
+//					t = new SkriptParser(lastExpr =  expr.substring(start, end), flags, context).parseSingleExpr(types);
 //				}
 //				if (t != null) {
 //					isLiteralList &= t instanceof Literal;
@@ -1049,7 +1049,7 @@ public final class SkriptParser {
                 log.printError();
                 return null;
             }
-            final String functionName = "" + m.group(1);
+            final String functionName =  m.group(1);
             final String args = m.group(2);
             final Expression<?>[] params;
             if (args.length() != 0) {
@@ -1085,7 +1085,7 @@ public final class SkriptParser {
 //				int j = 0;
 //				for (int i = 0; i != -1 && i <= args.length(); i = next(args, i, context)) {
 //					if (i == args.length() || args.charAt(i) == ',') {
-//						final Expression<?> e = new SkriptParser("" + args.substring(j, i).trim(), flags | PARSE_LITERALS, context).parseExpression(function.getParameter(p).getType().getC());
+//						final Expression<?> e = new SkriptParser( args.substring(j, i).trim(), flags | PARSE_LITERALS, context).parseExpression(function.getParameter(p).getType().getC());
 //						if (e == null) {
 //							log.printError("Can't understand this expression: '" + args.substring(j, i) + "'", ErrorQuality.NOT_AN_EXPRESSION);
 //							return null;
@@ -1146,6 +1146,64 @@ public final class SkriptParser {
         }
     }
 
+	/**
+	 * Checks if the given string is a valid integer.
+	 *
+	 * Use this method instead of catching exceptions, it is faster.
+	 */
+	public static final boolean isInteger(final @Nullable String str) {
+		if (str == null) {
+			return false;
+		}
+		final int length = str.length();
+		if (length == 0) {
+			return false;
+		}
+		int i = 0;
+		if (str.charAt(0) == '-') {
+			if (length == 1) {
+				return false;
+			}
+			i = 1;
+		}
+		for (; i < length; i++) {
+			final char c = str.charAt(i);
+			if (c < '0' || c > '9') {
+				return false;
+			}
+		}
+		return true;
+	}
+
+    /**
+     * Checks if the given string is a valid integer or double.
+     *
+     * Use this method instead of catching exceptions, it is faster.
+     */
+    public static final boolean isIntegerOrDouble(final @Nullable String str) {
+        if (str == null) {
+            return false;
+        }
+        final int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            final char c = str.charAt(i);
+            if ((c < '0' || c > '9') && c != '.' && c != ',') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Prints errors
      *
@@ -1191,10 +1249,15 @@ public final class SkriptParser {
                                 if (j != pattern.length() - 1 && ('0' <= pattern.charAt(j + 1) && pattern.charAt(j + 1) <= '9' || pattern.charAt(j + 1) == '-')) {
                                     final int j2 = pattern.indexOf('¦', j + 2);
                                     if (j2 != -1) {
-                                        try {
-                                            mark = Integer.parseInt(pattern.substring(j + 1, j2));
-                                            j = j2;
-                                        } catch (final NumberFormatException ignored) { /* skipped */ }
+										final String str = pattern.substring(j + 1, j2);
+										if (SkriptParser.isInteger(str)) {
+											try {
+												mark = Integer.parseInt(str);
+												j = j2;
+											} catch (final NumberFormatException e) {
+												Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+											}
+										}
                                     }
                                 }
                                 res = parse_i(pattern, i, j + 1);
@@ -1231,7 +1294,7 @@ public final class SkriptParser {
                             return null;
                     }
                     final ParseLogHandler log = SkriptLogger.startParseLogHandler();
-                    final String name = "" + pattern.substring(j + 1, end);
+                    final String name = pattern.substring(j + 1, end);
                     final ExprInfo vi = getExprInfo(name);
                     try {
                         for (; i2 != -1; i2 = next(expr, i2, context)) {
@@ -1244,7 +1307,7 @@ public final class SkriptParser {
                                         if ((flags & vi.flagMask) == 0)
                                             continue;
                                         log2.clear();
-                                        @SuppressWarnings("unchecked") final Expression<?> e = new SkriptParser("" + expr.substring(i, i2), flags & vi.flagMask, context).parseExpression(vi.classes[k].getC());
+                                        @SuppressWarnings("unchecked") final Expression<?> e = new SkriptParser( expr.substring(i, i2), flags & vi.flagMask, context).parseExpression(vi.classes[k].getC());
                                         if (e != null) {
                                             if (!vi.isPlural[k] && !e.isSingle()) {
                                                 if (context == ParseContext.COMMAND) {

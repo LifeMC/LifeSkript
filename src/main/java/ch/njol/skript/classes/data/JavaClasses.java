@@ -22,12 +22,14 @@
 
 package ch.njol.skript.classes.data;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.NumberArithmetic;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.Serializer;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Message;
@@ -57,12 +59,24 @@ public final class JavaClasses {
                     @Nullable
                     public Number parse(final String s, final ParseContext context) {
                         try {
-                            return Long.valueOf(s);
-                        } catch (final NumberFormatException ignored) {
+                            if (SkriptParser.isInteger(s))
+                                return Long.valueOf(s);
+                        } catch (final NumberFormatException e) {
+                            Skript.exception(e);
                         }
                         try {
-                            return s.endsWith("%") ? Double.parseDouble(s.substring(0, s.length() - 1)) / 100 : Double.parseDouble(s);
+                            if (s.endsWith("%")) {
+                                final String str = s.substring(0, s.length() - 1);
+                                if (!SkriptParser.isIntegerOrDouble(str))
+                                    return null;
+                                return Double.parseDouble(str) / 100;
+                            } else {
+                                if (!SkriptParser.isIntegerOrDouble(s))
+                                    return null;
+                                return Double.parseDouble(s);
+                            }
                         } catch (final NumberFormatException e) {
+                            Skript.exception(e);
                             return null;
                         }
                     }
@@ -101,6 +115,8 @@ public final class JavaClasses {
                     @Override
                     @Nullable
                     public Number deserialize(final String s) {
+                        if (!SkriptParser.isIntegerOrDouble(s))
+                            return null;
                         try {
                             return Integer.valueOf(s);
                         } catch (final NumberFormatException ignored) {
@@ -108,6 +124,7 @@ public final class JavaClasses {
                         try {
                             return Double.valueOf(s);
                         } catch (final NumberFormatException e) {
+                            Skript.exception(e);
                             return null;
                         }
                     }
@@ -122,9 +139,12 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Long parse(final String s, final ParseContext context) {
+                if (!SkriptParser.isInteger(s))
+                    return null;
                 try {
                     return Long.valueOf(s);
                 } catch (final NumberFormatException e) {
+                    Skript.exception(e);
                     return null;
                 }
             }
@@ -163,9 +183,12 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Long deserialize(final String s) {
+                if (!SkriptParser.isInteger(s))
+                    return null;
                 try {
                     return Long.parseLong(s);
                 } catch (final NumberFormatException e) {
+                    Skript.exception(e);
                     return null;
                 }
             }
@@ -180,9 +203,12 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Integer parse(final String s, final ParseContext context) {
+                if (!SkriptParser.isInteger(s))
+                    return null;
                 try {
                     return Integer.valueOf(s);
                 } catch (final NumberFormatException e) {
+                    Skript.exception(e);
                     return null;
                 }
             }
@@ -221,9 +247,12 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Integer deserialize(final String s) {
+                if (!SkriptParser.isInteger(s))
+                    return null;
                 try {
                     return Integer.parseInt(s);
                 } catch (final NumberFormatException e) {
+                    Skript.exception(e);
                     return null;
                 }
             }
@@ -239,7 +268,16 @@ public final class JavaClasses {
             @Nullable
             public Double parse(final String s, final ParseContext context) {
                 try {
-                    return s.endsWith("%") ? Double.parseDouble(s.substring(0, s.length() - 1)) / 100 : Double.parseDouble(s);
+                    if (s.endsWith("%")) {
+                        final String str = s.substring(0, s.length() - 1);
+                        if (!SkriptParser.isIntegerOrDouble(str))
+                            return null;
+                        return Double.parseDouble(str) / 100;
+                    } else {
+                        if (!SkriptParser.isIntegerOrDouble(s))
+                            return null;
+                        return Double.parseDouble(s);
+                    }
                 } catch (final NumberFormatException e) {
                     return null;
                 }
@@ -279,6 +317,8 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Double deserialize(final String s) {
+                if (!SkriptParser.isIntegerOrDouble(s))
+                    return null;
                 try {
                     return Double.parseDouble(s);
                 } catch (final NumberFormatException e) {
@@ -603,6 +643,69 @@ public final class JavaClasses {
                 return false;
             }
         }));
+
+        /* Downgrades parser performance unnecessarily and generates bunch of illegal argument exceptions. But can be added in the future with a proper check.
+        Classes.registerClass(new ClassInfo<>(UUID.class, "uuid").user("uuids?").parser(new Parser<UUID>() {
+            public final @Nullable UUID parse(final String s, final ParseContext context) {
+                try {
+                    return UUID.fromString(s);
+                } catch (final IllegalArgumentException ignored) {
+                    // ignored
+                }
+                return null;
+            }
+
+            @SuppressWarnings("null")
+			public final String toString(final UUID o, final int flags)
+            {
+                return o.toString();
+            }
+
+            @SuppressWarnings("null")
+			public final String toVariableNameString(final UUID o)
+            {
+                return o.toString();
+            }
+
+            public final String getVariableNamePattern()
+            {
+                return ".+";
+            }
+        }).serializer(new Serializer<UUID>() {
+            @Override
+            public final Fields serialize(final UUID o) {
+                final Fields f = new Fields();
+                f.putObject("uuid", o);
+                return f;
+            }
+
+            @Override
+            public final void deserialize(final UUID o, final Fields f) throws StreamCorruptedException {
+                throw new UnsupportedOperationException();
+            }
+
+            @SuppressWarnings("null")
+			@Override
+            protected final UUID deserialize(final Fields fields) throws StreamCorruptedException {
+                return UUID.fromString((String)fields.getObject("uuid"));
+            }
+
+            @Override
+            public final boolean mustSyncDeserialization() {
+                return false;
+            }
+
+            @Override
+            public final boolean canBeInstantiated(final Class<? extends UUID> clazz) {
+                return false;
+            }
+
+            @Override
+            protected final boolean canBeInstantiated() {
+                return false;
+            }
+        }));
+        */
     }
 
     public JavaClasses() {

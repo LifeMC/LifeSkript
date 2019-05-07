@@ -136,7 +136,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final WeatherType o) {
-                return "" + o.name().toLowerCase();
+                return "" + o.name().toLowerCase(Locale.ENGLISH);
             }
 
             @Override
@@ -555,73 +555,6 @@ public final class SkriptClasses {
             }
         }).serializeAs(ItemStack.class));
 
-        Classes.registerClass(new ClassInfo<>(ch.njol.skript.util.slot.Slot.class, "slotnew").user("(inventory )?slots?").name("Inventory Slot").description("Represents a single slot of an <a href='#inventory'>inventory</a>. " + "Notable slots are the <a href='../expressions/#ExprArmorSlot'>armour slots</a> and <a href='../expressions/#ExprFurnaceSlot'>furnace slots</a>. ", "The most important property that distinguishes a slot from an <a href='#itemstack'>item</a> is its ability to be changed, e.g. it can be set, deleted, enchanted, etc. " + "(Some item expressions can be changed as well, e.g. items stored in variables. " + "For that matter: slots are never saved to variables, only the items they represent at the time when the variable is set).", "Please note that <a href='../expressions/#ExprTool'>tool</a> can be regarded a slot, but it can actually change it's position, i.e. doesn't represent always the same slot.").usage("").examples("set tool of player to dirt", "delete helmet of the victim", "set the colour of the player's tool to green", "enchant the player's chestplate with projectile protection 5").since("").defaultExpression(new EventValueExpression<>(ch.njol.skript.util.slot.Slot.class)).changer(new Changer<ch.njol.skript.util.slot.Slot>() {
-            @SuppressWarnings("unchecked")
-            @Override
-            @Nullable
-            public Class<Object>[] acceptChange(final ChangeMode mode) {
-                if (mode == ChangeMode.RESET)
-                    return null;
-                return new Class[]{ItemType.class, ItemStack.class};
-            }
-
-            @Override
-            public void change(final ch.njol.skript.util.slot.Slot[] slots, final @Nullable Object[] deltas, final ChangeMode mode) {
-                final Object delta = deltas == null ? null : deltas[0];
-                for (final ch.njol.skript.util.slot.Slot slot : slots) {
-                    switch (mode) {
-                        case SET:
-                            assert delta != null;
-                            slot.setItem(delta instanceof ItemStack ? (ItemStack) delta : ((ItemType) delta).getItem().getRandom());
-                            break;
-                        case ADD:
-                            assert delta != null;
-                            if (delta instanceof ItemStack) {
-                                final ItemStack i = slot.getItem();
-                                if (i == null || i.getType() == Material.AIR || Utils.itemStacksEqual(i, (ItemStack) delta)) {
-                                    if (i != null && i.getType() != Material.AIR) {
-                                        i.setAmount(Math.min(i.getAmount() + ((ItemStack) delta).getAmount(), i.getMaxStackSize()));
-                                        slot.setItem(i);
-                                    } else {
-                                        slot.setItem((ItemStack) delta);
-                                    }
-                                }
-                            } else {
-                                slot.setItem(((ItemType) delta).getItem().addTo(slot.getItem()));
-                            }
-                            break;
-                        case REMOVE:
-                        case REMOVE_ALL:
-                            assert delta != null;
-                            if (delta instanceof ItemStack) {
-                                final ItemStack i = slot.getItem();
-                                if (i != null && Utils.itemStacksEqual(i, (ItemStack) delta)) {
-                                    final int a = mode == ChangeMode.REMOVE_ALL ? 0 : i.getAmount() - ((ItemStack) delta).getAmount();
-                                    if (a <= 0) {
-                                        slot.setItem(null);
-                                    } else {
-                                        i.setAmount(a);
-                                        slot.setItem(i);
-                                    }
-                                }
-                            } else {
-                                if (mode == ChangeMode.REMOVE)
-                                    slot.setItem(((ItemType) delta).removeFrom(slot.getItem()));
-                                else
-                                    // REMOVE_ALL
-                                    slot.setItem(((ItemType) delta).removeAll(slot.getItem()));
-                            }
-                            break;
-                        case DELETE:
-                            slot.setItem(null);
-                            break;
-                        case RESET:
-                            assert false;
-                    }
-                }
-            }
-        }).serializeAs(ItemStack.class));
-
         Classes.registerClass(new ClassInfo<>(Color.class, "color").user("colou?rs?").name("Colour").description("Wool, dye and chat colours.").usage("black, dark grey/dark gray, grey/light grey/gray/light gray/silver, white, blue/dark blue, cyan/aqua/dark cyan/dark aqua, light blue/light cyan/light aqua, green/dark green, light green/lime/lime green, yellow/light yellow, orange/gold/dark yellow, red/dark red, pink/light red, purple/dark purple, magenta/light purple, brown/indigo").examples("color of the sheep is red or black", "set the colour of the block to green", "message \"You're holding a <%color of tool%>%color of tool%<reset> wool block\"").since("").parser(new Parser<Color>() {
             @Override
             @Nullable
@@ -659,7 +592,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final StructureType o) {
-                return "" + o.name().toLowerCase();
+                return "" + o.name().toLowerCase(Locale.ENGLISH);
             }
 
             @Override

@@ -111,7 +111,7 @@
         </repository>
         <repository>
             <id>vault-repo</id>
-            <name>Unsecure Vault-API Repository</name>
+            <name>Unsecure Vault-API Repository</name> <!-- :P -->
             <!-- Let's Encrypt and CloudFlare gives free SSL certificates and it's 2019 but vault's repo don't have an
                     valid SSL certificate, interesting. -->
             <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
@@ -137,24 +137,24 @@
                         Ebean dependency is required because it is
                      referenced directly from JavaPlugin class -->
                 <exclusion>
-                    <artifactId>commons-lang</artifactId>
                     <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>gson</artifactId>
                     <groupId>com.google.code.gson</groupId>
+                    <artifactId>gson</artifactId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>json-simple</artifactId>
                     <groupId>com.googlecode.json-simple</groupId>
+                    <artifactId>json-simple</artifactId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>snakeyaml</artifactId>
                     <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>persistence-api</artifactId>
                     <groupId>javax.persistence</groupId>
+                    <artifactId>persistence-api</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>junit</groupId>
@@ -250,7 +250,8 @@
             <groupId>org.eclipse</groupId>
             <artifactId>jdt.annotation</artifactId>
             <version>1.1.0</version>
-            <scope>provided</scope>
+            <!-- Only annotations - but anyway include it. -->
+            <scope>compile</scope>
             <exclusions>
                 <!-- Includes old stuff: also it's a provided dependency
                         used just for the suppress annotations -->
@@ -273,28 +274,43 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>17.0.0</version>
+            <!-- Only annotations - but anyway include it. -->
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>1.3.31</version>
-            <!-- Currently we are not using kotlin in runtime. -->
             <scope>compile</scope>
-            <!-- We are already excluding this in runtime with maven
-             shade plugin. -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jetbrains</groupId>
+                    <artifactId>annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>org.jetbrains.kotlin</groupId>
+                	<artifactId>kotlin-stdlib</artifactId>
+                </exclusion>
+                <exclusion>
+                	<groupId>org.jetbrains.kotlin</groupId>
+                	<artifactId>kotlin-stdlib-common</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>1.3.31</version>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <artifactId>annotations</artifactId>
                     <groupId>org.jetbrains</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-common</artifactId>
-            <version>1.3.31</version>
-            <!-- Currently we are not using kotlin in runtime. -->
-            <scope>compile</scope>
-            <!-- We are already excluding this in runtime with maven
-             shade plugin. -->
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -325,6 +341,10 @@
                 <exclusion>
                     <artifactId>kotlin-stdlib-common</artifactId>
                     <groupId>org.jetbrains.kotlin</groupId>
+                </exclusion>
+                <exclusion>
+                	<groupId>org.jetbrains.kotlin</groupId>
+                	<artifactId>kotlin-stdlib</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -385,6 +405,7 @@
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
+						<phase>validate</phase>
                         <goals>
                             <goal>enforce</goal>
                         </goals>
@@ -398,6 +419,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- It slows down the entire build
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -414,7 +436,7 @@
                 <configuration>
                     <outputEncoding>UTF-8</outputEncoding>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -513,31 +535,47 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <createDependencyReducedPom>true</createDependencyReducedPom>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
                     <artifactSet>
                         <includes>
-                            <include>ch.njol:skript</include>
-                            <include>ch.njol:utils</include>
-                            <include>ch.njol:yggdrasil</include>
+							<include>*:*</include>
                         </includes>
-                        <excludes>
-                            <!-- Exclude kotlin as it is not required in runtime for now. -->
-                            <exclude>org.jetbrains.kotlin:kotlin-stdlib-jdk8</exclude>
-                            <exclude>org.jetbrains.kotlin:kotlin-stdlib-common</exclude>
-                        </excludes>
                     </artifactSet>
                     <filters>
                         <filter>
                             <artifact>*:*</artifact>
                             <excludes>
+                                <!-- Eclipse annotations includes bunch of un required stuff -->
                                 <exclude>META-INF/*.SF</exclude>
                                 <exclude>META-INF/*.DSA</exclude>
                                 <exclude>META-INF/*.RSA</exclude>
-                                <!-- We are not using kotlin in runtime for now. -->
-                                <exclude>META-INF/*.kotlin_module</exclude>
+
+                                <exclude>bundle.properties</exclude>
+                                <exclude>src/</exclude>
+                                <exclude>about.html</exclude>
+                                <exclude>.api_description</exclude>
                             </excludes>
                         </filter>
                     </filters>
+                    <relocations>
+                        <!-- For the future - Don't share the Kotlin library with other plugins -->
+                        <relocation>
+                            <pattern>kotlin</pattern>
+                            <shadedPattern>ch.njol.libraries.kotlin</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.jetbrains.annotations</pattern>
+                            <shadedPattern>ch.njol.libraries.annotations.jetbrains</shadedPattern>
+                        </relocation>
+						<relocation>
+							<pattern>org.intellij.lang.annotations</pattern>
+							<shadedPattern>ch.njol.libraries.annotations.intellij</shadedPattern>
+						</relocation>
+                        <relocation>
+                            <pattern>org.eclipse.jdt.annotation</pattern>
+                            <shadedPattern>ch.njol.libraries.annotations.eclipse</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
             <plugin>
@@ -584,7 +622,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M3</version>
                 <configuration>
-                    <useFile>true</useFile>
+                    <useFile>false</useFile>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
@@ -607,6 +645,7 @@
         <profile>
             <id>only-eclipse</id>
             <activation>
+				<activeByDefault>false</activeByDefault>
                 <property>
                     <name>m2e.version</name>
                 </property>
@@ -649,12 +688,7 @@
                 </pluginManagement>
             </build>
         </profile>
-        <profile>
-            <id>build</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
+        <!-- Un required profile, duplicates build
         <profile>
             <id>deploy</id>
             <build>
@@ -718,8 +752,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <createSourcesJar>true</createSourcesJar>
-                            <minimizeJar>true</minimizeJar>
+                            <createSourcesJar>false</createSourcesJar>
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -744,13 +778,14 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile> -->
     </profiles>
 
+    <!-- This also un required for now
     <distributionManagement>
         <repository>
             <id>njol-repo</id>
             <url>file://///DISKSTATION/web/maven.njol.ch/repo/</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement> -->
 </project>
