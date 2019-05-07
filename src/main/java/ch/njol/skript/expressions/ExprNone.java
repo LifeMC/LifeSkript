@@ -35,6 +35,8 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author TheDGOfficial
  */
@@ -76,6 +78,6 @@ public final class ExprNone extends SimpleExpression<Object> {
 
     @SuppressWarnings("null")
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "none value of " + getReturnType().getSimpleName().toLowerCase();
+        return "none value of " + getReturnType().getSimpleName().toLowerCase(Locale.ENGLISH);
     }
 }

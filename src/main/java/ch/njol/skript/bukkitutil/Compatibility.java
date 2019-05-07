@@ -52,7 +52,7 @@ public final class Compatibility {
      * check via {@link Class#isAssignableFrom(Class)} and cast it.
      */
     @NonNull
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "unused"})
     public static final <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
 
         if (Skript.classExists(newClass)) {

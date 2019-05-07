@@ -31,6 +31,8 @@ import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 public final class Parameter<T> {
 
     final String name;
@@ -45,7 +47,7 @@ public final class Parameter<T> {
 
     @SuppressWarnings("null")
     public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
-        this.name = name != null ? name.toLowerCase() : null;
+        this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;
         this.single = single;
@@ -54,7 +56,7 @@ public final class Parameter<T> {
 
     @SuppressWarnings("null")
     public Parameter(final String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
-        this.name = name != null ? name.toLowerCase() : null;
+        this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;
         this.single = single;

@@ -117,7 +117,7 @@ public final class WebUtils {
             con.setRequestProperty("Accept", "*/*");
 
             con.setRequestProperty("User-Agent", USER_AGENT.trim());
-            con.setRequestProperty("Referer", Skript.LATEST_VERSION_DOWNLOAD_LINK.replace("/releases", "".trim()).trim());
+            con.setRequestProperty("Referer", Skript.LATEST_VERSION_DOWNLOAD_LINK.replace("/releases", "").trim());
 
             in = new BufferedInputStream(con.getInputStream());
 

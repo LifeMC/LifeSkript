@@ -31,6 +31,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author Peter Güttinger
  */
@@ -59,7 +61,7 @@ public final class EvtGameMode extends SkriptEvent {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "gamemode change" + (mode != null ? " to " + mode.toString().toLowerCase() : "");
+        return "gamemode change" + (mode != null ? " to " + mode.toString().toLowerCase(Locale.ENGLISH) : "");
     }
 
 }

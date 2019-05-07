@@ -22,6 +22,8 @@
 
 package ch.njol.util;
 
+import java.util.Locale;
+
 /**
  * A three-valued logic type (true, unknown, false), named after Stephen Cole Kleene.
  *
@@ -67,7 +69,7 @@ public enum Kleenean {
 
     @Override
     public final String toString() {
-        return "" + name().toLowerCase();
+        return "" + name().toLowerCase(Locale.ENGLISH);
     }
 
     public final Kleenean is(final Kleenean other) {

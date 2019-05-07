@@ -32,6 +32,7 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author Peter Güttinger
@@ -53,8 +54,8 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     static {
         Language.addListener(() -> {
             for (int i = 0; i < names.length; i++) {
-                parseValues.put(names[i].getSingular().toLowerCase(), times[i]);
-                parseValues.put(names[i].getPlural().toLowerCase(), times[i]);
+                parseValues.put(names[i].getSingular().toLowerCase(Locale.ENGLISH), times[i]);
+                parseValues.put(names[i].getPlural().toLowerCase(Locale.ENGLISH), times[i]);
             }
         });
     }
@@ -87,7 +88,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                 t += times[offset + i] * Utils.parseLong("" + ss[i]);
             }
         } else {
-            final String[] subs = s.toLowerCase().split("\\s+");
+            final String[] subs = s.toLowerCase(Locale.ENGLISH).split("\\s+");
             for (int i = 0; i < subs.length; i++) {
                 String sub = subs[i];
 
@@ -128,7 +129,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                 if (sub.endsWith(","))
                     sub = sub.substring(0, sub.length() - 1);
 
-                final Long d = parseValues.get(sub.toLowerCase());
+                final Long d = parseValues.get(sub.toLowerCase(Locale.ENGLISH));
                 if (d == null)
                     return null;
 

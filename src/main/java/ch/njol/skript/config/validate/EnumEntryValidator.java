@@ -28,6 +28,8 @@ import ch.njol.skript.config.Node;
 import ch.njol.util.Setter;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author Peter Güttinger
  */
@@ -67,7 +69,7 @@ public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator 
             return false;
         final EntryNode n = (EntryNode) node;
         try {
-            final E e = Enum.valueOf(enumType, n.getValue().toUpperCase().replace(' ', '_'));
+            final E e = Enum.valueOf(enumType, n.getValue().toUpperCase(Locale.ENGLISH).replace(' ', '_'));
             assert e != null;
 //			if (setter != null)
             setter.set(e);

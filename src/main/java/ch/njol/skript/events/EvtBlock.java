@@ -84,24 +84,24 @@ public final class EvtBlock extends SkriptEvent {
             return true;
         final int id;
         final short durability;
-        if (e instanceof BlockEvent) {
-            id = ((BlockEvent) e).getBlock().getTypeId();
-            durability = ((BlockEvent) e).getBlock().getData();
-        } else if (e instanceof BlockFormEvent) {
+        if (e instanceof BlockFormEvent) {
             id = ((BlockFormEvent) e).getNewState().getTypeId();
             durability = ((BlockFormEvent) e).getNewState().getRawData();
+        } else if (e instanceof BlockEvent) {
+            id = ((BlockEvent) e).getBlock().getTypeId();
+            durability = ((BlockEvent) e).getBlock().getData();
         } else if (e instanceof PlayerBucketFillEvent) {
             id = ((PlayerBucketEvent) e).getBlockClicked().getRelative(((PlayerBucketEvent) e).getBlockFace()).getTypeId();
             durability = ((PlayerBucketEvent) e).getBlockClicked().getRelative(((PlayerBucketEvent) e).getBlockFace()).getData();
         } else if (e instanceof PlayerBucketEmptyEvent) {
             id = ((PlayerBucketEmptyEvent) e).getBucket() == Material.WATER_BUCKET ? Material.STATIONARY_WATER.getId() : Material.STATIONARY_LAVA.getId();
             durability = 0;
-        } else if (e instanceof PaintingEvent) {
-            id = Material.PAINTING.getId();
-            durability = 0;
         } else if (Skript.isRunningMinecraft(1, 4, 3) && e instanceof HangingEvent) {
             final EntityData<?> d = EntityData.fromEntity(((HangingEvent) e).getEntity());
             return types.check(e, t -> t != null && Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(d, t)));
+        } else if (e instanceof PaintingEvent) {
+            id = Material.PAINTING.getId();
+            durability = 0;
         } else {
             assert false;
             return false;

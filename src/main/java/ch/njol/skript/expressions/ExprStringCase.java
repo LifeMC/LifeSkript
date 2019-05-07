@@ -36,6 +36,8 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author Peter Güttinger
  */
@@ -70,9 +72,9 @@ public final class ExprStringCase extends SimpleExpression<String> {
         if (str == null)
             return "";
         else if (mode == UPPER)
-            return str.toUpperCase();
+            return str.toUpperCase(Locale.ENGLISH);
         else if (mode == LOWER)
-            return str.toLowerCase();
+            return str.toLowerCase(Locale.ENGLISH);
         else
             return str;
     }

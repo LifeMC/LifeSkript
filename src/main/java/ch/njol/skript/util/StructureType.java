@@ -31,6 +31,7 @@ import org.bukkit.block.Block;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -72,7 +73,7 @@ public enum StructureType {
                 parseMap.put(Pattern.compile(pattern, Pattern.CASE_INSENSITIVE), t);
             }
         }
-        s = "" + s.toLowerCase();
+        s = "" + s.toLowerCase(Locale.ENGLISH);
         for (final Entry<Pattern, StructureType> e : parseMap.entrySet()) {
             if (e.getKey().matcher(s).matches())
                 return e.getValue();

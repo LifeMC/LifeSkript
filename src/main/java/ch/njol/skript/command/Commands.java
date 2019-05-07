@@ -202,6 +202,8 @@ public final class Commands { //NOSONAR
                 cmKnownCommands = (Map<String, Command>) knownCommandsField.get(commandMap);
 
                 try {
+                    //noinspection JavaReflectionMemberAccess
+                    // Aliases field is removed in new versions. (probably 1.7+)
                     final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
                     aliasesField.setAccessible(true);
                     cmAliases = (Set<String>) aliasesField.get(commandMap);
@@ -232,7 +234,7 @@ public final class Commands { //NOSONAR
      */
     static boolean handleCommand(final CommandSender sender, final String command) {
         final String[] cmd = command.split("\\s+", 2);
-        cmd[0] = cmd[0].toLowerCase();
+        cmd[0] = cmd[0].toLowerCase(Locale.ENGLISH);
         if (cmd[0].endsWith("?")) {
             final ScriptCommand c = commands.get(cmd[0].substring(0, cmd[0].length() - 1));
             if (c != null) {
@@ -345,7 +347,7 @@ public final class Commands { //NOSONAR
         final boolean a = m.matches();
         assert a;
 
-        final String command = "" + m.group(1).toLowerCase();
+        final String command = "" + m.group(1).toLowerCase(Locale.ENGLISH);
         final ScriptCommand existingCommand = commands.get(command);
         if (existingCommand != null && existingCommand.getLabel().equals(command)) {
             final File f = existingCommand.getScript();
@@ -520,7 +522,7 @@ public final class Commands { //NOSONAR
         }
         commands.put(command.getLabel(), command);
         for (final String alias : command.getActiveAliases()) {
-            commands.put(alias.toLowerCase(), command);
+            commands.put(alias.toLowerCase(Locale.ENGLISH), command);
         }
         command.registerHelp();
     }

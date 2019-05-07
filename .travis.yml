@@ -19,7 +19,10 @@ addons:
     organization: "lifemc"
     token:
       secure: $SONAR_TOKEN
+notifications:
+  email: false
 script:
   - git fetch --unshallow --quiet
-  - mvn -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul --batch-mode -e -B -DcompilerArgument=-O clean install package sonar:sonar
+  - git fetch --no-tags https://github.com/LifeMC/LifeSkript +refs/heads/master:refs/remotes/origin/master
+  - mvn -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul --batch-mode -e -B -DcompilerArgument=-O clean org.jacoco:jacoco-maven-plugin:prepare-agent install package sonar:sonar
   - java -jar lib/proguard.jar @Skript.pro

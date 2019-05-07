@@ -75,7 +75,8 @@ public final class ScriptLoader {
     /**
      * Filter for enabled scripts & folders.
      */
-    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() || StringUtils.endsWithIgnoreCase(f.getName(), ".sk")) && !f.getName().startsWith("-");
+    @SuppressWarnings("null")
+	private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -102,8 +103,8 @@ public final class ScriptLoader {
     /**
      * Call {@link #deleteCurrentEvent()} after parsing
      *
-     * @param name
-     * @param events
+     * @param name The name of the current event.
+     * @param events The current events.
      */
     @SafeVarargs
     public static final void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
@@ -132,6 +133,7 @@ public final class ScriptLoader {
     static final ScriptInfo loadScripts() {
         final File scriptsFolder = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
         if (!scriptsFolder.isDirectory())
+            //noinspection ResultOfMethodCallIgnored
             scriptsFolder.mkdirs();
 
         final Date start = new Date();
@@ -165,7 +167,7 @@ public final class ScriptLoader {
     /**
      * Loads enabled scripts from the specified directory and it's subdirectories.
      *
-     * @param directory
+     * @param directory The directory to load scripts from
      * @return Info on the loaded scripts
      */
     public static ScriptInfo loadScripts(final File directory) {
@@ -173,6 +175,7 @@ public final class ScriptLoader {
         final boolean wasLocal = Language.setUseLocal(false);
         try {
             final File[] files = directory.listFiles(scriptFilter);
+            assert files != null;
             Arrays.sort(files);
             for (final File f : files) {
                 if (f.isDirectory()) {
@@ -192,7 +195,7 @@ public final class ScriptLoader {
     /**
      * Loads the specified scripts.
      *
-     * @param files
+     * @param files The script files to load
      * @return Info on the loaded scripts
      */
     public static ScriptInfo loadScripts(final File[] files) {
@@ -322,7 +325,7 @@ public final class ScriptLoader {
                             final ItemType t = Aliases.parseAlias(((EntryNode) n).getValue());
                             if (t == null)
                                 continue;
-                            currentAliases.put(n.getKey().toLowerCase(), t);
+                            currentAliases.put(n.getKey().toLowerCase(Locale.ENGLISH), t);
                         }
                         continue;
                     } else if ("options".equalsIgnoreCase(event)) {
@@ -406,7 +409,7 @@ public final class ScriptLoader {
                     if (!SkriptParser.validateLine(event))
                         continue;
 
-                    if (event.toLowerCase().startsWith("command ")) {
+                    if (event.toLowerCase(Locale.ENGLISH).startsWith("command ")) {
 
                         setCurrentEvent("command", CommandEvent.class);
 
@@ -419,14 +422,14 @@ public final class ScriptLoader {
                         deleteCurrentEvent();
 
                         continue;
-                    } else if (event.toLowerCase().startsWith("function ") || event.startsWith("func ") || event.startsWith("fun ")) { // Allow kotlin and javascript style function prefixes
+                    } else if (event.toLowerCase(Locale.ENGLISH).startsWith("function ") || event.startsWith("func ") || event.startsWith("fun ")) { // Allow kotlin and javascript style function prefixes
 
                         setCurrentEvent("function", FunctionEvent.class);
 
                         // Allows to define functions with kotlin style:
                         // fun myFunction():
                         //     broadcast "Yey!"
-                        if (!event.toLowerCase().startsWith("function ")) {
+                        if (!event.toLowerCase(Locale.ENGLISH).startsWith("function ")) {
                             if (event.startsWith("func ")) {
                                 node.setKey(event.replaceFirst("func", "function"));
                             } else {
@@ -533,7 +536,7 @@ public final class ScriptLoader {
     /**
      * Unloads enabled scripts from the specified directory and its subdirectories.
      *
-     * @param folder
+     * @param folder The folder to unload scripts from
      * @return Info on the unloaded scripts
      */
     static ScriptInfo unloadScripts(final File folder) {
@@ -545,6 +548,7 @@ public final class ScriptLoader {
     private static ScriptInfo unloadScripts_(final File folder) {
         final ScriptInfo info = new ScriptInfo();
         final File[] files = folder.listFiles(scriptFilter);
+        assert files != null;
         for (final File f : files) {
             if (f.isDirectory()) {
                 info.add(unloadScripts_(f));
@@ -558,7 +562,7 @@ public final class ScriptLoader {
     /**
      * Unloads the specified script.
      *
-     * @param script
+     * @param script The script file to unload
      * @return Info on the unloaded script
      */
     static ScriptInfo unloadScript(final File script) {
@@ -608,7 +612,8 @@ public final class ScriptLoader {
             SkriptLogger.setNode(n);
             if (n instanceof SimpleNode) {
                 final SimpleNode e = (SimpleNode) n;
-                final String s = replaceOptions(e.getKey());
+                @SuppressWarnings("null")
+				final String s = replaceOptions(e.getKey());
                 if (!SkriptParser.validateLine(s))
                     continue;
                 final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
@@ -620,7 +625,8 @@ public final class ScriptLoader {
                 if (stmt instanceof Delay)
                     hasDelayBefore = Kleenean.TRUE;
             } else if (n instanceof SectionNode) {
-                String name = replaceOptions(n.getKey());
+                @SuppressWarnings("null")
+				String name = replaceOptions(n.getKey());
                 if (!SkriptParser.validateLine(name))
                     continue;
 
@@ -717,7 +723,7 @@ public final class ScriptLoader {
     /**
      * For unit testing
      *
-     * @param node
+     * @param node The node to load trigger from
      * @return The loaded Trigger
      */
     @Nullable
@@ -727,7 +733,7 @@ public final class ScriptLoader {
             assert false : node;
             return null;
         }
-        if (event.toLowerCase().startsWith("on "))
+        if (event.toLowerCase(Locale.ENGLISH).startsWith("on "))
             event = event.substring("on ".length());
 
         final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");

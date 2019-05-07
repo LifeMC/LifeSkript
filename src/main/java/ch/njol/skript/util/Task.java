@@ -109,7 +109,8 @@ public abstract class Task implements Runnable, Closeable {
      */
     @SuppressWarnings("deprecation")
     private void schedule(final long delay) {
-        if (Skript.instance == null || !Skript.instance.isEnabled())
+    	final Skript instance = Skript.instance;
+        if (instance == null || !instance.isEnabled())
             return;
         assert !isAlive();
         if (period == -1) {

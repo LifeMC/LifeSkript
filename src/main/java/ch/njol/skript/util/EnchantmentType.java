@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -51,7 +52,7 @@ public final class EnchantmentType implements YggdrasilSerializable {
                 final String[] names = Language.getList(LANGUAGE_NODE + ".names." + e.getName());
                 enchantmentNames.put(e, names[0]);
                 for (final String n : names)
-                    enchantmentPatterns.put(n.toLowerCase(), e);
+                    enchantmentPatterns.put(n.toLowerCase(Locale.ENGLISH), e);
             }
         });
     }
@@ -102,7 +103,7 @@ public final class EnchantmentType implements YggdrasilSerializable {
 
     @Nullable
     public static Enchantment parseEnchantment(final String s) {
-        return enchantmentPatterns.get(s.toLowerCase());
+        return enchantmentPatterns.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     @SuppressWarnings("null")

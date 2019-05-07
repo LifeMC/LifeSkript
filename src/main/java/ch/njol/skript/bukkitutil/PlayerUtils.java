@@ -40,11 +40,12 @@ import java.util.*;
 public final class PlayerUtils {
 
     static final Set<Player> inviUpdate = new HashSet<>();
+
     // created when first used
     static final Task task = new Task(Skript.getInstance(), 1, 1) {
         @SuppressWarnings("deprecation")
         @Override
-        public void run() {
+        public final void run() {
             try {
                 for (final Player p : inviUpdate)
                     p.updateInventory();
@@ -55,7 +56,9 @@ public final class PlayerUtils {
             inviUpdate.clear();
         }
     };
+
     private static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
+
     @Nullable
     private static Method getOnlinePlayers;
 

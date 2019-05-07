@@ -34,6 +34,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author Peter Güttinger
  */
@@ -61,7 +63,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "" + event.name().replace('_', ' ').toLowerCase();
+        return "" + event.name().replace('_', ' ').toLowerCase(Locale.ENGLISH);
     }
 
     private enum ChangeEvent {
