@@ -23,9 +23,6 @@
 @file:JvmName("AgentEvent")
 package ch.njol.skript.agents
 
-import org.bukkit.event.Event
-import org.bukkit.event.HandlerList
-
 /**
  * Represents a skript debugger event.
  *
@@ -33,7 +30,7 @@ import org.bukkit.event.HandlerList
  *
  * @since 2.2-V13b
  */
-abstract class AgentEvent : Event() {
+abstract class AgentEvent {
 
     /**
      * Triggers before executing the event.
@@ -67,15 +64,5 @@ abstract class AgentEvent : Event() {
      */
     @Suppress("MemberVisibilityCanBePrivate")
     protected fun afterExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {}
-
-    /**
-     * This method is not supported and always throw an exception.
-     *
-     * @return No return value for you!
-     */
-    @Deprecated("This method is not supported and always throw an exception.")
-    override fun getHandlers(): HandlerList {
-        throw UnsupportedOperationException()
-    }
 
 }
