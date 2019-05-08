@@ -132,10 +132,10 @@
             <artifactId>bukkit</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+            <!-- Do not use server version dependant stuff
+                    Ebean dependency is required because it is
+                 referenced directly from JavaPlugin class -->
             <exclusions>
-                <!-- Do not use server version dependant stuff
-                        Ebean dependency is required because it is
-                     referenced directly from JavaPlugin class -->
                 <exclusion>
                     <groupId>commons-lang</groupId>
                     <artifactId>commons-lang</artifactId>

@@ -33,6 +33,7 @@ import ch.njol.util.Kleenean;
  *
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface SyntaxElement {
 
     /**

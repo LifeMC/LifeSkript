@@ -176,6 +176,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static Skript instance;
     static boolean disabled;
     static boolean updateAvailable;
+    static boolean updateChecked;
     @Nullable
     static String latestVersion;
     static Version minecraftVersion = new Version(666);
@@ -187,7 +188,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static Version version;
     public static final @Nullable Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
-    private static final boolean isCraftBukkit = classExists("org.bukkit.craftbukkit.CraftServer") || craftbukkitMain != null;
+    private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
     static final boolean runningCraftBukkit = isCraftBukkit;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{Skript.getLatestVersion(), Skript.getVersion().toString()});
@@ -1092,7 +1093,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateAvailable ? " (update available)" : " (latest)"));
+            logEx("  Skript: " + getVersion() + (updateChecked ? (updateAvailable ? " (update available)" : " (latest)") : " (not checked)"));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1132,7 +1133,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (addon.plugin instanceof Skript)
                     continue;
                 stringBuilder.append(addon.getName());
-                if (i <= addons.size())
+                if (i < (addons.size() - 1))
                     stringBuilder.append(", ");
                 i++;
             }
@@ -1469,6 +1470,9 @@ public final class Skript extends JavaPlugin implements Listener {
                                         Skript.exception(ex, "Cannot load class " + c);
                                     } catch (final ExceptionInInitializerError err) {
                                         Skript.exception(err.getCause(), "Class " + c + " generated an exception while loading");
+                                    } catch (final Throwable tw) {
+                                        if (Skript.testing() || Skript.debug())
+                                            Skript.exception(tw, "Cannot load class " + c);
                                     }
                                 }
                             }
@@ -1689,6 +1693,8 @@ public final class Skript extends JavaPlugin implements Listener {
                         }
                         Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
                     }
+                    updateChecked = true;
+                    Thread.currentThread().interrupt();
                 }, "Skript update checker thread");
 
                 // Not slow down the server, it's just an updater!
@@ -1697,6 +1703,12 @@ public final class Skript extends JavaPlugin implements Listener {
                 t.setPriority(Thread.MIN_PRIORITY);
                 t.setDaemon(true);
                 t.start();
+            }
+
+            // No need to add debug code everytime to test the exception handler (:
+            if (System.getProperty("skript.throwTestError") != null
+                    && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
+                Skript.exception(new Throwable(), "Test error");
             }
 
         } catch (final Throwable tw) {
@@ -1733,8 +1745,8 @@ public final class Skript extends JavaPlugin implements Listener {
                 Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
             }
         }
-        if (Skript.debug())
-            Skript.debug("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
+        if (Skript.logHigh())
+            info("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
 
         // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
         // async to not slow down server reload, delayed to not slow down server shutdown
@@ -1789,6 +1801,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (testing() || logHigh())
                     tw.printStackTrace();
             }
+            Thread.currentThread().interrupt();
         }, "Skript cleanup thread");
         t.setPriority(Thread.MIN_PRIORITY);
         t.setDaemon(true);

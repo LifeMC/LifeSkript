@@ -39,6 +39,7 @@
 # Why are you keeping the unused libraries, what rule it causes to keep?
 -whyareyoukeeping class ch.njol.libraries.* { *; }
 
+# Since Skript is also a library for Skript Add-Ons, we must keep all classes.
 -keep,allowoptimization class ch.njol.skript.* { *; }
 -keep,allowoptimization class ch.njol.util.* { *; }
 -keep,allowoptimization class ch.njol.yggdrasil.* { *; }
@@ -829,4 +830,4 @@
     public java.lang.String substring(int,int);
 }
 
--assumenosideeffects class **
+#-assumenosideeffects class **

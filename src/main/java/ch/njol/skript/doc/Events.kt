@@ -20,16 +20,17 @@
  *
  */
 
-package ch.njol.skript.doc;
-
-import java.lang.annotation.*;
+package ch.njol.skript.doc
 
 /**
  * @author Peter Güttinger
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Name {
-    String value();
-}
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+annotation class Events(
+    /**
+     * A list of [name(s)][ch.njol.skript.lang.SkriptEventInfo.getName] of [events][ch.njol.skript.lang.SkriptEvent] this expression is useful for.
+     */
+    vararg val value: String
+)

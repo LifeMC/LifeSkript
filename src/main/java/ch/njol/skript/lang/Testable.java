@@ -31,6 +31,7 @@ import org.bukkit.event.Event;
  *
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface Testable {
 
     boolean test(final Event e);

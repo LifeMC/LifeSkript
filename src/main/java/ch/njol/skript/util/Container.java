@@ -33,6 +33,7 @@ import java.util.Iterator;
  *
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface Container<T> {
 
     /**

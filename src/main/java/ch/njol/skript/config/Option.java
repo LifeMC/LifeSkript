@@ -72,7 +72,7 @@ public final class Option<T> {
     }
 
     public Option(final String key, final T defaultValue, final Converter<String, ? extends T> parser) {
-        this.key = "" + key.toLowerCase(Locale.ENGLISH);
+        this.key = key.toLowerCase(Locale.ENGLISH);
         this.defaultValue = defaultValue;
         parsedValue = defaultValue;
         this.parser = parser;

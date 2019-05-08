@@ -82,6 +82,7 @@ public interface YggdrasilSerializable {
      *
      * @author Peter Güttinger
      */
+    @FunctionalInterface
     interface YggdrasilRobustEnum {
 
         /**

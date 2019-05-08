@@ -15,6 +15,12 @@ Requirements for running Skript is:
 
 I've only created this fork for my old 1.7.10 server, so don't expect too much. I will back-port and/or make some sort of bug fixes and features but nothing too much.
 
+# Goals Of This Fork
+- Provide bug fixes and backports to older server versions.
+- Improve over-all performance of the plugin and scripts.
+
+For more info about performance, see the wiki: [Improving performance](https://github.com/LifeMC/LifeSkript/wiki/Why-the-Skript-Parser-is-so-slow%3F-%5BPerformance-Tips%5D)
+
 # Issues and Pull Requests
 Feel free to report all issues, make pull requests etc. but I can't guarantee these issues will be fixed because i'm not the original
 author of the Skript and don't know everything about Skript.

@@ -31,6 +31,7 @@ package ch.njol.skript.classes;
  * @see ch.njol.skript.registrations.Comparators#registerComparator(Class, Class, Comparator)
  * @see ch.njol.skript.classes.data.DefaultComparators
  */
+@FunctionalInterface
 public interface Comparator<T1, T2> {
 
     Comparator<?, ?> equalsComparator = new Comparator<Object, Object>() {
@@ -57,7 +58,9 @@ public interface Comparator<T1, T2> {
     /**
      * @return whether this comparator supports ordering of elements or not.
      */
-    boolean supportsOrdering();
+    default boolean supportsOrdering() {
+        return false;
+    }
 
     /**
      * represents a relation between two objects.

@@ -20,16 +20,12 @@
  *
  */
 
-package ch.njol.skript.doc;
-
-import java.lang.annotation.*;
+package ch.njol.skript.doc
 
 /**
  * @author Peter Güttinger
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Examples {
-    String[] value();
-}
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Retention(AnnotationRetention.RUNTIME)
+@MustBeDocumented
+annotation class Name(val value: String)

@@ -33,6 +33,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  * @see ch.njol.skript.registrations.Converters#registerConverter(Class, Class, Converter)
  */
+@FunctionalInterface
 public interface Converter<F, T> {
 
     int NO_LEFT_CHAINING = 1;

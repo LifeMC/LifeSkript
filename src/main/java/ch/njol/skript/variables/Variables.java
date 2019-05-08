@@ -174,6 +174,7 @@ public final class Variables {
             }
             Thread.currentThread().interrupt();
         }, "Skript variable load tracker thread");
+        loadingLoggerThread.setPriority(Thread.MIN_PRIORITY);
         loadingLoggerThread.start();
 
         try {
