@@ -1,6 +1,6 @@
 
-]squid:HiddenFieldCheck·"5Rename "c" which hides the field declared at line 53.(Ã¼áÄúÿÿÿÿ
-]squid:HiddenFieldCheckÀ"5Rename "c" which hides the field declared at line 53.(Ã¼áÄúÿÿÿÿ
-Nsquid:S2589@"7Remove this expression which always evaluates to "true"( ™„
-¤%squid:RedundantThrowsDeclarationCheck¼"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-Lsquid:S20659"0Remove the "transient" modifier from this field.(óŒÊ»øÿÿÿÿ
+]squid:HiddenFieldCheckÁ"5Rename "c" which hides the field declared at line 54.(Ã¼áÄúÿÿÿÿ
+Nsquid:S2589A"7Remove this expression which always evaluates to "true"( ™„
+]squid:HiddenFieldCheck¸"5Rename "c" which hides the field declared at line 54.(Ã¼áÄúÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheck½"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+Lsquid:S2065:"0Remove the "transient" modifier from this field.(óŒÊ»øÿÿÿÿ

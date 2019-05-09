@@ -1,4 +1,3 @@
 
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ôé›öÿÿÿÿÿ
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(ðå üþÿÿÿÿ
+t
+squid:S135\"YReduce the total number of break and continue statements in this loop to use at most one.(ðå üþÿÿÿÿ

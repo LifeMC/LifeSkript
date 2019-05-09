@@ -1,14 +1,10 @@
 
-ˆ"squid:ClassVariableVisibilityCheck;"ZMake infiniNumTrack a static final constant or non-public and provide accessors if needed.(Š†®¯
-]squid:CallToDeprecatedMethod‡"/Remove this use of "getData"; it is deprecated.(Û‚“„ÿÿÿÿÿ
-asquid:CallToDeprecatedMethod…"3Remove this use of "getWoolData"; it is deprecated.(ÓªâÚøÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ò˜¡ùùÿÿÿÿ
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(’²]
-jsquid:ModifiersOrderCheck;"EReorder the modifiers to comply with the Java Language Specification.(Š†®¯
-Ksquid:S1444;"4Make this "public static infiniNumTrack" field final(Š†®¯
-Š"squid:ClassVariableVisibilityCheck9"WMake getWoolData a static final constant or non-public and provide accessors if needed.(”¾ğÌşÿÿÿÿ
-Msquid:S14449"1Make this "public static getWoolData" field final(”¾ğÌşÿÿÿÿ
-~squid:S2637x"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(‹Œ±v
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(â‘ı«
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ßÀ¬±øÿÿÿÿ
-osquid:ModifiersOrderCheck9"EReorder the modifiers to comply with the Java Language Specification.(”¾ğÌşÿÿÿÿ
+Msquid:S1444;"1Make this "public static getWoolData" field final(”¾ğÌşÿÿÿÿ
+asquid:CallToDeprecatedMethod"3Remove this use of "getWoolData"; it is deprecated.(ÓªâÚøÿÿÿÿ
+]squid:CallToDeprecatedMethod"/Remove this use of "getData"; it is deprecated.(Û‚“„ÿÿÿÿÿ
+squid:S2637"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(‹Œ±v
+ˆ"squid:ClassVariableVisibilityCheck="ZMake infiniNumTrack a static final constant or non-public and provide accessors if needed.(Š†®¯
+Š"squid:ClassVariableVisibilityCheck;"WMake getWoolData a static final constant or non-public and provide accessors if needed.(”¾ğÌşÿÿÿÿ
+Ksquid:S1444="4Make this "public static infiniNumTrack" field final(Š†®¯
+msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(”¾ğÌşÿÿÿÿ
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Š†®¯8¤ãµ®©-

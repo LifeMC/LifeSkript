@@ -107,6 +107,7 @@
       <option name="myAdditionalJavadocTags" value="Well,addon" />
     </inspection_tool>
     <inspection_tool class="LiftReturnOrAssignment" enabled="false" level="INFO" enabled_by_default="false" />
+    <inspection_tool class="NonAsciiCharacters" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="RedundantSuppression" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="RedundantThrows" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SameParameterValue" enabled="false" level="WARNING" enabled_by_default="false" />

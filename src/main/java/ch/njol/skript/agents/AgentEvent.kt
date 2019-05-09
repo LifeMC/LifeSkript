@@ -38,7 +38,9 @@ abstract class AgentEvent {
      * @param on The debugger that listens this event.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    protected fun beforeExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {}
+    protected fun beforeExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {
+        /* empty, overrideable */
+    }
 
     /**
      * Runs this event on a skript debugger agent.
@@ -63,6 +65,8 @@ abstract class AgentEvent {
      * @param on The debugger that listens this event.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    protected fun afterExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {}
+    protected fun afterExecuting(@Suppress("UNUSED_PARAMETER") on: SkriptAgent) {
+        /* empty, overrideable */
+    }
 
 }

@@ -47,9 +47,10 @@ public abstract class AsyncEffect extends Effect {
         Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), () -> {
             execute(e); // Execute this effect
             if (next != null) {
-                Bukkit.getScheduler().runTask(Skript.getInstance(), () -> { // Walk to next item synchronously
-                    TriggerItem.walk(next, e);
-                });
+                Bukkit.getScheduler().runTask(Skript.getInstance(), () ->
+                    // Walk to next item synchronously
+                    TriggerItem.walk(next, e)
+                );
             }
         });
         return null;

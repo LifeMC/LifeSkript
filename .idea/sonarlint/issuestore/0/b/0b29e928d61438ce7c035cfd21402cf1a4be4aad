@@ -1,27 +1,11 @@
 
-Vsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ˆ›ĞÍ8´ƒÿÌ¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Èˆ…Ó8´ƒÿÌ¢-
-Ksquid:S00108")Either remove or fill this block of code.(¢ÙÁÀÿÿÿÿÿ8Š¤„Û¢-
-xsquid:S2629"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(ÛÜ»8Š¤„Û¢-
-Gsquid:S2386"+Make member "currentArguments" "protected".(·ÓôË8´ƒÿÌ¢-
-isquid:CallToDeprecatedMethod"7Remove this use of "PlayerChatEvent"; it is deprecated.(…«¡Çùÿÿÿÿ8´ƒÿÌ¢-
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Æ÷ãL
-nsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ûŸÜ8´ƒÿÌ¢-
-Ssquid:S2629"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ğåÊıùÿÿÿÿ8´ƒÿÌ¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ïºşœ8Š¤„Û¢-
-Rsquid:S1444"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
-Vsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(±ªÅÓøÿÿÿÿ
-Isquid:S1659"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
-Dsquid:S1604"(Make this anonymous inner class a lambda(ã¥¨”8´ƒÿÌ¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ïÉÛö8´ƒÿÌ¢-
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(’ŸÜ±ùÿÿÿÿ8´ƒÿÌ¢-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(îÆğıüÿÿÿÿ8´ƒÿÌ¢-
-nsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ëªâ!8´ƒÿÌ¢-
-3squid:S1700"Rename field "commands"(ïÉÛö8´ƒÿÌ¢-
-Wsquid:S2696"6Make the enclosing method "static" or remove this set.(’ŸÜ±ùÿÿÿÿ8´ƒÿÌ¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÛäÃĞ8´ƒÿÌ¢-
-Ksquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ8Š¤„Û¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.( ¹•¨8´ƒÿÌ¢-
+Vsquid:S2629ü"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
+Usquid:S1444‰"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
+Xsquid:S1141y"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+Lsquid:S1659‡"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
+Ysquid:S1141Ì"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+Jsquid:S2386é"+Make member "currentArguments" "protected".(·ÓôË8´ƒÿÌ¢-
+ksquid:CallToDeprecatedMethode"7Remove this use of "PlayerChatEvent"; it is deprecated.(…«¡Çùÿÿÿÿ8´ƒÿÌ¢-
+Nsquid:S00108Ò")Either remove or fill this block of code.(¢ÙÁÀÿÿÿÿÿ8Š¤„Û¢-
+Gsquid:S1604²"(Make this anonymous inner class a lambda(ã¥¨”8´ƒÿÌ¢-
+5squid:S1700["Rename field "commands"(‡û–8„Ù¶®©-

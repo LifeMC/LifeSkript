@@ -1,3 +1,2 @@
 
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(»­
-rsquid:S00115,"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(»­
+~squid:S00115-"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ë¢‹¼ıÿÿÿÿ8ì¶®©-

@@ -1,25 +1,13 @@
 
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Æ¼ºÉıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¸í‘üÿÿÿÿ
 p
-squid:S135³"YReduce the total number of break and continue statements in this loop to use at most one.(Ç»Ø¨
-Fsquid:S00108b")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
-Gsquid:S00108Ã")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
-psquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®ÿ²
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ªï²°
-csquid:S3824"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(¬Ò–
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Œ…›
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‡ƒ£øúÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ù½†°ûÿÿÿÿ
-]squid:S2184ä"@Cast one of the operands of this integer division to a "double".(Â¾ÆÖıÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Šöœ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(®ÿ²
-usquid:S1171l"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(óÈõ¬
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(­Ï‹Œıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ãê›ºûÿÿÿÿ
-?squid:S1604V"(Make this anonymous inner class a lambda(Šöœ
-2squid:S1700"Rename field "variables"(‡ƒ£øúÿÿÿÿ
-|
-squid:S135Ÿ"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8öß§£-
-hsquid:S3358¡"DExtract this nested ternary operation into an independent statement.(ƒÇĞÛûÿÿÿÿ8öß§£-
+squid:S135¶"YReduce the total number of break and continue statements in this loop to use at most one.(Ç»Ø¨
+usquid:S1171n"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheckÈ".Extract the assignment out of this expression.(Æ¼ºÉıÿÿÿÿ
+]squid:S2184ç"@Cast one of the operands of this integer division to a "double".(Â¾ÆÖıÿÿÿÿ
+fsquid:S3824Æ"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(¬Ò–
+hsquid:S3358£"DExtract this nested ternary operation into an independent statement.(ƒÇĞÛûÿÿÿÿ8öß§£-
+v
+squid:S135¡"YReduce the total number of break and continue statements in this loop to use at most one.(›ùC8õûµ®©-
+Ksquid:S1604W"(Make this anonymous inner class a lambda(„’—ˆÿÿÿÿÿ8õûµ®©-
+~squid:S00115I"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¾µÂşÿÿÿÿ8õûµ®©-
+6squid:S1700P"Rename field "variables"(œîƒ8õûµ®©-

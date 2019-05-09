@@ -1,6 +1,3 @@
 
-^squid:CallToDeprecatedMethodE"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÊÌ‡~
-dsquid:CallToDeprecatedMethodS"7Remove this use of "PlayerChatEvent"; it is deprecated.(€…šÂùÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ê‡÷­
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÇóÜŒùÿÿÿÿ
-Rsquid:S2696e"6Make the enclosing method "static" or remove this set.(‘÷¹¨úÿÿÿÿ
+^squid:CallToDeprecatedMethodF"7Remove this use of "PlayerChatEvent"; it is deprecated.(ÊÌ‡~
+dsquid:CallToDeprecatedMethodT"7Remove this use of "PlayerChatEvent"; it is deprecated.(€…šÂùÿÿÿÿ

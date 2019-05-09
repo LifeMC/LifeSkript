@@ -1,3 +1,2 @@
 
-Vsquid:S1118(":Add a private constructor to hide the implicit public one.(ºÑèúÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(“ßÁĞ
+Vsquid:S1118)":Add a private constructor to hide the implicit public one.(ºÑèúÿÿÿÿ

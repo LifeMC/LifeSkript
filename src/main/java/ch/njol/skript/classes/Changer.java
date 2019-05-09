@@ -63,10 +63,14 @@ public interface Changer<T> {
         ADD, SET, REMOVE, REMOVE_ALL, DELETE, RESET
     }
 
-    abstract class ChangerUtils {
+    final class ChangerUtils {
+
+        private ChangerUtils() {
+            throw new UnsupportedOperationException();
+        }
 
         @SuppressWarnings("unchecked")
-        public static <T, V> void change(final Changer<T> changer, final Object[] what, final @Nullable Object[] delta, final ChangeMode mode) {
+        public static final <T, V> void change(final Changer<T> changer, final Object[] what, final @Nullable Object[] delta, final ChangeMode mode) {
             changer.change((T[]) what, delta, mode);
         }
 
@@ -78,7 +82,7 @@ public interface Changer<T> {
          * @param types The types to test for
          * @return Whether <tt>e.{@link Expression#change(org.bukkit.event.Event, Object[], ChangeMode) change}(event, type[], mode)</tt> can be used or not.
          */
-        public static boolean acceptsChange(final Expression<?> e, final ChangeMode mode, final Class<?>... types) {
+        public static final boolean acceptsChange(final Expression<?> e, final ChangeMode mode, final Class<?>... types) {
             final Class<?>[] cs = e.acceptChange(mode);
             if (cs == null)
                 return false;

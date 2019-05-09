@@ -1,6 +1,5 @@
 
-8squid:S16594"!Declare "ANY" on a separate line.(ê®¡é
-9squid:S16594""Declare "LEFT" on a separate line.(ê®¡é
-`squid:HiddenFieldCheck`"9Rename "click" which hides the field declared at line 64.(ñÖ”µüÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ê®¡é
-asquid:S3358Š"DExtract this nested ternary operation into an independent statement.(šæû¢ýÿÿÿÿ
+`squid:HiddenFieldChecka"9Rename "click" which hides the field declared at line 65.(ñÖ”µüÿÿÿÿ
+asquid:S3358‹"DExtract this nested ternary operation into an independent statement.(šæû¢ýÿÿÿÿ
+@squid:S16595""Declare "LEFT" on a separate line.(º—äû8â•µ®©-
+?squid:S16595"!Declare "ANY" on a separate line.(º—äû8â•µ®©-

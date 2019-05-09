@@ -41,4 +41,26 @@ data class VariableChangeEndEvent(
 	 * The new value of the variable.
 	 */
 	@JvmField val newValue: Array<Any?>?
-) : AgentEvent()
+) : AgentEvent() {
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as VariableChangeEndEvent
+
+        if (variable != other.variable) return false
+        if (newValue != null) {
+            if (other.newValue == null) return false
+            if (!newValue.contentEquals(other.newValue)) return false
+        } else if (other.newValue != null) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = variable.hashCode()
+        result = 31 * result + (newValue?.contentHashCode() ?: 0)
+        return result
+    }
+}

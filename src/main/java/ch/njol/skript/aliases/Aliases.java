@@ -47,8 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * FIXME rename
- *
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")

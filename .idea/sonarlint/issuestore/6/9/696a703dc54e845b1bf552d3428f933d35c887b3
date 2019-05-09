@@ -1,16 +1,12 @@
 
-[squid:HiddenFieldCheckÛ"8Rename "name" which hides the field declared at line 72.(óšÜï
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Üûßúÿÿÿÿ
-Ksquid:S1066"/Merge this if statement with the enclosing one.(ËÕ³öûÿÿÿÿ
-Gsquid:S1905ª"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
-[squid:HiddenFieldCheck°"8Rename "name" which hides the field declared at line 72.(óšÜï
-[squid:HiddenFieldCheckÿ"8Rename "name" which hides the field declared at line 72.(óšÜï
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(›“¬
-Usquid:S2589ê"8Remove this expression which always evaluates to "false"(éØéıÿÿÿÿ
-¤%squid:RedundantThrowsDeclarationCheck€"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ç’”ûıÿÿÿÿ
-Usquid:S2589í"8Remove this expression which always evaluates to "false"(åĞªûÿÿÿÿ
-Ssquid:S2589Q"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ğ¹ÑÌ
-^squid:CallToDeprecatedMethodô"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
-wsquid:S00115B"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ç’”ûıÿÿÿÿ
+[squid:HiddenFieldCheckÜ"8Rename "name" which hides the field declared at line 73.(óšÜï
+[squid:HiddenFieldCheck€"8Rename "name" which hides the field declared at line 73.(óšÜï
+Gsquid:S1905«"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
+Usquid:S2589î"8Remove this expression which always evaluates to "false"(åĞªûÿÿÿÿ
+[squid:HiddenFieldCheck±"8Rename "name" which hides the field declared at line 73.(óšÜï
+Lsquid:S1066€"/Merge this if statement with the enclosing one.(ËÕ³öûÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheck"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+Usquid:S2589ë"8Remove this expression which always evaluates to "false"(éØéıÿÿÿÿ
+Ssquid:S2589R"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
+^squid:CallToDeprecatedMethodõ"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
+~squid:S00115C"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¤ëæøÿÿÿÿ8îÚ¶®©-

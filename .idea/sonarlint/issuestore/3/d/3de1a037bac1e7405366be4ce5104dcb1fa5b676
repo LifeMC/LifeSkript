@@ -1,19 +1,11 @@
 
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(“ëøî
-asquid:S3358"DExtract this nested ternary operation into an independent statement.(Ğà¹ÿÿÿÿÿ
-zsquid:S1845]"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 40.(š´Ç
-Bsquid:S1659"-Declare "NO_GENDER_TOKEN" on a separate line.(…ÈÄ¥
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŞßÂ£ûÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(…ÈÄ¥
+zsquid:S1845^"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 41.(š´Ç
+<squid:S1659Š"Declare "c" on a separate line.(­†ıÿÿÿÿ
+;squid:S1659^"$Declare "plural" on a separate line.(š´Ç
 t
-squid:S135:"YReduce the total number of break and continue statements in this loop to use at most one.(‘¦ä’ÿÿÿÿÿ
-;squid:S1659]"$Declare "plural" on a separate line.(š´Ç
-<squid:S1659‰"Declare "c" on a separate line.(­†ıÿÿÿÿ
-Asquid:S1659"'Declare "NO_GENDER" on a separate line.(Õ§Ÿúÿÿÿÿ
-asquid:S3358²"DExtract this nested ternary operation into an independent statement.(âÑÏÆùÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ù¹”­ùÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ãİà
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(™—‚Úÿÿÿÿÿ
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(µ¦’
-psquid:S4144ó"YUpdate this method so that its implementation is not identical to "toString" on line 277.(ˆ„ºq
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Õ§Ÿúÿÿÿÿ8«ß§£-
+squid:S135;"YReduce the total number of break and continue statements in this loop to use at most one.(‘¦ä’ÿÿÿÿÿ
+asquid:S3358‘"DExtract this nested ternary operation into an independent statement.(Ğà¹ÿÿÿÿÿ
+psquid:S4144ô"YUpdate this method so that its implementation is not identical to "toString" on line 278.(ˆ„ºq
+asquid:S3358³"DExtract this nested ternary operation into an independent statement.(âÑÏÆùÿÿÿÿ
+Esquid:S1659)"'Declare "NO_GENDER" on a separate line.(›İç8±—¶®©-
+Ksquid:S1659*"-Declare "NO_GENDER_TOKEN" on a separate line.(öğ‘÷8±—¶®©-

@@ -1,11 +1,11 @@
 
-Fsquid:S00108P")Either remove or fill this block of code.(°¶åÕûÿÿÿÿ
-Zsquid:S2184Õ"BCast one of the operands of this addition operation to a "double".(¥³Ö®
-˜squid:S1186C"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é¹ğ÷
-csquid:S00112h"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
-;squid:S1659Ñ"#Declare "upper" on a separate line.(€„ê£
-Msquid:S2065¨"0Remove the "transient" modifier from this field.(»’ßùÿÿÿÿ
-@squid:S00108W")Either remove or fill this block of code.(áĞıS
-Ysquid:S2184Ö"BCast one of the operands of this addition operation to a "double".(šÙC
-fsquid:CallToDeprecatedMethodÌ"8Remove this use of "getOfflinePlayer"; it is deprecated.(õ†í†ùÿÿÿÿ
-squid:S1845a"hRename method "getClaim" to prevent any misunderstanding/clash with field "getClaim" defined on line 63.(ú¸İ—
+Msquid:S2065©"0Remove the "transient" modifier from this field.(»’ßùÿÿÿÿ
+fsquid:CallToDeprecatedMethodÍ"8Remove this use of "getOfflinePlayer"; it is deprecated.(õ†í†ùÿÿÿÿ
+˜squid:S1186D"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é¹ğ÷
+csquid:S00112i"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
+Zsquid:S2184Ö"BCast one of the operands of this addition operation to a "double".(¥³Ö®
+@squid:S00108X")Either remove or fill this block of code.(áĞıS
+squid:S1845b"hRename method "getClaim" to prevent any misunderstanding/clash with field "getClaim" defined on line 64.(ú¸İ—
+Fsquid:S00108Q")Either remove or fill this block of code.(°¶åÕûÿÿÿÿ
+;squid:S1659Ò"#Declare "upper" on a separate line.(€„ê£
+`squid:S2184×"BCast one of the operands of this addition operation to a "double".(šÙC8½¤µ®©-

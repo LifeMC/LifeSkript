@@ -1,6 +1,6 @@
 
-8squid:S1214#""Move constants to a class or enum.(ˆ¤Ò{
-=squid:S1452R"&Remove usage of generic wildcard type.(ÌÇÏ
-=squid:S1452g"&Remove usage of generic wildcard type.(Îœ
-Bsquid:S1452N"&Remove usage of generic wildcard type.(ğ¿¨ıÿÿÿÿ
-=squid:S1452c"&Remove usage of generic wildcard type.(¯å³¾
+=squid:S1452e"&Remove usage of generic wildcard type.(¯å³¾
+Bsquid:S1452P"&Remove usage of generic wildcard type.(ğ¿¨ıÿÿÿÿ
+8squid:S1214%""Move constants to a class or enum.(ˆ¤Ò{
+=squid:S1452i"&Remove usage of generic wildcard type.(Îœ
+=squid:S1452T"&Remove usage of generic wildcard type.(ÌÇÏ

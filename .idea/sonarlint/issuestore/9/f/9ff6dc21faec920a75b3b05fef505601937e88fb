@@ -1,32 +1,29 @@
 
->squid:S1168…"&Return an empty array instead of null.(•πÔç
-ksquid:S2975ì"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(“Œ“ö
-<squid:S1659w" Declare "it" on a separate line.(Ö™¨Ö˝ˇˇˇˇ
-Zsquid:CallToDeprecatedMethod∏"1Remove this use of "getTypeId"; it is deprecated.(”˝•’
-Ysquid:CallToDeprecatedMethodo"1Remove this use of "getTypeId"; it is deprecated.(»€∑¢
-Wsquid:CallToDeprecatedMethod¿"/Remove this use of "getData"; it is deprecated.(™ßË.
-Zsquid:CallToDeprecatedMethodì"1Remove this use of "getTypeId"; it is deprecated.(ΩúµË
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(â◊≠t
+`squid:HiddenFieldCheckÏ"8Rename "item" which hides the field declared at line 81.(√◊§∆˙ˇˇˇˇ
+[squid:HiddenFieldCheck¶"8Rename "item" which hides the field declared at line 81.(’ß˜Í
+`squid:S1182î"HUse super.clone() to create and seed the cloned instance to be returned.(“Œ“ö
+Fsquid:S1066æ"/Merge this if statement with the enclosing one.(íƒ∑8
+g squid:LabelsShouldNotBeUsedCheckﬂ";Refactor the code to remove this label and the need for it.(‡œ≈)
+ksquid:S2975î"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(“Œ“ö
+Qsquid:MissingDeprecatedCheck»"(Add the missing @deprecated Javadoc tag.(Âì∆Ñ
+Gsquid:S2065B"0Remove the "transient" modifier from this field.(†ïçØ
+g squid:LabelsShouldNotBeUsedCheck∑";Refactor the code to remove this label and the need for it.(‡œ≈)
+Zsquid:CallToDeprecatedMethodî"1Remove this use of "getTypeId"; it is deprecated.(ΩúµË
+<squid:S1659x" Declare "it" on a separate line.(Ö™¨Ö˝ˇˇˇˇ
 p
-squid:S135Ÿ"YReduce the total number of break and continue statements in this loop to use at most one.(„«‚á
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÿ‚—ƒ˝ˇˇˇˇ
-_squid:CallToDeprecatedMethodä"1Remove this use of "getTypeId"; it is deprecated.(îî˚Ωˇˇˇˇˇ
-`squid:HiddenFieldCheck®"8Rename "meta" which hides the field declared at line 69.(®–ë™˘ˇˇˇˇ
-Gsquid:S2065A"0Remove the "transient" modifier from this field.(†ïçØ
-Gsquid:S2065F"0Remove the "transient" modifier from this field.(Â®¯“
-Ysquid:CallToDeprecatedMethod¿"1Remove this use of "getTypeId"; it is deprecated.(™ßË.
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(◊ÿƒô˛ˇˇˇˇ
-g squid:LabelsShouldNotBeUsedCheck∂";Refactor the code to remove this label and the need for it.(‡œ≈)
-Qsquid:MissingDeprecatedCheck«"(Add the missing @deprecated Javadoc tag.(Âì∆Ñ
-Fsquid:S1066Ω"/Merge this if statement with the enclosing one.(íƒ∑8
-`squid:S1182ì"HUse super.clone() to create and seed the cloned instance to be returned.(“Œ“ö
-Msquid:S1133«"5Do not forget to remove this deprecated code someday.(Âì∆Ñ
-[squid:HiddenFieldCheck•"8Rename "item" which hides the field declared at line 80.(’ß˜Í
-fsquid:S00100Î"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ˆ˘T
-?squid:S1659Q"#Declare "block" on a separate line.(ƒ≤‰¬¸ˇˇˇˇ
-Wsquid:CallToDeprecatedMethodo"/Remove this use of "getData"; it is deprecated.(»€∑¢
-g squid:LabelsShouldNotBeUsedCheckﬁ";Refactor the code to remove this label and the need for it.(‡œ≈)
-usquid:S00115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÿ‚—ƒ˝ˇˇˇˇ
-`squid:HiddenFieldCheckÎ"8Rename "item" which hides the field declared at line 80.(√◊§∆˙ˇˇˇˇ
->squid:S1168œ"&Return an empty array instead of null.(•πÔç
-\squid:HiddenFieldCheckç"9Rename "block" which hides the field declared at line 80.(˙ÃÊï
+squid:S135⁄"YReduce the total number of break and continue statements in this loop to use at most one.(„«‚á
+\squid:HiddenFieldChecké"9Rename "block" which hides the field declared at line 81.(˙ÃÊï
+Ysquid:CallToDeprecatedMethod¡"1Remove this use of "getTypeId"; it is deprecated.(™ßË.
+?squid:S1659R"#Declare "block" on a separate line.(ƒ≤‰¬¸ˇˇˇˇ
+fsquid:S00100Ï"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ˆ˘T
+>squid:S1168–"&Return an empty array instead of null.(•πÔç
+`squid:HiddenFieldCheck©"8Rename "meta" which hides the field declared at line 70.(®–ë™˘ˇˇˇˇ
+_squid:CallToDeprecatedMethodã"1Remove this use of "getTypeId"; it is deprecated.(îî˚Ωˇˇˇˇˇ
+>squid:S1168 "&Return an empty array instead of null.(•πÔç
+Msquid:S1133»"5Do not forget to remove this deprecated code someday.(Âì∆Ñ
+Wsquid:CallToDeprecatedMethodp"/Remove this use of "getData"; it is deprecated.(»€∑¢
+Gsquid:S2065G"0Remove the "transient" modifier from this field.(Â®¯“
+Ysquid:CallToDeprecatedMethodp"1Remove this use of "getTypeId"; it is deprecated.(»€∑¢
+Zsquid:CallToDeprecatedMethodπ"1Remove this use of "getTypeId"; it is deprecated.(”˝•’
+Wsquid:CallToDeprecatedMethod¡"/Remove this use of "getData"; it is deprecated.(™ßË.
+ysquid:S001159"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(»•ƒü8‡…µÆ©-

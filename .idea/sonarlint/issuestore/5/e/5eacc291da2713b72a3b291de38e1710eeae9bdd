@@ -1,65 +1,65 @@
 
-:squid:S1452"&Remove usage of generic wildcard type.(ÌÆŞ#
-›%squid:RedundantThrowsDeclarationCheck"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(Ş„6
-Lsquid:S1066³"/Merge this if statement with the enclosing one.(óäÙµúÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¬šû
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ğ»‘¦
-Nsquid:S2696ú"6Make the enclosing method "static" or remove this set.(â¸“€
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ø¨·šûÿÿÿÿ
-Gsquid:S1066İ"/Merge this if statement with the enclosing one.(–ûé¼
-Nsquid:S2696´	"6Make the enclosing method "static" or remove this set.(ÿ”ÿ¢
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ô¢³[
-;squid:S1452"&Remove usage of generic wildcard type.(Ô¹££
-¡%squid:RedundantThrowsDeclarationCheck"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(à©Ã¾ÿÿÿÿÿ
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ôÇÀİ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(à˜Èš
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(ª¶î‚ùÿÿÿÿ8‡ŒÎ¢-
-Ssquid:S2696"6Make the enclosing method "static" or remove this set.(ã‹œ½şÿÿÿÿ
-Hsquid:S00108­")Either remove or fill this block of code.(éúá)8ô§„Û¢-
-Bsquid:S3010µ"%Remove this assignment of "instance".(ñõîÙşÿÿÿÿ
-Nsquid:S00108Ò	")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ8ô§„Û¢-
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ò›œıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÙêßÂúÿÿÿÿ
-Xsquid:S2629"7Use the built-in formatting to construct this argument.(‹ÀÛ¹şÿÿÿÿ8§¸ŒÎ¢-
-¡%squid:RedundantThrowsDeclarationCheck"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ˆˆöŒıÿÿÿÿ
-;squid:S1452"&Remove usage of generic wildcard type.(åÌÔß
-¡%squid:RedundantThrowsDeclarationCheck²"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
-Isquid:S1133"5Do not forget to remove this deprecated code someday.(’ì®B
-Nsquid:S00108¦")Either remove or fill this block of code.(É·í¯üÿÿÿÿ8ô§„Û¢-
-Esquid:S1659"0Declare "m_finished_loading" on a separate line.(”º©—
-esquid:S2583"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
-Rsquid:S1141¾"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-jsquid:S1871Ä"MThis branch's code block is the same as the block for the branch on line 958.(êõ±§şÿÿÿÿ
-:squid:S1452"&Remove usage of generic wildcard type.(ÌÆŞ#
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ËÈˆ»úÿÿÿÿ
-esquid:S2583"DChange this condition so that it does not always evaluate to "false"(‘Ê¹Áÿÿÿÿÿ8‡ŒÎ¢-
-Rsquid:S1141«"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-@squid:S1604Ş"(Make this anonymous inner class a lambda(šû£‰
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-Nsquid:S2696”	"6Make the enclosing method "static" or remove this set.(¼âº
-:squid:S1452"&Remove usage of generic wildcard type.(ãÙ¿K
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(î£Óøÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(§·¶
-Rsquid:S1141ê"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Esquid:S1185«"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
-Rsquid:S1141Š"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ü±¸³
-Ysquid:S2589"8Remove this expression which always evaluates to "false"(¾ÃÕŠøÿÿÿÿ8‡ŒÎ¢-
-Xsquid:S2184¼"@Cast one of the operands of this integer division to a "double".(Ó§³
-Gsquid:S2093Š"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-Rsquid:S1141Ú	"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Nsquid:S2696ù"6Make the enclosing method "static" or remove this set.(ôÒÍÅ
-@squid:S1452"&Remove usage of generic wildcard type.(üáıÿÿÿÿ
-;squid:S1452"&Remove usage of generic wildcard type.(Ô¹££
-Ssquid:S2696“	"6Make the enclosing method "static" or remove this set.(–€îğûÿÿÿÿ
-Nsquid:S2696ÿ"6Make the enclosing method "static" or remove this set.(äÏ˜„
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶®Êˆşÿÿÿÿ8ª£ß§£-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(†£í‡8ª£ß§£-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‡À»¤øÿÿÿÿ8ª£ß§£-
-nsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ˆ˜ËI8ª£ß§£-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.( ›É×8ª£ß§£-
-Gsquid:S1452"&Remove usage of generic wildcard type.(®˜òÉùÿÿÿÿ8ª£ß§£-
+Gsquid:S2093Î
+"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+@squid:S1604©"(Make this anonymous inner class a lambda(šû£‰
+Esquid:S1185ù"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
+Gsquid:S1659"0Declare "m_finished_loading" on a separate line.(”º©—
+Rsquid:S1141ì	"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141µ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Xsquid:S2184—"@Cast one of the operands of this integer division to a "double".(Ó§³
+[squid:S2629”	"7Use the built-in formatting to construct this argument.(‹ÀÛ¹şÿÿÿÿ8§¸ŒÎ¢-
+¡%squid:RedundantThrowsDeclarationCheckÈ"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
+Rsquid:S1141‰"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141ó
+"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheck£".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
+Rsquid:S1141Î
+"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+ksquid:S1871"NThis branch's code block is the same as the block for the branch on line 1421.(êõ±§şÿÿÿÿ
+Lsquid:S1066"/Merge this if statement with the enclosing one.(óäÙµúÿÿÿÿ
+:squid:S1643™
+"Use a StringBuilder instead.(ËŸÈ]8Ôå¶®©-
+;squid:S1643£
+"Use a StringBuilder instead.(çóà8Ôå¶®©-
+¦%squid:RedundantThrowsDeclarationCheck®"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(–®·Õ8Ôå¶®©-
+¦%squid:RedundantThrowsDeclarationCheck»"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÈË¹£8Ôå¶®©-
+«%squid:RedundantThrowsDeclarationCheckÙ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(‹ıæşÿÿÿÿ8Ôå¶®©-
+[squid:S2629‘	"7Use the built-in formatting to construct this argument.(Îšùşûÿÿÿÿ8Ôå¶®©-
+dsquid:S1193ö"@Replace the usage of the "instanceof" operator by a catch block.(ßŒ“¼üÿÿÿÿ8Ôå¶®©-
+dsquid:S1193ú"@Replace the usage of the "instanceof" operator by a catch block.(êó²†ÿÿÿÿÿ8Ôå¶®©-
+dsquid:S1193ş"@Replace the usage of the "instanceof" operator by a catch block.(ù§œŠşÿÿÿÿ8Ôå¶®©-
+Msquid:S1066É"/Merge this if statement with the enclosing one.(†ºß	8Ôå¶®©-
+Rsquid:S1444°".Make this "public static instance" field final(›Ğ‘±ıÿÿÿÿ8Ôå¶®©-
+Esquid:S1452Ä"&Remove usage of generic wildcard type.(ÃõÎ8Ôå¶®©-
+Jsquid:S1452È"&Remove usage of generic wildcard type.(—Å‰ìüÿÿÿÿ8Ôå¶®©-
+Dsquid:S1452Ì"&Remove usage of generic wildcard type.(¿ÈN8Ôå¶®©-
+Esquid:S1452å"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
+Esquid:S1452å"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
+Jsquid:S1452ë"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
+Jsquid:S1452ë"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
+Esquid:S1452š"&Remove usage of generic wildcard type.(Ü½˜ô8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheck‘".Extract the assignment out of this expression.(Ã†‡İ8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheckª".Extract the assignment out of this expression.(Ğà¯ù8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheck¬".Extract the assignment out of this expression.(Ì×ÂÏ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheck®".Extract the assignment out of this expression.(¼İ›Õüÿÿÿÿ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheck°".Extract the assignment out of this expression.(ˆ”Öëøÿÿÿÿ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheck²".Extract the assignment out of this expression.(Ş²Ú¤şÿÿÿÿ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheckµ".Extract the assignment out of this expression.(‚Ş¥ıÿÿÿÿ8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheck·".Extract the assignment out of this expression.(£ÉŒÄ8Ôå¶®©-
+Ysquid:S3725Ì
+":Replace this with a call to the "toFile().exists()" method(Ó¢¤Ë8Ôå¶®©-
+Ysquid:S3725Ì
+":Replace this with a call to the "toFile().exists()" method(Ó¢¤Ë8Ôå¶®©-
+|
+squid:S135ç"YReduce the total number of break and continue statements in this loop to use at most one.(«çùËÿÿÿÿÿ8Ôå¶®©-
+lsquid:HiddenFieldCheckÙ"=Rename "instance" which hides the field declared at line 175.(§Öêæûÿÿÿÿ8Ôå¶®©-
+Ysquid:S1141é"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ôå¶®©-
+[squid:S2589Ÿ	"7Remove this expression which always evaluates to "true"(ãğƒäùÿÿÿÿ8Ôå¶®©-
+Wsquid:S2589	"8Remove this expression which always evaluates to "false"(„Èâö8Ôå¶®©-
+Tsquid:S1133•"5Do not forget to remove this deprecated code someday.(»ö¢8Ôå¶®©-
+hsquid:S3358È"DExtract this nested ternary operation into an independent statement.(†Á­Ëıÿÿÿÿ8Ôå¶®©-
+ysquid:S00115º"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®°öM8Ôå¶®©-
+zsquid:S00115¿"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ù˜ëß8Ôå¶®©-
+squid:S00115À"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ô°æûÿÿÿÿ8Ôå¶®©-
+squid:S00115Á"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÏâŠºùÿÿÿÿ8Ôå¶®©-
+zsquid:S00115Ê"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¹øÛß8Ôå¶®©-

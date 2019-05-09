@@ -1,10 +1,10 @@
 
-£%squid:RedundantThrowsDeclarationCheckv"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-Xsquid:CallToDeprecatedMethod"/Remove this use of "setData"; it is deprecated.(¯ÌÿÔ
-Wsquid:CallToDeprecatedMethodT"/Remove this use of "getData"; it is deprecated.(ùƒÆÑ
-Zsquid:CallToDeprecatedMethod}"2Remove this use of "getNewData"; it is deprecated.(£Ó’æ
-=squid:S1168n"&Return an empty array instead of null.(¥¹ï
-Wsquid:CallToDeprecatedMethod}"/Remove this use of "getData"; it is deprecated.(£Ó’æ
-Xsquid:CallToDeprecatedMethod"/Remove this use of "getData"; it is deprecated.(¯ÌÿÔ
-Zsquid:CallToDeprecatedMethodT"2Remove this use of "getNewData"; it is deprecated.(ùƒÆÑ
-=squid:S1168q"&Return an empty array instead of null.(¥¹ï
+=squid:S1168o"&Return an empty array instead of null.(¥¹ï
+Zsquid:CallToDeprecatedMethod~"2Remove this use of "getNewData"; it is deprecated.(£Ó’æ
+Xsquid:CallToDeprecatedMethod‚"/Remove this use of "getData"; it is deprecated.(¯ÌÿÔ
+Wsquid:CallToDeprecatedMethodU"/Remove this use of "getData"; it is deprecated.(ùƒÆÑ
+£%squid:RedundantThrowsDeclarationCheckw"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+Zsquid:CallToDeprecatedMethodU"2Remove this use of "getNewData"; it is deprecated.(ùƒÆÑ
+Xsquid:CallToDeprecatedMethod‚"/Remove this use of "setData"; it is deprecated.(¯ÌÿÔ
+=squid:S1168r"&Return an empty array instead of null.(¥¹ï
+Wsquid:CallToDeprecatedMethod~"/Remove this use of "getData"; it is deprecated.(£Ó’æ

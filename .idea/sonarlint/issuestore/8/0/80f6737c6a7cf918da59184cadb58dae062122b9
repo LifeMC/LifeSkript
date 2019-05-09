@@ -1,0 +1,6 @@
+
+vsquid:S2637R"_This method's return value is marked "org.eclipse.jdt.annotation.NonNull" but null is returned.(ÉÈ¤‹
+`squid:S2583@"DChange this condition so that it does not always evaluate to "false"(Ô¹ŒÐùÿÿÿÿ
+`squid:S2583J"DChange this condition so that it does not always evaluate to "false"(Ô¹ŒÐùÿÿÿÿ
+asquid:S001198"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(ÍøÜü
+fsquid:S00119b"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(é²ºãüÿÿÿÿ

@@ -1,28 +1,21 @@
 
-Jsquid:S1452ø"&Remove usage of generic wildcard type.(ıå‡€øÿÿÿÿ8òñÍ¢-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(„Ší¦ÿÿÿÿÿ8òñÍ¢-
-Esquid:S1452ê"&Remove usage of generic wildcard type.(‘Ğ™†8òñÍ¢-
-‡squid:S2637”"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8òñÍ¢-
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶Â³æ
-k$squid:AssignmentInSubExpressionCheck§".Extract the assignment out of this expression.(Ô×¸Šıÿÿÿÿ8òñÍ¢-
-ˆ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8òñÍ¢-
-Esquid:S1452Û"&Remove usage of generic wildcard type.(ÂËÏÆ8òñÍ¢-
-Hsquid:S00108İ")Either remove or fill this block of code.(éúá)8‹„Û¢-
-Ysquid:S1854§"5Remove this useless assignment to local variable "d".(Ô×¸Šıÿÿÿÿ8òñÍ¢-
-Ksquid:S1905µ",Remove this unnecessary cast to "Converter".(´ƒìı8òñÍ¢-
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ñ†À˜
-Jsquid:S1452·"&Remove usage of generic wildcard type.(åçµùÿÿÿÿ8òñÍ¢-
-Esquid:S1452‘"&Remove usage of generic wildcard type.(Î´Àƒ8òñÍ¢-
-Jsquid:S1452í"&Remove usage of generic wildcard type.(±û»ùÿÿÿÿÿ8òñÍ¢-
-]squid:MissingDeprecatedCheckí"(Add the missing @deprecated Javadoc tag.(±Ãë—üÿÿÿÿ8òñÍ¢-
-nsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ƒ’W8òñÍ¢-
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÏÖşóşÿÿÿÿ
-8squid:S1659´" Declare "c2" on a separate line.(Ü¾óò
-Nsquid:S2093Ì"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8òñÍ¢-
-Dsquid:S1452Ì"&Remove usage of generic wildcard type.(Ä„ÿY8òñÍ¢-
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶Ú–şÿÿÿÿ8òñÍ¢-
-wsquid:S2095›"SUse try-with-resources or close this "YggdrasilOutputStream" in a "finally" clause.(ŸÊÙôúÿÿÿÿ8òñÍ¢-
-Ysquid:S1133í"5Do not forget to remove this deprecated code someday.(±Ãë—üÿÿÿÿ8òñÍ¢-
-Hsquid:S00108Ø")Either remove or fill this block of code.(éúá)8‹„Û¢-
-hsquid:S3358¿"DExtract this nested ternary operation into an independent statement.(íáÇûÿÿÿÿ8‹„Û¢-
-Jsquid:S1452Û"&Remove usage of generic wildcard type.(íæŸ’ÿÿÿÿÿ8òñÍ¢-
+Jsquid:S1452è"&Remove usage of generic wildcard type.(íæŸ’ÿÿÿÿÿ8òñÍ¢-
+Jsquid:S1452Ä"&Remove usage of generic wildcard type.(åçµùÿÿÿÿ8òñÍ¢-
+Ysquid:S1133…"5Do not forget to remove this deprecated code someday.(±Ãë—üÿÿÿÿ8òñÍ¢-
+8squid:S1659Ì" Declare "c2" on a separate line.(Ü¾óò
+Esquid:S1452÷"&Remove usage of generic wildcard type.(‘Ğ™†8òñÍ¢-
+]squid:MissingDeprecatedCheck…"(Add the missing @deprecated Javadoc tag.(±Ãë—üÿÿÿÿ8òñÍ¢-
+Hsquid:S00108õ")Either remove or fill this block of code.(éúá)8‹„Û¢-
+Esquid:S1452"&Remove usage of generic wildcard type.(Î´Àƒ8òñÍ¢-
+‹ squid:ForLoopCounterChangedCheck»"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8òñÍ¢-
+Jsquid:S1452…"&Remove usage of generic wildcard type.(ıå‡€øÿÿÿÿ8òñÍ¢-
+Nsquid:S2093ä"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8òñÍ¢-
+‡squid:S2637¡"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8òñÍ¢-
+Dsquid:S1452Ù"&Remove usage of generic wildcard type.(Ä„ÿY8òñÍ¢-
+Jsquid:S1452ú"&Remove usage of generic wildcard type.(±û»ùÿÿÿÿÿ8òñÍ¢-
+Ksquid:S1905Â",Remove this unnecessary cast to "Converter".(´ƒìı8òñÍ¢-
+Hsquid:S00108ğ")Either remove or fill this block of code.(éúá)8‹„Û¢-
+Esquid:S1452è"&Remove usage of generic wildcard type.(ÂËÏÆ8òñÍ¢-
+hsquid:S3358×"DExtract this nested ternary operation into an independent statement.(íáÇûÿÿÿÿ8‹„Û¢-
+osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¦àºÖ8ğä¶®©-
+hsquid:S1134¼"DTake the required action to fix the issue indicated by this comment.(¯«ıûÿÿÿÿ8ğä¶®©-

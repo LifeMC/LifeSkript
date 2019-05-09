@@ -1,13 +1,7 @@
 
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(²Éäãÿÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÆæõÉ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(‡şôñ
-[squid:HiddenFieldCheck";Rename "current" which hides the field declared at line 81.(¸’áò
-Usquid:HiddenFieldCheck"5Rename "e" which hides the field declared at line 78.(–—¢É
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(ËÕÈ¥
-[squid:HiddenFieldCheck";Rename "current" which hides the field declared at line 81.(à†††
- squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
-=squid:S1604"(Make this anonymous inner class a lambda(Ó‹§
- squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ó‹§
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ˆãÆî
+Wsquid:HiddenFieldCheckX"5Rename "e" which hides the field declared at line 79.(–—¢É
+]squid:HiddenFieldChecke";Rename "current" which hides the field declared at line 82.(à†††
+„ squid:ForLoopCounterChangedCheckØ"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
+]squid:HiddenFieldCheckW";Rename "current" which hides the field declared at line 82.(¸’áò
+„ squid:ForLoopCounterChangedCheckå"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
+Fsquid:S1604="(Make this anonymous inner class a lambda(Áæòñ8üöµ®©-

@@ -1,8 +1,8 @@
 
-asquid:HiddenFieldCheckC":Rename "single" which hides the field declared at line 48.(ª™ñüÿÿÿÿ
->squid:S1168å"&Return an empty array instead of null.(¥¹ï
-=squid:S1452¶"&Remove usage of generic wildcard type.(İù°j
-¤%squid:RedundantThrowsDeclarationCheckó"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
->squid:S1168ê"&Return an empty array instead of null.(¥¹ï
-Nsquid:S2589<"7Remove this expression which always evaluates to "true"(‡ÿ…
->squid:S1168í"&Return an empty array instead of null.(¥¹ï
+asquid:HiddenFieldCheckD":Rename "single" which hides the field declared at line 49.(ª™ñüÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheckô"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+=squid:S1452·"&Remove usage of generic wildcard type.(İù°j
+>squid:S1168æ"&Return an empty array instead of null.(¥¹ï
+>squid:S1168ë"&Return an empty array instead of null.(¥¹ï
+>squid:S1168î"&Return an empty array instead of null.(¥¹ï
+Nsquid:S2589="7Remove this expression which always evaluates to "true"(‡ÿ…

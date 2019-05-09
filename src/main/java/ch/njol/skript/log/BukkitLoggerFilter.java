@@ -40,6 +40,10 @@ import java.util.logging.Filter;
  */
 public final class BukkitLoggerFilter {
 
+    public BukkitLoggerFilter() {
+        super();
+    }
+
     private static final LoggerFilter filter = new LoggerFilter(SkriptLogger.LOGGER);
 
     static {

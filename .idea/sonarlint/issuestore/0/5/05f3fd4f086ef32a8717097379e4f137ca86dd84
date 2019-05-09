@@ -1,4 +1,4 @@
 
-Œ"squid:SwitchLastCaseIsDefaultCheck_"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-squid:S2637A"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï
-=squid:S1168A"&Return an empty array instead of null.(¥¹ï
+squid:S2637B"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï
+=squid:S1168B"&Return an empty array instead of null.(¥¹ï
+Œ"squid:SwitchLastCaseIsDefaultCheck`"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ

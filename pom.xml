@@ -554,11 +554,23 @@
                                 <exclude>src/</exclude>
                                 <exclude>about.html</exclude>
                                 <exclude>.api_description</exclude>
+								
+								<!-- Unrequired kotlin files - we already remove some of them with proguard. -->
+								<exclude>**/*.kotlin_metadata</exclude>
+								<exclude>**/*.kotlin_builtins</exclude>
+								
+								<exclude>META-INF/kotlin-stdlib.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib_coroutinesExperimental.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib-common.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib-common-coroutines.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib-jdk7.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib-jdk8.kotlin_module</exclude>
                             </excludes>
                         </filter>
                     </filters>
                     <relocations>
-                        <!-- For the future - Don't share the Kotlin library with other plugins -->
+                        <!-- Don't share the Kotlin library with other plugins 
+								Also: Add-ons should not use these libraries. -->
                         <relocation>
                             <pattern>kotlin</pattern>
                             <shadedPattern>ch.njol.libraries.kotlin</shadedPattern>
@@ -688,104 +700,5 @@
                 </pluginManagement>
             </build>
         </profile>
-        <!-- Un required profile, duplicates build
-        <profile>
-            <id>deploy</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <configuration>
-                            <archive>
-                                <index>true</index>
-                                <manifest>
-                                    <addClasspath>false</addClasspath>
-                                    <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                    <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-                                </manifest>
-                                <manifestEntries>
-                                    <Manifest-Version>1.0</Manifest-Version>
-                                    <Implementation-Title>Skript</Implementation-Title>
-                                    <Implementation-Version>${project.version}</Implementation-Version>
-                                    <Main-Class>ch.njol.skript.SkriptCLI</Main-Class>
-                                    <Sealed>true</Sealed>
-                                    <Built-By>Skript Team</Built-By>
-                                    <Automatic-Module-Name>ch.njol.skript</Automatic-Module-Name>
-                                    <Specification-Vendor>Skript Team</Specification-Vendor>
-                                    <Specification-Title>Skript</Specification-Title>
-                                    <Implementation-Vendor>Skript Team</Implementation-Vendor>
-                                    <Specification-Version>${project.version}</Specification-Version>
-
-                                    <Name>ch/njol</Name>
-                                    <Sealed>true</Sealed>
-                                </manifestEntries>
-                            </archive>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <version>3.2.1</version>
-                        <executions>
-                            <execution>
-                                <id>shade</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <createSourcesJar>false</createSourcesJar>
-                            <minimizeJar>false</minimizeJar>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <id>javadoc</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <quiet>true</quiet>
-                            <dependencySourceIncludes>
-                                <dependencySourceInclude>ch.njol:*</dependencySourceInclude>
-                            </dependencySourceIncludes>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile> -->
     </profiles>
-
-    <!-- This also un required for now
-    <distributionManagement>
-        <repository>
-            <id>njol-repo</id>
-            <url>file://///DISKSTATION/web/maven.njol.ch/repo/</url>
-        </repository>
-    </distributionManagement> -->
 </project>

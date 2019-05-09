@@ -1,10 +1,6 @@
 
-Qsquid:S1118&":Add a private constructor to hide the implicit public one.(ËÏßÆ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¦‹²˜
-Qsquid:S2629"7Use the built-in formatting to construct this argument.(º£ïèşÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Û®”øÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(è‰Ûıÿÿÿÿ
-9squid:S2629"$Invoke method(s) only conditionally.(‘èŞ»
-}squid:S1845/"aRename field "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(ŠÚ€ˆÿÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¬ø§ó
-squid:S1845ö"bRename method "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 43.(‡¤÷ùıÿÿÿÿ
+Qsquid:S1118)":Add a private constructor to hide the implicit public one.(ËÏßÆ
+squid:S1845ù"bRename method "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 46.(‡¤÷ùıÿÿÿÿ
+<squid:S2629Ã"$Invoke method(s) only conditionally.(‘èŞ»
+Ssquid:S2629r"7Use the built-in formatting to construct this argument.(º£ïèşÿÿÿÿ
+}squid:S18452"aRename field "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 46.(ŠÚ€ˆÿÿÿÿÿ

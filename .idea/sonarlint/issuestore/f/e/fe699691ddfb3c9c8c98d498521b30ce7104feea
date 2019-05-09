@@ -1,17 +1,13 @@
 
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ùó¼
-@squid:S1452"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÇŒ
-isquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íæõ¬üÿÿÿÿ
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(€­Èª
-@squid:S1452"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ú¬¯²ûÿÿÿÿ
-=squid:S1659—" Declare "c2" on a separate line.(Ó×š´ùÿÿÿÿ
-4squid:S1700"Rename field "comparators"(Ìƒ™Üüÿÿÿÿ
-_squid:HiddenFieldCheck®"7Rename "c1" which hides the field declared at line 149.(ò¸µúÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ìƒ™Üüÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÁÑ¤øøÿÿÿÿ
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Âùƒà
-nsquid:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌÏ‹
-7squid:S2386"Make this member "protected".(Ìƒ™Üüÿÿÿÿ
-Zsquid:HiddenFieldCheck²"7Rename "c2" which hides the field declared at line 149.(¦ı§•
+psquid:S2293~"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌÏ‹
+psquid:S2293x"YReplace the type specification in this constructor call with the diamond operator ("<>").(Âùƒà
+Bsquid:S1452S"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
+ksquid:S00100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íæõ¬üÿÿÿÿ
+=squid:S1659˜" Declare "c2" on a separate line.(Ó×š´ùÿÿÿÿ
+_squid:HiddenFieldCheck¯"7Rename "c1" which hides the field declared at line 150.(ò¸µúÿÿÿÿ
+Zsquid:HiddenFieldCheck³"7Rename "c2" which hides the field declared at line 150.(¦ı§•
+psquid:S2293e"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÇŒ
+Bsquid:S1452S"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
+qsquid:S2293Š"YReplace the type specification in this constructor call with the diamond operator ("<>").(€­Èª
+:squid:S2386,"Make this member "protected".(¯ˆ°T8º’¶®©-
+7squid:S1700,"Rename field "comparators"(¯ˆ°T8º’¶®©-

@@ -64,6 +64,10 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class BukkitEventValues {
 
+    public BukkitEventValues() {
+        super();
+    }
+
     static {
 
         // === WorldEvents ===

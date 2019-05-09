@@ -1,7 +1,6 @@
 
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(§Ö£˜ýÿÿÿÿ
-Qsquid:MissingDeprecatedCheck…"(Add the missing @deprecated Javadoc tag.(›ËÁý
-Msquid:S1133…"5Do not forget to remove this deprecated code someday.(›ËÁý
-_squid:HiddenFieldChecka"8Rename "hand" which hides the field declared at line 48.(ú…ðÇùÿÿÿÿ
-dsquid:CallToDeprecatedMethodW"5Remove this use of "getItemTypeId"; it is deprecated.(´ú›Ô8Ä—ß§£-
-^squid:CallToDeprecatedMethodW"/Remove this use of "getData"; it is deprecated.(´ú›Ô8Ä—ß§£-
+Msquid:S1133‡"5Do not forget to remove this deprecated code someday.(›ËÁý
+dsquid:CallToDeprecatedMethodY"5Remove this use of "getItemTypeId"; it is deprecated.(´ú›Ô8Ä—ß§£-
+Qsquid:MissingDeprecatedCheck‡"(Add the missing @deprecated Javadoc tag.(›ËÁý
+_squid:HiddenFieldCheckc"8Rename "hand" which hides the field declared at line 49.(ú…ðÇùÿÿÿÿ
+^squid:CallToDeprecatedMethodY"/Remove this use of "getData"; it is deprecated.(´ú›Ô8Ä—ß§£-

@@ -1,17 +1,17 @@
 
-rsquid:CallToDeprecatedMethod®"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(™Ï
-ssquid:CallToDeprecatedMethodõ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(²®Â„
-]squid:CallToDeprecatedMethodú"/Remove this use of "getById"; it is deprecated.(±úÿùÿÿÿÿ
-ssquid:CallToDeprecatedMethod¦"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Øì
-5squid:S1118Ç"Hide this public constructor.(ûˆ¿
-Rsquid:S1133Ö"5Do not forget to remove this deprecated code someday.(Ûí‡íıÿÿÿÿ
-Vsquid:MissingDeprecatedCheckÖ"(Add the missing @deprecated Javadoc tag.(Ûí‡íıÿÿÿÿ
-Qsquid:MissingDeprecatedCheckå"(Add the missing @deprecated Javadoc tag.(Ì—ƒ²
-ssquid:CallToDeprecatedMethod¦"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(íªÁË
->squid:S1168ğ"&Return an empty array instead of null.(¥¹ï
-V"squid:SwitchLastCaseIsDefaultCheckø""Add a default case to this switch.(©Øûºûÿÿÿÿ
-Msquid:S1133å"5Do not forget to remove this deprecated code someday.(Ì—ƒ²
-Vsquid:CallToDeprecatedMethod³"-Remove this use of "getId"; it is deprecated.(ğ¤›’
-xsquid:CallToDeprecatedMethodÒ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ğîŞ™ûÿÿÿÿ
-xsquid:CallToDeprecatedMethod"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ì½øòüÿÿÿÿ
-rsquid:CallToDeprecatedMethodr"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÙğîÙ
+rsquid:CallToDeprecatedMethod¯"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(™Ï
+Vsquid:CallToDeprecatedMethod´"-Remove this use of "getId"; it is deprecated.(ğ¤›’
+]squid:CallToDeprecatedMethodû"/Remove this use of "getById"; it is deprecated.(±úÿùÿÿÿÿ
+5squid:S1118È"Hide this public constructor.(ûˆ¿
+Rsquid:S1133×"5Do not forget to remove this deprecated code someday.(Ûí‡íıÿÿÿÿ
+Msquid:S1133æ"5Do not forget to remove this deprecated code someday.(Ì—ƒ²
+ssquid:CallToDeprecatedMethod§"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Øì
+ssquid:CallToDeprecatedMethod§"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(íªÁË
+V"squid:SwitchLastCaseIsDefaultCheckù""Add a default case to this switch.(©Øûºûÿÿÿÿ
+ssquid:CallToDeprecatedMethodö"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(²®Â„
+>squid:S1168ñ"&Return an empty array instead of null.(¥¹ï
+xsquid:CallToDeprecatedMethodÓ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ğîŞ™ûÿÿÿÿ
+rsquid:CallToDeprecatedMethods"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÙğîÙ
+Qsquid:MissingDeprecatedCheckæ"(Add the missing @deprecated Javadoc tag.(Ì—ƒ²
+Vsquid:MissingDeprecatedCheck×"(Add the missing @deprecated Javadoc tag.(Ûí‡íıÿÿÿÿ
+xsquid:CallToDeprecatedMethodŸ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ì½øòüÿÿÿÿ

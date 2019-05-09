@@ -1,5 +1,3 @@
 
-Bsquid:S1905m"&Remove this unnecessary cast to "Map".(ÈÇø½ûÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(“®Ôö
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÕÍÜ’
-@squid:S1659h"$Declare "values" on a separate line.(õž•Ìüÿÿÿÿ
+@squid:S1659i"$Declare "values" on a separate line.(õž•Ìüÿÿÿÿ
+Bsquid:S1905n"&Remove this unnecessary cast to "Map".(ÈÇø½ûÿÿÿÿ

@@ -1,3 +1,3 @@
 
-Ysquid:CallToDeprecatedMethodX"1Remove this use of "getTypeId"; it is deprecated.(î—Éù
-Wsquid:CallToDeprecatedMethodX"/Remove this use of "getData"; it is deprecated.(î—Éù
+Wsquid:CallToDeprecatedMethodY"/Remove this use of "getData"; it is deprecated.(î—Éù
+Ysquid:CallToDeprecatedMethodY"1Remove this use of "getTypeId"; it is deprecated.(î—Éù

@@ -1,4 +1,3 @@
 
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ü¯Òð
-dsquid:CallToDeprecatedMethod1"7Remove this use of "PlayerChatEvent"; it is deprecated.(‚óù™úÿÿÿÿ
-rsquid:S00115&"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ü¯Òð
+dsquid:CallToDeprecatedMethod2"7Remove this use of "PlayerChatEvent"; it is deprecated.(‚óù™úÿÿÿÿ
+~squid:S00115'"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Û‹†‡þÿÿÿÿ8¿”µ®©-

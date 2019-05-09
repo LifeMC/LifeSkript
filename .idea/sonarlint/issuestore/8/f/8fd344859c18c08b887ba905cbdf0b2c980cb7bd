@@ -1,4 +1,4 @@
 
->squid:S1168"&Return an empty array instead of null.(¥¹ï
-fsquid:HiddenFieldCheckP"?Rename "returnTypes" which hides the field declared at line 49.(è›Œ¯ùÿÿÿÿ
-Fsquid:S1066l"/Merge this if statement with the enclosing one.(Ñç¾À
+Fsquid:S1066m"/Merge this if statement with the enclosing one.(Ñç¾À
+>squid:S1168Ÿ"&Return an empty array instead of null.(¥¹ï
+fsquid:HiddenFieldCheckQ"?Rename "returnTypes" which hides the field declared at line 50.(è›Œ¯ùÿÿÿÿ

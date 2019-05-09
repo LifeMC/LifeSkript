@@ -1,11 +1,7 @@
 
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŞïÉ¶üÿÿÿÿ
-\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(±Ô¼Ğ
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(…áºÉşÿÿÿÿ
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
-;squid:S1452"&Remove usage of generic wildcard type.(ÅÉ¶Î
-Csquid:S1905")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.( Üè
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶©šø
-;squid:S1452"&Remove usage of generic wildcard type.(ÅÉ¶Î
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¾®…ˆ
+d$squid:AssignmentInSubExpressionCheck¬".Extract the assignment out of this expression.(…áºÉşÿÿÿÿ
+Fsquid:S1905¯")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
+=squid:S1452~"&Remove usage of generic wildcard type.(ÅÉ¶Î
+=squid:S1452~"&Remove usage of generic wildcard type.(ÅÉ¶Î
+d$squid:AssignmentInSubExpressionCheckˆ".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck™".Extract the assignment out of this expression.(±Ô¼Ğ

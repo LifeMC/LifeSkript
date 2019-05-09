@@ -1,5 +1,5 @@
 
- %squid:RedundantThrowsDeclarationCheckB"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÛÂòÛøÿÿÿÿ
-8squid:S1170D"!Make this final field static too.(ìÎ§‹
- %squid:RedundantThrowsDeclarationCheck-"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(úÓ©‘øÿÿÿÿ
-š%squid:RedundantThrowsDeclarationCheckT"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÜÃùl
+8squid:S1170E"!Make this final field static too.(ìÎ§‹
+š%squid:RedundantThrowsDeclarationCheckU"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÜÃùl
+ %squid:RedundantThrowsDeclarationCheckC"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÛÂòÛøÿÿÿÿ
+ %squid:RedundantThrowsDeclarationCheck."jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(úÓ©‘øÿÿÿÿ

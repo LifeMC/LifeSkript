@@ -1,19 +1,9 @@
 
-Rsquid:S1133Ä"5Do not forget to remove this deprecated code someday.(ŒÖÉ¦ıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¼‰¾€ùÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ùüé³üÿÿÿÿ
-Rsquid:S1133—"5Do not forget to remove this deprecated code someday.(¾ìŸúûÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(€Ã÷®ùÿÿÿÿ
-asquid:S3358Ô"DExtract this nested ternary operation into an independent statement.(êèƒ÷úÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ä®×Ëüÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(³Ü’
-fsquid:S00100›"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ ¦^
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(úšÎ÷ÿÿÿÿÿ
-„ squid:ForLoopCounterChangedCheckw"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-„ squid:ForLoopCounterChangedCheck|"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-gsquid:S00100º"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜áÎ
-„ squid:ForLoopCounterChangedCheckq"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-„ squid:ForLoopCounterChangedCheckh"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(½õŠ’şÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¬ĞüÈûÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(æ´İ­ûÿÿÿÿ
+„ squid:ForLoopCounterChangedCheck~"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+… squid:ForLoopCounterChangedCheckƒ"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+„ squid:ForLoopCounterChangedCheckx"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+Rsquid:S1133Ë"5Do not forget to remove this deprecated code someday.(ŒÖÉ¦ıÿÿÿÿ
+„ squid:ForLoopCounterChangedChecko"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+asquid:S3358Û"DExtract this nested ternary operation into an independent statement.(êèƒ÷úÿÿÿÿ
+Ysquid:S1133"5Do not forget to remove this deprecated code someday.(èÈ€úÿÿÿÿ8úƒ¶®©-
+ssquid:S00100¢"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô÷¶Ñùÿÿÿÿ8úƒ¶®©-

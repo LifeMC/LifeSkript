@@ -1,11 +1,11 @@
 
-fsquid:S001164"NRename this field "ANY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-8squid:S11704"!Make this final field static too.(ð´þø
-fsquid:S001164"NRename this field "SKY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-Zsquid:S3358H"DExtract this nested ternary operation into an independent statement.(½¨€n
-hsquid:S001164"PRename this field "BLOCK" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-8squid:S16594"!Declare "ANY" on a separate line.(ð´þø
-8squid:S11704"!Make this final field static too.(ð´þø
-[squid:S3358N"DExtract this nested ternary operation into an independent statement.(Ï”„Ç
-8squid:S11704"!Make this final field static too.(ð´þø
-:squid:S16594"#Declare "BLOCK" on a separate line.(ð´þø
+:squid:S16595"#Declare "BLOCK" on a separate line.(ð´þø
+[squid:S3358O"DExtract this nested ternary operation into an independent statement.(Ï”„Ç
+8squid:S11705"!Make this final field static too.(ð´þø
+hsquid:S001165"PRename this field "BLOCK" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
+Zsquid:S3358I"DExtract this nested ternary operation into an independent statement.(½¨€n
+8squid:S11705"!Make this final field static too.(ð´þø
+8squid:S11705"!Make this final field static too.(ð´þø
+fsquid:S001165"NRename this field "ANY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
+fsquid:S001165"NRename this field "SKY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
+8squid:S16595"!Declare "ANY" on a separate line.(ð´þø

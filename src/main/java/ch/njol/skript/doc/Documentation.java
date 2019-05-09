@@ -56,6 +56,10 @@ import java.util.regex.Pattern;
 @SuppressFBWarnings("ES_COMPARING_STRINGS_WITH_EQ")
 public final class Documentation {
 
+    private Documentation() {
+        throw new UnsupportedOperationException();
+    }
+
     public static final boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
     private static final ArrayList<Pattern> validation = new ArrayList<>();
     private static final String[] urls = {"expressions", "effects", "conditions"};
@@ -130,13 +134,13 @@ public final class Documentation {
         }
     }
 
-    private static String convertRegex(final String regex) {
+    private static final String convertRegex(final String regex) {
         if (StringUtils.containsAny(regex, ".[]\\*+"))
             Skript.error("Regex '" + regex + "' contains unconverted Regex syntax");
         return escapeHTML("" + regex.replaceAll("\\((.+?)\\)\\?", "[$1]").replaceAll("(.)\\?", "[$1]"));
     }
 
-    private static String cleanPatterns(final String patterns) {
+    private static final String cleanPatterns(final String patterns) {
         // link & fancy types
         final String s = StringUtils.replaceAll("" + escapeHTML(patterns) // escape HTML
                         .replaceAll("(?<=[(|])[-0-9]+?¦", "") // remove marks
@@ -269,7 +273,7 @@ public final class Documentation {
     }
 
     @Nullable
-    private static String validateHTML(@Nullable String html, final String baseURL) {
+    private static final String validateHTML(@Nullable String html, final String baseURL) {
         if (html == null) {
             assert false;
             return null;
@@ -321,11 +325,11 @@ public final class Documentation {
         return html;
     }
 
-    private static String escapeSQL(final String s) {
+    private static final String escapeSQL(final String s) {
         return "" + s.replace("'", "\\'").replace("\"", "\\\"");
     }
 
-    public static String escapeHTML(final @Nullable String s) {
+    public static final String escapeHTML(final @Nullable String s) {
         if (s == null) {
             assert false;
             return "";

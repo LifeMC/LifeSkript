@@ -1,5 +1,4 @@
 
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¸ ©‡üÿÿÿÿ
-Lsquid:S1133{"5Do not forget to remove this deprecated code someday.(›ËÁý
-Psquid:MissingDeprecatedCheck{"(Add the missing @deprecated Javadoc tag.(›ËÁý
-[squid:HiddenFieldChecko"9Rename "types" which hides the field declared at line 48.(÷«Ïø
+[squid:HiddenFieldCheckp"9Rename "types" which hides the field declared at line 49.(÷«Ïø
+Lsquid:S1133|"5Do not forget to remove this deprecated code someday.(›ËÁý
+Psquid:MissingDeprecatedCheck|"(Add the missing @deprecated Javadoc tag.(›ËÁý

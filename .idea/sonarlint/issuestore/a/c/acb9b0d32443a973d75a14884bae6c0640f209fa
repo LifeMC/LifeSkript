@@ -1,5 +1,4 @@
 
-¢%squid:RedundantThrowsDeclarationCheck0"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(¢‘šÍøÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(§Ü¤Âıÿÿÿÿ
- %squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(À¹ıÈúÿÿÿÿ
- %squid:RedundantThrowsDeclarationCheck"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(ºÙ¨üÿÿÿÿ
+¤%squid:RedundantThrowsDeclarationCheck)"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(°çš¾8œøµ®©-
+©%squid:RedundantThrowsDeclarationCheck-"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(«İÈ°ÿÿÿÿÿ8œøµ®©-
+©%squid:RedundantThrowsDeclarationCheck1"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(ñıÍÕıÿÿÿÿ8œøµ®©-

@@ -1,9 +1,9 @@
 
-msquid:S00100u"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆº“°8ã¦„Û¢-
-Bsquid:S1452g"&Remove usage of generic wildcard type.(ƒ•×íøÿÿÿÿ
-msquid:S00100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×®Ë8ã¦„Û¢-
-Bsquid:S1452N"&Remove usage of generic wildcard type.(ø¹Èıÿÿÿÿ
-Bsquid:S1452w"&Remove usage of generic wildcard type.(ûòàşÿÿÿÿ
-lsquid:S00100|"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üê±|8ã¦„Û¢-
-rsquid:S00100w"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûòàşÿÿÿÿ8¾™ß§£-
-;squid:S2386+"Make this member "protected".(ÃöÃõ8¾™ß§£-
+Bsquid:S1452h"&Remove usage of generic wildcard type.(ƒ•×íøÿÿÿÿ
+msquid:S00100{"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×®Ë8ã¦„Û¢-
+Bsquid:S1452O"&Remove usage of generic wildcard type.(ø¹Èıÿÿÿÿ
+rsquid:S00100x"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûòàşÿÿÿÿ8¾™ß§£-
+;squid:S2386,"Make this member "protected".(ÃöÃõ8¾™ß§£-
+lsquid:S00100}"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Üê±|8ã¦„Û¢-
+Bsquid:S1452x"&Remove usage of generic wildcard type.(ûòàşÿÿÿÿ
+msquid:S00100v"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆº“°8ã¦„Û¢-

@@ -1,7 +1,7 @@
 
-`squid:S1182£"HUse super.clone() to create and seed the cloned instance to be returned.(Ï­£ô
-Usquid:MissingDeprecatedCheckD"(Add the missing @deprecated Javadoc tag.(‰±–£úÿÿÿÿ
-Qsquid:S1133D"5Do not forget to remove this deprecated code someday.(‰±–£úÿÿÿÿ
-Nsquid:S2589|"7Remove this expression which always evaluates to "true"(à‘¦ö
-…"squid:ClassVariableVisibilityCheckZ"RMake amount a static final constant or non-public and provide accessors if needed.(¥ß›ùÿÿÿÿ
-ksquid:S2975£"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(Ï­£ô
+Usquid:MissingDeprecatedCheckE"(Add the missing @deprecated Javadoc tag.(‰±–£úÿÿÿÿ
+`squid:S1182¤"HUse super.clone() to create and seed the cloned instance to be returned.(Ï­£ô
+ksquid:S2975¤"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(Ï­£ô
+Qsquid:S1133E"5Do not forget to remove this deprecated code someday.(‰±–£úÿÿÿÿ
+…"squid:ClassVariableVisibilityCheck["RMake amount a static final constant or non-public and provide accessors if needed.(¥ß›ùÿÿÿÿ
+Nsquid:S2589}"7Remove this expression which always evaluates to "true"(à‘¦ö

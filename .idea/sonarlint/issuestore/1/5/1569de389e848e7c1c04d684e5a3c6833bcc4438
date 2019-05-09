@@ -1,2 +1,2 @@
 
-squid:S1157B"cReplace these toUpperCase()/toLowerCase() and equals() calls with a single equalsIgnoreCase() call.(ØÀÌ×תÿÿÿÿ
+squid:S1157F"cReplace these toUpperCase()/toLowerCase() and equals() calls with a single equalsIgnoreCase() call.(ØÀÌ×תÿÿÿÿ

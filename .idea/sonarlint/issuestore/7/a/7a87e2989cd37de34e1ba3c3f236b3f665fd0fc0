@@ -1,13 +1,11 @@
 
-[squid:S2583Ğ"CChange this condition so that it does not always evaluate to "true"(‚÷û§
-dsquid:CallToDeprecatedMethodä"6Remove this use of "getPlayerExact"; it is deprecated.(§ Ÿóùÿÿÿÿ
-_squid:CallToDeprecatedMethod|"8Remove this use of "getOfflinePlayer"; it is deprecated.(¹–Å6
-Rsquid:S1133Å"5Do not forget to remove this deprecated code someday.(¼Êİîúÿÿÿÿ
-Ssquid:S2589w"7Remove this expression which always evaluates to "true"(»°ÿÿÿÿÿÿ
-t
-squid:S1354"YReduce the total number of break and continue statements in this loop to use at most one.(øº•—úÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(á¤Ô
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(İ×¥¬
-`squid:CallToDeprecatedMethod>"8Remove this use of "getOfflinePlayer"; it is deprecated.(×”ÎÕ
-Vsquid:MissingDeprecatedCheckÅ"(Add the missing @deprecated Javadoc tag.(¼Êİîúÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ü†Ğ•şÿÿÿÿ
+Vsquid:MissingDeprecatedCheckÔ"(Add the missing @deprecated Javadoc tag.(¼Êİîúÿÿÿÿ
+`squid:CallToDeprecatedMethod‰"8Remove this use of "getOfflinePlayer"; it is deprecated.(¹–Å6
+[squid:S2583ß"CChange this condition so that it does not always evaluate to "true"(‚÷û§
+`squid:CallToDeprecatedMethodE"8Remove this use of "getOfflinePlayer"; it is deprecated.(×”ÎÕ
+Rsquid:S1133Ô"5Do not forget to remove this deprecated code someday.(¼Êİîúÿÿÿÿ
+dsquid:CallToDeprecatedMethodô"6Remove this use of "getPlayerExact"; it is deprecated.(§ Ÿóùÿÿÿÿ
+Tsquid:S2589„"7Remove this expression which always evaluates to "true"(»°ÿÿÿÿÿÿ
+u
+squid:S1359"YReduce the total number of break and continue statements in this loop to use at most one.(›ùC8·éµ®©-
+[squid:S2589±"7Remove this expression which always evaluates to "true"(Ó¨¿ºúÿÿÿÿ8·éµ®©-

@@ -1,8 +1,5 @@
 
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(™Ñïœ
-]squid:CallToDeprecatedMethod"7Remove this use of "updateInventory"; it is deprecated.(şİÓ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(İÿ¿Şÿÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(·ÂÌáüÿÿÿÿ
-wsquid:S001159"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(İÿ¿Şÿÿÿÿÿ
-=squid:S1452G"&Remove usage of generic wildcard type.(ãè ‹
-esquid:S2259U"NA "NullPointerException" could be thrown; "getOnlinePlayers" is nullable here.(Ş¤¼×
+_squid:CallToDeprecatedMethod3"7Remove this use of "updateInventory"; it is deprecated.(şİÓ
+esquid:S2259f"NA "NullPointerException" could be thrown; "getOnlinePlayers" is nullable here.(Ş¤¼×
+=squid:S1452M"&Remove usage of generic wildcard type.(ãè ‹
+~squid:S00115<"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(øóßçüÿÿÿÿ8Ìµ®©-

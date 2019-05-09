@@ -1,10 +1,8 @@
 
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(óö
-Zsquid:CallToDeprecatedMethodC"-Remove this use of "getId"; it is deprecated.(Ëï¹ìûÿÿÿÿ
-Tsquid:CallToDeprecatedMethodP"-Remove this use of "getId"; it is deprecated.(Å²
-Tsquid:CallToDeprecatedMethodV"-Remove this use of "getId"; it is deprecated.(Å²
-bsquid:CallToDeprecatedMethoda"5Remove this use of "toDamageValue"; it is deprecated.(»ûéÙøÿÿÿÿ
-Tsquid:CallToDeprecatedMethod3"-Remove this use of "getId"; it is deprecated.(¶ç
+Tsquid:CallToDeprecatedMethodX"-Remove this use of "getId"; it is deprecated.(Å²
+Tsquid:CallToDeprecatedMethod5"-Remove this use of "getId"; it is deprecated.(¶ç
 
-Zsquid:CallToDeprecatedMethodD"-Remove this use of "getId"; it is deprecated.(™•¡şûÿÿÿÿ
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¡Ÿº
+Tsquid:CallToDeprecatedMethodR"-Remove this use of "getId"; it is deprecated.(Å²
+Zsquid:CallToDeprecatedMethodF"-Remove this use of "getId"; it is deprecated.(™•¡şûÿÿÿÿ
+Zsquid:CallToDeprecatedMethodE"-Remove this use of "getId"; it is deprecated.(Ëï¹ìûÿÿÿÿ
+bsquid:CallToDeprecatedMethodc"5Remove this use of "toDamageValue"; it is deprecated.(»ûéÙøÿÿÿÿ

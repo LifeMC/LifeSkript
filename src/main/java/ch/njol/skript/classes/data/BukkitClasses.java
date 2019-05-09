@@ -65,6 +65,10 @@ import java.util.regex.Pattern;
 // TODO vectors
 public final class BukkitClasses {
 
+    public BukkitClasses() {
+        super();
+    }
+
     static {
         Classes.registerClass(new ClassInfo<>(Entity.class, "entity").user("entit(y|ies)").name("Entity").description("An entity is something in a <a href='#world'>world</a> that's not a <a href='#block'>block</a>, " + "e.g. a <a href='#player'>player</a>, a skeleton, or a zombie, but also <a href='#projectile'>projectiles</a> like arrows, fireballs or thrown potions, " + "or special entities like dropped items, falling blocks or paintings.").usage("player, op, wolf, tamed ocelot, powered creeper, zombie, unsaddled pig, fireball, arrow, dropped item, item frame, etc.").examples("entity is a zombie or creeper", "player is an op", "projectile is an arrow", "shoot a fireball from the player").since("1.0").defaultExpression(new EventValueExpression<>(Entity.class)).parser(new Parser<Entity>() {
             @Override

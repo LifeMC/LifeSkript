@@ -198,6 +198,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static SkriptAddon addon;
 
     public Skript() throws IllegalStateException {
+        super();
         if (instance != null)
             throw new IllegalStateException("Cannot create multiple instances of Skript!");
         instance = this;
@@ -1579,6 +1580,12 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (Skript.debug())
                             Skript.debug("Reset thread priority to " + oldPriority);
                     }
+
+                    // No need to add debug code everytime to test the exception handler (:
+                    if (System.getProperty("skript.throwTestError") != null
+                            && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
+                        Skript.exception(new Throwable(), "Test error");
+                    }
                 }
             });
 
@@ -1703,12 +1710,6 @@ public final class Skript extends JavaPlugin implements Listener {
                 t.setPriority(Thread.MIN_PRIORITY);
                 t.setDaemon(true);
                 t.start();
-            }
-
-            // No need to add debug code everytime to test the exception handler (:
-            if (System.getProperty("skript.throwTestError") != null
-                    && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
-                Skript.exception(new Throwable(), "Test error");
             }
 
         } catch (final Throwable tw) {

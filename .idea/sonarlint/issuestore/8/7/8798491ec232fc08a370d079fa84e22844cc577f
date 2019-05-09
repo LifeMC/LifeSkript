@@ -1,69 +1,36 @@
 
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¿‹øq
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(®†›¯ûÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(·Şüïûÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(³®€øÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¸˜‰¶şÿÿÿÿ
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
-esquid:CallToDeprecatedMethod"3Remove this use of "getMaterial"; it is deprecated.(ØñÒúÿÿÿÿ8´¥„Û¢-
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(„§ øÿÿÿÿ
-Isquid:S1066"/Merge this if statement with the enclosing one.(˜¤íôıÿÿÿÿ
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(–ëÅ­şÿÿÿÿ8´¥„Û¢-
-Xsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
-Ysquid:S3358"DExtract this nested ternary operation into an independent statement.(ØçÙÙ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ììüÿÿÿÿ
-isquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢û€ãúÿÿÿÿ
-[squid:S11344"DTake the required action to fix the issue indicated by this comment.(îÂ÷
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ŠÏëËıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÃğõØúÿÿÿÿ
-y
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(Ïäìóøÿÿÿÿ8´¥„Û¢-
-Ssquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(¡¤Š
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ì£íßúÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¿–Ø›
-‚ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(é°ÍÓøÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¶‹­
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¡µÃûÿÿÿÿ
-\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(”–ä
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¥úğ»
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
-@squid:S1172"&Remove these unused method parameters.(ÊÈù¬úÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ôì´
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ûÊ¢o
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(©ºñõøÿÿÿÿ
-\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Œ™Ş¤
-fsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÀÎ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(·Ëü¯üÿÿÿÿ
-‚ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
-\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Ÿ¢¹ó
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ºƒâ
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Å‹ßö
-0squid:S3626"Remove this redundant jump.(ÉŠ©ƒ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(âßá
-k squid:LabelsShouldNotBeUsedCheck";Refactor the code to remove this label and the need for it.(àÏÅ)8´¥„Û¢-
-osquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ÿ²±8´¥„Û¢-
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ƒ‡ñA
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(¬ƒæè
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ÄàĞ«ûÿÿÿÿ
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(Ìÿ°ÿÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(šÇÄ¿øÿÿÿÿ
-Dsquid:S1066"/Merge this if statement with the enclosing one.(•Æ©ô
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(Ğ¸Ëùÿÿÿÿ
-Xsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(äßÉµ
-`squid:CallToDeprecatedMethod"3Remove this use of "getMaterial"; it is deprecated.(ØçÙÙ8´¥„Û¢-
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(çÒÀ‚
-tsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(çµ‘íıÿÿÿÿ8´¥„Û¢-
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(×Æ¶½
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
-Xsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(Í‰‡Âıÿÿÿÿ
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(§ûıÖ
-‚ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+… squid:ForLoopCounterChangedCheck "XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+Lsquid:S1066›"/Merge this if statement with the enclosing one.(˜¤íôıÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck€".Extract the assignment out of this expression.(Ÿ¢¹ó
+Csquid:S1172´"&Remove these unused method parameters.(ÊÈù¬úÿÿÿÿ
+u
+squid:S135ƒ"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
+u
+squid:S135˜"YReduce the total number of break and continue statements in this loop to use at most one.(Ğ¸Ëùÿÿÿÿ
+… squid:ForLoopCounterChangedCheck“"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+n squid:LabelsShouldNotBeUsedCheck”";Refactor the code to remove this label and the need for it.(àÏÅ)8´¥„Û¢-
+d$squid:AssignmentInSubExpressionCheck‰".Extract the assignment out of this expression.(©ºñõøÿÿÿÿ
+u
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
+3squid:S3626š"Remove this redundant jump.(ÉŠ©ƒ
+d$squid:AssignmentInSubExpressionCheckĞ".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
+ksquid:S00100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢û€ãúÿÿÿÿ
+Vsquid:CallToDeprecatedMethodÄ"-Remove this use of "getId"; it is deprecated.(¡¤Š
+Gsquid:S1066û"/Merge this if statement with the enclosing one.(•Æ©ô
+\squid:S3358İ"DExtract this nested ternary operation into an independent statement.(ØçÙÙ
+d$squid:AssignmentInSubExpressionCheck‡".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheckØ".Extract the assignment out of this expression.(„§ øÿÿÿÿ
+[squid:CallToDeprecatedMethodÆ"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ
+… squid:ForLoopCounterChangedCheck‚"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
+d$squid:AssignmentInSubExpressionCheckŒ".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
+Ysquid:S1134"DTake the required action to fix the issue indicated by this comment.(îÂ÷
+|
+squid:S135•"YReduce the total number of break and continue statements in this loop to use at most one.(Ïäìóøÿÿÿÿ8´¥„Û¢-
+hsquid:CallToDeprecatedMethodÑ"3Remove this use of "getMaterial"; it is deprecated.(ØñÒúÿÿÿÿ8´¥„Û¢-
+csquid:CallToDeprecatedMethodİ"3Remove this use of "getMaterial"; it is deprecated.(ØçÙÙ8´¥„Û¢-
+u
+squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheckš".Extract the assignment out of this expression.(”–ä
+_$squid:AssignmentInSubExpressionCheck„".Extract the assignment out of this expression.(Œ™Ş¤
+]squid:CallToDeprecatedMethodÅ"-Remove this use of "getId"; it is deprecated.(šõ Œ8åÖ¶®©-
+]squid:CallToDeprecatedMethodÅ"-Remove this use of "getId"; it is deprecated.(šõ Œ8åÖ¶®©-

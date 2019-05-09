@@ -1,12 +1,7 @@
 
-gsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(€ÂŸ0
-Jsquid:S2065"0Remove the "transient" modifier from this field.(ĞŒßñÿÿÿÿÿ
-Jsquid:S2696"6Make the enclosing method "static" or remove this set.(ŒÅó%
-r
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ
-a$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Û¬Å£şÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(ò©ëªıÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(é³êÈşÿÿÿÿ
-msquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(–‡™ïüÿÿÿÿ
-Zsquid:HiddenFieldCheck"5Rename "t" which hides the field declared at line 61.(™ô³ôüÿÿÿÿ
-osquid:S3824"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(Í‡Ï°ûÿÿÿÿ8è•ß§£-
+\squid:HiddenFieldCheckp"5Rename "t" which hides the field declared at line 62.(™ô³ôüÿÿÿÿ
+Lsquid:S2065A"0Remove the "transient" modifier from this field.(ĞŒßñÿÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheckƒ".Extract the assignment out of this expression.(Û¬Å£şÿÿÿÿ
+rsquid:S3824"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(Í‡Ï°ûÿÿÿÿ8è•ß§£-
+u
+squid:S135T"YReduce the total number of break and continue statements in this loop to use at most one.(›ùC8Ùç¶®©-
