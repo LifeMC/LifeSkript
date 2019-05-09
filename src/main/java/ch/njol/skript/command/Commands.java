@@ -25,6 +25,7 @@ package ch.njol.skript.command;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.SkriptEventHandler;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.SectionNode;
@@ -52,6 +53,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventException;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -136,12 +138,24 @@ public final class Commands { //NOSONAR
     @Nullable
     public static List<Argument<?>> currentArguments;
     static boolean suppressUnknownCommandMessage;
+    public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
+
     private static final Listener commandListener = new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
         public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-            if (handleCommand(e.getPlayer(), e.getMessage().substring(1)))
+            if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
                 e.setCancelled(true);
+                if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
+                    try {
+                        // We cancelled the current event, execute this one instead.
+                        SkriptEventHandler.last = null;
+                        SkriptEventHandler.ee.execute(null, new PlayerCommandPreprocessEvent(e.getPlayer(), e.getMessage()));
+                    } catch (final EventException ex) {
+                        Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + "\"");
+                    }
+                }
+            }
         }
 
         @SuppressWarnings("null")
@@ -151,14 +165,38 @@ public final class Commands { //NOSONAR
                 return;
             if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
                 if (handleEffectCommand(e.getSender(), e.getCommand())) {
+                    final String command = e.getCommand();
                     e.setCommand("");
+                    if (cancellableServerCommand)
+                        e.setCancelled(true);
                     suppressUnknownCommandMessage = true;
+                    if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
+                        try {
+                            // We cancelled the current event, execute this one instead.
+                            SkriptEventHandler.last = null;
+                            SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
+                        } catch (final EventException ex) {
+                            Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
+                        }
+                    }
                 }
                 return;
             }
             if (handleCommand(e.getSender(), e.getCommand())) {
+                final String command = e.getCommand();
                 e.setCommand("");
+                if (cancellableServerCommand)
+                    e.setCancelled(true);
                 suppressUnknownCommandMessage = true;
+                if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
+                    try {
+                        // We cancelled the current event, execute this one instead.
+                        SkriptEventHandler.last = null;
+                        SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
+                    } catch (final EventException ex) {
+                        Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
+                    }
+                }
             }
         }
     };
@@ -202,8 +240,8 @@ public final class Commands { //NOSONAR
                 cmKnownCommands = (Map<String, Command>) knownCommandsField.get(commandMap);
 
                 try {
-                    //noinspection JavaReflectionMemberAccess
                     // Aliases field is removed in new versions. (probably 1.7+)
+                    //noinspection JavaReflectionMemberAccess
                     final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
                     aliasesField.setAccessible(true);
                     cmAliases = (Set<String>) aliasesField.get(commandMap);
@@ -228,7 +266,7 @@ public final class Commands { //NOSONAR
     }
 
     /**
-     * @param sender
+     * @param sender the sender of the command
      * @param command full command string without the slash
      * @return whether to cancel the event
      */

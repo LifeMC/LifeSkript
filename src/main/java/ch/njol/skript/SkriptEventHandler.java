@@ -31,6 +31,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventException;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -55,12 +56,12 @@ public final class SkriptEventHandler {
     private static final Listener listener = new Listener() {
     };
     @Nullable
-    static Event last;
+    public static Event last;
     static long startTrigger;
     private static long startEvent;
-    static final EventExecutor ee = new EventExecutor() {
+    public static final EventExecutor ee = new EventExecutor() {
         @Override
-        public final void execute(final @Nullable Listener l, final @Nullable Event e) {
+        public final void execute(final @Nullable Listener l, final @Nullable Event e) throws EventException {
             if (e == null)
                 return;
             if (last == e) // an event is received multiple times if multiple superclasses of it are registered
@@ -138,8 +139,9 @@ public final class SkriptEventHandler {
         }
 
         if (e instanceof Cancellable && ((Cancellable) e).isCancelled() && !(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY) || e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
-            if (Skript.logVeryHigh())
-                Skript.info(e.getClass().getSimpleName() + " was cancelled");
+            // Not possible to listen for uncancelled events in Skript
+            //if (Skript.logVeryHigh())
+                //Skript.info(e.getClass().getSimpleName() + " was cancelled");
             return;
         }
 

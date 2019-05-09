@@ -65,6 +65,7 @@ public final class SkriptConfig {
             return EventPriority.NORMAL;
         }
     });
+    public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
     public static final Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
      * Maximum number of digits to display after the period for floats and doubles
