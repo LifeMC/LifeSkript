@@ -54,6 +54,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * This class is used for user-defined commands.
@@ -61,6 +63,9 @@ import java.util.Map.Entry;
  * @author Peter Güttinger
  */
 public final class ScriptCommand implements CommandExecutor {
+    public static final ConcurrentMap<String, ScriptCommand> commandMap =
+            new ConcurrentHashMap<>();
+
     public static final Message m_executable_by_players = new Message("commands.executable by players");
     public static final Message m_executable_by_console = new Message("commands.executable by console");
     public static final int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
@@ -93,7 +98,7 @@ public final class ScriptCommand implements CommandExecutor {
      * Creates a new SkriptCommand.
      *
      * @param name              /name
-     * @param pattern
+     * @param pattern           the pattern of the command
      * @param arguments         the list of Arguments this command takes
      * @param description       description to display in /help
      * @param usage             message to display if the command was used incorrectly
@@ -102,10 +107,11 @@ public final class ScriptCommand implements CommandExecutor {
      * @param permissionMessage message to display if the player doesn't have the given permission
      * @param items             trigger to execute
      */
+    @SuppressWarnings("null")
     public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
         Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
         this.name = name;
-        label = "" + name.toLowerCase(Locale.ENGLISH);
+        label = name.toLowerCase(Locale.ENGLISH);
         this.permission = permission;
         this.permissionMessage = permissionMessage == null ? new SimpleLiteral<>(Language.get("commands.no permission message"), false) : permissionMessage;
 
@@ -115,7 +121,16 @@ public final class ScriptCommand implements CommandExecutor {
         this.cooldownStorage = cooldownStorage;
 
         // remove aliases that are the same as the command
-        aliases.removeIf(s -> s.equals(label));
+        if (Skript.logHigh()) {
+            for(Iterator<String> iterator = aliases.iterator(); iterator.hasNext();) {
+                final String alias = iterator.next();
+                if (alias.equals(label)) {
+                    Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command and it is redundant, remove it.");
+                    iterator.remove();
+                }
+            }
+        } else
+            aliases.removeIf(s -> s.equals(label));
         this.aliases = aliases;
         activeAliases = new ArrayList<>(aliases);
 
@@ -130,6 +145,8 @@ public final class ScriptCommand implements CommandExecutor {
         trigger = new Trigger(script, "command /" + name, new SimpleEvent(), items);
 
         bukkitCommand = setupBukkitCommand();
+
+        commandMap.put(name, this);
     }
 
     private PluginCommand setupBukkitCommand() {
