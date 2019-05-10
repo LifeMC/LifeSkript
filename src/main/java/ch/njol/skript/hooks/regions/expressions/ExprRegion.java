@@ -23,10 +23,7 @@
 package ch.njol.skript.hooks.regions.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.ExpressionType;
@@ -40,6 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"The <a href='../classes/#region'>region</a> involved in an event.", "This expression requires a supported regions plugin to be installed."})
 @Examples({"on region enter:", "	region is {forbidden region}", "	cancel the event"})
 @Since("2.1")
+@RequiredPlugins("A region plugin")
 public final class ExprRegion extends EventValueExpression<Region> {
     static {
         Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, "[the] [event-]region");

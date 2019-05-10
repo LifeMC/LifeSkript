@@ -22,6 +22,7 @@
 
 package ch.njol.skript.hooks.regions.events;
 
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.classes.Region;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -31,6 +32,7 @@ import org.bukkit.event.HandlerList;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins("A region plugin")
 public final class RegionBorderEvent extends Event implements Cancellable {
 
     // Bukkit stuff

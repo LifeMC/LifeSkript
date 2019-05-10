@@ -23,6 +23,7 @@
 package ch.njol.skript.hooks;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.RequiredPlugins;
 import net.milkbowl.vault.Vault;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -33,6 +34,7 @@ import java.io.IOException;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins("Vault")
 public final class VaultHook extends Hook<Vault> {
 
     @SuppressWarnings("null")

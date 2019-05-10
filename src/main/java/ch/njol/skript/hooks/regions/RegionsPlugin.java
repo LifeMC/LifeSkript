@@ -22,6 +22,7 @@
 
 package ch.njol.skript.hooks.regions;
 
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.variables.Variables;
@@ -39,6 +40,7 @@ import java.util.*;
  * @author Peter Güttinger
  */
 // REMIND support more plugins?
+@RequiredPlugins("A region plugin")
 public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
 
     public static final List<RegionsPlugin<?>> plugins = new ArrayList<>(2);

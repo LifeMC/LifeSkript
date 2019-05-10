@@ -26,6 +26,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.YggdrasilSerializer;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.RegionsPlugin;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.lang.VariableString;
@@ -44,6 +45,7 @@ import java.util.Iterator;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins("A region plugin")
 public abstract class Region implements YggdrasilExtendedSerializable {
     static {
         Classes.registerClass(new ClassInfo<>(Region.class, "region").name("Region").description("A region of a regions plugin. Skript currently supports WorldGuard, Factions, GriefPrevention and PreciousStones.", "Please note that some regions plugins do not have named regions, some use numerical ids to identify regions, and some may have regions with the same name in different worlds, " + "thus using regions like \"region name\" in scripts may or may not work.").usage("\"region name\"").examples("").after("string", "world", "offlineplayer", "player").since("2.1").user("regions?").parser(new Parser<Region>() {

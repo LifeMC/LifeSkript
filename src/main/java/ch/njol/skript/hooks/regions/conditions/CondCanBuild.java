@@ -23,10 +23,7 @@
 package ch.njol.skript.hooks.regions.conditions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.hooks.regions.RegionsPlugin;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
@@ -45,6 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Tests whether a player is allowed to build at a certain location.", "This condition requires a supported <a href='../classes/#region'>regions</a> plugin to be installed."})
 @Examples({"command /setblock <material>:", "	description: set the block at your crosshair to a different type", "	trigger:", "		player cannot build at the targeted block:", "			message \"You do not have permission to change blocks there!\"", "			stop", "		set the targeted block to argument"})
 @Since("2.0")
+@RequiredPlugins("A region plugin")
 public final class CondCanBuild extends Condition {
     static {
         Skript.registerCondition(CondCanBuild.class, "%players% (can|(is|are) allowed to) build %directions% %locations%", "%players% (can('t|not)|(is|are)(n't| not) allowed to) build %directions% %locations%");

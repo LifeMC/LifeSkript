@@ -23,10 +23,7 @@
 package ch.njol.skript.hooks.regions.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.hooks.regions.RegionsPlugin;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.Expression;
@@ -47,6 +44,7 @@ import java.util.ArrayList;
 @Description({"A list of members or owners of a <a href='../classes/#region'>region</a>.", "This expression requires a supported regions plugin to be installed."})
 @Examples({"on entering of a region:", "	message \"You're entering %region% whose owners are %owners of region%\"."})
 @Since("2.1")
+@RequiredPlugins("A region plugin")
 public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
     static {
         Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");

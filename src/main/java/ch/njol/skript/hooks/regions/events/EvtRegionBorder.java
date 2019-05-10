@@ -24,6 +24,7 @@ package ch.njol.skript.hooks.regions.events;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.RegionsPlugin;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.Literal;
@@ -51,6 +52,7 @@ import java.util.Set;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins("A region plugin")
 public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
     private static final Collection<Trigger> triggers = new ArrayList<>();
     // even WorldGuard doesn't have events, and this way all region plugins are supported for sure.

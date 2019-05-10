@@ -23,6 +23,7 @@
 package ch.njol.skript.hooks.regions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.util.AABB;
 import ch.njol.skript.variables.Variables;
@@ -53,6 +54,7 @@ import java.util.List;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins("GriefPrevention")
 public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 
     static {

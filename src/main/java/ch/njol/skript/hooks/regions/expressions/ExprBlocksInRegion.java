@@ -23,10 +23,7 @@
 package ch.njol.skript.hooks.regions.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Examples;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
@@ -51,6 +48,7 @@ import java.util.NoSuchElementException;
 @Description({"All blocks in a <a href='../classes/#region'>region</a>.", "This expression requires a supported regions plugin to be installed."})
 @Examples({"loop all blocks in the region {arena.%{faction.%player%}%}:", "	clear the loop-block"})
 @Since("2.1")
+@RequiredPlugins("A region plugin")
 public final class ExprBlocksInRegion extends SimpleExpression<Block> {
     static {
         Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");

@@ -58,8 +58,9 @@ public abstract class Hook<P extends Plugin> {
         return plugin;
     }
 
+    @SuppressWarnings("null")
     protected void loadClasses() throws IOException {
-        Skript.getAddonInstance().loadClasses("" + getClass().getPackage().getName());
+        Skript.getAddonInstance().loadClasses(getClass().getPackage().getName());
     }
 
     /**

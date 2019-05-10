@@ -27,8 +27,10 @@ import ch.njol.skript.classes.Arithmetic;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Comparator;
 import ch.njol.skript.classes.Parser;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.VaultHook;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Comparators;
 import ch.njol.skript.registrations.Converters;
@@ -38,6 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
+@RequiredPlugins({"Vault", "An economy Plugin"})
 public final class Money {
     static {
         Classes.registerClass(new ClassInfo<>(Money.class, "money").user("money").name("Money").description("A certain amount of money. Please note that this differs from <a href='#number'>numbers</a> as it includes a currency symbol or name, but usually the two are interchangeable, e.g. you can both <code>add 100$ to the player's balance</code> and <code>add 100 to the player's balance</code>.").usage("<code>&lt;number&gt; $</code> or <code>$ &lt;number&gt;</code>, where '$' is your server's currency, e.g. '10 rupees' or '£5.00'").examples("add 10£ to the player's account", "remove Fr. 9.95 from the player's money", "set the victim's money to 0", "increase the attacker's balance by the level of the victim * 100").since("2.0").before("itemtype", "itemstack").parser(new Parser<Money>() {
@@ -123,31 +126,47 @@ public final class Money {
         final String singular = VaultHook.economy.currencyNameSingular(), plural = VaultHook.economy.currencyNamePlural();
         if (!plural.isEmpty()) {
             if (StringUtils.endsWithIgnoreCase(s, plural)) {
+                final String str = s.substring(0, s.length() - plural.length()).trim();
                 try {
-                    final double d = Double.parseDouble(s.substring(0, s.length() - plural.length()).trim());
-                    return new Money(d);
-                } catch (final NumberFormatException ignored) {
+                    if (SkriptParser.isIntegerOrDouble(str)) {
+                        final double d = Double.parseDouble(str);
+                        return new Money(d);
+                    }
+                } catch (final NumberFormatException e) {
+                    Skript.exception(e,"Error occurred when parsing \"" + str + "\"");
                 }
             } else if (StringUtils.startsWithIgnoreCase(s, plural)) {
+                final String str = s.substring(plural.length()).trim();
                 try {
-                    final double d = Double.parseDouble(s.substring(plural.length()).trim());
-                    return new Money(d);
-                } catch (final NumberFormatException ignored) {
+                    if (SkriptParser.isIntegerOrDouble(str)) {
+                        final double d = Double.parseDouble(str);
+                        return new Money(d);
+                    }
+                } catch (final NumberFormatException e) {
+                    Skript.exception(e,"Error occurred when parsing \"" + str + "\"");
                 }
             }
         }
         if (!singular.isEmpty()) {
             if (StringUtils.endsWithIgnoreCase(s, singular)) {
+                final String str = s.substring(0, s.length() - singular.length()).trim();
                 try {
-                    final double d = Double.parseDouble(s.substring(0, s.length() - singular.length()).trim());
-                    return new Money(d);
-                } catch (final NumberFormatException ignored) {
+                    if (SkriptParser.isIntegerOrDouble(str)) {
+                        final double d = Double.parseDouble(str);
+                        return new Money(d);
+                    }
+                } catch (final NumberFormatException e) {
+                    Skript.exception(e,"Error occurred when parsing \"" + str + "\"");
                 }
             } else if (StringUtils.startsWithIgnoreCase(s, singular)) {
+                final String str = s.substring(singular.length()).trim();
                 try {
-                    final double d = Double.parseDouble(s.substring(singular.length()).trim());
-                    return new Money(d);
-                } catch (final NumberFormatException ignored) {
+                    if (SkriptParser.isIntegerOrDouble(str)) {
+                        final double d = Double.parseDouble(str);
+                        return new Money(d);
+                    }
+                } catch (final NumberFormatException e) {
+                    Skript.exception(e,"Error occurred when parsing \"" + str + "\"");
                 }
             }
         }
@@ -163,7 +182,7 @@ public final class Money {
 
     @Override
     public String toString() {
-        return "" + VaultHook.economy.format(amount);
+        return VaultHook.economy.format(amount);
     }
 
 }
