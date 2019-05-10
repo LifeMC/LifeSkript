@@ -108,7 +108,8 @@ public final class SkriptParser {
      * @param flags   Some parse flags ({@link #PARSE_EXPRESSIONS}, {@link #PARSE_LITERALS})
      * @param context The parse context
      */
-    public SkriptParser(final String expr, final int flags, final ParseContext context) {
+    @SuppressWarnings("null")
+	public SkriptParser(final String expr, final int flags, final ParseContext context) {
         assert expr != null;
         assert (flags & ALL_FLAGS) != 0;
         this.expr =  expr.trim();
@@ -125,7 +126,7 @@ public final class SkriptParser {
      * <p>
      * Prints errors.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public static final <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
         expr =  expr.trim();
@@ -139,7 +140,8 @@ public final class SkriptParser {
      * <p>
      * Can print an error.
      */
-    @Nullable
+    @SuppressWarnings("null")
+	@Nullable
     public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
         expr =  expr.trim();
         if (expr.isEmpty()) {
@@ -160,7 +162,8 @@ public final class SkriptParser {
         }
     }
 
-    @Nullable
+    @SuppressWarnings("null")
+	@Nullable
     public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
         expr =  expr.trim();
         if (expr.isEmpty()) {
@@ -451,7 +454,8 @@ public final class SkriptParser {
      * @param cs
      * @return "not an x" or "neither an x, a y nor a z"
      */
-    public static final String notOfType(final Class<?>... cs) {
+    @SuppressWarnings("null")
+	public static final String notOfType(final Class<?>... cs) {
         if (cs.length == 1) {
             final Class<?> c = cs[0];
             assert c != null;
@@ -469,7 +473,7 @@ public final class SkriptParser {
                 assert c != null;
                 b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
             }
-            return  b.toString();
+            return b.toString();
         }
     }
 
@@ -477,7 +481,8 @@ public final class SkriptParser {
      * @param cs
      * @return "not an x" or "neither an x, a y nor a z"
      */
-    public static final String notOfType(final ClassInfo<?>... cs) {
+    @SuppressWarnings("null")
+	public static final String notOfType(final ClassInfo<?>... cs) {
         if (cs.length == 1) {
             return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
         } else {
@@ -491,7 +496,7 @@ public final class SkriptParser {
                 }
                 b.append(cs[k].getName().withIndefiniteArticle());
             }
-            return  b.toString();
+            return b.toString();
         }
     }
 
@@ -551,6 +556,7 @@ public final class SkriptParser {
      * @param pattern
      * @return The pattern with %codenames% and a boolean array that contains whetehr the expressions are plural or not
      */
+    @SuppressWarnings("null")
     @Nullable
     public static final NonNullPair<String, boolean[]> validatePattern(final String pattern) {
         final List<Boolean> ps = new ArrayList<>();
@@ -599,7 +605,7 @@ public final class SkriptParser {
                 final int j = pattern.indexOf('%', i + 1);
                 if (j == -1)
                     return error("Missing end sign '%' of expression. Escape the percent sign to match a literal '%': '\\%'");
-                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( pattern.substring(i + 1, j));
+				final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( pattern.substring(i + 1, j));
                 final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(p.getFirst());
                 if (ci == null)
                     return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
@@ -650,7 +656,8 @@ public final class SkriptParser {
         return r;
     }
 
-    private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+    @SuppressWarnings("null")
+	private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
         final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
         r.isOptional = s.startsWith("-");
         if (r.isOptional)
@@ -739,7 +746,7 @@ public final class SkriptParser {
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings({"unchecked", "rawtypes", "null"})
     @Nullable
     private final <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
         assert types.length > 0;
@@ -840,7 +847,7 @@ public final class SkriptParser {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public final <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
         if (expr.length() == 0)
@@ -1032,7 +1039,7 @@ public final class SkriptParser {
      * @param types The required return type or null if it is not used (e.g. when calling a void function)
      * @return The parsed function, or null if the given expression is not a function call or is an invalid function call (check for an error to differentiate these two)
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public final <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
         if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
@@ -1212,7 +1219,8 @@ public final class SkriptParser {
      * @param j       Position in the pattern
      * @return Parsed result or null on error (which does not imply that an error was printed)
      */
-    @Nullable
+    @SuppressWarnings("null")
+	@Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
         ParseResult res;
         int end, i2;

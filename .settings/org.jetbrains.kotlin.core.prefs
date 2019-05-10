@@ -1,0 +1,7 @@
+apiVersion=1.3
+codeStyle/codeStyleId=KOTLIN_OFFICIAL
+codeStyle/globalsOverridden=true
+compilerFlags=-Xjsr305\=strict -Xjvm-default\=compatibility -Xno-param-assertions -Xno-call-assertions
+eclipse.preferences.version=1
+globalsOverridden=true
+languageVersion=1.3

@@ -86,8 +86,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import static ch.njol.skript.bukkitutil.Workarounds.getOriginalProperty;
-
 // TODO meaningful error if someone uses an %expression with percent signs% outside of text or a variable
 
 /**
@@ -1055,7 +1053,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param info  Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
-    public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final String... info) {
+    public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final @Nullable String... info) {
         try {
             logEx();
             logEx("[Skript] Severe Error:");
@@ -1094,7 +1092,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateChecked ? (updateAvailable ? " (update available)" : " (latest)") : " (not checked)"));
+            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? " (update available)" : " (latest)" : " (not checked)"));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1125,8 +1123,8 @@ public final class Skript extends JavaPlugin implements Listener {
             logEx();
             logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
             logEx();
-            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + getOriginalProperty("user.language") + "-" + getOriginalProperty("user.country") + ")");
-            logEx("Encoding: " + "file = " + getOriginalProperty("file.encoding") + " , jnu = " + getOriginalProperty("sun.jnu.encoding") + " , stderr = " + getOriginalProperty("sun.stderr.encoding") + " , stdout = " + getOriginalProperty("sun.stdout.encoding"));
+            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language") + "-" + Workarounds.getOriginalProperty("user.country") + ")");
+            logEx("Encoding: " + "file = " + Workarounds.getOriginalProperty("file.encoding") + " , jnu = " + Workarounds.getOriginalProperty("sun.jnu.encoding") + " , stderr = " + Workarounds.getOriginalProperty("sun.stderr.encoding") + " , stdout = " + Workarounds.getOriginalProperty("sun.stdout.encoding"));
             logEx();
             final StringBuilder stringBuilder = new StringBuilder();
             int i = 0;
@@ -1134,7 +1132,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (addon.plugin instanceof Skript)
                     continue;
                 stringBuilder.append(addon.getName());
-                if (i < (addons.size() - 1))
+                if (i < addons.size() - 1)
                     stringBuilder.append(", ");
                 i++;
             }
@@ -1163,7 +1161,7 @@ public final class Skript extends JavaPlugin implements Listener {
         SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX);
     }
 
-    static final void logEx(final String... lines) {
+    static final void logEx(final @Nullable String... lines) {
         if (lines == null || lines.length < 1)
             return;
         if (lines.length == 1)
