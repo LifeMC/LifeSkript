@@ -30,6 +30,7 @@ import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Documentation;
 import ch.njol.skript.events.EvtSkript;
 import ch.njol.skript.expressions.ExprEntities;
+import ch.njol.skript.expressions.ExprTargetedBlock;
 import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Functions;
@@ -1250,83 +1251,81 @@ public final class Skript extends JavaPlugin implements Listener {
 
             if (!first) {
 
-                if (System.getProperty("-Dskript.disableAutomaticChanges") != null &&
-                        Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
-                    return;
-                }
+                if (System.getProperty("-Dskript.disableAutomaticChanges") == null ||
+                        !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
+                    first = true;
+                    try {
+                        // Get server directory / folder
+                        final File serverDirectory = this.getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
-                first = true;
-                try {
-                    // Get server directory / folder
-                    final File serverDirectory = this.getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                        // Flag to track changes and warn the user
+                        boolean madeChanges = false;
 
-                    // Flag to track changes and warn the user
-                    boolean madeChanges = false;
-
-                    // Find and detect paper file and automatically disable velocity warnings
-                    final File paperFile = new File(serverDirectory, "paper.yml");
-                    if (paperFile.exists()) {
-                        final Path filePath = paperFile.toPath();
-                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-                        // See: https://github.com/LifeMC/LifeSkript/issues/25
-                        final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
-                        if (!contents.equalsIgnoreCase(replacedContents)) {
-                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                            madeChanges = true;
-                        }
-                    }
-
-                    // Find the startup script and automatically add log strip color option
-                    final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
-                            name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
-                    );
-
-                    if (startupScripts != null) {
-                        for (final File startupScript : startupScripts) {
-                            final Path filePath = startupScript.toPath();
+                        // Find and detect paper file and automatically disable velocity warnings
+                        final File paperFile = new File(serverDirectory, "paper.yml");
+                        if (paperFile.exists()) {
+                            final Path filePath = paperFile.toPath();
                             final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-                            if (contents.contains("java") && contents.contains("-jar ")) {
-                                String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
-                                if (afterJar.contains(System.lineSeparator()))
-                                    afterJar = afterJar.split(System.lineSeparator())[0];
-                                String stripColor = afterJar;
-                                // Strip color is required for not showing strange characters on log when using jansi colors
-                                if (!afterJar.contains("--log-strip-color")) {
-                                    stripColor += " --log-strip-color";
-                                }
-                                String replacedContents = contents.replace(afterJar, stripColor);
-                                if (!contents.equalsIgnoreCase(replacedContents)) {
-                                    String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
-                                    if (beforeJar.contains(System.lineSeparator()))
-                                        beforeJar = beforeJar.split(System.lineSeparator())[0];
-                                    String fileEncoding = beforeJar;
-                                    // File encoding is required on some locales to fix some issues with localization
-                                    if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
-                                        fileEncoding += " -Dfile.encoding=UTF-8";
-                                    replacedContents = replacedContents.replace(beforeJar, fileEncoding);
+                            // See: https://github.com/LifeMC/LifeSkript/issues/25
+                            final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
+                            if (!contents.equalsIgnoreCase(replacedContents)) {
+                                Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                                madeChanges = true;
+                            }
+                        }
+
+                        // Find the startup script and automatically add log strip color option
+                        final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
+                                name.toLowerCase(Locale.ENGLISH).trim()
+                                        .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
+                                        || name.toLowerCase(Locale.ENGLISH).trim()
+                                        .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
+                                        || name.toLowerCase(Locale.ENGLISH).trim()
+                                        .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
+                                        || name.toLowerCase(Locale.ENGLISH).trim()
+                                        .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
+                                        || name.toLowerCase(Locale.ENGLISH).trim()
+                                        .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
+                        );
+
+                        if (startupScripts != null) {
+                            for (final File startupScript : startupScripts) {
+                                final Path filePath = startupScript.toPath();
+                                final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                                if (contents.contains("java") && contents.contains("-jar ")) {
+                                    String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                                    if (afterJar.contains(System.lineSeparator()))
+                                        afterJar = afterJar.split(System.lineSeparator())[0];
+                                    String stripColor = afterJar;
+                                    // Strip color is required for not showing strange characters on log when using jansi colors
+                                    if (!afterJar.contains("--log-strip-color")) {
+                                        stripColor += " --log-strip-color";
+                                    }
+                                    String replacedContents = contents.replace(afterJar, stripColor);
                                     if (!contents.equalsIgnoreCase(replacedContents)) {
-                                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                                        madeChanges = true;
+                                        String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
+                                        if (beforeJar.contains(System.lineSeparator()))
+                                            beforeJar = beforeJar.split(System.lineSeparator())[0];
+                                        String fileEncoding = beforeJar;
+                                        // File encoding is required on some locales to fix some issues with localization
+                                        if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
+                                            fileEncoding += " -Dfile.encoding=UTF-8";
+                                        replacedContents = replacedContents.replace(beforeJar, fileEncoding);
+                                        if (!contents.equalsIgnoreCase(replacedContents)) {
+                                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                                            madeChanges = true;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    // Warn the user that server needs a restart
-                    if (madeChanges)
-                        info("Automatically made some compatibility settings. Restart your server to apply them.");
-                } catch (final Throwable tw) {
-                    //Skript.exception(tw);
+                        // Warn the user that server needs a restart
+                        if (madeChanges)
+                            info("Automatically made some compatibility settings. Restart your server to apply them.");
+                    } catch (final Throwable tw) {
+                        //Skript.exception(tw);
+                    }
                 }
             }
 
@@ -1591,6 +1590,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 Bukkit.getScheduler().runTask(this, () -> {
                     info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
                     info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
+                    info(ExprTargetedBlock.set ? "Using new method for target block expression." : "Using old method for target block expression.");
                 });
             }
 
@@ -1614,7 +1614,8 @@ public final class Skript extends JavaPlugin implements Listener {
                             warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
                         } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
                             // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
-                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot does NOT break some plugins that work on Spigot.
+                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
+                            // TODO Also add options for disabling recommendations one by one or all of them. e.g: -Dskript.disableTacoRecommendation=true etc.
                             if (Skript.logHigh()) {
                                 info("We recommend using TacoSpigot over Spigot on 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
                                 info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
