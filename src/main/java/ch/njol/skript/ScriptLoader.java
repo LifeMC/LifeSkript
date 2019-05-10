@@ -485,10 +485,8 @@ public final class ScriptLoader {
                 }
 
                 if (Skript.logHigh() && startDate != null) {
-
                     final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + " and " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
-
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
                 }
 
                 currentScript = null;
@@ -598,7 +596,7 @@ public final class ScriptLoader {
         return r;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     public static List<TriggerItem> loadItems(final SectionNode node) {
 
         if (Skript.debug())
@@ -726,7 +724,8 @@ public final class ScriptLoader {
      * @param node The node to load trigger from
      * @return The loaded Trigger
      */
-    @Nullable
+    @SuppressWarnings("null")
+	@Nullable
     static Trigger loadTrigger(final SectionNode node) {
         String event = node.getKey();
         if (event == null) {

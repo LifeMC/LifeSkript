@@ -24,6 +24,7 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.entity.EntityData;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.util.NonNullPair;
@@ -482,6 +483,7 @@ public final class Utils {
      */
     public static int parseInt(final String s) {
         assert s.matches("-?\\d+");
+        assert SkriptParser.isInteger(s);
         try {
             return Integer.parseInt(s);
         } catch (final NumberFormatException e) {
