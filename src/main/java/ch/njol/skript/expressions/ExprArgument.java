@@ -22,9 +22,11 @@
 
 package ch.njol.skript.expressions;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.command.Argument;
+import ch.njol.skript.command.CommandEvent;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.command.ScriptCommandEvent;
 import ch.njol.skript.doc.Description;
@@ -41,7 +43,10 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.List;
@@ -61,45 +66,69 @@ public final class ExprArgument extends SimpleExpression<Object> {
     @SuppressWarnings("null")
     private Argument<?> arg;
 
+    private boolean dynamic;
+    private int index;
+
+    private int matchedPattern;
+
     @Override
     @SuppressWarnings({"null", "unused"})
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+        this.matchedPattern = matchedPattern;
         final List<Argument<?>> currentArguments = Commands.currentArguments;
         if (currentArguments == null) {
-            Skript.error("The expression 'argument' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
-            return false;
+            if ((ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class) || ScriptLoader.isCurrentEvent(ServerCommandEvent.class)) && !ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
+                dynamic = true;
+            } else {
+                Skript.error("The expression 'argument' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
+                return false;
+            }
         }
-        if (currentArguments.isEmpty()) {
+        if (!dynamic && currentArguments.isEmpty()) {
             Skript.error("This command doesn't have any arguments", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         Argument<?> arg = null;
         switch (matchedPattern) {
             case 0:
-                arg = currentArguments.get(currentArguments.size() - 1);
+                if (!dynamic)
+                    arg = currentArguments.get(currentArguments.size() - 1);
+                else
+                    index = -1;
                 break;
             case 1:
             case 2:
                 @SuppressWarnings("null") final int i = Utils.parseInt(parser.regexes.get(0).group(1));
-                if (i > currentArguments.size()) {
-                    Skript.error("The command doesn't have a " + StringUtils.fancyOrderNumber(i) + " argument", ErrorQuality.SEMANTIC_ERROR);
-                    return false;
-                } else if (i < 1) {
-                    Skript.error("Command arguments start from one; argument number " + i + " is invalid", ErrorQuality.SEMANTIC_ERROR);
-                    return false;
-                }
-                arg = currentArguments.get(i - 1);
+                if (!dynamic) {
+                    assert currentArguments != null;
+                    if (i > currentArguments.size()) {
+                        Skript.error("The command doesn't have a " + StringUtils.fancyOrderNumber(i) + " argument", ErrorQuality.SEMANTIC_ERROR);
+                        return false;
+                    } else if (i < 1) {
+                        Skript.error("Command arguments start from one; argument number " + i + " is invalid", ErrorQuality.SEMANTIC_ERROR);
+                        return false;
+                    }
+                    arg = currentArguments.get(i - 1);
+                } else
+                    index = i - 1;
                 break;
             case 3:
-                if (currentArguments.size() == 1) {
-                    arg = currentArguments.get(0);
-                } else {
-                    Skript.error("'argument(s)' cannot be used if the command has multiple arguments. Use 'argument 1', 'argument 2', etc. instead", ErrorQuality.SEMANTIC_ERROR);
-                    return false;
-                }
+                if (!dynamic) {
+                    if (currentArguments.size() == 1) {
+                        arg = currentArguments.get(0);
+                    } else {
+                        Skript.error("'argument(s)' cannot be used if the command has multiple arguments. Use 'argument 1', 'argument 2', etc. instead", ErrorQuality.SEMANTIC_ERROR);
+                        return false;
+                    }
+                } else
+                    index = 0;
                 break;
             case 4:
             case 5:
+                if (dynamic) {
+                    Skript.error("This form of the argument expression is not supported on command events! Use 'argument 1', 'argument 2', etc. instead", ErrorQuality.SEMANTIC_ERROR);
+                    return false;
+                }
                 @SuppressWarnings("unchecked") final ClassInfo<?> c = ((Literal<ClassInfo<?>>) exprs[0]).getSingle();
                 @SuppressWarnings("null") final int num = !parser.regexes.isEmpty() ? Utils.parseInt(parser.regexes.get(0).group()) : -1;
                 int j = 1;
@@ -133,26 +162,54 @@ public final class ExprArgument extends SimpleExpression<Object> {
                 assert false : matchedPattern;
                 return false;
         }
-        assert arg != null;
         this.arg = arg;
         return true;
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     @Nullable
     protected Object[] get(final Event e) {
-        if (!(e instanceof ScriptCommandEvent))
-            return null;
-        return arg.getCurrent(e);
+        if (e instanceof ScriptCommandEvent)
+            return arg.getCurrent(e);
+        else if (dynamic) {
+            CommandEvent event = null;
+
+            if (e instanceof PlayerCommandPreprocessEvent) {
+                final PlayerCommandPreprocessEvent ev = (PlayerCommandPreprocessEvent) e;
+                event = new CommandEvent(ev.getPlayer(), ev.getMessage(), ev.getMessage().split(" "));
+            } else if (e instanceof ServerCommandEvent) {
+                final ServerCommandEvent ev = (ServerCommandEvent) e;
+                event = new CommandEvent(ev.getSender(), ev.getCommand(), ev.getCommand().split(" "));
+            } else
+                assert false;
+
+            final String[] args = event.getArgs();
+
+            final int finalIndex = matchedPattern == 0 ? index > 0 ? index - 1 : index : index + 1;
+
+            assert matchedPattern != 0 || index == -1;
+            assert finalIndex >= 0;
+
+            if (finalIndex >= args.length)
+                return null;
+
+            return CollectionUtils.array(args[finalIndex]);
+        }
+        return null;
     }
 
     @Override
     public Class<?> getReturnType() {
+        if (dynamic)
+            return String.class;
         return arg.getType();
     }
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
+        if (dynamic)
+            return "the " + (matchedPattern == 0 ? "last" : StringUtils.fancyOrderNumber(index + 1)) + " argument";
         if (e == null)
             return "the " + StringUtils.fancyOrderNumber(arg.getIndex() + 1) + " argument";
         return Classes.getDebugMessage(getArray(e));
@@ -160,6 +217,8 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
     @Override
     public boolean isSingle() {
+        if (dynamic)
+            return true;
         return arg.isSingle();
     }
 

@@ -155,7 +155,7 @@ public final class FunctionReference<T> {
         if (function == null)
             function = (Function<? extends T>) Functions.getFunction(functionName);
         if (function == null) {
-            //Skript.error("Invalid function call to function that does not exist yet. Be careful when using functions in 'script load' events!");
+            Skript.error("Invalid function call to function that does not exist yet. Be careful when using functions in 'script load' events!");
             return null;
         }
 
