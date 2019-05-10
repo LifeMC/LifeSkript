@@ -53,7 +53,7 @@ public final class SkriptEventHandler {
      * Stores which events are currently registered with Bukkit
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
-    private static final Listener listener = new Listener() {
+    public static final Listener listener = new Listener() {
     };
     @Nullable
     public static Event last;

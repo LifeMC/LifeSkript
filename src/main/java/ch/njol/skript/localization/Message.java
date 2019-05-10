@@ -60,8 +60,9 @@ public class Message {
     @Nullable
     private String value;
 
+    @SuppressWarnings("null")
     public Message(final String key) {
-        this.key = "" + key.toLowerCase(Locale.ENGLISH);
+        this.key = key.toLowerCase(Locale.ENGLISH);
         messages.add(this);
         if (Skript.testing() && !Language.english.isEmpty()) {
             if (!Language.english.containsKey(this.key))

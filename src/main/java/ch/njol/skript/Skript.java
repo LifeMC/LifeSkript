@@ -1660,7 +1660,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (current == null || current.length() < 1)
                             return;
 
-                        final String latest = getLatestVersion();
+                        final String latest = !debug() ? getLatestVersion() : getLatestVersion(Skript::exception);
 
                         if (!isEnabled())
                             return;

@@ -100,7 +100,7 @@ public abstract class Function<T> {
         }
         final Object[][] ps = params.length < parameters.length ? Arrays.copyOf(params, parameters.length) : params;
         assert ps != null;
-        final FunctionEvent e = new FunctionEvent();
+        final FunctionEvent<? extends T> e = new FunctionEvent<>(this);
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
             final Object[] val = i < params.length ? params[i] : p.def != null ? p.def.getArray(e) : null;
@@ -127,7 +127,7 @@ public abstract class Function<T> {
      * @return Whatever this function is supposed to return. May be null or empty, but must not contain null elements.
      */
     @Nullable
-    public abstract T[] execute(FunctionEvent e, final Object[][] params);
+    public abstract T[] execute(FunctionEvent<? extends T> e, final Object[][] params);
 
     @Override
     public String toString() {

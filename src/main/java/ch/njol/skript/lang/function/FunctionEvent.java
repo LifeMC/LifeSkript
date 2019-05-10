@@ -24,11 +24,38 @@ package ch.njol.skript.lang.function;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.eclipse.jdt.annotation.Nullable;
 
-public final class FunctionEvent extends Event {
-
+public final class FunctionEvent<T> extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
+
+    /**
+     * @deprecated Backwards compatibility.
+     *
+     * @see FunctionEvent#FunctionEvent(Function)
+     */
+    @Deprecated
+    public FunctionEvent() {
+        this(null);
+    }
+
+    public FunctionEvent(final @Nullable Function<? extends T> function) {
+        this.function = function;
+    }
+
+    private final @Nullable Function<? extends T> function;
+
+    /**
+     * Returns null only if the old deprecated
+     * constructor is used, or a null function is passed.
+     *
+     * @return Returns the function.
+     */
+    @Nullable
+    public Function<? extends T> getFunction() {
+        return function;
+    }
 
     public static HandlerList getHandlerList() {
         return handlers;

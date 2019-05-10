@@ -96,40 +96,28 @@ public final class Commands { //NOSONAR
     private static final Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
     @SuppressWarnings("null")
     private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
+    /**
+     * @deprecated Only for reference
+     */
+    @Deprecated
     @Nullable
     private static final Listener pre1_3chatListener = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
         @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerChat(final PlayerChatEvent e) {
-            if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
-                return;
-            if (handleEffectCommand(e.getPlayer(), e.getMessage()))
-                e.setCancelled(true);
+            Commands.onPlayerChat(e);
         }
     };
+    /**
+     * @deprecated Only for reference
+     */
+    @Deprecated
     @Nullable
-    private static final Listener post1_3chatListener = !Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
+    private static final Listener post1_3chatListener = pre1_3chatListener != null ? null : new Listener() {
         @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-        public void onPlayerChat(final AsyncPlayerChatEvent e) {
-            if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
-                return;
-            if (!e.isAsynchronous()) {
-                if (handleEffectCommand(e.getPlayer(), e.getMessage()))
-                    e.setCancelled(true);
-            } else {
-                final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
-                try {
-                    try {
-                        if (f.get())
-                            e.setCancelled(true);
-                    } catch (final InterruptedException ignored) {
-                        /* ignored */
-                    }
-                } catch (final ExecutionException e1) {
-                    Skript.exception(e1);
-                }
-            }
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+        public void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
+            Commands.onAsyncPlayerChat(e);
         }
     };
     @SuppressWarnings("null")
@@ -140,64 +128,21 @@ public final class Commands { //NOSONAR
     static boolean suppressUnknownCommandMessage;
     public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
 
+    /**
+     * @deprecated Only for reference
+     */
+    @Deprecated
     private static final Listener commandListener = new Listener() {
         @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-            if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
-                e.setCancelled(true);
-                if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
-                    try {
-                        // We cancelled the current event, execute this one instead.
-                        SkriptEventHandler.last = null;
-                        SkriptEventHandler.ee.execute(null, new PlayerCommandPreprocessEvent(e.getPlayer(), e.getMessage()));
-                    } catch (final EventException ex) {
-                        Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + "\"");
-                    }
-                }
-            }
+            Commands.onPlayerCommand(e);
         }
 
         @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.HIGHEST)
+        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onServerCommand(final ServerCommandEvent e) {
-            if (e.getCommand() == null || e.getCommand().isEmpty())
-                return;
-            if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
-                if (handleEffectCommand(e.getSender(), e.getCommand())) {
-                    final String command = e.getCommand();
-                    e.setCommand("");
-                    if (cancellableServerCommand)
-                        e.setCancelled(true);
-                    suppressUnknownCommandMessage = true;
-                    if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
-                        try {
-                            // We cancelled the current event, execute this one instead.
-                            SkriptEventHandler.last = null;
-                            SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
-                        } catch (final EventException ex) {
-                            Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
-                        }
-                    }
-                }
-                return;
-            }
-            if (handleCommand(e.getSender(), e.getCommand())) {
-                final String command = e.getCommand();
-                e.setCommand("");
-                if (cancellableServerCommand)
-                    e.setCancelled(true);
-                suppressUnknownCommandMessage = true;
-                if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
-                    try {
-                        // We cancelled the current event, execute this one instead.
-                        SkriptEventHandler.last = null;
-                        SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
-                    } catch (final EventException ex) {
-                        Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
-                    }
-                }
-            }
+            Commands.onServerCommand(e);
         }
     };
     @Nullable
@@ -263,6 +208,82 @@ public final class Commands { //NOSONAR
 
     private static String unescape(final String s) {
         return "" + unescape.matcher(s).replaceAll("$0");
+    }
+
+    public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+        if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
+            e.setCancelled(true);
+            if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
+                try {
+                    // We cancelled the current event, execute this one instead.
+                    SkriptEventHandler.last = null;
+                    SkriptEventHandler.ee.execute(null, new PlayerCommandPreprocessEvent(e.getPlayer(), e.getMessage()));
+                } catch (final EventException ex) {
+                    Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + "\"");
+                }
+            }
+        }
+    }
+
+    public static final void onServerCommand(final ServerCommandEvent e) {
+        if (e.getCommand() == null || e.getCommand().isEmpty())
+            return;
+        boolean effectCommand = false;
+        if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
+            if (!handleEffectCommand(e.getSender(), e.getCommand())) {
+                return;
+            }
+            effectCommand = true;
+        }
+        if (!effectCommand && !handleCommand(e.getSender(), e.getCommand())) {
+            return;
+        }
+        final String command = e.getCommand();
+        e.setCommand("");
+        if (cancellableServerCommand)
+            e.setCancelled(true);
+        suppressUnknownCommandMessage = true;
+        if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
+            try {
+                // We cancelled the current event, execute this one instead.
+                SkriptEventHandler.last = null;
+                SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
+            } catch (final EventException ex) {
+                Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
+            }
+        }
+    }
+
+    public static final void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
+        if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
+            return;
+        if (!e.isAsynchronous()) {
+            if (handleEffectCommand(e.getPlayer(), e.getMessage()))
+                e.setCancelled(true);
+        } else {
+            final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
+            try {
+                try {
+                    if (f.get())
+                        e.setCancelled(true);
+                } catch (final InterruptedException ignored) {
+                    /* ignored */
+                }
+            } catch (final ExecutionException e1) {
+                Skript.exception(e1);
+            }
+        }
+    }
+
+    /**
+     * @see Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)
+     */
+    @Deprecated
+    public static final void onPlayerChat(final PlayerChatEvent e) {
+        if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
+            return;
+        if (handleEffectCommand(e.getPlayer(), e.getMessage()))
+            e.setCancelled(true);
     }
 
     /**
@@ -585,8 +606,33 @@ public final class Commands { //NOSONAR
 
     public static final void registerListeners() {
         if (!registeredListeners) {
-            Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
-            Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
+            Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                if (event instanceof PlayerCommandPreprocessEvent)
+                    onPlayerCommand((PlayerCommandPreprocessEvent) event);
+            }, Skript.getInstance(), true);
+
+            Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                if (event instanceof ServerCommandEvent)
+                    onServerCommand((ServerCommandEvent) event);
+            }, Skript.getInstance(), true);
+
+            if (post1_3chatListener != null) {
+                Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                    if (event instanceof AsyncPlayerChatEvent)
+                        onAsyncPlayerChat((AsyncPlayerChatEvent) event);
+                }, Skript.getInstance(), true);
+            } else {
+                Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                    if (event instanceof PlayerChatEvent)
+                        onPlayerChat((PlayerChatEvent) event);
+                }, Skript.getInstance(), true);
+            }
+
+            // If we use these methods, it will use reflection to access methods
+            // to it's super slow, and we are handling the events manually to fix performance impact.
+
+            //Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
+            //Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
             registeredListeners = true;
         }
     }
