@@ -74,7 +74,7 @@ public final class PlayerUtils {
     private static boolean cached;
 
     @SuppressWarnings({"null", "unchecked"})
-    public static Collection<? extends Player> getOnlinePlayers() {
+    public static final Collection<? extends Player> getOnlinePlayers() {
         if (hasCollecionGetOnlinePlayers) {
             return Bukkit.getOnlinePlayers();
         } else {
