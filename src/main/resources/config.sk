@@ -183,6 +183,11 @@ warn when using none values in strings: false
 # That indicating a variable is none, or an expression is returned none when converting to string.
 # It usually happens by a bug. You should set a default value in such situation.
 
+enable timings: false
+# When enabled, triggers in scripts will be present in timings reports.
+# Note that this requires Paper or LifeSpigot to work; on Bukkit/Spigot this option has no effect.
+# When false, timings are not enabled for scripts even if you're running Paper or LifeSpigot.
+
 # ==== Variables ====
 
 databases:

@@ -4,9 +4,23 @@
 # If building with Java 9 or higher, change this to JMods directory.
 -libraryjars '<java.home>/lib/rt.jar'
 
+# Bukkit, Jansi and Timings - Bukkit is required, Jansi and Timings are optional.
 -libraryjars '<user.home>/.m2/repository/org/bukkit/bukkit/1.8.8-R0.1-SNAPSHOT/bukkit-1.8.8-R0.1-SNAPSHOT.jar'
 -libraryjars '<user.home>/.m2/repository/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar'
+-libraryjars '<user.home>/.m2/repository/co/aikar/timings/1.8.8-SNAPSHOT/timings-1.8.8-SNAPSHOT.jar'
+
+# Hooks of Skript - All of them are optional.
+-libraryjars '<user.home>/.m2/repository/net/milkbowl/vault/VaultAPI/1.7/VaultAPI-1.7.jar'
+-libraryjars '<user.home>/.m2/repository/net/milkbowl/vault/vault-plugin/1.7.1/vault-plugin-1.7.1.jar'
+-libraryjars '<user.home>/.m2/repository/me/ryanhamshire/griefprevention/13.9.1/griefprevention-13.9.1.jar'
+-libraryjars '<user.home>/.m2/repository/com/sk89q/worldguard/6.1.2/worldguard-6.1.2.jar'
+-libraryjars '<user.home>/.m2/repository/com/sk89q/worldedit/6.1.9/worldedit-6.1.9.jar'
+-libraryjars '<user.home>/.m2/repository/patpeter/sqlibrary/7.1/sqlibrary-7.1.jar'
+
+# Annotations used by Skript - All of them are optional.
 #-libraryjars '<user.home>/.m2/repository/org/eclipse/jdt.annotation/1.1.0/jdt.annotation-1.1.0.jar'
+-libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.0.0-beta1/spotbugs-annotations-4.0.0-beta1.jar'
+-libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
 
 -dontskipnonpubliclibraryclassmembers
 -target 1.8

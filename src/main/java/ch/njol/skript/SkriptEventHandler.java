@@ -27,6 +27,7 @@ import ch.njol.skript.command.Commands;
 import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.lang.function.Functions;
+import ch.njol.skript.timings.SkriptTimings;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -147,7 +148,10 @@ public final class SkriptEventHandler {
                 continue;
             if (logVeryHigh)
                 logTriggerStart(t);
+            final Object timing = SkriptTimings.start(t.getDebugLabel());
             t.execute(e);
+            if (timing != null)
+                SkriptTimings.stop(timing);
             if (logVeryHigh)
                 logTriggerEnd(t);
         }

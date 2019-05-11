@@ -32,12 +32,10 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
-import ch.njol.skript.lang.Effect;
-import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.Literal;
+import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.lang.TriggerItem;
 import ch.njol.skript.lang.function.FunctionEvent;
+import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
@@ -106,7 +104,16 @@ public final class Delay extends Effect {
                 if (Skript.debug())
                     Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
+                Object timing = null;
+                if (SkriptTimings.enabled()) { // getTrigger call is not free, do it only if we must
+                    Trigger trigger = getTrigger();
+                    if (trigger != null) {
+                        timing = SkriptTimings.start(trigger.getDebugLabel());
+                    }
+                }
                 TriggerItem.walk(next, e);
+                if (timing != null)
+                    SkriptTimings.stop(timing); // Stop timing if it was even started
                 if (trackingEnabled)
                     SkriptAgentKt.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
             }, duration.getTicks_i());

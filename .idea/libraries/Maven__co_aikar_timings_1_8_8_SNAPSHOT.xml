@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: co.aikar:timings:1.8.8-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/co/aikar/timings/1.8.8-SNAPSHOT/timings-1.8.8-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/co/aikar/timings/1.8.8-SNAPSHOT/timings-1.8.8-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/co/aikar/timings/1.8.8-SNAPSHOT/timings-1.8.8-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

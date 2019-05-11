@@ -40,6 +40,7 @@ import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
+import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Closeable;
@@ -453,14 +454,14 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Returns whatever this server is running CraftBukkit or CraftBukkit based server implementation.
+     * Returns whatever this server is running CraftBukkit.
      *
-     * @return Whatever this server is running CraftBukkit or CraftBukkit based server implementation.
+     * @return Whatever this server is running CraftBukkit.
      *
      * @see Skript#getServerPlatform()
      */
     public static final boolean isRunningCraftBukkit() {
-        return runningCraftBukkit;
+        return getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT;
     }
 
     // ================ CONSTANTS, OPTIONS & OTHER ================
@@ -1487,6 +1488,8 @@ public final class Skript extends JavaPlugin implements Listener {
 
                     if (!SkriptConfig.disableDocumentationGeneration.value())
                         Documentation.generate();
+
+                    SkriptTimings.setSkript(Skript.this);
 
                     if (logNormal())
                         info("Loading variables...");

@@ -26,6 +26,7 @@ import ch.njol.skript.config.*;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
+import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.FileUtils;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
@@ -86,6 +87,18 @@ public final class SkriptConfig {
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
     public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
+    public static final Option<Boolean> enableTimings = new Option<>("enable timings", false)
+        .setter(t -> {
+            if (Skript.classExists("co.aikar.timings.Timings")) { // Check for Paper or LifeSpigot server
+                if (t)
+                    Skript.info("Timings support enabled");
+                SkriptTimings.setEnabled(t); // Config option will be used
+            } else { // Not running Paper or LifeSpigot
+                if (t) // Warn the console that timings won't work
+                    Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
+                SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
+            }
+        });
     /**
      * False by default - Use /sk track variables to enable in runtime.
      */
