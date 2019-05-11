@@ -254,7 +254,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
                     }
                 }
             }
-            return (E[]) list.toArray(new Player[0]);
+            return (E[]) list.toArray(EMPTY_PLAYER_ARRAY);
         }
         final List<E> list = new ArrayList<>();
         if (worlds == null)

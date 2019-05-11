@@ -116,6 +116,16 @@
                     valid SSL certificate, interesting. -->
             <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
         </repository>
+		<repository>
+			<id>md_5-snapshots</id>
+			<name>md_5's Snapshot Repository</name>
+			<url>https://repo.md-5.net/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>md_5-releases</id>
+			<name>md_5's Release Repository</name>
+			<url>https://repo.md-5.net/content/repositories/releases/</url>
+		</repository>
     </repositories>
 
     <pluginRepositories>
@@ -187,6 +197,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+		<dependency>
+			<groupId>fr.neatmonster</groupId>
+			<artifactId>nocheatplus</artifactId>
+			<version>3.16.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<exclusions>
+                <!-- Duplicates bukkit and other dependencies -->
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>VaultAPI</artifactId>
@@ -272,7 +295,18 @@
             <artifactId>spotbugs-annotations</artifactId>
             <version>4.0.0-beta1</version>
             <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>com.google.code.findbugs</groupId>
+            		<artifactId>jsr305</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>3.0.2</version>
+		</dependency>
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>

@@ -237,7 +237,7 @@ public final class Utils {
             if (s.endsWith(p[1]))
                 return new NonNullPair<>(s.substring(0, s.length() - p[1].length()) + p[0], Boolean.TRUE);
             if (s.endsWith(p[1].toUpperCase(Locale.ENGLISH)))
-                return new NonNullPair<>(s.substring(0, s.length() - p[1].length()) + p[0].toUpperCase(), Boolean.TRUE);
+                return new NonNullPair<>(s.substring(0, s.length() - p[1].length()) + p[0].toUpperCase(Locale.ENGLISH), Boolean.TRUE);
         }
         return new NonNullPair<>(s, Boolean.FALSE);
     }

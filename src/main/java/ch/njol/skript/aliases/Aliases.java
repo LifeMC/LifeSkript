@@ -301,6 +301,7 @@ public final class Aliases {
      * @param variations
      * @return amount of added aliases
      */
+    @SuppressWarnings("null")
     static int addAliases(final String name, final String value, final Variations variations) {
         final ItemType t = parseAlias(value);
         if (t == null) {
@@ -311,7 +312,7 @@ public final class Aliases {
         boolean printedStartingWithNumberError = false;
 //		boolean printedSyntaxError = false;
         for (final Entry<String, ItemType> e : as.entrySet()) {
-            final String s = "" + e.getKey().trim().replaceAll("\\s+", " ");
+            final String s = e.getKey().trim().replaceAll("\\s+", " ");
             final NonNullPair<String, Integer> g = Noun.stripGender(s, "" + e.getKey());
             final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
             final String lcs = p.getFirst().toLowerCase(Locale.ENGLISH);

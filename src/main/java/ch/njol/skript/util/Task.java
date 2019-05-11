@@ -47,6 +47,21 @@ public abstract class Task implements Runnable, Closeable {
     public Task(final Plugin plugin, final long delay, final long period) {
         this(plugin, delay, period, false);
     }
+    
+    /**
+     * does not automatically schedule
+     */
+    public Task(final Plugin plugin) {
+    	this(plugin, false);
+    }
+    
+    /**
+     * does not automatically schedule
+     */
+    public Task(final Plugin plugin, final boolean async) {
+    	this.plugin = plugin;
+    	this.async = async;
+    }
 
     public Task(final Plugin plugin, final long delay, final long period, final boolean async) {
         this.plugin = plugin;
@@ -108,7 +123,7 @@ public abstract class Task implements Runnable, Closeable {
      * @param delay
      */
     @SuppressWarnings("deprecation")
-    private void schedule(final long delay) {
+    public void schedule(final long delay) {
     	final Skript instance = Skript.instance;
         if (instance == null || !instance.isEnabled())
             return;

@@ -1,3 +1,4 @@
+# This only for example - Always use native effect commands instead!
 command /eval <text>:
 	description: Evaluates the given effect.
 	usage: /eval <effect>

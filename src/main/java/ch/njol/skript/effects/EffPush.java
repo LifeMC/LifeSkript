@@ -32,10 +32,15 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
 import ch.njol.util.Kleenean;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import org.eclipse.jdt.annotation.Nullable;
+
+import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 
 /**
  * @author Peter Güttinger
@@ -45,6 +50,11 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"push the player upwards", "push the victim downwards at speed 0.5"})
 @Since("1.4.6")
 public final class EffPush extends Effect {
+	public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")
+			&& Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && (System.getProperty("skript.disableNcpHook") == null || !Boolean.parseBoolean(System.getProperty("skript.disableNpcHook")));
+	
+	public static boolean hookNotified;
+	
     static {
         Skript.registerEffect(EffPush.class, "(push|thrust) %entities% %direction% [(at|with) (speed|velocity|force) %-number%]");
     }
@@ -62,6 +72,10 @@ public final class EffPush extends Effect {
         entities = (Expression<Entity>) exprs[0];
         direction = (Expression<Direction>) exprs[1];
         speed = (Expression<Number>) exprs[2];
+        if (hasNoCheatPlus && !hookNotified) {
+        	Skript.info("Hooked to NoCheatPlus");
+        	hookNotified = true;
+        }
         return true;
     }
 
@@ -79,7 +93,12 @@ public final class EffPush extends Effect {
             final Vector mod = d.getDirection(en);
             if (v != null)
                 mod.normalize().multiply(v.doubleValue());
-            en.setVelocity(en.getVelocity().add(mod)); // REMIND add NoCheatPlus exception to players
+            final boolean flag = en instanceof Player && hasNoCheatPlus;
+            if (flag)
+            	NCPExemptionManager.exemptPermanently((Player) en);
+            en.setVelocity(en.getVelocity().add(mod));
+            if (flag)
+            	NCPExemptionManager.unexempt((Player) en);
         }
     }
 

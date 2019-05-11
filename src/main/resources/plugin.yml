@@ -42,7 +42,7 @@ commands:
     usage: /skript help
 
 # Load Skript after some plugins just for safety and interactions with these plugins.
-soft-depend: [SQLibrary, Vault, WorldGuard, WorldEdit, IConomy, Residence, ChestShop, Factions, ASkyBlock, NoCheatPlus, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
+soft-depend: [Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
 
 permissions:
   skript.*:

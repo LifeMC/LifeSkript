@@ -28,7 +28,6 @@ import ch.njol.util.WebUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Event.Result;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,6 +47,18 @@ public final class Workarounds {
     static {
         if (Skript.isBukkitRunning()) {
             // allows to properly remove a player's tool in right click events
+        	
+        	Bukkit.getPluginManager().registerEvent(PlayerInteractEvent.class, new Listener() {
+        		/* empty */
+        	}, EventPriority.LOWEST, (listener, event) -> {
+        		if (event instanceof PlayerInteractEvent) {
+        			final PlayerInteractEvent e = (PlayerInteractEvent) event;
+                    if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
+                        e.setUseItemInHand(Result.DENY);
+        		}
+        	}, Skript.getInstance(), false);
+        	        	
+        	/* Bukkit uses reflection to call methods - We use our own hacky way above.
             Bukkit.getPluginManager().registerEvents(new Listener() {
                 @EventHandler(priority = EventPriority.HIGHEST)
                 public void onInteract(final PlayerInteractEvent e) {
@@ -55,6 +66,7 @@ public final class Workarounds {
                         e.setUseItemInHand(Result.DENY);
                 }
             }, Skript.getInstance());
+            */
         }
     }
 

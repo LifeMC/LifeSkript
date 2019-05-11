@@ -67,6 +67,7 @@ public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator 
     public boolean validate(final Node node) {
         if (!super.validate(node))
             return false;
+        assert node instanceof EntryNode;
         final EntryNode n = (EntryNode) node;
         try {
             final E e = Enum.valueOf(enumType, n.getValue().toUpperCase(Locale.ENGLISH).replace(' ', '_'));

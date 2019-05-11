@@ -69,7 +69,7 @@ public final class EffVisualEffect extends Effect {
         where = exprs[2];
         players = (Expression<Player>) exprs[3];
         if (effects instanceof Literal) {
-            final VisualEffect[] effs = effects.getAll(null);
+            final VisualEffect[] effs = ((Literal<VisualEffect>) effects).getAll();
             boolean hasLocationEffect = false, hasEntityEffect = false;
             for (final VisualEffect e : effs) {
                 if (e.isEntityEffect())

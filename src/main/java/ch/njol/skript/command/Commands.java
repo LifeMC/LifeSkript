@@ -104,6 +104,7 @@ public final class Commands {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerChat(final PlayerChatEvent e) {
+        	assert false;
             Commands.onPlayerChat(e);
         }
     };
@@ -116,6 +117,7 @@ public final class Commands {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
+        	assert false;
             Commands.onAsyncPlayerChat(e);
         }
     };
@@ -136,12 +138,14 @@ public final class Commands {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+        	assert false;
             Commands.onPlayerCommand(e);
         }
 
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onServerCommand(final ServerCommandEvent e) {
+        	assert false;
             Commands.onServerCommand(e);
         }
     };

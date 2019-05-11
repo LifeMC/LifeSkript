@@ -47,6 +47,7 @@ public final class ParsedEntryValidator<T> extends EntryValidator {
     public boolean validate(final Node node) {
         if (!super.validate(node))
             return false;
+        assert node instanceof EntryNode;
         final T t = parser.parse(((EntryNode) node).getValue(), ParseContext.CONFIG);
         if (t == null)
             return false;

@@ -56,7 +56,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -1237,6 +1237,23 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final ClassLoader getBukkitClassLoader(final Skript instance) {
         return instance.getClassLoader();
     }
+    
+    public static int oldPriority = Thread.NORM_PRIORITY;
+    
+    @Override
+    public void onLoad() {
+    	oldPriority = Thread.currentThread().getPriority();
+        try {
+            Thread.currentThread().checkAccess();
+            // Set the thread priority for speeding up loading of variables and scripts
+            final int priority = Thread.MAX_PRIORITY;
+            Thread.currentThread().setPriority(priority);
+            if (Skript.debug())
+                Skript.debug("Set thread priority to " + priority);
+        } catch (final SecurityException ignored) {
+            /* ignored */
+        }
+    }
 
     @SuppressWarnings("null")
 	@Override
@@ -1307,9 +1324,9 @@ public final class Skript extends JavaPlugin implements Listener {
                                         if (beforeJar.contains(System.lineSeparator()))
                                             beforeJar = beforeJar.split(System.lineSeparator())[0];
                                         String fileEncoding = beforeJar;
-                                        // File encoding is required on some locales to fix some issues with localization
+                                        // This is required on some locales to fix some issues with localization and other plugins
                                         if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
-                                            fileEncoding += " -Dfile.encoding=UTF-8";
+                                            fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
                                         replacedContents = replacedContents.replace(beforeJar, fileEncoding);
                                         if (!contents.equalsIgnoreCase(replacedContents)) {
                                             Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
@@ -1341,7 +1358,7 @@ public final class Skript extends JavaPlugin implements Listener {
             final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
             if (!m.find()) {
                 Skript.error("The Bukkit version '" + bukkitV + "' does not contain a version number which is required for Skript to enable or disable certain features. " + "Skript will still work, but you might get random errors if you use features that are not available in your version of Bukkit.");
-                minecraftVersion = new Version(666, 0, 0);
+                minecraftVersion = new Version(999, 0, 0);
             } else {
                 minecraftVersion = new Version(m.group());
             }
@@ -1413,15 +1430,11 @@ public final class Skript extends JavaPlugin implements Listener {
 
             try {
                 getAddonInstance().loadClasses("ch.njol.skript", "conditions", "effects", "events", "expressions", "entity");
-                if (logHigh()) {
+                if (logVeryHigh()) {
                     if (getAddonInstance().getUnloadableClassCount() > 0) {
-                        if (Skript.logVeryHigh()) {
-                            info("Total of " + getAddonInstance().getUnloadableClassCount() + " classes are excluded from Skript. This maybe because of your version. Try enabling debug logging for more info.");
-                        } else if (!Skript.isRunningMinecraft(1, 7, 10) && !Skript.isRunningMinecraft(1, 8, 8)) {
-                            info("Total of " + getAddonInstance().getUnloadableClassCount() + " classes are excluded from Skript. This maybe because of your version. Try enabling debug logging for more info.");
-                        }
+                        info("Total of " + getAddonInstance().getUnloadableClassCount() + " classes are excluded from Skript. This maybe because of your version. Try enabling debug logging for more info.");
                     } else {
-                        info("Total of " + getAddonInstance().getLoadedClassCount() + " classes loaded from Skript.");
+                        info("Total of " + getAddonInstance().getLoadedClassCount() + " classes loaded from Skript");
                     }
                 }
             } catch (final Throwable tw) {
@@ -1443,148 +1456,132 @@ public final class Skript extends JavaPlugin implements Listener {
 
             @SuppressWarnings("unused")
 			final long tick = testing() ? Bukkit.getWorlds().get(0).getFullTime() : 0;
-            Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-                @Override
-                @SuppressWarnings("synthetic-access")
-                public void run() {
-                    assert Bukkit.getWorlds().get(0).getFullTime() == tick;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+			    assert Bukkit.getWorlds().get(0).getFullTime() == tick;
 
-                    // load hooks
-                    try {
-                        try (JarFile jar = new JarFile(getPluginFile())) {
-                            for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
-                                if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
-                                    final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
-                                    try {
-                                        final Class<?> hook = Class.forName(c, true, getBukkitClassLoader());
-                                        if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
-                                            hook.getDeclaredConstructor().setAccessible(true);
-                                            hook.getDeclaredConstructor().newInstance();
-                                        }
-                                    } catch (final NoClassDefFoundError ncdffe) {
-                                        Skript.exception(ncdffe, "Cannot load class " + c + " because it missing some dependencies");
-                                    } catch (final ClassNotFoundException ex) {
-                                        Skript.exception(ex, "Cannot load class " + c);
-                                    } catch (final ExceptionInInitializerError err) {
-                                        Skript.exception(err.getCause(), "Class " + c + " generated an exception while loading");
-                                    } catch (final Throwable tw) {
-                                        if (Skript.testing() || Skript.debug())
-                                            Skript.exception(tw, "Cannot load class " + c);
-                                    }
-                                }
-                            }
-                        }
-                    } catch (final Throwable tw) {
-                        error("Error while loading plugin hooks" + (tw.getLocalizedMessage() == null ? "" : ": " + tw.getLocalizedMessage()));
-                        if (testing() || debug())
-                            tw.printStackTrace();
-                    }
+			    // load hooks
+			    try {
+			        try (JarFile jar = new JarFile(getPluginFile())) {
+			            for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
+			                if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
+			                    final String c1 = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
+			                    try {
+			                        final Class<?> hook = Class.forName(c1, true, getBukkitClassLoader());
+			                        if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
+			                            hook.getDeclaredConstructor().setAccessible(true);
+			                            hook.getDeclaredConstructor().newInstance();
+			                        }
+			                    } catch (final NoClassDefFoundError ncdffe) {
+			                        Skript.exception(ncdffe, "Cannot load class " + c1 + " because it missing some dependencies");
+			                    } catch (final ClassNotFoundException ex) {
+			                        Skript.exception(ex, "Cannot load class " + c1);
+			                    } catch (final ExceptionInInitializerError err) {
+			                        Skript.exception(err.getCause(), "Class " + c1 + " generated an exception while loading");
+			                    } catch (final Throwable tw1) {
+			                        if (Skript.testing() || Skript.debug())
+			                            Skript.exception(tw1, "Cannot load class " + c1);
+			                    }
+			                }
+			            }
+			        }
+			    } catch (final Throwable tw2) {
+			        error("Error while loading plugin hooks" + (tw2.getLocalizedMessage() == null ? "" : ": " + tw2.getLocalizedMessage()));
+			        if (testing() || debug())
+			            tw2.printStackTrace();
+			    }
 
-                    Language.setUseLocal(false);
+			    Language.setUseLocal(false);
 
-                    stopAcceptingRegistrations();
+			    stopAcceptingRegistrations();
 
-                    if (!SkriptConfig.disableDocumentationGeneration.value())
-                        Documentation.generate();
+			    if (!SkriptConfig.disableDocumentationGeneration.value())
+			        Documentation.generate();
 
-                    SkriptTimings.setSkript(Skript.this);
+			    SkriptTimings.setSkript(Skript.this);
 
-                    if (logNormal())
-                        info("Loading variables...");
+			    if (logNormal())
+			        info("Loading variables...");
 
-                    final long vls = System.currentTimeMillis();
+			    final long vls = System.currentTimeMillis();
 
-                    final LogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler() {
+			    final LogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler() {
 //						private final List<LogEntry> log = new ArrayList<LogEntry>();
 
-                        @Override
-                        public LogResult log(final LogEntry entry) {
-                            super.log(entry);
-                            if (entry.level.intValue() >= Level.SEVERE.intValue()) {
-                                logEx(entry.message); // no [Skript] prefix
-                                return LogResult.DO_NOT_LOG;
-                            }
-							//								log.add(entry);
+			        @Override
+			        public LogResult log(final LogEntry entry) {
+			            super.log(entry);
+			            if (entry.level.intValue() >= Level.SEVERE.intValue()) {
+			                logEx(entry.message); // no [Skript] prefix
+			                return LogResult.DO_NOT_LOG;
+			            }
+						//								log.add(entry);
 //								return LogResult.CACHED;
-							return LogResult.LOG;
-                        }
+						return LogResult.LOG;
+			        }
 
-                        @Override
-                        protected void beforeErrors() {
-                            logEx();
-                            logEx("===!!!=== Skript variable load error ===!!!===");
-                            logEx("Unable to load (all) variables:");
-                        }
+			        @Override
+			        protected void beforeErrors() {
+			            logEx();
+			            logEx("===!!!=== Skript variable load error ===!!!===");
+			            logEx("Unable to load (all) variables:");
+			        }
 
-                        @Override
-                        protected void afterErrors() {
-                            logEx();
-                            logEx("Skript will work properly, but old variables might not be available at all and new ones may or may not be saved until Skript is able to create a backup of the old file and/or is able to connect to the database (which requires a restart of Skript)!");
-                            logEx();
-                        }
+			        @Override
+			        protected void afterErrors() {
+			            logEx();
+			            logEx("Skript will work properly, but old variables might not be available at all and new ones may or may not be saved until Skript is able to create a backup of the old file and/or is able to connect to the database (which requires a restart of Skript)!");
+			            logEx();
+			        }
 
-                        @Override
-                        protected void onStop() {
-                            super.onStop();
+			        @Override
+			        protected void onStop() {
+			            super.onStop();
 //							SkriptLogger.logAll(log);
-                        }
-                    });
+			        }
+			    });
 
-                    final int oldPriority = Thread.currentThread().getPriority();
-                    try {
-                        Thread.currentThread().checkAccess();
-                        // Set the thread priority for speeding up loading of variables and scripts
-                        final int priority = Thread.MAX_PRIORITY;
-                        Thread.currentThread().setPriority(priority);
-                        if (Skript.debug())
-                            Skript.debug("Set thread priority to " + priority);
-                    } catch (final SecurityException ignored) {
-                        /* ignored */
-                    }
+			    final CountingLogHandler c2 = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
+			    try {
+			        if (!Variables.load())
+			            if (c2.getCount() == 0)
+			                error("(no information available)");
+			    } finally {
+			        c2.stop();
+			        h.stop();
+			    }
 
-                    final CountingLogHandler c = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
-                    try {
-                        if (!Variables.load())
-                            if (c.getCount() == 0)
-                                error("(no information available)");
-                    } finally {
-                        c.stop();
-                        h.stop();
-                    }
+			    final long vld = System.currentTimeMillis() - vls;
+			    if (logNormal())
+			        info("Loaded " + Variables.numVariables() + " variables in " + vld / 100 / 10. + " seconds");
 
-                    final long vld = System.currentTimeMillis() - vls;
-                    if (logNormal())
-                        info("Loaded " + Variables.numVariables() + " variables in " + vld / 100 / 10. + " seconds");
+			    ScriptLoader.loadScripts();
 
-                    ScriptLoader.loadScripts();
+			    Skript.info(m_finished_loading.toString());
 
-                    Skript.info(m_finished_loading.toString());
+			    EvtSkript.onSkriptStart();
 
-                    EvtSkript.onSkriptStart();
+			    // suppresses the "can't keep up" warning after loading all scripts
+			    final Filter f = record -> record != null && record.getMessage() != null && !record.getMessage().toLowerCase(Locale.ENGLISH).startsWith("can't keep up!".toLowerCase(Locale.ENGLISH));
+			    BukkitLoggerFilter.addFilter(f);
+			    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.this, () -> BukkitLoggerFilter.removeFilter(f), 1);
 
-                    // suppresses the "can't keep up" warning after loading all scripts
-                    final Filter f = record -> record != null && record.getMessage() != null && !record.getMessage().toLowerCase(Locale.ENGLISH).startsWith("can't keep up!".toLowerCase(Locale.ENGLISH));
-                    BukkitLoggerFilter.addFilter(f);
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.this, () -> BukkitLoggerFilter.removeFilter(f), 1);
+			    if (Skript.logVeryHigh()) {
+			        info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
+			    }
 
-                    if (Skript.logVeryHigh()) {
-                        Bukkit.getScheduler().runTask(instance, () -> info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions."));
-                    }
+			    // Restore the old priority if we changed the priority.
+			    if (Thread.currentThread().getPriority() != oldPriority) {
+			        Thread.currentThread().setPriority(oldPriority);
+			        if (Skript.debug())
+			            Skript.debug("Reset thread priority to " + oldPriority);
+			    }
 
-                    // Restore the old priority if we changed the priority.
-                    if (Thread.currentThread().getPriority() != oldPriority) {
-                        Thread.currentThread().setPriority(oldPriority);
-                        if (Skript.debug())
-                            Skript.debug("Reset thread priority to " + oldPriority);
-                    }
-
-                    // No need to add debug code everytime to test the exception handler (:
-                    if (System.getProperty("skript.throwTestError") != null
-                            && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
-                        Skript.exception(new Throwable(), "Test error");
-                    }
-                }
-            });
+			    // No need to add debug code everytime to test the exception handler (:
+			    if (System.getProperty("skript.throwTestError") != null
+			            && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
+			        Skript.exception(new Throwable(), "Test error");
+			    }
+			});
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
                 Bukkit.getScheduler().runTask(this, () -> {
@@ -1603,6 +1600,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
                     if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities
                         warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or upgrade to newer versions. Report this if it is a bug.");
+                        warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
                     }
                 } else if (minecraftVersion.compareTo(1, 8, 8) == 0) {
                     if (getServerPlatform() != ServerPlatform.BUKKIT_TACO) {
@@ -1617,7 +1615,7 @@ public final class Skript extends JavaPlugin implements Listener {
                             // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
                             // TODO Also add options for disabling recommendations one by one or all of them. e.g: -Dskript.disableTacoRecommendation=true etc.
                             if (Skript.logHigh()) {
-                                info("We recommend using TacoSpigot over Spigot on 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
+                                info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
                                 info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
                             }
                         } else {
@@ -1629,12 +1627,13 @@ public final class Skript extends JavaPlugin implements Listener {
                 }
             });
 
-            Bukkit.getPluginManager().registerEvents(new Listener() {
-                @SuppressWarnings("unused")
-				@EventHandler
-                public final void onJoin(final PlayerJoinEvent e) {
+            Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
+            	/* empty */
+            }, EventPriority.MONITOR, (listener, event) -> {
+            	if (event instanceof PlayerJoinEvent) {
+            		final PlayerJoinEvent e = (PlayerJoinEvent) event;
                     if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
-                        new Task(Skript.this, 0) {
+                        new Task(Skript.this) {
                             @Override
                             public final void run() {
                                 final Player p = e.getPlayer();
@@ -1644,10 +1643,10 @@ public final class Skript extends JavaPlugin implements Listener {
                                     info(p, getDownloadLink());
                                 }
                             }
-                        };
+                        }.schedule(0L);
                     }
-                }
-            }, this);
+            	}
+            }, this, true);
 
             latestVersion = getDescription().getVersion();
 
