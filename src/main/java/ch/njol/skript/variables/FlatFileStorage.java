@@ -274,7 +274,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 PrintWriter cw;
                 while ((cw = changesWriter.get()) == null) {
                     try {
-                        changesWriter.wait(); //NOSONAR
+                        changesWriter.wait();
                     } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
                     }

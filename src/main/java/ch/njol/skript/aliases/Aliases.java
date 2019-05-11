@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public final class Aliases { //NOSONAR
+public final class Aliases {
 
     /**
      * Note to self: never use this, use {@link #getAlias_i(String)} instead.

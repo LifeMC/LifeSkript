@@ -88,7 +88,6 @@ public final class Date implements Comparable<Date>, YggdrasilSerializable {
         if (!(obj instanceof Date))
             return false;
         final Date other = (Date) obj;
-        //NOSONAR
         return timestamp == other.timestamp;
     }
 

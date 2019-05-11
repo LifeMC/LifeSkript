@@ -60,7 +60,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
         @Nullable
         Event last;
 
-        @SuppressWarnings("null")
+        @SuppressWarnings({"null", "unlikely-arg-type"})
         @Override
         public void execute(final @Nullable Listener listener, final Event event) throws EventException {
             if (event == last)

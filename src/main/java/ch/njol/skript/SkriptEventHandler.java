@@ -88,7 +88,8 @@ public final class SkriptEventHandler {
                 while (current == null || !current.hasNext()) {
                     if (e == null || !Event.class.isAssignableFrom(e))
                         return false;
-                    final List<Trigger> l = triggers.get(e);
+                    @SuppressWarnings("unlikely-arg-type")
+					final List<Trigger> l = triggers.get(e);
                     this.current = current = l == null ? null : l.iterator();
                     this.e = e = e.getSuperclass();
                 }

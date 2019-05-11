@@ -459,7 +459,7 @@ public final class DatabaseStorage extends VariablesStorage {
         }
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "unused"})
     protected void checkDatabase() {
         try {
             final long lastRowID; // local variable as this is used to clean the database below
@@ -487,7 +487,7 @@ public final class DatabaseStorage extends VariablesStorage {
             if (!closed) { // Skript may have been disabled in the meantime // TODO not fixed
                 new Task(Skript.getInstance(), (long) Math.ceil(2. * monitorInterval / 50) + 100, true) { // 2 times the interval + 5 seconds
                     @Override
-                    public void run() {
+                    public final void run() {
                         try {
                             synchronized (db) {
                                 if (closed || db.get() == null)

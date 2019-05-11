@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
-public final class DefaultChangers { //NOSONAR
+public final class DefaultChangers {
 
     public static final Changer<Entity> entityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")

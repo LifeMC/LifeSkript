@@ -124,10 +124,10 @@ public final class ClassesTest {
 		init.invoke(skript, new JavaPluginLoader(s), s, pdf, dataDir, jar, getClass().getClassLoader());
 		
 		Skript.getAddonInstance().loadClasses("ch.njol.skript", "entity");
-		new JavaClasses(); //NOSONAR
-		new BukkitClasses(); //NOSONAR
-		new BukkitEventValues(); //NOSONAR
-		new SkriptClasses(); //NOSONAR
+		new JavaClasses();
+		new BukkitClasses();
+		new BukkitEventValues();
+		new SkriptClasses();
 		
 		final Field r = Skript.class.getDeclaredField("acceptRegistrations");
 		r.setAccessible(true);

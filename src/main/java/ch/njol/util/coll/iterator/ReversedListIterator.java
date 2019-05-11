@@ -60,7 +60,7 @@ public final class ReversedListIterator<T> implements ListIterator<T> {
 
     @Override
     @Nullable
-    public T next() throws NoSuchElementException { //NOSONAR
+    public T next() throws NoSuchElementException {
         return iter.previous();
     }
 

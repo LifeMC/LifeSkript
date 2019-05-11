@@ -39,7 +39,7 @@ import java.util.Arrays;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public final class BlockUtils { //NOSONAR
+public final class BlockUtils {
 
     private static final BlockFace[] torch = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN
     };

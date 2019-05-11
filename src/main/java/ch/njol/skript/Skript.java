@@ -1335,7 +1335,7 @@ public final class Skript extends JavaPlugin implements Listener {
             Workarounds.init();
 
             version = new Version(getDescription().getVersion());
-            //runningCraftBukkit = craftbukkitMain != null; //NOSONAR
+            //runningCraftBukkit = craftbukkitMain != null;
             final String bukkitV = Bukkit.getBukkitVersion();
             final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
             if (!m.find()) {
@@ -1400,14 +1400,14 @@ public final class Skript extends JavaPlugin implements Listener {
 
             getCommand("skript").setExecutor(new SkriptCommand());
 
-            new JavaClasses(); //NOSONAR
-            new BukkitClasses(); //NOSONAR
-            new BukkitEventValues(); //NOSONAR
-            new SkriptClasses(); //NOSONAR
+            new JavaClasses();
+            new BukkitClasses();
+            new BukkitEventValues();
+            new SkriptClasses();
 
-            new DefaultComparators(); //NOSONAR
-            new DefaultConverters(); //NOSONAR
-            new DefaultFunctions(); //NOSONAR
+            new DefaultComparators();
+            new DefaultConverters();
+            new DefaultFunctions();
 
             SkriptConfig.load();
 
@@ -1630,7 +1630,8 @@ public final class Skript extends JavaPlugin implements Listener {
             });
 
             Bukkit.getPluginManager().registerEvents(new Listener() {
-                @EventHandler
+                @SuppressWarnings("unused")
+				@EventHandler
                 public final void onJoin(final PlayerJoinEvent e) {
                     if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
                         new Task(Skript.this, 0) {

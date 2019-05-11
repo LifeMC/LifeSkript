@@ -83,7 +83,7 @@ import static ch.njol.skript.Skript.*;
  * @author Peter Güttinger
  */
 @SuppressWarnings("deprecation")
-public final class Commands { //NOSONAR
+public final class Commands {
 
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
     public static final Message m_correct_usage = new Message("commands.correct usage");

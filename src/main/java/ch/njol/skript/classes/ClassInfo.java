@@ -46,7 +46,7 @@ public class ClassInfo<T> implements Debuggable {
     /**
      * Use this as {@link #name(String)} to suppress warnings about missing documentation.
      */
-    public static final String NO_DOC = ""; //NOSONAR
+    public static final String NO_DOC = "";
     private final Class<T> c;
     private final String codeName;
     private final Noun name;

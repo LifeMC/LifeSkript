@@ -59,7 +59,7 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @SuppressWarnings({"unchecked"})
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         if (!VaultHook.permission.hasGroupSupport()) {
             Skript.error(VaultHook.NO_GROUP_SUPPORT);
             return false;
@@ -71,9 +71,9 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @SuppressWarnings("null")
     @Override
-    protected String[] get(Event e) {
-        List<String> groups = new ArrayList<>();
-        for (OfflinePlayer player : players.getArray(e)) {
+    protected String[] get(final Event e) {
+        final List<String> groups = new ArrayList<>();
+        for (final OfflinePlayer player : players.getArray(e)) {
             if (primary)
                 groups.add(VaultHook.permission.getPrimaryGroup(null, player));
             else
@@ -84,7 +84,7 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @Override
     @Nullable
-    public Class<?>[] acceptChange(Changer.ChangeMode mode) {
+    public Class<?>[] acceptChange(final Changer.ChangeMode mode) {
         if (mode == Changer.ChangeMode.ADD ||
                 mode == Changer.ChangeMode.REMOVE ||
                 mode == Changer.ChangeMode.SET ||
@@ -97,26 +97,27 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @Override
     @SuppressWarnings("null")
-    public void change(Event e, @Nullable Object[] delta, Changer.ChangeMode mode) {
-        Permission api = VaultHook.permission;
-        for (OfflinePlayer player : players.getArray(e)) {
+    public void change(final Event e, @Nullable final Object[] delta, final Changer.ChangeMode mode) {
+        final Permission api = VaultHook.permission;
+        for (final OfflinePlayer player : players.getArray(e)) {
             switch (mode) {
                 case ADD:
-                    for (Object o : delta)
+                    for (final Object o : delta)
                         api.playerAddGroup(null, player, (String) o);
                     break;
                 case REMOVE:
-                    for (Object o : delta)
+                    for (final Object o : delta)
                         api.playerRemoveGroup(null, player, (String) o);
                     break;
+                case REMOVE_ALL:
                 case RESET:
                 case DELETE:
                 case SET:
-                    for (String group : api.getPlayerGroups(null, player)) {
+                    for (final String group : api.getPlayerGroups(null, player)) {
                         api.playerRemoveGroup(null, player, group);
                     }
                     if (mode == Changer.ChangeMode.SET) {
-                        for (Object o : delta) {
+                        for (final Object o : delta) {
                             api.playerAddGroup(null, player, (String) o);
                         }
                     }
@@ -138,7 +139,7 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @SuppressWarnings("null")
     @Override
-    public String toString(Event e, boolean debug) {
+    public String toString(final Event e, final boolean debug) {
         return "group" + (primary ? "" : "s") + " of " + players.toString(e, debug);
     }
 

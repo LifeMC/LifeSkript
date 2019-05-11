@@ -75,7 +75,7 @@ public interface Converter<F, T> {
 
     }
 
-    final class ConverterUtils { //NOSONAR
+    final class ConverterUtils {
 
         public static <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
             return createInstanceofConverter(conv.from, conv.converter);

@@ -176,7 +176,6 @@ public final class AABB implements Iterable<Block> {
             return false;
         if (!upperBound.equals(other.upperBound))
             return false;
-        //NOSONAR
         return world.equals(other.world);
     }
 

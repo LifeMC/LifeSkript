@@ -133,7 +133,8 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
     @SuppressWarnings("unchecked")
     private static final <T extends PseudoEnum<T>> Info<T> getInfo(final Class<T> c) {
         synchronized (infos) {
-            Info<T> info = (Info<T>) infos.get(getDeclaringClass(c));
+            @SuppressWarnings("unlikely-arg-type")
+			Info<T> info = (Info<T>) infos.get(getDeclaringClass(c));
             if (info == null)
                 infos.put(c, info = new Info<>());
             return info;
