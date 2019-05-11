@@ -180,7 +180,8 @@ public final class Money {
         return amount;
     }
 
-    @Override
+    @SuppressWarnings("null")
+	@Override
     public String toString() {
         return VaultHook.economy.format(amount);
     }

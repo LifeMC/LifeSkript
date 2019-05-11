@@ -71,7 +71,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.logging.Filter;
 import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,7 +130,8 @@ public final class Commands { //NOSONAR
     /**
      * @deprecated Only for reference
      */
-    @Deprecated
+    @SuppressWarnings("unused")
+	@Deprecated
     private static final Listener commandListener = new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -158,18 +158,15 @@ public final class Commands { //NOSONAR
     }
 
     static {
-        BukkitLoggerFilter.addFilter(new Filter() {
-            @Override
-            public boolean isLoggable(final @Nullable LogRecord record) {
-                if (record == null)
-                    return false;
-                if (suppressUnknownCommandMessage && record.getMessage() != null && record.getMessage().startsWith("Unknown command. Type")) {
-                    suppressUnknownCommandMessage = false;
-                    return false;
-                }
-                return true;
-            }
-        });
+        BukkitLoggerFilter.addFilter((final @Nullable LogRecord record) -> {
+		    if (record == null)
+		        return false;
+		    if (suppressUnknownCommandMessage && record.getMessage() != null && record.getMessage().startsWith("Unknown command. Type")) {
+		        suppressUnknownCommandMessage = false;
+		        return false;
+		    }
+		    return true;
+		});
     }
 
     @SuppressWarnings("unchecked")
@@ -210,7 +207,8 @@ public final class Commands { //NOSONAR
         return "" + unescape.matcher(s).replaceAll("$0");
     }
 
-    public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+    @SuppressWarnings("null")
+	public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
             e.setCancelled(true);
             if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
@@ -225,7 +223,8 @@ public final class Commands { //NOSONAR
         }
     }
 
-    public static final void onServerCommand(final ServerCommandEvent e) {
+    @SuppressWarnings("null")
+	public static final void onServerCommand(final ServerCommandEvent e) {
         if (e.getCommand() == null || e.getCommand().isEmpty())
             return;
         boolean effectCommand = false;
@@ -254,7 +253,8 @@ public final class Commands { //NOSONAR
         }
     }
 
-    public static final void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
+    @SuppressWarnings("null")
+	public static final void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
         if (!e.isAsynchronous()) {
@@ -278,7 +278,8 @@ public final class Commands { //NOSONAR
     /**
      * @see Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)
      */
-    @Deprecated
+    @SuppressWarnings("null")
+	@Deprecated
     public static final void onPlayerChat(final PlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
@@ -417,7 +418,7 @@ public final class Commands { //NOSONAR
         final String arguments = m.group(3) == null ? "" : m.group(3);
         final StringBuilder pattern = new StringBuilder();
 
-        List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
+        final List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
         m = argumentPattern.matcher(arguments);
         int lastEnd = 0;
         int optionals = 0;
