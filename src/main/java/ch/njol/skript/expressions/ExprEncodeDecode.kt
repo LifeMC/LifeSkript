@@ -40,7 +40,7 @@ class ExprEncodeDecode : SimpleExpression<String>() {
     }
 
     @JvmField var str: Expression<String>? = null
-    var encode: Boolean = false
+    private var encode: Boolean = false
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         @Suppress("UNCHECKED_CAST")
