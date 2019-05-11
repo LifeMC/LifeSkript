@@ -61,7 +61,7 @@ class ExprEncodeDecode : SimpleExpression<String>() {
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "base64 " + (if (encode) "encoded" else "decoded") + str?.getSingle(e)
+        return "base64 " + (if (encode) "encoded " else "decoded ") + str?.getSingle(e)
     }
 
     override fun isSingle(): Boolean {
