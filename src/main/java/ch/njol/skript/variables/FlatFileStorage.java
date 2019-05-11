@@ -74,7 +74,7 @@ public final class FlatFileStorage extends VariablesStorage {
         super(name);
     }
 
-    static String encode(final byte[] data) {
+    static final String encode(final byte[] data) {
         final char[] r = new char[data.length * 2];
         for (int i = 0; i < data.length; i++) {
             r[2 * i] = Character.toUpperCase(Character.forDigit((data[i] & 0xF0) >>> 4, 16));
@@ -83,7 +83,7 @@ public final class FlatFileStorage extends VariablesStorage {
         return new String(r);
     }
 
-    static byte[] decode(final String hex) {
+    static final byte[] decode(final String hex) {
         final byte[] r = new byte[hex.length() / 2];
         for (int i = 0; i < r.length; i++) {
             r[i] = (byte) ((Character.digit(hex.charAt(2 * i), 16) << 4) + Character.digit(hex.charAt(2 * i + 1), 16));
@@ -92,7 +92,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     @Nullable
-    static String[] splitCSV(final String line) {
+    static final String[] splitCSV(final String line) {
         final Matcher m = csv.matcher(line);
         int lastEnd = 0;
         final ArrayList<String> r = new ArrayList<>();

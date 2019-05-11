@@ -29,6 +29,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.util.StringMode;
@@ -57,13 +58,21 @@ public final class EffCommand extends Effect {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         if (matchedPattern == 0) {
-            commands = (Expression<String>) vars[0];
-            senders = (Expression<CommandSender>) vars[1];
+            commands = (Expression<String>) exprs[0];
+            senders = (Expression<CommandSender>) exprs[1];
         } else {
-            senders = (Expression<CommandSender>) vars[0];
-            commands = (Expression<String>) vars[1];
+            senders = (Expression<CommandSender>) exprs[0];
+            commands = (Expression<String>) exprs[1];
+        }
+        if (commands instanceof Literal) {
+            for (final String command : ((Literal<String>) commands).getAll()) {
+                if ((command.contains("eco")) && (command.contains("give") ||
+                            command.contains("take"))) {
+                    Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
+                }
+            }
         }
         commands = VariableString.setStringMode(commands, StringMode.COMMAND);
         return true;

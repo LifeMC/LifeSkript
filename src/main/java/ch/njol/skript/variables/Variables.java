@@ -82,7 +82,7 @@ public final class Variables {
      * Not accessed concurrently
      */
     private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
-    private static final int MAX_CONFLICT_WARNINGS = 30;
+    private static final int MAX_CONFLICT_WARNINGS = 10;
     static volatile boolean closed;
     private static final Thread saveThread = Skript.newThread(() -> {
 	    while (!closed) {
@@ -95,7 +95,7 @@ public final class Variables {
 	                }
 	            }
 	        } catch (final InterruptedException ignored) {
-	            /* ignored */
+	            break;
 	        }
 	    }
 	}, "Skript variable save thread");
@@ -137,7 +137,7 @@ public final class Variables {
         throw new UnsupportedOperationException();
     }
 
-    public static boolean load() {
+    public static final boolean load() {
         assert variables.treeMap.isEmpty();
         assert variables.hashMap.isEmpty();
         assert storages.isEmpty();
@@ -253,14 +253,14 @@ public final class Variables {
     }
 
     @SuppressWarnings("null")
-    public static String[] splitVariableName(final String name) {
+    public static final String[] splitVariableName(final String name) {
         return variableNameSplitPattern.split(name);
     }
 
     /**
      * Remember to lock with {@link #getReadLock()} and to not make any changes!
      */
-    static TreeMap<String, Object> getVariables() {
+    static final TreeMap<String, Object> getVariables() {
         return variables.treeMap;
     }
 
@@ -268,12 +268,12 @@ public final class Variables {
      * Remember to lock with {@link #getReadLock()}!
      */
     @SuppressWarnings("null")
-    static Map<String, Object> getVariablesHashMap() {
+    static final Map<String, Object> getVariablesHashMap() {
         return Collections.unmodifiableMap(variables.hashMap);
     }
 
     @SuppressWarnings("null")
-    static Lock getReadLock() {
+    static final Lock getReadLock() {
         return variablesLock.readLock();
     }
 
@@ -286,7 +286,7 @@ public final class Variables {
      * @return an Object for a normal Variable or a Map<String, Object> for a list variable, or null if the variable is not set.
      */
     @Nullable
-    public static Object getVariable(final String name, final @Nullable Event e, final boolean local) {
+    public static final Object getVariable(final String name, final @Nullable Event e, final boolean local) {
         if (local) {
             final VariablesMap map = localVariables.get(e);
             if (map == null)
@@ -352,7 +352,7 @@ public final class Variables {
      * @return Whether the variable was stored somewhere. Not valid while storages are loading.
      */
     @SuppressWarnings({"unused", "null"})
-    static boolean variableLoaded(final String name, final @Nullable Object value, final VariablesStorage source) {
+    static final boolean variableLoaded(final String name, final @Nullable Object value, final VariablesStorage source) {
         assert Bukkit.isPrimaryThread(); // required by serialisation
 
         synchronized (tempVars) {
@@ -401,7 +401,7 @@ public final class Variables {
      * @return How many variables were not stored anywhere
      */
     @SuppressWarnings("null")
-    private static int onStoragesLoaded() {
+    private static final int onStoragesLoaded() {
         if (loadConflicts > MAX_CONFLICT_WARNINGS)
             Skript.warning("A total of " + loadConflicts + " variables were loaded more than once from different databases");
         Skript.debug("Databases loaded, setting variables...");
@@ -430,13 +430,13 @@ public final class Variables {
         }
     }
 
-    public static SerializedVariable serialize(final String name, final @Nullable Object value) {
+    public static final SerializedVariable serialize(final String name, final @Nullable Object value) {
         final SerializedVariable.Value var = serialize(value);
         return new SerializedVariable(name, var);
     }
 
     @Nullable
-    public static SerializedVariable.Value serialize(final @Nullable Object value) {
+    public static final SerializedVariable.Value serialize(final @Nullable Object value) {
         return Classes.serialize(value);
     }
 
@@ -456,7 +456,7 @@ public final class Variables {
         saveThread.interrupt();
     }
 
-    public static int numVariables() {
+    public static final int numVariables() {
         try {
             variablesLock.readLock().lock();
             return variables.hashMap.size();
