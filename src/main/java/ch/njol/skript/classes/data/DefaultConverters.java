@@ -53,8 +53,11 @@ import org.bukkit.inventory.PlayerInventory;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultConverters {
 
-    static {
-
+    private DefaultConverters() {
+        throw new UnsupportedOperationException();
+    }
+	
+    public static final void init() {
         // OfflinePlayer - PlayerInventory
         Converters.registerConverter(OfflinePlayer.class, PlayerInventory.class, p -> {
             if (!p.isOnline())
@@ -195,9 +198,5 @@ public final class DefaultConverters {
         // Enchantment - EnchantmentType
         Converters.registerConverter(Enchantment.class, EnchantmentType.class, e -> new EnchantmentType(e, -1));
 
-    }
-
-    public DefaultConverters() {
-        super();
     }
 }

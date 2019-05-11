@@ -136,12 +136,9 @@ public final class Config {
      */
     public void save(final File f) throws IOException {
         separator = defaultSeparator;
-        final PrintWriter w = new PrintWriter(f, "UTF-8");
-        try {
+        try(final PrintWriter w = new PrintWriter(f, "UTF-8")) {
             main.save(w);
-        } finally {
             w.flush();
-            w.close();
         }
     }
 

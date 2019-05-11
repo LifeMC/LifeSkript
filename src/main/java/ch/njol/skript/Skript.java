@@ -53,6 +53,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -1351,11 +1352,9 @@ public final class Skript extends JavaPlugin implements Listener {
 
             final File scripts = new File(getDataFolder(), SCRIPTSFOLDER);
             if (!scripts.isDirectory() || !Files.exists(Paths.get(getDataFolder() + File.separator + "aliases-english.sk")) || !Files.exists(Paths.get(getDataFolder() + File.separator + "aliases-german.sk"))) {
-                ZipFile f = null;
-                try {
-                    if (!scripts.exists() && !scripts.mkdirs())
-                        throw new IOException("Could not create the directory " + scripts);
-                    f = new ZipFile(getFile());
+                if (!scripts.exists() && !scripts.mkdirs())
+                    Skript.exception(new IOException("Could not create the directory " + scripts), "Error generating the default files");
+                try(final ZipFile f = new ZipFile(getFile())) {
                     for (final ZipEntry e : new EnumerationIterable<ZipEntry>(f.entries())) {
                         if (e.isDirectory())
                             continue;
@@ -1387,27 +1386,28 @@ public final class Skript extends JavaPlugin implements Listener {
                         Skript.exception(e);
                 } catch (final IOException e) {
                     error("Error generating the default files: " + ExceptionUtils.toString(e));
-                } finally {
-                    if (f != null) {
-                        try {
-                            f.close();
-                        } catch (final IOException ignored) {
-                            /* ignored */
-                        }
-                    }
+                } catch (final Throwable tw) {
+                	exception(tw);
                 }
             }
 
-            getCommand("skript").setExecutor(new SkriptCommand());
+            final PluginCommand command = getCommand("skript");
+            
+            if (command != null)
+            	command.setExecutor(new SkriptCommand());
+            else {
+            	Skript.error("Malformed plugin.yml file detecded; skript command will **not** work. You can try to re-download the plugin.");
+            	printDownloadLink();
+            }
+            	
+            JavaClasses.init();
+            BukkitClasses.init();
+            BukkitEventValues.init();
+            SkriptClasses.init();
 
-            new JavaClasses();
-            new BukkitClasses();
-            new BukkitEventValues();
-            new SkriptClasses();
-
-            new DefaultComparators();
-            new DefaultConverters();
-            new DefaultFunctions();
+            DefaultComparators.init();
+            DefaultConverters.init();
+            DefaultFunctions.init();
 
             SkriptConfig.load();
 

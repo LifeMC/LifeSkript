@@ -48,8 +48,15 @@ import java.util.Calendar;
 @SuppressWarnings("null")
 public final class DefaultFunctions {
 
-    static {
+    private DefaultFunctions() {
+        throw new UnsupportedOperationException();
+    }
 
+    private static final String s(final double n) {
+        return StringUtils.toString(n, 4);
+    }
+	
+    public static final void init() {
         final ClassInfo<Number> numberClass = Classes.getExactClassInfo(Number.class);
         final ClassInfo<Long> longClass = Classes.getExactClassInfo(Long.class);
 
@@ -288,15 +295,5 @@ public final class DefaultFunctions {
                 return new Date[]{new Date(c.getTimeInMillis())};
             }
         }.description("Creates a date from a year, month, and day, and optionally also from hour, minute, second and millisecond.", "A time zone and DST offset can be specified as well (in minutes), if they are left out the server's time zone and DST offset are used (the created date will not retain this information).").examples("date(2014, 10, 1) # 0:00, 1st October 2014", "date(1990, 3, 5, 14, 30) # 14:30, 5th May 1990", "date(1999, 12, 31, 23, 59, 59, 999, -3*60, 0) # almost year 2000 in parts of Brazil (-3 hours offset, no DST)").since("2.2"));
-
     }
-
-    public DefaultFunctions() {
-        super();
-    }
-
-    private static String s(final double n) {
-        return StringUtils.toString(n, 4);
-    }
-
 }

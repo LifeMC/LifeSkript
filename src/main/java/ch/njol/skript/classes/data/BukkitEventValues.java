@@ -64,12 +64,11 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings({"unchecked", "deprecation"})
 public final class BukkitEventValues {
 
-    public BukkitEventValues() {
-        super();
+    private BukkitEventValues() {
+        throw new UnsupportedOperationException();
     }
 
-    static {
-
+    public static final void init() {
         // === WorldEvents ===
         EventValues.registerEventValue(WorldEvent.class, World.class, new Getter<World, WorldEvent>() {
             @Override
@@ -649,7 +648,5 @@ public final class BukkitEventValues {
                 return e.getRecipe().getResult();
             }
         }, 0);
-
     }
-
 }

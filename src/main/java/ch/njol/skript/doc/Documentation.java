@@ -72,13 +72,11 @@ public final class Documentation {
     public static final void generate() {
         if (!generate)
             return;
-        try {
-            final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), StandardCharsets.UTF_8));
+        try(final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), StandardCharsets.UTF_8))) {
             asSql(pw);
             pw.flush();
-            pw.close();
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (final Throwable tw) {
+            tw.printStackTrace();
         }
     }
 

@@ -171,20 +171,13 @@ public final class Language {
     public static final void loadDefault(final SkriptAddon addon) {
         if (addon.getLanguageFileDirectory() == null)
             return;
-        final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang");
-        if (din == null)
-            throw new IllegalStateException(addon + " is missing the required english.lang file!");
         Map<String, String> en;
-        try {
+        try(final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang");) {
+            if (din == null)
+                throw new IllegalStateException(addon + " is missing the required english.lang file!");
             en = new Config(din, "english.lang", false, false, ":").toMap(".");
-        } catch (final Exception e) {
-            throw Skript.exception(e, "Could not load " + addon + "'s default language file!");
-        } finally {
-            try {
-                din.close();
-            } catch (final IOException ignored) {
-            	/* ignored */
-            }
+        } catch (final Throwable tw) {
+            throw Skript.exception(tw, "Could not load " + addon + "'s default language file!");
         }
         final String v = en.get("version");
         //if (v == null)

@@ -160,22 +160,16 @@ public final class DatabaseStorage extends VariablesStorage {
                 final boolean hasOldTable = db.isTable(OLD_TABLE_NAME);
                 final boolean hadNewTable = db.isTable(TABLE_NAME);
                 if (hasOldTable) {
-                    final ResultSet r1 = db.query("SELECT " + SELECT_ORDER + " FROM " + OLD_TABLE_NAME);
-                    assert r1 != null;
-                    try {
+                    try(final ResultSet r1 = db.query("SELECT " + SELECT_ORDER + " FROM " + OLD_TABLE_NAME)) {
+                        assert r1 != null;
                         oldLoadVariables(r1, hadNewTable);
-                    } finally {
-                        r1.close();
                     }
                 }
 
                 // new
-                final ResultSet r2 = db.query("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME);
-                assert r2 != null;
-                try {
+                try(final ResultSet r2 = db.query("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME)) {
+                    assert r2 != null;
                     loadVariables(r2);
-                } finally {
-                    r2.close();
                 }
 
                 // store old variables in new table and delete the old table

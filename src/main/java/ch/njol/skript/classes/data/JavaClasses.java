@@ -49,7 +49,11 @@ public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
 
-    static {
+    private JavaClasses() {
+        throw new UnsupportedOperationException();
+    }
+    
+    public static final void init() {
         Classes.registerClass(new ClassInfo<>(Object.class, "object").user("objects?").name("Object").description("The supertype of all types, meaning that if %object% is used in e.g. a condition it will accept all kinds of expressions.").usage("").examples("").since("1.0"));
 
         Classes.registerClass(new ClassInfo<>(Number.class, "number").user("num(ber)?s?").name("Number").description("A number, e.g. 2.5, 3, or -9812454.", "Please note that many expressions only need integers, i.e. will discard any frational parts of any numbers without producing an error.").usage("<code>[-]###[.###]</code> (any amount of digits; very large numbers will be truncated though)").examples("set the player's health to 5.5", "set {_temp} to 2*{_temp} - 2.5").since("1.0")
@@ -711,9 +715,5 @@ public final class JavaClasses {
             }
         }));
         */
-    }
-
-    public JavaClasses() {
-        super();
     }
 }

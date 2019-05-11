@@ -48,7 +48,7 @@ public class ExprAllGroups extends SimpleExpression<String> {
     }
 
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         if (!VaultHook.permission.hasGroupSupport()) {
             Skript.error(VaultHook.NO_GROUP_SUPPORT);
             return false;
@@ -58,7 +58,7 @@ public class ExprAllGroups extends SimpleExpression<String> {
 
     @Override
     @Nullable
-    protected String[] get(Event e) {
+    protected String[] get(final Event e) {
         return VaultHook.permission.getGroups();
     }
 
@@ -73,7 +73,7 @@ public class ExprAllGroups extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(@Nullable Event e, boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "all groups";
     }
 

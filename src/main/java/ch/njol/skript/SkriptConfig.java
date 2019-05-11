@@ -185,8 +185,7 @@ public final class SkriptConfig {
             mainConfig = mc;
 
             if (!Skript.getVersion().toString().equals(mc.get(version.key))) {
-                try {
-                    final InputStream in = Skript.getInstance().getResource("config.sk");
+                try(final InputStream in = Skript.getInstance().getResource("config.sk")) {
                     if (in == null) {
                         Skript.error("Your config is outdated, but Skript couldn't find the newest config in its jar. Please download Skript again from the link below:");
                         Skript.printDownloadLink();

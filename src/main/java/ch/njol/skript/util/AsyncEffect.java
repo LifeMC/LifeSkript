@@ -53,7 +53,7 @@ public abstract class AsyncEffect extends Effect {
                     // Walk to next item synchronously
                     Object timing = null;
                     if (SkriptTimings.enabled()) { // getTrigger call is not free, do it only if we must
-                        Trigger trigger = getTrigger();
+                        final Trigger trigger = getTrigger();
                         if (trigger != null) {
                             timing = SkriptTimings.start(trigger.getDebugLabel());
                         }

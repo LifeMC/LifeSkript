@@ -68,7 +68,7 @@ public final class EffCommand extends Effect {
         }
         if (commands instanceof Literal) {
             for (final String command : ((Literal<String>) commands).getAll()) {
-                if ((command.contains("eco")) && (command.contains("give") ||
+                if (command.contains("eco") && (command.contains("give") ||
                             command.contains("take"))) {
                     Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
                 }

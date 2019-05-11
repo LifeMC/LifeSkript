@@ -53,7 +53,12 @@ import java.util.regex.Pattern;
 @SuppressWarnings("rawtypes")
 public final class SkriptClasses {
 
-    static {
+
+    private SkriptClasses() {
+        throw new UnsupportedOperationException();
+    }
+	
+    public static final void init() {
         Classes.registerClass(new ClassInfo<>(ClassInfo.class, "classinfo").user("types?").name("Type").description("Represents a type, e.g. number, object, item type, location, block, world, entity type, etc.", "This is mostly used for expressions like 'event-&lt;type&gt;', '&lt;type&gt;-argument', 'loop-&lt;type&gt;', etc., e.g. event-world, number-argument and loop-player.").usage("See the type name patterns of all types - including this one").examples("{variable} is a number # check whether the variable contains a number, e.g. -1 or 5.5", "{variable} is a type # check whether the variable contains a type, e.g. number or player", "{variable} is an object # will always succeed if the variable is set as everything is an object, even types.", "disable PvP in the event-world", "kill the loop-entity").since("2.0").after("entitydata", "entitytype", "itemtype").parser(new Parser<ClassInfo>() {
             @Override
             @Nullable
@@ -708,9 +713,4 @@ public final class SkriptClasses {
             }
         }).serializer(new YggdrasilSerializer<>()));
     }
-
-    public SkriptClasses() {
-        super();
-    }
-
 }

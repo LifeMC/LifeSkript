@@ -106,7 +106,7 @@ public final class Delay extends Effect {
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
                 Object timing = null;
                 if (SkriptTimings.enabled()) { // getTrigger call is not free, do it only if we must
-                    Trigger trigger = getTrigger();
+                    final Trigger trigger = getTrigger();
                     if (trigger != null) {
                         timing = SkriptTimings.start(trigger.getDebugLabel());
                     }
