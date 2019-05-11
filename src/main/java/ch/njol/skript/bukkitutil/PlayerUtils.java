@@ -50,7 +50,7 @@ public final class PlayerUtils {
                 for (final Player p : inviUpdate)
                     p.updateInventory();
             } catch (final NullPointerException e) { // can happen on older CraftBukkit (Tekkit) builds
-                if (Skript.debug() || Skript.testing())
+                if (Skript.testing() || Skript.debug())
                     e.printStackTrace();
             }
             inviUpdate.clear();

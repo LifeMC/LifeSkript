@@ -37,13 +37,14 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Custom Warn / Error")
 @Description("Throws a custom warning / error.")
 @Examples({"on load:", "\tset {id} to random uuid", "\tif {id} is not set:", "\t\tthrow new error \"Failed to set ID, please reload!\"", "\t\tstop # Throw does not stops execution, you must add stop!"})
-@Since("2.2-Fixes-V10c")
+@Since("2.2-Fixes-V10c, 2.2.14 (throwing java errors)")
 public final class EffThrow extends Effect {
     static {
-        Skript.registerEffect(EffThrow.class, "throw [a] [new] (0¦warning|1¦error) %string%");
+        Skript.registerEffect(EffThrow.class, "throw[ a] [new] (0¦warning|1¦error|2¦java error) %string%");
     }
 
     private boolean error;
+    private boolean java;
 
     @SuppressWarnings("null")
     private Expression<?> detail;
@@ -52,19 +53,23 @@ public final class EffThrow extends Effect {
     @SuppressWarnings("null")
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         error = parseResult.mark > 0;
+        java = parseResult.mark > 1;
         detail = exprs[0];
         return true;
     }
 
     private String getTypeName() {
-        return error ? "error" : "warning";
+        return error ? java ? "java error" : "error" : "warning";
     }
 
     @Override
     @SuppressWarnings("null")
     protected void execute(final Event e) {
         if (error) {
-            Skript.error(String.valueOf(detail.getSingle(e)));
+        	if (java) {
+        		throw new ScriptError(String.valueOf(detail.getSingle(e)));
+        	} else
+        		Skript.error(String.valueOf(detail.getSingle(e)));
         } else {
             Skript.warning(String.valueOf(detail.getSingle(e)));
         }
@@ -73,5 +78,53 @@ public final class EffThrow extends Effect {
     @Override
     public String toString(@Nullable final Event e, final boolean debug) {
         return "throw new " + getTypeName();
+    }
+    
+    public static final class ScriptError extends RuntimeException {
+
+		/**
+		 * serialVersionUID
+		 */
+		private static final long serialVersionUID = 1255223120346309260L;
+    	
+		/**
+		 * 
+		 */
+		public ScriptError() {
+			super();
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 * @param enableSuppression
+		 * @param writableStackTrace
+		 */
+		public ScriptError(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+			super(message, cause, enableSuppression, writableStackTrace);
+		}
+
+		/**
+		 * @param message
+		 * @param cause
+		 */
+		public ScriptError(final String message, final Throwable cause) {
+			super(message, cause);
+		}
+
+		/**
+		 * @param message
+		 */
+		public ScriptError(final String message) {
+			super(message);
+		}
+
+		/**
+		 * @param cause
+		 */
+		public ScriptError(final Throwable cause) {
+			super(cause);
+		}
+    	
     }
 }

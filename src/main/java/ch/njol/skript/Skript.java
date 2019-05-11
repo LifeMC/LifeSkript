@@ -1477,7 +1477,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         }
                     } catch (final Throwable tw) {
                         error("Error while loading plugin hooks" + (tw.getLocalizedMessage() == null ? "" : ": " + tw.getLocalizedMessage()));
-                        if (testing())
+                        if (testing() || debug())
                             tw.printStackTrace();
                     }
 
