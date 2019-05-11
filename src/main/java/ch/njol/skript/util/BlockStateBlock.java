@@ -185,11 +185,10 @@ public final class BlockStateBlock implements Block {
         if (delayChanges) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> state.getBlock().setTypeId(type));
             return true;
-        } else {
-            final int id = getTypeId();
-            state.setTypeId(type);
-            return id != type;
         }
+		final int id = getTypeId();
+		state.setTypeId(type);
+		return id != type;
     }
 
     @Override
@@ -197,11 +196,10 @@ public final class BlockStateBlock implements Block {
         if (delayChanges) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> state.getBlock().setTypeId(type, applyPhysics));
             return true;
-        } else {
-            final int id = getTypeId();
-            state.setTypeId(type);
-            return id != type;
         }
+		final int id = getTypeId();
+		state.setTypeId(type);
+		return id != type;
     }
 
     @Override
@@ -209,13 +207,12 @@ public final class BlockStateBlock implements Block {
         if (delayChanges) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> state.getBlock().setTypeIdAndData(type, data, applyPhysics));
             return true;
-        } else {
-            final int id = getTypeId();
-            final byte d = getData();
-            state.setTypeId(type);
-            state.setRawData(data);
-            return id != type || d != data;
         }
+		final int id = getTypeId();
+		final byte d = getData();
+		state.setTypeId(type);
+		state.setRawData(data);
+		return id != type || d != data;
     }
 
     @Override
@@ -298,9 +295,8 @@ public final class BlockStateBlock implements Block {
         if (delayChanges) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> state.getBlock().breakNaturally());
             return true;
-        } else {
-            return false;
         }
+		return false;
     }
 
     @Override
@@ -308,9 +304,8 @@ public final class BlockStateBlock implements Block {
         if (delayChanges) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> state.getBlock().breakNaturally(tool));
             return true;
-        } else {
-            return false;
         }
+		return false;
     }
 
     @Override

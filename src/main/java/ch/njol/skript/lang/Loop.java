@@ -51,7 +51,7 @@ public final class Loop extends TriggerSection {
     private TriggerItem actualNext;
 
     @SuppressWarnings("unchecked")
-    public <T> Loop(final Expression<?> expr, final SectionNode node) {
+    public Loop(final Expression<?> expr, final SectionNode node) {
         assert expr != null;
         assert node != null;
         if (Container.class.isAssignableFrom(expr.getReturnType())) {
@@ -91,10 +91,9 @@ public final class Loop extends TriggerSection {
                 currentIter.remove(e); // a loop inside another loop can be called multiple times in the same event
             debug(e, false);
             return actualNext;
-        } else {
-            current.put(e, iter.next());
-            return walk(e, true);
         }
+		current.put(e, iter.next());
+		return walk(e, true);
     }
 
     @Override

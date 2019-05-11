@@ -183,6 +183,7 @@ public final class Language {
             try {
                 din.close();
             } catch (final IOException ignored) {
+            	/* ignored */
             }
         }
         final String v = en.get("version");
@@ -267,6 +268,7 @@ public final class Language {
             try {
                 in.close();
             } catch (final IOException ignored) {
+            	/* ignored */
             }
         }
     }

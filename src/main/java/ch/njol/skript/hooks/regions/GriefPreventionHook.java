@@ -80,14 +80,18 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
             getClaim.setAccessible(true);
             if (!Claim.class.isAssignableFrom(getClaim.getReturnType()))
                 getClaim = null;
-        } catch (final NoSuchMethodException | SecurityException ignored) {
+        } catch (final NoSuchMethodException | SecurityException e) {
+        	if (Skript.testing() || Skript.debug())
+        		Skript.exception(e);
         }
         try {
             claimsField = DataStore.class.getDeclaredField("claims");
             claimsField.setAccessible(true);
             if (!List.class.isAssignableFrom(claimsField.getType()))
                 claimsField = null;
-        } catch (final NoSuchFieldException | SecurityException ignored) {
+        } catch (final NoSuchFieldException | SecurityException e) {
+        	if (Skript.testing() || Skript.debug())
+        		Skript.exception(e);
         }
         if (getClaim == null && claimsField == null) {
             Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "." + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");

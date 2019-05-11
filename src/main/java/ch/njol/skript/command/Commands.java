@@ -188,6 +188,7 @@ public final class Commands { //NOSONAR
                     aliasesField.setAccessible(true);
                     cmAliases = (Set<String>) aliasesField.get(commandMap);
                 } catch (final NoSuchFieldException ignored) {
+                	/* ignored */
                 }
             }
         } catch (final SecurityException e) {
@@ -411,7 +412,7 @@ public final class Commands { //NOSONAR
         final ScriptCommand existingCommand = commands.get(command);
         if (existingCommand != null && existingCommand.getLabel().equals(command)) {
             final File f = existingCommand.getScript();
-            Skript.error("A command with the name /" + command + " is already defined" + (f == null ? "" : " in " + f.getName()));
+            Skript.error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
             return null;
         }
 
@@ -607,23 +608,25 @@ public final class Commands { //NOSONAR
 
     public static final void registerListeners() {
         if (!registeredListeners) {
-            Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+        	final Listener emptyListener = new Listener() { /* ignored */ };
+        	
+            Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof PlayerCommandPreprocessEvent)
                     onPlayerCommand((PlayerCommandPreprocessEvent) event);
             }, Skript.getInstance(), true);
 
-            Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+            Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof ServerCommandEvent)
                     onServerCommand((ServerCommandEvent) event);
             }, Skript.getInstance(), true);
 
             if (post1_3chatListener != null) {
-                Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof AsyncPlayerChatEvent)
                         onAsyncPlayerChat((AsyncPlayerChatEvent) event);
                 }, Skript.getInstance(), true);
             } else {
-                Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, SkriptEventHandler.listener, EventPriority.MONITOR, (listener, event) -> {
+                Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof PlayerChatEvent)
                         onPlayerChat((PlayerChatEvent) event);
                 }, Skript.getInstance(), true);

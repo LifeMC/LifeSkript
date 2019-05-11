@@ -99,6 +99,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
             return;
         for (final Class<? extends Event> c : new Class[]{BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class})
             Bukkit.getPluginManager().registerEvent(c, new Listener() {
+            	/* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
     }
 

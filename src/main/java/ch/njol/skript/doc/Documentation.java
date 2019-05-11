@@ -314,7 +314,9 @@ public final class Documentation {
                             try {
                                 Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
                                 continue;
-                            } catch (final ClassNotFoundException ignored) {
+                            } catch (final ClassNotFoundException e) {
+                            	if (Skript.testing() || Skript.debug())
+                            		Skript.exception(e);
                             }
                         }
                         break;

@@ -54,6 +54,7 @@ public final class SkriptEventHandler {
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
     public static final Listener listener = new Listener() {
+    	/* empty */
     };
     @Nullable
     public static Event last;

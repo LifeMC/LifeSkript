@@ -264,6 +264,7 @@ public final class YggdrasilTest {
         public static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶");
         public static final PETest2 PET2_2 = new PETest2("PET2_2");
         public static final PETest1 PET1_2 = new PETest1("PET1_2") {
+        	/* empty */
         };
 
         protected PETest1(final String name) {

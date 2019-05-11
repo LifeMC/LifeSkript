@@ -183,7 +183,8 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
         final BidiHashMap<?, ?> other = (BidiHashMap<?, ?>) obj;
         if (this.other == null) {
             return other.other == null;
-        } else return this.other.equals(other.other);
+        }
+		return this.other.equals(other.other);
     }
 
 }

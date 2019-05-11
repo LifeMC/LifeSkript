@@ -269,23 +269,22 @@ public final class Aliases { //NOSONAR
                         s = s.substring(0, g + 1) + "-";
                     r.putAll(getAliases(s, value, variations));
                     return r;
-                } else {
-                    final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
-                    };
-                    for (final String[] o : os) {
-                        if (x.equalsIgnoreCase(o[0])) {
-                            for (int j = 1; j < o.length; j += 3) {
-                                String s = name.substring(0, i) + "¦" + o[j] + "¦" + o[j + 1] + "¦" + name.substring(end + 1);
-                                if (o[j + 2] != null) {
-                                    final NonNullPair<String, Integer> p = Noun.stripGender(s, s);
-                                    s = p.getFirst() + "@" + o[j + 2];
-                                }
-                                r.put(s, value);
-                            }
-                            return r;
-                        }
-                    }
                 }
+				final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
+				};
+				for (final String[] o : os) {
+				    if (x.equalsIgnoreCase(o[0])) {
+				        for (int j = 1; j < o.length; j += 3) {
+				            String s = name.substring(0, i) + "¦" + o[j] + "¦" + o[j + 1] + "¦" + name.substring(end + 1);
+				            if (o[j + 2] != null) {
+				                final NonNullPair<String, Integer> p = Noun.stripGender(s, s);
+				                s = p.getFirst() + "@" + o[j + 2];
+				            }
+				            r.put(s, value);
+				        }
+				        return r;
+				    }
+				}
             }
         }
 

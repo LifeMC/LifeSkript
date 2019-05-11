@@ -198,7 +198,7 @@ public final class Variable<T> implements Expression<T> {
      * Gets the value of this variable as stored in the variables map.
      */
     @Nullable
-    private Object getRaw(final Event e) {
+    public Object getRaw(final Event e) {
         final String n = name.toString(e).toLowerCase(Locale.ENGLISH);
         if (n.endsWith(Variable.SEPARATOR + "*") != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
             return null;

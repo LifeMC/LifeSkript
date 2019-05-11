@@ -119,10 +119,13 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
         if (registered)
             return;
         Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {
+        	/* empty */
         }, SkriptConfig.defaultEventPriority.value(), ee, Skript.getInstance(), true);
         Bukkit.getPluginManager().registerEvent(PlayerTeleportEvent.class, new Listener() {
+        	/* empty */
         }, SkriptConfig.defaultEventPriority.value(), ee, Skript.getInstance(), true);
         Bukkit.getPluginManager().registerEvent(PlayerPortalEvent.class, new Listener() {
+        	/* empty */
         }, SkriptConfig.defaultEventPriority.value(), ee, Skript.getInstance(), true);
         registered = true;
     }

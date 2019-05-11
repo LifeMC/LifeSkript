@@ -239,7 +239,9 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
                 if (o instanceof Player) {
                     try {
                         ((Player) o).setPlayerListName(s == null ? "" : s.length() > 16 ? s.substring(0, 16) : s);
-                    } catch (final IllegalArgumentException ignored) {
+                    } catch (final IllegalArgumentException e) {
+                    	if (Skript.testing() || Skript.debug())
+                    		Skript.exception(e);
                     }
                 } else {
                     assert false;
@@ -253,10 +255,9 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
                     return null;
                 if (o instanceof Player) {
                     return ((Player) o).getPlayerListName();
-                } else {
-                    assert false;
-                    return null;
                 }
+				assert false;
+				return null;
             }
         };
 

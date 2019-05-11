@@ -70,7 +70,7 @@ public interface Changer<T> {
         }
 
         @SuppressWarnings("unchecked")
-        public static final <T, V> void change(final Changer<T> changer, final Object[] what, final @Nullable Object[] delta, final ChangeMode mode) {
+        public static final <T> void change(final Changer<T> changer, final Object[] what, final @Nullable Object[] delta, final ChangeMode mode) {
             changer.change((T[]) what, delta, mode);
         }
 

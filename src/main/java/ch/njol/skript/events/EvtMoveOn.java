@@ -222,6 +222,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //		}
         if (!registeredExecutor) {
             Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {
+            	/* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
             registeredExecutor = true;
         }

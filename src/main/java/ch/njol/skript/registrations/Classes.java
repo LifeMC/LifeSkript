@@ -750,11 +750,13 @@ public final class Classes {
                 try {
                     in.close();
                 } catch (final IOException ignored) {
+                	/* ignored */
                 }
             }
             try {
                 value.close();
             } catch (final IOException ignored) {
+            	/* ignored */
             }
         }
     }

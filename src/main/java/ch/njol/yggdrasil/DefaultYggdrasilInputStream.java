@@ -312,6 +312,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
             read();
             throw new StreamCorruptedException("Stream still has data, at least " + (1 + in.available()) + " bytes remain");
         } catch (final EOFException ignored) {
+        	/* ignored */
         } finally {
             in.close();
         }

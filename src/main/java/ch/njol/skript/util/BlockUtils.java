@@ -204,13 +204,12 @@ public final class BlockUtils { //NOSONAR
                     b.getRelative(f, -1).setTypeIdAndData(type, (byte) (data & ~0x8), false);
                     b.setTypeIdAndData(type, data, applyPhysics);
                     return true;
-                } else {
-                    if (b.getRelative(f).getTypeId() != 0)
-                        continue;
-                    b.getRelative(f).setTypeIdAndData(type, (byte) (data | 0x8), false);
-                    b.setTypeIdAndData(type, data, applyPhysics);
-                    return true;
                 }
+				if (b.getRelative(f).getTypeId() != 0)
+				    continue;
+				b.getRelative(f).setTypeIdAndData(type, (byte) (data | 0x8), false);
+				b.setTypeIdAndData(type, data, applyPhysics);
+				return true;
             }
             return false;
         }
@@ -228,9 +227,8 @@ public final class BlockUtils { //NOSONAR
                 if ((m1 == Material.FENCE.getId() || m1 == 113 || m1 == Material.FENCE_GATE.getId() && (b1.getData() & 0x1) == (data & 0x1)) && (m2 == Material.FENCE.getId() || m2 == 113 || m2 == Material.FENCE_GATE.getId() && (b2.getData() & 0x1) == (data & 0x1))) {
                     b.setTypeIdAndData(type, data, applyPhysics);
                     return true;
-                } else {
-                    tried[data & 0x1] = true;
                 }
+				tried[data & 0x1] = true;
             }
             b.setTypeIdAndData(type, (byte) Utils.random(dataMin, dataMax + 1), applyPhysics);
             return true;

@@ -269,6 +269,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try {
                     Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
                 } catch (final InterruptedException ignored) {
+                	break;
                 }
             }
         }, "Skript database '" + databaseName + "' transaction committing thread").start();
@@ -278,6 +279,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try { // variables were just downloaded, not need to check for modifications straight away
                     Thread.sleep(monitorInterval);
                 } catch (final InterruptedException ignored) {
+                	return;
                 }
 
                 long lastWarning = Long.MIN_VALUE;
@@ -296,6 +298,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         try {
                             Thread.sleep(next - System.currentTimeMillis());
                         } catch (final InterruptedException ignored) {
+                        	break;
                         }
                     }
                 }
@@ -359,6 +362,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (writeQuery != null)
                         writeQuery.close();
                 } catch (final SQLException ignored) {
+                	/* ignored */
                 }
                 writeQuery = db.prepare("REPLACE INTO " + TABLE_NAME + " (name, type, value, update_guid) VALUES (?, ?, ?, ?)");
 
@@ -366,6 +370,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (deleteQuery != null)
                         deleteQuery.close();
                 } catch (final SQLException ignored) {
+                	/* ignored */
                 }
                 deleteQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE name = ?");
 
@@ -373,12 +378,14 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (monitorQuery != null)
                         monitorQuery.close();
                 } catch (final SQLException ignored) {
+                	/* ignored */
                 }
                 monitorQuery = db.prepare("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME + " WHERE rowid > ? AND update_guid != ?");
                 try {
                     if (monitorCleanUpQuery != null)
                         monitorCleanUpQuery.close();
                 } catch (final SQLException ignored) {
+                	/* ignored */
                 }
                 monitorCleanUpQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE value IS NULL AND rowid < ?");
             } catch (final SQLException e) {

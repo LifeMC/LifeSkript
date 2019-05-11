@@ -417,16 +417,14 @@ public final class BukkitClasses {
             public String toVariableNameString(final Player p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return "" + p.getUniqueId();
-                else
-                    return "" + p.getName();
+				return "" + p.getName();
             }
 
             @Override
             public String getVariableNamePattern() {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}";
-                else
-                    return "\\S+";
+				return "\\S+";
             }
 
             @Override
