@@ -77,11 +77,10 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
                 final ItemStack is = ((ItemStack) o).clone();
                 is.setAmount(a.intValue());
                 return is;
-            } else {
-                final EntityType t = ((EntityType) o).clone();
-                t.amount = a.intValue();
-                return t;
             }
+			final EntityType t = ((EntityType) o).clone();
+			t.amount = a.intValue();
+			return t;
         });
     }
 

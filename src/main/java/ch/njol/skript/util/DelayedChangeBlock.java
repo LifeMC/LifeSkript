@@ -187,10 +187,9 @@ public final class DelayedChangeBlock implements Block {
         if (newState != null) {
             newState.setTypeId(type);
             return newState.getTypeId() != getTypeId();
-        } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeId(type));
-            return true;
         }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeId(type));
+		return true;
     }
 
     @Override
@@ -199,10 +198,9 @@ public final class DelayedChangeBlock implements Block {
         if (newState != null) {
             newState.setTypeId(type);
             return newState.getTypeId() != getTypeId();
-        } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeId(type, applyPhysics));
-            return true;
         }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeId(type, applyPhysics));
+		return true;
     }
 
     @Override
@@ -212,10 +210,9 @@ public final class DelayedChangeBlock implements Block {
             newState.setTypeId(type);
             newState.setRawData(data);
             return newState.getTypeId() != getTypeId() || newState.getRawData() != getData();
-        } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeIdAndData(type, data, applyPhysics));
-            return true;
         }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.setTypeIdAndData(type, data, applyPhysics));
+		return true;
     }
 
     @Override
@@ -297,20 +294,18 @@ public final class DelayedChangeBlock implements Block {
     public boolean breakNaturally() {
         if (newState != null) {
             return false;
-        } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), b::breakNaturally);
-            return true;
         }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), b::breakNaturally);
+		return true;
     }
 
     @Override
     public boolean breakNaturally(final ItemStack tool) {
         if (newState != null) {
             return false;
-        } else {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.breakNaturally(tool));
-            return true;
         }
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> b.breakNaturally(tool));
+		return true;
     }
 
     @Override

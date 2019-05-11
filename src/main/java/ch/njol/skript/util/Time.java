@@ -91,28 +91,27 @@ public final class Time implements YggdrasilSerializable {
                 return null;
             }
             return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
-        } else {
-            final Matcher m = Pattern.compile("(\\d?\\d)(:(\\d\\d))? ?(am|pm)", Pattern.CASE_INSENSITIVE).matcher(s);
-            if (m.matches()) {
-                int hours = Utils.parseInt(m.group(1));
-                if (hours == 12) {
-                    hours = 0;
-                } else if (hours > 12) {
-                    Skript.error("" + m_error_12_hours);
-                    return null;
-                }
-                int minutes = 0;
-                if (m.group(3) != null)
-                    minutes = Utils.parseInt(m.group(3));
-                if (minutes >= 60) {
-                    Skript.error("" + m_error_60_minutes);
-                    return null;
-                }
-                if ("pm".equalsIgnoreCase(m.group(4)))
-                    hours += 12;
-                return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
-            }
         }
+		final Matcher m = Pattern.compile("(\\d?\\d)(:(\\d\\d))? ?(am|pm)", Pattern.CASE_INSENSITIVE).matcher(s);
+		if (m.matches()) {
+		    int hours = Utils.parseInt(m.group(1));
+		    if (hours == 12) {
+		        hours = 0;
+		    } else if (hours > 12) {
+		        Skript.error("" + m_error_12_hours);
+		        return null;
+		    }
+		    int minutes = 0;
+		    if (m.group(3) != null)
+		        minutes = Utils.parseInt(m.group(3));
+		    if (minutes >= 60) {
+		        Skript.error("" + m_error_60_minutes);
+		        return null;
+		    }
+		    if ("pm".equalsIgnoreCase(m.group(4)))
+		        hours += 12;
+		    return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
+		}
         return null;
     }
 

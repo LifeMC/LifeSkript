@@ -174,7 +174,8 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
         final Object d = data;
         if (d == null) {
             return other.data == null;
-        } else return d.equals(other.data);
+        }
+		return d.equals(other.data);
     }
 
     private enum Type implements YggdrasilSerializable {

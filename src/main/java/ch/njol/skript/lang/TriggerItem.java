@@ -95,11 +95,10 @@ public abstract class TriggerItem implements Debuggable {
         if (run(e)) {
             debug(e, true);
             return next;
-        } else {
-            debug(e, false);
-            final TriggerSection parent = this.parent;
-            return parent == null ? null : parent.getNext();
         }
+		debug(e, false);
+		final TriggerSection parent = this.parent;
+		return parent == null ? null : parent.getNext();
     }
 
     /**

@@ -100,8 +100,7 @@ public final class Version implements Serializable, Comparable<Version> {
         final String pf = postfix;
         if (pf == null)
             return other.postfix == null ? 0 : 1;
-        else
-            return other.postfix == null ? -1 : pf.compareTo(other.postfix);
+		return other.postfix == null ? -1 : pf.compareTo(other.postfix);
     }
 
     public int compareTo(final int... other) {

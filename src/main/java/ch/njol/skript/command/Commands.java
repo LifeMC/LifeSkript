@@ -689,12 +689,10 @@ public final class Commands { //NOSONAR
                 final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
                 if (aliasForTopic != null) {
                     return aliasForTopic.canSee(commandSender);
-                } else {
-                    return false;
                 }
-            } else {
-                return commandSender != null && commandSender.hasPermission(amendedPermission);
+				return false;
             }
+			return commandSender != null && commandSender.hasPermission(amendedPermission);
         }
     }
 

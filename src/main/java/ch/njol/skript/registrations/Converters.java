@@ -239,8 +239,7 @@ public final class Converters {
         final T converted = convert(original, to);
         if (converted != null)
             return converted;
-        else
-            throw new ClassCastException();
+		throw new ClassCastException();
     }
 
     /**

@@ -510,10 +510,9 @@ public final class Classes {
                     return (Parser<? extends T>) ci.getParser();
             }
             return null;
-        } else {
-            final ClassInfo<T> ci = getExactClassInfo(c);
-            return ci == null ? null : ci.getParser();
         }
+		final ClassInfo<T> ci = getExactClassInfo(c);
+		return ci == null ? null : ci.getParser();
     }
 
     private static final <F, T> Parser<T> createConvertedParser(final Parser<?> parser, final Converter<F, T> converter) {

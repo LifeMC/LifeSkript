@@ -412,11 +412,10 @@ public final class ScriptCommand implements CommandExecutor {
     public Date getLastUsage(final UUID uuid, final Event event) {
         if (cooldownStorage == null) {
             return lastUsageMap.get(uuid);
-        } else {
-            final String name = getStorageVariableName(event);
-            assert name != null;
-            return (Date) Variables.getVariable(name, null, false);
         }
+		final String name = getStorageVariableName(event);
+		assert name != null;
+		return (Date) Variables.getVariable(name, null, false);
     }
 
     public void setLastUsage(final UUID uuid, final Event event, @Nullable final Date date) {

@@ -86,8 +86,7 @@ public final class EffExplosion extends Effect {
     public String toString(final @Nullable Event e, final boolean debug) {
         if (force != null)
             return "create explosion of force " + force.toString(e, debug) + " " + locations.toString(e, debug);
-        else
-            return "create explosion effect " + locations.toString(e, debug);
+		return "create explosion effect " + locations.toString(e, debug);
     }
 
 }

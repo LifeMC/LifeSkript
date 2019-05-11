@@ -53,12 +53,11 @@ public final class Conditional extends TriggerSection {
     protected TriggerItem walk(final Event e) {
         if (cond.run(e)) {
             return walk(e, true);
-        } else {
-            debug(e, false);
-            if (elseClause != null)
-                return elseClause;
-            return getNext();
         }
+		debug(e, false);
+		if (elseClause != null)
+		    return elseClause;
+		return getNext();
     }
 
     @Override

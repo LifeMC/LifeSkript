@@ -289,16 +289,15 @@ public final class Direction implements YggdrasilRobustSerializable {
             } catch (final NumberFormatException e) {
                 return null;
             }
-        } else {
-            final String[] split2 = split[1].split(",");
-            if (split2.length != 3)
-                return null;
-            try {
-                return new Direction(new double[]{Double.parseDouble(split2[0]), Double.parseDouble(split2[1]), Double.parseDouble(split2[2])});
-            } catch (final NumberFormatException e) {
-                return null;
-            }
         }
+		final String[] split2 = split[1].split(",");
+		if (split2.length != 3)
+		    return null;
+		try {
+		    return new Direction(new double[]{Double.parseDouble(split2[0]), Double.parseDouble(split2[1]), Double.parseDouble(split2[2])});
+		} catch (final NumberFormatException e) {
+		    return null;
+		}
     }
 
     public static Expression<Location> combine(final Expression<? extends Direction> dirs, final Expression<? extends Location> locs) {

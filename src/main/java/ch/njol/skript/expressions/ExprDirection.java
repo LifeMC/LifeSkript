@@ -131,35 +131,34 @@ public final class ExprDirection extends SimpleExpression<Direction> {
                 if (f == BlockFace.SELF || horizontal && (f == BlockFace.UP || f == BlockFace.DOWN))
                     return new Direction[]{Direction.ZERO};
                 return new Direction[]{new Direction(f, ln)};
-            } else {
-                final Location l = ((Entity) o).getLocation();
-                if (!horizontal) {
-                    if (!facing) {
-                        final Vector v = l.getDirection().normalize().multiply(ln);
-                        assert v != null;
-                        return new Direction[]{new Direction(v)};
-                    }
-                    final double pitch = Direction.pitchToRadians(l.getPitch());
-                    assert pitch >= -Math.PI / 2 && pitch <= Math.PI / 2;
-                    if (pitch > Math.PI / 4)
-                        return new Direction[]{new Direction(new double[]{0, ln, 0})};
-                    if (pitch < -Math.PI / 4)
-                        return new Direction[]{new Direction(new double[]{0, -ln, 0})};
-                }
-                double yaw = Direction.yawToRadians(l.getYaw());
-                if (horizontal && !facing) {
-                    return new Direction[]{new Direction(new double[]{Math.cos(yaw) * ln, 0, Math.sin(yaw) * ln})};
-                }
-                yaw = Math2.mod(yaw, 2 * Math.PI);
-                if (yaw >= Math.PI / 4 && yaw < 3 * Math.PI / 4)
-                    return new Direction[]{new Direction(new double[]{0, 0, ln})};
-                if (yaw >= 3 * Math.PI / 4 && yaw < 5 * Math.PI / 4)
-                    return new Direction[]{new Direction(new double[]{-ln, 0, 0})};
-                if (yaw >= 5 * Math.PI / 4 && yaw < 7 * Math.PI / 4)
-                    return new Direction[]{new Direction(new double[]{0, 0, -ln})};
-                assert yaw >= 0 && yaw < Math.PI / 4 || yaw >= 7 * Math.PI / 4 && yaw < 2 * Math.PI;
-                return new Direction[]{new Direction(new double[]{ln, 0, 0})};
             }
+			final Location l = ((Entity) o).getLocation();
+			if (!horizontal) {
+			    if (!facing) {
+			        final Vector v = l.getDirection().normalize().multiply(ln);
+			        assert v != null;
+			        return new Direction[]{new Direction(v)};
+			    }
+			    final double pitch = Direction.pitchToRadians(l.getPitch());
+			    assert pitch >= -Math.PI / 2 && pitch <= Math.PI / 2;
+			    if (pitch > Math.PI / 4)
+			        return new Direction[]{new Direction(new double[]{0, ln, 0})};
+			    if (pitch < -Math.PI / 4)
+			        return new Direction[]{new Direction(new double[]{0, -ln, 0})};
+			}
+			double yaw = Direction.yawToRadians(l.getYaw());
+			if (horizontal && !facing) {
+			    return new Direction[]{new Direction(new double[]{Math.cos(yaw) * ln, 0, Math.sin(yaw) * ln})};
+			}
+			yaw = Math2.mod(yaw, 2 * Math.PI);
+			if (yaw >= Math.PI / 4 && yaw < 3 * Math.PI / 4)
+			    return new Direction[]{new Direction(new double[]{0, 0, ln})};
+			if (yaw >= 3 * Math.PI / 4 && yaw < 5 * Math.PI / 4)
+			    return new Direction[]{new Direction(new double[]{-ln, 0, 0})};
+			if (yaw >= 5 * Math.PI / 4 && yaw < 7 * Math.PI / 4)
+			    return new Direction[]{new Direction(new double[]{0, 0, -ln})};
+			assert yaw >= 0 && yaw < Math.PI / 4 || yaw >= 7 * Math.PI / 4 && yaw < 2 * Math.PI;
+			return new Direction[]{new Direction(new double[]{ln, 0, 0})};
         } else {
             return new Direction[]{new Direction(horizontal ? Direction.IGNORE_PITCH : 0, yaw, ln)};
         }

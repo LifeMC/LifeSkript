@@ -460,21 +460,20 @@ public final class SkriptParser {
             final Class<?> c = cs[0];
             assert c != null;
             return Language.get("not") + " " + Classes.getSuperClassInfo(c).getName().withIndefiniteArticle();
-        } else {
-            final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
-            for (int k = 0; k < cs.length; k++) {
-                if (k != 0) {
-                    if (k != cs.length - 1)
-                        b.append(", ");
-                    else
-                        b.append(" ").append(Language.get("nor")).append(" ");
-                }
-                final Class<?> c = cs[k];
-                assert c != null;
-                b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
-            }
-            return b.toString();
         }
+		final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
+		for (int k = 0; k < cs.length; k++) {
+		    if (k != 0) {
+		        if (k != cs.length - 1)
+		            b.append(", ");
+		        else
+		            b.append(" ").append(Language.get("nor")).append(" ");
+		    }
+		    final Class<?> c = cs[k];
+		    assert c != null;
+		    b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
+		}
+		return b.toString();
     }
 
     /**
@@ -485,19 +484,18 @@ public final class SkriptParser {
 	public static final String notOfType(final ClassInfo<?>... cs) {
         if (cs.length == 1) {
             return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
-        } else {
-            final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
-            for (int k = 0; k < cs.length; k++) {
-                if (k != 0) {
-                    if (k != cs.length - 1)
-                        b.append(", ");
-                    else
-                        b.append(" ").append(Language.get("nor")).append(" ");
-                }
-                b.append(cs[k].getName().withIndefiniteArticle());
-            }
-            return b.toString();
         }
+		final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
+		for (int k = 0; k < cs.length; k++) {
+		    if (k != 0) {
+		        if (k != cs.length - 1)
+		            b.append(", ");
+		        else
+		            b.append(" ").append(Language.get("nor")).append(" ");
+		    }
+		    b.append(cs[k].getName().withIndefiniteArticle());
+		}
+		return b.toString();
     }
 
     /**
@@ -798,15 +796,14 @@ public final class SkriptParser {
                     if (e instanceof Variable) {
                         final Class<T>[] objTypes = (Class<T>[]) types;
                         return e.getConvertedExpression(objTypes);
-                    } else {
-                        for (final Class<? extends T> t : types) {
-                            final Expression<? extends T> r = e.getConvertedExpression(t);
-                            if (r != null) {
-                                log.printLog();
-                                return r;
-                            }
-                        }
                     }
+					for (final Class<? extends T> t : types) {
+					    final Expression<? extends T> r = e.getConvertedExpression(t);
+					    if (r != null) {
+					        log.printLog();
+					        return r;
+					    }
+					}
                     log.printError(e.toString(null, false) + " " + Language.get("is") + " " + notOfType(types), ErrorQuality.NOT_AN_EXPRESSION);
                     return null;
                 }
@@ -1025,11 +1022,10 @@ public final class SkriptParser {
                 final Literal<T>[] ls = ts.toArray(new Literal[0]);
                 assert ls != null;
                 return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
-            } else {
-                final Expression<T>[] es = ts.toArray(new Expression[0]);
-                assert es != null;
-                return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
+			final Expression<T>[] es = ts.toArray(new Expression[0]);
+			assert es != null;
+			return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
         } finally {
             log.stop();
         }
@@ -1321,10 +1317,9 @@ public final class SkriptParser {
                                                 if (context == ParseContext.COMMAND) {
                                                     Skript.error(Commands.m_too_many_arguments.toString(vi.classes[k].getName().getIndefiniteArticle(), vi.classes[k].getName().toString()), ErrorQuality.SEMANTIC_ERROR);
                                                     return null;
-                                                } else {
-                                                    Skript.error("'" + expr.substring(0, i) + "<...>" + expr.substring(i2) + "' can only accept a single " + vi.classes[k].getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
-                                                    return null;
                                                 }
+												Skript.error("'" + expr.substring(0, i) + "<...>" + expr.substring(i2) + "' can only accept a single " + vi.classes[k].getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
+												return null;
                                             }
                                             if (vi.time != 0) {
                                                 if (e instanceof Literal<?>)
@@ -1397,15 +1392,13 @@ public final class SkriptParser {
                         if (i == expr.length()) {
                             j = pattern.length();
                             break;
-                        } else {
-                            i = 0;
-                            j++;
-                            continue;
                         }
-                    } else {
-                        j = newJ + 1;
-                        break;
+						i = 0;
+						j++;
+						continue;
                     }
+					j = newJ + 1;
+					break;
                 case ' ':
                     if (i == 0 || i == expr.length() || i > 0 && expr.charAt(i - 1) == ' ') {
                         j++;

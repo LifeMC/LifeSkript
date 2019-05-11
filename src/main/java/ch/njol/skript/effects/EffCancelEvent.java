@@ -79,10 +79,9 @@ public final class EffCancelEvent extends Effect {
         final Class<? extends Event> e = es[0];
         if (Cancellable.class.isAssignableFrom(e) || InventoryInteractEvent.class.isAssignableFrom(e) || PlayerInteractEvent.class.isAssignableFrom(e) || BlockCanBuildEvent.class.isAssignableFrom(e) || PlayerDropItemEvent.class.isAssignableFrom(e)) {
             return true;
-        } else {
-            Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
-            return false;
         }
+		Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
+		return false;
     }
 
     @Override

@@ -324,7 +324,8 @@ public final class YggdrasilTest {
             final String blah = this.blah;
             if (blah == null) {
                 return other.blah == null;
-            } else return blah.equals(other.blah);
+            }
+			return blah.equals(other.blah);
         }
 
         @Override

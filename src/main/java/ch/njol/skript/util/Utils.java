@@ -309,11 +309,10 @@ public final class Utils {
             if (capA)
                 return "An " + s;
             return "an " + s;
-        } else {
-            if (capA)
-                return "A " + s;
-            return "a " + s;
         }
+		if (capA)
+		    return "A " + s;
+		return "a " + s;
     }
 
     /**

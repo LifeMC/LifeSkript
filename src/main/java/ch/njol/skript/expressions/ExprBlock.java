@@ -59,10 +59,9 @@ public final class ExprBlock extends WrapperExpression<Block> {
         if (exprs.length > 0) {
             setExpr(new ConvertedExpression<>(Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]), Block.class, Location::getBlock));
             return true;
-        } else {
-            setExpr(new EventValueExpression<>(Block.class));
-            return ((EventValueExpression<Block>) getExpr()).init();
         }
+		setExpr(new EventValueExpression<>(Block.class));
+		return ((EventValueExpression<Block>) getExpr()).init();
     }
 
     @Override

@@ -465,16 +465,14 @@ public final class BukkitClasses {
             public String toVariableNameString(final OfflinePlayer p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return "" + p.getUniqueId();
-                else
-                    return "" + p.getName();
+				return "" + p.getName();
             }
 
             @Override
             public String getVariableNamePattern() {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}";
-                else
-                    return "\\S+";
+				return "\\S+";
             }
 
             @Override
@@ -514,13 +512,12 @@ public final class BukkitClasses {
                     if (uuid == null || (p = Bukkit.getOfflinePlayer(uuid)) == null)
                         throw new StreamCorruptedException();
                     return p;
-                } else {
-                    final String name = fields.getObject("name", String.class);
-                    OfflinePlayer p;
-                    if (name == null || (p = Bukkit.getOfflinePlayer(name)) == null)
-                        throw new StreamCorruptedException();
-                    return p;
                 }
+				final String name = fields.getObject("name", String.class);
+				OfflinePlayer p;
+				if (name == null || (p = Bukkit.getOfflinePlayer(name)) == null)
+				    throw new StreamCorruptedException();
+				return p;
             }
 
             //					return p.getName();

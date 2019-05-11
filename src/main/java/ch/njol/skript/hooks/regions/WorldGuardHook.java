@@ -143,8 +143,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
         public boolean isMember(final OfflinePlayer p) {
             if (supportsUUIDs)
                 return region.isMember(plugin.wrapOfflinePlayer(p));
-            else
-                return region.isMember(p.getName());
+			return region.isMember(p.getName());
         }
 
         @SuppressWarnings("deprecation")
@@ -156,13 +155,12 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
                 for (final UUID id : ids)
                     r.add(Bukkit.getOfflinePlayer(id));
                 return r;
-            } else {
-                final Collection<String> ps = region.getMembers().getPlayers();
-                final Collection<OfflinePlayer> r = new ArrayList<>(ps.size());
-                for (final String p : ps)
-                    r.add(Bukkit.getOfflinePlayer(p));
-                return r;
             }
+			final Collection<String> ps = region.getMembers().getPlayers();
+			final Collection<OfflinePlayer> r = new ArrayList<>(ps.size());
+			for (final String p : ps)
+			    r.add(Bukkit.getOfflinePlayer(p));
+			return r;
         }
 
         @SuppressWarnings("deprecation")
@@ -170,8 +168,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
         public boolean isOwner(final OfflinePlayer p) {
             if (supportsUUIDs)
                 return region.isOwner(plugin.wrapOfflinePlayer(p));
-            else
-                return region.isOwner(p.getName());
+			return region.isOwner(p.getName());
         }
 
         @SuppressWarnings("deprecation")
@@ -183,13 +180,12 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
                 for (final UUID id : ids)
                     r.add(Bukkit.getOfflinePlayer(id));
                 return r;
-            } else {
-                final Collection<String> ps = region.getOwners().getPlayers();
-                final Collection<OfflinePlayer> r = new ArrayList<>(ps.size());
-                for (final String p : ps)
-                    r.add(Bukkit.getOfflinePlayer(p));
-                return r;
             }
+			final Collection<String> ps = region.getOwners().getPlayers();
+			final Collection<OfflinePlayer> r = new ArrayList<>(ps.size());
+			for (final String p : ps)
+			    r.add(Bukkit.getOfflinePlayer(p));
+			return r;
         }
 
         @Override

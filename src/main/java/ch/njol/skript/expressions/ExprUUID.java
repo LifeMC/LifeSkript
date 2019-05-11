@@ -54,8 +54,7 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
         if (o instanceof OfflinePlayer) {
             if (offlineUUIDSupported)
                 return ((OfflinePlayer) o).getUniqueId().toString();
-            else
-                return ((Player) o).getUniqueId().toString();
+			return ((Player) o).getUniqueId().toString();
         } else if (o instanceof World) {
             return ((World) o).getUID().toString();
         }

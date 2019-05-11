@@ -68,8 +68,8 @@ public final class EffThrow extends Effect {
         if (error) {
         	if (java) {
         		throw new ScriptError(String.valueOf(detail.getSingle(e)));
-        	} else
-        		Skript.error(String.valueOf(detail.getSingle(e)));
+        	}
+			Skript.error(String.valueOf(detail.getSingle(e)));
         } else {
             Skript.warning(String.valueOf(detail.getSingle(e)));
         }

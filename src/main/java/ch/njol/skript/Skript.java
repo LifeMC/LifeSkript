@@ -802,8 +802,7 @@ public final class Skript extends JavaPlugin implements Listener {
         final SkriptAddon a = addon;
         if (a == null)
             return addon = new SkriptAddon(Skript.getInstance()).setLanguageFileDirectory("lang");
-        else
-            return a;
+		return a;
     }
 
     /**
@@ -941,13 +940,12 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (e.isCancelled() || e.getMessage() == null || !e.getMessage().startsWith("/"))
                     return false;
                 return Bukkit.dispatchCommand(e.getPlayer(), e.getMessage().substring(1));
-            } else {
-                final ServerCommandEvent e = new ServerCommandEvent(sender, command);
-                Bukkit.getPluginManager().callEvent(e);
-                if (e.getCommand() == null || e.getCommand().isEmpty())
-                    return false;
-                return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
             }
+			final ServerCommandEvent e = new ServerCommandEvent(sender, command);
+			Bukkit.getPluginManager().callEvent(e);
+			if (e.getCommand() == null || e.getCommand().isEmpty())
+			    return false;
+			return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
         } catch (final Throwable tw) {
             Skript.exception(tw, "Error occurred when executing command " + command);
             return false;
@@ -1505,11 +1503,10 @@ public final class Skript extends JavaPlugin implements Listener {
                             if (entry.level.intValue() >= Level.SEVERE.intValue()) {
                                 logEx(entry.message); // no [Skript] prefix
                                 return LogResult.DO_NOT_LOG;
-                            } else {
-//								log.add(entry);
-//								return LogResult.CACHED;
-                                return LogResult.LOG;
                             }
+							//								log.add(entry);
+//								return LogResult.CACHED;
+							return LogResult.LOG;
                         }
 
                         @Override

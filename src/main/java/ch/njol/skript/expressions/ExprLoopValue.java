@@ -131,9 +131,8 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
     protected <R> ConvertedExpression<Object, ? extends R> getConvertedExpr(final Class<R>... to) {
         if (isVariableLoop && !isIndex) {
             return new ConvertedExpression<>(this, (Class<R>) Utils.getSuperType(to), o -> Converters.convert(o, to));
-        } else {
-            return super.getConvertedExpr(to);
         }
+		return super.getConvertedExpr(to);
     }
 
     @Override

@@ -55,9 +55,8 @@ public final class ExprDurability extends SimplePropertyExpression<Object, Short
         if (o instanceof Slot) {
             final ItemStack i = ((Slot) o).getItem();
             return i == null ? null : i.getDurability();
-        } else {
-            return ((ItemStack) o).getDurability();
         }
+		return ((ItemStack) o).getDurability();
     }
 
     @Override

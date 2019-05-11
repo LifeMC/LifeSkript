@@ -216,8 +216,7 @@ public final class Config {
             } else {
                 if (n instanceof EntryNode && i == path.length - 1)
                     return ((EntryNode) n).getValue();
-                else
-                    return null;
+				return null;
             }
         }
         return null;

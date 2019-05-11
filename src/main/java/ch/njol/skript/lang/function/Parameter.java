@@ -68,9 +68,8 @@ public final class Parameter<T> {
         if (def != null) {
             final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
             return newInstance(name, type, single, def, isNone);
-        } else {
-            return newInstance(name, type, single, def, false);
         }
+		return newInstance(name, type, single, def, false);
     }
 
     @SuppressWarnings("unchecked")

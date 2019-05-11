@@ -229,30 +229,29 @@ public final class SkriptCommand implements CommandExecutor {
                             error(sender, "enable.single.error", f.getName(), r.numErrors());
                         }
                         return true;
-                    } else {
-                        final Collection<File> scripts;
-                        try {
-                            scripts = toggleScripts(f, true);
-                        } catch (final IOException e) {
-                            error(sender, "enable.folder.io error", f.getName(), ExceptionUtils.toString(e));
-                            return true;
-                        }
-                        if (scripts.isEmpty()) {
-                            info(sender, "enable.folder.empty", f.getName());
-                            return true;
-                        }
-                        info(sender, "enable.folder.enabling", f.getName(), scripts.size());
-                        final File[] ss = scripts.toArray(new File[0]);
-                        assert ss != null;
-                        final ScriptInfo i = ScriptLoader.loadScripts(ss);
-                        assert i.files == scripts.size();
-                        if (r.numErrors() == 0) {
-                            info(sender, "enable.folder.enabled", f.getName(), i.files);
-                        } else {
-                            error(sender, "enable.folder.error", f.getName(), r.numErrors());
-                        }
-                        return true;
                     }
+					final Collection<File> scripts;
+					try {
+					    scripts = toggleScripts(f, true);
+					} catch (final IOException e) {
+					    error(sender, "enable.folder.io error", f.getName(), ExceptionUtils.toString(e));
+					    return true;
+					}
+					if (scripts.isEmpty()) {
+					    info(sender, "enable.folder.empty", f.getName());
+					    return true;
+					}
+					info(sender, "enable.folder.enabling", f.getName(), scripts.size());
+					final File[] ss = scripts.toArray(new File[0]);
+					assert ss != null;
+					final ScriptInfo i = ScriptLoader.loadScripts(ss);
+					assert i.files == scripts.size();
+					if (r.numErrors() == 0) {
+					    info(sender, "enable.folder.enabled", f.getName(), i.files);
+					} else {
+					    error(sender, "enable.folder.error", f.getName(), r.numErrors());
+					}
+					return true;
                 }
             } else if ("disable".equalsIgnoreCase(args[0])) {
                 if ("all".equalsIgnoreCase(args[1])) {
@@ -283,25 +282,24 @@ public final class SkriptCommand implements CommandExecutor {
                         }
                         info(sender, "disable.single.disabled", f.getName());
                         return true;
-                    } else {
-                        final Collection<File> scripts;
-                        try {
-                            scripts = toggleScripts(f, false);
-                        } catch (final IOException e) {
-                            error(sender, "disable.folder.io error", f.getName(), ExceptionUtils.toString(e));
-                            return true;
-                        }
-                        if (scripts.isEmpty()) {
-                            info(sender, "disable.folder.empty", f.getName());
-                            return true;
-                        }
-
-                        for (final File script : scripts)
-                            ScriptLoader.unloadScript(new File(script.getParentFile(), script.getName().substring(1)));
-
-                        info(sender, "disable.folder.disabled", f.getName(), scripts.size());
-                        return true;
                     }
+					final Collection<File> scripts;
+					try {
+					    scripts = toggleScripts(f, false);
+					} catch (final IOException e) {
+					    error(sender, "disable.folder.io error", f.getName(), ExceptionUtils.toString(e));
+					    return true;
+					}
+					if (scripts.isEmpty()) {
+					    info(sender, "disable.folder.empty", f.getName());
+					    return true;
+					}
+
+					for (final File script : scripts)
+					    ScriptLoader.unloadScript(new File(script.getParentFile(), script.getName().substring(1)));
+
+					info(sender, "disable.folder.disabled", f.getName(), scripts.size());
+					return true;
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
                 if ("check".equalsIgnoreCase(args[1])) {

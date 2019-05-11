@@ -75,9 +75,8 @@ public final class ExprRandomNumber extends SimpleExpression<Number> {
         final double uu = Math.max(l.doubleValue(), u.doubleValue());
         if (integer) {
             return new Long[]{Math2.ceil(ll) + Math2.mod(rand.nextLong(), Math2.floor(uu) - Math2.ceil(ll) + 1)};
-        } else {
-            return new Double[]{ll + rand.nextDouble() * (uu - ll)};
         }
+		return new Double[]{ll + rand.nextDouble() * (uu - ll)};
     }
 
     @Override

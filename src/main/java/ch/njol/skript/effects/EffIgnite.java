@@ -95,8 +95,7 @@ public final class EffIgnite extends Effect {
     public String toString(final @Nullable Event e, final boolean debug) {
         if (ignite)
             return "set " + entities.toString(e, debug) + " on fire for " + (duration != null ? duration.toString(e, debug) : Timespan.fromTicks_i(DEFAULT_DURATION).toString());
-        else
-            return "extinguish " + entities.toString(e, debug);
+		return "extinguish " + entities.toString(e, debug);
     }
 
 }

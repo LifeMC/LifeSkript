@@ -84,27 +84,26 @@ final class VariablesMap {
     Object getVariable(final String name) {
         if (!name.endsWith("*")) {
             return hashMap.get(name);
-        } else {
-            final String[] split = Variables.splitVariableName(name);
-            Map<String, Object> current = treeMap;
-            for (int i = 0; i < split.length; i++) {
-                final String n = split[i];
-                if ("*".equals(n)) {
-                    assert i == split.length - 1;
-                    return current;
-                }
-                final Object o = current.get(n);
-                if (o == null)
-                    return null;
-                if (o instanceof Map) {
-                    current = (Map<String, Object>) o;
-                    assert i != split.length - 1;
-                } else {
-                    return null;
-                }
-            }
-            return null;
         }
+		final String[] split = Variables.splitVariableName(name);
+		Map<String, Object> current = treeMap;
+		for (int i = 0; i < split.length; i++) {
+		    final String n = split[i];
+		    if ("*".equals(n)) {
+		        assert i == split.length - 1;
+		        return current;
+		    }
+		    final Object o = current.get(n);
+		    if (o == null)
+		        return null;
+		    if (o instanceof Map) {
+		        current = (Map<String, Object>) o;
+		        assert i != split.length - 1;
+		    } else {
+		        return null;
+		    }
+		}
+		return null;
     }
 
     /**

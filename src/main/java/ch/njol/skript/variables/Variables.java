@@ -292,14 +292,13 @@ public final class Variables {
             if (map == null)
                 return null;
             return map.getVariable(name);
-        } else {
-            try {
-                variablesLock.readLock().lock();
-                return variables.getVariable(name);
-            } finally {
-                variablesLock.readLock().unlock();
-            }
         }
+		try {
+		    variablesLock.readLock().lock();
+		    return variables.getVariable(name);
+		} finally {
+		    variablesLock.readLock().unlock();
+		}
     }
 
     /**

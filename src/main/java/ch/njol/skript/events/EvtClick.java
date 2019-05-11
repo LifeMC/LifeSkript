@@ -126,9 +126,8 @@ public final class EvtClick extends SkriptEvent {
             return types.check(e, (Checker<Object>) o -> {
                 if (entity != null) {
                     return o instanceof EntityData ? ((EntityData<?>) o).isInstance(entity) : Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity(entity), (ItemType) o));
-                } else {
-                    return !(o instanceof EntityData) && ((ItemType) o).isOfType(block);
                 }
+				return !(o instanceof EntityData) && ((ItemType) o).isOfType(block);
             });
         }
         return true;

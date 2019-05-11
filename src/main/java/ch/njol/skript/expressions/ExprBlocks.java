@@ -133,16 +133,15 @@ public final class ExprBlocks extends SimpleExpression<Block> {
                 if (l.getBlock() == null)
                     return null;
                 return new BlockLineIterator(l, o != l ? d.getDirection((Block) o) : d.getDirection(l), SkriptConfig.maxTargetBlockDistance.value());
-            } else {
-                final Block b = (Block) from.getSingle(e);
-                if (b == null)
-                    return null;
-                assert end != null;
-                final Block b2 = end.getSingle(e);
-                if (b2 == null || b2.getWorld() != b.getWorld())
-                    return null;
-                return new BlockLineIterator(b, b2);
             }
+			final Block b = (Block) from.getSingle(e);
+			if (b == null)
+			    return null;
+			assert end != null;
+			final Block b2 = end.getSingle(e);
+			if (b2 == null || b2.getWorld() != b.getWorld())
+			    return null;
+			return new BlockLineIterator(b, b2);
         } catch (final IllegalStateException ex) {
             if ("Start block missed in BlockIterator".equals(ex.getMessage()))
                 return null;
@@ -165,11 +164,10 @@ public final class ExprBlocks extends SimpleExpression<Block> {
         final Expression<Block> end = this.end;
         if (end != null) {
             return "blocks from " + from.toString(e, debug) + " to " + end.toString(e, debug);
-        } else {
-            final Expression<Direction> direction = this.direction;
-            assert direction != null;
-            return "block" + (isSingle() ? "" : "s") + " " + direction.toString(e, debug) + " " + from.toString(e, debug);
         }
+		final Expression<Direction> direction = this.direction;
+		assert direction != null;
+		return "block" + (isSingle() ? "" : "s") + " " + direction.toString(e, debug) + " " + from.toString(e, debug);
     }
 
 }

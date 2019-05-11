@@ -74,9 +74,8 @@ public final class ExprJoinSplit extends SimpleExpression<String> {
             return new String[0];
         if (join) {
             return new String[]{StringUtils.join(s, d)};
-        } else {
-            return s[0].split(Pattern.quote(d), -1);
         }
+		return s[0].split(Pattern.quote(d), -1);
     }
 
     @Override

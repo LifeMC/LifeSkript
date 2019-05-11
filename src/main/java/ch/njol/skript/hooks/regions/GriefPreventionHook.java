@@ -207,8 +207,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         public Collection<OfflinePlayer> getOwners() {
             if (supportsUUIDs)
                 return Collections.singletonList(Bukkit.getOfflinePlayer(claim.ownerID));
-            else
-                return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
+			return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
         }
 
         @Override

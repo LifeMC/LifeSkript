@@ -359,10 +359,9 @@ public final class Math2 {
             h |= h >> 16;
             h = ~h;
             return n == h ? n : h >> 1;
-        } else {
-            final int h = Integer.highestOneBit(n);
-            return n == h ? n : h << 1;
         }
+		final int h = Integer.highestOneBit(n);
+		return n == h ? n : h << 1;
     }
 
     /**
@@ -379,10 +378,9 @@ public final class Math2 {
             h |= h >> 32;
             h = ~h;
             return n == h ? n : h >> 1;
-        } else {
-            final long h = Long.highestOneBit(n);
-            return n == h ? n : h << 1;
         }
+		final long h = Long.highestOneBit(n);
+		return n == h ? n : h << 1;
     }
 
     /**

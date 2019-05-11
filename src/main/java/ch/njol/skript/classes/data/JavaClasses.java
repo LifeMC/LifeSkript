@@ -70,11 +70,10 @@ public final class JavaClasses {
                                 if (!SkriptParser.isIntegerOrDouble(str))
                                     return null;
                                 return Double.parseDouble(str) / 100;
-                            } else {
-                                if (!SkriptParser.isIntegerOrDouble(s))
-                                    return null;
-                                return Double.parseDouble(s);
                             }
+							if (!SkriptParser.isIntegerOrDouble(s))
+							    return null;
+							return Double.parseDouble(s);
                         } catch (final NumberFormatException e) {
                             Skript.exception(e);
                             return null;
@@ -273,11 +272,10 @@ public final class JavaClasses {
                         if (!SkriptParser.isIntegerOrDouble(str))
                             return null;
                         return Double.parseDouble(str) / 100;
-                    } else {
-                        if (!SkriptParser.isIntegerOrDouble(s))
-                            return null;
-                        return Double.parseDouble(s);
                     }
+					if (!SkriptParser.isIntegerOrDouble(s))
+					    return null;
+					return Double.parseDouble(s);
                 } catch (final NumberFormatException e) {
                     return null;
                 }
