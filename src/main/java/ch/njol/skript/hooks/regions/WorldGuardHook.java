@@ -94,7 +94,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
         final ApplicableRegionSet applicable = manager.getApplicableRegions(l);
         if (applicable == null)
             return r;
-        for (ProtectedRegion protectedRegion : applicable) r.add(new WorldGuardRegion(l.getWorld(), protectedRegion));
+        for (final ProtectedRegion protectedRegion : applicable) r.add(new WorldGuardRegion(l.getWorld(), protectedRegion));
         return r;
     }
 

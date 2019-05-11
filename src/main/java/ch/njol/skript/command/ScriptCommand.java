@@ -122,7 +122,7 @@ public final class ScriptCommand implements CommandExecutor {
 
         // remove aliases that are the same as the command
         if (Skript.logHigh()) {
-            for(Iterator<String> iterator = aliases.iterator(); iterator.hasNext();) {
+            for(final Iterator<String> iterator = aliases.iterator(); iterator.hasNext();) {
                 final String alias = iterator.next();
                 if (alias.equals(label)) {
                     Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command and it is redundant, remove it.");

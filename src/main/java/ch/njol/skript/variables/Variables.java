@@ -84,24 +84,21 @@ public final class Variables {
     private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
     private static final int MAX_CONFLICT_WARNINGS = 30;
     static volatile boolean closed;
-    private static final Thread saveThread = Skript.newThread(new Runnable() {
-        @Override
-        public final void run() {
-            while (!closed) {
-                try {
-                    final SerializedVariable v = queue.take();
-                    for (final VariablesStorage s : storages) {
-                        if (s.accept(v.name)) {
-                            s.save(v);
-                            break;
-                        }
-                    }
-                } catch (final InterruptedException ignored) {
-                    /* ignored */
-                }
-            }
-        }
-    }, "Skript variable save thread");
+    private static final Thread saveThread = Skript.newThread(() -> {
+	    while (!closed) {
+	        try {
+	            final SerializedVariable v = queue.take();
+	            for (final VariablesStorage s : storages) {
+	                if (s.accept(v.name)) {
+	                    s.save(v);
+	                    break;
+	                }
+	            }
+	        } catch (final InterruptedException ignored) {
+	            /* ignored */
+	        }
+	    }
+	}, "Skript variable save thread");
     private static int loadConflicts;
 
     static {

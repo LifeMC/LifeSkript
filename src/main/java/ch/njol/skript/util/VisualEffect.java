@@ -29,7 +29,6 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.SyntaxElement;
 import ch.njol.skript.lang.SyntaxElementInfo;
 import ch.njol.skript.localization.Language;
-import ch.njol.skript.localization.LanguageChangeListener;
 import ch.njol.skript.localization.Noun;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
@@ -67,30 +66,27 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
     }
 
     static {
-        Language.addListener(new LanguageChangeListener() {
-            @Override
-            public void onLanguageChange() {
-                final Type[] ts = Type.values();
-                types.clear();
-                final List<String> patterns = new ArrayList<>(ts.length);
-                for (int i = 0; i < ts.length; i++) {
-                    final String node = LANGUAGE_NODE + "." + ts[i].name();
-                    final String pattern = Language.get_(node + ".pattern");
-                    if (pattern == null) {
-                        if (Skript.testing())
-                            Skript.warning("Missing pattern at '" + node + ".pattern" + "' in the " + Language.getName() + " language file");
-                    } else {
-                        types.add(ts[i]);
-                        patterns.add(pattern);
-                    }
-                    if (names[i] == null)
-                        names[i] = new Noun(node + ".name");
-                }
-                final String[] ps = patterns.toArray(new String[0]);
-                assert ps != null;
-                info = new SyntaxElementInfo<>(ps, VisualEffect.class);
-            }
-        });
+        Language.addListener(() -> {
+		    final Type[] ts = Type.values();
+		    types.clear();
+		    final List<String> patterns = new ArrayList<>(ts.length);
+		    for (int i = 0; i < ts.length; i++) {
+		        final String node = LANGUAGE_NODE + "." + ts[i].name();
+		        final String pattern = Language.get_(node + ".pattern");
+		        if (pattern == null) {
+		            if (Skript.testing())
+		                Skript.warning("Missing pattern at '" + node + ".pattern" + "' in the " + Language.getName() + " language file");
+		        } else {
+		            types.add(ts[i]);
+		            patterns.add(pattern);
+		        }
+		        if (names[i] == null)
+		            names[i] = new Noun(node + ".name");
+		    }
+		    final String[] ps = patterns.toArray(new String[0]);
+		    assert ps != null;
+		    info = new SyntaxElementInfo<>(ps, VisualEffect.class);
+		});
     }
 
     private Type type;

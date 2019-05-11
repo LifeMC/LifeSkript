@@ -153,7 +153,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public BidiHashMap<T1, T2> clone() {
-        return new BidiHashMap<T1, T2>(this);
+        return new BidiHashMap<>(this);
     }
 
     /**

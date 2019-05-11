@@ -1256,7 +1256,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     first = true;
                     try {
                         // Get server directory / folder
-                        final File serverDirectory = this.getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                        final File serverDirectory = getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
                         // Flag to track changes and warn the user
                         boolean madeChanges = false;
@@ -1648,7 +1648,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 }
             }, this);
 
-            latestVersion = this.getDescription().getVersion();
+            latestVersion = getDescription().getVersion();
 
             if (!isEnabled())
                 return;
@@ -1656,7 +1656,7 @@ public final class Skript extends JavaPlugin implements Listener {
             if (SkriptConfig.checkForNewVersion.value()) {
                 final Thread t = newThread(() -> {
                     try {
-                        final String current = this.getDescription().getVersion();
+                        final String current = getDescription().getVersion();
 
                         if (current == null || current.length() < 1)
                             return;

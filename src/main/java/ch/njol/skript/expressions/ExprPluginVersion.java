@@ -71,7 +71,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
      * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
      */
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        this.pluginName = (Expression<String>) exprs[0];
+        pluginName = (Expression<String>) exprs[0];
         return true;
     }
 

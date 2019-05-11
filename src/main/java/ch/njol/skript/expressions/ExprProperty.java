@@ -71,7 +71,7 @@ public final class ExprProperty extends SimpleExpression<String> {
      * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
      */
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        this.propertyName = (Expression<String>) exprs[0];
+        propertyName = (Expression<String>) exprs[0];
         return true;
     }
 

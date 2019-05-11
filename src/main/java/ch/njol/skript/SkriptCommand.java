@@ -314,8 +314,8 @@ public final class SkriptCommand implements CommandExecutor {
             } else if ("track".equalsIgnoreCase(args[0]) || "untrack".equalsIgnoreCase(args[0])) {
                 if ("delays".equalsIgnoreCase(args[1])) {
                     if ("track".equalsIgnoreCase(args[0])) {
-                        long limit = 0L;
-                        TimeUnit unit = TimeUnit.NANOSECONDS;
+                        final long limit = 0L;
+                        final TimeUnit unit = TimeUnit.NANOSECONDS;
 
                         for (final TrackerAgent agent : registeredTrackers)
                             if (agent instanceof TaskTrackerAgent)

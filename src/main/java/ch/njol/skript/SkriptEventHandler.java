@@ -31,7 +31,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
-import org.bukkit.event.EventException;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -59,17 +58,14 @@ public final class SkriptEventHandler {
     public static Event last;
     static long startTrigger;
     private static long startEvent;
-    public static final EventExecutor ee = new EventExecutor() {
-        @Override
-        public final void execute(final @Nullable Listener l, final @Nullable Event e) throws EventException {
-            if (e == null)
-                return;
-            if (last == e) // an event is received multiple times if multiple superclasses of it are registered
-                return;
-            last = e;
-            check(e);
-        }
-    };
+    public static final EventExecutor ee = (final @Nullable Listener l, final @Nullable Event e) -> {
+	    if (e == null)
+	        return;
+	    if (last == e) // an event is received multiple times if multiple superclasses of it are registered
+	        return;
+	    last = e;
+	    check(e);
+	};
 
     private SkriptEventHandler() {
         throw new UnsupportedOperationException();
@@ -189,7 +185,7 @@ public final class SkriptEventHandler {
 
     static final void addTrigger(final Class<? extends Event>[] events, final Trigger trigger) {
         for (final Class<? extends Event> e : events) {
-            List<Trigger> ts = triggers.computeIfAbsent(e, k -> new ArrayList<>());
+            final List<Trigger> ts = triggers.computeIfAbsent(e, k -> new ArrayList<>());
             ts.add(trigger);
         }
     }

@@ -123,7 +123,7 @@ public final class DatabaseStorage extends VariablesStorage {
             if (monitor_changes == null || monitor_interval == null)
                 return false;
             monitor = monitor_changes;
-            this.monitorInterval = monitor_interval.getMilliSeconds();
+            monitorInterval = monitor_interval.getMilliSeconds();
 
             final Database db;
             try {
