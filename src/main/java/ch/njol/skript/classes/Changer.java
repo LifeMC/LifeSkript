@@ -80,7 +80,7 @@ public interface Changer<T> {
          * @param e     The expression to test
          * @param mode  The ChangeMode to use in the test
          * @param types The types to test for
-         * @return Whether <tt>e.{@link Expression#change(org.bukkit.event.Event, Object[], ChangeMode) change}(event, type[], mode)</tt> can be used or not.
+         * @return Whatever <tt>e.{@link Expression#change(org.bukkit.event.Event, Object[], ChangeMode) change}(event, type[], mode)</tt> can be used or not.
          */
         public static final boolean acceptsChange(final Expression<?> e, final ChangeMode mode, final Class<?>... types) {
             final Class<?>[] cs = e.acceptChange(mode);

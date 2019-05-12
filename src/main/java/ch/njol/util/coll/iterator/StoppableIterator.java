@@ -46,7 +46,7 @@ public class StoppableIterator<T> implements Iterator<T> {
     /**
      * @param iter
      * @param stopper    Called for every element. If it returns true the iteration is stopped.
-     * @param returnLast Whether to return the last element, i.e. the element on which the stopper stops.
+     * @param returnLast Whatever to return the last element, i.e. the element on which the stopper stops.
      *                   This doesn't change anything if the iterator ends before the stopper stops.
      */
     public StoppableIterator(final Iterator<T> iter, final NullableChecker<T> stopper, final boolean returnLast) {

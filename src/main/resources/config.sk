@@ -154,6 +154,11 @@ disable expression is already a text warnings: false
 # Disables the "... is already a text, so you should not put it in one" warnings.
 # You should remove redundant %% used to make string conversions to fix these warnings.
 
+disable using id instead of an alias warnings: false
+# Disables the "... using an ID instead of an alias is discouraged ..." warnings.
+# You should only make this true if a certain alias don't exist in Skript.
+# Using an alias instead of an ID is a more cleaner, readable, idiomatic and better way.
+
 disable start stop event warnings: false
 # Disables the "Server start/stop events are actually called when Skript is started or stopped." warnings.
 # While generally on load and on disable is recommended, you can also use on server start or stop events as you wish.

@@ -194,7 +194,7 @@ public final class Fields implements Iterable<FieldContext> {
 
     /**
      * @param fieldID A field's id
-     * @return Whether the field is defined
+     * @return Whatever the field is defined
      */
     public boolean contains(final String fieldID) {
         return fields.containsKey(fieldID);
@@ -253,7 +253,7 @@ public final class Fields implements Iterable<FieldContext> {
      * Removes a field and its value from this Fields object.
      *
      * @param fieldID The id of the field to remove
-     * @return Whether a field with the given name was actually defined
+     * @return Whatever a field with the given name was actually defined
      */
     public boolean removeField(final String fieldID) {
         return fields.remove(fieldID) != null;

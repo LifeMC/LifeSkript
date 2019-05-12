@@ -195,7 +195,7 @@ public abstract class Node {
     }
 
     /**
-     * @return Whether this node does not hold information (i.e. is empty or invalid)
+     * @return Whatever this node does not hold information (i.e. is empty or invalid)
      */
     public boolean isVoid() {
         return this instanceof VoidNode;// || this instanceof ParseOptionNode;

@@ -148,7 +148,7 @@ public final class Config {
      * Used by Skript to import old settings into the updated config. The return value is used to not modify the config if no new options were added.
      *
      * @param other
-     * @return Whether the configs' keys differ, i.e. false == configs only differ in values, not keys.
+     * @return Whatever the configs' keys differ, i.e. false == configs only differ in values, not keys.
      */
     public boolean setValues(final Config other) {
         return getMainNode().setValues(other.getMainNode());

@@ -99,7 +99,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
      * Tests whether the given item is of this type.
      *
      * @param item
-     * @return Whether the given item is of this type. If <tt>item</tt> is <tt>null</tt> this returns <tt>getId() == 0</tt>.
+     * @return Whatever the given item is of this type. If <tt>item</tt> is <tt>null</tt> this returns <tt>getId() == 0</tt>.
      */
     public boolean isOfType(final @Nullable ItemStack item) {
         if (item == null)

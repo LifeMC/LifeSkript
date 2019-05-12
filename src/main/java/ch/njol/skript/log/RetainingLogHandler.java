@@ -64,7 +64,7 @@ public final class RetainingLogHandler extends LogHandler {
      * This handler is stopped if not already done.
      *
      * @param def Error to print if no errors were logged, can be null to not print any error if there are none
-     * @return Whether there were any errors
+     * @return Whatever there were any errors
      */
     public final boolean printErrors(final @Nullable String def) {
         return printErrors(def, ErrorQuality.SEMANTIC_ERROR);
@@ -98,7 +98,7 @@ public final class RetainingLogHandler extends LogHandler {
      *
      * @param recipient
      * @param def       Error to send if no errors were logged, can be null to not print any error if there are none
-     * @return Whether there were any errors to send
+     * @return Whatever there were any errors to send
      */
     public final boolean printErrors(final CommandSender recipient, final @Nullable String def) {
         assert !printedErrorOrLog;

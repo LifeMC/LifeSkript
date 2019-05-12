@@ -354,7 +354,7 @@ public final class SkriptParser {
      * @param closingBracket The bracket to look for, e.g. ')'
      * @param openingBracket A bracket that opens another group, e.g. '('
      * @param start          This must not be the index of the opening bracket!
-     * @param isGroup        Whether <tt>start</tt> is assumed to be in a group (will print an error if this is not the case, otherwise it returns <tt>pattern.length()</tt>)
+     * @param isGroup        Whatever <tt>start</tt> is assumed to be in a group (will print an error if this is not the case, otherwise it returns <tt>pattern.length()</tt>)
      * @return The index of the next bracket
      * @throws MalformedPatternException If the group is not closed
      */

@@ -64,7 +64,7 @@ public final class LiteralUtils {
      * objects.
      *
      * @param expr The Expression to check for {@link UnparsedLiteral} objects
-     * @return Whether or not {@code expr} contains {@link UnparsedLiteral} objects
+     * @return Whatever or not {@code expr} contains {@link UnparsedLiteral} objects
      */
     public static boolean hasUnparsedLiteral(final Expression<?> expr) {
         if (expr instanceof UnparsedLiteral) {
@@ -84,7 +84,7 @@ public final class LiteralUtils {
      * and do not contain {@link UnparsedLiteral} objects.
      *
      * @param expressions The expressions to check for {@link UnparsedLiteral} objects
-     * @return Whether or not the passed expressions contain {@link UnparsedLiteral} objects
+     * @return Whatever or not the passed expressions contain {@link UnparsedLiteral} objects
      */
     @SuppressWarnings("null")
     public static boolean canInitSafely(final Expression<?>... expressions) {

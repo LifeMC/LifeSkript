@@ -99,8 +99,8 @@ public final class VariableString implements Expression<String> {
      * Tests whether a string is correctly quoted, i.e. only has doubled double quotes in it.
      *
      * @param s          The string
-     * @param withQuotes Whether s must be surrounded by double quotes or not
-     * @return Whether the string is quoted correctly
+     * @param withQuotes Whatever s must be surrounded by double quotes or not
+     * @return Whatever the string is quoted correctly
      */
     public static final boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
         if (withQuotes && (!s.startsWith("\"") || !s.endsWith("\"")))
@@ -121,7 +121,7 @@ public final class VariableString implements Expression<String> {
      * Removes quoted quotes from a string.
      *
      * @param s                 The string
-     * @param surroundingQuotes Whether the string has quotes at the start & end that should be removed
+     * @param surroundingQuotes Whatever the string has quotes at the start & end that should be removed
      * @return The string with double quotes replaced with signle ones and optionally with removed surrounding quotes.
      */
     public static final String unquote(final String s, final boolean surroundingQuotes) {

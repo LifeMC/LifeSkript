@@ -429,7 +429,7 @@ public final class Direction implements YggdrasilRobustSerializable {
     }
 
     /**
-     * @return Whether this Direction rotates the direction of a given object or only translates it.
+     * @return Whatever this Direction rotates the direction of a given object or only translates it.
      */
     public boolean isRelative() {
         return relative;

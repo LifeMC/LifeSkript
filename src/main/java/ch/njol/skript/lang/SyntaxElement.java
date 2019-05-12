@@ -42,9 +42,9 @@ public interface SyntaxElement {
      * @param exprs          all %expr%s included in the matching pattern in the order they appear in the pattern. If an optional value was left out it will still be included in this list
      *                       holding the default value of the desired type which usually depends on the event.
      * @param matchedPattern The index of the pattern which matched
-     * @param isDelayed      Whether this expression is used after a delay or not (i.e. if the event has already passed when this expression will be called)
+     * @param isDelayed      Whatever this expression is used after a delay or not (i.e. if the event has already passed when this expression will be called)
      * @param parseResult    Additional information about the match.
-     * @return Whether this expression was initialised successfully. An error should be printed prior to returning false to specify the cause.
+     * @return Whatever this expression was initialised successfully. An error should be printed prior to returning false to specify the cause.
      * @see ScriptLoader#isCurrentEvent(Class...)
      */
     boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult);

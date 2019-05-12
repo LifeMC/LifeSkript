@@ -162,7 +162,7 @@ public final class Language {
 
     /**
      * @param key
-     * @return Whether the given key exists in the <b>english</b> language file.
+     * @return Whatever the given key exists in the <b>english</b> language file.
      */
     public static boolean keyExists(final String key) {
         return english.containsKey(key.toLowerCase(Locale.ENGLISH));
@@ -328,7 +328,7 @@ public final class Language {
      * }
      * </pre>
      *
-     * @param b Whether to enable localisation or not
+     * @param b Whatever to enable localisation or not
      * @return Previous state
      */
     public static boolean setUseLocal(final boolean b) {

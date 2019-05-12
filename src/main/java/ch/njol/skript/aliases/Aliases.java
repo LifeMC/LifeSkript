@@ -24,6 +24,7 @@ package ch.njol.skript.aliases;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.config.EntryNode;
 import ch.njol.skript.config.Node;
@@ -567,7 +568,7 @@ public final class Aliases {
      *
      * @param s       The string holding the type, can be either a number, or an alias, plus an optional data part. Case does not matter.
      * @param t       The ItemType to add the parsed ItemData(s) to (i.e. this ItemType will be modified)
-     * @param isAlias Whether this type is parsed for an alias.
+     * @param isAlias Whatever this type is parsed for an alias.
      * @return The given item type or null if the input couldn't be parsed.
      */
     @Nullable
@@ -601,8 +602,8 @@ public final class Aliases {
                 }
                 d = d.intersection(data);
             }
-            if (!isAlias && d != null) {
-                Skript.warning("Using an ID instead of an alias is discouraged and will likely not be supported in future versions of Skript anymore. " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with e.g. '" + d.toString(true, false) + "'."));
+            if (!isAlias && d != null && !SkriptConfig.disableUsingIdInsteadOfAliasWarnings.value()) {
+                Skript.warning("Using an ID instead of an alias is discouraged and will likely not be supported in future versions of Skript anymore. " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
             }
             t.add(d);
             return t;

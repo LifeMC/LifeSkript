@@ -335,7 +335,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     /**
      * @param c An entity's class, e.g. Player
      * @param e An actual entity, or null to get an entity data for an entity class
-     * @return Whether initialisation was successful
+     * @return Whatever initialisation was successful
      */
     protected abstract boolean init(@Nullable Class<? extends E> c, @Nullable E e);
 

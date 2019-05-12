@@ -177,7 +177,7 @@ public abstract class VariablesStorage implements Closeable {
     /**
      * Loads variables stored here.
      *
-     * @return Whether the database could be loaded successfully, i.e. whether the config is correct and all variables could be loaded
+     * @return Whatever the database could be loaded successfully, i.e. whether the config is correct and all variables could be loaded
      */
     protected abstract boolean load_i(final SectionNode n);
 
@@ -194,7 +194,7 @@ public abstract class VariablesStorage implements Closeable {
     /**
      * (Re)connects to the database (not called on the first connect - do this in {@link #load_i(SectionNode)}).
      *
-     * @return Whether the connection could be re-established. An error should be printed by this method prior to returning false.
+     * @return Whatever the connection could be re-established. An error should be printed by this method prior to returning false.
      */
     protected abstract boolean connect();
 
@@ -282,7 +282,7 @@ public abstract class VariablesStorage implements Closeable {
      * @param name
      * @param type
      * @param value
-     * @return Whether the variable was saved
+     * @return Whatever the variable was saved
      */
     protected abstract boolean save(String name, @Nullable String type, @Nullable byte[] value);
 

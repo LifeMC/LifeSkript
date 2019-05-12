@@ -177,7 +177,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      *
      * @param set
      * @param sub
-     * @return Whether all item types in <tt>sub</tt> have at least one {@link #isSupertypeOf(ItemType) super type} in <tt>set</tt>
+     * @return Whatever all item types in <tt>sub</tt> have at least one {@link #isSupertypeOf(ItemType) super type} in <tt>set</tt>
      */
     public static boolean isSubset(final ItemType[] set, final ItemType[] sub) {
         outer:
@@ -282,7 +282,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     /**
      * @param item
-     * @return Whether the given item has correct enchantments & ItemMeta, but doesn't check its type
+     * @return Whatever the given item has correct enchantments & ItemMeta, but doesn't check its type
      */
     private boolean hasMeta(final @Nullable ItemStack item) {
         final Map<Enchantment, Integer> enchs = enchantments;
@@ -416,7 +416,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     /**
-     * @return Whether this ItemType has at least one ItemData that represents an item
+     * @return Whatever this ItemType has at least one ItemData that represents an item
      */
     public boolean hasItem() {
         for (final ItemData d : types) {
@@ -427,7 +427,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     /**
-     * @return Whether this ItemType has at least one ItemData that represents a block
+     * @return Whatever this ItemType has at least one ItemData that represents a block
      */
     public boolean hasBlock() {
         for (final ItemData d : types) {
@@ -441,8 +441,8 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * Sets the given block to this ItemType
      *
      * @param block        The block to set
-     * @param applyPhysics Whether to run a physics check just after setting the block
-     * @return Whether the block was successfully set
+     * @param applyPhysics Whatever to run a physics check just after setting the block
+     * @return Whatever the block was successfully set
      */
     public boolean setBlock(final Block block, final boolean applyPhysics) {
         for (final ItemData d : types) {
@@ -695,7 +695,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * CondCanHold currently blocks aliases without 'every'/'all' as temporary solution.
      *
      * @param invi
-     * @return Whether this item type can be added to the given inventory
+     * @return Whatever this item type can be added to the given inventory
      */
     public boolean hasSpace(final Inventory invi) {
         if (!isAll()) {
@@ -811,7 +811,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * Removes this type from the given inventory. Does not call updateInventory for players.
      *
      * @param invi
-     * @return Whether everything could be removed from the inventory
+     * @return Whatever everything could be removed from the inventory
      */
     public boolean removeFrom(final Inventory invi) {
         final ItemStack[] buf = invi.getContents();
@@ -841,7 +841,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     /**
      * @param lists The lists to remove this type from. Each list should implement {@link RandomAccess} or this method will be slow.
-     * @return Whether this whole item type could be removed (i.e. returns false if the lists didn't contain this item type completely)
+     * @return Whatever this whole item type could be removed (i.e. returns false if the lists didn't contain this item type completely)
      */
     @SafeVarargs
     public final boolean removeFrom(final List<ItemStack>... lists) {
@@ -922,7 +922,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * Tries to add this ItemType to the given inventory. Does not call updateInventory for players.
      *
      * @param invi
-     * @return Whether everything could be added to the inventory
+     * @return Whatever everything could be added to the inventory
      */
     public boolean addTo(final Inventory invi) {
         // important: don't use inventory.add() - it ignores max stack sizes

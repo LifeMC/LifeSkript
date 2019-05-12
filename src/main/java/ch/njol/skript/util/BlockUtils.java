@@ -100,7 +100,7 @@ public final class BlockUtils {
      * @param dataMin      The minimum data value from 0 to 15, can be -1
      * @param dataMax      The maximum data value from 0 to 15, can be -1
      * @param applyPhysics TODO add effect that sets block without physics checks
-     * @return Whether the block could be set successfully
+     * @return Whatever the block could be set successfully
      */
     public static boolean set(final Block b, final int type, byte dataMin, byte dataMax, final boolean applyPhysics) {
         if (dataMin == -1)

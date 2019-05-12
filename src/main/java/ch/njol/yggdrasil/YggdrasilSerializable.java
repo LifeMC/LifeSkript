@@ -50,7 +50,7 @@ public interface YggdrasilSerializable {
          *
          * @param field The Java field
          * @param value The field read from stream
-         * @return Whether the field was handled. If false,
+         * @return Whatever the field was handled. If false,
          * <tt>yggdrasil.{@link Yggdrasil#incompatibleField(Object, Field, FieldContext) incompatibleField}(this, field, value)</tt> will be called.
          */
         @SuppressWarnings("null")
@@ -60,7 +60,7 @@ public interface YggdrasilSerializable {
          * Called if a field was read from stream which does not exist in this class.
          *
          * @param field The field read from stream
-         * @return Whether the field was handled. If false, <tt>yggdrasil.{@link Yggdrasil#excessiveField(Object, FieldContext) excessiveField}(this, field)</tt> will be called.
+         * @return Whatever the field was handled. If false, <tt>yggdrasil.{@link Yggdrasil#excessiveField(Object, FieldContext) excessiveField}(this, field)</tt> will be called.
          */
         @SuppressWarnings("null")
         boolean excessiveField(final @NonNull FieldContext field) throws StreamCorruptedException;
@@ -69,7 +69,7 @@ public interface YggdrasilSerializable {
          * Called if a field was not found in the stream.
          *
          * @param field The field that did not occur in the stream
-         * @return Whether the field was handled (e.g. true if the default value is fine). If false,
+         * @return Whatever the field was handled (e.g. true if the default value is fine). If false,
          * <tt>yggdrasil.{@link Yggdrasil#missingField(Object, Field) missingField}(this, field)</tt> will be called.
          */
         @SuppressWarnings("null")

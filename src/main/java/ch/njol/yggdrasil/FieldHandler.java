@@ -34,7 +34,7 @@ public interface FieldHandler {
      *
      * @param o     The object whose filed is missing
      * @param field The field read from stream
-     * @return Whether this Handler handled the request
+     * @return Whatever this Handler handled the request
      */
     boolean excessiveField(final Object o, final FieldContext field) throws StreamCorruptedException;
 
@@ -43,7 +43,7 @@ public interface FieldHandler {
      *
      * @param o     The object whose filed is missing
      * @param field The field that didn't occur in the stream
-     * @return Whether this Handler handled the request
+     * @return Whatever this Handler handled the request
      */
     boolean missingField(final Object o, final Field field) throws StreamCorruptedException;
 
@@ -53,7 +53,7 @@ public interface FieldHandler {
      * @param o     The object the field belongs to
      * @param f     The field to set
      * @param field The field read from stream
-     * @return Whether this Handler handled the request
+     * @return Whatever this Handler handled the request
      */
     boolean incompatibleField(final Object o, final Field f, final FieldContext field) throws StreamCorruptedException;
 

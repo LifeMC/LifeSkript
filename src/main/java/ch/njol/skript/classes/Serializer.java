@@ -98,7 +98,7 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
     /**
      * Not currently used (everything happens on Bukkit's main thread).
      *
-     * @return Whether deserialisation must be done on Bukkit's main thread.
+     * @return Whatever deserialisation must be done on Bukkit's main thread.
      */
     public abstract boolean mustSyncDeserialization();
 

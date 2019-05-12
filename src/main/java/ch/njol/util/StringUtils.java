@@ -233,7 +233,7 @@ public final class StringUtils {
      *
      * @param s       The ChatSequence to search the number in
      * @param index   The index to start searching at (inclusive)
-     * @param forward Whether to search forwards or backwards
+     * @param forward Whatever to search forwards or backwards
      * @return The number found or -1 if no matching number was found
      */
     public static double numberAt(final CharSequence s, final int index, final boolean forward) {

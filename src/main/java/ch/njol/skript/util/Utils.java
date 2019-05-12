@@ -173,7 +173,7 @@ public final class Utils {
      *
      * @param is1
      * @param is2
-     * @return Whether the item stacks are of the same type
+     * @return Whatever the item stacks are of the same type
      */
     public static boolean itemStacksEqual(final @Nullable ItemStack is1, final @Nullable ItemStack is2) {
         if (is1 == null || is2 == null)
@@ -299,7 +299,7 @@ public final class Utils {
      * Adds 'a' or 'an' to the given string, depending on the first character of the string.
      *
      * @param s    The string to add the article to
-     * @param capA Whether to use a capital a or not
+     * @param capA Whatever to use a capital a or not
      * @return The given string with an appended a/an (or A/An if capA is true) and a space at the beginning
      * @see #a(String)
      */

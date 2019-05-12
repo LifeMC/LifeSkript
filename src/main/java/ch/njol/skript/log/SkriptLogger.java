@@ -240,7 +240,7 @@ public final class SkriptLogger {
      * Checks whether messages should be logged for the given verbosity.
      *
      * @param minVerb minimal verbosity
-     * @return Whether messages should be logged for the given verbosity.
+     * @return Whatever messages should be logged for the given verbosity.
      */
     public static boolean log(final Verbosity minVerb) {
         return minVerb.compareTo(verbosity) <= 0;

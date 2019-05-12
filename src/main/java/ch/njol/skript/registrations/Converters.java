@@ -247,7 +247,7 @@ public final class Converters {
      *
      * @param from
      * @param to
-     * @return Whether a converter exists
+     * @return Whatever a converter exists
      */
     public static boolean converterExists(final Class<?> from, final Class<?> to) {
         if (to.isAssignableFrom(from) || from.isAssignableFrom(to))

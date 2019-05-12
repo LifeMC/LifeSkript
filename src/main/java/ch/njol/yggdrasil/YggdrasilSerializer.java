@@ -46,7 +46,7 @@ public abstract class YggdrasilSerializer<T> implements ClassResolver {
     public abstract Fields serialize(T o) throws NotSerializableException;
 
     /**
-     * Whether an instance of the given class can be dynamically created. If this method returns false, {@link #newInstance(Class)} and {@link #deserialize(Object, Fields)} will
+     * Whatever an instance of the given class can be dynamically created. If this method returns false, {@link #newInstance(Class)} and {@link #deserialize(Object, Fields)} will
      * not be called for the given class, but {@link #deserialize(Class, Fields)} will be used instead, and having any reference to an object of the given class in its own fields'
      * graph will cause Yggdrasil to throw an exception upon serialisation as no reference to the object will be available when deserialising the object. // TODO allow this
      * <p>

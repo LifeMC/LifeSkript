@@ -103,7 +103,7 @@ public interface Comparator<T1, T2> {
          * well.
          *
          * @param other
-         * @return Whether this relation is part of the given relation, e.g. <code>GREATER_OR_EQUAL.is(EQUAL)</code> returns true.
+         * @return Whatever this relation is part of the given relation, e.g. <code>GREATER_OR_EQUAL.is(EQUAL)</code> returns true.
          */
         public boolean is(final Relation other) {
             if (other == this)

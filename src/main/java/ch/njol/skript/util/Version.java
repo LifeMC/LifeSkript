@@ -123,7 +123,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     /**
-     * @return Whether this is a stable version, i.e. a simple version number without any additional details (like alpha/beta/etc.)
+     * @return Whatever this is a stable version, i.e. a simple version number without any additional details (like alpha/beta/etc.)
      */
     public boolean isStable() {
         return postfix == null;

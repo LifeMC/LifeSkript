@@ -93,7 +93,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * @param e       The event
      * @param c       A checker
      * @param negated The cheking condition's negated state. This is used to invert the output of the checker if set to true (i.e. <tt>negated ^ checker.check(...)</tt>)
-     * @return Whether this expression matches or doesn't match the given checker depending on the condition's negated state.
+     * @return Whatever this expression matches or doesn't match the given checker depending on the condition's negated state.
      * @see ch.njol.skript.lang.util.SimpleExpression#check(Object[], Checker, boolean, boolean)
      */
     boolean check(final Event e, final Checker<? super T> c, final boolean negated);
@@ -104,7 +104,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      *
      * @param e The event
      * @param c A checker
-     * @return Whether this expression matches the given checker
+     * @return Whatever this expression matches the given checker
      * @see ch.njol.skript.lang.util.SimpleExpression#check(Object[], Checker, boolean, boolean)
      */
     boolean check(final Event e, final Checker<? super T> c);
@@ -143,7 +143,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * <p>
      * This method must return true if this is a {@link #isSingle() single} expression. // TODO make this method irrelevant for single expressions
      *
-     * @return Whether this expression returns all values at once or only part of them.
+     * @return Whatever this expression returns all values at once or only part of them.
      */
     boolean getAnd();
 
@@ -157,7 +157,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * printed (NB: {@link ch.njol.skript.Skript#error(String)} always creates semantic errors).
      *
      * @param time -1 for past or 1 for future. 0 is never passed to this method as it represents the default state.
-     * @return Whether this expression has distinct time states, e.g. a player never changes but a block can. This should be sensitive for the event (using
+     * @return Whatever this expression has distinct time states, e.g. a player never changes but a block can. This should be sensitive for the event (using
      * {@link ch.njol.skript.ScriptLoader#isCurrentEvent(Class)}).
      * @see ch.njol.skript.lang.util.SimpleExpression#setTime(int)
      * @see ch.njol.skript.ScriptLoader#isCurrentEvent(Class...)
@@ -175,7 +175,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * <p>
      * This method might be removed in the future as it's better to check whether value == event.getXyz() for every value an expression returns.
      *
-     * @return Whether is is the return types' default expression
+     * @return Whatever is is the return types' default expression
      */
     boolean isDefault();
 
@@ -195,7 +195,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * You should usually just return false as e.g. loop-block will automatically match the expression if its returnType is Block or a subtype of it.
      *
      * @param s The entered string
-     * @return Whether this loop matches the given string
+     * @return Whatever this loop matches the given string
      */
     boolean isLoopOf(final String s);
 

@@ -348,7 +348,7 @@ public final class Variables {
      * @param name
      * @param value
      * @param source
-     * @return Whether the variable was stored somewhere. Not valid while storages are loading.
+     * @return Whatever the variable was stored somewhere. Not valid while storages are loading.
      */
     @SuppressWarnings({"unused", "null"})
     static final boolean variableLoaded(final String name, final @Nullable Object value, final VariablesStorage source) {

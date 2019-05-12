@@ -528,7 +528,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * Used to test whether certain Bukkit features are supported.
      *
      * @param className The {@link Class#getCanonicalName() canonical name} of the class
-     * @return Whether the given class exists.
+     * @return Whatever the given class exists.
      * @deprecated use {@link #classExists(String)}
      */
     @Deprecated
@@ -546,7 +546,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * No actual checks performed with null name. It just returns false.
      *
      * @param className The {@link Class#getCanonicalName() canonical name} of the class
-     * @return Whether the given class exists.
+     * @return Whatever the given class exists.
      */
     @SuppressWarnings({"null", "unused"})
     public static final boolean classExists(final @Nullable String className) {
@@ -596,7 +596,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param c              The class
      * @param methodName     The name of the method
      * @param parameterTypes The parameter types of the method
-     * @return Whether the given method exists.
+     * @return Whatever the given method exists.
      */
     @SuppressWarnings("null")
     public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>... parameterTypes) {
@@ -623,7 +623,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param methodName     The name of the method
      * @param parameterTypes The parameter types of the method
      * @param returnType     The expected return type
-     * @return Whether the given method exists.
+     * @return Whatever the given method exists.
      */
     @SuppressWarnings("null")
     public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
@@ -646,7 +646,7 @@ public final class Skript extends JavaPlugin implements Listener {
      *
      * @param c         The class
      * @param fieldName The name of the field
-     * @return Whether the given field exists.
+     * @return Whatever the given field exists.
      */
     @SuppressWarnings("null")
     public static final boolean fieldExists(final @Nullable Class<?> c, final @Nullable String fieldName) {
@@ -931,7 +931,7 @@ public final class Skript extends JavaPlugin implements Listener {
      *
      * @param sender The sender of the command.
      * @param command The command to run.
-     * @return Whether the command was run
+     * @return Whatever the command was run
      */
     public static final boolean dispatchCommand(final CommandSender sender, final String command) {
         try {

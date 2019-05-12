@@ -29,7 +29,7 @@ public abstract class LogHandler {
 
     /**
      * @param entry
-     * @return Whether to print the specified entry or not.
+     * @return Whatever to print the specified entry or not.
      */
     public abstract LogResult log(LogEntry entry);
 

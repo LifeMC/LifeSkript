@@ -222,7 +222,7 @@ public final class CollectionUtils {
     /**
      * @param classes Array of classes
      * @param c       The class to look for
-     * @return Whether the class or any of its superclasses are contained in the array
+     * @return Whatever the class or any of its superclasses are contained in the array
      */
     public static boolean containsSuperclass(final @Nullable Class<?>[] classes, final @Nullable Class<?> c) {
         if (classes == null || c == null)
@@ -239,7 +239,7 @@ public final class CollectionUtils {
     /**
      * @param classes Array of classes
      * @param cs      The classes to look for
-     * @return Whether the classes or any of their superclasses are contained in the array
+     * @return Whatever the classes or any of their superclasses are contained in the array
      */
     public static boolean containsAnySuperclass(final @Nullable Class<?>[] classes, final @Nullable Class<?>... cs) {
         if (classes == null || cs == null)
@@ -279,7 +279,7 @@ public final class CollectionUtils {
     /**
      * @param set The set of elements
      * @param sub The set to test for being a subset of <tt>set</tt>
-     * @return Whether <tt>sub</tt> only contains elements out of <tt>set</tt> or not
+     * @return Whatever <tt>sub</tt> only contains elements out of <tt>set</tt> or not
      */
     public static boolean isSubset(final @Nullable Object[] set, final @Nullable Object[] sub) {
         if (set == null || sub == null)
