@@ -267,7 +267,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     public void setItemMeta(final Object meta) {
         if (!itemMetaSupported || !(meta instanceof ItemMeta))
-            throw new IllegalStateException(meta);
+            throw new IllegalStateException(String.valueOf(meta));
         unsetItemMetaEnchs((ItemMeta) meta);
         this.meta = meta;
         if (item != null) {

@@ -137,7 +137,7 @@ public final class StringUtils {
     public static String toString(final double d, final int accuracy) {
         assert accuracy >= 0;
         if (accuracy <= 0)
-            return Math.round(d);
+            return String.valueOf(Math.round(d));
         final String s = String.format(Locale.ENGLISH, "%." + accuracy + "f", d);
         int c = s.length() - 1;
         while (s.charAt(c) == '0')
@@ -339,7 +339,7 @@ public final class StringUtils {
         assert start >= 0 && start <= end && end <= strings.length : start + ", " + end + ", " + strings.length;
         if (start < 0 || start >= strings.length || start == end)
             return "";
-        final StringBuilder b = new StringBuilder(strings[start]);
+        final StringBuilder b = new StringBuilder(String.valueOf(strings[start]));
         for (int i = start + 1; i < end; i++) {
             b.append(delimiter);
             b.append(strings[i]);
@@ -362,7 +362,7 @@ public final class StringUtils {
     public static String join(final @Nullable Iterator<?> strings, final String delimiter) {
         if (strings == null || !strings.hasNext())
             return "";
-        final StringBuilder b = new StringBuilder(strings.next());
+        final StringBuilder b = new StringBuilder(String.valueOf(strings.next()));
         while (strings.hasNext()) {
             b.append(delimiter);
             b.append(strings.next());

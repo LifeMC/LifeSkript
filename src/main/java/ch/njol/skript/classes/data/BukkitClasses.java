@@ -416,7 +416,7 @@ public final class BukkitClasses {
             @Override
             public String toVariableNameString(final Player p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
-                    return p.getUniqueId();
+                    return p.getUniqueId().toString();
 				return p.getName();
             }
 
@@ -464,7 +464,7 @@ public final class BukkitClasses {
             @Override
             public String toVariableNameString(final OfflinePlayer p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
-                    return p.getUniqueId();
+                    return p.getUniqueId().toString();
 				return p.getName();
             }
 

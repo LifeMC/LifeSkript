@@ -233,7 +233,7 @@ public final class VariableString implements Expression<String> {
         checkVariableConflicts(s, mode, string);
 
         if (string.size() == 1 && string.get(0) instanceof String)
-            return new VariableString(string.get(0));
+            return new VariableString(String.valueOf(string.get(0)));
         final Object[] sa = string.toArray();
         assert sa != null;
         if (string.size() == 1 && string.get(0) instanceof ExpressionInfo && ((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class && ((ExpressionInfo) string.get(0)).expr.isSingle()) {
