@@ -23,6 +23,7 @@
 package ch.njol.skript.effects;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -66,11 +67,13 @@ public final class EffCommand extends Effect {
             senders = (Expression<CommandSender>) exprs[0];
             commands = (Expression<String>) exprs[1];
         }
-        if (commands instanceof Literal) {
+        if (commands instanceof Literal && !SkriptConfig.disableUseNativeEffectInsteadWarnings.value()) {
             for (final String command : ((Literal<String>) commands).getAll()) {
                 if (command.contains("eco") && (command.contains("give") ||
                             command.contains("take"))) {
                     Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
+                } else if (command.contains("give ")) {
+                    Skript.warning("Use native 'give' effect instead of executing a console command and depending on other plugins, e.g: 'give 1 diamond to player'");
                 }
             }
         }

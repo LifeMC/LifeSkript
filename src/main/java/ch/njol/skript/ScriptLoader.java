@@ -592,6 +592,7 @@ public final class ScriptLoader {
         synchronized (loadedScripts) {
             loadedScripts.subtract(info);
         }
+        loadedFiles.remove(script);
         return info;
     }
 

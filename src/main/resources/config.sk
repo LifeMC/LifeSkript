@@ -177,6 +177,10 @@ disable variable name starting with expression warnings: false
 # I recommend to not touch this option, but if you do so you should at least set it back to false
 # whenever you create new scripts with new variables.
 
+disable use native effect instead of command warnings: false
+# Disables the suggestion warnings when you use 'execute console command "eco give 1000 %player%"' etc.
+# It recommends in warning to replace these with their native Skript version, e.g: "add 1000 to player's balance"
+# It is generally faster and better because it is in native Skript, however you can disable these warnings if you want.
 
 warn when using none values in strings: false
 # If this option is true, skript sends a warning message to console
