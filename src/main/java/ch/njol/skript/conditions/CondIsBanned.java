@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is Banned")
-@Description("Checks whether a player or IP is banned.")
+@Description("Checks whatever a player or IP is banned.")
 @Examples({"player is banned", "victim is not IP-banned", "\"127.0.0.1\" is banned"})
 @Since("1.4")
 public final class CondIsBanned extends Condition {

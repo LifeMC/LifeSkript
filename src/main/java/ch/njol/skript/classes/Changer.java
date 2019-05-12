@@ -38,7 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface Changer<T> {
 
     /**
-     * Tests whether this changer supports the given mode, and if yes what type(s) it expects the elements of <code>delta</code> to be.
+     * Tests whatever this changer supports the given mode, and if yes what type(s) it expects the elements of <code>delta</code> to be.
      * <p>
      * Unlike {@link Expression#acceptChange(ChangeMode)} this method must not print errors.
      *
@@ -75,7 +75,7 @@ public interface Changer<T> {
         }
 
         /**
-         * Tests whether an expression accepts changes of a certain type. If multiple types are given it test for whether any of the types is accepted.
+         * Tests whatever an expression accepts changes of a certain type. If multiple types are given it test for whatever any of the types is accepted.
          *
          * @param e     The expression to test
          * @param mode  The ChangeMode to use in the test

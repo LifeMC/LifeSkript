@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Time")
-@Description("Tests whether a given <a href='../classes/#date'>real time</a> was more or less than some <a href='../classes/#timespan'>time span</a> ago.")
+@Description("Tests whatever a given <a href='../classes/#date'>real time</a> was more or less than some <a href='../classes/#timespan'>time span</a> ago.")
 @Examples({"command /command_with_cooldown:", "	trigger:", "		{command.%player%.lastused} was less than a minute ago:", "			message \"Please wait a minute between uses of this command.\"", "			stop", "		set {command.%player%.lastused} to now", "		# ... actual command trigger here ..."})
 @Since("2.0")
 public final class CondDate extends Condition {

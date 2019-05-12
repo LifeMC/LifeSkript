@@ -177,7 +177,7 @@ public abstract class VariablesStorage implements Closeable {
     /**
      * Loads variables stored here.
      *
-     * @return Whatever the database could be loaded successfully, i.e. whether the config is correct and all variables could be loaded
+     * @return Whatever the database could be loaded successfully, i.e. whatever the config is correct and all variables could be loaded
      */
     protected abstract boolean load_i(final SectionNode n);
 

@@ -34,7 +34,7 @@ import org.bukkit.potion.PotionEffectType;
  * @author Peter Güttinger
  */
 @Name("Is Poisoned")
-@Description("Checks whether an entity is poisoned.")
+@Description("Checks whatever an entity is poisoned.")
 @Examples({"player is poisoned:", "	cure the player from posion", "	message \"You have been cured!\""})
 @Since("1.4.4")
 public final class CondIsPoisoned extends PropertyCondition<LivingEntity> {

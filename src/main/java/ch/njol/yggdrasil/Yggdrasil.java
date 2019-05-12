@@ -303,7 +303,7 @@ public final class Yggdrasil {
                 throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from newInstance(" + c + ")");
             return o;
         }
-        // try whether a nullary constructor exists
+        // try whatever a nullary constructor exists
         try {
             final Constructor<?> constr = c.getDeclaredConstructor();
             constr.setAccessible(true);

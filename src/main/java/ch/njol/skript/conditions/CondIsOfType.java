@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is of Type")
-@Description("Checks whether an item of entity is of the given type. This is mostly useful for variables, as you can use the general 'is' condition otherwise (e.g. 'victim is a creeper').")
+@Description("Checks whatever an item of entity is of the given type. This is mostly useful for variables, as you can use the general 'is' condition otherwise (e.g. 'victim is a creeper').")
 @Examples({"tool is of type {*selected type}", "victim is of type {villager type}"})
 @Since("1.4")
 public final class CondIsOfType extends Condition {

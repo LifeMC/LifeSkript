@@ -148,7 +148,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     boolean getAnd();
 
     /**
-     * Sets the time of this expression, i.e. whether the returned value represents this expression before or after the event.
+     * Sets the time of this expression, i.e. whatever the returned value represents this expression before or after the event.
      * <p>
      * This method will <b>not</b> be called if this expression is <i>guaranteed</i> to be used after a delay (an error will be printed immediately), but <b>will</b> be called if
      * it only <i>can be</i> after a delay (e.g. if the preceding delay is in an if or a loop) as well as if there's no delay involved.
@@ -171,9 +171,9 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     int getTime();
 
     /**
-     * Returns whether this value represents the default value of its type for the event, i.e. it can be replaced with a call to event.getXyz() if one knows the event & value type.
+     * Returns whatever this value represents the default value of its type for the event, i.e. it can be replaced with a call to event.getXyz() if one knows the event & value type.
      * <p>
-     * This method might be removed in the future as it's better to check whether value == event.getXyz() for every value an expression returns.
+     * This method might be removed in the future as it's better to check whatever value == event.getXyz() for every value an expression returns.
      *
      * @return Whatever is is the return types' default expression
      */
@@ -189,7 +189,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     Iterator<? extends T> iterator(final Event e);
 
     /**
-     * Checks whether the given 'loop-...' expression should match this loop, e.g. loop-block matches any loops that loop through blocks and loop-argument matches an
+     * Checks whatever the given 'loop-...' expression should match this loop, e.g. loop-block matches any loops that loop through blocks and loop-argument matches an
      * argument loop.
      * <p>
      * You should usually just return false as e.g. loop-block will automatically match the expression if its returnType is Block or a subtype of it.
@@ -221,9 +221,9 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     Expression<? extends T> simplify();
 
     /**
-     * Tests whether this expression supports the given mode, and if yes what type it expects the <code>delta</code> to be.
+     * Tests whatever this expression supports the given mode, and if yes what type it expects the <code>delta</code> to be.
      * <p>
-     * <b>Use {@link ch.njol.skript.classes.Changer.ChangerUtils#acceptsChange(Expression, ChangeMode, Class...)} to test whether an expression supports changing</b>, don't directly use this method!
+     * <b>Use {@link ch.njol.skript.classes.Changer.ChangerUtils#acceptsChange(Expression, ChangeMode, Class...)} to test whatever an expression supports changing</b>, don't directly use this method!
      * <p>
      * Please note that if a changer is registered for this expression's {@link #getReturnType() returnType} this method does not have to be overridden. If you override it though
      * make sure to return <tt>super.acceptChange(mode)</tt>, and to handle the appropriate ChangeMode(s) in {@link #change(Event, Object[], ChangeMode)} with

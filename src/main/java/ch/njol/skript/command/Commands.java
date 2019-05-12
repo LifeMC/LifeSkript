@@ -295,7 +295,7 @@ public final class Commands {
     /**
      * @param sender the sender of the command
      * @param command full command string without the slash
-     * @return whether to cancel the event
+     * @return whatever to cancel the event
      */
     static boolean handleCommand(final CommandSender sender, final String command) {
         final String[] cmd = command.split("\\s+", 2);

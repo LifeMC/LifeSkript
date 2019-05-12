@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Has Played Before")
-@Description("Checks whether a player has played on this server before. You can also use <a href='../events/#first_join'>on first join</a> if you want to make triggers for new players.")
+@Description("Checks whatever a player has played on this server before. You can also use <a href='../events/#first_join'>on first join</a> if you want to make triggers for new players.")
 @Examples({"player has played on this server before", "player hasn't played before"})
 @Since("1.4")
 public final class CondPlayedBefore extends Condition {

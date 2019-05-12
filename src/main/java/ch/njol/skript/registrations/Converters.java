@@ -243,7 +243,7 @@ public final class Converters {
     }
 
     /**
-     * Tests whether a converter between the given classes exists.
+     * Tests whatever a converter between the given classes exists.
      *
      * @param from
      * @param to

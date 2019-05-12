@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Event Cancelled")
-@Description("Checks whether or not the event is cancelled")
+@Description("Checks whatever or not the event is cancelled")
 @Examples({"on click:", "\tif event is cancelled:", "\t\tbroadcast \"no clicks allowed!\""
 })
 @Since("2.2-Fixes-V9c")

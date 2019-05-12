@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is Holding")
-@Description("Checks whether a player is holdign a specific item. Cannot be used with endermen, use 'entity is [not] an enderman holding &lt;item type&gt;' instead.")
+@Description("Checks whatever a player is holdign a specific item. Cannot be used with endermen, use 'entity is [not] an enderman holding &lt;item type&gt;' instead.")
 @Examples({"player is holding a stick", "victim isn't holding a sword of sharpness"})
 @Since("1.0")
 public final class CondItemInHand extends Condition {

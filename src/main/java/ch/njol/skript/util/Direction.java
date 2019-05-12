@@ -86,7 +86,7 @@ public final class Direction implements YggdrasilRobustSerializable {
 
     // rotation or offset - These would be in a union if this were written in C
     private final double pitchOrX, yawOrY, lengthOrZ;
-    // whether this direction is rotational (i.e. depends on some object) or translational/directional (i.e. depends on the coordinate system but nothing else)
+    // whatever this direction is rotational (i.e. depends on some object) or translational/directional (i.e. depends on the coordinate system but nothing else)
     private final boolean relative;
 
     public Direction(final double[] mod) {

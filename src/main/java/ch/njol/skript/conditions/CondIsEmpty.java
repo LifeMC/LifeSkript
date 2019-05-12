@@ -36,7 +36,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Peter Güttinger
  */
 @Name("Is Empty")
-@Description("Checks whether an inventory, an inventory slot, or a text is empty.")
+@Description("Checks whatever an inventory, an inventory slot, or a text is empty.")
 @Examples("player's inventory is empty")
 @Since("1.0")
 public final class CondIsEmpty extends PropertyCondition<Object> {

@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Exists/Is Set")
-@Description("Checks whether a given expression or variable is set.")
+@Description("Checks whatever a given expression or variable is set.")
 @Examples({"{teamscript.%player%.preferred team} is not set", "on damage:", "	projectile exists", "	broadcast \"%attacker% used a %projectile% to attack %victim%!\""})
 @Since("1.2")
 public final class CondIsSet extends Condition {

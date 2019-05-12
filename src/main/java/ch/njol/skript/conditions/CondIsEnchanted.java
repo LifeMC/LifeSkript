@@ -43,7 +43,7 @@ import java.util.Map;
  * @author Peter Güttinger
  */
 @Name("Is Enchanted")
-@Description("Checks whether an item is enchanted.")
+@Description("Checks whatever an item is enchanted.")
 @Examples({"tool of the player is enchanted with efficiency 2", "helm, chestplate, leggings or boots are enchanted"})
 @Since("1.4.6")
 public final class CondIsEnchanted extends Condition {

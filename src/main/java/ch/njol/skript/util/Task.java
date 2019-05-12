@@ -145,7 +145,7 @@ public abstract class Task implements Runnable, Closeable {
     }
 
     /**
-     * @return Whatever this task is still running, i.e. whether it will run later or is currently running.
+     * @return Whatever this task is still running, i.e. whatever it will run later or is currently running.
      */
     public final boolean isAlive() {
         if (taskID == -1)

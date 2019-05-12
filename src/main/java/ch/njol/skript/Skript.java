@@ -100,7 +100,7 @@ import java.util.zip.ZipFile;
  * If your plugin.yml contains <tt>'depend: [Skript]'</tt> then your plugin will not start at all if Skript is not present. Add <tt>'softdepend: [Skript]'</tt> to your plugin.yml
  * if you want your plugin to work even if Skript isn't present, but want to make sure that Skript gets loaded before your plugin.
  * <p>
- * If you use 'softdepend' you can test whether Skript is loaded with <tt>'Bukkit.getPluginManager().getPlugin(&quot;Skript&quot;) != null'</tt>
+ * If you use 'softdepend' you can test whatever Skript is loaded with <tt>'Bukkit.getPluginManager().getPlugin(&quot;Skript&quot;) != null'</tt>
  * <p>
  * Once you made sure that Skript is loaded you can use <code>Skript.getInstance()</code> whenever you need a reference to the plugin, but you likely won't need it since all API
  * methods are static.
@@ -130,13 +130,13 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * A small value, useful for comparing doubles or floats.
      * <p>
-     * E.g. to test whether two floating-point numbers are equal:
+     * E.g. to test whatever two floating-point numbers are equal:
      *
      * <pre>
      * Math.abs(a - b) &lt; Skript.EPSILON
      * </pre>
      * <p>
-     * or whether a location is within a specific radius of another location:
+     * or whatever a location is within a specific radius of another location:
      *
      * <pre>
      * location.distanceSquared(center) - radius * radius &lt; Skript.EPSILON
@@ -525,7 +525,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Used to test whether certain Bukkit features are supported.
+     * Used to test whatever certain Bukkit features are supported.
      *
      * @param className The {@link Class#getCanonicalName() canonical name} of the class
      * @return Whatever the given class exists.
@@ -537,7 +537,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Tests whether a given class exists in the classpath.
+     * Tests whatever a given class exists in the classpath.
      *
      * Constantly calling this method does not cache values -
      * preferably assign the result to a static final variable.
@@ -589,7 +589,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Tests whether a method exists in the given class.
+     * Tests whatever a method exists in the given class.
      *
      * Save the result to a static final variable for maximum performance.
      *
@@ -613,7 +613,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Tests whether a method exists in the given class, and whether the return type matches the expected one.
+     * Tests whatever a method exists in the given class, and whatever the return type matches the expected one.
      * <p>
      * Note that this method doesn't work properly if multiple methods with the same name and parameters exist but have different return types.
      *
@@ -640,7 +640,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Tests whether a field exists in the given class.
+     * Tests whatever a field exists in the given class.
      *
      * Save the result to a static final variable for maximum performance.
      *

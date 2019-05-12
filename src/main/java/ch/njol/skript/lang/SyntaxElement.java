@@ -49,6 +49,6 @@ public interface SyntaxElement {
      */
     boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult);
 
-    // TODO [code style] add equals to be able to find out whether two elements are equal (useful for e.g. 'if <a>: ... [else] if not <a>: ...')
+    // TODO [code style] add equals to be able to find out whatever two elements are equal (useful for e.g. 'if <a>: ... [else] if not <a>: ...')
 
 }

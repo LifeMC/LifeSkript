@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Former/Future State")
-@Description({"Represents the value of an expression before an event happened or the value it will have directly after the event, e.g. the old or new level respectively in a <a href='../events/#level_change'>level change event</a>.", "Note: The past, future and present states of an expression are sometimes called 'time states' of an expression.", "Note 2: If you don't specify whether to use the past or future state of an expression that has different values, its default value will be used which is usually the value after the event."})
+@Description({"Represents the value of an expression before an event happened or the value it will have directly after the event, e.g. the old or new level respectively in a <a href='../events/#level_change'>level change event</a>.", "Note: The past, future and present states of an expression are sometimes called 'time states' of an expression.", "Note 2: If you don't specify whatever to use the past or future state of an expression that has different values, its default value will be used which is usually the value after the event."})
 @Examples({"on teleport:", "	former world was \"world_nether\" # or 'world was'", "	world will be \"world\" # or 'world after the event is'", "on tool change:", "	past tool is an axe", "	the tool after the event will be air", "on weather change:", "	set {weather.%world%.old} to past weather", "	set {weather.%world%.current} to the new weather"})
 @Since("1.1")
 public final class ExprTimeState extends WrapperExpression<Object> {

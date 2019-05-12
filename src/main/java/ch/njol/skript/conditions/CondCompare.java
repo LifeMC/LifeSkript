@@ -49,7 +49,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Comparison")
-@Description({"A very general condition, it simply compares two values. Usually you can only compare for equality (e.g. block is/isn't of &lt;type&gt;), " + "but some values can also be compared using greater than/less than. In that case you can also test for whether an object is between two others.", "Note: This is the only element where not all patterns are shown. It has actually another two sets of similar patters, " + "but with <code>(was|were)</code> or <code>will be</code> instead of <code>(is|are)</code> respectively, " + "which check different <a href='../expressions/#ExprTimeState'>time states</a> of the first expression."})
+@Description({"A very general condition, it simply compares two values. Usually you can only compare for equality (e.g. block is/isn't of &lt;type&gt;), " + "but some values can also be compared using greater than/less than. In that case you can also test for whatever an object is between two others.", "Note: This is the only element where not all patterns are shown. It has actually another two sets of similar patters, " + "but with <code>(was|were)</code> or <code>will be</code> instead of <code>(is|are)</code> respectively, " + "which check different <a href='../expressions/#ExprTimeState'>time states</a> of the first expression."})
 @Examples({"the clicked block is a stone slab or a double stone slab", "time in the player's world is greater than 8:00", "the creature is not an enderman or an ender dragon"})
 @Since("1.0")
 public final class CondCompare extends Condition {

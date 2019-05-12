@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
  * @author Peter Güttinger
  */
 @Name("Is Blocking")
-@Description("Checks whether a player is blocking with his sword.")
+@Description("Checks whatever a player is blocking with his sword.")
 @Examples("victim is blocking")
 @Since("")
 public final class CondIsBlocking extends PropertyCondition<Player> {

@@ -169,7 +169,7 @@ public final class Utils {
     }
 
     /**
-     * Tests whether two item stacks are of the same type, i.e. it ignores the amounts.
+     * Tests whatever two item stacks are of the same type, i.e. it ignores the amounts.
      *
      * @param is1
      * @param is2
@@ -226,7 +226,7 @@ public final class Utils {
 
     /**
      * @param s trimmed string
-     * @return Pair of singular string + boolean whether it was plural
+     * @return Pair of singular string + boolean whatever it was plural
      */
     @SuppressWarnings("null")
     public static NonNullPair<String, Boolean> getEnglishPlural(final String s) {

@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Contains")
-@Description("Checks whether an inventory contains the given item, a text contains another piece of text, or a list of objects (e.g. a {list variable::*}) contains another object.")
+@Description("Checks whatever an inventory contains the given item, a text contains another piece of text, or a list of objects (e.g. a {list variable::*}) contains another object.")
 @Examples({"block contains 20 cobblestone", "player has 4 flint and 2 iron ingots"})
 @Since("1.0")
 public final class CondContains extends Condition {

@@ -105,7 +105,7 @@ public final class SectionValidator implements NodeValidator {
                 if (n instanceof SectionNode && allowUndefinedSections || n instanceof EntryNode && allowUndefinedEntries)
                     continue;
                 SkriptLogger.setNode(n);
-                Skript.error("Unexpected entry '" + n.getKey() + "'. Check whether it's spelled correctly or remove it.");
+                Skript.error("Unexpected entry '" + n.getKey() + "'. Check whatever it's spelled correctly or remove it.");
                 ok = false;
             }
         }

@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is Online")
-@Description("Checks whether a player is online.")
+@Description("Checks whatever a player is online.")
 @Examples({"player is online", "player-argument is offline"})
 @Since("1.4")
 public final class CondIsOnline extends Condition {

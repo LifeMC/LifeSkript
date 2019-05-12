@@ -171,7 +171,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     /**
-     * Tests whether a given set of ItemTypes is a subset of another set of ItemTypes.
+     * Tests whatever a given set of ItemTypes is a subset of another set of ItemTypes.
      * <p>
      * This method works differently that normal set operations, as is e.g. returns true if set == {everything}.
      *
@@ -689,7 +689,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     /**
-     * Test whether this ItemType can be put into the given inventory completely.
+     * Test whatever this ItemType can be put into the given inventory completely.
      * <p>
      * REMIND If this ItemType represents multiple items with OR, this function will immediately return false.<br/>
      * CondCanHold currently blocks aliases without 'every'/'all' as temporary solution.

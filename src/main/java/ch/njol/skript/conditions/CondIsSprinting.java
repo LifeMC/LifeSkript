@@ -33,7 +33,7 @@ import org.bukkit.entity.Player;
  * @author Peter Güttinger
  */
 @Name("Is Sprinting")
-@Description("Checks whether a player is sprinting")
+@Description("Checks whatever a player is sprinting")
 @Examples("player is not sprinting")
 @Since("1.4.4")
 public final class CondIsSprinting extends PropertyCondition<Player> {

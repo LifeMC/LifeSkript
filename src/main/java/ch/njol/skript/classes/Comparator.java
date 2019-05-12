@@ -56,7 +56,7 @@ public interface Comparator<T1, T2> {
     Relation compare(final T1 o1, final T2 o2);
 
     /**
-     * @return whether this comparator supports ordering of elements or not.
+     * @return whatever this comparator supports ordering of elements or not.
      */
     default boolean supportsOrdering() {
         return false;
@@ -99,7 +99,7 @@ public interface Comparator<T1, T2> {
         }
 
         /**
-         * Test whether this relation is fulfilled if another is, i.e. if the parameter relation fulfils <code>X rel Y</code>, then this relation fulfils <code>X rel Y</code> as
+         * Test whatever this relation is fulfilled if another is, i.e. if the parameter relation fulfils <code>X rel Y</code>, then this relation fulfils <code>X rel Y</code> as
          * well.
          *
          * @param other

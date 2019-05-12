@@ -68,7 +68,7 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
         Skript.registerExpression(ExprLoopValue.class, Object.class, ExpressionType.SIMPLE, "[the] loop-<.+>");
     }
 
-    // whether this loops a variable
+    // whatever this loops a variable
     boolean isVariableLoop;
     // if this loops a variable and isIndex is true, return the index of the variable instead of the value
     boolean isIndex;

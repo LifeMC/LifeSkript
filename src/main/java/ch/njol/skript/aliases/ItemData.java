@@ -96,7 +96,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     }
 
     /**
-     * Tests whether the given item is of this type.
+     * Tests whatever the given item is of this type.
      *
      * @param item
      * @return Whatever the given item is of this type. If <tt>item</tt> is <tt>null</tt> this returns <tt>getId() == 0</tt>.

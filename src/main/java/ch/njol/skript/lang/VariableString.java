@@ -96,7 +96,7 @@ public final class VariableString implements Expression<String> {
     }
 
     /**
-     * Tests whether a string is correctly quoted, i.e. only has doubled double quotes in it.
+     * Tests whatever a string is correctly quoted, i.e. only has doubled double quotes in it.
      *
      * @param s          The string
      * @param withQuotes Whatever s must be surrounded by double quotes or not

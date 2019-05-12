@@ -331,7 +331,7 @@ public final class FlatFileStorage extends VariablesStorage {
     /**
      * Completely rewrites the while file
      *
-     * @param finalSave whether this is the last save in this session or not.
+     * @param finalSave whatever this is the last save in this session or not.
      */
     @SuppressWarnings({"null", "unused"})
     public void saveVariables(final boolean finalSave) {

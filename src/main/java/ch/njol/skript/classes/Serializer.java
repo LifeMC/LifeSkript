@@ -109,7 +109,7 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
     }
 
     /**
-     * Returns whether the class should be instantiated using its nullary constructor or not. Return false if the class has no nullary constructor or if you do not have control
+     * Returns whatever the class should be instantiated using its nullary constructor or not. Return false if the class has no nullary constructor or if you do not have control
      * over the source of the class (e.g. if it's from an API).
      * <p>
      * You must override and use {@link #deserialize(Fields)} if this method returns false ({@link #deserialize(Object, Fields)} will no be used anymore in this case).

@@ -28,8 +28,8 @@ import org.bukkit.event.Event;
 
 /**
  * A SkriptEvent is like a condition. It is called when any of the registered events occurs.
- * An instance of this class should then check whether the event applies
- * (e.g. the right click event is included in the PlayerInteractEvent which also includes lef clicks, thus the SkriptEvent {@link ch.njol.skript.events.EvtClick} checks whether it was a rightclick or
+ * An instance of this class should then check whatever the event applies
+ * (e.g. the right click event is included in the PlayerInteractEvent which also includes lef clicks, thus the SkriptEvent {@link ch.njol.skript.events.EvtClick} checks whatever it was a rightclick or
  * not).<br/>
  * It is also needed if the event has parameters.
  *
@@ -52,7 +52,7 @@ public abstract class SkriptEvent implements SyntaxElement, Debuggable {
     public abstract boolean init(final Literal<?>[] args, int matchedPattern, ParseResult parseResult);
 
     /**
-     * Checks whether the given Event applies, e.g. the leftclick event is only part of the PlayerInteractEvent, and this checks whether the player leftclicked or not. This method
+     * Checks whatever the given Event applies, e.g. the leftclick event is only part of the PlayerInteractEvent, and this checks whatever the player leftclicked or not. This method
      * will only be called for events this SkriptEvent is registered for.
      *
      * @param e

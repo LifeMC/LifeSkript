@@ -38,7 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Region Contains")
-@Description({"Checks whether a location is contained in a particular <a href='../classes/#region'>region</a>.", "This condition requires a supported regions plugin to be installed."})
+@Description({"Checks whatever a location is contained in a particular <a href='../classes/#region'>region</a>.", "This condition requires a supported regions plugin to be installed."})
 @Examples({"player is in the region {regions::3}", "on region enter:", "	region contains {flags.%world%.red}", "	message \"The red flag is near!\""})
 @Since("2.1")
 @RequiredPlugins("A region plugin")

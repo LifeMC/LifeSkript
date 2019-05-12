@@ -51,7 +51,7 @@ public abstract class Condition extends Statement {
     }
 
     /**
-     * Checks whether this condition is satisfied with the given event. This should not alter the event or the world in any way, as conditions are only checked until one returns
+     * Checks whatever this condition is satisfied with the given event. This should not alter the event or the world in any way, as conditions are only checked until one returns
      * false. All subsequent conditions of the same trigger will then be omitted.<br/>
      * <br/>
      * You might want to use {@link ch.njol.skript.lang.util.SimpleExpression#check(Event, ch.njol.util.Checker)}
@@ -67,7 +67,7 @@ public abstract class Condition extends Statement {
     }
 
     /**
-     * @return whether this condition is negated or not.
+     * @return whatever this condition is negated or not.
      */
     public final boolean isNegated() {
         return negated;

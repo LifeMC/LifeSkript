@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Has Permission")
-@Description("Test whether a player has a certain permission.")
+@Description("Test whatever a player has a certain permission.")
 @Examples({"player has permission \"skript.tree\"", "victim has the permission \"admin\":", "	send \"You're attacking an admin!\" to attacker"})
 @Since("1.0")
 public final class CondPermission extends Condition {

@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Is Wearing")
-@Description("Checks whether a player is wearing some armour.")
+@Description("Checks whatever a player is wearing some armour.")
 @Examples({"player is wearing an iron chestplate and iron leggings", "player is wearing all diamond armour"})
 @Since("1.0")
 public final class CondIsWearing extends Condition {

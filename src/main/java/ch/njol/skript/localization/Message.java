@@ -92,7 +92,7 @@ public class Message {
     }
 
     /**
-     * Checks whether this value is set in the current language or the english default.
+     * Checks whatever this value is set in the current language or the english default.
      *
      * @return Whatever this message will display an actual value instead of its key when used
      */
@@ -102,7 +102,7 @@ public class Message {
     }
 
     /**
-     * Checks whether this message's value has changed and calls {@link #onValueChange()} if neccessary.
+     * Checks whatever this message's value has changed and calls {@link #onValueChange()} if neccessary.
      */
     protected synchronized void validate() {
         if (revalidate) {

@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Can Hold")
-@Description("Tests whether a player or a chest can hold the given item.")
+@Description("Tests whatever a player or a chest can hold the given item.")
 @Examples({"block can hold 200 cobblestone", "player has enough space for 64 feathers"})
 @Since("1.0")
 public final class CondCanHold extends Condition {

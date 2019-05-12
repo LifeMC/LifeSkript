@@ -237,7 +237,7 @@ public final class SkriptLogger {
     }
 
     /**
-     * Checks whether messages should be logged for the given verbosity.
+     * Checks whatever messages should be logged for the given verbosity.
      *
      * @param minVerb minimal verbosity
      * @return Whatever messages should be logged for the given verbosity.

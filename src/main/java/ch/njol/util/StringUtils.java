@@ -385,7 +385,7 @@ public final class StringUtils {
     }
 
     /**
-     * Searches for whether a String contains any of the characters of another string.
+     * Searches for whatever a String contains any of the characters of another string.
      *
      * @param s
      * @param chars

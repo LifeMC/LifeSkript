@@ -95,7 +95,7 @@ public final class Variable<T> implements Expression<T> {
     }
 
     /**
-     * Checks whether a string is a valid variable name. This is used to verify variable names as well as command and function arguments.
+     * Checks whatever a string is a valid variable name. This is used to verify variable names as well as command and function arguments.
      *
      * @param name              The name to test
      * @param allowListVariable Whatever to allow a list variable

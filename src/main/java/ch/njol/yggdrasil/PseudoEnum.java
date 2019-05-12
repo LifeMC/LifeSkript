@@ -202,7 +202,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
 
     /**
      * Returns this constant's pseudo-enum class, i.e. the first non-anonymous superclass of this constant. This class is the same for all constants inheriting from a common class
-     * independently from whether they define an anonymous subclass.
+     * independently from whatever they define an anonymous subclass.
      *
      * @return This constant's pseudo-enum class.
      * @see Enum#getDeclaringClass()
