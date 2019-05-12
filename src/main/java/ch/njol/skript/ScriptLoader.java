@@ -96,7 +96,7 @@ public final class ScriptLoader {
     }
 
     @Nullable
-    public static String getCurrentEventName() {
+    public static final String getCurrentEventName() {
         return currentEventName;
     }
 
@@ -165,12 +165,23 @@ public final class ScriptLoader {
     }
 
     /**
+     * All loaded script files.
+     */
+    @SuppressWarnings("null")
+    static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>());
+
+    @SuppressWarnings("null") // Collections methods don't return nulls, ever
+    public static final Collection<File> getLoadedFiles() {
+        return Collections.unmodifiableCollection(loadedFiles);
+    }
+
+    /**
      * Loads enabled scripts from the specified directory and it's subdirectories.
      *
      * @param directory The directory to load scripts from
      * @return Info on the loaded scripts
      */
-    public static ScriptInfo loadScripts(final File directory) {
+    public static final ScriptInfo loadScripts(final File directory) {
         final ScriptInfo i = new ScriptInfo();
         final boolean wasLocal = Language.setUseLocal(false);
         try {
@@ -198,7 +209,7 @@ public final class ScriptLoader {
      * @param files The script files to load
      * @return Info on the loaded scripts
      */
-    public static ScriptInfo loadScripts(final File[] files) {
+    public static final ScriptInfo loadScripts(final File[] files) {
         Arrays.sort(files);
         final ScriptInfo i = new ScriptInfo();
         final boolean wasLocal = Language.setUseLocal(false);
@@ -222,7 +233,11 @@ public final class ScriptLoader {
     }
 
     @SuppressWarnings({"unchecked", "null"})
-    public static ScriptInfo loadScript(final File f) {
+    public static final ScriptInfo loadScript(final File f) {
+        if (f == null) {
+            assert false;
+            return new ScriptInfo();
+        }
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -386,7 +401,7 @@ public final class ScriptLoader {
                                 log.stop();
                             }
                             final ClassInfo<?> ci = Classes.getSuperClassInfo(o.getClass());
-                            if (ci.getSerializer() == null) {
+                            if (ci == null || ci.getSerializer() == null) {
                                 Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
                                 continue;
                             } else if (ci.getSerializeAs() != null) {
@@ -520,6 +535,7 @@ public final class ScriptLoader {
 //				}
 //			}
 
+            loadedFiles.add(f);
             return new ScriptInfo(1, numTriggers, numCommands, numFunctions);
         } catch (final IOException e) {
             Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
@@ -528,6 +544,8 @@ public final class ScriptLoader {
         } finally {
             SkriptLogger.setNode(null);
         }
+        if (Skript.testing() || Skript.debug())
+            Skript.warning("Returning empty script info after loading \"" + f.getName() + "\"");
         return new ScriptInfo();
     }
 
@@ -537,13 +555,13 @@ public final class ScriptLoader {
      * @param folder The folder to unload scripts from
      * @return Info on the unloaded scripts
      */
-    static ScriptInfo unloadScripts(final File folder) {
+    static final ScriptInfo unloadScripts(final File folder) {
         final ScriptInfo r = unloadScripts_(folder);
         Functions.validateFunctions();
         return r;
     }
 
-    private static ScriptInfo unloadScripts_(final File folder) {
+    private static final ScriptInfo unloadScripts_(final File folder) {
         final ScriptInfo info = new ScriptInfo();
         final File[] files = folder.listFiles(scriptFilter);
         assert files != null;
@@ -563,13 +581,13 @@ public final class ScriptLoader {
      * @param script The script file to unload
      * @return Info on the unloaded script
      */
-    static ScriptInfo unloadScript(final File script) {
+    static final ScriptInfo unloadScript(final File script) {
         final ScriptInfo r = unloadScript_(script);
         Functions.validateFunctions();
         return r;
     }
 
-    private static ScriptInfo unloadScript_(final File script) {
+    private static final ScriptInfo unloadScript_(final File script) {
         final ScriptInfo info = SkriptEventHandler.removeTriggers(script);
         synchronized (loadedScripts) {
             loadedScripts.subtract(info);
@@ -583,7 +601,7 @@ public final class ScriptLoader {
      * @param s The string to replace options.
      * @return The replaced string. May return null, but only if the input is null.
      */
-    public static String replaceOptions(final String s) {
+    public static final String replaceOptions(final String s) {
         final String r = StringUtils.replaceAll(s, "\\{@(.+?)\\}", m -> {
             final String option = currentOptions.get(m.group(1));
             if (option == null) {
@@ -597,7 +615,7 @@ public final class ScriptLoader {
     }
 
     @SuppressWarnings({"unchecked", "null"})
-    public static List<TriggerItem> loadItems(final SectionNode node) {
+    public static final List<TriggerItem> loadItems(final SectionNode node) {
 
         if (Skript.debug())
             indentation += "    ";
@@ -726,7 +744,7 @@ public final class ScriptLoader {
      */
     @SuppressWarnings("null")
 	@Nullable
-    static Trigger loadTrigger(final SectionNode node) {
+    static final Trigger loadTrigger(final SectionNode node) {
         String event = node.getKey();
         if (event == null) {
             assert false : node;
@@ -749,36 +767,36 @@ public final class ScriptLoader {
         }
     }
 
-    public static int loadedScripts() {
+    public static final int loadedScripts() {
         synchronized (loadedScripts) {
             return loadedScripts.files;
         }
     }
 
-    public static int loadedCommands() {
+    public static final int loadedCommands() {
         synchronized (loadedScripts) {
             return loadedScripts.commands;
         }
     }
 
-    public static int loadedFunctions() {
+    public static final int loadedFunctions() {
         synchronized (loadedScripts) {
             return loadedScripts.functions;
         }
     }
 
-    public static int loadedTriggers() {
+    public static final int loadedTriggers() {
         synchronized (loadedScripts) {
             return loadedScripts.triggers;
         }
     }
 
-    public static boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
+    public static final boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
         return CollectionUtils.containsSuperclass(currentEvents, event);
     }
 
     @SafeVarargs
-    public static boolean isCurrentEvent(final Class<? extends Event>... events) {
+    public static final boolean isCurrentEvent(final Class<? extends Event>... events) {
         return CollectionUtils.containsAnySuperclass(currentEvents, events);
     }
 
@@ -786,11 +804,11 @@ public final class ScriptLoader {
      * Use this sparingly; {@link #isCurrentEvent(Class)} or {@link #isCurrentEvent(Class...)} should be used in most cases.
      */
     @Nullable
-    public static Class<? extends Event>[] getCurrentEvents() {
+    public static final Class<? extends Event>[] getCurrentEvents() {
         return currentEvents;
     }
 
-    public static class ScriptInfo {
+    public static final class ScriptInfo {
         public int files, triggers, commands, functions;
 
         public ScriptInfo() {

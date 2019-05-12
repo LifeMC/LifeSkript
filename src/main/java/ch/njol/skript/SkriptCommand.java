@@ -137,6 +137,16 @@ public final class SkriptCommand implements CommandExecutor {
     @Nullable
     private static File getScriptFromArgs(final CommandSender sender, final String[] args, final int start) {
         String script = StringUtils.join(args, " ", start, args.length);
+        File f = getScriptFromName(script);
+        if (f == null){
+            Skript.error(sender, (script.endsWith("/") || script.endsWith("\\") ? m_invalid_folder : m_invalid_script).toString(script));
+            return null;
+        }
+        return f;
+    }
+
+    @Nullable
+    public static File getScriptFromName(String script){
         final boolean isFolder = script.endsWith("/") || script.endsWith("\\");
         if (isFolder) {
             script = script.replace('/', File.separatorChar).replace('\\', File.separatorChar);
@@ -149,7 +159,6 @@ public final class SkriptCommand implements CommandExecutor {
         if (!f.exists()) {
             f = new File(f.getParentFile(), "-" + f.getName());
             if (!f.exists()) {
-                Skript.error(sender, (isFolder ? m_invalid_folder : m_invalid_script).toString(script));
                 return null;
             }
         }
