@@ -315,7 +315,7 @@ public final class Commands {
 //			}
             if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
-            c.execute(sender, cmd[0], cmd == null || cmd.length == 1 ? "" : cmd[1]);
+            c.execute(sender, cmd[0], cmd.length == 1 ? "" : cmd[1]);
             return true;
         }
         return false;
@@ -328,7 +328,7 @@ public final class Commands {
         final boolean wasLocal = Language.setUseLocal(false);
         try {
             command = command.substring(SkriptConfig.effectCommandToken.value().length()).trim();
-            if (command == null || command.isEmpty()) {
+            if (command.isEmpty()) {
                 info(sender, "Please enter a effect, expression or condition");
                 return true;
             }

@@ -234,10 +234,6 @@ public final class ScriptLoader {
 
     @SuppressWarnings({"unchecked", "null"})
     public static final ScriptInfo loadScript(final File f) {
-        if (f == null) {
-            assert false;
-            return new ScriptInfo();
-        }
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");

@@ -58,6 +58,9 @@
 # Remove comment from this for debugging or analyzing purposes - it gives useful information, not like notes, warnings etc.
 -verbose
 
+# Android option has better optimization and default settings, use that.
+-android
+
 # Don't allow optimization for kotlin - it gives some strange errors that probably not fixable.
 -keep,allowshrinking class ch.njol.libraries.kotlin.** { *; }
 

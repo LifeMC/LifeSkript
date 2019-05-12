@@ -147,7 +147,8 @@ public final class Aliases {
      *
      * @param parts
      */
-    private static String concatenate(final String... parts) {
+    @SuppressWarnings("null")
+	private static String concatenate(final String... parts) {
         assert parts.length >= 2;
         final StringBuilder b = new StringBuilder();
         for (final String part : parts) {
@@ -382,7 +383,7 @@ public final class Aliases {
                 MaterialName n = materialNames.get(d.getId());
                 if (d.dataMin == -1 && d.dataMax == -1) {
                     if (n != null) {
-                        if (n.singular.equals(d.getId()) && n.singular.equals(n.plural)) {
+                        if (n.singular.equals(String.valueOf(d.getId())) && n.singular.equals(n.plural)) {
                             n.singular = p.getFirst();
                             n.plural = p.getSecond();
                         }
@@ -415,7 +416,8 @@ public final class Aliases {
         return getDebugMaterialName(id, data, data, plural);
     }
 
-    public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
+    @SuppressWarnings("null")
+	public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
             return String.valueOf(id);

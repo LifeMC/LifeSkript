@@ -385,7 +385,8 @@ public final class Utils {
      * @param message
      * @return message with localised chat styles converted to Minecraft's format
      */
-    public static String replaceChatStyles(final String message) {
+    @SuppressWarnings("null")
+	public static String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
         String m = StringUtils.replaceAll(message.replace("<<none>>", ""), stylePattern, m1 -> {
