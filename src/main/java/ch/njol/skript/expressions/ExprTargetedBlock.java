@@ -37,6 +37,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -54,7 +55,7 @@ import java.util.WeakHashMap;
 @Since("1.0")
 public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     // FIXME Add this method to LifeSpigot, it seems to be added in 1.8, backport it.
-    public static final boolean set = Skript.methodExists(Player.class, "getTargetBlock", Set.class, int.class);
+    public static final boolean set = Skript.methodExists(LivingEntity.class, "getTargetBlock", Set.class, int.class);
     private static final WeakHashMap<Player, Block> targetedBlocks = new WeakHashMap<>();
     @Nullable
     private static Event last;
@@ -109,7 +110,9 @@ public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
                 b = null;
             targetedBlocks.put(p, b);
             return b;
-        } catch (final IllegalStateException ex) {// Bukkit my throw this (for no reason?)
+        } catch (final IllegalStateException ex) {// Bukkit may throw this (for no reason?)
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(ex);
             return null;
         }
     }

@@ -76,12 +76,41 @@ public final class SkriptCommand implements CommandExecutor {
     private static final ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
 
+    public static int oldPriority = Thread.NORM_PRIORITY;
+
+    public static final void setPriority() {
+        oldPriority = Thread.currentThread().getPriority();
+        try {
+            // Set the thread priority for speeding up loading of variables and scripts
+            final int priority = Thread.MAX_PRIORITY;
+            if (oldPriority == priority)
+                return;
+            Thread.currentThread().checkAccess();
+            Thread.currentThread().setPriority(priority);
+            if (Skript.debug())
+                Skript.debug("Set thread priority to " + priority);
+        } catch (final SecurityException ignored) {
+            /* ignored */
+        }
+    }
+
+    public static final void resetPriority() {
+        // Restore the old priority if we changed the priority.
+        if (Thread.currentThread().getPriority() != oldPriority) {
+            Thread.currentThread().setPriority(oldPriority);
+            if (Skript.debug())
+                Skript.debug("Reset thread priority to " + oldPriority);
+        }
+    }
+
     private static final void reloading(final CommandSender sender, String what, final Object... args) {
+        setPriority();
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : Language.format(NODE + ".reload." + what, args);
         Skript.info(sender, StringUtils.fixCapitalization(m_reloading.toString(what)));
     }
 
     private static final void reloaded(final CommandSender sender, final RedirectingLogHandler r, String what, final Object... args) {
+        resetPriority();
         what = args.length == 0 ? Language.get(NODE + ".reload." + what) : PluralizingArgsMessage.format(Language.format(NODE + ".reload." + what, args));
         if (r.numErrors() == 0)
             Skript.info(sender, StringUtils.fixCapitalization(PluralizingArgsMessage.format(m_reloaded.toString(what))));
@@ -195,7 +224,9 @@ public final class SkriptCommand implements CommandExecutor {
                         final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EMPTY_FILE_ARRAY);
                         //noinspection ConstantConditions
                         assert files != null;
+                        setPriority();
                         ScriptLoader.loadScripts(files);
+                        resetPriority();
                         if (r.numErrors() == 0) {
                             info(sender, "enable.all.enabled");
                         } else {
@@ -222,7 +253,9 @@ public final class SkriptCommand implements CommandExecutor {
                         }
 
                         info(sender, "enable.single.enabling", f.getName());
+                        setPriority();
                         ScriptLoader.loadScripts(new File[]{f});
+                        resetPriority();
                         if (r.numErrors() == 0) {
                             info(sender, "enable.single.enabled", f.getName());
                         } else {
@@ -244,7 +277,9 @@ public final class SkriptCommand implements CommandExecutor {
 					info(sender, "enable.folder.enabling", f.getName(), scripts.size());
 					final File[] ss = scripts.toArray(new File[0]);
 					assert ss != null;
+					setPriority();
 					final ScriptInfo i = ScriptLoader.loadScripts(ss);
+					resetPriority();
 					assert i.files == scripts.size();
 					if (r.numErrors() == 0) {
 					    info(sender, "enable.folder.enabled", f.getName(), i.files);
@@ -255,6 +290,7 @@ public final class SkriptCommand implements CommandExecutor {
                 }
             } else if ("disable".equalsIgnoreCase(args[0])) {
                 if ("all".equalsIgnoreCase(args[1])) {
+                    setPriority();
                     Skript.disableScripts();
                     try {
                         toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), false);
@@ -262,6 +298,7 @@ public final class SkriptCommand implements CommandExecutor {
                     } catch (final IOException e) {
                         error(sender, "disable.all.io error", ExceptionUtils.toString(e));
                     }
+                    resetPriority();
                 } else {
                     final File f = getScriptFromArgs(sender, args, 1);
                     if (f == null) // TODO allow disabling deleted/renamed scripts
@@ -272,7 +309,9 @@ public final class SkriptCommand implements CommandExecutor {
                             return true;
                         }
 
+                        setPriority();
                         ScriptLoader.unloadScript(f);
+                        resetPriority();
 
                         try {
                             FileUtils.move(f, new File(f.getParentFile(), "-" + f.getName()), false);
@@ -295,19 +334,21 @@ public final class SkriptCommand implements CommandExecutor {
 					    return true;
 					}
 
+					setPriority();
 					for (final File script : scripts)
 					    ScriptLoader.unloadScript(new File(script.getParentFile(), script.getName().substring(1)));
+					resetPriority();
 
 					info(sender, "disable.folder.disabled", f.getName(), scripts.size());
 					return true;
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
                 if ("check".equalsIgnoreCase(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("changes".equalsIgnoreCase(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("download".equalsIgnoreCase(args[1])) {
-                    Skript.info(sender, Skript.updateAvailable ? "New version " + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
+                    Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 }
             } else if ("track".equalsIgnoreCase(args[0]) || "untrack".equalsIgnoreCase(args[0])) {
                 if ("delays".equalsIgnoreCase(args[1])) {

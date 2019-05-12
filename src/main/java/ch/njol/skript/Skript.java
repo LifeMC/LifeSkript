@@ -1237,22 +1237,10 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final ClassLoader getBukkitClassLoader(final Skript instance) {
         return instance.getClassLoader();
     }
-    
-    public static int oldPriority = Thread.NORM_PRIORITY;
-    
+
     @Override
     public void onLoad() {
-    	oldPriority = Thread.currentThread().getPriority();
-        try {
-            Thread.currentThread().checkAccess();
-            // Set the thread priority for speeding up loading of variables and scripts
-            final int priority = Thread.MAX_PRIORITY;
-            Thread.currentThread().setPriority(priority);
-            if (Skript.debug())
-                Skript.debug("Set thread priority to " + priority);
-        } catch (final SecurityException ignored) {
-            /* ignored */
-        }
+        SkriptCommand.setPriority();
     }
 
     @SuppressWarnings("null")
@@ -1569,18 +1557,13 @@ public final class Skript extends JavaPlugin implements Listener {
 			        info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
 			    }
 
-			    // Restore the old priority if we changed the priority.
-			    if (Thread.currentThread().getPriority() != oldPriority) {
-			        Thread.currentThread().setPriority(oldPriority);
-			        if (Skript.debug())
-			            Skript.debug("Reset thread priority to " + oldPriority);
-			    }
-
 			    // No need to add debug code everytime to test the exception handler (:
 			    if (System.getProperty("skript.throwTestError") != null
 			            && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
 			        Skript.exception(new Throwable(), "Test error");
 			    }
+
+			    SkriptCommand.resetPriority();
 			});
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
@@ -1678,7 +1661,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (!latestTrimmed.equals(currentTrimmed)) {
                             if (!isEnabled())
                                 return;
-                            Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript " + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
+                            Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript v" + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
                             Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
                             updateAvailable = true;
                             latestVersion = latest;
