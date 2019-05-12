@@ -137,14 +137,14 @@ public final class StringUtils {
     public static String toString(final double d, final int accuracy) {
         assert accuracy >= 0;
         if (accuracy <= 0)
-            return "" + Math.round(d);
+            return Math.round(d);
         final String s = String.format(Locale.ENGLISH, "%." + accuracy + "f", d);
         int c = s.length() - 1;
         while (s.charAt(c) == '0')
             c--;
         if (s.charAt(c) == '.')
             c--;
-        return "" + s.substring(0, c + 1);
+        return s.substring(0, c + 1);
     }
 
     public static String firstToUpper(final String s) {
@@ -170,7 +170,7 @@ public final class StringUtils {
             end = end + s.length();
         if (end < start)
             throw new IllegalArgumentException("invalid indices");
-        return "" + s.substring(start, end);
+        return s.substring(start, end);
     }
 
     /**
@@ -339,12 +339,12 @@ public final class StringUtils {
         assert start >= 0 && start <= end && end <= strings.length : start + ", " + end + ", " + strings.length;
         if (start < 0 || start >= strings.length || start == end)
             return "";
-        final StringBuilder b = new StringBuilder("" + strings[start]);
+        final StringBuilder b = new StringBuilder(strings[start]);
         for (int i = start + 1; i < end; i++) {
             b.append(delimiter);
             b.append(strings[i]);
         }
-        return "" + b;
+        return b.toString();
     }
 
     public static String join(final @Nullable Iterable<?> strings) {
@@ -362,12 +362,12 @@ public final class StringUtils {
     public static String join(final @Nullable Iterator<?> strings, final String delimiter) {
         if (strings == null || !strings.hasNext())
             return "";
-        final StringBuilder b = new StringBuilder("" + strings.next());
+        final StringBuilder b = new StringBuilder(strings.next());
         while (strings.hasNext()) {
             b.append(delimiter);
             b.append(strings.next());
         }
-        return "" + b;
+        return b.toString();
     }
 
     /**
@@ -411,8 +411,8 @@ public final class StringUtils {
 
     public static String replace(final String haystack, final String needle, final String replacement, final boolean caseSensitive) {
         if (caseSensitive)
-            return "" + haystack.replace(needle, replacement);
-        return "" + haystack.replaceAll("(?ui)" + Pattern.quote(needle), replacement);
+            return haystack.replace(needle, replacement);
+        return haystack.replaceAll("(?ui)" + Pattern.quote(needle), replacement);
     }
 
 }

@@ -298,12 +298,12 @@ public final class BukkitClasses {
 
             @Override
             public String toString(final World w, final int flags) {
-                return "" + w.getName();
+                return w.getName();
             }
 
             @Override
             public String toVariableNameString(final World w) {
-                return "" + w.getName();
+                return w.getName();
             }
 
             @Override
@@ -410,14 +410,14 @@ public final class BukkitClasses {
 
             @Override
             public String toString(final Player p, final int flags) {
-                return "" + p.getName();
+                return p.getName();
             }
 
             @Override
             public String toVariableNameString(final Player p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
-                    return "" + p.getUniqueId();
-				return "" + p.getName();
+                    return p.getUniqueId();
+				return p.getName();
             }
 
             @Override
@@ -458,14 +458,14 @@ public final class BukkitClasses {
 
             @Override
             public String toString(final OfflinePlayer p, final int flags) {
-                return "" + p.getName();
+                return p.getName();
             }
 
             @Override
             public String toVariableNameString(final OfflinePlayer p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
-                    return "" + p.getUniqueId();
-				return "" + p.getName();
+                    return p.getUniqueId();
+				return p.getName();
             }
 
             @Override
@@ -479,7 +479,7 @@ public final class BukkitClasses {
             public String getDebugMessage(final OfflinePlayer p) {
                 if (p.isOnline())
                     return Classes.getDebugMessage(p.getPlayer());
-                return "" + p.getName();
+                return p.getName();
             }
         }).serializer(new Serializer<OfflinePlayer>() {
             private final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
@@ -548,12 +548,12 @@ public final class BukkitClasses {
 
             @Override
             public String toString(final CommandSender s, final int flags) {
-                return "" + s.getName();
+                return s.getName();
             }
 
             @Override
             public String toVariableNameString(final CommandSender s) {
-                return "" + s.getName();
+                return s.getName();
             }
 
             @Override
@@ -591,7 +591,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final GameMode o) {
-                return "" + o.toString().toLowerCase(Locale.ENGLISH);
+                return o.toString().toLowerCase(Locale.ENGLISH);
             }
 
             @Override
@@ -640,7 +640,7 @@ public final class BukkitClasses {
                     b.append("#").append(e.getKey().getId());
                     b.append(":").append(e.getValue());
                 }
-                return "" + b.toString();
+                return b.toString();
             }
 
             @Override
@@ -665,7 +665,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final Biome b) {
-                return "" + b.name();
+                return b.name();
             }
 
             @Override
@@ -689,7 +689,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final PotionEffectType p) {
-                return "" + p.getName();
+                return p.getName();
             }
 
             @Override
@@ -751,7 +751,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final DamageCause d) {
-                return "" + d.name();
+                return d.name();
             }
 
             @Override
@@ -857,7 +857,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final Enchantment e) {
-                return "" + e.getName();
+                return e.getName();
             }
 
             @Override
@@ -891,7 +891,7 @@ public final class BukkitClasses {
                 return e;
             }
 
-            //					return "" + e.getId();
+            //					return e.getId();
             @SuppressWarnings("deprecation")
             @Override
             @Nullable

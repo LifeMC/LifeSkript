@@ -112,7 +112,7 @@ public final class Yggdrasil {
         if (yid != null) {
             return yid.value();
         }
-        return "" + f.getName();
+        return f.getName();
     }
 
     @SuppressWarnings("null")
@@ -121,7 +121,7 @@ public final class Yggdrasil {
             return getID(e.getDeclaringClass().getDeclaredField(e.name()));
         } catch (final NoSuchFieldException ex) {
             assert false : e;
-            return "" + e.name();
+            return e.name();
         }
     }
 

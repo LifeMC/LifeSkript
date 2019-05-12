@@ -80,12 +80,12 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
     @Override
     public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         name = parser.expr;
-        String s = "" + parser.regexes.get(0).group();
+        String s = parser.regexes.get(0).group();
         int i = -1;
         final Matcher m = pattern.matcher(s);
         if (m.matches()) {
-            s = "" + m.group(1);
-            i = Utils.parseInt("" + m.group(2));
+            s = m.group(1);
+            i = Utils.parseInt(m.group(2));
         }
         final Class<?> c = Classes.getClassFromUserInput(s);
         int j = 1;

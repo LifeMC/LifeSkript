@@ -203,7 +203,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         final String[] split = s.split("(?!<\\|)\\|(?!\\|)");
         final ItemType[] types = new ItemType[split.length];
         for (int i = 0; i < types.length; i++) {
-            final ItemType t = (ItemType) Classes.deserialize("itemtype", "" + split[i].replace("||", "|"));
+            final ItemType t = (ItemType) Classes.deserialize("itemtype", split[i].replace("||", "|"));
             if (t == null)
                 return null;
             types[i] = t;
@@ -267,7 +267,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     public void setItemMeta(final Object meta) {
         if (!itemMetaSupported || !(meta instanceof ItemMeta))
-            throw new IllegalStateException("" + meta);
+            throw new IllegalStateException(meta);
         unsetItemMetaEnchs((ItemMeta) meta);
         this.meta = meta;
         if (item != null) {
@@ -1032,7 +1032,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         }
         final Map<Enchantment, Integer> enchs = enchantments;
         if (enchs == null)
-            return "" + b.toString();
+            return b.toString();
         b.append(Language.getSpaced("enchantments.of"));
         int i = 0;
         for (final Entry<Enchantment, Integer> e : enchs.entrySet()) {
@@ -1059,7 +1059,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
             if (debug)
                 b.append(" meta=[").append(meta).append("]");
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     public String getDebugMessage() {

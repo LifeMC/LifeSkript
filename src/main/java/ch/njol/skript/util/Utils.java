@@ -126,15 +126,15 @@ public final class Utils {
 //
 //	public static final AmountResponse getAmountWithEvery(final String s) {
 //		if (s.matches("\\d+ of (all|every) .+")) {
-//			return new AmountResponse("" + s.split(" ", 4)[3], Utils.parseInt("" + s.split(" ", 2)[0]), true);
+//			return new AmountResponse(s.split(" ", 4)[3], Utils.parseInt(s.split(" ", 2)[0]), true);
 //		} else if (s.matches("\\d+ of .+")) {
-//			return new AmountResponse("" + s.split(" ", 3)[2], Utils.parseInt("" + s.split(" ", 2)[0]));
+//			return new AmountResponse(s.split(" ", 3)[2], Utils.parseInt(s.split(" ", 2)[0]));
 //		} else if (s.matches("\\d+ .+")) {
-//			return new AmountResponse("" + s.split(" ", 2)[1], Utils.parseInt("" + s.split(" ", 2)[0]));
+//			return new AmountResponse(s.split(" ", 2)[1], Utils.parseInt(s.split(" ", 2)[0]));
 //		} else if (s.matches("an? .+")) {
-//			return new AmountResponse("" + s.split(" ", 2)[1], 1);
+//			return new AmountResponse(s.split(" ", 2)[1], 1);
 //		} else if (s.matches("(all|every) .+")) {
-//			return new AmountResponse("" + s.split(" ", 2)[1], true);
+//			return new AmountResponse(s.split(" ", 2)[1], true);
 //		}
 //		return new AmountResponse(s);
 //	}
@@ -151,7 +151,7 @@ public final class Utils {
                 b.append(", ");
             b.append(Classes.toString(objects[i]));
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     public static String join(final Iterable<?> objects) {
@@ -165,7 +165,7 @@ public final class Utils {
                 first = false;
             b.append(Classes.toString(o));
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     /**
@@ -215,9 +215,9 @@ public final class Utils {
 
     public static Pair<String, Integer> getAmount(final String s) {
         if (s.matches("\\d+ of .+")) {
-            return new Pair<>(s.split(" ", 3)[2], Utils.parseInt("" + s.split(" ", 2)[0]));
+            return new Pair<>(s.split(" ", 3)[2], Utils.parseInt(s.split(" ", 2)[0]));
         } else if (s.matches("\\d+ .+")) {
-            return new Pair<>(s.split(" ", 2)[1], Utils.parseInt("" + s.split(" ", 2)[0]));
+            return new Pair<>(s.split(" ", 2)[1], Utils.parseInt(s.split(" ", 2)[0]));
         } else if (s.matches("an? .+")) {
             return new Pair<>(s.split(" ", 2)[1], 1);
         }
@@ -388,18 +388,18 @@ public final class Utils {
     public static String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll("" + message.replace("<<none>>", ""), stylePattern, m1 -> {
-            @SuppressWarnings("null") final Color c = Color.byName("" + m1.group(1));
+        String m = StringUtils.replaceAll(message.replace("<<none>>", ""), stylePattern, m1 -> {
+            @SuppressWarnings("null") final Color c = Color.byName(m1.group(1));
             if (c != null)
                 return c.getChat();
             final String f = chat.get(m1.group(1).toLowerCase(Locale.ENGLISH));
             if (f != null)
                 return f;
-            return "" + m1.group();
+            return m1.group();
         });
         assert m != null;
-        m = ChatColor.translateAlternateColorCodes('&', "" + m);
-        return "" + m;
+        m = ChatColor.translateAlternateColorCodes('&', m);
+        return m;
     }
 
     /**
@@ -413,17 +413,17 @@ public final class Utils {
         if (message.isEmpty())
             return message;
         String m = StringUtils.replaceAll(message, stylePattern, m1 -> {
-            @SuppressWarnings("null") final Color c = Color.byEnglishName("" + m1.group(1));
+            @SuppressWarnings("null") final Color c = Color.byEnglishName(m1.group(1));
             if (c != null)
                 return c.getChat();
             final String f = englishChat.get(m1.group(1).toLowerCase(Locale.ENGLISH));
             if (f != null)
                 return f;
-            return "" + m1.group();
+            return m1.group();
         });
         assert m != null;
-        m = ChatColor.translateAlternateColorCodes('&', "" + m);
-        return "" + m;
+        m = ChatColor.translateAlternateColorCodes('&', m);
+        return m;
     }
 
     /**

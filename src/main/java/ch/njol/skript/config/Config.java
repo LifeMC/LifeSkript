@@ -88,7 +88,7 @@ public final class Config {
 
     @SuppressWarnings("resource")
     public Config(final File file, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
-        this(new FileInputStream(file), "" + file.getName(), simple, allowEmptySections, defaultSeparator);
+        this(new FileInputStream(file), file.getName(), simple, allowEmptySections, defaultSeparator);
         this.file = file;
     }
 

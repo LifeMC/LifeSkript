@@ -103,7 +103,7 @@ public final class Variable<T> implements Expression<T> {
      * @return true if the name is valid, false otherwise.
      */
     public static final boolean isValidVariableName(String name, final boolean allowListVariable, final boolean printErrors) {
-        name = name.startsWith(LOCAL_VARIABLE_TOKEN) ? "" + name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : "" + name.trim();
+        name = name.startsWith(LOCAL_VARIABLE_TOKEN) ? name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : name.trim();
         if (!allowListVariable && name.contains(SEPARATOR)) {
             if (printErrors)
                 Skript.error("List variables are not allowed here (error in variable {" + name + "})");
@@ -140,10 +140,10 @@ public final class Variable<T> implements Expression<T> {
 //			Skript.error("Local variables cannot be lists, i.e. must not contain the separator '" + SEPARATOR + "' (error in variable {" + name + "})");
 //			return null;
 //		} else
-        name = "" + name.trim();
+        name = name.trim();
         if (!isValidVariableName(name, true, true))
             return null;
-        final VariableString vs = VariableString.newInstance(name.startsWith(LOCAL_VARIABLE_TOKEN) ? "" + name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : name, StringMode.VARIABLE_NAME);
+        final VariableString vs = VariableString.newInstance(name.startsWith(LOCAL_VARIABLE_TOKEN) ? name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : name, StringMode.VARIABLE_NAME);
         if (vs == null)
             return null;
         return new Variable<>(vs, types, name.startsWith(LOCAL_VARIABLE_TOKEN), name.endsWith(SEPARATOR + "*"), null);
@@ -362,7 +362,7 @@ public final class Variable<T> implements Expression<T> {
     }
 
     private void set(final Event e, final @Nullable Object value) {
-        Variables.setVariable("" + name.toString(e).toLowerCase(Locale.ENGLISH), value, e, local);
+        Variables.setVariable(name.toString(e).toLowerCase(Locale.ENGLISH), value, e, local);
     }
 
     private void setIndex(final Event e, final String index, final @Nullable Object value) {
@@ -395,9 +395,9 @@ public final class Variable<T> implements Expression<T> {
                     for (final Object d : delta) {
                         if (d instanceof Object[]) {
                             for (int j = 0; j < ((Object[]) d).length; j++)
-                                setIndex(e, "" + i + SEPARATOR + j, ((Object[]) d)[j]);
+                                setIndex(e, i + SEPARATOR + j, ((Object[]) d)[j]);
                         } else {
-                            setIndex(e, "" + i, d);
+                            setIndex(e, String.valueOf(i), d);
                         }
                         i++;
                     }
@@ -469,9 +469,9 @@ public final class Variable<T> implements Expression<T> {
                         int i = 1;
                         for (final Object d : delta) {
                             if (o != null)
-                                while (o.containsKey("" + i))
+                                while (o.containsKey(String.valueOf(i)))
                                     i++;
-                            setIndex(e, "" + i, d);
+                            setIndex(e, String.valueOf(i), d);
                             i++;
                         }
                     }

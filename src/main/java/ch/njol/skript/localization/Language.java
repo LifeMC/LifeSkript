@@ -91,8 +91,8 @@ public final class Language {
      * @return The requested message if it exists or the key otherwise
      */
     public static String get(final String key) {
-        final String s = get_i("" + key.toLowerCase(Locale.ENGLISH));
-        return s == null ? "" + key.toLowerCase(Locale.ENGLISH) : s;
+        final String s = get_i(key.toLowerCase(Locale.ENGLISH));
+        return s == null ? key.toLowerCase(Locale.ENGLISH) : s;
     }
 
     /**
@@ -103,7 +103,7 @@ public final class Language {
      */
     @Nullable
     public static String get_(final String key) {
-        return get_i("" + key.toLowerCase(Locale.ENGLISH));
+        return get_i(key.toLowerCase(Locale.ENGLISH));
     }
 
     public static final void missingEntryError(final String key) {
@@ -120,12 +120,12 @@ public final class Language {
      * @return The formatted string
      */
     public static String format(String key, final Object... args) {
-        key = "" + key.toLowerCase(Locale.ENGLISH);
+        key = key.toLowerCase(Locale.ENGLISH);
         final String value = get_i(key);
         if (value == null)
             return key;
         try {
-            return "" + String.format(value, args);
+            return String.format(value, args);
         } catch (final Exception e) {
             Skript.error("Invalid format string at '" + key + "' in the " + getName() + " language file: " + value);
             return key;
@@ -152,7 +152,7 @@ public final class Language {
      * @return a non-null String array with at least one element
      */
     public static String[] getList(final String key) {
-        final String s = get_i("" + key.toLowerCase(Locale.ENGLISH));
+        final String s = get_i(key.toLowerCase(Locale.ENGLISH));
         if (s == null)
             return new String[]{key.toLowerCase(Locale.ENGLISH)};
         final String[] r = listSplitPattern.split(s);
@@ -190,7 +190,7 @@ public final class Language {
     }
 
     public static boolean load(String name) {
-        name = "" + name.toLowerCase(Locale.ENGLISH);
+        name = name.toLowerCase(Locale.ENGLISH);
         if ("english".equals(name))
             return true;
         localized = new HashMap<>();
@@ -231,7 +231,7 @@ public final class Language {
             Skript.error(addon + "'s language file " + name + ".lang does not provide a version number!");
         } else {
             try {
-                final Version v = new Version("" + l.get("version"));
+                final Version v = new Version(l.get("version"));
                 final Version lv = langVersion.get(addon.plugin);
                 assert lv != null; // set in loadDefault()
                 if (v.isSmallerThan(lv))

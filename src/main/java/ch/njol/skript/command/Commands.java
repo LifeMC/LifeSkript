@@ -205,11 +205,11 @@ public final class Commands {
     }
 
     private static String escape(final String s) {
-        return "" + escape.matcher(s).replaceAll("\\\\$0");
+        return escape.matcher(s).replaceAll("\\\\$0");
     }
 
     private static String unescape(final String s) {
-        return "" + unescape.matcher(s).replaceAll("$0");
+        return unescape.matcher(s).replaceAll("$0");
     }
 
     @SuppressWarnings("null")
@@ -315,7 +315,7 @@ public final class Commands {
 //			}
             if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
-            c.execute(sender, "" + cmd[0], cmd.length == 1 ? "" : "" + cmd[1]);
+            c.execute(sender, cmd[0], cmd == null || cmd.length == 1 ? "" : cmd[1]);
             return true;
         }
         return false;
@@ -327,8 +327,8 @@ public final class Commands {
             return false;
         final boolean wasLocal = Language.setUseLocal(false);
         try {
-            command = "" + command.substring(SkriptConfig.effectCommandToken.value().length()).trim();
-            if (command.isEmpty()) {
+            command = command.substring(SkriptConfig.effectCommandToken.value().length()).trim();
+            if (command == null || command.isEmpty()) {
                 info(sender, "Please enter a effect, expression or condition");
                 return true;
             }
@@ -412,7 +412,7 @@ public final class Commands {
         final boolean a = m.matches();
         assert a;
 
-        final String command = "" + m.group(1).toLowerCase(Locale.ENGLISH);
+        final String command = m.group(1).toLowerCase(Locale.ENGLISH);
         final ScriptCommand existingCommand = commands.get(command);
         if (existingCommand != null && existingCommand.getLabel().equals(command)) {
             final File f = existingCommand.getScript();
@@ -428,15 +428,15 @@ public final class Commands {
         int lastEnd = 0;
         int optionals = 0;
         for (int i = 0; m.find(); i++) {
-            pattern.append(escape("" + arguments.substring(lastEnd, m.start())));
+            pattern.append(escape(arguments.substring(lastEnd, m.start())));
             optionals += StringUtils.count(arguments, '[', lastEnd, m.start());
             optionals -= StringUtils.count(arguments, ']', lastEnd, m.start());
 
             lastEnd = m.end();
 
             ClassInfo<?> c;
-            c = Classes.getClassInfoFromUserInput("" + m.group(2));
-            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + m.group(2));
+            c = Classes.getClassInfoFromUserInput(m.group(2));
+            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(m.group(2));
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());
             if (c == null) {
@@ -461,7 +461,7 @@ public final class Commands {
             pattern.append("%").append(arg.isOptional() ? "-" : "").append(Utils.toEnglishPlural(c.getCodeName(), p.getSecond())).append("%");
         }
 
-        pattern.append(escape("" + arguments.substring(lastEnd)));
+        pattern.append(escape(arguments.substring(lastEnd)));
         optionals += StringUtils.count(arguments, '[', lastEnd);
         optionals -= StringUtils.count(arguments, ']', lastEnd);
         for (int i = 0; i < optionals; i++)
@@ -472,7 +472,7 @@ public final class Commands {
         try {
             desc += StringUtils.replaceAll(pattern, "(?<!\\\\)%-?(.+?)%", m1 -> {
                 assert m1 != null;
-                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural("" + m1.group(1));
+                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(m1.group(1));
                 final String s1 = p.getFirst();
                 return "<" + Classes.getClassInfo(s1).getName().toString(p.getSecond()) + ">";
             });
@@ -480,7 +480,7 @@ public final class Commands {
             Language.setUseLocal(wasLocal);
         }
         desc = unescape(desc);
-        desc = "" + desc.trim();
+        desc = desc.trim();
 
         node.convertToEntries(0);
         commandStructure.validate(node);
@@ -563,7 +563,7 @@ public final class Commands {
         final ScriptCommand c;
 
         try {
-            c = new ScriptCommand(config, command, "" + pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, executableBy, ScriptLoader.loadItems(trigger));
+            c = new ScriptCommand(config, command, pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, executableBy, ScriptLoader.loadItems(trigger));
         } finally {
             Commands.currentArguments = null;
         }
@@ -684,7 +684,7 @@ public final class Commands {
                 sb.append("\n");
                 sb.append(aliasForTopic.getFullText(forWho));
             }
-            return "" + sb.toString();
+            return sb.toString();
         }
 
         @Override

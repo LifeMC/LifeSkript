@@ -137,7 +137,7 @@ public final class Aliases {
                 n++;
             }
         }
-        Skript.error(m_invalid_brackets.toString(openingBracket + "" + closingBracket));
+        Skript.error(m_invalid_brackets.toString(openingBracket + closingBracket));
         return -1;
     }
 
@@ -164,7 +164,7 @@ public final class Aliases {
                 b.append(part);
             }
         }
-        return "" + b.toString().replace("  ", " ").trim();
+        return b.toString().replace("  ", " ").trim();
     }
 
     /**
@@ -309,12 +309,12 @@ public final class Aliases {
             return 0;
         }
         final HashMap<String, ItemType> aliases = getAliases();
-        final HashMap<String, ItemType> as = getAliases("" + name.replaceAll("\\s+", " "), t, variations);
+        final HashMap<String, ItemType> as = getAliases(name.replaceAll("\\s+", " "), t, variations);
         boolean printedStartingWithNumberError = false;
 //		boolean printedSyntaxError = false;
         for (final Entry<String, ItemType> e : as.entrySet()) {
             final String s = e.getKey().trim().replaceAll("\\s+", " ");
-            final NonNullPair<String, Integer> g = Noun.stripGender(s, "" + e.getKey());
+            final NonNullPair<String, Integer> g = Noun.stripGender(s, e.getKey());
             final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
             final String lcs = p.getFirst().toLowerCase(Locale.ENGLISH);
             final String lcp = p.getSecond().toLowerCase(Locale.ENGLISH);
@@ -382,7 +382,7 @@ public final class Aliases {
                 MaterialName n = materialNames.get(d.getId());
                 if (d.dataMin == -1 && d.dataMax == -1) {
                     if (n != null) {
-                        if (n.singular.equals("" + d.getId()) && n.singular.equals(n.plural)) {
+                        if (n.singular.equals(d.getId()) && n.singular.equals(n.plural)) {
                             n.singular = p.getFirst();
                             n.plural = p.getSecond();
                         }
@@ -391,7 +391,7 @@ public final class Aliases {
                     }
                 } else {
                     if (n == null)
-                        materialNames.put(d.getId(), n = new MaterialName(d.getId(), "" + d.getId(), "" + d.getId(), g.getSecond()));
+                        materialNames.put(d.getId(), n = new MaterialName(d.getId(), String.valueOf(d.getId()), String.valueOf(d.getId()), g.getSecond()));
                     @SuppressWarnings("null") final NonNullPair<Short, Short> data = new NonNullPair<>(d.dataMin, d.dataMax);
                     n.names.put(data, p);
                 }
@@ -418,7 +418,7 @@ public final class Aliases {
     public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
-            return "" + id;
+            return String.valueOf(id);
         }
         return n.toString(dataMin, dataMax, plural);
     }
@@ -426,7 +426,7 @@ public final class Aliases {
     public static String getDebugMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
-            return "" + id + ":" + dataMin + (dataMax == dataMin ? "" : "-" + dataMax);
+            return id + ":" + dataMin + (dataMax == dataMin ? "" : "-" + dataMax);
         }
         return n.getDebugName(dataMin, dataMax, plural);
     }
@@ -463,7 +463,7 @@ public final class Aliases {
             r++;
         }
         if (r > 0 && Skript.logHigh())
-            Skript.warning("" + missing.substring(0, missing.length() - 2));
+            Skript.warning(missing.substring(0, missing.length() - 2));
         return r;
     }
 
@@ -505,21 +505,21 @@ public final class Aliases {
     public static ItemType parseItemType(String s) {
         if (s.isEmpty())
             return null;
-        s = "" + s.trim();
+        s = s.trim();
 
         final ItemType t = new ItemType();
 
         Matcher m;
         if ((m = p_of_every.matcher(s)).matches()) {
-            t.setAmount(Utils.parseInt("" + m.group(1)));
+            t.setAmount(Utils.parseInt(m.group(1)));
             t.setAll(true);
-            s = "" + m.group(m.groupCount());
+            s = m.group(m.groupCount());
         } else if ((m = p_of.matcher(s)).matches()) {
-            t.setAmount(Utils.parseInt("" + m.group(1)));
-            s = "" + m.group(m.groupCount());
+            t.setAmount(Utils.parseInt(m.group(1)));
+            s = m.group(m.groupCount());
         } else if ((m = p_every.matcher(s)).matches()) {
             t.setAll(true);
-            s = "" + m.group(m.groupCount());
+            s = m.group(m.groupCount());
         } else {
             final int l = s.length();
             s = Noun.stripIndefiniteArticle(s);
@@ -535,7 +535,7 @@ public final class Aliases {
             final ItemType t2 = t.clone();
             final BlockingLogHandler log = SkriptLogger.startLogHandler(new BlockingLogHandler());
             try {
-                if (parseType("" + s.substring(0, c), t2, false) == null)
+                if (parseType(s.substring(0, c), t2, false) == null)
                     continue;
             } finally {
                 log.stop();
@@ -545,7 +545,7 @@ public final class Aliases {
             final Map<Enchantment, Integer> enchantments = new HashMap<>();
             final String[] enchs = lc.substring(c + of.length()).split("\\s*(,|" + Pattern.quote(Language.get("and")) + ")\\s*");
             for (final String ench : enchs) {
-                final EnchantmentType e = EnchantmentType.parse("" + ench);
+                final EnchantmentType e = EnchantmentType.parse(ench);
                 if (e == null)
                     continue outer;
                 enchantments.put(e.getType(), e.getLevel());
@@ -579,7 +579,7 @@ public final class Aliases {
         ItemData data = null;
         ItemType i;
         if (c != s.length()) {
-            data = parseData("" + s.substring(c + 1));
+            data = parseData(s.substring(c + 1));
             if (data == null) {
                 Skript.error(m_invalid_item_data.toString(s.substring(c)));
                 return null;
@@ -642,16 +642,16 @@ public final class Aliases {
     @Nullable
     private static ItemType getAlias(final String s) {
         ItemType i;
-        String lc = "" + s.toLowerCase(Locale.ENGLISH);
+        String lc = s.toLowerCase(Locale.ENGLISH);
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
-            lc = "" + m.group(m.groupCount());
+            lc = m.group(m.groupCount());
         }
         if ((i = getAlias_i(lc)) != null)
             return i.clone();
         boolean b;
         if ((b = lc.endsWith(" " + blockSingular)) || lc.endsWith(" " + blockPlural)) {
-            if ((i = getAlias_i("" + s.substring(0, s.length() - (b ? blockSingular.length() : blockPlural.length()) - 1))) != null) {
+            if ((i = getAlias_i(s.substring(0, s.length() - (b ? blockSingular.length() : blockPlural.length()) - 1))) != null) {
                 i = i.clone();
                 for (int j = 0; j < i.numTypes(); j++) {
                     final ItemData d = i.getTypes().get(j);
@@ -665,7 +665,7 @@ public final class Aliases {
                 return i;
             }
         } else if ((b = lc.endsWith(" " + itemSingular)) || lc.endsWith(" " + itemPlural)) {
-            if ((i = getAlias_i("" + s.substring(0, s.length() - (b ? itemSingular.length() : itemPlural.length()) - 1))) != null) {
+            if ((i = getAlias_i(s.substring(0, s.length() - (b ? itemSingular.length() : itemPlural.length()) - 1))) != null) {
                 for (int j = 0; j < i.numTypes(); j++) {
                     final ItemData d = i.getTypes().get(j);
                     if (d.getId() != -1 && d.getId() <= Skript.MAXBLOCKID) {
@@ -749,14 +749,14 @@ public final class Aliases {
                     final NonNullPair<String, Integer> g = Noun.stripGender(s, "item");
                     itemGender = Noun.getGenderID(g.getSecond());
                     final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-                    itemSingular = "" + p.getFirst().toLowerCase(Locale.ENGLISH);
-                    itemPlural = "" + p.getSecond().toLowerCase(Locale.ENGLISH);
+                    itemSingular = p.getFirst().toLowerCase(Locale.ENGLISH);
+                    itemPlural = p.getSecond().toLowerCase(Locale.ENGLISH);
                 }, false).addEntry("block", s -> {
                     final NonNullPair<String, Integer> g = Noun.stripGender(s, "block");
                     blockGender = Noun.getGenderID(g.getSecond());
                     final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
-                    blockSingular = "" + p.getFirst().toLowerCase(Locale.ENGLISH);
-                    blockPlural = "" + p.getSecond().toLowerCase(Locale.ENGLISH);
+                    blockSingular = p.getFirst().toLowerCase(Locale.ENGLISH);
+                    blockPlural = p.getSecond().toLowerCase(Locale.ENGLISH);
                 }, false).setAllowUndefinedSections(true));
 
                 for (final Node node : aliasConfig.getMainNode()) {

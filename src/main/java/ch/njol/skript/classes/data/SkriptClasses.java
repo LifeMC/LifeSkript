@@ -141,7 +141,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final WeatherType o) {
-                return "" + o.name().toLowerCase(Locale.ENGLISH);
+                return o.name().toLowerCase(Locale.ENGLISH);
             }
 
             @Override
@@ -186,7 +186,7 @@ public final class SkriptClasses {
                         b.append(":").append(e.getValue());
                     }
                 }
-                return "" + b.toString();
+                return b.toString();
             }
 
             @Override
@@ -262,7 +262,7 @@ public final class SkriptClasses {
                     if (sss.length == 2) {
                         if (!ItemType.itemMetaSupported)
                             return null;
-                        final ItemMeta m = ConfigurationSerializer.deserializeCSOld("" + sss[1].replace("¦¦", "¦"), ItemMeta.class);
+                        final ItemMeta m = ConfigurationSerializer.deserializeCSOld(sss[1].replace("¦¦", "¦"), ItemMeta.class);
                         if (m == null)
                             return null;
                         t.setItemMeta(m);
@@ -294,7 +294,7 @@ public final class SkriptClasses {
                 return "time:\\d+";
             }
         }).serializer(new YggdrasilSerializer<Time>() {
-            //						return "" + t.getTicks();
+            //						return t.getTicks();
             @Override
             @Nullable
             public Time deserialize(final String s) {
@@ -338,7 +338,7 @@ public final class SkriptClasses {
                 return "timespan:\\d+";
             }
         }).serializer(new YggdrasilSerializer<Timespan>() {
-            //						return "" + t.getMilliSeconds();
+            //						return t.getMilliSeconds();
             @Override
             @Nullable
             public Timespan deserialize(final String s) {
@@ -392,8 +392,8 @@ public final class SkriptClasses {
                                 return null;
                             return new Timeperiod(t.getTicks());
                         }
-                        final Time t1 = Time.parse("" + s.substring(0, c).trim());
-                        final Time t2 = Time.parse("" + s.substring(c + 1).trim());
+                        final Time t1 = Time.parse(s.substring(0, c).trim());
+                        final Time t2 = Time.parse(s.substring(c + 1).trim());
                         if (t1 == null || t2 == null)
                             return null;
                         return new Timeperiod(t1.getTicks(), t2.getTicks());
@@ -430,7 +430,7 @@ public final class SkriptClasses {
                 }));
 
         Classes.registerClass(new ClassInfo<>(Date.class, "date").user("dates?").name("Date").description("A date is a certain point in the real world's time which can currently only be obtained with <a href='../expressions/#ExprNow'>now</a>.", "See <a href='#time'>time</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("").examples("set {_yesterday} to now", "subtract a day from {_yesterday}", "# now {_yesterday} represents the date 24 hours before now").since("1.4").serializer(new YggdrasilSerializer<Date>() {
-            //						return "" + d.getTimestamp();
+            //						return d.getTimestamp();
             @Override
             @Nullable
             public Date deserialize(final String s) {
@@ -574,7 +574,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final Color o) {
-                return "" + o.name().toLowerCase(Locale.ENGLISH).replace('_', ' ');
+                return o.name().toLowerCase(Locale.ENGLISH).replace('_', ' ');
             }
 
             @Override
@@ -597,7 +597,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final StructureType o) {
-                return "" + o.name().toLowerCase(Locale.ENGLISH);
+                return o.name().toLowerCase(Locale.ENGLISH);
             }
 
             @Override
@@ -655,8 +655,8 @@ public final class SkriptClasses {
             public Experience parse(String s, final ParseContext context) {
                 int xp = -1;
                 if (s.matches("\\d+ .+")) {
-                    xp = Utils.parseInt("" + s.substring(0, s.indexOf(' ')));
-                    s = "" + s.substring(s.indexOf(' ') + 1);
+                    xp = Utils.parseInt(s.substring(0, s.indexOf(' ')));
+                    s = s.substring(s.indexOf(' ') + 1);
                 }
                 if (pattern.matcher(s).matches())
                     return new Experience(xp);
@@ -670,7 +670,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final Experience xp) {
-                return "" + xp.getXP();
+                return xp.getXP();
             }
 
             @Override
@@ -678,7 +678,7 @@ public final class SkriptClasses {
                 return "\\d+";
             }
         }).serializer(new YggdrasilSerializer<Experience>() {
-            //						return "" + xp;
+            //						return xp;
             @Override
             @Nullable
             public Experience deserialize(final String s) {

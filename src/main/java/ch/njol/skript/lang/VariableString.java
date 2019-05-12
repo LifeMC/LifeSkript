@@ -127,8 +127,8 @@ public final class VariableString implements Expression<String> {
     public static final String unquote(final String s, final boolean surroundingQuotes) {
         assert isQuotedCorrectly(s, surroundingQuotes);
         if (surroundingQuotes)
-            return "" + s.substring(1, s.length() - 1).replace("\"\"", "\"");
-        return "" + s.replace("\"\"", "\"");
+            return s.substring(1, s.length() - 1).replace("\"\"", "\"");
+        return s.replace("\"\"", "\"");
     }
 
     /**
@@ -147,7 +147,7 @@ public final class VariableString implements Expression<String> {
             Skript.error("The percent sign is used for expressions (e.g. %player%). To insert a '%' type it twice: %%.");
             return null;
         }
-        final String s = Utils.replaceChatStyles("" + orig.replace("\"\"", "\""));
+        final String s = Utils.replaceChatStyles(orig.replace("\"\"", "\""));
         final ArrayList<Object> string = new ArrayList<>(n / 2 + 2);
         int c = s.indexOf('%');
         if (c != -1) {
@@ -177,7 +177,7 @@ public final class VariableString implements Expression<String> {
                 } else {
                     final RetainingLogHandler log = SkriptLogger.startRetainingLog();
                     try {
-                        @SuppressWarnings("unchecked") final Expression<?> expr = new SkriptParser("" + s.substring(c + 1, c2), SkriptParser.PARSE_EXPRESSIONS, ParseContext.DEFAULT).parseExpression(Object.class);
+                        @SuppressWarnings("unchecked") final Expression<?> expr = new SkriptParser(s.substring(c + 1, c2), SkriptParser.PARSE_EXPRESSIONS, ParseContext.DEFAULT).parseExpression(Object.class);
                         if (expr == null) {
                             log.printErrors("Can't understand this expression: " + s.substring(c + 1, c2));
                             return null;
@@ -198,7 +198,7 @@ public final class VariableString implements Expression<String> {
 						            c2++; // remove the '>'
 						        } else {
 						            final int l = last.lastIndexOf(' ', last.endsWith(" ") ? last.length() - 2 : last.length() - 1);
-						            final String lastWord = "" + last.substring(l + 1).trim();
+						            final String lastWord = last.substring(l + 1).trim();
 						            if (Noun.isLocalIndefiniteArticle(lastWord))
 						                i.flags |= Language.F_INDEFINITE_ARTICLE;
 						            else if (Noun.isLocalDefiniteArticle(lastWord))
@@ -233,7 +233,7 @@ public final class VariableString implements Expression<String> {
         checkVariableConflicts(s, mode, string);
 
         if (string.size() == 1 && string.get(0) instanceof String)
-            return new VariableString("" + string.get(0));
+            return new VariableString(string.get(0));
         final Object[] sa = string.toArray();
         assert sa != null;
         if (string.size() == 1 && string.get(0) instanceof ExpressionInfo && ((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class && ((ExpressionInfo) string.get(0)).expr.isSingle()) {
@@ -315,7 +315,7 @@ public final class VariableString implements Expression<String> {
         VariableString[] strings = new VariableString[args.length];
         int j = 0;
         for (final String arg : args) {
-            final VariableString vs = newInstance("" + arg);
+            final VariableString vs = newInstance(arg);
             if (vs != null)
                 strings[j++] = vs;
         }
@@ -334,7 +334,7 @@ public final class VariableString implements Expression<String> {
         final VariableString[] strings = new VariableString[args.size()];
         for (int i = 0; i < args.size(); i++) {
             assert args.get(i).startsWith("\"") && args.get(i).endsWith("\"");
-            final VariableString vs = newInstance("" + args.get(i).substring(1, args.get(i).length() - 1));
+            final VariableString vs = newInstance(args.get(i).substring(1, args.get(i).length() - 1));
             if (vs == null)
                 return null;
             strings[i] = vs;
@@ -404,7 +404,7 @@ public final class VariableString implements Expression<String> {
                 b.append(o);
             }
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     @Override
@@ -434,7 +434,7 @@ public final class VariableString implements Expression<String> {
             }
         }
         b.append('"');
-        return "" + b.toString();
+        return b.toString();
     }
 
     public String getDefaultVariableName() {
@@ -452,7 +452,7 @@ public final class VariableString implements Expression<String> {
                 b.append(o);
             }
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     public boolean isSimple() {

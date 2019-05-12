@@ -63,7 +63,7 @@ public final class Version implements Serializable, Comparable<Version> {
             throw new IllegalArgumentException("'" + version + "' is not a valid version string");
         for (int i = 0; i < 3; i++) {
             if (m.group(i + 1) != null)
-                this.version[i] = Utils.parseInt("" + m.group(i + 1));
+                this.version[i] = Utils.parseInt(m.group(i + 1));
         }
         postfix = m.group(m.groupCount()).isEmpty() ? null : m.group(m.groupCount());
     }
