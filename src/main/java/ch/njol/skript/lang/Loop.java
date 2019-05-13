@@ -92,8 +92,8 @@ public final class Loop extends TriggerSection {
             debug(e, false);
             return actualNext;
         }
-		current.put(e, iter.next());
-		return walk(e, true);
+        current.put(e, iter.next());
+        return walk(e, true);
     }
 
     @Override

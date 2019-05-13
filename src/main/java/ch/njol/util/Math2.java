@@ -360,8 +360,8 @@ public final class Math2 {
             h = ~h;
             return n == h ? n : h >> 1;
         }
-		final int h = Integer.highestOneBit(n);
-		return n == h ? n : h << 1;
+        final int h = Integer.highestOneBit(n);
+        return n == h ? n : h << 1;
     }
 
     /**
@@ -379,8 +379,8 @@ public final class Math2 {
             h = ~h;
             return n == h ? n : h >> 1;
         }
-		final long h = Long.highestOneBit(n);
-		return n == h ? n : h << 1;
+        final long h = Long.highestOneBit(n);
+        return n == h ? n : h << 1;
     }
 
     /**

@@ -73,7 +73,7 @@ public final class CondIsBanned extends Condition {
                 if (ipBanned) {
                     return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
                 }
-				return ((Player) o).isBanned();
+                return ((Player) o).isBanned();
             } else if (o instanceof OfflinePlayer) {
                 return ((OfflinePlayer) o).isBanned();
             } else if (o instanceof String) {

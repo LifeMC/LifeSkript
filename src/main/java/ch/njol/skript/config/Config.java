@@ -136,7 +136,7 @@ public final class Config {
      */
     public void save(final File f) throws IOException {
         separator = defaultSeparator;
-        try(final PrintWriter w = new PrintWriter(f, "UTF-8")) {
+        try (final PrintWriter w = new PrintWriter(f, "UTF-8")) {
             main.save(w);
             w.flush();
         }
@@ -213,7 +213,7 @@ public final class Config {
             } else {
                 if (n instanceof EntryNode && i == path.length - 1)
                     return ((EntryNode) n).getValue();
-				return null;
+                return null;
             }
         }
         return null;

@@ -74,14 +74,11 @@ block = block¦s
 
 
 
-
 # List of alias groups. Only groups listed here are allowed below,
 # but you can easily define your own by adding it to this list.
 # The groups will be loaded in this order,
 # e.g. if 'custom aliases' is loaded after 'default aliases' you can use all default aliases to define your own aliases.
 aliases = default aliases, collections, custom aliases
-
-
 
 
 
@@ -1292,8 +1289,6 @@ default aliases:
 	{wool} banner block = 176, 177
 	{wool} standing banner [block] = 176
 	{wool} wall banner [block] = 177
-
-
 
 
 

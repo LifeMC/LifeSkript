@@ -148,7 +148,7 @@ public final class Aliases {
      * @param parts
      */
     @SuppressWarnings("null")
-	private static String concatenate(final String... parts) {
+    private static String concatenate(final String... parts) {
         assert parts.length >= 2;
         final StringBuilder b = new StringBuilder();
         for (final String part : parts) {
@@ -272,21 +272,21 @@ public final class Aliases {
                     r.putAll(getAliases(s, value, variations));
                     return r;
                 }
-				final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
-				};
-				for (final String[] o : os) {
-				    if (x.equalsIgnoreCase(o[0])) {
-				        for (int j = 1; j < o.length; j += 3) {
-				            String s = name.substring(0, i) + "¦" + o[j] + "¦" + o[j + 1] + "¦" + name.substring(end + 1);
-				            if (o[j + 2] != null) {
-				                final NonNullPair<String, Integer> p = Noun.stripGender(s, s);
-				                s = p.getFirst() + "@" + o[j + 2];
-				            }
-				            r.put(s, value);
-				        }
-				        return r;
-				    }
-				}
+                final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
+                };
+                for (final String[] o : os) {
+                    if (x.equalsIgnoreCase(o[0])) {
+                        for (int j = 1; j < o.length; j += 3) {
+                            String s = name.substring(0, i) + "¦" + o[j] + "¦" + o[j + 1] + "¦" + name.substring(end + 1);
+                            if (o[j + 2] != null) {
+                                final NonNullPair<String, Integer> p = Noun.stripGender(s, s);
+                                s = p.getFirst() + "@" + o[j + 2];
+                            }
+                            r.put(s, value);
+                        }
+                        return r;
+                    }
+                }
             }
         }
 
@@ -417,7 +417,7 @@ public final class Aliases {
     }
 
     @SuppressWarnings("null")
-	public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
+    public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
             return String.valueOf(id);
@@ -446,8 +446,8 @@ public final class Aliases {
     /**
      * @return how many ids are missing an alias, including the 'any id' (-1)
      */
-	@SuppressWarnings("null")
-	static int addMissingMaterialNames() {
+    @SuppressWarnings("null")
+    static int addMissingMaterialNames() {
         final HashMap<Integer, MaterialName> materialNames = getMaterialNames();
         int r = 0;
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");

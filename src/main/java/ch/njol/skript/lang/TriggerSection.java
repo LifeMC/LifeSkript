@@ -115,7 +115,7 @@ public abstract class TriggerSection extends TriggerItem {
         if (run && first != null) {
             return first;
         }
-		return getNext();
+        return getNext();
     }
 
 }

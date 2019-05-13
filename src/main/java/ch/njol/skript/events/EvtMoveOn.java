@@ -99,8 +99,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //				}
 //			}
         if (!itemTypeTriggers.isEmpty()) {
-            @SuppressWarnings("null")
-			final int id = getOnBlock(to);
+            @SuppressWarnings("null") final int id = getOnBlock(to);
             if (id == 0)
                 return;
             final List<Trigger> ts = itemTypeTriggers.get(id);
@@ -222,7 +221,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //		}
         if (!registeredExecutor) {
             Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {
-            	/* empty */
+                /* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
             registeredExecutor = true;
         }

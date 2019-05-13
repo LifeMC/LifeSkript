@@ -85,20 +85,20 @@ public final class Variables {
     private static final int MAX_CONFLICT_WARNINGS = 10;
     static volatile boolean closed;
     private static final Thread saveThread = Skript.newThread(() -> {
-	    while (!closed) {
-	        try {
-	            final SerializedVariable v = queue.take();
-	            for (final VariablesStorage s : storages) {
-	                if (s.accept(v.name)) {
-	                    s.save(v);
-	                    break;
-	                }
-	            }
-	        } catch (final InterruptedException ignored) {
-	            break;
-	        }
-	    }
-	}, "Skript variable save thread");
+        while (!closed) {
+            try {
+                final SerializedVariable v = queue.take();
+                for (final VariablesStorage s : storages) {
+                    if (s.accept(v.name)) {
+                        s.save(v);
+                        break;
+                    }
+                }
+            } catch (final InterruptedException ignored) {
+                break;
+            }
+        }
+    }, "Skript variable save thread");
     private static int loadConflicts;
 
     static {
@@ -293,12 +293,12 @@ public final class Variables {
                 return null;
             return map.getVariable(name);
         }
-		try {
-		    variablesLock.readLock().lock();
-		    return variables.getVariable(name);
-		} finally {
-		    variablesLock.readLock().unlock();
-		}
+        try {
+            variablesLock.readLock().lock();
+            return variables.getVariable(name);
+        } finally {
+            variablesLock.readLock().unlock();
+        }
     }
 
     /**

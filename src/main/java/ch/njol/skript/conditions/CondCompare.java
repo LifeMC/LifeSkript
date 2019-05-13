@@ -108,8 +108,8 @@ public final class CondCompare extends Condition {
             if (third == null && first.getReturnType() == Object.class && second.getReturnType() == Object.class) {
                 return false;
             }
-			Skript.error("Can't compare " + f(first) + " with " + f(second) + (third == null ? "" : " and " + f(third)), ErrorQuality.NOT_AN_EXPRESSION);
-			return false;
+            Skript.error("Can't compare " + f(first) + " with " + f(second) + (third == null ? "" : " and " + f(third)), ErrorQuality.NOT_AN_EXPRESSION);
+            return false;
         }
         @SuppressWarnings("rawtypes") final Comparator comp = this.comp;
         if (comp != null) {

@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("TaskTrackerAgent")
+
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
@@ -53,28 +54,29 @@ data class TaskTrackerAgent
  * @param unit The unit of the limit parameter.
  */
 @JvmOverloads constructor(
-    /**
-     * The out, we report statistics to it.
-     */
-    @JvmField val out: CommandSender,
+        /**
+         * The out, we report statistics to it.
+         */
+        @JvmField val out: CommandSender,
 
-    /**
-     * The minimum limit and its unit that
-     * considered as a long time.
-     */
-    @JvmField val limit: Long,
+        /**
+         * The minimum limit and its unit that
+         * considered as a long time.
+         */
+        @JvmField val limit: Long,
 
-    /**
-     * The time unit specifies the
-     * unit is used in limit variable.
-     */
-    @JvmField val unit: TimeUnit = TimeUnit.SECONDS
+        /**
+         * The time unit specifies the
+         * unit is used in limit variable.
+         */
+        @JvmField val unit: TimeUnit = TimeUnit.SECONDS
 ) : TrackerAgent {
 
     /**
      * The skript agent we registered.
      */
-    @JvmField var agent: SkriptAgent? = null
+    @JvmField
+    var agent: SkriptAgent? = null
 
     /**
      * Creates a new TaskTrackerAgent for given out.

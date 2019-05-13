@@ -21,15 +21,16 @@
  */
 
 @file:JvmName("ResolvedPlayerEvent")
+
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.bukkitutil.UnresolvedOfflinePlayer
 
 data class ResolvedPlayerEvent(
-    /**
-     * The player that resolved. Still uses UnresolvedOfflinePlayer
-     * instance because implementation is still safe to use after resolution.
-     */
-    @JvmField val player: UnresolvedOfflinePlayer
+        /**
+         * The player that resolved. Still uses UnresolvedOfflinePlayer
+         * instance because implementation is still safe to use after resolution.
+         */
+        @JvmField val player: UnresolvedOfflinePlayer
 ) : AgentEvent()

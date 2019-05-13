@@ -44,20 +44,24 @@ import java.util.Map;
  */
 public final class Workarounds {
 
+    private static final Map<String, String> oldValues =
+            new HashMap<>();
+    private static boolean init;
+
     static {
         if (Skript.isBukkitRunning()) {
             // allows to properly remove a player's tool in right click events
-        	
-        	Bukkit.getPluginManager().registerEvent(PlayerInteractEvent.class, new Listener() {
-        		/* empty */
-        	}, EventPriority.LOWEST, (listener, event) -> {
-        		if (event instanceof PlayerInteractEvent) {
-        			final PlayerInteractEvent e = (PlayerInteractEvent) event;
+
+            Bukkit.getPluginManager().registerEvent(PlayerInteractEvent.class, new Listener() {
+                /* empty */
+            }, EventPriority.LOWEST, (listener, event) -> {
+                if (event instanceof PlayerInteractEvent) {
+                    final PlayerInteractEvent e = (PlayerInteractEvent) event;
                     if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
                         e.setUseItemInHand(Result.DENY);
-        		}
-        	}, Skript.getInstance(), false);
-        	        	
+                }
+            }, Skript.getInstance(), false);
+
         	/* Bukkit uses reflection to call methods - We use our own hacky way above.
             Bukkit.getPluginManager().registerEvents(new Listener() {
                 @EventHandler(priority = EventPriority.HIGHEST)
@@ -70,19 +74,14 @@ public final class Workarounds {
         }
     }
 
-    private static final Map<String, String> oldValues =
-            new HashMap<>();
-
-    private static boolean init;
-
-    @SuppressWarnings("null")
-	public static final String getOriginalProperty(final String key) {
-        final String value = oldValues.get(key);
-        return value != null ? value : System.getProperty(key);
-    }
-
     private Workarounds() {
         throw new UnsupportedOperationException();
+    }
+
+    @SuppressWarnings("null")
+    public static final String getOriginalProperty(final String key) {
+        final String value = oldValues.get(key);
+        return value != null ? value : System.getProperty(key);
     }
 
     public static final void initIfNotAlready() {

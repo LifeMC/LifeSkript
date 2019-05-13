@@ -66,10 +66,10 @@ public final class EffThrow extends Effect {
     @SuppressWarnings("null")
     protected void execute(final Event e) {
         if (error) {
-        	if (java) {
-        		throw new ScriptError(String.valueOf(detail.getSingle(e)));
-        	}
-			Skript.error(String.valueOf(detail.getSingle(e)));
+            if (java) {
+                throw new ScriptError(String.valueOf(detail.getSingle(e)));
+            }
+            Skript.error(String.valueOf(detail.getSingle(e)));
         } else {
             Skript.warning(String.valueOf(detail.getSingle(e)));
         }
@@ -79,52 +79,52 @@ public final class EffThrow extends Effect {
     public String toString(@Nullable final Event e, final boolean debug) {
         return "throw new " + getTypeName();
     }
-    
+
     public static final class ScriptError extends RuntimeException {
 
-		/**
-		 * serialVersionUID
-		 */
-		private static final long serialVersionUID = 1255223120346309260L;
-    	
-		/**
-		 * 
-		 */
-		public ScriptError() {
-			super();
-		}
+        /**
+         * serialVersionUID
+         */
+        private static final long serialVersionUID = 1255223120346309260L;
 
-		/**
-		 * @param message
-		 * @param cause
-		 * @param enableSuppression
-		 * @param writableStackTrace
-		 */
-		public ScriptError(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
-			super(message, cause, enableSuppression, writableStackTrace);
-		}
+        /**
+         *
+         */
+        public ScriptError() {
+            super();
+        }
 
-		/**
-		 * @param message
-		 * @param cause
-		 */
-		public ScriptError(final String message, final Throwable cause) {
-			super(message, cause);
-		}
+        /**
+         * @param message
+         * @param cause
+         * @param enableSuppression
+         * @param writableStackTrace
+         */
+        public ScriptError(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+            super(message, cause, enableSuppression, writableStackTrace);
+        }
 
-		/**
-		 * @param message
-		 */
-		public ScriptError(final String message) {
-			super(message);
-		}
+        /**
+         * @param message
+         * @param cause
+         */
+        public ScriptError(final String message, final Throwable cause) {
+            super(message, cause);
+        }
 
-		/**
-		 * @param cause
-		 */
-		public ScriptError(final Throwable cause) {
-			super(cause);
-		}
-    	
+        /**
+         * @param message
+         */
+        public ScriptError(final String message) {
+            super(message);
+        }
+
+        /**
+         * @param cause
+         */
+        public ScriptError(final Throwable cause) {
+            super(cause);
+        }
+
     }
 }

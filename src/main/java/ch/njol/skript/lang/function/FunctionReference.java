@@ -183,7 +183,7 @@ public final class FunctionReference<T> {
     }
 
     @SuppressWarnings("null")
-	public String toString(@Nullable final Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final StringBuilder b = new StringBuilder(functionName + "(");
         for (int i = 0; i < parameters.length; i++) {
             if (i != 0)

@@ -55,7 +55,7 @@ public final class EvtGrow extends SkriptEvent {
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     public boolean check(final Event e) {
         if (types != null) {
             return types.check(e, t -> t.is(((StructureGrowEvent) e).getSpecies()));

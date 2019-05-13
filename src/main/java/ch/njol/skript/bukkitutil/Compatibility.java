@@ -44,8 +44,8 @@ public final class Compatibility {
     /**
      * Gets the most compatible class.
      *
-     * @param oldClass The old, deprecated or moved class.
-     * @param newClass The new class.
+     * @param oldClass   The old, deprecated or moved class.
+     * @param newClass   The new class.
      * @param superClass The superclass of the two classes entered.
      * @return The most compatible class as super class.
      * If you must do operations specific to old or new one,

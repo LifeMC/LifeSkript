@@ -53,7 +53,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     static final BlockingQueue<UnresolvedOfflinePlayer> toResolve = new LinkedBlockingQueue<>();
     static final AtomicBoolean threadStarted = new AtomicBoolean();
     @SuppressWarnings("deprecation")
-	static final Thread resolverThread = Skript.newThread(() -> {
+    static final Thread resolverThread = Skript.newThread(() -> {
         while (Skript.isSkriptRunning()) {
             try {
                 final UnresolvedOfflinePlayer p = toResolve.take(); // Takes the next unresolved player and removes from the queue.
@@ -155,7 +155,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.permissions.ServerOperator#setOp(boolean)
      */
     @SuppressWarnings("null")
-	public void setOp(final boolean value) {
+    public void setOp(final boolean value) {
         actionQueue.add(() -> bukkitOfflinePlayer.setOp(value));
     }
 
@@ -208,7 +208,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.OfflinePlayer#setBanned(boolean)
      */
     @SuppressWarnings({"null", "deprecation"})
-	@Deprecated
+    @Deprecated
     public void setBanned(final boolean banned) {
         actionQueue.add(() -> bukkitOfflinePlayer.setBanned(banned));
     }
@@ -232,7 +232,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.OfflinePlayer#setWhitelisted(boolean)
      */
     @SuppressWarnings("null")
-	public void setWhitelisted(final boolean value) {
+    public void setWhitelisted(final boolean value) {
         actionQueue.add(() -> bukkitOfflinePlayer.setWhitelisted(value));
     }
 

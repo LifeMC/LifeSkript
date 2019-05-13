@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 public final class FlatFileStorageTest {
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void testHexCoding() {
         final byte[] bytes = {-0x80, -0x50, -0x01, 0x00, 0x01, 0x44, 0x7F};
         final String string = "80B0FF0001447F";

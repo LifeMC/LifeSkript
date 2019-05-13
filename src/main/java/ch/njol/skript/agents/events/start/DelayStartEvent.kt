@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("DelayStartEvent")
+
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
@@ -32,8 +33,8 @@ import ch.njol.skript.util.Timespan
  * @since 2.2-V13b
  */
 data class DelayStartEvent(
-    /**
-     * The duration of the delay
-     */
-    @JvmField val duration: Timespan
+        /**
+         * The duration of the delay
+         */
+        @JvmField val duration: Timespan
 ) : AgentEvent()

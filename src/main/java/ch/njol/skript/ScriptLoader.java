@@ -64,6 +64,11 @@ public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
     public static final List<Loop> currentLoops = new ArrayList<>();
     static final HashMap<String, String> currentOptions = new HashMap<>();
+    /**
+     * All loaded script files.
+     */
+    @SuppressWarnings("null")
+    static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>());
     private static final Message m_no_errors = new Message("skript.no errors"),
             m_no_scripts = new Message("skript.no scripts");
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
@@ -76,7 +81,7 @@ public final class ScriptLoader {
      * Filter for enabled scripts & folders.
      */
     @SuppressWarnings("null")
-	private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
+    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -103,7 +108,7 @@ public final class ScriptLoader {
     /**
      * Call {@link #deleteCurrentEvent()} after parsing
      *
-     * @param name The name of the current event.
+     * @param name   The name of the current event.
      * @param events The current events.
      */
     @SafeVarargs
@@ -113,18 +118,18 @@ public final class ScriptLoader {
         hasDelayBefore = Kleenean.FALSE;
     }
 
-    public static final void deleteCurrentEvent() {
-        currentEventName = null;
-        currentEvents = null;
-        hasDelayBefore = Kleenean.FALSE;
-    }
-
 //	private static final class SerializedScript {
 //		public SerializedScript() {}
 //
 //		public final List<Trigger> triggers = new ArrayList<Trigger>();
 //		public final List<ScriptCommand> commands = new ArrayList<ScriptCommand>();
 //	}
+
+    public static final void deleteCurrentEvent() {
+        currentEventName = null;
+        currentEvents = null;
+        hasDelayBefore = Kleenean.FALSE;
+    }
 
     public static final Map<String, ItemType> getScriptAliases() {
         return currentAliases;
@@ -163,12 +168,6 @@ public final class ScriptLoader {
         Functions.postCheck(); // Check that all functions which are called exist.
         return i;
     }
-
-    /**
-     * All loaded script files.
-     */
-    @SuppressWarnings("null")
-    static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>());
 
     @SuppressWarnings("null") // Collections methods don't return nulls, ever
     public static final Collection<File> getLoadedFiles() {
@@ -357,7 +356,7 @@ public final class ScriptLoader {
                                 continue;
                             }
                             @SuppressWarnings("null")
-							String name = n.getKey().toLowerCase(Locale.ENGLISH);
+                            String name = n.getKey().toLowerCase(Locale.ENGLISH);
                             if (name.startsWith("{") && name.endsWith("}"))
                                 name = name.substring(1, name.length() - 1);
                             final String var = name;
@@ -625,8 +624,7 @@ public final class ScriptLoader {
             SkriptLogger.setNode(n);
             if (n instanceof SimpleNode) {
                 final SimpleNode e = (SimpleNode) n;
-                @SuppressWarnings("null")
-				final String s = replaceOptions(e.getKey());
+                @SuppressWarnings("null") final String s = replaceOptions(e.getKey());
                 if (!SkriptParser.validateLine(s))
                     continue;
                 final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
@@ -639,7 +637,7 @@ public final class ScriptLoader {
                     hasDelayBefore = Kleenean.TRUE;
             } else if (n instanceof SectionNode) {
                 @SuppressWarnings("null")
-				String name = replaceOptions(n.getKey());
+                String name = replaceOptions(n.getKey());
                 if (!SkriptParser.validateLine(name))
                     continue;
 
@@ -740,7 +738,7 @@ public final class ScriptLoader {
      * @return The loaded Trigger
      */
     @SuppressWarnings("null")
-	@Nullable
+    @Nullable
     static final Trigger loadTrigger(final SectionNode node) {
         String event = node.getKey();
         if (event == null) {

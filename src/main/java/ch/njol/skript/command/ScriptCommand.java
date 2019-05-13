@@ -122,7 +122,7 @@ public final class ScriptCommand implements CommandExecutor {
 
         // remove aliases that are the same as the command
         if (Skript.logHigh()) {
-            for(final Iterator<String> iterator = aliases.iterator(); iterator.hasNext();) {
+            for (final Iterator<String> iterator = aliases.iterator(); iterator.hasNext(); ) {
                 final String alias = iterator.next();
                 if (alias.equals(label)) {
                     Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command and it is redundant, remove it.");
@@ -413,9 +413,9 @@ public final class ScriptCommand implements CommandExecutor {
         if (cooldownStorage == null) {
             return lastUsageMap.get(uuid);
         }
-		final String name = getStorageVariableName(event);
-		assert name != null;
-		return (Date) Variables.getVariable(name, null, false);
+        final String name = getStorageVariableName(event);
+        assert name != null;
+        return (Date) Variables.getVariable(name, null, false);
     }
 
     public void setLastUsage(final UUID uuid, final Event event, @Nullable final Date date) {
@@ -519,7 +519,7 @@ public final class ScriptCommand implements CommandExecutor {
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (usage != null ? usage.hashCode() : 0);

@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 public final class ReversedListViewTest {
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void testReversedListView() {
 
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1, 1, 2, 4, 7));

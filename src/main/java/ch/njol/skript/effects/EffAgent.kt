@@ -59,12 +59,16 @@ class EffAgent : Effect() {
         }
     }
 
-    @JvmField var enable: Boolean = false
+    @JvmField
+    var enable: Boolean = false
 
-    @JvmField var agent: Expression<String>? = null
-    @JvmField var type: Array<TrackerType?>? = null
+    @JvmField
+    var agent: Expression<String>? = null
+    @JvmField
+    var type: Array<TrackerType?>? = null
 
-    @JvmField var sender: Expression<CommandSender>? = null
+    @JvmField
+    var sender: Expression<CommandSender>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean?, parseResult: SkriptParser.ParseResult?): Boolean {
         enable = matchedPattern == 1
@@ -88,7 +92,7 @@ class EffAgent : Effect() {
 
     private fun initTypes(arr: Array<String?>): Array<TrackerType?> {
         val trackers: Array<TrackerType?> = arrayOfNulls(arr.size)
-        for((i, str) in arr.withIndex())
+        for ((i, str) in arr.withIndex())
             if (str != null) {
                 val type = TrackerType.parseFrom(str)
 
@@ -109,10 +113,10 @@ class EffAgent : Effect() {
         val localType = type
         if (localType != null) {
             if (enable) {
-                for(trackerType in localType)
+                for (trackerType in localType)
                     trackerType?.enable(sender?.getAll(e)!!)
             } else {
-                for(trackerType in localType)
+                for (trackerType in localType)
                     trackerType?.disable(sender?.getAll(e)!!)
             }
         }
@@ -123,16 +127,18 @@ class EffAgent : Effect() {
     }
 
     data class TypedTracker(
-        @JvmField val type: TrackerType,
-        @JvmField val tracker: TrackerAgent
+            @JvmField val type: TrackerType,
+            @JvmField val tracker: TrackerAgent
     )
 
     class TrackerRegistry {
         companion object {
-            @JvmField val registryMap: ConcurrentMap<TrackerAgent, CommandSender> =
+            @JvmField
+            val registryMap: ConcurrentMap<TrackerAgent, CommandSender> =
                     ConcurrentHashMap()
 
-            @JvmField val trackerMap: ConcurrentMap<CommandSender, TypedTracker> =
+            @JvmField
+            val trackerMap: ConcurrentMap<CommandSender, TypedTracker> =
                     ConcurrentHashMap()
 
             @JvmStatic
@@ -187,19 +193,19 @@ class EffAgent : Effect() {
         }
 
         fun enable(senders: Array<CommandSender>) {
-            for(sender in senders)
+            for (sender in senders)
                 enable(sender)
         }
 
         fun disable(senders: Array<CommandSender>) {
-            for(sender in senders)
+            for (sender in senders)
                 disable(sender)
         }
 
         companion object {
             @JvmStatic
             fun parseFrom(s: String?): TrackerType? {
-                for(type in values())
+                for (type in values())
                     if (type.name.equals(s, true) || type.name.equals((s + "s"), true))
                         return type
                 return null

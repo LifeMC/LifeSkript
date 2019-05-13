@@ -90,17 +90,17 @@ public final class SkriptConfig {
     public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
     public static final Option<Boolean> enableTimings = new Option<>("enable timings", false)
-        .setter(t -> {
-            if (Skript.classExists("co.aikar.timings.Timings")) { // Check for Paper or LifeSpigot server
-                if (t)
-                    Skript.info("Timings support enabled");
-                SkriptTimings.setEnabled(t); // Config option will be used
-            } else { // Not running Paper or LifeSpigot
-                if (t) // Warn the console that timings won't work
-                    Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
-                SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
-            }
-        });
+            .setter(t -> {
+                if (Skript.classExists("co.aikar.timings.Timings")) { // Check for Paper or LifeSpigot server
+                    if (t)
+                        Skript.info("Timings support enabled");
+                    SkriptTimings.setEnabled(t); // Config option will be used
+                } else { // Not running Paper or LifeSpigot
+                    if (t) // Warn the console that timings won't work
+                        Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
+                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
+                }
+            });
     /**
      * False by default - Use /sk track variables to enable in runtime.
      */
@@ -187,7 +187,7 @@ public final class SkriptConfig {
             mainConfig = mc;
 
             if (!Skript.getVersion().toString().equals(mc.get(version.key))) {
-                try(final InputStream in = Skript.getInstance().getResource("config.sk")) {
+                try (final InputStream in = Skript.getInstance().getResource("config.sk")) {
                     if (in == null) {
                         Skript.error("Your config is outdated, but Skript couldn't find the newest config in its jar. Please download Skript again from the link below:");
                         Skript.printDownloadLink();

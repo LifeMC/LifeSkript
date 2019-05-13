@@ -249,13 +249,13 @@ public final class EffChange extends Effect {
         final Object[] delta = changer == null ? null : changer.getArray(e);
         if (delta != null && delta.length == 0)
             return;
-		final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
+        final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
 
         if (trackingEnabled && changed instanceof Variable)
             SkriptAgentKt.throwEvent(new VariableChangeStartEvent((Variable<?>) changed, delta));
         changed.change(e, delta, mode); // REMIND use a random element out of delta if changed only supports changing a single instance
-		if (trackingEnabled && changed instanceof Variable)
-			SkriptAgentKt.throwEvent(new VariableChangeEndEvent((Variable<?>) changed, delta));
+        if (trackingEnabled && changed instanceof Variable)
+            SkriptAgentKt.throwEvent(new VariableChangeEndEvent((Variable<?>) changed, delta));
 //		changed.change(e, new Changer2<Object>() {
 //			@Override
 //			public Object change(Object o) {

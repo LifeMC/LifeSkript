@@ -90,7 +90,7 @@ public class ExprGroup extends SimpleExpression<String> {
                 mode == Changer.ChangeMode.SET ||
                 mode == Changer.ChangeMode.DELETE ||
                 mode == Changer.ChangeMode.RESET) {
-            return new Class<?>[] {String[].class};
+            return new Class<?>[]{String[].class};
         }
         return null;
     }

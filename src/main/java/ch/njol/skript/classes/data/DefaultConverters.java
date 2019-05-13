@@ -56,7 +56,7 @@ public final class DefaultConverters {
     private DefaultConverters() {
         throw new UnsupportedOperationException();
     }
-	
+
     public static final void init() {
         // OfflinePlayer - PlayerInventory
         Converters.registerConverter(OfflinePlayer.class, PlayerInventory.class, p -> {

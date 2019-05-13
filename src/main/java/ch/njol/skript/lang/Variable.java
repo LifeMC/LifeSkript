@@ -65,12 +65,12 @@ public final class Variable<T> implements Expression<T> {
     private static final String SINGLE_SEPARATOR_CHAR = ":";
     public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
     private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
-    final Class<? extends T>[] types;
-    final boolean local;
     /**
      * The name of this variable, excluding the local variable token, but including the list variable token '::*'.
      */
     public final VariableString name;
+    final Class<? extends T>[] types;
+    final boolean local;
     private final Class<T> superType;
     private final boolean list;
     @Nullable

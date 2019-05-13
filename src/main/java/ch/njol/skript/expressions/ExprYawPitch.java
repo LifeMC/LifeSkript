@@ -53,6 +53,13 @@ public final class ExprYawPitch extends SimplePropertyExpression<Location, Numbe
 
     private boolean yaw;
 
+    //Some random method decided to use for converting to positive values.
+    public static float convertToPositive(final float f) {
+        if (f * -1 == Math.abs(f))
+            return 360 + f;
+        return f;
+    }
+
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         yaw = parseResult.mark == 0;
@@ -111,13 +118,6 @@ public final class ExprYawPitch extends SimplePropertyExpression<Location, Numbe
             default:
                 break;
         }
-    }
-
-    //Some random method decided to use for converting to positive values.
-    public static float convertToPositive(final float f) {
-        if (f * -1 == Math.abs(f))
-            return 360 + f;
-        return f;
     }
 
 }

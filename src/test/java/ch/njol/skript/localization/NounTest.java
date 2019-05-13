@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
 public final class NounTest {
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void testGetPlural() {
         final String[][] tests = {{"a", "a", "a"}, {"a¦b", "a", "ab"}, {"a¦b¦c", "ab", "ac"}, {"a¦b¦c¦d", "abd", "acd"}, {"a¦b¦c¦d¦e", "abd", "acde"}, {"a¦b¦c¦d¦e¦f", "abde", "acdf"}, {"a¦b¦c¦d¦e¦f¦g", "abdeg", "acdfg"},
         };

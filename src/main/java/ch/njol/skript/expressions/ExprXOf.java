@@ -78,9 +78,9 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
                 is.setAmount(a.intValue());
                 return is;
             }
-			final EntityType t = ((EntityType) o).clone();
-			t.amount = a.intValue();
-			return t;
+            final EntityType t = ((EntityType) o).clone();
+            t.amount = a.intValue();
+            return t;
         });
     }
 

@@ -69,8 +69,8 @@ public final class ExprLore extends SimpleExpression<String> {
             Skript.registerExpression(ExprLore.class, String.class, ExpressionType.PROPERTY, "[the] lore of %itemstack/itemtype%", "%itemstack/itemtype%'[s] lore", "[the] line %number% of [the] lore of %itemstack/itemtype%", "[the] line %number% of %itemstack/itemtype%'[s] lore", "[the] %number%(st|nd|rd|th) line of [the] lore of %itemstack/itemtype%", "[the] %number%(st|nd|rd|th) line of %itemstack/itemtype%'[s] lore");
 
         } catch (final NoClassDefFoundError e) {
-        	if (Skript.testing() || Skript.debug())
-        		Skript.exception(e);
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
         }
     }
 

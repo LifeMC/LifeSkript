@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("AgentEvent")
+
 package ch.njol.skript.agents
 
 /**

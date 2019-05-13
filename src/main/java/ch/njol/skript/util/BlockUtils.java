@@ -205,11 +205,11 @@ public final class BlockUtils {
                     b.setTypeIdAndData(type, data, applyPhysics);
                     return true;
                 }
-				if (b.getRelative(f).getTypeId() != 0)
-				    continue;
-				b.getRelative(f).setTypeIdAndData(type, (byte) (data | 0x8), false);
-				b.setTypeIdAndData(type, data, applyPhysics);
-				return true;
+                if (b.getRelative(f).getTypeId() != 0)
+                    continue;
+                b.getRelative(f).setTypeIdAndData(type, (byte) (data | 0x8), false);
+                b.setTypeIdAndData(type, data, applyPhysics);
+                return true;
             }
             return false;
         }
@@ -228,7 +228,7 @@ public final class BlockUtils {
                     b.setTypeIdAndData(type, data, applyPhysics);
                     return true;
                 }
-				tried[data & 0x1] = true;
+                tried[data & 0x1] = true;
             }
             b.setTypeIdAndData(type, (byte) Utils.random(dataMin, dataMax + 1), applyPhysics);
             return true;

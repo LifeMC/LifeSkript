@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("SkriptTimings")
+
 package ch.njol.skript.timings
 
 import ch.njol.skript.Skript

@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("VariableTrackerAgent")
+
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
@@ -34,21 +35,23 @@ import org.bukkit.command.CommandSender
 import java.util.function.Consumer
 
 data class VariableTrackerAgent(
-    /**
-     * The out, we report statistics to it.
-     */
-    @JvmField val out: CommandSender
+        /**
+         * The out, we report statistics to it.
+         */
+        @JvmField val out: CommandSender
 ) : TrackerAgent {
 
     /**
      * The skript agent we registered.
      */
-    @JvmField var agent: SkriptAgent? = null
+    @JvmField
+    var agent: SkriptAgent? = null
 
     /**
      * Whatever we enabled none warnings or not.
      */
-    @JvmField var flag: Boolean = false
+    @JvmField
+    var flag: Boolean = false
 
     init {
         // Sanity checks

@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("LoopTrackerAgent")
+
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
@@ -37,16 +38,17 @@ import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
 data class LoopTrackerAgent(
-    /**
-     * The out, we report statistics to it.
-     */
-    @JvmField val out: CommandSender
+        /**
+         * The out, we report statistics to it.
+         */
+        @JvmField val out: CommandSender
 ) : TrackerAgent {
 
     /**
      * The skript agent we registered.
      */
-    @JvmField var agent: SkriptAgent? = null
+    @JvmField
+    var agent: SkriptAgent? = null
 
     init {
         // Sanity checks

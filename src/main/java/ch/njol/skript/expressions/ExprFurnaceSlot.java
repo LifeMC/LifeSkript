@@ -82,7 +82,7 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                 if (getTime() >= 0 && (e instanceof FurnaceSmeltEvent && b.equals(((FurnaceSmeltEvent) e).getBlock()) || e instanceof FurnaceBurnEvent && b.equals(((FurnaceBurnEvent) e).getBlock())) && !Delay.isDelayed(e)) {
                     return new FurnaceEventSlot(e, ((Furnace) b.getState()).getInventory());
                 }
-				return new InventorySlot(((Furnace) b.getState()).getInventory(), slot);
+                return new InventorySlot(((Furnace) b.getState()).getInventory(), slot);
             }
         });
     }
@@ -121,31 +121,31 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                 if (slot == RESULT) {
                     if (getTime() >= 0)
                         return ((FurnaceSmeltEvent) e).getResult().clone();
-					return super.getItem();
+                    return super.getItem();
                 } else if (slot == ORE) {
                     if (getTime() <= 0) {
                         return super.getItem();
                     }
-					final ItemStack i = super.getItem();
-					if (i == null)
-					    return null;
-					i.setAmount(i.getAmount() - 1);
-					return i.getAmount() == 0 ? new ItemStack(Material.AIR, 1) : i;
+                    final ItemStack i = super.getItem();
+                    if (i == null)
+                        return null;
+                    i.setAmount(i.getAmount() - 1);
+                    return i.getAmount() == 0 ? new ItemStack(Material.AIR, 1) : i;
                 } else {
                     return super.getItem();
                 }
             }
-			if (slot == FUEL) {
-			    if (getTime() <= 0) {
-			        return super.getItem();
-			    }
-				final ItemStack i = super.getItem();
-				if (i == null)
-				    return null;
-				i.setAmount(i.getAmount() - 1);
-				return i.getAmount() == 0 ? new ItemStack(Material.AIR, 1) : i;
-			}
-			return super.getItem();
+            if (slot == FUEL) {
+                if (getTime() <= 0) {
+                    return super.getItem();
+                }
+                final ItemStack i = super.getItem();
+                if (i == null)
+                    return null;
+                i.setAmount(i.getAmount() - 1);
+                return i.getAmount() == 0 ? new ItemStack(Material.AIR, 1) : i;
+            }
+            return super.getItem();
         }
 
         @SuppressWarnings("synthetic-access")

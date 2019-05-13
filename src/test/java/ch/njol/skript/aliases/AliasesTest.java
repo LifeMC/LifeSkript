@@ -43,7 +43,7 @@ public final class AliasesTest {
     }
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void testNames() {
         final ItemType t = new ItemType();
         t.add(new ItemData(0));

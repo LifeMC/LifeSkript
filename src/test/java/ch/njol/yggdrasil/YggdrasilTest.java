@@ -217,7 +217,7 @@ public final class YggdrasilTest {
     }
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void keepReferencesTest() throws IOException {
         //System.out.println();
         final Object ref = new Object();
@@ -232,7 +232,7 @@ public final class YggdrasilTest {
     }
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void renameTest() throws IOException {
         //System.out.println();
         currentModifiedClass = UnmodifiedClass.class;
@@ -264,7 +264,7 @@ public final class YggdrasilTest {
         public static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶");
         public static final PETest2 PET2_2 = new PETest2("PET2_2");
         public static final PETest1 PET1_2 = new PETest1("PET1_2") {
-        	/* empty */
+            /* empty */
         };
 
         protected PETest1(final String name) {
@@ -325,7 +325,7 @@ public final class YggdrasilTest {
             if (blah == null) {
                 return other.blah == null;
             }
-			return blah.equals(other.blah);
+            return blah.equals(other.blah);
         }
 
         @Override

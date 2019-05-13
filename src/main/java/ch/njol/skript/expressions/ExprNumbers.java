@@ -148,7 +148,7 @@ public final class ExprNumbers extends SimpleExpression<Number> {
                     throw new NoSuchElementException();
                 if (integer)
                     return (long) i++;
-				return i++;
+                return i++;
             }
 
             @Override

@@ -80,8 +80,8 @@ public enum ServerPlatform {
      * Represents a server platform.
      *
      * @param platformName Display name for platform.
-     * @param isWorking If the platform usually works.
-     * @param isSupported If the platform is supported.
+     * @param isWorking    If the platform usually works.
+     * @param isSupported  If the platform is supported.
      */
     ServerPlatform(final String platformName, final boolean isWorking, final boolean isSupported) {
         if (isSupported && !isWorking)

@@ -39,7 +39,8 @@ class ExprEncodeDecode : SimpleExpression<String>() {
         }
     }
 
-    @JvmField var str: Expression<String>? = null
+    @JvmField
+    var str: Expression<String>? = null
     private var encode: Boolean = false
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {

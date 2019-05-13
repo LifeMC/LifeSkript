@@ -32,15 +32,13 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
 import ch.njol.util.Kleenean;
-
+import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 import org.eclipse.jdt.annotation.Nullable;
-
-import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 
 /**
  * @author Peter Güttinger
@@ -50,11 +48,11 @@ import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 @Examples({"push the player upwards", "push the victim downwards at speed 0.5"})
 @Since("1.4.6")
 public final class EffPush extends Effect {
-	public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")
-			&& Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && (System.getProperty("skript.disableNcpHook") == null || !Boolean.parseBoolean(System.getProperty("skript.disableNpcHook")));
-	
-	public static boolean hookNotified;
-	
+    public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")
+            && Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && (System.getProperty("skript.disableNcpHook") == null || !Boolean.parseBoolean(System.getProperty("skript.disableNpcHook")));
+
+    public static boolean hookNotified;
+
     static {
         Skript.registerEffect(EffPush.class, "(push|thrust) %entities% %direction% [(at|with) (speed|velocity|force) %-number%]");
     }
@@ -73,8 +71,8 @@ public final class EffPush extends Effect {
         direction = (Expression<Direction>) exprs[1];
         speed = (Expression<Number>) exprs[2];
         if (hasNoCheatPlus && !hookNotified) {
-        	Skript.info("Hooked to NoCheatPlus");
-        	hookNotified = true;
+            Skript.info("Hooked to NoCheatPlus");
+            hookNotified = true;
         }
         return true;
     }
@@ -95,10 +93,10 @@ public final class EffPush extends Effect {
                 mod.normalize().multiply(v.doubleValue());
             final boolean flag = en instanceof Player && hasNoCheatPlus;
             if (flag)
-            	NCPExemptionManager.exemptPermanently((Player) en);
+                NCPExemptionManager.exemptPermanently((Player) en);
             en.setVelocity(en.getVelocity().add(mod));
             if (flag)
-            	NCPExemptionManager.unexempt((Player) en);
+                NCPExemptionManager.unexempt((Player) en);
         }
     }
 

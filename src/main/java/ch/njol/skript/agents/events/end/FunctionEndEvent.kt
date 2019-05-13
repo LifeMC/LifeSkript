@@ -21,35 +21,36 @@
  */
 
 @file:JvmName("FunctionEndEvent")
+
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.lang.function.Function
 
 data class FunctionEndEvent(
-    /**
-     * The function ended executing.
-     */
-    @JvmField val function: Function<*>,
+        /**
+         * The function ended executing.
+         */
+        @JvmField val function: Function<*>,
 
-    /**
-     * The arguments used to execute function.
-     */
-    @JvmField val arguments: Array<Array<Any>>,
+        /**
+         * The arguments used to execute function.
+         */
+        @JvmField val arguments: Array<Array<Any>>,
 
-    /**
-     * The start time of the function.
-     * Determined by nanoseconds, provided by
-     * [java.lang.System.nanoTime].
-     */
-    @JvmField val startTime: Long,
+        /**
+         * The start time of the function.
+         * Determined by nanoseconds, provided by
+         * [java.lang.System.nanoTime].
+         */
+        @JvmField val startTime: Long,
 
-    /**
-     * The end time of the function.
-     * Determined by nanoseconds, provided by
-     * [java.lang.System.nanoTime].
-     */
-    @JvmField val endTime: Long
+        /**
+         * The end time of the function.
+         * Determined by nanoseconds, provided by
+         * [java.lang.System.nanoTime].
+         */
+        @JvmField val endTime: Long
 ) : AgentEvent() {
 
     override fun equals(other: Any?): Boolean {

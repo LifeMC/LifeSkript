@@ -81,8 +81,8 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
             if (!Claim.class.isAssignableFrom(getClaim.getReturnType()))
                 getClaim = null;
         } catch (final NoSuchMethodException | SecurityException e) {
-        	if (Skript.testing() || Skript.debug())
-        		Skript.exception(e);
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
         }
         try {
             claimsField = DataStore.class.getDeclaredField("claims");
@@ -90,8 +90,8 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
             if (!List.class.isAssignableFrom(claimsField.getType()))
                 claimsField = null;
         } catch (final NoSuchFieldException | SecurityException e) {
-        	if (Skript.testing() || Skript.debug())
-        		Skript.exception(e);
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
         }
         if (getClaim == null && claimsField == null) {
             Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "." + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");
@@ -207,7 +207,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         public Collection<OfflinePlayer> getOwners() {
             if (supportsUUIDs)
                 return Collections.singletonList(Bukkit.getOfflinePlayer(claim.ownerID));
-			return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
+            return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
         }
 
         @Override

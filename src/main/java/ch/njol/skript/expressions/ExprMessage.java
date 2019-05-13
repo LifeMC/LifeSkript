@@ -120,7 +120,7 @@ public final class ExprMessage extends SimpleExpression<String> {
             String get(final Event e) {
                 if (PlayerChatEventHandler.usesAsyncEvent)
                     return ((AsyncPlayerChatEvent) e).getMessage();
-				return ((PlayerChatEvent) e).getMessage();
+                return ((PlayerChatEvent) e).getMessage();
             }
 
             @Override
@@ -149,7 +149,7 @@ public final class ExprMessage extends SimpleExpression<String> {
             String get(final Event e) {
                 if (e instanceof PlayerKickEvent)
                     return ((PlayerKickEvent) e).getLeaveMessage();
-				return ((PlayerQuitEvent) e).getQuitMessage();
+                return ((PlayerQuitEvent) e).getQuitMessage();
             }
 
             @Override

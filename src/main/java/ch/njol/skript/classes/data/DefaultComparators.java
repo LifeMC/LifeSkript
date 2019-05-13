@@ -53,10 +53,6 @@ import java.util.Map.Entry;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultComparators {
 
-    private DefaultComparators() {
-        throw new UnsupportedOperationException();
-    }
-	
     // EntityData - ItemType
     static final LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>();
     public static final Comparator<EntityData, ItemType> entityItemComparator = new Comparator<EntityData, ItemType>() {
@@ -82,6 +78,51 @@ public final class DefaultComparators {
             return false;
         }
     };
+
+    static {
+        // to fix comparisons of eggs, arrows, etc. (e.g. 'projectile is an arrow')
+        // TODO !Update with every version [entities]
+        if (Skript.classExists("org.bukkit.entity.Boat")) {
+            try {
+                entityMaterials.put(Boat.class, Material.BOAT);
+            } catch (final NoSuchFieldError ignored) {
+                /* ignored */
+            }
+        }
+        entityMaterials.put(Painting.class, Material.PAINTING);
+        entityMaterials.put(Arrow.class, Material.ARROW);
+        entityMaterials.put(Egg.class, Material.EGG);
+        entityMaterials.put(Chicken.class, Material.RAW_CHICKEN);
+        entityMaterials.put(EnderPearl.class, Material.ENDER_PEARL);
+        entityMaterials.put(Snowball.class, Material.SNOW_BALL);
+        entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);
+        if (Skript.classExists("org.bukkit.entity.FishHook")) {
+            entityMaterials.put(FishHook.class, Material.FISHING_ROD);
+        } else if (Skript.classExists("org.bukkit.entity.Fish")) {
+            entityMaterials.put(Fish.class, Material.FISHING_ROD);
+        }
+        entityMaterials.put(TNTPrimed.class, Material.TNT);
+        entityMaterials.put(Slime.class, Material.SLIME_BALL);
+        if (Skript.classExists("org.bukkit.entity.ItemFrame"))
+            entityMaterials.put(ItemFrame.class, Material.ITEM_FRAME);
+        if (Skript.classExists("org.bukkit.entity.Firework"))
+            entityMaterials.put(Firework.class, Material.FIREWORK);
+        if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
+            entityMaterials.put(org.bukkit.entity.minecart.StorageMinecart.class, Material.STORAGE_MINECART);
+            entityMaterials.put(org.bukkit.entity.minecart.PoweredMinecart.class, Material.POWERED_MINECART);
+            entityMaterials.put(RideableMinecart.class, Material.MINECART);
+            entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
+            entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
+        } else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
+            entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
+            entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
+        }
+        entityMaterials.put(Minecart.class, Material.MINECART);
+    }
+
+    private DefaultComparators() {
+        throw new UnsupportedOperationException();
+    }
 
     public static final void init() {
         // Number - Number
@@ -370,46 +411,5 @@ public final class DefaultComparators {
             }
         });
         Comparators.registerComparator(EntityData.class, ItemType.class, entityItemComparator);
-    }
-
-    static {
-        // to fix comparisons of eggs, arrows, etc. (e.g. 'projectile is an arrow')
-        // TODO !Update with every version [entities]
-        if (Skript.classExists("org.bukkit.entity.Boat")) {
-            try {
-                entityMaterials.put(Boat.class, Material.BOAT);
-            } catch (final NoSuchFieldError ignored) {
-                /* ignored */
-            }
-        }
-        entityMaterials.put(Painting.class, Material.PAINTING);
-        entityMaterials.put(Arrow.class, Material.ARROW);
-        entityMaterials.put(Egg.class, Material.EGG);
-        entityMaterials.put(Chicken.class, Material.RAW_CHICKEN);
-        entityMaterials.put(EnderPearl.class, Material.ENDER_PEARL);
-        entityMaterials.put(Snowball.class, Material.SNOW_BALL);
-        entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);
-        if (Skript.classExists("org.bukkit.entity.FishHook")) {
-            entityMaterials.put(FishHook.class, Material.FISHING_ROD);
-        } else if (Skript.classExists("org.bukkit.entity.Fish")) {
-            entityMaterials.put(Fish.class, Material.FISHING_ROD);
-        }
-        entityMaterials.put(TNTPrimed.class, Material.TNT);
-        entityMaterials.put(Slime.class, Material.SLIME_BALL);
-        if (Skript.classExists("org.bukkit.entity.ItemFrame"))
-            entityMaterials.put(ItemFrame.class, Material.ITEM_FRAME);
-        if (Skript.classExists("org.bukkit.entity.Firework"))
-            entityMaterials.put(Firework.class, Material.FIREWORK);
-        if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
-            entityMaterials.put(org.bukkit.entity.minecart.StorageMinecart.class, Material.STORAGE_MINECART);
-            entityMaterials.put(org.bukkit.entity.minecart.PoweredMinecart.class, Material.POWERED_MINECART);
-            entityMaterials.put(RideableMinecart.class, Material.MINECART);
-            entityMaterials.put(HopperMinecart.class, Material.HOPPER_MINECART);
-            entityMaterials.put(ExplosiveMinecart.class, Material.EXPLOSIVE_MINECART);
-        } else if (Skript.classExists("org.bukkit.entity.StorageMinecart")) {
-            entityMaterials.put(StorageMinecart.class, Material.STORAGE_MINECART);
-            entityMaterials.put(PoweredMinecart.class, Material.POWERED_MINECART);
-        }
-        entityMaterials.put(Minecart.class, Material.MINECART);
     }
 }

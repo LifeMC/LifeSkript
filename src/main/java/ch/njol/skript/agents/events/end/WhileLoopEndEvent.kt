@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("WhileLoopEndEvent")
+
 package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent

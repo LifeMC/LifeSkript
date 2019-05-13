@@ -68,7 +68,7 @@ public final class ExprWeather extends PropertyExpression<World, WeatherType> {
             public WeatherType get(final World w) {
                 if (getTime() >= 0 && e instanceof WeatherEvent && w.equals(((WeatherEvent) e).getWorld()) && !Delay.isDelayed(e))
                     return WeatherType.fromEvent((WeatherEvent) e);
-				return WeatherType.fromWorld(w);
+                return WeatherType.fromWorld(w);
             }
         });
     }

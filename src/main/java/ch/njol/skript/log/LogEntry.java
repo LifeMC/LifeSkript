@@ -71,7 +71,7 @@ public final class LogEntry {
     }
 
     @SuppressWarnings("null")
-	public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
+    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
         this.level = level;
         this.quality = quality;
         this.message = message;

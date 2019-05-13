@@ -40,7 +40,10 @@ import ch.njol.util.coll.iterator.IteratorIterable;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -56,10 +59,6 @@ import java.util.regex.Pattern;
 @SuppressFBWarnings("ES_COMPARING_STRINGS_WITH_EQ")
 public final class Documentation {
 
-    private Documentation() {
-        throw new UnsupportedOperationException();
-    }
-
     public static final boolean generate = Skript.testing() && new File(Skript.getInstance().getDataFolder(), "generate-doc").exists(); // don't generate the documentation on normal servers
     private static final ArrayList<Pattern> validation = new ArrayList<>();
     private static final String[] urls = {"expressions", "effects", "conditions"};
@@ -69,10 +68,14 @@ public final class Documentation {
         validation.add(Pattern.compile("(?<!</a|'|br ?/|/?(i|b|u|code|pre|ul|li|em))" + ">"));
     }
 
+    private Documentation() {
+        throw new UnsupportedOperationException();
+    }
+
     public static final void generate() {
         if (!generate)
             return;
-        try(final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), StandardCharsets.UTF_8))) {
+        try (final PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(new File(Skript.getInstance().getDataFolder(), "doc.sql")), StandardCharsets.UTF_8))) {
             asSql(pw);
             pw.flush();
         } catch (final Throwable tw) {
@@ -313,8 +316,8 @@ public final class Documentation {
                                 Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
                                 continue;
                             } catch (final ClassNotFoundException e) {
-                            	if (Skript.testing() || Skript.debug())
-                            		Skript.exception(e);
+                                if (Skript.testing() || Skript.debug())
+                                    Skript.exception(e);
                             }
                         }
                         break;

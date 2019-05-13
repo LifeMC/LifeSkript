@@ -97,31 +97,31 @@ public final class ExprEntities extends SimpleExpression<Entity> {
         if (getNearbyEntities) {
             return l.getWorld().getNearbyEntities(l, x, y, z);
         }
-		// Don't try it, known to be not exist
-		if (hardFail) {
+        // Don't try it, known to be not exist
+        if (hardFail) {
 
-		    // Return empty collection. The warning should be already printed in first hard fail.
-		    return Collections.emptyList();
-		}
-		try {
+            // Return empty collection. The warning should be already printed in first hard fail.
+            return Collections.emptyList();
+        }
+        try {
 
-		    // Try it
-		    final Collection<Entity> col = l.getWorld().getNearbyEntities(l, x, y, z);
+            // Try it
+            final Collection<Entity> col = l.getWorld().getNearbyEntities(l, x, y, z);
 
-		    // Success
-		    hardFail = false;
-		    return col;
+            // Success
+            hardFail = false;
+            return col;
 
-		} catch (final NoSuchMethodError e) { // Method not exists
+        } catch (final NoSuchMethodError e) { // Method not exists
 
-		    if (!hardFail) { // Give the warning only in first use
-		        Skript.warning("This server version not supports getNearbyEntities method. This method is only available on minecraft 1.8 and above. The LifeSpigot adds this method to lower versions. Look it LifeSpigot if you want to fix this issue, or just don't use the entities expression.");
-		    }
+            if (!hardFail) { // Give the warning only in first use
+                Skript.warning("This server version not supports getNearbyEntities method. This method is only available on minecraft 1.8 and above. The LifeSpigot adds this method to lower versions. Look it LifeSpigot if you want to fix this issue, or just don't use the entities expression.");
+            }
 
-		    // Return empty collection (list) in case of a hard fail.
-		    hardFail = true;
-		    return Collections.emptyList();
-		}
+            // Return empty collection (list) in case of a hard fail.
+            hardFail = true;
+            return Collections.emptyList();
+        }
     }
 
     @SuppressWarnings({"unchecked", "null"})
@@ -175,7 +175,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
                 l.add(iter.next());
             return l.toArray((Entity[]) Array.newInstance(returnType, l.size()));
         }
-		return EntityData.getAll(types.getAll(e), returnType, worlds != null ? worlds.getArray(e) : null);
+        return EntityData.getAll(types.getAll(e), returnType, worlds != null ? worlds.getArray(e) : null);
     }
 
     @SuppressWarnings("unchecked")
@@ -235,37 +235,37 @@ public final class ExprEntities extends SimpleExpression<Entity> {
                 return false;
             });
         }
-		if (worlds == null && returnType == Player.class)
-		    return super.iterator(e);
-		return new NonNullIterator<Entity>() {
+        if (worlds == null && returnType == Player.class)
+            return super.iterator(e);
+        return new NonNullIterator<Entity>() {
 
-		    private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
-		    private final EntityData<?>[] ts = types.getAll(e);
-		    private int w = -1;
-		    @Nullable
-		    private Iterator<? extends Entity> curIter;
+            private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
+            private final EntityData<?>[] ts = types.getAll(e);
+            private int w = -1;
+            @Nullable
+            private Iterator<? extends Entity> curIter;
 
-		    @Override
-		    @Nullable
-		    protected Entity getNext() {
-		        while (Skript.isSkriptRunning()) {
-		            while (curIter == null || !curIter.hasNext()) {
-		                w++;
-		                if (w == ws.length)
-		                    return null;
-		                curIter = ws[w].getEntitiesByClass(returnType).iterator();
-		            }
-		            while (curIter.hasNext()) {
-		                final Entity current = curIter.next();
-		                for (final EntityData<?> t : ts) {
-		                    if (t.isInstance(current))
-		                        return current;
-		                }
-		            }
-		        }
-		        return null;
-		    }
-		};
+            @Override
+            @Nullable
+            protected Entity getNext() {
+                while (Skript.isSkriptRunning()) {
+                    while (curIter == null || !curIter.hasNext()) {
+                        w++;
+                        if (w == ws.length)
+                            return null;
+                        curIter = ws[w].getEntitiesByClass(returnType).iterator();
+                    }
+                    while (curIter.hasNext()) {
+                        final Entity current = curIter.next();
+                        for (final EntityData<?> t : ts) {
+                            if (t.isInstance(current))
+                                return current;
+                        }
+                    }
+                }
+                return null;
+            }
+        };
     }
 
     @SuppressWarnings("null")

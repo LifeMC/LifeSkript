@@ -61,6 +61,7 @@ public final class PlayerUtils {
 
     @Nullable
     private static Method getOnlinePlayers;
+    private static boolean cached;
 
     private PlayerUtils() {
         throw new UnsupportedOperationException();
@@ -71,43 +72,41 @@ public final class PlayerUtils {
             inviUpdate.add(p);
     }
 
-    private static boolean cached;
-
     @SuppressWarnings({"null", "unchecked"})
     public static final Collection<? extends Player> getOnlinePlayers() {
         if (hasCollecionGetOnlinePlayers) {
             return Bukkit.getOnlinePlayers();
         }
-		// Return directly to improve performance and fix some bugs
-		// Hope everything goes well and it works. :C
-		if (cached) {
-		    return Bukkit.getOnlinePlayers();
-		}
-		// Is running minecraft mehod checks if version is - at least - >= given version.
-		cached = Skript.isRunningMinecraft(1, 7, 10);
-		if (cached)
-		    return Bukkit.getOnlinePlayers();
-		// Handle other versions here
-		if (getOnlinePlayers == null) {
-		    try {
-		        getOnlinePlayers = Bukkit.class.getDeclaredMethod("getOnlinePlayers");
-		    } catch (final NoSuchMethodException e) {
-		        Skript.outdatedError(e);
-		    } catch (final SecurityException e) {
-		        Skript.exception(e);
-		    }
-		}
-		try {
-		    final Object o = getOnlinePlayers.invoke(null);
-		    if (o instanceof Collection<?>)
-		        return (Collection<? extends Player>) o;
-			return Arrays.asList((Player[]) o);
-		} catch (final IllegalAccessException | IllegalArgumentException e) {
-		    Skript.outdatedError(e);
-		} catch (final InvocationTargetException e) {
-		    throw Skript.exception(e);
-		}
-		throw new EmptyStackException();
+        // Return directly to improve performance and fix some bugs
+        // Hope everything goes well and it works. :C
+        if (cached) {
+            return Bukkit.getOnlinePlayers();
+        }
+        // Is running minecraft mehod checks if version is - at least - >= given version.
+        cached = Skript.isRunningMinecraft(1, 7, 10);
+        if (cached)
+            return Bukkit.getOnlinePlayers();
+        // Handle other versions here
+        if (getOnlinePlayers == null) {
+            try {
+                getOnlinePlayers = Bukkit.class.getDeclaredMethod("getOnlinePlayers");
+            } catch (final NoSuchMethodException e) {
+                Skript.outdatedError(e);
+            } catch (final SecurityException e) {
+                Skript.exception(e);
+            }
+        }
+        try {
+            final Object o = getOnlinePlayers.invoke(null);
+            if (o instanceof Collection<?>)
+                return (Collection<? extends Player>) o;
+            return Arrays.asList((Player[]) o);
+        } catch (final IllegalAccessException | IllegalArgumentException e) {
+            Skript.outdatedError(e);
+        } catch (final InvocationTargetException e) {
+            throw Skript.exception(e);
+        }
+        throw new EmptyStackException();
     }
 
 }

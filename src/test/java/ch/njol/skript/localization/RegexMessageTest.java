@@ -32,7 +32,7 @@ import static kotlin.test.AssertionsKt.assertTrue;
 public final class RegexMessageTest {
 
     @SuppressWarnings("static-method")
-	@Test
+    @Test
     public void testRegexMessage() {
 
         final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};

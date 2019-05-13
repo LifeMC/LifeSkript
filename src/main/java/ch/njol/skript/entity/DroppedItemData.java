@@ -76,7 +76,7 @@ public final class DroppedItemData extends EntityData<Item> {
             }
             return false;
         }
-		return true;
+        return true;
     }
 
     @Override

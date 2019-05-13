@@ -64,7 +64,7 @@ public final class EffScriptOptionLoops extends Effect {
 
     @Override
     protected void execute(final Event e) {
-    	/* executed on parse-time */
+        /* executed on parse-time */
     }
 
 }

@@ -21,21 +21,22 @@
  */
 
 @file:JvmName("FunctionStartEvent")
+
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.lang.function.Function
 
 data class FunctionStartEvent(
-    /**
-     * The function that started executing.
-     */
-    @JvmField val function: Function<*>,
+        /**
+         * The function that started executing.
+         */
+        @JvmField val function: Function<*>,
 
-    /**
-     * The arguments used to execute function.
-     */
-    @JvmField val arguments: Array<Array<Any>>
+        /**
+         * The arguments used to execute function.
+         */
+        @JvmField val arguments: Array<Array<Any>>
 ) : AgentEvent() {
 
     override fun equals(other: Any?): Boolean {

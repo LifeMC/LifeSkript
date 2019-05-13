@@ -49,7 +49,7 @@ import java.util.Collection;
 public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
     static final Collection<Trigger> triggers = new ArrayList<>();
     @SuppressWarnings("null")
-	private static final EventExecutor executor = (listener, e) -> {
+    private static final EventExecutor executor = (listener, e) -> {
         if (e == null)
             return;
 
@@ -99,7 +99,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
             return;
         for (final Class<? extends Event> c : new Class[]{BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class})
             Bukkit.getPluginManager().registerEvent(c, new Listener() {
-            	/* empty */
+                /* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
     }
 

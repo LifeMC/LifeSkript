@@ -45,11 +45,11 @@ public final class PlayerChatEventHandler {
     public static final void registerChatEvent(final EventPriority priority, final EventExecutor executor, final boolean ignoreCancelled) {
         if (Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent"))
             Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
-            	/* empty */
+                /* empty */
             }, priority, executor, Skript.getInstance(), ignoreCancelled);
         else
             Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, new Listener() {
-            	/* empty */
+                /* empty */
             }, priority, executor, Skript.getInstance(), ignoreCancelled);
     }
 

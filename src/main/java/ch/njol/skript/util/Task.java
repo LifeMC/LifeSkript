@@ -47,20 +47,20 @@ public abstract class Task implements Runnable, Closeable {
     public Task(final Plugin plugin, final long delay, final long period) {
         this(plugin, delay, period, false);
     }
-    
+
     /**
      * does not automatically schedule
      */
     public Task(final Plugin plugin) {
-    	this(plugin, false);
+        this(plugin, false);
     }
-    
+
     /**
      * does not automatically schedule
      */
     public Task(final Plugin plugin, final boolean async) {
-    	this.plugin = plugin;
-    	this.async = async;
+        this.plugin = plugin;
+        this.async = async;
     }
 
     public Task(final Plugin plugin, final long delay, final long period, final boolean async) {
@@ -112,7 +112,7 @@ public abstract class Task implements Runnable, Closeable {
         } catch (final ExecutionException e) {
             Skript.exception(e);
         } catch (final InterruptedException | CancellationException | ThreadDeath ignored) {
-			// server shutting down
+            // server shutting down
         }
         return null;
     }
@@ -124,7 +124,7 @@ public abstract class Task implements Runnable, Closeable {
      */
     @SuppressWarnings("deprecation")
     public void schedule(final long delay) {
-    	final Skript instance = Skript.instance;
+        final Skript instance = Skript.instance;
         if (instance == null || !instance.isEnabled())
             return;
         assert !isAlive();

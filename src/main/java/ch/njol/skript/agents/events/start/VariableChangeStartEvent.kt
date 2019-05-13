@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("VariableChangeStartEvent")
+
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
@@ -33,14 +34,14 @@ import ch.njol.skript.lang.Variable
  * @since 2.2-V13b
  */
 data class VariableChangeStartEvent(
-    /**
-     * The variable being changed.
-     */
-    @JvmField val variable: Variable<*>,
-	/**
-	 * The new value of the variable.
-	 */
-	@JvmField val newValue: Array<Any?>?
+        /**
+         * The variable being changed.
+         */
+        @JvmField val variable: Variable<*>,
+        /**
+         * The new value of the variable.
+         */
+        @JvmField val newValue: Array<Any?>?
 ) : AgentEvent() {
 
     override fun equals(other: Any?): Boolean {

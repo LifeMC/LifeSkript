@@ -165,7 +165,8 @@ internal constructor(
     /**
      * The all agent event listeners for this agent.
      */
-    @JvmField @JvmSynthetic
+    @JvmField
+    @JvmSynthetic
     internal val listeners: MutableList<Class<out AgentEvent>>
 
     init {

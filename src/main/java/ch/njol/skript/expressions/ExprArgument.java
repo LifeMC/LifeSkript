@@ -167,7 +167,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     @Nullable
     protected Object[] get(final Event e) {
         if (e instanceof ScriptCommandEvent)

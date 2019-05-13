@@ -21,6 +21,7 @@
  */
 
 @file:JvmName("ResolverTrackerAgent")
+
 package ch.njol.skript.agents.defaults
 
 import ch.njol.skript.Skript
@@ -34,16 +35,17 @@ import org.bukkit.command.CommandSender
 import java.util.function.Consumer
 
 data class ResolverTrackerAgent(
-    /**
-     * The out, we report statistics to it.
-     */
-    @JvmField val out: CommandSender
+        /**
+         * The out, we report statistics to it.
+         */
+        @JvmField val out: CommandSender
 ) : TrackerAgent {
 
     /**
      * The skript agent we registered.
      */
-    @JvmField var agent: SkriptAgent? = null
+    @JvmField
+    var agent: SkriptAgent? = null
 
     init {
         // Sanity checks

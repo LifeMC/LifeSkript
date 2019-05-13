@@ -46,7 +46,7 @@ public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElem
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     public int hashCode() {
         return returnType != null ? returnType.hashCode() : 0;
     }

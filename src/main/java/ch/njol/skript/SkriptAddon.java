@@ -125,7 +125,7 @@ public final class SkriptAddon {
                         final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
                         // TODO Actually test this - it might break some things.
                         //if (c.contains("$"))
-                            //Skript.debug("Skipping loading of \"" + c + "\", it contains illegal characters, probably a lambda or such.");
+                        //Skript.debug("Skipping loading of \"" + c + "\", it contains illegal characters, probably a lambda or such.");
                         try {
                             Class.forName(c, true, plugin.getClass().getClassLoader());
                             loadedClasses.incrementAndGet(); // successfully loaded

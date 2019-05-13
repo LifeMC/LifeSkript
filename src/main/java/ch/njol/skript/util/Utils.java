@@ -310,9 +310,9 @@ public final class Utils {
                 return "An " + s;
             return "an " + s;
         }
-		if (capA)
-		    return "A " + s;
-		return "a " + s;
+        if (capA)
+            return "A " + s;
+        return "a " + s;
     }
 
     /**
@@ -386,7 +386,7 @@ public final class Utils {
      * @return message with localised chat styles converted to Minecraft's format
      */
     @SuppressWarnings("null")
-	public static String replaceChatStyles(final String message) {
+    public static String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
         String m = StringUtils.replaceAll(message.replace("<<none>>", ""), stylePattern, m1 -> {

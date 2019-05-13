@@ -52,8 +52,8 @@ public final class While extends TriggerSection {
         if (c.check(e)) {
             return walk(e, true);
         }
-		debug(e, false);
-		return actualNext;
+        debug(e, false);
+        return actualNext;
     }
 
     @Override

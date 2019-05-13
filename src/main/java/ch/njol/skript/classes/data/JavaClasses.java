@@ -52,7 +52,7 @@ public final class JavaClasses {
     private JavaClasses() {
         throw new UnsupportedOperationException();
     }
-    
+
     public static final void init() {
         Classes.registerClass(new ClassInfo<>(Object.class, "object").user("objects?").name("Object").description("The supertype of all types, meaning that if %object% is used in e.g. a condition it will accept all kinds of expressions.").usage("").examples("").since("1.0"));
 
@@ -75,9 +75,9 @@ public final class JavaClasses {
                                     return null;
                                 return Double.parseDouble(str) / 100;
                             }
-							if (!SkriptParser.isIntegerOrDouble(s))
-							    return null;
-							return Double.parseDouble(s);
+                            if (!SkriptParser.isIntegerOrDouble(s))
+                                return null;
+                            return Double.parseDouble(s);
                         } catch (final NumberFormatException e) {
                             Skript.exception(e);
                             return null;
@@ -277,9 +277,9 @@ public final class JavaClasses {
                             return null;
                         return Double.parseDouble(str) / 100;
                     }
-					if (!SkriptParser.isIntegerOrDouble(s))
-					    return null;
-					return Double.parseDouble(s);
+                    if (!SkriptParser.isIntegerOrDouble(s))
+                        return null;
+                    return Double.parseDouble(s);
                 } catch (final NumberFormatException e) {
                     return null;
                 }
@@ -398,6 +398,8 @@ public final class JavaClasses {
         Classes.registerClass(new ClassInfo<>(Boolean.class, "boolean").user("booleans?").name("Boolean").description("A boolean is a value that is either true or false. Other accepted names are 'on' and 'yes' for true, and 'off' and 'no' for false.").usage("true/yes/on or false/no/off").examples("set {config.%player%.use mod} to false").since("1.0").parser(new Parser<Boolean>() {
             private final RegexMessage truePattern = new RegexMessage("boolean.true.pattern");
             private final RegexMessage falsePattern = new RegexMessage("boolean.false.pattern");
+            private final Message trueName = new Message("boolean.true.name");
+            private final Message falseName = new Message("boolean.false.name");
 
             @Override
             @Nullable
@@ -408,9 +410,6 @@ public final class JavaClasses {
                     return Boolean.FALSE;
                 return null;
             }
-
-            private final Message trueName = new Message("boolean.true.name");
-            private final Message falseName = new Message("boolean.false.name");
 
             @Override
             public String toString(final Boolean b, final int flags) {

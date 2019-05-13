@@ -83,9 +83,9 @@ public final class EffColorArmor extends Effect {
         if (color != null) {
             return "dye " + items.toString(e, debug) + " " + color.toString(e, debug);
         }
-		final Expression<Number>[] rgb = this.rgb;
-		assert rgb != null;
-		return "dye " + items.toString(e, debug) + " (" + rgb[0].toString(e, debug) + "," + rgb[1].toString(e, debug) + "," + rgb[2].toString(e, debug) + ")";
+        final Expression<Number>[] rgb = this.rgb;
+        assert rgb != null;
+        return "dye " + items.toString(e, debug) + " (" + rgb[0].toString(e, debug) + "," + rgb[1].toString(e, debug) + "," + rgb[2].toString(e, debug) + ")";
     }
 
     @Override

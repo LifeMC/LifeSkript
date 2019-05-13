@@ -47,27 +47,27 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
+    public static final Listener listener = new Listener() {
+        /* empty */
+    };
     static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
     private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>();
     /**
      * Stores which events are currently registered with Bukkit
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
-    public static final Listener listener = new Listener() {
-    	/* empty */
-    };
     @Nullable
     public static Event last;
     static long startTrigger;
     private static long startEvent;
     public static final EventExecutor ee = (final @Nullable Listener l, final @Nullable Event e) -> {
-	    if (e == null)
-	        return;
-	    if (last == e) // an event is received multiple times if multiple superclasses of it are registered
-	        return;
-	    last = e;
-	    check(e);
-	};
+        if (e == null)
+            return;
+        if (last == e) // an event is received multiple times if multiple superclasses of it are registered
+            return;
+        last = e;
+        check(e);
+    };
 
     private SkriptEventHandler() {
         throw new UnsupportedOperationException();
@@ -88,8 +88,7 @@ public final class SkriptEventHandler {
                 while (current == null || !current.hasNext()) {
                     if (e == null || !Event.class.isAssignableFrom(e))
                         return false;
-                    @SuppressWarnings("unlikely-arg-type")
-					final List<Trigger> l = triggers.get(e);
+                    @SuppressWarnings("unlikely-arg-type") final List<Trigger> l = triggers.get(e);
                     this.current = current = l == null ? null : l.iterator();
                     this.e = e = e.getSuperclass();
                 }
@@ -140,7 +139,7 @@ public final class SkriptEventHandler {
         if (e instanceof Cancellable && ((Cancellable) e).isCancelled() && !(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY) || e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
             // Not possible to listen for uncancelled events in Skript
             //if (Skript.logVeryHigh())
-                //Skript.info(e.getClass().getSimpleName() + " was cancelled");
+            //Skript.info(e.getClass().getSimpleName() + " was cancelled");
             return;
         }
 

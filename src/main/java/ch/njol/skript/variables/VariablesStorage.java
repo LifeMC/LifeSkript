@@ -136,12 +136,12 @@ public abstract class VariablesStorage implements Closeable {
                 Skript.error("The database file '" + file.getName() + "' must be an actual file, not a directory.");
                 return false;
             }
-			try {
-			    file.createNewFile();
-			} catch (final IOException e) {
-			    Skript.error("Cannot create the database file '" + file.getName() + "': " + e.getLocalizedMessage());
-			    return false;
-			}
+            try {
+                file.createNewFile();
+            } catch (final IOException e) {
+                Skript.error("Cannot create the database file '" + file.getName() + "': " + e.getLocalizedMessage());
+                return false;
+            }
             if (!file.canWrite()) {
                 Skript.error("Cannot write to the database file '" + file.getName() + "'!");
                 return false;

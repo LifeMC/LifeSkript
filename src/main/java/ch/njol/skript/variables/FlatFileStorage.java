@@ -156,8 +156,8 @@ public final class FlatFileStorage extends VariablesStorage {
                             update2_0_beta3 = varVersion.isSmallerThan(v2_0_beta3);
                             update2_1 = varVersion.isSmallerThan(v2_1);
                         } catch (final IllegalArgumentException e) {
-                        	if (Skript.testing() || Skript.debug())
-                        		Skript.exception(e);
+                            if (Skript.testing() || Skript.debug())
+                                Skript.exception(e);
                         }
                     }
                     continue;

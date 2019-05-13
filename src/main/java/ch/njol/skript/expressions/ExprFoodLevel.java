@@ -69,7 +69,7 @@ public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
                 if (getTime() >= 0 && e instanceof FoodLevelChangeEvent && p.equals(((FoodLevelChangeEvent) e).getEntity()) && !Delay.isDelayed(e)) {
                     return 0.5f * ((FoodLevelChangeEvent) e).getFoodLevel();
                 }
-				return 0.5f * p.getFoodLevel();
+                return 0.5f * p.getFoodLevel();
             }
         });
     }

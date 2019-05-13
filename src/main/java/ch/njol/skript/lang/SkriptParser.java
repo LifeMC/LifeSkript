@@ -109,10 +109,10 @@ public final class SkriptParser {
      * @param context The parse context
      */
     @SuppressWarnings("null")
-	public SkriptParser(final String expr, final int flags, final ParseContext context) {
+    public SkriptParser(final String expr, final int flags, final ParseContext context) {
         assert expr != null;
         assert (flags & ALL_FLAGS) != 0;
-        this.expr =  expr.trim();
+        this.expr = expr.trim();
         this.flags = flags;
         this.context = context;
     }
@@ -129,7 +129,7 @@ public final class SkriptParser {
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public static final <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
-        expr =  expr.trim();
+        expr = expr.trim();
         if (expr.isEmpty())
             return null;
         return new UnparsedLiteral(expr).getConvertedExpression(context, c);
@@ -141,9 +141,9 @@ public final class SkriptParser {
      * Can print an error.
      */
     @SuppressWarnings("null")
-	@Nullable
+    @Nullable
     public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
-        expr =  expr.trim();
+        expr = expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
             return null;
@@ -163,9 +163,9 @@ public final class SkriptParser {
     }
 
     @SuppressWarnings("null")
-	@Nullable
+    @Nullable
     public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
-        expr =  expr.trim();
+        expr = expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
             return null;
@@ -189,7 +189,7 @@ public final class SkriptParser {
      * Prints errors
      */
     @SuppressWarnings("null")
-	@Nullable
+    @Nullable
     private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
         if (varPattern.matcher(expr).matches())
             return Variable.newInstance(expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
@@ -455,25 +455,25 @@ public final class SkriptParser {
      * @return "not an x" or "neither an x, a y nor a z"
      */
     @SuppressWarnings("null")
-	public static final String notOfType(final Class<?>... cs) {
+    public static final String notOfType(final Class<?>... cs) {
         if (cs.length == 1) {
             final Class<?> c = cs[0];
             assert c != null;
             return Language.get("not") + " " + Classes.getSuperClassInfo(c).getName().withIndefiniteArticle();
         }
-		final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
-		for (int k = 0; k < cs.length; k++) {
-		    if (k != 0) {
-		        if (k != cs.length - 1)
-		            b.append(", ");
-		        else
-		            b.append(" ").append(Language.get("nor")).append(" ");
-		    }
-		    final Class<?> c = cs[k];
-		    assert c != null;
-		    b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
-		}
-		return b.toString();
+        final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
+        for (int k = 0; k < cs.length; k++) {
+            if (k != 0) {
+                if (k != cs.length - 1)
+                    b.append(", ");
+                else
+                    b.append(" ").append(Language.get("nor")).append(" ");
+            }
+            final Class<?> c = cs[k];
+            assert c != null;
+            b.append(Classes.getSuperClassInfo(c).getName().withIndefiniteArticle());
+        }
+        return b.toString();
     }
 
     /**
@@ -481,21 +481,21 @@ public final class SkriptParser {
      * @return "not an x" or "neither an x, a y nor a z"
      */
     @SuppressWarnings("null")
-	public static final String notOfType(final ClassInfo<?>... cs) {
+    public static final String notOfType(final ClassInfo<?>... cs) {
         if (cs.length == 1) {
             return Language.get("not") + " " + cs[0].getName().withIndefiniteArticle();
         }
-		final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
-		for (int k = 0; k < cs.length; k++) {
-		    if (k != 0) {
-		        if (k != cs.length - 1)
-		            b.append(", ");
-		        else
-		            b.append(" ").append(Language.get("nor")).append(" ");
-		    }
-		    b.append(cs[k].getName().withIndefiniteArticle());
-		}
-		return b.toString();
+        final StringBuilder b = new StringBuilder(Language.get("neither") + " ");
+        for (int k = 0; k < cs.length; k++) {
+            if (k != 0) {
+                if (k != cs.length - 1)
+                    b.append(", ");
+                else
+                    b.append(" ").append(Language.get("nor")).append(" ");
+            }
+            b.append(cs[k].getName().withIndefiniteArticle());
+        }
+        return b.toString();
     }
 
     /**
@@ -603,7 +603,7 @@ public final class SkriptParser {
                 final int j = pattern.indexOf('%', i + 1);
                 if (j == -1)
                     return error("Missing end sign '%' of expression. Escape the percent sign to match a literal '%': '\\%'");
-				final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( pattern.substring(i + 1, j));
+                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(pattern.substring(i + 1, j));
                 final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(p.getFirst());
                 if (ci == null)
                     return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
@@ -622,7 +622,7 @@ public final class SkriptParser {
         final boolean[] plurals = new boolean[ps.size()];
         for (int i = 0; i < plurals.length; i++)
             plurals[i] = ps.get(i);
-        return new NonNullPair<>( b.toString(), plurals);
+        return new NonNullPair<>(b.toString(), plurals);
     }
 
     @Nullable
@@ -655,36 +655,94 @@ public final class SkriptParser {
     }
 
     @SuppressWarnings("null")
-	private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
+    private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
         final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
         r.isOptional = s.startsWith("-");
         if (r.isOptional)
-            s =  s.substring(1);
+            s = s.substring(1);
         if (s.startsWith("*")) {
-            s =  s.substring(1);
+            s = s.substring(1);
             r.flagMask &= ~PARSE_EXPRESSIONS;
         } else if (s.startsWith("~")) {
-            s =  s.substring(1);
+            s = s.substring(1);
             r.flagMask &= ~PARSE_LITERALS;
         }
         if (!r.isOptional) {
             r.isOptional = s.startsWith("-");
             if (r.isOptional)
-                s =  s.substring(1);
+                s = s.substring(1);
         }
         final int a = s.indexOf('@');
         if (a != -1) {
             r.time = Integer.parseInt(s.substring(a + 1));
-            s =  s.substring(0, a);
+            s = s.substring(0, a);
         }
         final String[] classes = s.split("/");
         assert classes.length == r.classes.length;
         for (int i = 0; i < classes.length; i++) {
-            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural( classes[i]);
+            final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(classes[i]);
             r.classes[i] = Classes.getClassInfo(p.getFirst());
             r.isPlural[i] = p.getSecond();
         }
         return r;
+    }
+
+    /**
+     * Checks if the given string is a valid integer.
+     * <p>
+     * Use this method instead of catching exceptions, it is faster.
+     */
+    public static final boolean isInteger(final @Nullable String str) {
+        if (str == null) {
+            return false;
+        }
+        final int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            final char c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the given string is a valid integer or double.
+     * <p>
+     * Use this method instead of catching exceptions, it is faster.
+     */
+    public static final boolean isIntegerOrDouble(final @Nullable String str) {
+        if (str == null) {
+            return false;
+        }
+        final int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            final char c = str.charAt(i);
+            if ((c < '0' || c > '9') && c != '.') {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Nullable
@@ -797,13 +855,13 @@ public final class SkriptParser {
                         final Class<T>[] objTypes = (Class<T>[]) types;
                         return e.getConvertedExpression(objTypes);
                     }
-					for (final Class<? extends T> t : types) {
-					    final Expression<? extends T> r = e.getConvertedExpression(t);
-					    if (r != null) {
-					        log.printLog();
-					        return r;
-					    }
-					}
+                    for (final Class<? extends T> t : types) {
+                        final Expression<? extends T> r = e.getConvertedExpression(t);
+                        if (r != null) {
+                            log.printLog();
+                            return r;
+                        }
+                    }
                     log.printError(e.toString(null, false) + " " + Language.get("is") + " " + notOfType(types), ErrorQuality.NOT_AN_EXPRESSION);
                     return null;
                 }
@@ -901,7 +959,7 @@ public final class SkriptParser {
                 if (expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length()) {
                     log.clear();
                     log.printLog();
-                    return new SkriptParser(this,  expr.substring(1, expr.length() - 1)).parseExpression(types);
+                    return new SkriptParser(this, expr.substring(1, expr.length() - 1)).parseExpression(types);
                 }
                 if (isObject && (flags & PARSE_LITERALS) != 0) { // single expression - can return an UnparsedLiteral now
                     log.clear();
@@ -925,7 +983,7 @@ public final class SkriptParser {
                     if (b == 0 && a == pieces.size()) // i.e. the whole expression - already tried to parse above
                         continue;
                     final int x = pieces.get(b)[0], y = pieces.get(b + a - 1)[1];
-                    final String subExpr =  expr.substring(x, y).trim();
+                    final String subExpr = expr.substring(x, y).trim();
                     assert subExpr.length() < expr.length() : subExpr;
 
                     final Expression<? extends T> t;
@@ -1023,9 +1081,9 @@ public final class SkriptParser {
                 assert ls != null;
                 return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
-			final Expression<T>[] es = ts.toArray(new Expression[0]);
-			assert es != null;
-			return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
+            final Expression<T>[] es = ts.toArray(new Expression[0]);
+            assert es != null;
+            return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
         } finally {
             log.stop();
         }
@@ -1052,7 +1110,7 @@ public final class SkriptParser {
                 log.printError();
                 return null;
             }
-            final String functionName =  m.group(1);
+            final String functionName = m.group(1);
             final String args = m.group(2);
             final Expression<?>[] params;
             if (args.length() != 0) {
@@ -1149,64 +1207,6 @@ public final class SkriptParser {
         }
     }
 
-	/**
-	 * Checks if the given string is a valid integer.
-	 *
-	 * Use this method instead of catching exceptions, it is faster.
-	 */
-	public static final boolean isInteger(final @Nullable String str) {
-		if (str == null) {
-			return false;
-		}
-		final int length = str.length();
-		if (length == 0) {
-			return false;
-		}
-		int i = 0;
-		if (str.charAt(0) == '-') {
-			if (length == 1) {
-				return false;
-			}
-			i = 1;
-		}
-		for (; i < length; i++) {
-			final char c = str.charAt(i);
-			if (c < '0' || c > '9') {
-				return false;
-			}
-		}
-		return true;
-	}
-
-    /**
-     * Checks if the given string is a valid integer or double.
-     *
-     * Use this method instead of catching exceptions, it is faster.
-     */
-    public static final boolean isIntegerOrDouble(final @Nullable String str) {
-        if (str == null) {
-            return false;
-        }
-        final int length = str.length();
-        if (length == 0) {
-            return false;
-        }
-        int i = 0;
-        if (str.charAt(0) == '-') {
-            if (length == 1) {
-                return false;
-            }
-            i = 1;
-        }
-        for (; i < length; i++) {
-            final char c = str.charAt(i);
-            if ((c < '0' || c > '9') && c != '.') {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Prints errors
      *
@@ -1216,7 +1216,7 @@ public final class SkriptParser {
      * @return Parsed result or null on error (which does not imply that an error was printed)
      */
     @SuppressWarnings("null")
-	@Nullable
+    @Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
         ParseResult res;
         int end, i2;
@@ -1253,15 +1253,15 @@ public final class SkriptParser {
                                 if (j != pattern.length() - 1 && ('0' <= pattern.charAt(j + 1) && pattern.charAt(j + 1) <= '9' || pattern.charAt(j + 1) == '-')) {
                                     final int j2 = pattern.indexOf('¦', j + 2);
                                     if (j2 != -1) {
-										final String str = pattern.substring(j + 1, j2);
-										if (SkriptParser.isInteger(str)) {
-											try {
-												mark = Integer.parseInt(str);
-												j = j2;
-											} catch (final NumberFormatException e) {
-												Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
-											}
-										}
+                                        final String str = pattern.substring(j + 1, j2);
+                                        if (SkriptParser.isInteger(str)) {
+                                            try {
+                                                mark = Integer.parseInt(str);
+                                                j = j2;
+                                            } catch (final NumberFormatException e) {
+                                                Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                                            }
+                                        }
                                     }
                                 }
                                 res = parse_i(pattern, i, j + 1);
@@ -1311,15 +1311,15 @@ public final class SkriptParser {
                                         if ((flags & vi.flagMask) == 0)
                                             continue;
                                         log2.clear();
-                                        @SuppressWarnings("unchecked") final Expression<?> e = new SkriptParser( expr.substring(i, i2), flags & vi.flagMask, context).parseExpression(vi.classes[k].getC());
+                                        @SuppressWarnings("unchecked") final Expression<?> e = new SkriptParser(expr.substring(i, i2), flags & vi.flagMask, context).parseExpression(vi.classes[k].getC());
                                         if (e != null) {
                                             if (!vi.isPlural[k] && !e.isSingle()) {
                                                 if (context == ParseContext.COMMAND) {
                                                     Skript.error(Commands.m_too_many_arguments.toString(vi.classes[k].getName().getIndefiniteArticle(), vi.classes[k].getName().toString()), ErrorQuality.SEMANTIC_ERROR);
                                                     return null;
                                                 }
-												Skript.error("'" + expr.substring(0, i) + "<...>" + expr.substring(i2) + "' can only accept a single " + vi.classes[k].getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
-												return null;
+                                                Skript.error("'" + expr.substring(0, i) + "<...>" + expr.substring(i2) + "' can only accept a single " + vi.classes[k].getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
+                                                return null;
                                             }
                                             if (vi.time != 0) {
                                                 if (e instanceof Literal<?>)
@@ -1393,12 +1393,12 @@ public final class SkriptParser {
                             j = pattern.length();
                             break;
                         }
-						i = 0;
-						j++;
-						continue;
+                        i = 0;
+                        j++;
+                        continue;
                     }
-					j = newJ + 1;
-					break;
+                    j = newJ + 1;
+                    break;
                 case ' ':
                     if (i == 0 || i == expr.length() || i > 0 && expr.charAt(i - 1) == ' ') {
                         j++;

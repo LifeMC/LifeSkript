@@ -75,7 +75,8 @@ public final class SkriptCommand implements CommandExecutor {
     private static final File[] EMPTY_FILE_ARRAY = new File[0];
     private static final ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
-
+    private static final List<TrackerAgent> registeredTrackers =
+            new ArrayList<>();
     public static int oldPriority = Thread.NORM_PRIORITY;
 
     public static final void setPriority() {
@@ -138,7 +139,7 @@ public final class SkriptCommand implements CommandExecutor {
     private static File getScriptFromArgs(final CommandSender sender, final String[] args, final int start) {
         String script = StringUtils.join(args, " ", start, args.length);
         File f = getScriptFromName(script);
-        if (f == null){
+        if (f == null) {
             Skript.error(sender, (script.endsWith("/") || script.endsWith("\\") ? m_invalid_folder : m_invalid_script).toString(script));
             return null;
         }
@@ -146,7 +147,7 @@ public final class SkriptCommand implements CommandExecutor {
     }
 
     @Nullable
-    public static File getScriptFromName(String script){
+    public static File getScriptFromName(String script) {
         final boolean isFolder = script.endsWith("/") || script.endsWith("\\");
         if (isFolder) {
             script = script.replace('/', File.separatorChar).replace('\\', File.separatorChar);
@@ -172,9 +173,6 @@ public final class SkriptCommand implements CommandExecutor {
             return null;
         });
     }
-
-    private static final List<TrackerAgent> registeredTrackers =
-            new ArrayList<>();
 
     @SuppressWarnings("null")
     @Override
@@ -272,30 +270,30 @@ public final class SkriptCommand implements CommandExecutor {
                         }
                         return true;
                     }
-					final Collection<File> scripts;
-					try {
-					    scripts = toggleScripts(f, true);
-					} catch (final IOException e) {
-					    error(sender, "enable.folder.io error", f.getName(), ExceptionUtils.toString(e));
-					    return true;
-					}
-					if (scripts.isEmpty()) {
-					    info(sender, "enable.folder.empty", f.getName());
-					    return true;
-					}
-					info(sender, "enable.folder.enabling", f.getName(), scripts.size());
-					final File[] ss = scripts.toArray(new File[0]);
-					assert ss != null;
-					setPriority();
-					final ScriptInfo i = ScriptLoader.loadScripts(ss);
-					resetPriority();
-					assert i.files == scripts.size();
-					if (r.numErrors() == 0) {
-					    info(sender, "enable.folder.enabled", f.getName(), i.files);
-					} else {
-					    error(sender, "enable.folder.error", f.getName(), r.numErrors());
-					}
-					return true;
+                    final Collection<File> scripts;
+                    try {
+                        scripts = toggleScripts(f, true);
+                    } catch (final IOException e) {
+                        error(sender, "enable.folder.io error", f.getName(), ExceptionUtils.toString(e));
+                        return true;
+                    }
+                    if (scripts.isEmpty()) {
+                        info(sender, "enable.folder.empty", f.getName());
+                        return true;
+                    }
+                    info(sender, "enable.folder.enabling", f.getName(), scripts.size());
+                    final File[] ss = scripts.toArray(new File[0]);
+                    assert ss != null;
+                    setPriority();
+                    final ScriptInfo i = ScriptLoader.loadScripts(ss);
+                    resetPriority();
+                    assert i.files == scripts.size();
+                    if (r.numErrors() == 0) {
+                        info(sender, "enable.folder.enabled", f.getName(), i.files);
+                    } else {
+                        error(sender, "enable.folder.error", f.getName(), r.numErrors());
+                    }
+                    return true;
                 }
             } else if ("disable".equalsIgnoreCase(args[0])) {
                 if ("all".equalsIgnoreCase(args[1])) {
@@ -331,25 +329,25 @@ public final class SkriptCommand implements CommandExecutor {
                         info(sender, "disable.single.disabled", f.getName());
                         return true;
                     }
-					final Collection<File> scripts;
-					try {
-					    scripts = toggleScripts(f, false);
-					} catch (final IOException e) {
-					    error(sender, "disable.folder.io error", f.getName(), ExceptionUtils.toString(e));
-					    return true;
-					}
-					if (scripts.isEmpty()) {
-					    info(sender, "disable.folder.empty", f.getName());
-					    return true;
-					}
+                    final Collection<File> scripts;
+                    try {
+                        scripts = toggleScripts(f, false);
+                    } catch (final IOException e) {
+                        error(sender, "disable.folder.io error", f.getName(), ExceptionUtils.toString(e));
+                        return true;
+                    }
+                    if (scripts.isEmpty()) {
+                        info(sender, "disable.folder.empty", f.getName());
+                        return true;
+                    }
 
-					setPriority();
-					for (final File script : scripts)
-					    ScriptLoader.unloadScript(new File(script.getParentFile(), script.getName().substring(1)));
-					resetPriority();
+                    setPriority();
+                    for (final File script : scripts)
+                        ScriptLoader.unloadScript(new File(script.getParentFile(), script.getName().substring(1)));
+                    resetPriority();
 
-					info(sender, "disable.folder.disabled", f.getName(), scripts.size());
-					return true;
+                    info(sender, "disable.folder.disabled", f.getName(), scripts.size());
+                    return true;
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
                 if ("check".equalsIgnoreCase(args[1])) {

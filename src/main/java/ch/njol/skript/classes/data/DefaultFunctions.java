@@ -55,7 +55,7 @@ public final class DefaultFunctions {
     private static final String s(final double n) {
         return StringUtils.toString(n, 4);
     }
-	
+
     public static final void init() {
         final ClassInfo<Number> numberClass = Classes.getExactClassInfo(Number.class);
         final ClassInfo<Long> longClass = Classes.getExactClassInfo(Long.class);

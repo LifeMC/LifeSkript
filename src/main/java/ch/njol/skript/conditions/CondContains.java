@@ -96,14 +96,14 @@ public final class CondContains extends Condition {
             if (containers instanceof Variable && !containers.isSingle()) {
                 return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(container, item)), isNegated());
             }
-			if (container instanceof Inventory) {
-			    final Inventory invi = (Inventory) container;
-			    return items.check(e, (Checker<Object>) type -> type instanceof ItemType && ((ItemType) type).isContainedIn(invi), isNegated());
-			} else if (container instanceof String) {
-			    final String s = (String) container;
-			    return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
-			}
-			return false;
+            if (container instanceof Inventory) {
+                final Inventory invi = (Inventory) container;
+                return items.check(e, (Checker<Object>) type -> type instanceof ItemType && ((ItemType) type).isContainedIn(invi), isNegated());
+            } else if (container instanceof String) {
+                final String s = (String) container;
+                return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
+            }
+            return false;
         });
     }
 

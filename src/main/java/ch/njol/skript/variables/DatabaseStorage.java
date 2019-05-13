@@ -160,14 +160,14 @@ public final class DatabaseStorage extends VariablesStorage {
                 final boolean hasOldTable = db.isTable(OLD_TABLE_NAME);
                 final boolean hadNewTable = db.isTable(TABLE_NAME);
                 if (hasOldTable) {
-                    try(final ResultSet r1 = db.query("SELECT " + SELECT_ORDER + " FROM " + OLD_TABLE_NAME)) {
+                    try (final ResultSet r1 = db.query("SELECT " + SELECT_ORDER + " FROM " + OLD_TABLE_NAME)) {
                         assert r1 != null;
                         oldLoadVariables(r1, hadNewTable);
                     }
                 }
 
                 // new
-                try(final ResultSet r2 = db.query("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME)) {
+                try (final ResultSet r2 = db.query("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME)) {
                     assert r2 != null;
                     loadVariables(r2);
                 }
@@ -263,7 +263,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try {
                     Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
                 } catch (final InterruptedException ignored) {
-                	break;
+                    break;
                 }
             }
         }, "Skript database '" + databaseName + "' transaction committing thread").start();
@@ -273,7 +273,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try { // variables were just downloaded, not need to check for modifications straight away
                     Thread.sleep(monitorInterval);
                 } catch (final InterruptedException ignored) {
-                	return;
+                    return;
                 }
 
                 long lastWarning = Long.MIN_VALUE;
@@ -292,7 +292,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         try {
                             Thread.sleep(next - System.currentTimeMillis());
                         } catch (final InterruptedException ignored) {
-                        	break;
+                            break;
                         }
                     }
                 }
@@ -356,7 +356,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (writeQuery != null)
                         writeQuery.close();
                 } catch (final SQLException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
                 writeQuery = db.prepare("REPLACE INTO " + TABLE_NAME + " (name, type, value, update_guid) VALUES (?, ?, ?, ?)");
 
@@ -364,7 +364,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (deleteQuery != null)
                         deleteQuery.close();
                 } catch (final SQLException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
                 deleteQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE name = ?");
 
@@ -372,14 +372,14 @@ public final class DatabaseStorage extends VariablesStorage {
                     if (monitorQuery != null)
                         monitorQuery.close();
                 } catch (final SQLException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
                 monitorQuery = db.prepare("SELECT " + SELECT_ORDER + " FROM " + TABLE_NAME + " WHERE rowid > ? AND update_guid != ?");
                 try {
                     if (monitorCleanUpQuery != null)
                         monitorCleanUpQuery.close();
                 } catch (final SQLException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
                 monitorCleanUpQuery = db.prepare("DELETE FROM " + TABLE_NAME + " WHERE value IS NULL AND rowid < ?");
             } catch (final SQLException e) {
@@ -525,9 +525,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         Variables.variableLoaded(name, null, DatabaseStorage.this);
                     } else {
                         final ClassInfo<?> c = Classes.getClassInfoNoError(type);
-                        @SuppressWarnings("unused")
-						final
-                        Serializer<?> s;
+                        @SuppressWarnings("unused") final Serializer<?> s;
                         if (c == null || c.getSerializer() == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
                             continue;
@@ -641,8 +639,7 @@ public final class DatabaseStorage extends VariablesStorage {
             }
         };
 
-        @SuppressWarnings("null")
-		final SQLException e = Task.callSync(() -> {
+        @SuppressWarnings("null") final SQLException e = Task.callSync(() -> {
             try {
                 while (r.next()) {
                     int i = 1;
@@ -666,8 +663,7 @@ public final class DatabaseStorage extends VariablesStorage {
 //					if (s.mustSyncDeserialization()) {
 //						oldSyncDeserializing.add(new OldVariableInfo(name, value, c));
 //					} else {
-                        @SuppressWarnings("deprecation")
-						final Object d = s.deserialize(value);
+                        @SuppressWarnings("deprecation") final Object d = s.deserialize(value);
                         if (d == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database, because '" + value + "' cannot be parsed as a " + type);
                             continue;

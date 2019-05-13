@@ -58,7 +58,7 @@ public final class FormattedMessage extends Message {
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     public String toString() {
         try {
             final String val = getValue();

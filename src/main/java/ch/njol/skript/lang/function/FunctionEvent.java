@@ -29,11 +29,12 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class FunctionEvent<T> extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
+    private final @Nullable
+    Function<? extends T> function;
 
     /**
-     * @deprecated Backwards compatibility.
-     *
      * @see FunctionEvent#FunctionEvent(Function)
+     * @deprecated Backwards compatibility.
      */
     @Deprecated
     public FunctionEvent() {
@@ -44,7 +45,9 @@ public final class FunctionEvent<T> extends Event {
         this.function = function;
     }
 
-    private final @Nullable Function<? extends T> function;
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
     /**
      * Returns null only if the old deprecated
@@ -55,10 +58,6 @@ public final class FunctionEvent<T> extends Event {
     @Nullable
     public Function<? extends T> getFunction() {
         return function;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 
     @Override

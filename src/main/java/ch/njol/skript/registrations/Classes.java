@@ -511,8 +511,8 @@ public final class Classes {
             }
             return null;
         }
-		final ClassInfo<T> ci = getExactClassInfo(c);
-		return ci == null ? null : ci.getParser();
+        final ClassInfo<T> ci = getExactClassInfo(c);
+        return ci == null ? null : ci.getParser();
     }
 
     private static final <F, T> Parser<T> createConvertedParser(final Parser<?> parser, final Converter<F, T> converter) {
@@ -686,7 +686,7 @@ public final class Classes {
         assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        try(final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout)) {
+        try (final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout)) {
             yout.writeObject(o);
             yout.flush();
             final byte[] r = bout.toByteArray();
@@ -708,7 +708,7 @@ public final class Classes {
     }
 
     @SuppressWarnings("unused")
-	private static final boolean equals(final @Nullable Object o, final @Nullable Object d) {
+    private static final boolean equals(final @Nullable Object o, final @Nullable Object d) {
         if (o instanceof Chunk) { // CraftChunk does neither override equals nor is it a "coordinate-specific singleton" like Block
             if (!(d instanceof Chunk))
                 return false;
@@ -749,13 +749,13 @@ public final class Classes {
                 try {
                     in.close();
                 } catch (final IOException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
             }
             try {
                 value.close();
             } catch (final IOException ignored) {
-            	/* ignored */
+                /* ignored */
             }
         }
     }

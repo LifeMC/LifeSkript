@@ -78,7 +78,7 @@ public final class ExprWorld extends PropertyExpression<Object, World> {
             if (o instanceof Entity) {
                 if (getTime() > 0 && e instanceof PlayerTeleportEvent && o.equals(((PlayerTeleportEvent) e).getPlayer()) && !Delay.isDelayed(e))
                     return ((PlayerTeleportEvent) e).getTo().getWorld();
-				return ((Entity) o).getWorld();
+                return ((Entity) o).getWorld();
             }
             if (o instanceof Location)
                 return ((Location) o).getWorld();

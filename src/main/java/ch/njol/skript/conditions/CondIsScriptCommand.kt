@@ -49,7 +49,8 @@ class CondIsScriptCommand : Condition() {
         }
     }
 
-    @JvmField var command: Expression<*>? = null
+    @JvmField
+    var command: Expression<*>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         command = exprs[0]

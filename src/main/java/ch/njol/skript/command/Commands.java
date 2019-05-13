@@ -88,7 +88,7 @@ public final class Commands {
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
     public static final Message m_correct_usage = new Message("commands.correct usage");
     public static final Message m_internal_error = new Message("commands.internal error");
-
+    public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
     private static final Map<String, ScriptCommand> commands = new HashMap<>();
     private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
@@ -104,7 +104,7 @@ public final class Commands {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onPlayerChat(final PlayerChatEvent e) {
-        	assert false;
+            assert false;
             Commands.onPlayerChat(e);
         }
     };
@@ -117,7 +117,7 @@ public final class Commands {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
-        	assert false;
+            assert false;
             Commands.onAsyncPlayerChat(e);
         }
     };
@@ -127,25 +127,23 @@ public final class Commands {
     @Nullable
     public static List<Argument<?>> currentArguments;
     static boolean suppressUnknownCommandMessage;
-    public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
-
     /**
      * @deprecated Only for reference
      */
     @SuppressWarnings("unused")
-	@Deprecated
+    @Deprecated
     private static final Listener commandListener = new Listener() {
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-        	assert false;
+            assert false;
             Commands.onPlayerCommand(e);
         }
 
         @SuppressWarnings("null")
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         public final void onServerCommand(final ServerCommandEvent e) {
-        	assert false;
+            assert false;
             Commands.onServerCommand(e);
         }
     };
@@ -163,14 +161,14 @@ public final class Commands {
 
     static {
         BukkitLoggerFilter.addFilter((final @Nullable LogRecord record) -> {
-		    if (record == null)
-		        return false;
-		    if (suppressUnknownCommandMessage && record.getMessage() != null && record.getMessage().startsWith("Unknown command. Type")) {
-		        suppressUnknownCommandMessage = false;
-		        return false;
-		    }
-		    return true;
-		});
+            if (record == null)
+                return false;
+            if (suppressUnknownCommandMessage && record.getMessage() != null && record.getMessage().startsWith("Unknown command. Type")) {
+                suppressUnknownCommandMessage = false;
+                return false;
+            }
+            return true;
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -192,7 +190,7 @@ public final class Commands {
                     aliasesField.setAccessible(true);
                     cmAliases = (Set<String>) aliasesField.get(commandMap);
                 } catch (final NoSuchFieldException ignored) {
-                	/* ignored */
+                    /* ignored */
                 }
             }
         } catch (final SecurityException e) {
@@ -213,7 +211,7 @@ public final class Commands {
     }
 
     @SuppressWarnings("null")
-	public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
+    public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
             e.setCancelled(true);
             if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
@@ -229,7 +227,7 @@ public final class Commands {
     }
 
     @SuppressWarnings("null")
-	public static final void onServerCommand(final ServerCommandEvent e) {
+    public static final void onServerCommand(final ServerCommandEvent e) {
         if (e.getCommand() == null || e.getCommand().isEmpty())
             return;
         boolean effectCommand = false;
@@ -259,7 +257,7 @@ public final class Commands {
     }
 
     @SuppressWarnings("null")
-	public static final void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
+    public static final void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
         if (!e.isAsynchronous()) {
@@ -284,7 +282,7 @@ public final class Commands {
      * @see Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)
      */
     @SuppressWarnings("null")
-	@Deprecated
+    @Deprecated
     public static final void onPlayerChat(final PlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
@@ -293,7 +291,7 @@ public final class Commands {
     }
 
     /**
-     * @param sender the sender of the command
+     * @param sender  the sender of the command
      * @param command full command string without the slash
      * @return whatever to cancel the event
      */
@@ -612,8 +610,9 @@ public final class Commands {
 
     public static final void registerListeners() {
         if (!registeredListeners) {
-        	final Listener emptyListener = new Listener() { /* ignored */ };
-        	
+            final Listener emptyListener = new Listener() { /* ignored */
+            };
+
             Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof PlayerCommandPreprocessEvent)
                     onPlayerCommand((PlayerCommandPreprocessEvent) event);
@@ -694,9 +693,9 @@ public final class Commands {
                 if (aliasForTopic != null) {
                     return aliasForTopic.canSee(commandSender);
                 }
-				return false;
+                return false;
             }
-			return commandSender != null && commandSender.hasPermission(amendedPermission);
+            return commandSender != null && commandSender.hasPermission(amendedPermission);
         }
     }
 

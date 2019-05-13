@@ -175,7 +175,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                 if (!"0".equals(Skript.toString(second))) { // bad style but who cares...
                     return toString(Math.floor(1. * millis / simpleValues[i].getSecond()), simpleValues[i], flags) + " " + GeneralWords.and + " " + toString(second, simpleValues[i + 1], flags);
                 }
-				return toString(1. * millis / simpleValues[i].getSecond(), simpleValues[i], flags);
+                return toString(1. * millis / simpleValues[i].getSecond(), simpleValues[i], flags);
             }
         }
         return toString(1. * millis / simpleValues[simpleValues.length - 1].getSecond(), simpleValues[simpleValues.length - 1], flags);

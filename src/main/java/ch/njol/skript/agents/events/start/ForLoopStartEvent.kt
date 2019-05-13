@@ -21,13 +21,14 @@
  */
 
 @file:JvmName("ForLoopStartEvent")
+
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
 
 data class ForLoopStartEvent(
-    /**
-     * How many times loop will execute?
-     */
-    @JvmField val times: Int
+        /**
+         * How many times loop will execute?
+         */
+        @JvmField val times: Int
 ) : AgentEvent()

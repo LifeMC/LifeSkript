@@ -80,7 +80,7 @@ public final class ScriptCommandEvent extends CommandEvent {
     }
 
     @SuppressWarnings("null")
-	@Override
+    @Override
     public int hashCode() {
         return skriptCommand != null ? skriptCommand.hashCode() : 0;
     }

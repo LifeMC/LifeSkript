@@ -183,8 +183,7 @@ public final class EventValues {
     }
 
     private static boolean checkExcludes(final EventValueInfo<?, ?> ev, final Class<? extends Event> e) {
-        @SuppressWarnings("cast")
-		final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.exculdes;
+        @SuppressWarnings("cast") final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.exculdes;
         if (excl == null)
             return true;
         for (final Class<? extends Event> ex : excl) {

@@ -21,14 +21,15 @@
  */
 
 @file:JvmName("UnresolvedPlayerEvent")
+
 package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.bukkitutil.UnresolvedOfflinePlayer
 
 data class UnresolvedPlayerEvent(
-    /**
-     * The player that added to the queue.
-     */
-    @JvmField val player: UnresolvedOfflinePlayer
+        /**
+         * The player that added to the queue.
+         */
+        @JvmField val player: UnresolvedOfflinePlayer
 ) : AgentEvent()

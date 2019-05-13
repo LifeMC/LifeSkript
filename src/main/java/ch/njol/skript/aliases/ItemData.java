@@ -175,7 +175,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         if (dataMin == -1 && dataMax == -1) {
             return new ItemStack(type, 1);
         }
-		return new ItemStack(type, 1, (short) Utils.random(dataMin, dataMax + 1));
+        return new ItemStack(type, 1, (short) Utils.random(dataMin, dataMax + 1));
     }
 
     public Iterator<ItemStack> getAll() {

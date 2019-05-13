@@ -289,8 +289,8 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         if (e != null) {
             return new SimpleEntityData(e);
         }
-		assert c != null;
-		return new SimpleEntityData(c);
+        assert c != null;
+        return new SimpleEntityData(c);
     }
 
     public static <E extends Entity> EntityData<? super E> fromClass(final Class<E> c) {
