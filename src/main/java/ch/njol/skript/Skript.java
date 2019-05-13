@@ -100,7 +100,7 @@ import java.util.zip.ZipFile;
  * If your plugin.yml contains <tt>'depend: [Skript]'</tt> then your plugin will not start at all if Skript is not present. Add <tt>'softdepend: [Skript]'</tt> to your plugin.yml
  * if you want your plugin to work even if Skript isn't present, but want to make sure that Skript gets loaded before your plugin.
  * <p>
- * If you use 'softdepend' you can test whatever Skript is loaded with <tt>'Bukkit.getPluginManager().getPlugin(&quot;Skript&quot;) != null'</tt>
+ * If you use 'softdepend' you can test whatever Skript is loaded with <tt>'Bukkit.getPluginManager().isPluginEnabled(&quot;Skript&quot;)'</tt>
  * <p>
  * Once you made sure that Skript is loaded you can use <code>Skript.getInstance()</code> whenever you need a reference to the plugin, but you likely won't need it since all API
  * methods are static.

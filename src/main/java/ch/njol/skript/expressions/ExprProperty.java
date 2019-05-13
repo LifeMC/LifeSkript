@@ -90,7 +90,10 @@ public final class ExprProperty extends SimpleExpression<String> {
     @Nullable
     @SuppressWarnings("null")
     protected String[] get(final Event e) {
-        return new String[]{System.getProperty(propertyName.getSingle(e))};
+        final String key = propertyName.getSingle(e);
+        if (key == null || key.isEmpty())
+            return null;
+        return new String[]{System.getProperty(key)};
     }
 
 }

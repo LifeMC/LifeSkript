@@ -50,7 +50,7 @@ public final class RetainingLogHandler extends LogHandler {
 
     @Override
     public void onStop() {
-        if (!printedErrorOrLog && Skript.testing())
+        if (!printedErrorOrLog && Skript.testing() && Skript.logVeryHigh())
             SkriptLogger.LOGGER.warning("Retaining log wasn't instructed to print anything at " + SkriptLogger.getCaller());
     }
 
@@ -96,7 +96,7 @@ public final class RetainingLogHandler extends LogHandler {
      * <p>
      * This handler is stopped if not already done.
      *
-     * @param recipient
+     * @param recipient The recipient to send the error messages
      * @param def       Error to send if no errors were logged, can be null to not print any error if there are none
      * @return Whatever there were any errors to send
      */
