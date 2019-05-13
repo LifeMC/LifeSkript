@@ -1031,19 +1031,19 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param info Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
-    public static final RuntimeException exception(final String... info) {
+    public static final RuntimeException exception(final @Nullable String... info) {
         return exception(null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable String... info) {
         return exception(cause, null, null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final @Nullable String... info) {
         return exception(cause, thread, null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final String... info) {
+    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final @Nullable String... info) {
         return exception(cause, null, item, info);
     }
 
@@ -1055,7 +1055,10 @@ public final class Skript extends JavaPlugin implements Listener {
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
     public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final @Nullable String... info) {
-        try {
+        // We change that variable later to handle inner exceptions
+		final Throwable originalCause = cause;
+		
+		try {
             logEx();
             logEx("[Skript] Severe Error:");
             if (info != null)
@@ -1065,7 +1068,7 @@ public final class Skript extends JavaPlugin implements Listener {
             logEx("This issue is NOT your fault! You probably can't fix it yourself, either.");
             logEx();
             logEx("If you're a server admin please go to " + ISSUES_LINK);
-            logEx("and check this issue has already been reported.");
+            logEx("and check if this issue has already been reported.");
             logEx();
             logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
             logEx("and describe what you did before it happened and/or what you think caused the error.");
@@ -1132,7 +1135,7 @@ public final class Skript extends JavaPlugin implements Listener {
             for (final SkriptAddon addon : addons.values()) {
                 if (addon.plugin instanceof Skript)
                     continue;
-                stringBuilder.append(addon.getName());
+                stringBuilder.append(addon.getName() + " v" + addon.plugin.getDescription().getVersion());
                 if (i < addons.size() - 1)
                     stringBuilder.append(", ");
                 i++;
@@ -1146,12 +1149,16 @@ public final class Skript extends JavaPlugin implements Listener {
             return new EmptyStacktraceException();
         } catch (final Throwable tw) {
             // Unexpected horrible error when handling exception.
+			// Don't use any logger - it's a very very unexpected error.
             tw.printStackTrace();
             if (cause != null)
                 cause.printStackTrace();
+			if (originalCause != null)
+				originalCause.printStackTrace();
             if (info != null) {
                 for (final String str : info)
-                    System.out.println(str);
+					if (str != null)
+						System.out.println(str);
             }
             // This a real error - don't return an empty error.
             return new RuntimeException();
@@ -1240,7 +1247,13 @@ public final class Skript extends JavaPlugin implements Listener {
 
     @Override
     public void onLoad() {
-        SkriptCommand.setPriority();
+		try {
+			SkriptCommand.setPriority();
+		} catch (final Throwable tw) {
+			// Ignore if not debug, we are on early load
+			if (testing() || debug())
+				exception(tw);
+		}
     }
 
     @SuppressWarnings("null")
@@ -1401,7 +1414,7 @@ public final class Skript extends JavaPlugin implements Listener {
             if (command != null)
             	command.setExecutor(new SkriptCommand());
             else {
-            	Skript.error("Malformed plugin.yml file detecded; skript command will **not** work. You can try to re-download the plugin.");
+            	Skript.error("Malformed plugin.yml file detecded; skript command will **not** work. You can try re-downloading the plugin.");
             	printDownloadLink();
             }
             	
@@ -1454,11 +1467,16 @@ public final class Skript extends JavaPlugin implements Listener {
 			                if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
 			                    final String c1 = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
 			                    try {
+									if (Skript.debug())
+										Skript.debug("Trying to load hook class " + cl);
 			                        final Class<?> hook = Class.forName(c1, true, getBukkitClassLoader());
 			                        if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
 			                            hook.getDeclaredConstructor().setAccessible(true);
 			                            hook.getDeclaredConstructor().newInstance();
-			                        }
+										if (Skript.debug())
+											Skript.debug("Loaded hook class " + cl + " successfully.");
+			                        } else if (Skript.debug())
+										Skript.debug("Can't load hook class " + cl);
 			                    } catch (final NoClassDefFoundError ncdffe) {
 			                        Skript.exception(ncdffe, "Cannot load class " + c1 + " because it missing some dependencies");
 			                    } catch (final ClassNotFoundException ex) {
@@ -1472,10 +1490,14 @@ public final class Skript extends JavaPlugin implements Listener {
 			                }
 			            }
 			        }
-			    } catch (final Throwable tw2) {
-			        error("Error while loading plugin hooks" + (tw2.getLocalizedMessage() == null ? "" : ": " + tw2.getLocalizedMessage()));
+			    } catch (final Throwable throwable) {
+					if (System.getProperty("skript.disableHookErrors") == null ||
+							!Boolean.parseBoolean("skript.disableHookErrors")) {
+						error("Error while loading plugin hooks" + (throwable.getLocalizedMessage() == null ? "" : ": " + throwable.getLocalizedMessage()));
+					}
+					// Regardless of that option, print it if we are on debug verbosity (or the assertions are enabled).
 			        if (testing() || debug())
-			            tw2.printStackTrace();
+			            throwable.printStackTrace();
 			    }
 
 			    Language.setUseLocal(false);
@@ -1579,57 +1601,64 @@ public final class Skript extends JavaPlugin implements Listener {
 
             // Check server platform and version, ensure everything works fine.
 
-            Bukkit.getScheduler().runTask(this, () -> {
-                if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
-                    if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities
-                        warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or upgrade to newer versions. Report this if it is a bug.");
-                        warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
-                    }
-                } else if (minecraftVersion.compareTo(1, 8, 8) == 0) {
-                    if (getServerPlatform() != ServerPlatform.BUKKIT_TACO) {
-                        if (getServerPlatform() == ServerPlatform.BUKKIT_UNKNOWN || getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT) {
-                            // Make user first switch to Spigot, and give warnings (not infos as on taco) because there is no "official" Bukkit or CraftBukkit in 1.8 already.
-                            // The Bukkit and CraftBukkit that spigot provides after Minecraft 1.7.10 is unofficial, and it only exists for historical & development related reasons.
-                            // So, people should not use Bukkit or CraftBukkit on versions newer than 1.7.10. On 1.7.10, people can use Bukkit because Spigot has protocal patch and breaking changes.
-                            warning("We recommend using either Spigot or TacoSpigot with Minecraft 1.8.8, there is no official Bukkit for Minecraft 1.8.8 already. It is compatible with Bukkit plugins.");
-                            warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
-                        } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
-                            // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
-                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
-                            // TODO Also add options for disabling recommendations one by one or all of them. e.g: -Dskript.disableTacoRecommendation=true etc.
-                            if (Skript.logHigh()) {
-                                info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
-                                info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
-                            }
-                        } else {
-                            // PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
-                            warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
-                            warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
-                        }
-                    }
-                }
-            });
+			if (System.getProperty("skript.disableRecommendations") == null ||
+					!Boolean.parseBoolean("skript.disableRecommendations")) {
+				Bukkit.getScheduler().runTask(this, () -> {
+					if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
+						if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities (if there is another implementation that supports getNearbyEntities, we respect them and not advertise LifeSpigot :C)
+							warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or upgrade to newer versions. Report this if it is a bug.");
+							warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
+						}
+					} else if (minecraftVersion.compareTo(1, 8, 8) == 0) { // If running on Minecraft 1.8.8
+						if (getServerPlatform() != ServerPlatform.BUKKIT_TACO) { // If not using TacoSpigot
+							if (getServerPlatform() == ServerPlatform.BUKKIT_UNKNOWN || getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT) { // If running Bukkit or CraftBukkit on 1.8.8
+								// Make user first switch to Spigot, and give warnings (not infos as on taco) because there is no "official" Bukkit or CraftBukkit in 1.8 already.
+								// The Bukkit and CraftBukkit that spigot provides after Minecraft 1.7.10 is unofficial, and it only exists for historical & development related reasons.
+								// So, people should not use Bukkit or CraftBukkit on versions newer than 1.7.10. On 1.7.10, people can use Bukkit because Spigot has protocal patch and breaking changes.
+								warning("We recommend using either Spigot or TacoSpigot with Minecraft 1.8.8, because there is no official Bukkit for Minecraft 1.8.8 already. It is compatible with Bukkit plugins.");
+								warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
+							} else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
+								// Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
+								// TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
+								if (Skript.logHigh()) {
+									info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
+									info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
+								}
+							} else {
+								// PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
+								// TODO TacoSpigot is a bit unstable - it's JAR file has bigger size, it's version format is complicated etc.
+								if (Skript.logHigh()) {
+									warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
+									warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
+								}
+							}
+						}
+					}
+				});
+			}
 
-            Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
-            	/* empty */
-            }, EventPriority.MONITOR, (listener, event) -> {
-            	if (event instanceof PlayerJoinEvent) {
-            		final PlayerJoinEvent e = (PlayerJoinEvent) event;
-                    if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
-                        new Task(Skript.this) {
-                            @Override
-                            public final void run() {
-                                final Player p = e.getPlayer();
-                                assert p != null;
-                                if (updateAvailable) {
-                                    info(p, m_update_available.toString());
-                                    info(p, getDownloadLink());
-                                }
-                            }
-                        }.schedule(0L);
-                    }
-            	}
-            }, this, true);
+			if (SkriptConfig.checkForNewVersion.value()) {
+				Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
+					/* empty */
+				}, EventPriority.MONITOR, (listener, event) -> {
+					if (event instanceof PlayerJoinEvent) {
+						final PlayerJoinEvent e = (PlayerJoinEvent) event;
+						if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
+							new Task(Skript.this) {
+								@Override
+								public final void run() {
+									final Player p = e.getPlayer();
+									assert p != null;
+									if (updateAvailable) {
+										info(p, m_update_available.toString());
+										info(p, getDownloadLink());
+									}
+								}
+							}.schedule(0L);
+						}
+					}
+				}, this, true);
+			}
 
             latestVersion = getDescription().getVersion();
 
@@ -1695,100 +1724,112 @@ public final class Skript extends JavaPlugin implements Listener {
             }
 
         } catch (final Throwable tw) {
-            exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
+			if (System.getProperty("skript.disableStartupErrors") == null ||
+					!Boolean.parseBoolean("skript.disableStartupErrors")) {
+				exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
+			}
         }
 
     }
 
     @Override
     public void onDisable() {
-        if (disabled)
-            return;
-        disabled = true;
+		try {
+			
+			if (disabled)
+				return;
+			disabled = true;
 
-        if (Skript.logHigh())
-            info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
-        EvtSkript.onSkriptStop();
+			if (Skript.logHigh())
+				info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
+			EvtSkript.onSkriptStop();
 
-        if (Skript.logHigh())
-            info("Disabling scripts..");
-        disableScripts();
+			if (Skript.logHigh())
+				info("Disabling scripts..");
+			disableScripts();
 
-        if (Skript.logHigh())
-            info("Unregistering tasks and event listeners..");
-        Bukkit.getScheduler().cancelTasks(this);
-        HandlerList.unregisterAll((JavaPlugin) this);
+			if (Skript.logHigh())
+				info("Unregistering tasks and event listeners..");
+			Bukkit.getScheduler().cancelTasks(this);
+			HandlerList.unregisterAll((JavaPlugin) this);
 
-        if (Skript.logHigh())
-            info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
-        for (final Closeable c : closeOnDisable) {
-            try {
-                c.close();
-            } catch (final Throwable tw) {
-                Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
-            }
-        }
-        if (Skript.logHigh())
-            info("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
+			if (Skript.logHigh())
+				info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
+			for (final Closeable c : closeOnDisable) {
+				try {
+					c.close();
+				} catch (final Throwable tw) {
+					Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
+				}
+			}
+			if (Skript.logHigh())
+				info("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
 
-        // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
-        // async to not slow down server reload, delayed to not slow down server shutdown
-        final Skript instance = this;
-        // we are saving instance because in lambda we can't access it
-        // and using getInstance method causes IllegalStateException since
-        // we are un setting fields, we also unset the instance field.
-        final Thread t = newThread(() -> {
-            try {
-                Thread.sleep(10000L);
-            } catch (final InterruptedException e) {
-                return;
-            }
-            try {
-                final Field modifiers = Field.class.getDeclaredField("modifiers");
-                modifiers.setAccessible(true);
-                try (JarFile jar = new JarFile(getPluginFile())) {
-                    for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
-                        if (e.getName().endsWith(".class")) {
-                            try {
-                                final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(instance));
-                                for (final Field f : c.getDeclaredFields()) {
-                                    if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
-                                        if (Modifier.isFinal(f.getModifiers())) {
-                                            modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-                                        }
-                                        f.setAccessible(true);
-                                        f.set(null, null);
-                                    }
-                                }
-                            } catch (final Throwable tw) {
-                                // If Vault or WorldGuard is not available
-                                if (tw instanceof NoClassDefFoundError)
-                                    continue;
-                                // If we can't set fields (e.g if it's final
-                                // and we are on Java 9 or above )
-                                if (tw instanceof IllegalAccessException)
-                                    continue;
-                                // Happens when classes trying to register
-                                // expressions etc. when disabling.
-                                if (tw instanceof SkriptAPIException)
-                                    continue;
-                                // Only log in debug otherwise, an interesting
-                                // error occured because we already skip general errors
-                                if (testing() || debug())
-                                    tw.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            } catch (final Throwable tw) {
-                if (testing() || logHigh())
-                    tw.printStackTrace();
-            }
-            Thread.currentThread().interrupt();
-        }, "Skript cleanup thread");
-        t.setPriority(Thread.MIN_PRIORITY);
-        t.setDaemon(true);
-        t.start();
+			// unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
+			// async to not slow down server reload, delayed to not slow down server shutdown
+			final Skript instance = this;
+			// we are saving instance because in lambda we can't access it
+			// and using getInstance method causes IllegalStateException since
+			// we are un setting fields, we also unset the instance field.
+			final Thread t = newThread(() -> {
+				try {
+					Thread.sleep(10000L);
+				} catch (final InterruptedException e) {
+					return;
+				}
+				try {
+					final Field modifiers = Field.class.getDeclaredField("modifiers");
+					modifiers.setAccessible(true);
+					try (JarFile jar = new JarFile(getPluginFile())) {
+						for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
+							if (e.getName().endsWith(".class")) {
+								try {
+									final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(instance));
+									for (final Field f : c.getDeclaredFields()) {
+										if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
+											if (Modifier.isFinal(f.getModifiers())) {
+												modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+											}
+											f.setAccessible(true);
+											f.set(null, null);
+										}
+									}
+								} catch (final Throwable tw) {
+									// If Vault or WorldGuard is not available
+									if (tw instanceof NoClassDefFoundError)
+										continue;
+									// If we can't set fields (e.g if it's final
+									// and we are on Java 9 or above )
+									if (tw instanceof IllegalAccessException)
+										continue;
+									// Happens when classes trying to register
+									// expressions etc. when disabling.
+									if (tw instanceof SkriptAPIException)
+										continue;
+									// Only log in debug otherwise, an interesting
+									// error occured because we already skip general errors
+									if (testing() || debug())
+										tw.printStackTrace();
+								}
+							}
+						}
+					}
+				} catch (final Throwable tw) {
+					if (testing() || logHigh())
+						tw.printStackTrace();
+				}
+				Thread.currentThread().interrupt();
+			}, "Skript cleanup thread");
+			t.setPriority(Thread.MIN_PRIORITY);
+			t.setDaemon(true);
+			t.start();
+			
+		} catch (final Throwable tw) {
+			if (System.getProperty("skript.disableShutdownErrors") == null ||
+					!Boolean.parseBoolean("skript.disableShutdownErrors")) {
+				exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when disabling Skript");
+			}
+		}
     }
 
 }

@@ -56,7 +56,7 @@ public class ParseLogHandler extends LogHandler {
 
     @Override
     public void onStop() {
-        if (!printedErrorOrLog && Skript.testing())
+        if (!printedErrorOrLog && Skript.testing() && Skript.logVeryHigh())
             SkriptLogger.LOGGER.warning("Parse log wasn't instructed to print anything at " + SkriptLogger.getCaller());
     }
 
