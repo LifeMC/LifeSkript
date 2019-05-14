@@ -33,6 +33,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Experience;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
@@ -54,7 +55,6 @@ import java.util.List;
 @Since("1.0")
 @Events("death")
 public final class ExprDrops extends SimpleExpression<ItemStack> {
-    private static final ItemStack[] EMPTY_ITEMSTACK_ARRAY = new ItemStack[0];
 
     static {
         Skript.registerExpression(ExprDrops.class, ItemStack.class, ExpressionType.SIMPLE, "[the] drops");
@@ -77,8 +77,8 @@ public final class ExprDrops extends SimpleExpression<ItemStack> {
     @Nullable
     protected ItemStack[] get(final Event e) {
         if (!(e instanceof EntityDeathEvent))
-            return new ItemStack[0];
-        return ((EntityDeathEvent) e).getDrops().toArray(EMPTY_ITEMSTACK_ARRAY);
+            return EmptyArrays.EMPTY_ITEMSTACK_ARRAY;
+        return ((EntityDeathEvent) e).getDrops().toArray(EmptyArrays.EMPTY_ITEMSTACK_ARRAY);
     }
 
     @SuppressWarnings("unchecked")

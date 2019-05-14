@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.util.SimpleLiteral;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -68,16 +69,16 @@ public final class ExprSubstring extends SimpleExpression<String> {
     protected String[] get(final Event e) {
         final String s = string.getSingle(e);
         if (s == null)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         Number d1 = start != null ? start.getSingle(e) : 1;
         final Number d2 = end != null ? end.getSingle(e) : s.length();
         if (d1 == null || d2 == null)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         if (end == null)
             d1 = s.length() - d1.doubleValue() + 1;
         final int i1 = Math.max(0, (int) Math.round(d1.doubleValue()) - 1), i2 = Math.min((int) Math.round(d2.doubleValue()), s.length());
         if (i1 >= i2)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         return new String[]{s.substring(i1, i2)};
     }
 

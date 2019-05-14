@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import org.bukkit.event.Event;
@@ -71,7 +72,7 @@ public final class ExprJoinSplit extends SimpleExpression<String> {
         final String[] s = strings.getArray(e);
         final String d = delimiter != null ? delimiter.getSingle(e) : "";
         if (s.length == 0 || d == null)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         if (join) {
             return new String[]{StringUtils.join(s, d)};
         }

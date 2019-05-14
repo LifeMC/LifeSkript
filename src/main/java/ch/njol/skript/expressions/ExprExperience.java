@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Experience;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
@@ -62,7 +63,7 @@ public final class ExprExperience extends SimpleExpression<Experience> {
     @Nullable
     protected Experience[] get(final Event e) {
         if (!(e instanceof ExperienceSpawnEvent))
-            return new Experience[0];
+            return EmptyArrays.EMPTY_EXPERIENCE_ARRAY;
         return new Experience[]{new Experience(((ExperienceSpawnEvent) e).getSpawnedXP())};
     }
 

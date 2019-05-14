@@ -33,6 +33,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -88,7 +89,7 @@ public final class ExprChunk extends PropertyExpression<Location, Chunk> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.RESET)
-            return new Class[0];
+            return EmptyArrays.EMPTY_CLASS_ARRAY;
         return null;
     }
 

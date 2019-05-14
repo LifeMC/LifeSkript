@@ -29,6 +29,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Cancellable;
@@ -64,7 +65,7 @@ public final class ExprEventCancelled extends SimpleExpression<Boolean> {
     @Nullable
     protected Boolean[] get(final Event e) {
         if (!(e instanceof Cancellable))
-            return new Boolean[0];
+            return EmptyArrays.EMPTY_WRAPPER_BOOLEAN_ARRAY;
         return new Boolean[]{((Cancellable) e).isCancelled()};
     }
 

@@ -30,6 +30,7 @@ import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Time;
 import ch.njol.util.Math2;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -49,7 +50,6 @@ import java.util.Map.Entry;
  */
 @SuppressFBWarnings("EQ_COMPARETO_USE_OBJECT_EQUALS")
 public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<EvtAtTime> {
-    public static final World[] EMPTY_WORLD_ARRAY = new World[0];
     static final HashMap<World, EvtAtInfo> triggers = new HashMap<>();
     private static final int CHECKPERIOD = 10;
     private static int taskID = -1;
@@ -104,7 +104,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     @Override
     public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         tick = ((Literal<Time>) args[0]).getSingle().getTicks();
-        worlds = args[1] == null ? Bukkit.getWorlds().toArray(EMPTY_WORLD_ARRAY) : ((Literal<World>) args[1]).getAll();
+        worlds = args[1] == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : ((Literal<World>) args[1]).getAll();
         return true;
     }
 

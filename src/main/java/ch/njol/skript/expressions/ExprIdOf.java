@@ -36,6 +36,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.iterator.SingleItemIterator;
 import org.bukkit.Material;
@@ -82,7 +83,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
         if (single) {
             final ItemType t = getExpr().getSingle(e);
             if (t == null)
-                return new Integer[0];
+                return EmptyArrays.EMPTY_INTEGER_ARRAY;
             return new Integer[]{t.getTypes().get(0).getId()};
         }
         final ArrayList<Integer> r = new ArrayList<>();
@@ -91,7 +92,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
                 r.add(d.getId());
             }
         }
-        return r.toArray(new Integer[0]);
+        return r.toArray(EmptyArrays.EMPTY_INTEGER_ARRAY);
     }
 
     @Override

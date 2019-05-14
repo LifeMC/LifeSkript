@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.BlockSphereIterator;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.iterator.EmptyIterator;
 import ch.njol.util.coll.iterator.IteratorIterable;
@@ -82,7 +83,7 @@ public final class ExprBlockSphere extends SimpleExpression<Block> {
     protected Block[] get(final Event e) {
         final Number r = radius.getSingle(e);
         if (r == null)
-            return new Block[0];
+            return EmptyArrays.EMPTY_BLOCK_ARRAY;
         final ArrayList<Block> list = new ArrayList<>((int) (1.1 * 4 / 3. * Math.PI * Math.pow(r.doubleValue(), 3)));
         for (final Block b : new IteratorIterable<>(iterator(e)))
             list.add(b);

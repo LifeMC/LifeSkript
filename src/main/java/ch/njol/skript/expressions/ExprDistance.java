@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -64,7 +65,7 @@ public final class ExprDistance extends SimpleExpression<Double> {
     protected Double[] get(final Event e) {
         final Location l1 = loc1.getSingle(e), l2 = loc2.getSingle(e);
         if (l1 == null || l2 == null || l1.getWorld() != l2.getWorld())
-            return new Double[0];
+            return EmptyArrays.EMPTY_WRAPPER_DOUBLE_ARRAY;
         return new Double[]{l1.distance(l2)};
     }
 

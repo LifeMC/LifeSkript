@@ -28,13 +28,13 @@ import ch.njol.skript.bukkitutil.PlayerUtils;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.Serializer;
-import ch.njol.skript.events.EvtAtTime;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.*;
 import ch.njol.skript.localization.Language.LanguageListenerPriority;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.yggdrasil.Fields;
@@ -132,7 +132,6 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             return false;
         }
     };
-    private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
 
     static {
         Classes.registerClass(new ClassInfo<>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
@@ -242,7 +241,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         assert types.length > 0;
         if (type == Player.class) {
             if (worlds == null && types.length == 1 && types[0] instanceof PlayerData && ((PlayerData) types[0]).op == 0)
-                return (E[]) PlayerUtils.getOnlinePlayers().toArray(EMPTY_PLAYER_ARRAY);
+                return (E[]) PlayerUtils.getOnlinePlayers().toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
             final List<Player> list = new ArrayList<>();
             for (final Player p : PlayerUtils.getOnlinePlayers()) {
                 if (worlds != null && !CollectionUtils.contains(worlds, p.getWorld()))
@@ -254,11 +253,11 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
                     }
                 }
             }
-            return (E[]) list.toArray(EMPTY_PLAYER_ARRAY);
+            return (E[]) list.toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
         }
         final List<E> list = new ArrayList<>();
         if (worlds == null)
-            worlds = Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY);
+            worlds = Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY);
         for (final World w : worlds) {
             for (final E e : w.getEntitiesByClass(type)) {
                 for (final EntityData<?> t : types) {

@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
@@ -68,7 +69,7 @@ public final class ExprDamage extends SimpleExpression<Double> {
     @Nullable
     protected Double[] get(final Event e) {
         if (!(e instanceof EntityDamageEvent))
-            return new Double[0];
+            return EmptyArrays.EMPTY_WRAPPER_DOUBLE_ARRAY;
         return new Double[]{HealthUtils.getDamage((EntityDamageEvent) e)};
     }
 

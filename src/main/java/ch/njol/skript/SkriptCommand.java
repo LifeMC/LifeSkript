@@ -35,6 +35,7 @@ import ch.njol.skript.localization.PluralizingArgsMessage;
 import ch.njol.skript.log.RedirectingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Color;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.util.StringUtils;
@@ -72,7 +73,6 @@ public final class SkriptCommand implements CommandExecutor {
     private static final ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
     @SuppressWarnings("unused")
     private static final ArgsMessage m_changes_title = new ArgsMessage(NODE + ".update.changes.title");
-    private static final File[] EMPTY_FILE_ARRAY = new File[0];
     private static final ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
     private static final List<TrackerAgent> registeredTrackers =
@@ -228,7 +228,7 @@ public final class SkriptCommand implements CommandExecutor {
                 if ("all".equalsIgnoreCase(args[1])) {
                     try {
                         info(sender, "enable.all.enabling");
-                        final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EMPTY_FILE_ARRAY);
+                        final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EmptyArrays.EMPTY_FILE_ARRAY);
                         //noinspection ConstantConditions
                         assert files != null;
                         setPriority();

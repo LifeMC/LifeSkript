@@ -31,6 +31,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.Direction;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
@@ -69,7 +70,7 @@ public final class ExprRegionsAt extends SimpleExpression<Region> {
     protected Region[] get(final Event e) {
         final Location[] ls = locs.getArray(e);
         if (ls.length == 0)
-            return new Region[0];
+            return EmptyArrays.EMPTY_REGION_ARRAY;
         final ArrayList<Region> r = new ArrayList<>();
         for (final Location l : ls)
             r.addAll(RegionsPlugin.getRegionsAt(l));

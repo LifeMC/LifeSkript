@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.Direction;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.Math2;
 import org.bukkit.Location;
@@ -107,7 +108,7 @@ public final class ExprDirection extends SimpleExpression<Direction> {
     protected Direction[] get(final Event e) {
         final Number n = amount != null ? amount.getSingle(e) : 1;
         if (n == null)
-            return new Direction[0];
+            return EmptyArrays.EMPTY_DIRECTION_ARRAY;
         final double ln = n.doubleValue();
         if (direction != null) {
             final Vector v = direction.clone().multiply(ln);
@@ -115,7 +116,7 @@ public final class ExprDirection extends SimpleExpression<Direction> {
             while (d != null) {
                 final Number n2 = d.amount != null ? d.amount.getSingle(e) : 1;
                 if (n2 == null)
-                    return new Direction[0];
+                    return EmptyArrays.EMPTY_DIRECTION_ARRAY;
                 assert d.direction != null; // checked in init()
                 v.add(d.direction.clone().multiply(n2.doubleValue()));
                 d = d.next;
@@ -125,7 +126,7 @@ public final class ExprDirection extends SimpleExpression<Direction> {
         } else if (relativeTo != null) {
             final Object o = relativeTo.getSingle(e);
             if (o == null)
-                return new Direction[0];
+                return EmptyArrays.EMPTY_DIRECTION_ARRAY;
             if (o instanceof Block) {
                 final BlockFace f = Direction.getFacing((Block) o);
                 if (f == BlockFace.SELF || horizontal && (f == BlockFace.UP || f == BlockFace.DOWN))

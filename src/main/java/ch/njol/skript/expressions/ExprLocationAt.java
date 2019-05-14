@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -72,7 +73,7 @@ public final class ExprLocationAt extends SimpleExpression<Location> {
         final World w = world.getSingle(e);
         final Number x = this.x.getSingle(e), y = this.y.getSingle(e), z = this.z.getSingle(e);
         if (w == null || x == null || y == null || z == null)
-            return new Location[0];
+            return EmptyArrays.EMPTY_LOCATION_ARRAY;
         return new Location[]{new Location(w, x.doubleValue(), y.doubleValue(), z.doubleValue())};
     }
 

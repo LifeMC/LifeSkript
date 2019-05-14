@@ -33,6 +33,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
@@ -60,7 +61,7 @@ public final class ExprMe extends SimpleExpression<CommandSender> {
     protected CommandSender[] get(final Event e) {
         if (e instanceof EffectCommandEvent)
             return new CommandSender[]{((EffectCommandEvent) e).getSender()};
-        return new CommandSender[0];
+        return EmptyArrays.EMPTY_COMMANDSENDER_ARRAY;
     }
 
     @Override

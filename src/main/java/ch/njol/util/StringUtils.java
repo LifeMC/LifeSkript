@@ -34,8 +34,6 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
 
-    public static final String[] EMPTY_STRING_ARRAY = new String[0];
-
     private StringUtils() {
         throw new UnsupportedOperationException();
     }

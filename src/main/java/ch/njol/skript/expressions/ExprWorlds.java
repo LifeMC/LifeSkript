@@ -27,11 +27,11 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
-import ch.njol.skript.events.EvtAtTime;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -71,7 +71,7 @@ public final class ExprWorlds extends SimpleExpression<World> {
     @Override
     @Nullable
     protected World[] get(final Event e) {
-        return Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY);
+        return Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY);
     }
 
     @Override

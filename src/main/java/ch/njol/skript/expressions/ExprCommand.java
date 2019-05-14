@@ -29,6 +29,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -73,14 +74,14 @@ public final class ExprCommand extends SimpleExpression<String> {
         } else if (e instanceof ServerCommandEvent) {
             s = ((ServerCommandEvent) e).getCommand().trim();
         } else {
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         }
         if (what == FULL)
             return new String[]{s};
         final int c = s.indexOf(' ');
         if (what == ARGS) {
             if (c == -1)
-                return new String[0];
+                return EmptyArrays.EMPTY_STRING_ARRAY;
             return new String[]{s.substring(c + 1).trim()};
         }
         assert what == LABEL;

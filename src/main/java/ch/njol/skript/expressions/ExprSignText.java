@@ -34,6 +34,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.lang.util.SimpleLiteral;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -87,18 +88,18 @@ public final class ExprSignText extends SimpleExpression<String> {
     protected String[] get(final Event e) {
         final Number l = line.getSingle(e);
         if (l == null)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         final int line = l.intValue() - 1;
         if (line < 0 || line > 3)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         if (getTime() >= 0 && block.isDefault() && e instanceof SignChangeEvent && !Delay.isDelayed(e)) {
             return new String[]{((SignChangeEvent) e).getLine(line)};
         }
         final Block b = block.getSingle(e);
         if (b == null)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         if (b.getType() != Material.SIGN_POST && b.getType() != Material.WALL_SIGN)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         return new String[]{((Sign) b.getState()).getLine(line)};
     }
 

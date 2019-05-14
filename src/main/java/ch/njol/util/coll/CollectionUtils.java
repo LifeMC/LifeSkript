@@ -22,6 +22,7 @@
 
 package ch.njol.util.coll;
 
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Pair;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -359,7 +360,7 @@ public final class CollectionUtils {
      */
     public static int[] permutation(final int start, final int end) {
         if (start > end)
-            return new int[0];
+            return EmptyArrays.EMPTY_INT_ARRAY;
         final int length = end - start + 1;
         final int[] r = new int[length];
         for (int i = 0; i < length; i++)
@@ -382,7 +383,7 @@ public final class CollectionUtils {
      */
     public static byte[] permutation(final byte start, final byte end) {
         if (start > end)
-            return new byte[0];
+            return EmptyArrays.EMPTY_BYTE_ARRAY;
         final int length = end - start + 1;
         final byte[] r = new byte[length];
         for (byte i = 0; i < length; i++)
@@ -412,7 +413,7 @@ public final class CollectionUtils {
     @SuppressWarnings("null")
     public static int[] toArray(final @Nullable Collection<Integer> ints) {
         if (ints == null)
-            return new int[0];
+            return EmptyArrays.EMPTY_INT_ARRAY;
         final int[] r = new int[ints.size()];
         int i = 0;
         for (final Integer n : ints)
@@ -426,7 +427,7 @@ public final class CollectionUtils {
 
     public static float[] toFloats(final @Nullable double[] doubles) {
         if (doubles == null)
-            return new float[0];
+            return EmptyArrays.EMPTY_FLOAT_ARRAY;
         final float[] floats = new float[doubles.length];
         for (int i = 0; i < floats.length; i++)
             floats[i] = (float) doubles[i];

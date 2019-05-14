@@ -34,6 +34,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.BlockLineIterator;
 import ch.njol.skript.util.Direction;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.iterator.ArrayIterator;
 import ch.njol.util.coll.iterator.IteratorIterable;
@@ -98,7 +99,7 @@ public final class ExprBlocks extends SimpleExpression<Block> {
             final Location[] ls = (Location[]) from.getArray(e);
             final Direction d = direction.getSingle(e);
             if (ls.length == 0 || d == null)
-                return new Block[0];
+                return EmptyArrays.EMPTY_BLOCK_ARRAY;
             final Block[] bs = new Block[ls.length];
             for (int i = 0; i < ls.length; i++) {
                 bs[i] = d.getRelative(ls[i]).getBlock();
@@ -107,7 +108,7 @@ public final class ExprBlocks extends SimpleExpression<Block> {
         }
         final Iterator<Block> iter = iterator(e);
         if (iter == null)
-            return new Block[0];
+            return EmptyArrays.EMPTY_BLOCK_ARRAY;
         final ArrayList<Block> r = new ArrayList<>();
         for (final Block b : new IteratorIterable<>(iter))
             r.add(b);

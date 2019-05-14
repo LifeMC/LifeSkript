@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -66,7 +67,7 @@ public final class ExprIndexOf extends SimpleExpression<Integer> {
     protected Integer[] get(final Event e) {
         final String h = haystack.getSingle(e), n = needle.getSingle(e);
         if (h == null || n == null)
-            return new Integer[0];
+            return EmptyArrays.EMPTY_INTEGER_ARRAY;
         final int i = first ? h.indexOf(n) : h.lastIndexOf(n);
         return new Integer[]{i == -1 ? -1 : i + 1};
     }

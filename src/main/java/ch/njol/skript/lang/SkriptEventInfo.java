@@ -23,6 +23,7 @@
 package ch.njol.skript.lang;
 
 import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.util.EmptyArrays;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -33,7 +34,7 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
     /**
      * Use this as {@link #description(String...)} to prevent warnings about missing documentation.
      */
-    public static final String[] NO_DOC = new String[0];
+    public static final String[] NO_DOC = EmptyArrays.EMPTY_STRING_ARRAY;
     public final String name;
 
     private final String id;

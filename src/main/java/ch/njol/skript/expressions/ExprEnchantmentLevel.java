@@ -32,6 +32,7 @@ import ch.njol.skript.expressions.base.PropertyExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Event;
@@ -66,7 +67,7 @@ public final class ExprEnchantmentLevel extends PropertyExpression<ItemType, Int
     protected Integer[] get(final Event e, final ItemType[] source) {
         final Enchantment ench = enchantment.getSingle(e);
         if (ench == null)
-            return new Integer[0];
+            return EmptyArrays.EMPTY_INTEGER_ARRAY;
         return get(source, i -> {
             final Map<Enchantment, Integer> enchs = i.getEnchantments();
             if (enchs == null)

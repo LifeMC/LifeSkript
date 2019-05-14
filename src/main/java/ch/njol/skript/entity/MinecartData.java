@@ -26,8 +26,8 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.bukkitutil.Compatibility;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.variables.Variables;
-import ch.njol.util.StringUtils;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.entity.minecart.HopperMinecart;
@@ -160,7 +160,7 @@ public final class MinecartData extends EntityData<Minecart> {
                 if (t.c != null)
                     cn.add(t.codeName);
             }
-            codeNames = cn.toArray(StringUtils.EMPTY_STRING_ARRAY);
+            codeNames = cn.toArray(EmptyArrays.EMPTY_STRING_ARRAY);
         }
 
         @Nullable

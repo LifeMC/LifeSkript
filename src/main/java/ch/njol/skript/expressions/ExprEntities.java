@@ -28,7 +28,6 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.entity.EntityData;
-import ch.njol.skript.events.EvtAtTime;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.Literal;
@@ -37,6 +36,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.BlockingLogHandler;
 import ch.njol.skript.log.LogHandler;
 import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
@@ -169,7 +169,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
         if (matchedPattern >= 2) {
             final Iterator<? extends Entity> iter = iterator(e);
             if (iter == null || !iter.hasNext())
-                return new Entity[0];
+                return EmptyArrays.EMPTY_ENTITY_ARRAY;
             final List<Entity> l = new ArrayList<>();
             while (iter.hasNext())
                 l.add(iter.next());
@@ -239,7 +239,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
             return super.iterator(e);
         return new NonNullIterator<Entity>() {
 
-            private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EvtAtTime.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
+            private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
             private final EntityData<?>[] ts = types.getAll(e);
             private int w = -1;
             @Nullable
