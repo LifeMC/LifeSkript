@@ -19,21 +19,22 @@
 -libraryjars '<user.home>/.m2/repository/fr/neatmonster/nocheatplus/3.16.1-SNAPSHOT/nocheatplus-3.16.1-SNAPSHOT.jar'
 
 # Annotations used by Skript - All of them are optional.
-#-libraryjars '<user.home>/.m2/repository/org/eclipse/jdt.annotation/1.1.0/jdt.annotation-1.1.0.jar'
+-libraryjars '<user.home>/.m2/repository/org/eclipse/jdt.annotation/1.1.0/jdt.annotation-1.1.0.jar'
 -libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.0.0-beta1/spotbugs-annotations-4.0.0-beta1.jar'
 -libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
 -libraryjars '<user.home>/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'
 
 -dontskipnonpubliclibraryclassmembers
+-allowaccessmodification
+
 -target 1.8
 -forceprocessing
-#-dontshrink
 
 # Class merging & marking final: Mostly breaks binary compatibility and causes strange errors
 # Field propagation, marking private etc.: Breaks binary compatibility and it's bugged
 # Enum class unboxing: Gives strange errors on runtime
 # Code allocation: Changes variable stack map and causes runtime strange errors
--optimizations !class/merging/*,!class/marking/final,!method/marking/final,!field/*,!method/marking/private,!method/removal/parameter,!class/unboxing/enum,!code/allocation/variable
+-optimizations !class/merging/**,!class/marking/final,!method/marking/final,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
 
 # We moslty use optimization, and we want a powerful optimization. This maybe increased, but 10 looks powerful enough.
 # We also don't want to wait too much when building the project, so don't increase this too much.
@@ -47,12 +48,11 @@
 -keepattributes **
 -keepparameternames
 -adaptclassstrings
--adaptresourcefilenames **.properties,META-INF/MANIFEST.MF,**.MF,**.kotlin_module,**.sk,**.yml,**.md,version,**.lang,**.txt,version,LICENSE
--adaptresourcefilecontents **.properties,META-INF/MANIFEST.MF,**.MF,**.kotlin_module,**.sk,**.yml,**.md,version,**.lang,**.txt,version,LICENSE
+-adaptresourcefilenames **
+-adaptresourcefilecontents **
 
 # We don't want anything - just optimize whatever possible. But these may be commented out for debugging purposes.
 -dontnote
-#-dontwarn
 -ignorewarnings
 
 # Remove comment from this for debugging or analyzing purposes - it gives useful information, not like notes, warnings etc.
@@ -70,8 +70,23 @@
 -keep,allowoptimization class ch.njol.util.** { *; }
 -keep,allowoptimization class ch.njol.yggdrasil.** { *; }
 
-#-keep,allowoptimization class ** { *; }
-#-assumenosideeffects class ** { *; }
+# For enumeration classes, without this, it gives runtime errors.
+-keepclassmembers enum ** { *; }
+
+# For serializable classes - we use serialization.
+-keepclassmembers class ** implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# Ignore kotlin null checks at runtime - we have compile time checks.
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
 
 # Remove - System method calls. Remove all invocations of System
 # methods without side effects whose return values are not used.
@@ -138,7 +153,7 @@
 
 # Remove - Number method calls. Remove all invocations of Number
 # methods without side effects whose return values are not used.
--assumenosideeffects public class java.lang.* extends java.lang.Number {
+-assumenosideeffects public class java.lang.** extends java.lang.Number {
     public static java.lang.String toString(byte);
     public static java.lang.Byte valueOf(byte);
     public static byte parseByte(java.lang.String);

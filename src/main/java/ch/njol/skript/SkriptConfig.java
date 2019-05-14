@@ -96,9 +96,9 @@ public final class SkriptConfig {
                         Skript.info("Timings support enabled");
                     SkriptTimings.setEnabled(t); // Config option will be used
                 } else { // Not running Paper or LifeSpigot
-                    if (t) // Warn the console that timings won't work
-                        Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
-                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
+                    //if (t) // Warn the console that timings won't work
+                    //Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
+                    //SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
                 }
             });
     /**

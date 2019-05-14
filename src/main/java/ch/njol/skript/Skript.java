@@ -163,6 +163,14 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final @Nullable
     Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
+    /**
+     * Checks if currently running skript version is the experimental optimized version.
+     * This can be faked by removing nullable class - but at least it works.
+     * <p>
+     * We use proguard to optimize and shrink, proguard also removes this class.
+     * So, with this, we can check if the user is using optimized one, or the normal one.
+     */
+    public static final boolean isOptimized = !classExists("org.eclipse.jdt.annotation.Nullable");
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
@@ -179,7 +187,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final boolean debugProperty = System.getProperty("skript.debug") != null
             && Boolean.parseBoolean(System.getProperty("skript.debug"));
     /**
-     * use {@link Skript#getInstance()} for asserted access
+     * Use {@link Skript#getInstance()} for asserted access
      */
     @Nullable
     public static Skript instance;
@@ -268,13 +276,13 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             if (Skript.testing() && Skript.debug()) {
                 if (isUnsupportedTerminal)
-                    debug("Unsupported terminal");
+                    System.out.println("Unsupported terminal");
                 if (craftbukkitMain == null)
-                    debug("Null craftbukkit main");
+                    System.out.println("Null craftbukkit main");
                 if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useJline").get(null))
-                    debug("False useJline");
+                    System.out.println("False useJline");
                 if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useConsole").get(null))
-                    debug("No console");
+                    System.out.println("No console");
             }
             return hasJLineSupport = !isUnsupportedTerminal && craftbukkitMain != null && (boolean) craftbukkitMain.getField("useJline").get(null) && (boolean) craftbukkitMain.getField("useConsole").get(null);
         } catch (final ClassCastException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException | NullPointerException e) {
@@ -1088,7 +1096,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? " (update available)" : " (latest)" : " (not checked)"));
+            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? "(optimized, experimental)" : ""));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1127,7 +1135,7 @@ public final class Skript extends JavaPlugin implements Listener {
             for (final SkriptAddon addon : addons.values()) {
                 if (addon.plugin instanceof Skript)
                     continue;
-                stringBuilder.append(addon.getName() + " v" + addon.plugin.getDescription().getVersion());
+                stringBuilder.append(addon.getName()).append(" v").append(addon.plugin.getDescription().getVersion());
                 if (i < addons.size() - 1)
                     stringBuilder.append(", ");
                 i++;
@@ -1457,16 +1465,11 @@ public final class Skript extends JavaPlugin implements Listener {
                             if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
                                 final String cl = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
                                 try {
-                                    if (Skript.debug())
-                                        Skript.debug("Trying to load hook class " + cl);
                                     final Class<?> hook = Class.forName(cl, true, getBukkitClassLoader());
                                     if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
                                         hook.getDeclaredConstructor().setAccessible(true);
                                         hook.getDeclaredConstructor().newInstance();
-                                        if (Skript.debug())
-                                            Skript.debug("Loaded hook class " + cl + " successfully.");
-                                    } else if (Skript.debug())
-                                        Skript.debug("Can't load hook class " + cl);
+                                    }
                                 } catch (final NoClassDefFoundError ncdffe) {
                                     Skript.exception(ncdffe, "Cannot load class " + cl + " because it missing some dependencies");
                                 } catch (final ClassNotFoundException ex) {
@@ -1498,6 +1501,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     Documentation.generate();
 
                 SkriptTimings.setSkript(Skript.this);
+                SkriptCommand.setPriority();
 
                 if (logNormal())
                     info("Loading variables...");

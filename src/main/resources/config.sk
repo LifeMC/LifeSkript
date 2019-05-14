@@ -96,7 +96,7 @@ verbosity: normal
 # Only use debug if you're programming an add-on for Skript, but even then you might usually not need it.
 # Note: Debug verbosity has also some side effects and bugs, use it only for testing purposes!
 
-plugin priority: highest
+plugin priority: normal
 # Allowed values: lowest, low, normal, high, highest, monitor
 # Change this if you encounter problems with other plugins, e.g.:
 # - cancelled events: The event is cancelled by another plugin, but Skript handles the event nonetheless => increase priority
@@ -192,7 +192,7 @@ warn when using none values in strings: false
 # That indicating a variable is none, or an expression is returned none when converting to string.
 # It usually happens by a bug. You should set a default value in such situation.
 
-enable timings: false
+enable timings: true
 # When enabled, triggers in scripts will be present in timings reports.
 # Note that this requires Paper or LifeSpigot to work; on Bukkit/Spigot this option has no effect.
 # When false, timings are not enabled for scripts even if you're running Paper or LifeSpigot.
