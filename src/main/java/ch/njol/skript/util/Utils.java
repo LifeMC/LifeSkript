@@ -143,7 +143,7 @@ public final class Utils {
         throw new UnsupportedOperationException();
     }
 
-    public static String join(final Object[] objects) {
+    public static final String join(final Object[] objects) {
         assert objects != null;
         final StringBuilder b = new StringBuilder();
         for (int i = 0; i < objects.length; i++) {
@@ -154,7 +154,7 @@ public final class Utils {
         return b.toString();
     }
 
-    public static String join(final Iterable<?> objects) {
+    public static final String join(final Iterable<?> objects) {
         assert objects != null;
         final StringBuilder b = new StringBuilder();
         boolean first = true;
@@ -175,7 +175,7 @@ public final class Utils {
      * @param is2
      * @return Whatever the item stacks are of the same type
      */
-    public static boolean itemStacksEqual(final @Nullable ItemStack is1, final @Nullable ItemStack is2) {
+    public static final boolean itemStacksEqual(final @Nullable ItemStack is1, final @Nullable ItemStack is2) {
         if (is1 == null || is2 == null)
             return is1 == is2;
         return is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability() && (ItemType.itemMetaSupported ? is1.getItemMeta().equals(is2.getItemMeta()) : is1.getEnchantments().equals(is2.getEnchantments()));
@@ -190,7 +190,7 @@ public final class Utils {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static <T extends Entity> T getTarget(final LivingEntity entity, @Nullable final EntityData<T> type) {
+    public static final <T extends Entity> T getTarget(final LivingEntity entity, @Nullable final EntityData<T> type) {
         if (entity instanceof Creature) {
             return ((Creature) entity).getTarget() == null || type != null && !type.isInstance(((Creature) entity).getTarget()) ? null : (T) ((Creature) entity).getTarget();
         }
@@ -213,7 +213,7 @@ public final class Utils {
         return target;
     }
 
-    public static Pair<String, Integer> getAmount(final String s) {
+    public static final Pair<String, Integer> getAmount(final String s) {
         if (s.matches("\\d+ of .+")) {
             return new Pair<>(s.split(" ", 3)[2], Utils.parseInt(s.split(" ", 2)[0]));
         } else if (s.matches("\\d+ .+")) {
@@ -229,7 +229,7 @@ public final class Utils {
      * @return Pair of singular string + boolean whatever it was plural
      */
     @SuppressWarnings("null")
-    public static NonNullPair<String, Boolean> getEnglishPlural(final String s) {
+    public static final NonNullPair<String, Boolean> getEnglishPlural(final String s) {
         assert s != null;
         if (s.isEmpty())
             return new NonNullPair<>("", Boolean.FALSE);
@@ -248,7 +248,7 @@ public final class Utils {
      * @param s
      * @return The english plural of the given word
      */
-    public static String toEnglishPlural(final String s) {
+    public static final String toEnglishPlural(final String s) {
         assert s != null && s.length() != 0;
         for (final String[] p : plurals) {
             if (s.endsWith(p[0]))
@@ -265,7 +265,7 @@ public final class Utils {
      * @param p
      * @return The english plural of the given word, or the word itself if p is false.
      */
-    public static String toEnglishPlural(final String s, final boolean p) {
+    public static final String toEnglishPlural(final String s, final boolean p) {
         if (p)
             return toEnglishPlural(s);
         return s;
@@ -279,7 +279,7 @@ public final class Utils {
      * @see #A(String)
      * @see #a(String, boolean)
      */
-    public static String a(final String s) {
+    public static final String a(final String s) {
         return a(s, false);
     }
 
@@ -291,7 +291,7 @@ public final class Utils {
      * @see #a(String)
      * @see #a(String, boolean)
      */
-    public static String A(final String s) {
+    public static final String A(final String s) {
         return a(s, true);
     }
 
@@ -303,7 +303,7 @@ public final class Utils {
      * @return The given string with an appended a/an (or A/An if capA is true) and a space at the beginning
      * @see #a(String)
      */
-    public static String a(final String s, final boolean capA) {
+    public static final String a(final String s, final boolean capA) {
         assert s != null && s.length() != 0;
         if ("aeiouAEIOU".indexOf(s.charAt(0)) != -1) {
             if (capA)
@@ -323,7 +323,7 @@ public final class Utils {
      * @param type
      * @return The block's height at the center
      */
-    public static double getBlockHeight(final int type, final byte data) {
+    public static final double getBlockHeight(final int type, final byte data) {
         switch (type) {
             case 26: // bed
                 return 9. / 16;
@@ -372,7 +372,7 @@ public final class Utils {
     }
 
     @Nullable
-    public static String getChatStyle(final String s) {
+    public static final String getChatStyle(final String s) {
         final Color c = Color.byName(s);
         if (c != null)
             return c.getChat();
@@ -386,7 +386,7 @@ public final class Utils {
      * @return message with localised chat styles converted to Minecraft's format
      */
     @SuppressWarnings("null")
-    public static String replaceChatStyles(final String message) {
+    public static final String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
         String m = StringUtils.replaceAll(message.replace("<<none>>", ""), stylePattern, m1 -> {
@@ -410,7 +410,7 @@ public final class Utils {
      * @param message
      * @return message with english chat styles converted to Minecraft's format
      */
-    public static String replaceEnglishChatStyles(final String message) {
+    public static final String replaceEnglishChatStyles(final String message) {
         if (message.isEmpty())
             return message;
         String m = StringUtils.replaceAll(message, stylePattern, m1 -> {
@@ -434,14 +434,14 @@ public final class Utils {
      * @param end
      * @return <tt>start + random.nextInt(end - start)</tt>
      */
-    public static int random(final int start, final int end) {
+    public static final int random(final int start, final int end) {
         if (end <= start)
             throw new IllegalArgumentException("end (" + end + ") must be > start (" + start + ")");
         return start + random.nextInt(end - start);
     }
 
     // TODO improve
-    public static Class<?> getSuperType(final Class<?>... cs) {
+    public static final Class<?> getSuperType(final Class<?>... cs) {
         assert cs.length > 0;
         Class<?> r = cs[0];
         assert r != null;
@@ -481,7 +481,7 @@ public final class Utils {
      * @param s
      * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
      */
-    public static int parseInt(final String s) {
+    public static final int parseInt(final String s) {
         assert s.matches("-?\\d+");
         assert SkriptParser.isInteger(s);
         try {
@@ -499,7 +499,7 @@ public final class Utils {
      * @param s
      * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
      */
-    public static long parseLong(final String s) {
+    public static final long parseLong(final String s) {
         assert s.matches("-?\\d+");
         try {
             return Long.parseLong(s);

@@ -136,7 +136,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
             meta.removeEnchant(e);
     }
 
-    public static ItemStack[] getCopiedContents(final Inventory invi) {
+    public static final ItemStack[] getCopiedContents(final Inventory invi) {
         final ItemStack[] buf = invi.getContents();
         for (int i = 0; i < buf.length; i++)
             if (buf[i] != null)
@@ -144,7 +144,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return buf;
     }
 
-    private static boolean addTo(final @Nullable ItemStack is, final ItemStack[] buf) {
+    private static final boolean addTo(final @Nullable ItemStack is, final ItemStack[] buf) {
         if (is == null || is.getTypeId() == 0)
             return true;
         int added = 0;
@@ -179,7 +179,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param sub
      * @return Whatever all item types in <tt>sub</tt> have at least one {@link #isSupertypeOf(ItemType) super type} in <tt>set</tt>
      */
-    public static boolean isSubset(final ItemType[] set, final ItemType[] sub) {
+    public static final boolean isSubset(final ItemType[] set, final ItemType[] sub) {
         outer:
         for (final ItemType i : sub) {
             assert i != null;
@@ -197,7 +197,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      */
     @Deprecated
     @Nullable
-    public static ItemType[] deserialize(final String s) {
+    public static final ItemType[] deserialize(final String s) {
         if (s.isEmpty())
             return null;
         final String[] split = s.split("(?!<\\|)\\|(?!\\|)");
@@ -211,11 +211,11 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return types;
     }
 
-    public static String toString(final ItemStack i) {
+    public static final String toString(final ItemStack i) {
         return new ItemType(i).toString();
     }
 
-    public static String toString(final ItemStack i, final int flags) {
+    public static final String toString(final ItemStack i, final int flags) {
         return new ItemType(i).toString(flags);
     }
 

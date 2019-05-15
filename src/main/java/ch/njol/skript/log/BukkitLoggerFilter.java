@@ -59,7 +59,7 @@ public final class BukkitLoggerFilter {
         filter.addFilter(f);
     }
 
-    public static boolean removeFilter(final Filter f) {
+    public static final boolean removeFilter(final Filter f) {
         return filter.removeFilter(f);
     }
 

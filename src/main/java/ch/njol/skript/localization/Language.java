@@ -71,7 +71,7 @@ public final class Language {
     }
 
     @Nullable
-    private static String get_i(final String key) {
+    private static final String get_i(final String key) {
         if (useLocal && localized != null) {
             final String s = localized.get(key);
             if (s != null)
@@ -90,7 +90,7 @@ public final class Language {
      * @param key The message's key (case-insensitive)
      * @return The requested message if it exists or the key otherwise
      */
-    public static String get(final String key) {
+    public static final String get(final String key) {
         final String s = get_i(key.toLowerCase(Locale.ENGLISH));
         return s == null ? key.toLowerCase(Locale.ENGLISH) : s;
     }
@@ -102,7 +102,7 @@ public final class Language {
      * @return The requested message or null if it doesn't exist
      */
     @Nullable
-    public static String get_(final String key) {
+    public static final String get_(final String key) {
         return get_i(key.toLowerCase(Locale.ENGLISH));
     }
 
@@ -119,7 +119,7 @@ public final class Language {
      * @param args The arguments to pass to {@link String#format(String, Object...)}
      * @return The formatted string
      */
-    public static String format(String key, final Object... args) {
+    public static final String format(String key, final Object... args) {
         key = key.toLowerCase(Locale.ENGLISH);
         final String value = get_i(key);
         if (value == null)
@@ -138,7 +138,7 @@ public final class Language {
      * @param key
      * @return The message surrounded by spaces, a space if the entry is empty, or " "+key+" " if the entry is missing.
      */
-    public static String getSpaced(final String key) {
+    public static final String getSpaced(final String key) {
         final String s = get(key);
         if (s.isEmpty())
             return " ";
@@ -151,7 +151,7 @@ public final class Language {
      * @param key
      * @return a non-null String array with at least one element
      */
-    public static String[] getList(final String key) {
+    public static final String[] getList(final String key) {
         final String s = get_i(key.toLowerCase(Locale.ENGLISH));
         if (s == null)
             return new String[]{key.toLowerCase(Locale.ENGLISH)};
@@ -164,7 +164,7 @@ public final class Language {
      * @param key
      * @return Whatever the given key exists in the <b>english</b> language file.
      */
-    public static boolean keyExists(final String key) {
+    public static final boolean keyExists(final String key) {
         return english.containsKey(key.toLowerCase(Locale.ENGLISH));
     }
 
@@ -189,7 +189,7 @@ public final class Language {
             l.onLanguageChange();
     }
 
-    public static boolean load(String name) {
+    public static final boolean load(String name) {
         name = name.toLowerCase(Locale.ENGLISH);
         if ("english".equals(name))
             return true;
@@ -214,7 +214,7 @@ public final class Language {
     }
 
     @SuppressWarnings("resource") // closed in line 277.
-    private static boolean load(final SkriptAddon addon, final String name) {
+    private static final boolean load(final SkriptAddon addon, final String name) {
         if (addon.getLanguageFileDirectory() == null)
             return false;
         final Map<String, String> l = load(addon.plugin.getResource(addon.getLanguageFileDirectory() + "/" + name + ".lang"), name);
@@ -249,7 +249,7 @@ public final class Language {
         return true;
     }
 
-    private static Map<String, String> load(final @Nullable InputStream in, final String name) {
+    private static final Map<String, String> load(final @Nullable InputStream in, final String name) {
         if (in == null)
             return new HashMap<>();
         try {
@@ -331,7 +331,7 @@ public final class Language {
      * @param b Whatever to enable localisation or not
      * @return Previous state
      */
-    public static boolean setUseLocal(final boolean b) {
+    public static final boolean setUseLocal(final boolean b) {
         if (useLocal == b)
             return b;
         if (localized == null)
@@ -347,7 +347,7 @@ public final class Language {
         return !b;
     }
 
-    public static boolean isUsingLocal() {
+    public static final boolean isUsingLocal() {
         return useLocal;
     }
 

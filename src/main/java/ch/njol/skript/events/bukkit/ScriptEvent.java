@@ -37,7 +37,7 @@ public final class ScriptEvent extends Event {
         super();
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

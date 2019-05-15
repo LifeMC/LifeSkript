@@ -136,7 +136,7 @@ public final class SkriptCommand implements CommandExecutor {
     }
 
     @Nullable
-    private static File getScriptFromArgs(final CommandSender sender, final String[] args, final int start) {
+    private static final File getScriptFromArgs(final CommandSender sender, final String[] args, final int start) {
         String script = StringUtils.join(args, " ", start, args.length);
         File f = getScriptFromName(script);
         if (f == null) {
@@ -147,7 +147,7 @@ public final class SkriptCommand implements CommandExecutor {
     }
 
     @Nullable
-    public static File getScriptFromName(String script) {
+    public static final File getScriptFromName(String script) {
         final boolean isFolder = script.endsWith("/") || script.endsWith("\\");
         if (isFolder) {
             script = script.replace('/', File.separatorChar).replace('\\', File.separatorChar);
@@ -166,7 +166,7 @@ public final class SkriptCommand implements CommandExecutor {
         return f;
     }
 
-    private static Collection<File> toggleScripts(final File folder, final boolean enable) throws IOException {
+    private static final Collection<File> toggleScripts(final File folder, final boolean enable) throws IOException {
         return FileUtils.renameAll(folder, name -> {
             if (StringUtils.endsWithIgnoreCase(name, ".sk") && name.startsWith("-") == enable)
                 return enable ? name.substring(1) : "-" + name;

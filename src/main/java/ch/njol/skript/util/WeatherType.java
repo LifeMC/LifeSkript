@@ -63,11 +63,11 @@ public enum WeatherType {
     }
 
     @Nullable
-    public static WeatherType parse(final String s) {
+    public static final WeatherType parse(final String s) {
         return byName.get(s);
     }
 
-    public static WeatherType fromWorld(final World world) {
+    public static final WeatherType fromWorld(final World world) {
         assert world != null;
         if (world.isThundering())
             return THUNDER;
@@ -76,7 +76,7 @@ public enum WeatherType {
         return CLEAR;
     }
 
-    public static WeatherType fromEvent(final WeatherEvent e) {
+    public static final WeatherType fromEvent(final WeatherEvent e) {
         if (e instanceof WeatherChangeEvent)
             return fromEvent((WeatherChangeEvent) e);
         if (e instanceof ThunderChangeEvent)
@@ -85,7 +85,7 @@ public enum WeatherType {
         return CLEAR;
     }
 
-    public static WeatherType fromEvent(final WeatherChangeEvent e) {
+    public static final WeatherType fromEvent(final WeatherChangeEvent e) {
         assert e != null;
         if (!e.toWeatherState())
             return CLEAR;
@@ -94,7 +94,7 @@ public enum WeatherType {
         return RAIN;
     }
 
-    public static WeatherType fromEvent(final ThunderChangeEvent e) {
+    public static final WeatherType fromEvent(final ThunderChangeEvent e) {
         assert e != null;
         if (e.toThunderState())
             return THUNDER;

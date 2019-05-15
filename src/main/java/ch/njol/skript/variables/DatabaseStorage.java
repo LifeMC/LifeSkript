@@ -59,7 +59,7 @@ public final class DatabaseStorage extends VariablesStorage {
             OLD_TABLE_NAME = "variables";
 
     private static final String SELECT_ORDER = "name, type, value, rowid";
-    private static final String guid = "" + UUID.randomUUID().toString();
+    private static final String guid = UUID.randomUUID().toString();
     /**
      * The delay between transactions in milliseconds.
      */

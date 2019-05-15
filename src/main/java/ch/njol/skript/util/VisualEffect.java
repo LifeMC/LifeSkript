@@ -102,14 +102,14 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
     }
 
     @Nullable
-    public static VisualEffect parse(final String s) {
+    public static final VisualEffect parse(final String s) {
         final SyntaxElementInfo<VisualEffect> info = VisualEffect.info;
         if (info == null)
             return null;
         return SkriptParser.parseStatic(Noun.stripIndefiniteArticle(s), new SingleItemIterator<>(info), null);
     }
 
-    public static String getAllNames() {
+    public static final String getAllNames() {
         return StringUtils.join(names, ", ");
     }
 

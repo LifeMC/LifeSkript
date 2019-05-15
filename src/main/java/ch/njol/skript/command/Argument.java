@@ -69,7 +69,7 @@ public final class Argument<T> {
 
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
-    public static <T> Argument<T> newInstance(@Nullable final String name, final ClassInfo<T> type, final @Nullable String def, final int index, final boolean single, final boolean forceOptional) {
+    public static final <T> Argument<T> newInstance(@Nullable final String name, final ClassInfo<T> type, final @Nullable String def, final int index, final boolean single, final boolean forceOptional) {
         if (name != null && !Variable.isValidVariableName(name, false, false)) {
             Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
             return null;

@@ -94,7 +94,7 @@ public class ClassInfo<T> implements Debuggable {
         name = new Noun("types." + codeName);
     }
 
-    public static boolean isVaildCodeName(final String name) {
+    public static final boolean isVaildCodeName(final String name) {
         return name.matches("[a-z0-9]+");
     }
 

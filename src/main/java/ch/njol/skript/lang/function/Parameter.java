@@ -64,7 +64,7 @@ public final class Parameter<T> {
     }
 
     @Nullable
-    public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
+    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
         if (def != null) {
             final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
             return newInstance(name, type, single, def, isNone);
@@ -74,7 +74,7 @@ public final class Parameter<T> {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public static <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
+    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
         if (!Variable.isValidVariableName(name, false, false)) {
             Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
             return null;

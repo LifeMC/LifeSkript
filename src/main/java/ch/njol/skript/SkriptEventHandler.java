@@ -276,7 +276,7 @@ public final class SkriptEventHandler {
         return false;
     }
 
-//	private static final final void unregisterEvents() {
+//	private static final void unregisterEvents() {
 //		for (final Iterator<Class<? extends Event>> i = registeredEvents.iterator(); i.hasNext();) {
 //			if (unregisterEvent(i.next()))
 //				i.remove();

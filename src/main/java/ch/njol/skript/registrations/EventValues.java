@@ -43,7 +43,7 @@ public final class EventValues {
     private EventValues() {
     }
 
-    private static List<EventValueInfo<?, ?>> getEventValuesList(final int time) {
+    private static final List<EventValueInfo<?, ?>> getEventValuesList(final int time) {
         if (time == -1)
             return pastEventValues;
         if (time == 0)
@@ -63,7 +63,7 @@ public final class EventValues {
      *             <b>Always register a default state!</b> You can leave out one of the other states instead, e.g. only register a default and a past state. The future state will
      *             default to the default state in this case.
      */
-    public static <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time) {
+    public static final <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time) {
         registerEventValue(e, c, g, time, null, (Class<? extends E>[]) null);
     }
 
@@ -77,7 +77,7 @@ public final class EventValues {
      * @param excludes Subclasses of the event for which this event value should not be registered for
      */
     @SafeVarargs
-    public static <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>... excludes) {
+    public static final <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>... excludes) {
         Skript.checkAcceptRegistrations();
         final List<EventValueInfo<?, ?>> eventValues = getEventValuesList(time);
         for (int i = 0; i < eventValues.size(); i++) {
@@ -103,7 +103,7 @@ public final class EventValues {
      * @see #registerEventValue(Class, Class, Getter, int)
      */
     @Nullable
-    public static <T, E extends Event> T getEventValue(final E e, final Class<T> c, final int time) {
+    public static final <T, E extends Event> T getEventValue(final E e, final Class<T> c, final int time) {
         @SuppressWarnings({"unchecked"}) final Getter<? extends T, ? super E> g = EventValues.getEventValueGetter((Class<E>) e.getClass(), c, time);
         if (g == null)
             return null;
@@ -123,13 +123,13 @@ public final class EventValues {
      * @see ch.njol.skript.expressions.base.EventValueExpression#EventValueExpression(Class)
      */
     @Nullable
-    public static <T, E extends Event> Getter<? extends T, ? super E> getEventValueGetter(final Class<E> e, final Class<T> c, final int time) {
+    public static final <T, E extends Event> Getter<? extends T, ? super E> getEventValueGetter(final Class<E> e, final Class<T> c, final int time) {
         return EventValues.getEventValueGetter(e, c, time, true);
     }
 
     @SuppressWarnings("unchecked")
     @Nullable
-    private static <T, E extends Event> Getter<? extends T, ? super E> getEventValueGetter(final Class<E> e, final Class<T> c, final int time, final boolean allowDefault) {
+    private static final <T, E extends Event> Getter<? extends T, ? super E> getEventValueGetter(final Class<E> e, final Class<T> c, final int time, final boolean allowDefault) {
         final List<EventValueInfo<?, ?>> eventValues = getEventValuesList(time);
         boolean b;
         for (final EventValueInfo<?, ?> ev : eventValues) {
@@ -182,7 +182,7 @@ public final class EventValues {
         return null;
     }
 
-    private static boolean checkExcludes(final EventValueInfo<?, ?> ev, final Class<? extends Event> e) {
+    private static final boolean checkExcludes(final EventValueInfo<?, ?> ev, final Class<? extends Event> e) {
         @SuppressWarnings("cast") final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.exculdes;
         if (excl == null)
             return true;
@@ -196,7 +196,7 @@ public final class EventValues {
     }
 
     @Nullable
-    private static <E extends Event, F, T> Getter<? extends T, ? super E> getConvertedGetter(final EventValueInfo<E, F> i, final Class<T> to, final boolean checkInstanceOf) {
+    private static final <E extends Event, F, T> Getter<? extends T, ? super E> getConvertedGetter(final EventValueInfo<E, F> i, final Class<T> to, final boolean checkInstanceOf) {
         final Converter<? super F, ? extends T> c = Converters.getConverter(i.c, to);
         if (c == null)
             return null;
@@ -214,7 +214,7 @@ public final class EventValues {
         };
     }
 
-    public static boolean doesEventValueHaveTimeStates(final Class<? extends Event> e, final Class<?> c) {
+    public static final boolean doesEventValueHaveTimeStates(final Class<? extends Event> e, final Class<?> c) {
         return getEventValueGetter(e, c, -1, false) != null || getEventValueGetter(e, c, 1, false) != null;
     }
 

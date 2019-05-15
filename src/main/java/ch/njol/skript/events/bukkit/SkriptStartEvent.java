@@ -35,7 +35,7 @@ public final class SkriptStartEvent extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

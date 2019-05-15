@@ -68,7 +68,7 @@ public final class Version implements Serializable, Comparable<Version> {
         postfix = m.group(m.groupCount()).isEmpty() ? null : m.group(m.groupCount());
     }
 
-    public static int compare(final String v1, final String v2) {
+    public static final int compare(final String v1, final String v2) {
         return new Version(v1).compareTo(new Version(v2));
     }
 

@@ -92,7 +92,8 @@ public final class DefaultComparators {
         entityMaterials.put(Painting.class, Material.PAINTING);
         entityMaterials.put(Arrow.class, Material.ARROW);
         entityMaterials.put(Egg.class, Material.EGG);
-        entityMaterials.put(Chicken.class, Material.RAW_CHICKEN);
+        if (Skript.fieldExists(Material.class, "RAW_CHICKEN"))
+            entityMaterials.put(Chicken.class, Material.RAW_CHICKEN);
         entityMaterials.put(EnderPearl.class, Material.ENDER_PEARL);
         entityMaterials.put(Snowball.class, Material.SNOW_BALL);
         entityMaterials.put(ThrownExpBottle.class, Material.EXP_BOTTLE);

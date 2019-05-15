@@ -95,11 +95,11 @@ public final class SkriptConfig {
                     if (t)
                         Skript.info("Timings support enabled");
                     SkriptTimings.setEnabled(t); // Config option will be used
-                } else { // Not running Paper or LifeSpigot
+                }// else { // Not running Paper or LifeSpigot
                     //if (t) // Warn the console that timings won't work
                     //Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
                     //SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
-                }
+                //}
             });
     /**
      * False by default - Use /sk track variables to enable in runtime.
@@ -136,7 +136,7 @@ public final class SkriptConfig {
         throw new UnsupportedOperationException();
     }
 
-    public static String formatDate(final long timestamp) {
+    public static final String formatDate(final long timestamp) {
         final DateFormat format = dateFormat.value();
         assert format != null;
 
@@ -150,12 +150,12 @@ public final class SkriptConfig {
      * This should only be used in special cases
      */
     @Nullable
-    public static Config getConfig() {
+    public static final Config getConfig() {
         return mainConfig;
     }
 
     // also used for reloading
-    static boolean load() {
+    static final boolean load() {
         try {
             final File oldConfigFile = new File(Skript.getInstance().getDataFolder(), "config.cfg");
             final File configFile = new File(Skript.getInstance().getDataFolder(), "config.sk");

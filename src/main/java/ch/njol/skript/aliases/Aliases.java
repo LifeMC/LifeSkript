@@ -107,23 +107,23 @@ public final class Aliases {
         throw new UnsupportedOperationException();
     }
 
-    private static HashMap<String, ItemType> getAliases() {
+    private static final HashMap<String, ItemType> getAliases() {
         return Language.isUsingLocal() ? aliases_localised : aliases_english;
     }
 
     @Nullable
-    private static ItemType getAlias_i(final String s) {
+    private static final ItemType getAlias_i(final String s) {
         final ItemType t = ScriptLoader.getScriptAliases().get(s);
         if (t != null)
             return t;
         return getAliases().get(s);
     }
 
-    private static HashMap<Integer, MaterialName> getMaterialNames() {
+    private static final HashMap<Integer, MaterialName> getMaterialNames() {
         return Language.isUsingLocal() ? materialNames_localised : materialNames_english;
     }
 
-    private static int nextBracket(final String s, final char closingBracket, final char openingBracket, final int start) {
+    private static final int nextBracket(final String s, final char closingBracket, final char openingBracket, final int start) {
         int n = 0;
         assert s.charAt(start) == openingBracket;
         for (int i = start + 1; i < s.length(); i++) {
@@ -148,7 +148,7 @@ public final class Aliases {
      * @param parts
      */
     @SuppressWarnings("null")
-    private static String concatenate(final String... parts) {
+    private static final String concatenate(final String... parts) {
         assert parts.length >= 2;
         final StringBuilder b = new StringBuilder();
         for (final String part : parts) {
@@ -174,7 +174,7 @@ public final class Aliases {
      * @param variations
      * @return A map containing all parsed aliases
      */
-    static LinkedHashMap<String, ItemType> getAliases(final String name, final ItemType value, final Variations variations) {
+    static final LinkedHashMap<String, ItemType> getAliases(final String name, final ItemType value, final Variations variations) {
         final LinkedHashMap<String, ItemType> r = new LinkedHashMap<>(); // LinkedHashMap to preserve order for item names
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
@@ -304,7 +304,7 @@ public final class Aliases {
      * @return amount of added aliases
      */
     @SuppressWarnings("null")
-    static int addAliases(final String name, final String value, final Variations variations) {
+    static final int addAliases(final String name, final String value, final Variations variations) {
         final ItemType t = parseAlias(value);
         if (t == null) {
             return 0;
@@ -408,16 +408,16 @@ public final class Aliases {
      * @param data
      * @return The material's name
      */
-    public static String getMaterialName(final int id, final short data, final boolean plural) {
+    public static final String getMaterialName(final int id, final short data, final boolean plural) {
         return getMaterialName(id, data, data, plural);
     }
 
-    public static String getDebugMaterialName(final int id, final short data, final boolean plural) {
+    public static final String getDebugMaterialName(final int id, final short data, final boolean plural) {
         return getDebugMaterialName(id, data, data, plural);
     }
 
     @SuppressWarnings("null")
-    public static String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
+    public static final String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
             return String.valueOf(id);
@@ -425,7 +425,7 @@ public final class Aliases {
         return n.toString(dataMin, dataMax, plural);
     }
 
-    public static String getDebugMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
+    public static final String getDebugMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
             return id + ":" + dataMin + (dataMax == dataMin ? "" : "-" + dataMax);
@@ -436,7 +436,7 @@ public final class Aliases {
     /**
      * @return The ietm's gender or -1 if no name is found
      */
-    public static int getGender(final int id, final short dataMin, final short dataMax) {
+    public static final int getGender(final int id, final short dataMin, final short dataMax) {
         final MaterialName n = getMaterialNames().get(id);
         if (n != null)
             return n.gender;
@@ -447,7 +447,7 @@ public final class Aliases {
      * @return how many ids are missing an alias, including the 'any id' (-1)
      */
     @SuppressWarnings("null")
-    static int addMissingMaterialNames() {
+    static final int addMissingMaterialNames() {
         final HashMap<Integer, MaterialName> materialNames = getMaterialNames();
         int r = 0;
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
@@ -476,7 +476,7 @@ public final class Aliases {
      * @return A new ItemType representing the given value
      */
     @Nullable
-    public static ItemType parseAlias(final String s) {
+    public static final ItemType parseAlias(final String s) {
         if (s.isEmpty()) {
             Skript.error(m_empty_string.toString());
             return null;
@@ -504,7 +504,7 @@ public final class Aliases {
      * @return The parsed ItemType or null if the input is invalid.
      */
     @Nullable
-    public static ItemType parseItemType(String s) {
+    public static final ItemType parseItemType(String s) {
         if (s.isEmpty())
             return null;
         s = s.trim();
@@ -574,7 +574,7 @@ public final class Aliases {
      * @return The given item type or null if the input couldn't be parsed.
      */
     @Nullable
-    private static ItemType parseType(final String s, final ItemType t, final boolean isAlias) {
+    private static final ItemType parseType(final String s, final ItemType t, final boolean isAlias) {
         int c = s.indexOf(':');
         if (c == -1)
             c = s.length();
@@ -642,7 +642,7 @@ public final class Aliases {
      * @return A copy of the ItemType represented by the given alias or null if no such alias exists.
      */
     @Nullable
-    private static ItemType getAlias(final String s) {
+    private static final ItemType getAlias(final String s) {
         ItemType i;
         String lc = s.toLowerCase(Locale.ENGLISH);
         final Matcher m = p_any.matcher(lc);
@@ -690,7 +690,7 @@ public final class Aliases {
      * @return ItemData with only the dataMin and dataMax set
      */
     @Nullable
-    private static ItemData parseData(final String s) {
+    private static final ItemData parseData(final String s) {
         if (s.isEmpty())
             return new ItemData();
         if (!s.matches("\\d+(-\\d+)?"))

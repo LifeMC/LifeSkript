@@ -47,7 +47,7 @@ public final class LiteralUtils {
      * @return {@code expr} without {@link UnparsedLiteral} objects
      */
     @SuppressWarnings({"unchecked", "null"})
-    public static <T> Expression<T> defendExpression(final Expression<?> expr) {
+    public static final <T> Expression<T> defendExpression(final Expression<?> expr) {
         if (expr instanceof ExpressionList) {
             final Expression<?>[] exprs = ((ExpressionList<?>) expr).getExpressions();
             for (int i = 0; i < exprs.length; i++)
@@ -66,7 +66,7 @@ public final class LiteralUtils {
      * @param expr The Expression to check for {@link UnparsedLiteral} objects
      * @return Whatever or not {@code expr} contains {@link UnparsedLiteral} objects
      */
-    public static boolean hasUnparsedLiteral(final Expression<?> expr) {
+    public static final boolean hasUnparsedLiteral(final Expression<?> expr) {
         if (expr instanceof UnparsedLiteral) {
             return true;
         } else if (expr instanceof ExpressionList) {
@@ -87,7 +87,7 @@ public final class LiteralUtils {
      * @return Whatever or not the passed expressions contain {@link UnparsedLiteral} objects
      */
     @SuppressWarnings("null")
-    public static boolean canInitSafely(final Expression<?>... expressions) {
+    public static final boolean canInitSafely(final Expression<?>... expressions) {
         for (final Expression<?> expression : expressions) {
             if (expression == null || hasUnparsedLiteral(expression)) {
                 return false;

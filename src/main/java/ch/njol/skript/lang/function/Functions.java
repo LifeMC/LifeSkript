@@ -66,7 +66,7 @@ public final class Functions {
      * @param function
      * @return The passed function
      */
-    public static JavaFunction<?> registerFunction(final JavaFunction<?> function) {
+    public static final JavaFunction<?> registerFunction(final JavaFunction<?> function) {
         Skript.checkAcceptRegistrations();
         if (!function.name.matches(functionNamePattern))
             throw new SkriptAPIException("Invalid function name '" + function.name + "'");
@@ -85,7 +85,7 @@ public final class Functions {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public static Function<?> loadFunction(final SectionNode node) {
+    public static final Function<?> loadFunction(final SectionNode node) {
         SkriptLogger.setNode(node);
         final String key = node.getKey();
         final String definition = ScriptLoader.replaceOptions(key == null ? "" : key);
@@ -164,13 +164,13 @@ public final class Functions {
     }
 
     @Nullable
-    private static Function<?> error(final String error) {
+    private static final Function<?> error(final String error) {
         Skript.error(error);
         return null;
     }
 
     @Nullable
-    public static Function<?> getFunction(final String name) {
+    public static final Function<?> getFunction(final String name) {
         final FunctionData d = functions.get(name);
         if (d == null)
             return null;
@@ -183,7 +183,7 @@ public final class Functions {
      * @param script
      * @return How many functions were removed
      */
-    public static int clearFunctions(final File script) {
+    public static final int clearFunctions(final File script) {
         int r = 0;
         final Iterator<FunctionData> iter = functions.values().iterator();
         while (iter.hasNext()) {
@@ -250,7 +250,7 @@ public final class Functions {
     }
 
     @SuppressWarnings("null")
-    public static Iterable<JavaFunction<?>> getJavaFunctions() {
+    public static final Iterable<JavaFunction<?>> getJavaFunctions() {
         return javaFunctions.values();
     }
 

@@ -76,19 +76,19 @@ public final class EnchantmentType implements YggdrasilSerializable {
     }
 
     @SuppressWarnings("null")
-    public static String toString(final Enchantment e) {
+    public static final String toString(final Enchantment e) {
         return enchantmentNames.get(e);
     }
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public static String toString(final Enchantment e, final int flags) {
+    public static final String toString(final Enchantment e, final int flags) {
         return enchantmentNames.get(e);
     }
 
     @SuppressWarnings("null")
     @Nullable
-    public static EnchantmentType parse(final String s) {
+    public static final EnchantmentType parse(final String s) {
         if (pattern.matcher(s).matches()) {
             final Enchantment ench = parseEnchantment(s.substring(0, s.lastIndexOf(' ')));
             if (ench == null)
@@ -102,12 +102,12 @@ public final class EnchantmentType implements YggdrasilSerializable {
     }
 
     @Nullable
-    public static Enchantment parseEnchantment(final String s) {
+    public static final Enchantment parseEnchantment(final String s) {
         return enchantmentPatterns.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     @SuppressWarnings("null")
-    public static Collection<String> getNames() {
+    public static final Collection<String> getNames() {
         return enchantmentNames.values();
     }
 

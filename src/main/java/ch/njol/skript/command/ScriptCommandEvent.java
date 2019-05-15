@@ -43,7 +43,7 @@ public final class ScriptCommandEvent extends CommandEvent {
         skriptCommand = command;
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

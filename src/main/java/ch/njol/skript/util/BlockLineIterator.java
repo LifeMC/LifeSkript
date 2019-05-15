@@ -87,7 +87,7 @@ public final class BlockLineIterator extends StoppableIterator<Block> {
     }
 
     @SuppressWarnings("null")
-    private static Vector fitInWorld(final Location l, final Vector dir) {
+    private static final Vector fitInWorld(final Location l, final Vector dir) {
         if (0 <= l.getBlockY() && l.getBlockY() < l.getWorld().getMaxHeight())
             return l.toVector();
         final double y = Math2.fit(0, l.getY(), l.getWorld().getMaxHeight());

@@ -84,7 +84,7 @@ public final class HealthUtils {
      * @param e
      * @return The amount of hearts the entity has left
      */
-    public static double getHealth(final LivingEntity e) {
+    public static final double getHealth(final LivingEntity e) {
         if (e.isDead())
             return 0;
         if (supportsDoubles)
@@ -121,7 +121,7 @@ public final class HealthUtils {
      * @param e
      * @return How many hearts the entity can have at most
      */
-    public static double getMaxHealth(final LivingEntity e) {
+    public static final double getMaxHealth(final LivingEntity e) {
         if (supportsDoubles)
             return e.getMaxHealth() / 2;
         try {
@@ -186,7 +186,7 @@ public final class HealthUtils {
         setHealth(e, Math2.fit(0, getHealth(e) + h, getMaxHealth(e)));
     }
 
-    public static double getDamage(final EntityDamageEvent e) {
+    public static final double getDamage(final EntityDamageEvent e) {
         if (supportsDoubles)
             return e.getDamage() / 2;
         try {

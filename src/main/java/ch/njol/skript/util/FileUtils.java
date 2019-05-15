@@ -45,13 +45,13 @@ public final class FileUtils {
     /**
      * @return The current date and time
      */
-    public static String getBackupSuffix() {
+    public static final String getBackupSuffix() {
         synchronized (backupFormat) {
             return "" + backupFormat.format(System.currentTimeMillis());
         }
     }
 
-    public static File backup(final File f) throws IOException {
+    public static final File backup(final File f) throws IOException {
         String name = f.getName();
         final int c = name.lastIndexOf('.');
         final String ext = c == -1 ? null : name.substring(c + 1);
@@ -67,7 +67,7 @@ public final class FileUtils {
         return backup;
     }
 
-    public static File move(final File from, final File to, final boolean replace) throws IOException {
+    public static final File move(final File from, final File to, final boolean replace) throws IOException {
         if (!replace && to.exists())
             throw new IOException("Can't rename " + from.getName() + " to " + to.getName() + ": The target file already exists");
         if (replace)
@@ -87,7 +87,7 @@ public final class FileUtils {
      * @return A collection of all changed files (with their new names)
      * @throws IOException If renaming one of the files caused an IOException. Some files might have been renamed already.
      */
-    public static Collection<File> renameAll(final File directory, final Converter<String, String> renamer) throws IOException {
+    public static final Collection<File> renameAll(final File directory, final Converter<String, String> renamer) throws IOException {
         final Collection<File> changed = new ArrayList<>();
         for (final File f : directory.listFiles()) {
             if (f.isDirectory()) {

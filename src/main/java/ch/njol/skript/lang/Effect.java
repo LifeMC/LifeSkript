@@ -45,7 +45,7 @@ public abstract class Effect extends Statement {
 
     @SuppressWarnings({"rawtypes", "unchecked", "null"})
     @Nullable
-    public static Effect parse(final String s, final @Nullable String defaultError) {
+    public static final Effect parse(final String s, final @Nullable String defaultError) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             final EffFunctionCall f = EffFunctionCall.parse(s);

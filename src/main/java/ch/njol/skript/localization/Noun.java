@@ -104,7 +104,7 @@ public final class Noun extends Message {
      * @param flags
      * @return The article with a trailing space (as no article is possible in which case the empty string is returned)
      */
-    public static String getArticleWithSpace(final int gender, final int flags) {
+    public static final String getArticleWithSpace(final int gender, final int flags) {
         if (gender == PLURAL) {
             if ((flags & Language.F_DEFINITE_ARTICLE) != 0)
                 return definitePluralArticle + " ";
@@ -131,7 +131,7 @@ public final class Noun extends Message {
      * @param s String with ¦ plural markers but without a @gender
      * @return (singular, plural)
      */
-    public static NonNullPair<String, String> getPlural(final String s) {
+    public static final NonNullPair<String, String> getPlural(final String s) {
         final NonNullPair<String, String> r = new NonNullPair<>("", "");
         int part = 3; // 1 = singular, 2 = plural, 3 = both
         int i = StringUtils.count(s, '¦');
@@ -162,7 +162,7 @@ public final class Noun extends Message {
      * @param s Some string
      * @return The same string with normalized plural markers
      */
-    public static String normalizePluralMarkers(final String s) {
+    public static final String normalizePluralMarkers(final String s) {
         final int c = StringUtils.count(s, '¦');
         if (c % 3 == 0)
             return s;
@@ -184,7 +184,7 @@ public final class Noun extends Message {
      * @param key    Key to use in error messages§
      * @return The gender's id
      */
-    public static int getGender(final String gender, final String key) {
+    public static final int getGender(final String gender, final String key) {
         if (gender.equalsIgnoreCase(PLURAL_TOKEN))
             return PLURAL;
         if (gender.equalsIgnoreCase(NO_GENDER_TOKEN))
@@ -198,7 +198,7 @@ public final class Noun extends Message {
 
     @SuppressWarnings("null")
     @Nullable
-    public static String getGenderID(final int gender) {
+    public static final String getGenderID(final int gender) {
         if (gender == PLURAL)
             return PLURAL_TOKEN;
         if (gender == NO_GENDER)
@@ -213,7 +213,7 @@ public final class Noun extends Message {
      * @param key Key to report in case of error
      * @return (stripped string, gender or - 1 if none)
      */
-    public static NonNullPair<String, Integer> stripGender(String s, final String key) {
+    public static final NonNullPair<String, Integer> stripGender(String s, final String key) {
         final int c = s.lastIndexOf('@');
         int g = -1;
         if (c != -1) {
@@ -223,7 +223,7 @@ public final class Noun extends Message {
         return new NonNullPair<>(s, g);
     }
 
-    public static String stripIndefiniteArticle(final String s) {
+    public static final String stripIndefiniteArticle(final String s) {
         for (final String a : indefiniteArticles) {
             if (StringUtils.startsWithIgnoreCase(s, a + " "))
                 return "" + s.substring(a.length() + 1);
@@ -231,23 +231,23 @@ public final class Noun extends Message {
         return s;
     }
 
-    public static boolean isIndefiniteArticle(final String s) {
+    public static final boolean isIndefiniteArticle(final String s) {
         return indefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH));
     }
 
-    public static boolean isLocalIndefiniteArticle(final String s) {
+    public static final boolean isLocalIndefiniteArticle(final String s) {
         return localIndefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH));
     }
 
-    public static boolean isDefiniteArticle(final String s) {
+    public static final boolean isDefiniteArticle(final String s) {
         return definiteArticles.contains(s.toLowerCase(Locale.ENGLISH)) || definitePluralArticle.equalsIgnoreCase(s);
     }
 
-    public static boolean isLocalDefiniteArticle(final String s) {
+    public static final boolean isLocalDefiniteArticle(final String s) {
         return localDefiniteArticles.contains(s.toLowerCase(Locale.ENGLISH)) || localDefinitePluralArticle.equalsIgnoreCase(s);
     }
 
-    public static String toString(final String singular, final String plural, final int gender, final int flags) {
+    public static final String toString(final String singular, final String plural, final int gender, final int flags) {
         return getArticleWithSpace(gender, flags) + ((flags & Language.F_PLURAL) != 0 ? plural : singular);
     }
 

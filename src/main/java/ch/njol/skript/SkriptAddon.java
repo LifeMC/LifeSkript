@@ -64,7 +64,7 @@ public final class SkriptAddon {
      */
     SkriptAddon(final JavaPlugin p) {
         plugin = p;
-        name = "" + p.getName();
+        name = p.getName();
         Version v;
         try {
             v = new Version("" + p.getDescription().getVersion());

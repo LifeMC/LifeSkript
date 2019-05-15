@@ -39,7 +39,7 @@ public final class ScriptOptions {
     }
 
     @SuppressWarnings("null")
-    public static ScriptOptions getInstance() {
+    public static final ScriptOptions getInstance() {
         return instance != null ? instance : new ScriptOptions();
     }
 

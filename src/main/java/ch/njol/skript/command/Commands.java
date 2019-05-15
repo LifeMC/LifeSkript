@@ -202,11 +202,11 @@ public final class Commands {
         }
     }
 
-    private static String escape(final String s) {
+    private static final String escape(final String s) {
         return escape.matcher(s).replaceAll("\\\\$0");
     }
 
-    private static String unescape(final String s) {
+    private static final String unescape(final String s) {
         return unescape.matcher(s).replaceAll("$0");
     }
 
@@ -295,7 +295,7 @@ public final class Commands {
      * @param command full command string without the slash
      * @return whatever to cancel the event
      */
-    static boolean handleCommand(final CommandSender sender, final String command) {
+    static final boolean handleCommand(final CommandSender sender, final String command) {
         final String[] cmd = command.split("\\s+", 2);
         cmd[0] = cmd[0].toLowerCase(Locale.ENGLISH);
         if (cmd[0].endsWith("?")) {
@@ -320,7 +320,7 @@ public final class Commands {
     }
 
     @SuppressWarnings("unchecked")
-    static boolean handleEffectCommand(final CommandSender sender, String command) {
+    static final boolean handleEffectCommand(final CommandSender sender, String command) {
         if (!(sender instanceof ConsoleCommandSender || sender.hasPermission("skript.effectcommands") || SkriptConfig.allowOpsToUseEffectCommands.value() && sender.isOp()))
             return false;
         final boolean wasLocal = Language.setUseLocal(false);
@@ -383,7 +383,7 @@ public final class Commands {
 
     @SuppressWarnings("null")
     @Nullable
-    public static ScriptCommand loadCommand(final SectionNode node) {
+    public static final ScriptCommand loadCommand(final SectionNode node) {
         final String key = node.getKey();
         if (key == null)
             return null;
@@ -590,7 +590,7 @@ public final class Commands {
         command.registerHelp();
     }
 
-    public static int unregisterCommands(final File script) {
+    public static final int unregisterCommands(final File script) {
         int numCommands = 0;
         final Iterator<ScriptCommand> commandsIter = commands.values().iterator();
         while (commandsIter.hasNext()) {

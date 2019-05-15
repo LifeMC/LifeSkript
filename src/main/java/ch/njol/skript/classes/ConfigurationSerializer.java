@@ -47,7 +47,7 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public static <T extends ConfigurationSerializable> T deserializeCS(final String s, final Class<T> c) {
+    public static final <T extends ConfigurationSerializable> T deserializeCS(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
             y.loadFromString(s);
@@ -63,7 +63,7 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
     @SuppressWarnings("unchecked")
     @Deprecated
     @Nullable
-    public static <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
+    public static final <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
             y.loadFromString(s.replace("\uFEFF", "\n"));

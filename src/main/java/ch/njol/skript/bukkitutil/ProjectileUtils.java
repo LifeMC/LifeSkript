@@ -60,7 +60,7 @@ public final class ProjectileUtils {
     }
 
     @Nullable
-    public static Object getShooter(final @Nullable Projectile p) {
+    public static final Object getShooter(final @Nullable Projectile p) {
         if (p == null)
             return null;
         try {

@@ -63,7 +63,7 @@ public final class PotionEffectUtils {
     }
 
     // MCPC+ workaround
-    private static int getMaxPotionId() {
+    private static final int getMaxPotionId() {
         int i = 0;
         for (final PotionEffectType t : PotionEffectType.values()) {
             if (t != null && t.getId() > i)
@@ -73,26 +73,26 @@ public final class PotionEffectUtils {
     }
 
     @Nullable
-    public static PotionEffectType parseType(final String s) {
+    public static final PotionEffectType parseType(final String s) {
         return types.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     @SuppressWarnings("null")
-    public static String toString(final PotionEffectType t) {
+    public static final String toString(final PotionEffectType t) {
         return names[t.getId()];
     }
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public static String toString(final PotionEffectType t, final int flags) {
+    public static final String toString(final PotionEffectType t, final int flags) {
         return names[t.getId()];
     }
 
-    public static String[] getNames() {
+    public static final String[] getNames() {
         return names;
     }
 
-    public static short guessData(final ThrownPotion p) {
+    public static final short guessData(final ThrownPotion p) {
         if (p.getEffects().size() == 1) {
             final PotionEffect e = p.getEffects().iterator().next();
             final Potion d = new Potion(PotionType.getByEffect(e.getType())).splash();

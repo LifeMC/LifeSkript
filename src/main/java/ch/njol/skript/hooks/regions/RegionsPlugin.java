@@ -70,7 +70,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
     public RegionsPlugin() throws IOException {
     }
 
-    public static boolean canBuild(final Player p, final Location l) {
+    public static final boolean canBuild(final Player p, final Location l) {
         for (final RegionsPlugin<?> pl : plugins) {
             if (!pl.canBuild_i(p, l))
                 return false;
@@ -78,7 +78,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
         return true;
     }
 
-    public static Set<? extends Region> getRegionsAt(final Location l) {
+    public static final Set<? extends Region> getRegionsAt(final Location l) {
         final Set<Region> r = new HashSet<>();
         for (final RegionsPlugin<?> pl : plugins) {
             r.addAll(pl.getRegionsAt_i(l));
@@ -87,14 +87,14 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
     }
 
     @Nullable
-    public static Region getRegion(final World world, final String name) {
+    public static final Region getRegion(final World world, final String name) {
         if (!plugins.isEmpty()) {
             return plugins.get(0).getRegion_i(world, name);
         }
         return null;
     }
 
-    public static boolean hasMultipleOwners() {
+    public static final boolean hasMultipleOwners() {
         for (final RegionsPlugin<?> pl : plugins) {
             if (pl.hasMultipleOwners_i())
                 return true;
@@ -103,7 +103,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
     }
 
     @Nullable
-    public static RegionsPlugin<?> getPlugin(final String name) {
+    public static final RegionsPlugin<?> getPlugin(final String name) {
         for (final RegionsPlugin<?> pl : plugins) {
             if (pl.getName().equalsIgnoreCase(name))
                 return pl;

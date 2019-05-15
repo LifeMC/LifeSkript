@@ -61,7 +61,7 @@ public final class ExperienceSpawnEvent extends Event implements Cancellable {
         this.l = l;
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

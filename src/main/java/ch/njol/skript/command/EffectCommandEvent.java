@@ -37,7 +37,7 @@ public final class EffectCommandEvent extends CommandEvent {
         super(sender, command, new String[0]);
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

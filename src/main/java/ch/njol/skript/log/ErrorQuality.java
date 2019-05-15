@@ -32,7 +32,7 @@ public enum ErrorQuality {
     NONE, NOT_AN_EXPRESSION, SEMANTIC_ERROR;
 
     @SuppressWarnings("null")
-    public static ErrorQuality get(final int quality) {
+    public static final ErrorQuality get(final int quality) {
         return values()[quality];
     }
 

@@ -35,7 +35,7 @@ public final class PluralizingArgsMessage extends Message {
         super(key);
     }
 
-    public static String format(final String s) {
+    public static final String format(final String s) {
         final StringBuilder b = new StringBuilder();
         int last = 0;
         boolean plural = false;

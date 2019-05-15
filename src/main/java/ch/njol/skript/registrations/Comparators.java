@@ -57,7 +57,7 @@ public final class Comparators {
      * @param c
      * @throws IllegalArgumentException if any given class is equal to <code>Object.class</code>
      */
-    public static <T1, T2> void registerComparator(final Class<T1> t1, final Class<T2> t2, final Comparator<T1, T2> c) {
+    public static final <T1, T2> void registerComparator(final Class<T1> t1, final Class<T2> t2, final Comparator<T1, T2> c) {
         Skript.checkAcceptRegistrations();
         if (t1 == Object.class && t2 == Object.class)
             throw new IllegalArgumentException("You must not add a comparator for Objects");
@@ -65,7 +65,7 @@ public final class Comparators {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static Relation compare(final @Nullable Object o1, final @Nullable Object o2) {
+    public static final Relation compare(final @Nullable Object o1, final @Nullable Object o2) {
         if (o1 == null || o2 == null)
             return Relation.NOT_EQUAL;
         final Comparator c = getComparator(o1.getClass(), o2.getClass());
@@ -74,13 +74,13 @@ public final class Comparators {
         return c.compare(o1, o2);
     }
 
-    public static java.util.Comparator<Object> getJavaComparator() {
+    public static final java.util.Comparator<Object> getJavaComparator() {
         return javaComparator;
     }
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public static <F, S> Comparator<? super F, ? super S> getComparator(final Class<F> f, final Class<S> s) {
+    public static final <F, S> Comparator<? super F, ? super S> getComparator(final Class<F> f, final Class<S> s) {
         final Pair<Class<?>, Class<?>> p = new Pair<>(f, s);
         if (comparatorsQuickAccess.containsKey(p))
             return (Comparator<? super F, ? super S>) comparatorsQuickAccess.get(p);
@@ -91,7 +91,7 @@ public final class Comparators {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    private static <F, S> Comparator<?, ?> getComparator_i(final Class<F> f, final Class<S> s) {
+    private static final <F, S> Comparator<?, ?> getComparator_i(final Class<F> f, final Class<S> s) {
 
         // perfect match
         for (final ComparatorInfo<?, ?> info : comparators) {

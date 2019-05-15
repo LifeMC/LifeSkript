@@ -36,7 +36,7 @@ public final class ScheduledNoWorldEvent extends ScheduledEvent {
         super(null);
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

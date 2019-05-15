@@ -66,7 +66,7 @@ public enum StructureType {
     }
 
     @Nullable
-    public static StructureType fromName(String s) {
+    public static final StructureType fromName(String s) {
         if (parseMap.isEmpty()) {
             for (final StructureType t : values()) {
                 final String pattern = Language.get("tree types." + t.name() + ".pattern");

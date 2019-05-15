@@ -45,7 +45,7 @@ public final class FunctionEvent<T> extends Event {
         this.function = function;
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

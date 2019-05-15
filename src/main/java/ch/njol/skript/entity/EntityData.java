@@ -174,11 +174,11 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         throw new IllegalStateException();
     }
 
-    public static <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final String codeName) throws IllegalArgumentException {
+    public static final <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final String codeName) throws IllegalArgumentException {
         register(dataClass, codeName, entityClass, 0, codeName);
     }
 
-    public static <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final int defaultName, final String... codeNames) throws IllegalArgumentException {
+    public static final <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final int defaultName, final String... codeNames) throws IllegalArgumentException {
         final EntityDataInfo<T> info = new EntityDataInfo<>(dataClass, name, codeNames, defaultName, entityClass);
         for (int i = 0; i < infos.size(); i++) {
             if (infos.get(i).entityClass.isAssignableFrom(entityClass)) {
@@ -189,7 +189,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         infos.add(info);
     }
 
-    public static EntityDataInfo<?> getInfo(final Class<? extends EntityData<?>> c) {
+    public static final EntityDataInfo<?> getInfo(final Class<? extends EntityData<?>> c) {
         for (final EntityDataInfo<?> i : infos) {
             if (i.c == c)
                 return i;
@@ -198,7 +198,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     @Nullable
-    public static EntityDataInfo<?> getInfo(final String codeName) {
+    public static final EntityDataInfo<?> getInfo(final String codeName) {
         for (final EntityDataInfo<?> i : infos) {
             if (i.codeName.equals(codeName))
                 return i;
@@ -214,7 +214,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      */
     @SuppressWarnings("null")
     @Nullable
-    public static EntityData<?> parse(final String s) {
+    public static final EntityData<?> parse(final String s) {
         return SkriptParser.<EntityData>parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
     }
 
@@ -226,7 +226,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      */
     @SuppressWarnings("null")
     @Nullable
-    public static EntityData<?> parseWithoutIndefiniteArticle(final String s) {
+    public static final EntityData<?> parseWithoutIndefiniteArticle(final String s) {
         return SkriptParser.<EntityData>parseStatic(s, infos.iterator(), null); // fix for Java 9/10
     }
 
@@ -237,7 +237,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      * @return All entities of this type in the given worlds
      */
     @SuppressWarnings({"null", "unchecked"})
-    public static <E extends Entity> E[] getAll(final EntityData<?>[] types, final Class<E> type, @Nullable World[] worlds) {
+    public static final <E extends Entity> E[] getAll(final EntityData<?>[] types, final Class<E> type, @Nullable World[] worlds) {
         assert types.length > 0;
         if (type == Player.class) {
             if (worlds == null && types.length == 1 && types[0] instanceof PlayerData && ((PlayerData) types[0]).op == 0)
@@ -271,7 +271,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return list.toArray((E[]) Array.newInstance(type, list.size()));
     }
 
-    private static <E extends Entity> EntityData<? super E> getData(final @Nullable Class<E> c, final @Nullable E e) {
+    private static final <E extends Entity> EntityData<? super E> getData(final @Nullable Class<E> c, final @Nullable E e) {
         assert c == null ^ e == null;
         assert c == null || c.isInterface();
         for (final EntityDataInfo<?> info : infos) {
@@ -292,27 +292,27 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return new SimpleEntityData(c);
     }
 
-    public static <E extends Entity> EntityData<? super E> fromClass(final Class<E> c) {
+    public static final <E extends Entity> EntityData<? super E> fromClass(final Class<E> c) {
         return getData(c, null);
     }
 
-    public static <E extends Entity> EntityData<? super E> fromEntity(final E e) {
+    public static final <E extends Entity> EntityData<? super E> fromEntity(final E e) {
         return getData(null, e);
     }
 
-    public static String toString(final Entity e) {
+    public static final String toString(final Entity e) {
         return fromEntity(e).getSuperType().toString();
     }
 
-    public static String toString(final Class<? extends Entity> c) {
+    public static final String toString(final Class<? extends Entity> c) {
         return fromClass(c).getSuperType().toString();
     }
 
-    public static String toString(final Entity e, final int flags) {
+    public static final String toString(final Entity e, final int flags) {
         return fromEntity(e).getSuperType().toString(flags);
     }
 
-    public static String toString(final Class<? extends Entity> c, final int flags) {
+    public static final String toString(final Class<? extends Entity> c, final int flags) {
         return fromClass(c).getSuperType().toString(flags);
     }
 

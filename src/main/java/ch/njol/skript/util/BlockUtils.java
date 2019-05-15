@@ -102,7 +102,7 @@ public final class BlockUtils {
      * @param applyPhysics TODO add effect that sets block without physics checks
      * @return Whatever the block could be set successfully
      */
-    public static boolean set(final Block b, final int type, byte dataMin, byte dataMax, final boolean applyPhysics) {
+    public static final boolean set(final Block b, final int type, byte dataMin, byte dataMax, final boolean applyPhysics) {
         if (dataMin == -1)
             dataMin = 0;
         if (dataMax == -1)
@@ -249,19 +249,19 @@ public final class BlockUtils {
         return true;
     }
 
-    public static boolean isSolid(final int type) {
+    public static final boolean isSolid(final int type) {
         if (type < 0 || type >= isSolid.length)
             throw new IllegalArgumentException(type + " is not a block id");
         return isSolid[type];
     }
 
     @SuppressWarnings("null")
-    public static Iterable<Block> getBlocksAround(final Block b) {
+    public static final Iterable<Block> getBlocksAround(final Block b) {
         return Arrays.asList(b.getRelative(BlockFace.NORTH), b.getRelative(BlockFace.EAST), b.getRelative(BlockFace.SOUTH), b.getRelative(BlockFace.WEST));
     }
 
     @SuppressWarnings("null")
-    public static Iterable<BlockFace> getFaces() {
+    public static final Iterable<BlockFace> getFaces() {
         return Arrays.asList(BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
     }
 
@@ -270,7 +270,7 @@ public final class BlockUtils {
      * @return Location of the block, including its direction
      */
     @Nullable
-    public static Location getLocation(final @Nullable Block b) {
+    public static final Location getLocation(final @Nullable Block b) {
         if (b == null)
             return null;
         final Location l = b.getLocation().add(0.5, 0.5, 0.5);

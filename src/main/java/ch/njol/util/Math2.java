@@ -34,11 +34,11 @@ public final class Math2 {
         throw new UnsupportedOperationException();
     }
 
-    public static int min(final int a, final int b, final int c) {
+    public static final int min(final int a, final int b, final int c) {
         return a <= b ? a <= c ? a : c : b <= c ? b : c;
     }
 
-    public static int min(final int... nums) {
+    public static final int min(final int... nums) {
         if (nums == null || nums.length == 0) {
             assert false;
             return 0;
@@ -51,11 +51,11 @@ public final class Math2 {
         return min;
     }
 
-    public static int max(final int a, final int b, final int c) {
+    public static final int max(final int a, final int b, final int c) {
         return a >= b ? a >= c ? a : c : b >= c ? b : c;
     }
 
-    public static int max(final int... nums) {
+    public static final int max(final int... nums) {
         if (nums == null || nums.length == 0) {
             assert false;
             return 0;
@@ -68,11 +68,11 @@ public final class Math2 {
         return max;
     }
 
-    public static double min(final double a, final double b, final double c) {
+    public static final double min(final double a, final double b, final double c) {
         return a <= b ? a <= c ? a : c : b <= c ? b : c;
     }
 
-    public static double min(final double... nums) {
+    public static final double min(final double... nums) {
         if (nums == null || nums.length == 0) {
             assert false;
             return Double.NaN;
@@ -85,11 +85,11 @@ public final class Math2 {
         return min;
     }
 
-    public static double max(final double a, final double b, final double c) {
+    public static final double max(final double a, final double b, final double c) {
         return a >= b ? a >= c ? a : c : b >= c ? b : c;
     }
 
-    public static double max(final double... nums) {
+    public static final double max(final double... nums) {
         if (nums == null || nums.length == 0) {
             assert false;
             return Double.NaN;
@@ -108,7 +108,7 @@ public final class Math2 {
      * @param nums
      * @return smallest positive number in the sequence or -1 if no number is positive
      */
-    public static int minPositive(final int... nums) {
+    public static final int minPositive(final int... nums) {
         int max = -1;
         if (nums != null) {
             for (final int num : nums) {
@@ -124,7 +124,7 @@ public final class Math2 {
      *
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
-    public static int fit(final int min, final int x, final int max) {
+    public static final int fit(final int min, final int x, final int max) {
         assert min <= max : min + "," + x + "," + max;
         return x <= min ? min : x >= max ? max : x;
     }
@@ -134,7 +134,7 @@ public final class Math2 {
      *
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
-    public static short fit(final short min, final short x, final short max) {
+    public static final short fit(final short min, final short x, final short max) {
         assert min <= max : min + "," + x + "," + max;
         return x <= min ? min : x >= max ? max : x;
     }
@@ -144,7 +144,7 @@ public final class Math2 {
      *
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
-    public static long fit(final long min, final long x, final long max) {
+    public static final long fit(final long min, final long x, final long max) {
         assert min <= max : min + "," + x + "," + max;
         return x <= min ? min : x >= max ? max : x;
     }
@@ -154,7 +154,7 @@ public final class Math2 {
      *
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
-    public static float fit(final float min, final float x, final float max) {
+    public static final float fit(final float min, final float x, final float max) {
         assert min <= max : min + "," + x + "," + max;
         return x <= min ? min : x >= max ? max : x;
     }
@@ -164,7 +164,7 @@ public final class Math2 {
      *
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
-    public static double fit(final double min, final double x, final double max) {
+    public static final double fit(final double min, final double x, final double max) {
         assert min <= max : min + "," + x + "," + max;
         return x <= min ? min : x >= max ? max : x;
     }
@@ -176,7 +176,7 @@ public final class Math2 {
      * @param m
      * @return <tt>d%m < 0 ? d%m + m : d%m</tt>
      */
-    public static double mod(final double d, final double m) {
+    public static final double mod(final double d, final double m) {
         final double r = d % m;
         return r < 0 ? r + m : r;
     }
@@ -188,7 +188,7 @@ public final class Math2 {
      * @param m
      * @return <tt>d%m < 0 ? d%m + m : d%m</tt>
      */
-    public static float mod(final float d, final float m) {
+    public static final float mod(final float d, final float m) {
         final float r = d % m;
         return r < 0 ? r + m : r;
     }
@@ -200,7 +200,7 @@ public final class Math2 {
      * @param m
      * @return <tt>d%m < 0 ? d%m + m : d%m</tt>
      */
-    public static int mod(final int d, final int m) {
+    public static final int mod(final int d, final int m) {
         final int r = d % m;
         return r < 0 ? r + m : r % m;
     }
@@ -212,7 +212,7 @@ public final class Math2 {
      * @param m
      * @return <tt>d%m < 0 ? d%m + m : d%m</tt>
      */
-    public static long mod(final long d, final long m) {
+    public static final long mod(final long d, final long m) {
         final long r = d % m;
         return r < 0 ? r + m : r % m;
     }
@@ -222,7 +222,7 @@ public final class Math2 {
      * <p>
      * This method can be up to 20 times faster than the default {@link Math#floor(double)} (both with and without casting to long).
      */
-    public static long floor(final double d) {
+    public static final long floor(final double d) {
         final long l = (long) d;
         if (!(d < 0)) // d >= 0 || d == NaN
             return l;
@@ -236,7 +236,7 @@ public final class Math2 {
      * <p>
      * This method can be up to 20 times faster than the default {@link Math#ceil(double)} (both with and without casting to long).
      */
-    public static long ceil(final double d) {
+    public static final long ceil(final double d) {
         final long l = (long) d;
         if (!(d > 0)) // d <= 0 || d == NaN
             return l;
@@ -250,7 +250,7 @@ public final class Math2 {
      * <p>
      * This method is more exact and faster than {@link Math#round(double)} of Java 7 and older.
      */
-    public static long round(final double d) {
+    public static final long round(final double d) {
         if (d == 0x1.fffffffffffffp-2) // greatest double value less than 0.5
             return 0;
         if (Math.getExponent(d) >= 52)
@@ -258,7 +258,7 @@ public final class Math2 {
         return floor(d + 0.5);
     }
 
-    public static int floorI(final double d) {
+    public static final int floorI(final double d) {
         final int i = (int) d;
         if (!(d < 0)) // d >= 0 || d == NaN
             return i;
@@ -267,7 +267,7 @@ public final class Math2 {
         return d == i ? i : i - 1;
     }
 
-    public static int ceilI(final double d) {
+    public static final int ceilI(final double d) {
         final int i = (int) d;
         if (!(d > 0)) // d <= 0 || d == NaN
             return i;
@@ -276,7 +276,7 @@ public final class Math2 {
         return d == i ? i : i + 1;
     }
 
-    public static int roundI(final double d) {
+    public static final int roundI(final double d) {
         if (d == 0x1.fffffffffffffp-2) // greatest double value less than 0.5
             return 0;
         if (Math.getExponent(d) >= 52)
@@ -284,7 +284,7 @@ public final class Math2 {
         return floorI(d + 0.5);
     }
 
-    public static long floor(final float f) {
+    public static final long floor(final float f) {
         final long l = (long) f;
         if (!(f < 0)) // f >= 0 || f == NaN
             return l;
@@ -293,7 +293,7 @@ public final class Math2 {
         return f == l ? l : l - 1;
     }
 
-    public static long ceil(final float f) {
+    public static final long ceil(final float f) {
         final long l = (long) f;
         if (!(f > 0)) // f <= 0 || f == NaN
             return l;
@@ -307,7 +307,7 @@ public final class Math2 {
      * <p>
      * This method is more exact and faster than {@link Math#round(float)} of Java 7 and older.
      */
-    public static long round(final float f) {
+    public static final long round(final float f) {
         if (f == 0x1.fffffep-2f) // greatest float value less than 0.5
             return 0;
         if (Math.getExponent(f) >= 23)
@@ -315,7 +315,7 @@ public final class Math2 {
         return floor(f + 0.5f);
     }
 
-    public static int floorI(final float f) {
+    public static final int floorI(final float f) {
         final int i = (int) f;
         if (!(f < 0)) // f >= 0 || f == NaN
             return i;
@@ -324,7 +324,7 @@ public final class Math2 {
         return f == i ? i : i - 1;
     }
 
-    public static int ceilI(final float f) {
+    public static final int ceilI(final float f) {
         final int i = (int) f;
         if (!(f > 0)) // f <= 0 || f == NaN
             return i;
@@ -338,7 +338,7 @@ public final class Math2 {
      * <p>
      * This method is more exact and faster than {@link Math#round(float)} of Java 7 and older.
      */
-    public static int roundI(final float f) {
+    public static final int roundI(final float f) {
         if (f == 0x1.fffffep-2f) // greatest float value less than 0.5
             return 0;
         if (Math.getExponent(f) >= 23)
@@ -349,7 +349,7 @@ public final class Math2 {
     /**
      * Gets the smallest power of two &ge;n. Returns {@link Integer#MIN_VALUE} if <tt>n > 2<sup>30</sup></tt>.
      */
-    public static int nextPowerOfTwo(final int n) {
+    public static final int nextPowerOfTwo(final int n) {
         if (n < 0) {
             int h = ~n;
             h |= h >> 1;
@@ -367,7 +367,7 @@ public final class Math2 {
     /**
      * Gets the smallest power of two &ge;n. Returns {@link Long#MIN_VALUE} if <tt>n > 2<sup>62</sup></tt>.
      */
-    public static long nextPowerOfTwo(final long n) {
+    public static final long nextPowerOfTwo(final long n) {
         if (n < 0) {
             long h = ~n;
             h |= h >> 1;
@@ -386,7 +386,7 @@ public final class Math2 {
     /**
      * @return The floating point part of d in the range [0, 1)
      */
-    public static double frac(final double d) {
+    public static final double frac(final double d) {
         final double r = mod(d, 1);
         return r == 1 ? 0 : r;
     }
@@ -394,7 +394,7 @@ public final class Math2 {
     /**
      * @return The floating point part of f in the range [0, 1)
      */
-    public static float frac(final float f) {
+    public static final float frac(final float f) {
         final float r = mod(f, 1);
         return r == 1 ? 0 : r;
     }
@@ -402,42 +402,42 @@ public final class Math2 {
     /**
      * @return -1 if i is negative, 0 if i is 0, or 1 if i is positive
      */
-    public static int sign(final byte i) {
+    public static final int sign(final byte i) {
         return i >> 7 | -i >>> 7;
     }
 
     /**
      * @return -1 if i is negative, 0 if i is 0, or 1 if i is positive
      */
-    public static int sign(final short i) {
+    public static final int sign(final short i) {
         return i >> 15 | -i >>> 15;
     }
 
     /**
      * @return -1 if i is negative, 0 if i is 0, or 1 if i is positive
      */
-    public static int sign(final int i) {
+    public static final int sign(final int i) {
         return i >> 31 | -i >>> 31;
     }
 
     /**
      * @return -1 if i is negative, 0 if i is 0, or 1 if i is positive
      */
-    public static int sign(final long i) {
+    public static final int sign(final long i) {
         return (int) (i >> 63) | (int) (-i >>> 63);
     }
 
     /**
      * @return -1 if f is negative, 0 if f is +0, -0 or NaN, or 1 if f is positive
      */
-    public static int sign(final float f) {
+    public static final int sign(final float f) {
         return f > 0 ? 1 : f < 0 ? -1 : 0;
     }
 
     /**
      * @return -1 if d is negative, 0 if d is +0, -0 or NaN, or 1 if d is positive
      */
-    public static int sign(final double d) {
+    public static final int sign(final double d) {
         return d > 0 ? 1 : d < 0 ? -1 : 0;
     }
 
@@ -454,7 +454,7 @@ public final class Math2 {
      * @param x2 The upper end of the step
      * @return The step's value at <tt>x</tt>
      */
-    public static double smoothStep(final double x, final double x1, final double x2) {
+    public static final double smoothStep(final double x, final double x1, final double x2) {
         final double d = fit(0, (x - x1) / (x2 - x1), 1);
         return d * d * (3 - 2 * d);
     }

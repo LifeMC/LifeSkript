@@ -37,15 +37,15 @@ public final class DamageCauseUtils {
     }
 
     @Nullable
-    public static DamageCause parse(final String s) {
+    public static final DamageCause parse(final String s) {
         return util.parse(s);
     }
 
-    public static String toString(final DamageCause dc, final int flags) {
+    public static final String toString(final DamageCause dc, final int flags) {
         return util.toString(dc, flags);
     }
 
-    public static String getAllNames() {
+    public static final String getAllNames() {
         return util.getAllNames();
     }
 

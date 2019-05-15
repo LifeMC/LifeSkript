@@ -277,6 +277,7 @@ public final class FlatFileStorage extends VariablesStorage {
                         changesWriter.wait();
                     } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
+                        break;
                     }
                 }
                 writeCSV(cw, name, type, value == null ? "" : encode(value));

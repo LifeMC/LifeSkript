@@ -41,15 +41,15 @@ public final class SoundUtils {
     }
 
     @Nullable
-    public static Sound parse(final String s) {
+    public static final Sound parse(final String s) {
         return util.parse(s);
     }
 
-    public static String toString(final Sound s, final int flags) {
+    public static final String toString(final Sound s, final int flags) {
         return util.toString(s, flags);
     }
 
-    public static String getAllNames() {
+    public static final String getAllNames() {
         return util.getAllNames();
     }
 

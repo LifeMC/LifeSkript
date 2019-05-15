@@ -69,7 +69,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
 
     @SafeVarargs
     @Nullable
-    public static <F, T> ConvertedExpression<F, T> newInstance(final Expression<F> v, final Class<T>... to) {
+    public static final <F, T> ConvertedExpression<F, T> newInstance(final Expression<F> v, final Class<T>... to) {
         assert !CollectionUtils.containsSuperclass(to, v.getReturnType());
         for (final Class<T> c : to) { // REMIND try more converters? -> also change WrapperExpression (and maybe ExprLoopValue)
             assert c != null;

@@ -25,7 +25,7 @@ package ch.njol.skript;
 /**
  * This class does not serve much use (only an easter egg for now), but may be of use in the future. The JVM will refuse to run a class that has a superclass outside of the current classpath, hence the creation of this class.
  */
-public final class SkriptCLI {
+final class SkriptCLI {
     public static final void main(final String[] args) {
         // Use of Skript's internal logging methods create classpath errors.
         System.out.println("[Skript] Skript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java.");
