@@ -62,7 +62,7 @@ public final class Workarounds {
                 }
             }, Skript.getInstance(), false);
 
-        	/* Bukkit uses reflection to call methods - We use our own hacky way above.
+            /* Bukkit uses reflection to call methods - We use our own hacky way above.
             Bukkit.getPluginManager().registerEvents(new Listener() {
                 @EventHandler(priority = EventPriority.HIGHEST)
                 public void onInteract(final PlayerInteractEvent e) {

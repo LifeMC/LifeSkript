@@ -114,7 +114,7 @@ public final class JavaClasses {
                         assert false;
                     }
 
-                    //						return "" + n;
+                    //                        return "" + n;
                     @Override
                     @Nullable
                     public Number deserialize(final String s) {
@@ -182,7 +182,7 @@ public final class JavaClasses {
                 assert false;
             }
 
-            //						return "" + l;
+            //                        return "" + l;
             @Override
             @Nullable
             public Long deserialize(final String s) {
@@ -246,7 +246,7 @@ public final class JavaClasses {
                 assert false;
             }
 
-            //						return "" + i;
+            //                        return "" + i;
             @Override
             @Nullable
             public Integer deserialize(final String s) {
@@ -315,7 +315,7 @@ public final class JavaClasses {
                 assert false;
             }
 
-            //						return "" + d;
+            //                        return "" + d;
             @Override
             @Nullable
             public Double deserialize(final String s) {
@@ -377,7 +377,7 @@ public final class JavaClasses {
                     assert false;
                 }
 
-                //						return "" + f;
+                //                        return "" + f;
                 @Override
                 @Nullable
                 public Float deserialize(final String s) {
@@ -441,7 +441,7 @@ public final class JavaClasses {
                 assert false;
             }
 
-            //						return "" + b;
+            //                        return "" + b;
             @Override
             @Nullable
             public Boolean deserialize(final String s) {
@@ -500,7 +500,7 @@ public final class JavaClasses {
                     assert false;
                 }
 
-                //						return "" + s;
+                //                        return "" + s;
                 @Override
                 @Nullable
                 public Short deserialize(final String s) {
@@ -560,7 +560,7 @@ public final class JavaClasses {
                     assert false;
                 }
 
-                //						return "" + b;
+                //                        return "" + b;
                 @Override
                 @Nullable
                 public Byte deserialize(final String s) {
@@ -640,7 +640,7 @@ public final class JavaClasses {
                 assert false;
             }
 
-            //						return s;
+            //                        return s;
             @Override
             public String deserialize(final String s) {
                 return s;
@@ -664,13 +664,13 @@ public final class JavaClasses {
             }
 
             @SuppressWarnings("null")
-			public final String toString(final UUID o, final int flags)
+            public final String toString(final UUID o, final int flags)
             {
                 return o.toString();
             }
 
             @SuppressWarnings("null")
-			public final String toVariableNameString(final UUID o)
+            public final String toVariableNameString(final UUID o)
             {
                 return o.toString();
             }
@@ -693,7 +693,7 @@ public final class JavaClasses {
             }
 
             @SuppressWarnings("null")
-			@Override
+            @Override
             protected final UUID deserialize(final Fields fields) throws StreamCorruptedException {
                 return UUID.fromString((String)fields.getObject("uuid"));
             }

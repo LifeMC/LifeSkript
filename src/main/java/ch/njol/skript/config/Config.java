@@ -244,7 +244,7 @@ public final class Config {
                         ((Option<?>) f.get(o)).set(this, path);
                     }
                 } catch (final Throwable tw) {
-                    if (Skript.testing())
+                    if (Skript.testing() || Skript.debug())
                         Skript.exception(tw, "Error when setting field \"" + f.getName() + "\"" + " in class \"" + c.getCanonicalName() + "\" (path: \"" + path + "\", object: \"" + (o != null ? o : "null") + "\")");
                 }
             }

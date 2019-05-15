@@ -81,85 +81,85 @@ import org.bukkit.entity.Snowball;
  * @author Peter Güttinger
  */
 public final class ClassesTest {
-	
-	/*
-	@Before
-	@SuppressWarnings({"resource", "deprecation"})
-	public void before() throws Exception {
-		
-		final File dataDir = new File("target/classes/");
-		final File jar = new File("target/", "skript.jar");
-		assumeTrue(jar.exists());
-		
-		final Logger l = Logger.getLogger(getClass().getCanonicalName());
-		l.setParent(SkriptLogger.LOGGER);
-		l.setLevel(Level.WARNING);
-		
-		final Server s = createMock(Server.class);
-		s.getLogger();
-		expectLastCall().andReturn(l).anyTimes();
-		s.isPrimaryThread();
-		expectLastCall().andReturn(true).anyTimes();
-		s.getName();
-		expectLastCall().andReturn("Whatever").anyTimes();
-		s.getVersion();
-		expectLastCall().andReturn("2.0").anyTimes();
-		s.getBukkitVersion();
-		expectLastCall().andReturn("2.0").anyTimes();
-		replay(s);
-		
-		Bukkit.setServer(s);
-		
-		@SuppressWarnings("cast")
-		final Skript skript = (Skript) ObjenesisHelper.newInstance(Skript.class); // bypass the class loader check
-		final Field instance = Skript.class.getDeclaredField("instance");
-		instance.setAccessible(true);
-		instance.set(null, skript);
-		
-		final PluginDescriptionFile pdf = new PluginDescriptionFile(new FileInputStream(new File(dataDir, "plugin.yml")));
-		
-	//	    final void init(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
-		final Method init = JavaPlugin.class.getDeclaredMethod("init", PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
-		init.setAccessible(true);
-		init.invoke(skript, new JavaPluginLoader(s), s, pdf, dataDir, jar, getClass().getClassLoader());
-		
-		Skript.getAddonInstance().loadClasses("ch.njol.skript", "entity");
-		new JavaClasses();
-		new BukkitClasses();
-		new BukkitEventValues();
-		new SkriptClasses();
-		
-		final Field r = Skript.class.getDeclaredField("acceptRegistrations");
-		r.setAccessible(true);
-		r.set(null, false);
-		Classes.onRegistrationsStop();
-	}
-	*/
 
-	/*
+    /*
+    @Before
+    @SuppressWarnings({"resource", "deprecation"})
+    public void before() throws Exception {
+
+        final File dataDir = new File("target/classes/");
+        final File jar = new File("target/", "skript.jar");
+        assumeTrue(jar.exists());
+
+        final Logger l = Logger.getLogger(getClass().getCanonicalName());
+        l.setParent(SkriptLogger.LOGGER);
+        l.setLevel(Level.WARNING);
+
+        final Server s = createMock(Server.class);
+        s.getLogger();
+        expectLastCall().andReturn(l).anyTimes();
+        s.isPrimaryThread();
+        expectLastCall().andReturn(true).anyTimes();
+        s.getName();
+        expectLastCall().andReturn("Whatever").anyTimes();
+        s.getVersion();
+        expectLastCall().andReturn("2.0").anyTimes();
+        s.getBukkitVersion();
+        expectLastCall().andReturn("2.0").anyTimes();
+        replay(s);
+
+        Bukkit.setServer(s);
+
+        @SuppressWarnings("cast")
+        final Skript skript = (Skript) ObjenesisHelper.newInstance(Skript.class); // bypass the class loader check
+        final Field instance = Skript.class.getDeclaredField("instance");
+        instance.setAccessible(true);
+        instance.set(null, skript);
+
+        final PluginDescriptionFile pdf = new PluginDescriptionFile(new FileInputStream(new File(dataDir, "plugin.yml")));
+
+    //        final void init(PluginLoader loader, Server server, PluginDescriptionFile description, File dataFolder, File file, ClassLoader classLoader) {
+        final Method init = JavaPlugin.class.getDeclaredMethod("init", PluginLoader.class, Server.class, PluginDescriptionFile.class, File.class, File.class, ClassLoader.class);
+        init.setAccessible(true);
+        init.invoke(skript, new JavaPluginLoader(s), s, pdf, dataDir, jar, getClass().getClassLoader());
+
+        Skript.getAddonInstance().loadClasses("ch.njol.skript", "entity");
+        new JavaClasses();
+        new BukkitClasses();
+        new BukkitEventValues();
+        new SkriptClasses();
+
+        final Field r = Skript.class.getDeclaredField("acceptRegistrations");
+        r.setAccessible(true);
+        r.set(null, false);
+        Classes.onRegistrationsStop();
+    }
+    */
+
+    /*
     @org.junit.Test
     public void testClasses() {
-		final Object[] random = {
-				// Java
-				(byte) 127, (short) 2000, -1600000, 1L << 40, -1.5f, 13.37,
-				"String",
-				
-				// Skript
-				Color.BLACK, StructureType.RED_MUSHROOM, WeatherType.THUNDER,
-				new Date(System.currentTimeMillis()), new Timespan(1337), new Time(12000), new Timeperiod(1000, 23000),
-				new Experience(15), new Direction(0, Math.PI, 10), new Direction(new double[] {0, 1, 0}),
-				new EntityType(new SimpleEntityData(HumanEntity.class), 300), new CreeperData(), new SimpleEntityData(Snowball.class), new HorseData(Variant.SKELETON_HORSE), new WolfData(), new XpOrbData(50),
-				
-				// Bukkit - simple classes only
-				GameMode.ADVENTURE, Biome.EXTREME_HILLS, DamageCause.FALL,
-				
-				// there is also at least one variable for each class on my test server which are tested whenever the server shuts down.
-		};
-		
-		for (final Object o : random) {
-			Classes.serialize(o); // includes a deserialisation test
-		}
+        final Object[] random = {
+                // Java
+                (byte) 127, (short) 2000, -1600000, 1L << 40, -1.5f, 13.37,
+                "String",
+
+                // Skript
+                Color.BLACK, StructureType.RED_MUSHROOM, WeatherType.THUNDER,
+                new Date(System.currentTimeMillis()), new Timespan(1337), new Time(12000), new Timeperiod(1000, 23000),
+                new Experience(15), new Direction(0, Math.PI, 10), new Direction(new double[] {0, 1, 0}),
+                new EntityType(new SimpleEntityData(HumanEntity.class), 300), new CreeperData(), new SimpleEntityData(Snowball.class), new HorseData(Variant.SKELETON_HORSE), new WolfData(), new XpOrbData(50),
+
+                // Bukkit - simple classes only
+                GameMode.ADVENTURE, Biome.EXTREME_HILLS, DamageCause.FALL,
+
+                // there is also at least one variable for each class on my test server which are tested whenever the server shuts down.
+        };
+
+        for (final Object o : random) {
+            Classes.serialize(o); // includes a deserialisation test
+        }
     }
-	*/
+    */
 
 }

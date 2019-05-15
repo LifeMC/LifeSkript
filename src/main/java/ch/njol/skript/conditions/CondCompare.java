@@ -164,20 +164,20 @@ public final class CondCompare extends Condition {
         final Class<?> f = first.getReturnType(), s = third == null ? second.getReturnType() : Utils.getSuperType(second.getReturnType(), third.getReturnType());
         if (f == Object.class || s == Object.class)
             return true;
-		/*
-		 * https://github.com/Mirreski/Skript/issues/10
-		 * 
-		if(Entity.class.isAssignableFrom(s)){
-			String[] split = expr.split(" ");
-			System.out.println(expr);
-			if(!split[split.length - 1].equalsIgnoreCase("player") && EntityData.parseWithoutIndefiniteArticle(split[split.length - 1]) != null){
-				comp = Comparators.getComparator(f, EntityData.class);
-				second = SkriptParser.parseLiteral(split[split.length - 1], EntityData.class, ParseContext.DEFAULT);
-			}else
-				comp = Comparators.getComparator(f, s);
-			
-		}
-		*///else
+        /*
+         * https://github.com/Mirreski/Skript/issues/10
+         *
+        if(Entity.class.isAssignableFrom(s)){
+            String[] split = expr.split(" ");
+            System.out.println(expr);
+            if(!split[split.length - 1].equalsIgnoreCase("player") && EntityData.parseWithoutIndefiniteArticle(split[split.length - 1]) != null){
+                comp = Comparators.getComparator(f, EntityData.class);
+                second = SkriptParser.parseLiteral(split[split.length - 1], EntityData.class, ParseContext.DEFAULT);
+            }else
+                comp = Comparators.getComparator(f, s);
+
+        }
+        *///else
 
         comp = Comparators.getComparator(f, s);
 
@@ -199,13 +199,13 @@ public final class CondCompare extends Condition {
      *
      *
      * a and b !# x === a !# x && b !# x
-     * neither a nor b # x === a !# x && b !# x		// nor = and
+     * neither a nor b # x === a !# x && b !# x        // nor = and
      * a or b !# x === a !# x || b !# x
      *
-     * a !# x and y === a !# x || a !# y							// e.g. "player doesn't have 2 emeralds and 5 gold ingots" == "NOT(player has 2 emeralds and 5 gold ingots)" == "player doesn't have 2 emeralds OR player doesn't have 5 gold ingots"
-     * a # neither x nor y === a !# x && a !# y		// nor = or 	// e.g. "player has neither 2 emeralds nor 5 gold ingots" == "player doesn't have 2 emeralds AND player doesn't have 5 gold ingots"
-     * a # neither x nor y === a !# x && a !# y		// nor = or 	// e.g. "player is neither the attacker nor the victim" == "player is not the attacker AND player is not the victim"
-     * a !# x or y === a !# x && a !# y								// e.g. "player doesn't have 2 emeralds or 5 gold ingots" == "NOT(player has 2 emeralds or 5 gold ingots)" == "player doesn't have 2 emeralds AND player doesn't have 5 gold ingots"
+     * a !# x and y === a !# x || a !# y                            // e.g. "player doesn't have 2 emeralds and 5 gold ingots" == "NOT(player has 2 emeralds and 5 gold ingots)" == "player doesn't have 2 emeralds OR player doesn't have 5 gold ingots"
+     * a # neither x nor y === a !# x && a !# y        // nor = or     // e.g. "player has neither 2 emeralds nor 5 gold ingots" == "player doesn't have 2 emeralds AND player doesn't have 5 gold ingots"
+     * a # neither x nor y === a !# x && a !# y        // nor = or     // e.g. "player is neither the attacker nor the victim" == "player is not the attacker AND player is not the victim"
+     * a !# x or y === a !# x && a !# y                                // e.g. "player doesn't have 2 emeralds or 5 gold ingots" == "NOT(player has 2 emeralds or 5 gold ingots)" == "player doesn't have 2 emeralds AND player doesn't have 5 gold ingots"
      *
      * a and b !# x and y === a !# x and y && b !# x and y === (a !# x || a !# y) && (b !# x || b !# y)
      * a and b !# x or y === a !# x or y && b !# x or y
@@ -215,8 +215,8 @@ public final class CondCompare extends Condition {
      * a or b !# x or y === a !# x or y || b !# x or y
      * a or b # neither x nor y === a # neither x nor y || b # neither x nor y
      *
-     * neither a nor b # x and y === a !# x and y && b !# x and y		// nor = and
-     * neither a nor b # x or y === a !# x or y && b !# x or y			// nor = and
+     * neither a nor b # x and y === a !# x and y && b !# x and y        // nor = and
+     * neither a nor b # x or y === a !# x or y && b !# x or y            // nor = and
      */
     @Override
     public boolean check(final Event e) {

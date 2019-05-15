@@ -11,9 +11,9 @@ The exception to this rule is the default english file, which is only loaded fro
 Strings that have arguments use Java's formatter syntax, see https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html#syntax.
 
 Nouns have special syntax to define their plural and gender:
-	Plurals are defined like in aliases.sk: 'name¦s' / 'shel¦f¦ves' / 'word¦¦s¦ of power'
-	Genders are defined by adding @<gender> at the end of the noun, e.g. 'word¦s @a' or 'ocelot¦s @an'
-		(english uses a/an as genders, while other languages actually have genders)
+    Plurals are defined like in aliases.sk: 'name¦s' / 'shel¦f¦ves' / 'word¦¦s¦ of power'
+    Genders are defined by adding @<gender> at the end of the noun, e.g. 'word¦s @a' or 'ocelot¦s @an'
+        (english uses a/an as genders, while other languages actually have genders)
 
 Please make sure the version number in your file matches the version number of the english file your
 file is based off. It is used to inform the users and yourself if the file is outdated.

@@ -597,6 +597,7 @@
                                 <exclude>bundle.properties</exclude>
                                 <exclude>src/</exclude>
                                 <exclude>about.html</exclude>
+                                <exclude>**/*.html</exclude>
                                 <exclude>.api_description</exclude>
 
                                 <!-- Unrequired kotlin files - we already remove some of them with proguard. -->
@@ -613,8 +614,8 @@
                         </filter>
                     </filters>
                     <relocations>
-                        <!-- Don't share the Kotlin library with other plugins 
-								Also: Add-ons should not use these libraries. -->
+                        <!-- Don't share the Kotlin library with other plugins
+                                Also: Add-ons should not use these libraries. -->
                         <relocation>
                             <pattern>kotlin</pattern>
                             <shadedPattern>ch.njol.libraries.kotlin</shadedPattern>

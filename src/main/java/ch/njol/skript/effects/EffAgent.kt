@@ -82,9 +82,11 @@ class EffAgent : Effect() {
         if (sender == null)
             sender = SimpleLiteral<CommandSender>(Bukkit.getConsoleSender(), false)
 
-        if (agent is Literal) {
+        val copy = agent
+
+        if (copy is Literal) {
             // Literal, check at parse time.
-            initTypes(agent?.getAll(null)!!)
+            initTypes(copy.all!!)
         }
 
         return true

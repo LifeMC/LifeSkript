@@ -54,14 +54,14 @@ public final class EvtDamage extends SkriptEvent {
             return true;
         final LivingEntity en = (LivingEntity) e.getEntity();
         return !(HealthUtils.getHealth(en) <= 0);
-//		if (en.getNoDamageTicks() <= en.getMaximumNoDamageTicks() / 2) {
-//			lastDamages.put(en, e.getDamage());
-//			return true;
-//		}
-//		final Integer lastDamage = lastDamages.get(en);
-//		if (lastDamage != null && lastDamage >= e.getDamage())
-//			return false;
-//		lastDamages.put(en, e.getDamage());
+//        if (en.getNoDamageTicks() <= en.getMaximumNoDamageTicks() / 2) {
+//            lastDamages.put(en, e.getDamage());
+//            return true;
+//        }
+//        final Integer lastDamage = lastDamages.get(en);
+//        if (lastDamage != null && lastDamage >= e.getDamage())
+//            return false;
+//        lastDamages.put(en, e.getDamage());
     }
 
     @Override
@@ -92,43 +92,43 @@ public final class EvtDamage extends SkriptEvent {
         return true;
     }
 
-//	private static final WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
+//    private static final WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         return "damage" + (types != null ? " of " + types.toString(e, debug) : "");
     }
-	
-	/*
-	static {
-		Bukkit.getPluginManager().registerEvents(new Listener() {
-			@EventHandler
-			public void onDamage(final EntityDamageEvent e) {
-				if (e.getEntity() == EffSpawn.lastSpawned) {
-					final Entity en = e.getEntity();
-					Skript.info("");
-					Skript.info("- damage event! time: " + en.getWorld().getTime());
-	//					Skript.info("entity: " + en);
-					Skript.info("damage: " + e.getDamage());
-	//					Skript.info("last damage: " + (en.getLastDamageCause() == null ? "<none>" : ""+en.getLastDamageCause().getDamage()));
-					if (en instanceof LivingEntity) {
-						Skript.info("is invincible: " + (((LivingEntity) en).getNoDamageTicks() > ((LivingEntity) en).getMaximumNoDamageTicks() / 2f));
-						if (((LivingEntity) en).getNoDamageTicks() > 0)
-							Skript.info("damage difference (positive = more): " + (e.getDamage() - en.getLastDamageCause().getDamage()));
-						final int h = Math.max(((LivingEntity) en).getHealth(), 0);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								Skript.info("actual damage: " + (h - Math.max(((LivingEntity) en).getHealth(), 0)));
-							}
-						});
-					}
-					if (e instanceof EntityDamageByEntityEvent) {
-						Skript.info("attacker: " + ((EntityDamageByEntityEvent) e).getDamager());
-					}
-				}
-			}
-		}, Skript.getInstance());
-	}
-	//	*/
+
+    /*
+    static {
+        Bukkit.getPluginManager().registerEvents(new Listener() {
+            @EventHandler
+            public void onDamage(final EntityDamageEvent e) {
+                if (e.getEntity() == EffSpawn.lastSpawned) {
+                    final Entity en = e.getEntity();
+                    Skript.info("");
+                    Skript.info("- damage event! time: " + en.getWorld().getTime());
+    //                    Skript.info("entity: " + en);
+                    Skript.info("damage: " + e.getDamage());
+    //                    Skript.info("last damage: " + (en.getLastDamageCause() == null ? "<none>" : ""+en.getLastDamageCause().getDamage()));
+                    if (en instanceof LivingEntity) {
+                        Skript.info("is invincible: " + (((LivingEntity) en).getNoDamageTicks() > ((LivingEntity) en).getMaximumNoDamageTicks() / 2f));
+                        if (((LivingEntity) en).getNoDamageTicks() > 0)
+                            Skript.info("damage difference (positive = more): " + (e.getDamage() - en.getLastDamageCause().getDamage()));
+                        final int h = Math.max(((LivingEntity) en).getHealth(), 0);
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), new Runnable() {
+                            @Override
+                            public void run() {
+                                Skript.info("actual damage: " + (h - Math.max(((LivingEntity) en).getHealth(), 0)));
+                            }
+                        });
+                    }
+                    if (e instanceof EntityDamageByEntityEvent) {
+                        Skript.info("attacker: " + ((EntityDamageByEntityEvent) e).getDamager());
+                    }
+                }
+            }
+        }, Skript.getInstance());
+    }
+    //    */
 }

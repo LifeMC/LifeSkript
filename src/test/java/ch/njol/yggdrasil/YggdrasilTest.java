@@ -95,15 +95,15 @@ public final class YggdrasilTest {
         return out.toByteArray();
     }
 
-//	@SuppressWarnings("null")
-//	private static String saveXML(final @Nullable Object o) throws IOException {
-//		final ByteArrayOutputStream out = new ByteArrayOutputStream();
-//		final YggXMLOutputStream s = y.newXMLOutputStream(out);
-//		s.writeObject(o);
-//		s.flush();
-//		s.close();
-//		return out.toString("utf-8");
-//	}
+//    @SuppressWarnings("null")
+//    private static String saveXML(final @Nullable Object o) throws IOException {
+//        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        final YggXMLOutputStream s = y.newXMLOutputStream(out);
+//        s.writeObject(o);
+//        s.flush();
+//        s.close();
+//        return out.toString("utf-8");
+//    }
 
     @Nullable
     private static final Object load(final byte[] d) throws IOException {
@@ -111,11 +111,11 @@ public final class YggdrasilTest {
         return l.readObject();
     }
 
-//	@Nullable
-//	private static Object loadXML(final String xml) throws IOException {
-//		final YggdrasilInputStream l = y.newXMLInputStream(new ByteArrayInputStream(xml.getBytes("utf-8")));
-//		return l.readObject();
-//	}
+//    @Nullable
+//    private static Object loadXML(final String xml) throws IOException {
+//        final YggdrasilInputStream l = y.newXMLInputStream(new ByteArrayInputStream(xml.getBytes("utf-8")));
+//        return l.readObject();
+//    }
 
     private static final boolean equals(final @Nullable Object o1, final @Nullable Object o2) {
         if (o1 == null || o2 == null)
@@ -146,12 +146,12 @@ public final class YggdrasilTest {
         }
     }
 
-//	private static final class CollectionTests {
-//		Collection<?> al = new ArrayList<>(Arrays.asList(1, 2, 3)),
-//				hs = new HashSet<>(Arrays.asList(1, 2, 3, 3, 4)),
-//				ll = new LinkedList<>(Arrays.asList(4, 3, 2, 1));
-//		Map<?, ?> hm = new HashMap<>();
-//	}
+//    private static final class CollectionTests {
+//        Collection<?> al = new ArrayList<>(Arrays.asList(1, 2, 3)),
+//                hs = new HashSet<>(Arrays.asList(1, 2, 3, 3, 4)),
+//                ll = new LinkedList<>(Arrays.asList(4, 3, 2, 1));
+//        Map<?, ?> hm = new HashMap<>();
+//    }
 
     private static final String toString(final @Nullable Object o) {
         if (o == null)
@@ -171,36 +171,36 @@ public final class YggdrasilTest {
         return "" + o;
     }
 
-//	@Test
-//	public void generalXMLTest() throws IOException {
-//		System.out.println();
-//		for (final Object o : random) {
-//			final String d = saveXML(o);
-//			System.out.println(o + ": " + d);
-//			System.out.println();
-//			final Object l = loadXML(d);
-//			assertEquals(o, l, toString(o) + " <> " + toString(l));
-//			final String d2 = saveXML(l);
-//			assertEquals(d, d2, toString(o) + "\n" + toString(d) + " <>\n" + toString(d2));
-//		}
-//	}
+//    @Test
+//    public void generalXMLTest() throws IOException {
+//        System.out.println();
+//        for (final Object o : random) {
+//            final String d = saveXML(o);
+//            System.out.println(o + ": " + d);
+//            System.out.println();
+//            final Object l = loadXML(d);
+//            assertEquals(o, l, toString(o) + " <> " + toString(l));
+//            final String d2 = saveXML(l);
+//            assertEquals(d, d2, toString(o) + "\n" + toString(d) + " <>\n" + toString(d2));
+//        }
+//    }
 
     @SuppressWarnings("EmptyMethod")
     private static final void print(final @Nullable Object o, final byte[] d) {
-		/*
-		System.out.print(o);
-		System.out.print(": ");
-		for (final byte b : d) {
-			if (Pattern.matches("[a-zA-Z.]", "" + (char) b)) {
-				System.out.print((char) b);
-			} else {
-				final String h = Integer.toHexString(b & 0xFF);
-				System.out.print(" " + (h.length() == 1 ? "0" : "") + h + " ");
-			}
-		}
-		System.out.println();
-		System.out.println();
-		*/
+        /*
+        System.out.print(o);
+        System.out.print(": ");
+        for (final byte b : d) {
+            if (Pattern.matches("[a-zA-Z.]", "" + (char) b)) {
+                System.out.print((char) b);
+            } else {
+                final String h = Integer.toHexString(b & 0xFF);
+                System.out.print(" " + (h.length() == 1 ? "0" : "") + h + " ");
+            }
+        }
+        System.out.println();
+        System.out.println();
+        */
     }
 
     @Test
