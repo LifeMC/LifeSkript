@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface Predicate<T> {
 
     boolean test(final @Nullable T paramT);

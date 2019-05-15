@@ -24,6 +24,7 @@ package ch.njol.util;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+@FunctionalInterface
 public interface Callback<R, A> {
 
     @Nullable

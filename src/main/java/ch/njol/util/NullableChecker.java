@@ -26,6 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Objects;
 
+@FunctionalInterface
 public interface NullableChecker<T> extends Checker<T> {
 
     NullableChecker<Object> nullChecker = Objects::nonNull;

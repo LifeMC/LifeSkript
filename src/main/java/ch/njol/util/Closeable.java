@@ -27,6 +27,7 @@ package ch.njol.util;
  *
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface Closeable {
 
     /**

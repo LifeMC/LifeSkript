@@ -22,6 +22,7 @@
 
 package ch.njol.util;
 
+@FunctionalInterface
 public interface Checker<T> {
 
     boolean check(final T o);

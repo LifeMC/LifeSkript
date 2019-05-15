@@ -25,6 +25,7 @@ package ch.njol.util;
 /**
  * @author Peter Güttinger
  */
+@FunctionalInterface
 public interface Setter<T> {
 
     void set(final T t);
