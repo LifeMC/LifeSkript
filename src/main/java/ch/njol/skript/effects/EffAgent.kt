@@ -70,7 +70,7 @@ class EffAgent : Effect() {
     @JvmField
     var sender: Expression<CommandSender>? = null
 
-    override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean?, parseResult: SkriptParser.ParseResult?): Boolean {
+    override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         enable = matchedPattern == 1
         @Suppress("UNCHECKED_CAST")
         agent = exprs[0] as Expression<String>
