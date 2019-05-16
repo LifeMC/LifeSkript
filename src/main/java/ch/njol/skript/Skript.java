@@ -180,7 +180,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
     private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
     private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
-    private static final List<String> duplicatePatternCheckMap = new ArrayList<>();
+    private static final List<String> duplicatePatternCheckList = new ArrayList<>();
     private static final String EXCEPTION_PREFIX = "#!#! ";
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
@@ -221,7 +221,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
     /**
      * Checks if the Bukkit (and server) is loaded, enabled and working
-     * correclyt. You should use this method when doing Bukkit operations
+     * correctly. You should use this method when doing Bukkit operations
      * within a method callable from tests, or outside of Bukkit.
      *
      * @return True if the Bukkit (and server) is loaded, enabled and
@@ -833,9 +833,9 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final void checkDuplicatePatterns(final Class<?> element, final String[] patterns, final String name) {
         for (final String pattern : patterns)
-            if (duplicatePatternCheckMap.contains(pattern))
+            if (duplicatePatternCheckList.contains(pattern))
                 Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
-        Collections.addAll(duplicatePatternCheckMap, patterns);
+        Collections.addAll(duplicatePatternCheckList, patterns);
     }
 
     /**
