@@ -62,7 +62,7 @@ public final class SkriptLogger {
      *
      * @return A newly created RetainingLogHandler
      */
-    public static RetainingLogHandler startRetainingLog() {
+    public static final RetainingLogHandler startRetainingLog() {
         return startLogHandler(new RetainingLogHandler());
     }
 
@@ -71,7 +71,7 @@ public final class SkriptLogger {
      *
      * @return A newly created ParseLogHandler
      */
-    public static ParseLogHandler startParseLogHandler() {
+    public static final ParseLogHandler startParseLogHandler() {
         return startLogHandler(new ParseLogHandler());
     }
 
@@ -99,7 +99,7 @@ public final class SkriptLogger {
      * @see FilteringLogHandler
      * @see RedirectingLogHandler
      */
-    public static <T extends LogHandler> T startLogHandler(final T h) {
+    public static final <T extends LogHandler> T startLogHandler(final T h) {
         handlers.add(h);
         return h;
     }
@@ -115,13 +115,13 @@ public final class SkriptLogger {
         }
     }
 
-    static boolean isStopped(final LogHandler h) {
+    static final boolean isStopped(final LogHandler h) {
         return !handlers.contains(h);
     }
 
     @Nullable
-    static StackTraceElement getCaller() {
-        for (final StackTraceElement e : new Exception().getStackTrace()) {
+    static final StackTraceElement getCaller() {
+        for (final StackTraceElement e : Thread.currentThread().getStackTrace()) {
             if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName()))
                 return e;
         }
@@ -135,7 +135,7 @@ public final class SkriptLogger {
     }
 
     @Nullable
-    public static Node getNode() {
+    public static final Node getNode() {
         return node;
     }
 
@@ -209,7 +209,7 @@ public final class SkriptLogger {
     }
 
     @SuppressWarnings("null")
-    public static List<LogEntry> stopSuppressing() {
+    public static final List<LogEntry> stopSuppressing() {
         if (suppressed == null) {
             return new ArrayList<>();
         }
@@ -220,7 +220,7 @@ public final class SkriptLogger {
         suppressed = null;
     }
 
-    public static String format(final LogEntry entry) {
+    public static final String format(final LogEntry entry) {
         return SKRIPT_PREFIX_CONSOLE + entry.getMessage();
     }
 
@@ -242,11 +242,11 @@ public final class SkriptLogger {
      * @param minVerb minimal verbosity
      * @return Whatever messages should be logged for the given verbosity.
      */
-    public static boolean log(final Verbosity minVerb) {
+    public static final boolean log(final Verbosity minVerb) {
         return minVerb.compareTo(verbosity) <= 0;
     }
 
-    public static boolean debug() {
+    public static final boolean debug() {
         return debug;
     }
 

@@ -80,8 +80,8 @@ public final class LogEntry {
         from = tracked || Skript.debug() ? findCaller() : "";
     }
 
-    static String findCaller() {
-        final StackTraceElement[] es = new Throwable().getStackTrace();
+    static final String findCaller() {
+        final StackTraceElement[] es = Thread.currentThread().getStackTrace();
         for (int i = 0; i < es.length; i++) {
             if (!es[i].getClassName().startsWith(skriptLogPackageName))
                 continue;
