@@ -59,17 +59,37 @@ import java.util.logging.Level;
 @Name("Change: Set/Add/Remove/Delete/Reset")
 @Description("A very general effect that can change many <a href='../expressions'>expressions</a>. Many expressions can only be set and/or deleted, while some can have things added to or removed from them.")
 @Examples({"# set:", "Set the player's display name to \"<red>%name of player%\"", "set the block above the victim to lava", "# add:", "add 2 to the player's health # preferably use '<a href='#heal'>heal</a>' for this", "add argument to {blacklist::*}", "give a diamond pickaxe of efficiency 5 to the player", "increase the data value of the clicked block by 1", "# remove:", "remove 2 pickaxes from the victim", "subtract 2.5 from {points.%player%}", "# remove all:", "remove every iron tool from the player", "remove all minecarts from {entitylist::*}", "# delete:", "delete the block below the player", "clear drops", "delete {variable}", "# reset:", "reset walk speed of player", "reset chunk at the targeted block"})
-@Since("1.0 (set, add, remove, delete), 2.0 (remove all)")
+@Since("1.0 (set, add, remove, delete), 2.0 (remove all), 2.2.15 (new set pattern)")
 public final class EffChange extends Effect {
-    private static final Patterns<ChangeMode> patterns = new Patterns<>(new Object[][]{{"(add|give) %objects% to %~objects%", ChangeMode.ADD}, {"increase %~objects% by %objects%", ChangeMode.ADD}, {"give %~objects% %objects%", ChangeMode.ADD},
+    private static final Patterns<ChangeMode> patterns = new Patterns<>(new Object[][]{
+            // Add
+
+            {"(add|give) %objects% to %~objects%", ChangeMode.ADD},
+
+            {"increase %~objects% by %objects%", ChangeMode.ADD},
+
+            {"give %~objects% %objects%", ChangeMode.ADD},
+
+            // Set
 
             {"set %~objects% to %objects%", ChangeMode.SET},
+            {"%~objects% = %objects%", ChangeMode.SET},
+
+            // Remove All
 
             {"remove (all|every) %objects% from %~objects%", ChangeMode.REMOVE_ALL},
 
-            {"(remove|subtract) %objects% from %~objects%", ChangeMode.REMOVE}, {"reduce %~objects% by %objects%", ChangeMode.REMOVE},
+            // Remove
+
+            {"(remove|subtract) %objects% from %~objects%", ChangeMode.REMOVE},
+
+            {"reduce %~objects% by %objects%", ChangeMode.REMOVE},
+
+            // Delete
 
             {"(delete|clear) %~objects%", ChangeMode.DELETE},
+
+            // Reset
 
             {"reset %~objects%", ChangeMode.RESET}
     });
@@ -286,7 +306,7 @@ public final class EffChange extends Effect {
                 return "reset " + changed.toString(e, debug);
         }
         assert false;
-        return "";
+        return null;
     }
 
 }
