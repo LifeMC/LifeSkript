@@ -180,6 +180,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
     private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
     private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
+    private static final List<String> duplicatePatternCheckMap = new ArrayList<>();
     private static final String EXCEPTION_PREFIX = "#!#! ";
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
@@ -202,7 +203,7 @@ public final class Skript extends JavaPlugin implements Listener {
     ServerPlatform serverPlatform;
     private static @Nullable
     Boolean hasJLineSupport = null;
-    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
+    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     @Nullable
     private static Version version;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{Skript.getLatestVersion(), Skript.getVersion().toString()});
@@ -220,7 +221,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
     /**
      * Checks if the Bukkit (and server) is loaded, enabled and working
-     * correctly. You should use this method when doing Bukkit operations
+     * correclyt. You should use this method when doing Bukkit operations
      * within a method callable from tests, or outside of Bukkit.
      *
      * @return True if the Bukkit (and server) is loaded, enabled and
@@ -263,11 +264,25 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
+     * Checks if the currently runnnig server has jansi
+     *
+     * @return True if the currently running server has jansi
+     */
+    public static final boolean hasJansi() {
+        return classExists("org.fusesource.jansi.Ansi");
+    }
+
+    /**
      * Checks if a CraftBukkit server has JLine support.
      * Calculates once; returns cached value afterwards.
      *
+     * Note this does not check if the jline library is
+     * available, classes exists, or the jline version is compatible.
+     *
      * @return Returns true if the server has JLine support,
      * and currently enabled.
+     *
+     * @see Skript#hasJansi()
      */
     @SuppressWarnings("null")
     public static final boolean hasJLineSupport() {
@@ -810,6 +825,20 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
+     * Checks for duplicate patterns
+     *
+     * @param element The element
+     * @param patterns The patterns
+     * @param name The name of element
+     */
+    public static final void checkDuplicatePatterns(final Class<?> element, final String[] patterns, final String name) {
+        for (final String pattern : patterns)
+            if (duplicatePatternCheckMap.contains(pattern))
+                Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
+        Collections.addAll(duplicatePatternCheckMap, patterns);
+    }
+
+    /**
      * registers a {@link Condition}.
      *
      * @param condition The condition's class
@@ -817,6 +846,8 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final <E extends Condition> void registerCondition(final Class<E> condition, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
+        if (Skript.testing() && Skript.debug())
+            checkDuplicatePatterns(condition, patterns, "condition");
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, condition);
         conditions.add(info);
         statements.add(info);
@@ -832,6 +863,8 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
+        if (Skript.testing() && Skript.debug())
+            checkDuplicatePatterns(effect, patterns, "effect");
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, effect);
         effects.add(info);
         statements.add(info);
@@ -852,17 +885,19 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Registers an expression.
      *
-     * @param c          The expression's class
+     * @param expression          The expression's class
      * @param returnType The superclass of all values returned by the expression
      * @param type       The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
      * @param patterns   Skript patterns that match this expression
      * @throws IllegalArgumentException if returnType is not a normal class
      */
-    public static final <E extends Expression<T>, T> void registerExpression(final Class<E> c, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
+    public static final <E extends Expression<T>, T> void registerExpression(final Class<E> expression, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
             throw new IllegalArgumentException("returnType must be a normal type");
-        final ExpressionInfo<E, T> info = new ExpressionInfo<>(patterns, returnType, c);
+        if (Skript.testing() && Skript.debug())
+            checkDuplicatePatterns(expression, patterns, "expression");
+        final ExpressionInfo<E, T> info = new ExpressionInfo<>(patterns, returnType, expression);
         for (int i = type.ordinal() + 1; i < ExpressionType.values().length; i++) {
             expressionTypesStartIndices[i]++;
         }
@@ -902,6 +937,8 @@ public final class Skript extends JavaPlugin implements Listener {
     @SuppressWarnings({"unchecked"})
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
         checkAcceptRegistrations();
+        if (Skript.testing() && Skript.debug())
+            checkDuplicatePatterns(c, patterns, "event");
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, CollectionUtils.array(event));
         events.add(r);
         return r;
@@ -918,6 +955,8 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, final String... patterns) {
         checkAcceptRegistrations();
+        if (Skript.testing() && Skript.debug())
+            checkDuplicatePatterns(c, patterns, "event");
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, events);
         Skript.events.add(r);
         return r;
@@ -1444,7 +1483,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
 
             if (Bukkit.getOnlineMode() && !SkriptConfig.usePlayerUUIDsInVariableNames.value()) {
-                warning("Your server is running with online mode enabled, we recommend you to make \"use player UUIDs in variable names\" setting true in config file.");
+                warning("Server is running with the online mode enabled, we recommend making \"use player UUIDs in variable names\" setting true in config.");
             }
 
             Language.setUseLocal(true);
