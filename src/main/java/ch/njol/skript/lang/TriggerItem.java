@@ -60,9 +60,9 @@ public abstract class TriggerItem implements Debuggable {
     /**
      * @param start
      * @param e
-     * @return false iff an exception occurred
+     * @return false if an exception occurred
      */
-    public static boolean walk(final TriggerItem start, final Event e) {
+    public static final boolean walk(final TriggerItem start, final Event e) {
         assert start != null && e != null;
         TriggerItem i = start;
         try {
@@ -70,16 +70,16 @@ public abstract class TriggerItem implements Debuggable {
                 i = i.walk(e);
             return true;
         } catch (final StackOverflowError err) {
+            if (Skript.debug())
+                err.printStackTrace();
             final Trigger t = start.getTrigger();
             final File sc = t == null ? null : t.getScript();
             Skript.adminBroadcast("<red>The script '<gold>" + (sc == null ? "<unknown>" : sc.getName()) + "<red>' infinitely (or excessively) repeated itself!");
-            if (Skript.debug())
-                err.printStackTrace();
-        } catch (final Exception ex) {
-            if (ex.getStackTrace().length != 0) // empty exceptions have already been printed
-                Skript.exception(ex, i);
+            return false;
+        } catch (final Throwable tw) {
+            Skript.exception(tw, i, "Error when executing trigger in event " + e.getClass().getCanonicalName());
+            return false;
         }
-        return false;
     }
 
     /**
