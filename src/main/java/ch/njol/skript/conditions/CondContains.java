@@ -103,6 +103,7 @@ public final class CondContains extends Condition {
                 final String s = (String) container;
                 return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
             }
+            assert false;
             return false;
         });
     }

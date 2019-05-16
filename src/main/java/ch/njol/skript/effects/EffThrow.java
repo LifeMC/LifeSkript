@@ -67,6 +67,7 @@ public final class EffThrow extends Effect {
     protected void execute(final Event e) {
         if (error) {
             if (java) {
+                // Bad things happening - throw it to caller!
                 throw new ScriptError(String.valueOf(detail.getSingle(e)));
             }
             Skript.error(String.valueOf(detail.getSingle(e)));

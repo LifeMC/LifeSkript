@@ -84,7 +84,7 @@ public abstract class Parser<T> {
                 return toCommandString(o);
         }
         assert false;
-        return "";
+        return null;
     }
 
     // not used anymore

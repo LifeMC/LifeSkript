@@ -64,11 +64,11 @@ public final class EffReturn extends Effect {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         final ScriptFunction<?> f = Functions.currentFunction;
         if (f == null) {
-            Skript.error("The return statement can only be used in a function");
+            Skript.error("The return statement can only be used in a function. Please use 'stop' or 'exit' if you want to stop the execution of code.");
             return false;
         }
         if (!isDelayed.isFalse()) {
-            Skript.error("A return statement after a delay is useless, as the calling trigger will resume when the delay starts (and won't get any returned value)");
+            Skript.error("A return statement after a delay is useless, as the calling trigger will resume when the delay starts (and won't get any returned value!)");
             return false;
         }
         function = f;

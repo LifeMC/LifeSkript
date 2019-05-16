@@ -1462,8 +1462,10 @@ public final class SkriptParser {
 
     private static final class ExprInfo {
         final ClassInfo<?>[] classes;
+
         final boolean[] isPlural;
         boolean isOptional;
+
         int flagMask = ~0;
         int time;
 
