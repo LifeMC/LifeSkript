@@ -588,25 +588,25 @@ public final class VariableString implements Expression<String> {
             this.expr = expr;
         }
     }
-	
-	/* REMIND allow special characters?
-	private static String allowedChars = null;
-	private static Field allowedCharacters = null;
-	
-	static {
-		if (Skript.isRunningCraftBukkit()) {
-			try {
-				allowedCharacters = SharedConstants.class.getDeclaredField("allowedCharacters");
-				allowedCharacters.setAccessible(true);
-				Field modifiersField = Field.class.getDeclaredField("modifiers");
-				modifiersField.setAccessible(true);
-				modifiersField.setInt(allowedCharacters, allowedCharacters.getModifiers() & ~Modifier.FINAL);
-				allowedChars = (String) allowedCharacters.get(null);
-			} catch (Throwable e) {
-				allowedChars = null;
-				allowedCharacters = null;
-			}
-		}
-	}
-	 */
+
+    /* REMIND allow special characters?
+    private static String allowedChars = null;
+    private static Field allowedCharacters = null;
+
+    static {
+        if (Skript.isRunningCraftBukkit()) {
+            try {
+                allowedCharacters = SharedConstants.class.getDeclaredField("allowedCharacters");
+                allowedCharacters.setAccessible(true);
+                Field modifiersField = Field.class.getDeclaredField("modifiers");
+                modifiersField.setAccessible(true);
+                modifiersField.setInt(allowedCharacters, allowedCharacters.getModifiers() & ~Modifier.FINAL);
+                allowedChars = (String) allowedCharacters.get(null);
+            } catch (Throwable e) {
+                allowedChars = null;
+                allowedCharacters = null;
+            }
+        }
+    }
+     */
 }
