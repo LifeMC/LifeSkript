@@ -610,26 +610,31 @@ public final class Commands {
 
     public static final void registerListeners() {
         if (!registeredListeners) {
-            final Listener emptyListener = new Listener() { /* ignored */
-            };
-
-            Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
+            Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, new Listener() {
+                /* ignored */
+            }, EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof PlayerCommandPreprocessEvent)
                     onPlayerCommand((PlayerCommandPreprocessEvent) event);
             }, Skript.getInstance(), true);
 
-            Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
+            Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, new Listener() {
+                /* ignored */
+            }, EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof ServerCommandEvent)
                     onServerCommand((ServerCommandEvent) event);
             }, Skript.getInstance(), true);
 
             if (post1_3chatListener != null) {
-                Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
+                Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
+                    /* ignored */
+                }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof AsyncPlayerChatEvent)
                         onAsyncPlayerChat((AsyncPlayerChatEvent) event);
                 }, Skript.getInstance(), true);
             } else {
-                Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, emptyListener, EventPriority.MONITOR, (listener, event) -> {
+                Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, new Listener() {
+                    /* ignored */
+                }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof PlayerChatEvent)
                         onPlayerChat((PlayerChatEvent) event);
                 }, Skript.getInstance(), true);
