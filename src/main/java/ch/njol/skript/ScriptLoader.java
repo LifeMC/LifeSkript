@@ -68,8 +68,6 @@ import java.util.regex.Matcher;
 public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
-    // We don't use static initializer because Skript may not be initialized in that time,
-    // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
     public static final List<Loop> currentLoops = new ArrayList<>();
     static final HashMap<String, String> currentOptions = new HashMap<>();
     /**
@@ -96,6 +94,8 @@ public final class ScriptLoader {
     public static Version currentScriptVersion;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
     private static Version cachedDefaultScriptVersion;
+    // We don't use static initializer because Skript may not be initialized in that time,
+    // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
     public static final Supplier<Version> defaultScriptVersion = () -> {
         if (cachedDefaultScriptVersion == null) {
             final Version skriptVersion = Skript.getVersion();
