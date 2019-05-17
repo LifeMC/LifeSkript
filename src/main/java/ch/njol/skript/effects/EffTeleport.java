@@ -64,7 +64,7 @@ public final class EffTeleport extends Effect {
      * @param pitch Notch-pitch
      * @return Whatever the given pitch and yaw represent a cartesian coordinate direction
      */
-    private static boolean ignoreDirection(final float yaw, final float pitch) {
+    private static final boolean ignoreDirection(final float yaw, final float pitch) {
         return (pitch == 0 || Math.abs(pitch - 90) < Skript.EPSILON || Math.abs(pitch + 90) < Skript.EPSILON) && (yaw == 0 || Math.abs(Math.sin(Math.toRadians(yaw))) < Skript.EPSILON || Math.abs(Math.cos(Math.toRadians(yaw))) < Skript.EPSILON);
     }
 

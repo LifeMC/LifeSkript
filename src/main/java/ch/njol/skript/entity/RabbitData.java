@@ -37,7 +37,7 @@ public final class RabbitData extends EntityData<Rabbit> {
 
     private int type;
 
-    private static Rabbit.Type typeFromInt(final int i) {
+    private static final Rabbit.Type typeFromInt(final int i) {
         switch (i) {
             case 1:
                 return Rabbit.Type.BLACK;
@@ -59,7 +59,7 @@ public final class RabbitData extends EntityData<Rabbit> {
         return Rabbit.Type.BLACK;
     }
 
-    private static int intFromType(final Rabbit.Type type) {
+    private static final int intFromType(final Rabbit.Type type) {
         int i = 0;
         switch (type) {
             case BLACK:

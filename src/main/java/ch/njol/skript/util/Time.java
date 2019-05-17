@@ -55,7 +55,7 @@ public final class Time implements YggdrasilSerializable {
         this.time = Math2.mod(time, TICKS_PER_DAY);
     }
 
-    public static String toString(final int ticks) {
+    public static final String toString(final int ticks) {
         assert 0 <= ticks && ticks < TICKS_PER_DAY;
         final int t = (ticks + HOUR_ZERO) % TICKS_PER_DAY;
         int hours = t / TICKS_PER_HOUR;

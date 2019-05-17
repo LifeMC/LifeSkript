@@ -49,7 +49,7 @@ public final class EvtDamage extends SkriptEvent {
     private Literal<EntityData<?>> types;
 
     @SuppressWarnings("null")
-    private static boolean checkDamage(final EntityDamageEvent e) {
+    private static final boolean checkDamage(final EntityDamageEvent e) {
         if (!(e.getEntity() instanceof LivingEntity))
             return true;
         final LivingEntity en = (LivingEntity) e.getEntity();

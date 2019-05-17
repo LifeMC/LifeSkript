@@ -22,7 +22,9 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.classes.Converter;
+import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,7 +53,13 @@ public final class FileUtils {
         }
     }
 
+    /**
+     * @return null when backups are disabled from config
+     */
+    @Nullable
     public static final File backup(final File f) throws IOException {
+        if (SkriptConfig.disableBackupsCompletely.value())
+            return null;
         String name = f.getName();
         final int c = name.lastIndexOf('.');
         final String ext = c == -1 ? null : name.substring(c + 1);

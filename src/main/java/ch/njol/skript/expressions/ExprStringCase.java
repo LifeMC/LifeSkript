@@ -68,7 +68,7 @@ public final class ExprStringCase extends SimpleExpression<String> {
      * @return Changed string.
      */
     @SuppressWarnings("null")
-    private static String changeCase(@Nullable final String str, final int mode) {
+    private static final String changeCase(@Nullable final String str, final int mode) {
         if (str == null)
             return "";
         else if (mode == UPPER)

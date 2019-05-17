@@ -56,7 +56,7 @@ public final class ExprAttacker extends SimpleExpression<Entity> {
     }
 
     @Nullable
-    private static Entity getAttacker(final @Nullable Event e) {
+    private static final Entity getAttacker(final @Nullable Event e) {
         if (e == null)
             return null;
         if (e instanceof EntityDamageByEntityEvent) {

@@ -74,7 +74,7 @@ public interface Comparator<T1, T2> {
          * @param b
          * @return <tt>b ? Relation.EQUAL : Relation.NOT_EQUAL</tt>
          */
-        public static Relation get(final boolean b) {
+        public static final Relation get(final boolean b) {
             return b ? Relation.EQUAL : Relation.NOT_EQUAL;
         }
 
@@ -84,7 +84,7 @@ public interface Comparator<T1, T2> {
          * @param i
          * @return <tt>i == 0 ? Relation.EQUAL : i > 0 ? Relation.GREATER : Relation.SMALLER</tt>
          */
-        public static Relation get(final int i) {
+        public static final Relation get(final int i) {
             return i == 0 ? Relation.EQUAL : i > 0 ? Relation.GREATER : Relation.SMALLER;
         }
 
@@ -94,7 +94,7 @@ public interface Comparator<T1, T2> {
          * @param d
          * @return <tt>d == 0 ? Relation.EQUAL : d > 0 ? Relation.GREATER : Relation.SMALLER</tt>
          */
-        public static Relation get(final double d) {
+        public static final Relation get(final double d) {
             return d == 0 ? Relation.EQUAL : d > 0 ? Relation.GREATER : Relation.SMALLER;
         }
 

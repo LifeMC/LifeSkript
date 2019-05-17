@@ -63,7 +63,7 @@ public final class ExprNumbers extends SimpleExpression<Number> {
     @SuppressWarnings("null")
     private Expression<Number> start, end;
 
-    private static boolean isInLoop() {
+    private static final boolean isInLoop() {
         final Node node = SkriptLogger.getNode();
         if (node == null) {
             return false;

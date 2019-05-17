@@ -39,10 +39,10 @@ import java.io.StreamCorruptedException;
  */
 public class ConfigurationSerializer<T extends ConfigurationSerializable> extends Serializer<T> {
 
-    public static String serializeCS(final ConfigurationSerializable o) {
+    public static final String serializeCS(final ConfigurationSerializable o) {
         final YamlConfiguration y = new YamlConfiguration();
         y.set("value", o);
-        return "" + y.saveToString();
+        return y.saveToString();
     }
 
     @SuppressWarnings("unchecked")

@@ -71,7 +71,7 @@ public final class UnparsedLiteral implements Literal<Object> {
         this.error = error;
     }
 
-    private static SkriptAPIException invalidAccessException() {
+    private static final SkriptAPIException invalidAccessException() {
         return new SkriptAPIException("UnparsedLiterals must be converted before use");
     }
 

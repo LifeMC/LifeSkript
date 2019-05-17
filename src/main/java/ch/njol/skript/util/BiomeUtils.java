@@ -37,15 +37,15 @@ public final class BiomeUtils {
     }
 
     @Nullable
-    public static Biome parse(final String s) {
+    public static final Biome parse(final String s) {
         return util.parse(s);
     }
 
-    public static String toString(final Biome b, final int flags) {
+    public static final String toString(final Biome b, final int flags) {
         return util.toString(b, flags);
     }
 
-    public static String getAllNames() {
+    public static final String getAllNames() {
         return util.getAllNames();
     }
 

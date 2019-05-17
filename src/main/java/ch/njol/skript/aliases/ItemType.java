@@ -890,7 +890,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 //	/**
 //	 * Saves an array of ItemTypes, separated by '|'
 //	 */
-//	public static String serialize(final ItemType[] types) {
+//	public static final String serialize(final ItemType[] types) {
 //		if (types == null)
 //			return "";
 //		final StringBuilder b = new StringBuilder();

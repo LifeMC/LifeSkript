@@ -66,7 +66,7 @@ public final class Language {
      */
     private static String name = "english";
 
-    public static String getName() {
+    public static final String getName() {
         return useLocal ? name : "english";
     }
 

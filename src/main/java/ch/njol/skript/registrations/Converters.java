@@ -46,7 +46,7 @@ public final class Converters {
     }
 
     @SuppressWarnings("null")
-    public static List<ConverterInfo<?, ?>> getConverters() {
+    public static final List<ConverterInfo<?, ?>> getConverters() {
         return Collections.unmodifiableList(converters);
     }
 

@@ -376,7 +376,7 @@ public final class Commands {
         }
     }
 
-//	public static boolean skriptCommandExists(final String command) {
+//	public static final boolean skriptCommandExists(final String command) {
 //		final ScriptCommand c = commands.get(command);
 //		return c != null && c.getName().equals(command);
 //	}

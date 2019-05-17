@@ -77,7 +77,7 @@ public final class CondCompare extends Condition {
     @SuppressWarnings("null")
     private Expression<?> first;
 
-    public static String f(final Expression<?> e) {
+    public static final String f(final Expression<?> e) {
         if (e.getReturnType() == Object.class)
             return e.toString(null, false);
         return Classes.getSuperClassInfo(e.getReturnType()).getName().withIndefiniteArticle();

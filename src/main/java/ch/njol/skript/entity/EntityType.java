@@ -121,7 +121,7 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
 
     @SuppressWarnings("null")
     @Nullable
-    public static EntityType parse(String s) {
+    public static final EntityType parse(String s) {
         assert s != null && s.length() != 0;
         int amount = -1;
         if (s.matches("\\d+ .+")) {

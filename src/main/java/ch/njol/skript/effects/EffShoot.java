@@ -69,7 +69,7 @@ public final class EffShoot extends Effect {
     private Expression<Direction> direction;
 
     @SuppressWarnings("unchecked")
-    private static <E extends Entity> void set(final Entity e, final EntityData<E> d) {
+    private static final <E extends Entity> void set(final Entity e, final EntityData<E> d) {
         d.set((E) e);
     }
 

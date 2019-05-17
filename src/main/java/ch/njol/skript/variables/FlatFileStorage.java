@@ -217,7 +217,8 @@ public final class FlatFileStorage extends VariablesStorage {
                     Skript.info("[2.1] updating " + file.getName() + " to the new format...");
                 }
                 final File bu = FileUtils.backup(file);
-                Skript.info("Created a backup of " + file.getName() + " as " + bu.getName());
+                if (bu != null)
+                    Skript.info("Created a backup of " + file.getName() + " as " + bu.getName());
                 loadError = false;
             } catch (final IOException ex) {
                 Skript.error("Could not backup " + file.getName() + ": " + ex.getMessage());
@@ -357,7 +358,8 @@ public final class FlatFileStorage extends VariablesStorage {
                     if (loadError) {
                         try {
                             final File backup = FileUtils.backup(f);
-                            Skript.info("Created a backup of the old " + f.getName() + " as " + backup.getName());
+                            if (backup != null)
+                                Skript.info("Created a backup of the old " + f.getName() + " as " + backup.getName());
                             loadError = false;
                         } catch (final IOException e) {
                             Skript.error("Could not backup the old " + f.getName() + ": " + ExceptionUtils.toString(e));

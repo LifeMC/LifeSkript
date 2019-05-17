@@ -137,7 +137,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     @SuppressWarnings("null")
     ItemType[] types;
 
-    static int getOnBlock(final Location l) {
+    static final int getOnBlock(final Location l) {
         int id = l.getWorld().getBlockTypeIdAt(l.getBlockX(), (int) Math.ceil(l.getY()) - 1, l.getBlockZ());
         if (id == 0 && Math.abs(l.getY() - l.getBlockY() - 0.5) < Skript.EPSILON) { // fences
             id = l.getWorld().getBlockTypeIdAt(l.getBlockX(), l.getBlockY() - 1, l.getBlockZ());
@@ -147,14 +147,14 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
         return id;
     }
 
-    static int getBlockY(final double y, final int id) {
+    static final int getBlockY(final double y, final int id) {
         if ((id == Material.FENCE.getId() || id == 107 || id == 113) && Math.abs(y - Math.floor(y) - 0.5) < Skript.EPSILON) // fence gate // nether fence
             return (int) Math.floor(y) - 1;
         return (int) Math.ceil(y) - 1;
     }
 
     @SuppressWarnings("null")
-    public static Block getBlock(final PlayerMoveEvent e) {
+    public static final Block getBlock(final PlayerMoveEvent e) {
         return e.getTo().subtract(0, 0.5, 0).getBlock();
     }
 

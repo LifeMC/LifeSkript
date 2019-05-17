@@ -77,11 +77,11 @@ public interface Converter<F, T> {
 
     final class ConverterUtils {
 
-        public static <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
+        public static final <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
             return createInstanceofConverter(conv.from, conv.converter);
         }
 
-        public static <F, T> Converter<?, T> createInstanceofConverter(final Class<F> from, final Converter<F, T> conv) {
+        public static final <F, T> Converter<?, T> createInstanceofConverter(final Class<F> from, final Converter<F, T> conv) {
             return (Converter<Object, T>) o -> {
                 if (!from.isInstance(o))
                     return null;
@@ -89,7 +89,7 @@ public interface Converter<F, T> {
             };
         }
 
-        public static <F, T> Converter<F, T> createInstanceofConverter(final Converter<F, ?> conv, final Class<T> to) {
+        public static final <F, T> Converter<F, T> createInstanceofConverter(final Converter<F, ?> conv, final Class<T> to) {
             return f -> {
                 final Object o = conv.convert(f);
                 if (to.isInstance(o))
@@ -98,11 +98,11 @@ public interface Converter<F, T> {
             };
         }
 
-        public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final ConverterInfo<F, ?> conv, final Class<T> to) {
+        public static final <F, T> Converter<?, T> createDoubleInstanceofConverter(final ConverterInfo<F, ?> conv, final Class<T> to) {
             return createDoubleInstanceofConverter(conv.from, conv.converter, to);
         }
 
-        public static <F, T> Converter<?, T> createDoubleInstanceofConverter(final Class<F> from, final Converter<F, ?> conv, final Class<T> to) {
+        public static final <F, T> Converter<?, T> createDoubleInstanceofConverter(final Class<F> from, final Converter<F, ?> conv, final Class<T> to) {
             return (Converter<Object, T>) o -> {
                 if (!from.isInstance(o))
                     return null;

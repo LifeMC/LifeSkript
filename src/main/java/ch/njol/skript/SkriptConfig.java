@@ -74,7 +74,7 @@ public final class SkriptConfig {
     public static final Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
     public static final Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
     public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
-    public final static Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
+    public static final Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
     public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
     public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", false);
     public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", false);
@@ -101,6 +101,8 @@ public final class SkriptConfig {
                 //SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
                 //}
             });
+    public static final Option<String> defaultSourceVersion = new Option<>("default source version", "default");
+    public static final Option<Boolean> disableBackupsCompletely = new Option<>("disable backups completely", false);
     /**
      * False by default - Use /sk track variables to enable in runtime.
      */
@@ -235,7 +237,10 @@ public final class SkriptConfig {
                             newConfig.getMainNode().set(databases.key, mc.getMainNode().get(databases.key));
                         mc = mainConfig = newConfig;
                         mc.save(configFile);
-                        Skript.info("Your configuration has been updated to the latest version. A backup of your old config file has been created as " + bu.getName());
+                        if (!SkriptConfig.disableBackupsCompletely.value() && bu != null)
+                            Skript.info("Your configuration has been updated to the latest version. A backup of your old config file has been created as " + bu.getName());
+                        else
+                            Skript.info("Your configuration has been updated to the latest version.");
                     } else { // only the version changed
                         mc.getMainNode().set(version.key, Skript.getVersion().toString());
                         mc.save(configFile);

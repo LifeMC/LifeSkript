@@ -56,7 +56,7 @@ public final class ExprFacing extends SimplePropertyExpression<Object, Direction
 
     private boolean horizontal;
 
-    private static BlockFace toBlockFace(final Vector dir) {
+    private static final BlockFace toBlockFace(final Vector dir) {
 //		dir.normalize();
         BlockFace r = null;
         double d = Double.MAX_VALUE;

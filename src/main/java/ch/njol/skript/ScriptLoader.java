@@ -98,14 +98,31 @@ public final class ScriptLoader {
     // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
     public static final Supplier<Version> defaultScriptVersion = () -> {
         if (cachedDefaultScriptVersion == null) {
-            final Version skriptVersion = Skript.getVersion();
+            final String defaultSourceVersion = SkriptConfig.defaultSourceVersion.value();
 
-            final int major = skriptVersion.getMajor();
-            final int minor = skriptVersion.getMinor();
-            final int revision = skriptVersion.getRevision();
+            switch (defaultSourceVersion) {
+                case "current":
+                    return cachedDefaultScriptVersion = Skript.getVersion();
+                case "latest":
+                    try {
+                        if (Skript.latestVersion != null)
+                            return cachedDefaultScriptVersion = new Version(Skript.latestVersion);
+                    } catch (final IllegalArgumentException ignored) {
+                        // Fall back to current version
+                    }
+                    return cachedDefaultScriptVersion = Skript.getVersion();
+                case "default":
+                    final Version skriptVersion = Skript.getVersion();
 
-            // Dividing the revision by 10 drops the last digit, e.g 2.2.14 becomes 2.2.1
-            return cachedDefaultScriptVersion = new Version(major, minor, revision / 10);
+                    final int major = skriptVersion.getMajor();
+                    final int minor = skriptVersion.getMinor();
+                    final int revision = skriptVersion.getRevision();
+
+                    // Dividing the revision by 10 drops the last digit, e.g 2.2.14 becomes 2.2.1
+                    return cachedDefaultScriptVersion = new Version(major, minor, revision / 10);
+                default:
+                    return cachedDefaultScriptVersion = new Version(defaultSourceVersion);
+            }
         } else
             return cachedDefaultScriptVersion;
     };
@@ -366,6 +383,8 @@ public final class ScriptLoader {
             int numCommands = 0;
             int numFunctions = 0;
 
+            boolean hasConfiguraton = false;
+
             Version scriptVersion = defaultScriptVersion.get();
 
             currentAliases.clear();
@@ -481,10 +500,15 @@ public final class ScriptLoader {
                         }
                         continue;
                     } else if ("configuration".equalsIgnoreCase(event)) {
+                        if (hasConfiguraton) {
+                            Skript.error("duplicate configuration section");
+                            continue;
+                        }
                         if (index != 1) {
                             Skript.error("configuration should be on top of the script");
                             continue;
                         }
+                        hasConfiguraton = true;
                         node.convertToEntries(0);
                         final List<String> duplicateCheckList = new ArrayList<>();
                         for (final Node n : node) {
@@ -505,16 +529,19 @@ public final class ScriptLoader {
                                     currentScriptVersion = scriptVersion;
                                     duplicateCheckList.add("source");
                                 } else if (key.equalsIgnoreCase("target")) {
+                                    final Version target = new Version(value, true);
                                     if (duplicateCheckList.contains("target")) {
                                         Skript.error("Duplicate target configuration setting");
                                         continue;
                                     }
                                     // Source: The version that script is written and tested with.
                                     // Target: Actual minimum version that script supports.
-                                    if (Skript.getVersion().isSmallerThan(new Version(value, true))) {
+                                    if (Skript.getVersion().isSmallerThan(target)) {
                                         Skript.error("This script requires Skript version " + value);
                                         return new ScriptInfo(); // we return empty script info to abort parsing
-                                    }
+                                    } else
+                                        if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
+                                            Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
                                     duplicateCheckList.add("target");
                                 } else if (key.equalsIgnoreCase("loops")) {
                                     if (duplicateCheckList.contains("loops")) {
@@ -637,7 +664,7 @@ public final class ScriptLoader {
 
                 if (Skript.logHigh() && startDate != null) {
                     final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + "x" : "") + " in " + loadTime + " seconds.");
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion : "") + " in " + loadTime + " seconds.");
                 }
 
                 currentScript = null;

@@ -151,7 +151,8 @@ public abstract class VariablesStorage implements Closeable {
                 Skript.error("This means that no variables will be available and can also prevent new variables from being saved!");
                 try {
                     final File backup = FileUtils.backup(file);
-                    Skript.error("A backup of your variables.csv was created as " + backup.getName());
+                    if (backup != null)
+                        Skript.error("A backup of your variables.csv was created as " + backup.getName());
                 } catch (final IOException e) {
                     Skript.error("Failed to create a backup of your variables.csv: " + e.getLocalizedMessage());
                 }

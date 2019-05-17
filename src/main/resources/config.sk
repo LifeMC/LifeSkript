@@ -212,6 +212,19 @@ enable timings: true
 # Note that this requires Paper or LifeSpigot to work; on Bukkit/Spigot this option has no effect.
 # When false, timings are not enabled for scripts even if you're running Paper or LifeSpigot.
 
+
+default source version: default
+# Controls default source version of the scripts that does not contain source configuration setting.
+# The default value is fine in most situtations, but if you want perfection set this to latest (or current).
+# When set to default, scripts will have default source version of the current Skript version with last digit removed
+# For example if you're running Skript 2.2.14, the source version will be 2.2.1, and if you're running Skript 2.2.20, source version will be 2.2.2.
+
+
+disable backups completely: false
+# This option disables the backup system completely, e.g: when your configuration is updated to latest version,
+# it no longer create a backup of your old configuration, e.g the backups folder will NOT be created at all.
+# This also disables backups of variables, etc. so don't make this true unless you know what you're doing.
+
 # ==== Variables ====
 
 databases:

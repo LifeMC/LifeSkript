@@ -54,7 +54,7 @@ public final class ExprYawPitch extends SimplePropertyExpression<Location, Numbe
     private boolean yaw;
 
     //Some random method decided to use for converting to positive values.
-    public static float convertToPositive(final float f) {
+    public static final float convertToPositive(final float f) {
         if (f * -1 == Math.abs(f))
             return 360 + f;
         return f;

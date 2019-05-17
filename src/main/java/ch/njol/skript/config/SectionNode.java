@@ -59,11 +59,11 @@ public final class SectionNode extends Node implements Iterable<Node> {
         super(c);
     }
 
-    static SectionNode load(final Config c, final ConfigReader r) throws IOException {
+    static final SectionNode load(final Config c, final ConfigReader r) throws IOException {
         return new SectionNode(c).load_i(r);
     }
 
-    static SectionNode load(final String name, final String comment, final SectionNode parent, final ConfigReader r) throws IOException {
+    static final SectionNode load(final String name, final String comment, final SectionNode parent, final ConfigReader r) throws IOException {
         parent.config.level++;
         final SectionNode node = new SectionNode(name, comment, parent, r.getLineNum()).load_i(r);
         SkriptLogger.setNode(parent);
@@ -71,7 +71,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         return node;
     }
 
-    private static String readableWhitespace(final String s) {
+    private static final String readableWhitespace(final String s) {
         if (s.matches(" +"))
             return s.length() + " space" + (s.length() == 1 ? "" : "s");
         if (s.matches("\t+"))

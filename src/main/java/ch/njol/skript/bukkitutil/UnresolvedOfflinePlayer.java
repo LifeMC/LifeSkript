@@ -100,7 +100,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @param name The name of the player to use it on {@link Bukkit#getOfflinePlayer(String)}.
      */
     public UnresolvedOfflinePlayer(final String name) {
-        if (!threadStarted.get()) { // Do not start in static initializer, only start it when required.
+        if (!threadStarted.get()) { // Do not start in the static initializer, only start it when required.
             threadStarted.set(true);
             resolverThread.setPriority(Thread.MIN_PRIORITY);
             resolverThread.start();

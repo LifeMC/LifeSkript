@@ -65,7 +65,7 @@ public final class Delay extends Effect {
     @SuppressWarnings("null")
     Expression<Timespan> duration;
 
-    public static boolean isDelayed(final Event e) {
+    public static final boolean isDelayed(final Event e) {
         return delayed.contains(e);
     }
 

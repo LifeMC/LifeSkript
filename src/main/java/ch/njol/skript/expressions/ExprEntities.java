@@ -93,7 +93,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
      * @return The collection of entities nearby the given arguments.
      */
     @Nullable
-    public static Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
+    public static final Collection<Entity> getNearbyEntities(final Location l, final double x, final double y, final double z) {
         if (getNearbyEntities) {
             return l.getWorld().getNearbyEntities(l, x, y, z);
         }

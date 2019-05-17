@@ -48,7 +48,7 @@ public final class RegionBorderEvent extends Event implements Cancellable {
         this.enter = enter;
     }
 
-    public static HandlerList getHandlerList() {
+    public static final HandlerList getHandlerList() {
         return handlers;
     }
 

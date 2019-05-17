@@ -67,7 +67,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
         }
     }
 
-    private static String toHex(final byte[] b) {
+    private static final String toHex(final byte[] b) {
         final char[] r = new char[2 * b.length];
         for (int i = 0; i < b.length; i++) {
             r[2 * i] = Character.forDigit((b[i] & 0xF0) >> 4, 16);
