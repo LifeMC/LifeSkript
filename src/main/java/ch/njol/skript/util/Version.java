@@ -44,28 +44,100 @@ public final class Version implements Serializable, Comparable<Version> {
     private final String postfix;
 
     public Version(final int... version) {
-        if (version.length < 1 || version.length > 3)
-            throw new IllegalArgumentException("Versions must have a minimum of 2 and a maximum of 3 numbers (" + version.length + " numbers given)");
-        if (version.length >= 0)
-            System.arraycopy(version, 0, this.version, 0, version.length);
+        final int[] ver = new int[3];
+
+        int index = 0;
+
+        for (final int i : version) {
+            ver[index] = i;
+            index++;
+        }
+
+        System.arraycopy(version, 0, this.version, 0, version.length);
         postfix = null;
     }
 
-    public Version(final int major, final int minor, final @Nullable String postfix) {
+    public Version(final int major) {
+        this(major, 0);
+    }
+
+    public Version(final int major, final int minor) {
+        //noinspection ConstantConditions
+        this(major, minor, (String[]) null);
+    }
+
+    public Version(final int major, final int minor, final @Nullable String... postfix) {
         version[0] = major;
         version[1] = minor;
-        this.postfix = postfix == null || postfix.isEmpty() ? null : postfix;
+
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        if (postfix != null)
+            for (final String str : postfix)
+                stringBuilder.append(str);
+
+        final String suffix = stringBuilder.toString();
+        this.postfix = suffix.isEmpty() ? null : suffix;
     }
 
     public Version(final String version) {
-        final Matcher m = versionPattern.matcher(version.trim());
+        this(version, false);
+    }
+
+    public Version(String version, final boolean failSafe) {
+        Matcher m = versionPattern.matcher(version.trim());
+        String postfixStr = "";
+
         if (!m.matches())
-            throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+            if (!failSafe)
+                throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+            else {
+                // Remove any non-digit character to get a "meaningful" version string.
+                final StringBuilder stringBuilder = new StringBuilder();
+                final StringBuilder postfixBuilder = new StringBuilder();
+
+                int index = 0;
+
+                final char[] characters = version.toCharArray();
+
+                for (final char ch : characters) {
+                    // Continue if it's not a digit between 0 and 9 (and it's not a dot)
+                    // We don't use Character#isDigit because it also includes some
+                    // strange numbers in different locales.
+                    if ((ch < '0' || ch > '9') && (ch != '.' || index == characters.length))
+                        postfixBuilder.append(ch);
+                    else
+                        stringBuilder.append(ch);
+
+                    index++;
+                }
+
+                version = stringBuilder.toString().trim();
+
+                if (version.endsWith("."))
+                    version = version.substring(0, version.length() - 1);
+
+                if (version.length() == 1)
+                    version += ".0";
+
+                m = versionPattern.matcher(version.trim());
+
+                // If it still fails.. Then probably it's a bad argument.
+                if (!m.matches())
+                    throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+
+                postfixStr = postfixBuilder.toString().trim();
+            }
+
         for (int i = 0; i < 3; i++) {
             if (m.group(i + 1) != null)
                 this.version[i] = Utils.parseInt(m.group(i + 1));
         }
-        postfix = m.group(m.groupCount()).isEmpty() ? null : m.group(m.groupCount());
+
+        if (!postfixStr.isEmpty())
+            postfix = postfixStr;
+        else
+            postfix = m.group(m.groupCount()).isEmpty() ? null : m.group(m.groupCount());
     }
 
     public static final int compare(final String v1, final String v2) {

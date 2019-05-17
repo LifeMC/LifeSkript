@@ -25,6 +25,7 @@ package ch.njol.skript.effects;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.VersionRegistry;
 import ch.njol.skript.agents.SkriptAgentKt;
 import ch.njol.skript.agents.events.end.DelayEndEvent;
 import ch.njol.skript.agents.events.start.DelayStartEvent;
@@ -80,6 +81,10 @@ public final class Delay extends Effect {
             final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
             if (millis > 86400000L && !SkriptConfig.disableTooLongDelayWarnings.value())
                 Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
+            if (millis < 0 || ((Literal<Timespan>) duration).getSingle().getTicks_i() < 0 && ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.getVersion())) {
+                Skript.error("Waiting negative amount of time is not possible");
+                return false;
+            }
         }
         if (ScriptLoader.isCurrentEvent(FunctionEvent.class) && !SkriptConfig.disableDelaysInFunctionsWarnings.value())
             Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
@@ -96,11 +101,12 @@ public final class Delay extends Effect {
         final TriggerItem next = getNext();
         if (next != null) {
             delayed.add(e);
+            final boolean debug = Skript.debug();
             final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
-            final long start = Skript.debug() ? System.nanoTime() : 0L;
+            final long start = debug ? System.nanoTime() : 0L;
             if (trackingEnabled)
                 SkriptAgentKt.throwEvent(new DelayStartEvent(duration));
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
+            final Runnable task = () -> {
                 if (Skript.debug())
                     Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
@@ -116,7 +122,15 @@ public final class Delay extends Effect {
                     SkriptTimings.stop(timing); // Stop timing if it was even started
                 if (trackingEnabled)
                     SkriptAgentKt.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
-            }, duration.getTicks_i());
+            };
+            final long ticks = duration.getTicks_i();
+            if (ticks > 0)
+                Bukkit.getScheduler().runTaskLater(Skript.instance, task, ticks);
+            else {
+                if (debug)
+                    Skript.debug("Running task on next tick (" + ticks + " ticks requested)");
+                Bukkit.getScheduler().runTask(Skript.instance, task);
+            }
         }
         return null;
     }

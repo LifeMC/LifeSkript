@@ -62,6 +62,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
@@ -122,6 +123,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
     public static final String LATEST_VERSION_DOWNLOAD_LINK = "https://github.com/LifeMC/LifeSkript/releases";
     public static final String ISSUES_LINK = "https://github.com/LifeMC/LifeSkript/issues";
+    public static final String UPDATE_CHECK_URL = "https://raw.githubusercontent.com/LifeMC/LifeSkript/master/version";
 
     // ================ PLUGIN ================
     public static final Message m_invalid_reload = new Message("skript.invalid reload"),
@@ -180,7 +182,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
     private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
     private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
-    private static final List<String> duplicatePatternCheckList = new ArrayList<>();
+    private static final Collection<String> duplicatePatternCheckList = new ArrayList<>(100);
     private static final String EXCEPTION_PREFIX = "#!#! ";
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
@@ -192,12 +194,14 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     @Nullable
     public static Skript instance;
+    public static boolean updateAvailable;
+    public static boolean updateChecked;
+    public static boolean developmentVersion;
+    public static boolean customVersion;
     static boolean disabled;
-    static boolean updateAvailable;
-    static boolean updateChecked;
     @Nullable
     static String latestVersion;
-    static Version minecraftVersion = new Version(666);
+    static Version minecraftVersion = new Version(999);
     private static boolean first;
     private static @Nullable
     ServerPlatform serverPlatform;
@@ -206,7 +210,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     @Nullable
     private static Version version;
-    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{Skript.getLatestVersion(), Skript.getVersion().toString()});
+    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -275,13 +279,12 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Checks if a CraftBukkit server has JLine support.
      * Calculates once; returns cached value afterwards.
-     *
+     * <p>
      * Note this does not check if the jline library is
      * available, classes exists, or the jline version is compatible.
      *
      * @return Returns true if the server has JLine support,
      * and currently enabled.
-     *
      * @see Skript#hasJansi()
      */
     @SuppressWarnings("null")
@@ -451,7 +454,7 @@ public final class Skript extends JavaPlugin implements Listener {
         if (checkThread && classExists("org.bukkit.Bukkit") && Bukkit.isPrimaryThread())
             throw new SkriptAPIException("This method must be called asynchronously!");
         try {
-            return WebUtils.getResponse("https://www.lifemcserver.com/skript-latest.php");
+            return WebUtils.getResponse(UPDATE_CHECK_URL);
         } catch (final Throwable tw) {
             if (handler != null)
                 handler.accept(tw);
@@ -800,7 +803,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     @Nullable
-    public static final SkriptAddon getAddon(final JavaPlugin p) {
+    public static final SkriptAddon getAddon(final Plugin p) {
         return addons.get(p.getName());
     }
 
@@ -827,9 +830,9 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Checks for duplicate patterns
      *
-     * @param element The element
+     * @param element  The element
      * @param patterns The patterns
-     * @param name The name of element
+     * @param name     The name of element
      */
     public static final void checkDuplicatePatterns(final Class<?> element, final String[] patterns, final String name) {
         for (final String pattern : patterns)
@@ -885,7 +888,7 @@ public final class Skript extends JavaPlugin implements Listener {
     /**
      * Registers an expression.
      *
-     * @param expression          The expression's class
+     * @param expression The expression's class
      * @param returnType The superclass of all values returned by the expression
      * @param type       The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
      * @param patterns   Skript patterns that match this expression
@@ -1135,7 +1138,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? "(optimized, experimental)" : ""));
+            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? "(optimized, experimental)" : ""));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1391,10 +1394,20 @@ public final class Skript extends JavaPlugin implements Listener {
 
             Workarounds.init();
 
-            version = new Version(getDescription().getVersion());
+            try {
+                version = new Version(getDescription().getVersion());
+            } catch (final IllegalArgumentException e) {
+                Skript.error("Malformed plugin.yml version detecded; some skript features will **not** work. You can try re-downloading the plugin.");
+                printDownloadLink();
+                // Just use 2.2.x, it's the last official release of Skript
+                // of course at least on GitHub, on Bukkit it was 2.1.2.
+                version = new Version(2, 2, 0); // Default source version of 2.2.0 (same as version)
+            }
+
             //runningCraftBukkit = craftbukkitMain != null;
             final String bukkitV = Bukkit.getBukkitVersion();
             final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
+
             if (!m.find()) {
                 Skript.error("The Bukkit version '" + bukkitV + "' does not contain a version number which is required for Skript to enable or disable certain features. " + "Skript will still work, but you might get random errors if you use features that are not available in your version of Bukkit.");
                 minecraftVersion = new Version(999, 0, 0);
@@ -1623,9 +1636,10 @@ public final class Skript extends JavaPlugin implements Listener {
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
                 Bukkit.getScheduler().runTask(this, () -> {
-                    info(Color.getWoolData ? "Using new method for color data." : "Using old method for color data.");
-                    info(ExprEntities.getNearbyEntities ? "Using new method for entities expression." : "Using old method for entities expression.");
-                    info(ExprTargetedBlock.set ? "Using new method for target block expression." : "Using old method for target block expression.");
+                    info("Using " + (Color.getWoolData ? "new" : "old") + " method for color data.");
+                    info("Using " + (ExprEntities.getNearbyEntities ? "new" : "old") + " method for entities expression.");
+                    info("Using " + (ExprTargetedBlock.set ? "new" : "old") + " method for target block expression.");
+                    Bukkit.getLogger().info("");
                 });
             }
 
@@ -1723,10 +1737,44 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (!latestTrimmed.equals(currentTrimmed)) {
                             if (!isEnabled())
                                 return;
-                            Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript v" + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
-                            Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
-                            updateAvailable = true;
-                            latestVersion = latest;
+
+                            boolean printed = false;
+
+                            try {
+                                final Version latestVer = new Version(latestTrimmed);
+
+                                if (latestVer.isSmallerThan(version)) {
+                                    updateChecked = true;
+                                    latestVersion = latest;
+                                    developmentVersion = true;
+
+                                    Bukkit.getScheduler().runTask(this, () -> warning("You are running a development build. Report issues to GitHub."));
+                                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+                                    Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
+
+                                    printed = true;
+                                } else
+                                    customVersion = true;
+                            } catch (final IllegalArgumentException ignored) {
+                                // Web server may return errors
+                                if (!latest.contains("error"))
+                                    customVersion = true;
+                            }
+
+                            if (customVersion) {
+                                Bukkit.getScheduler().runTask(this, () -> warning("You are running a custom version of Skript."));
+                                Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+                                Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
+                                printed = true;
+                            }
+
+                            if (!printed) {
+                                Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript v" + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
+                                Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
+
+                                updateAvailable = true;
+                                latestVersion = latest;
+                            }
                         } else {
                             if (!isEnabled())
                                 return;
@@ -1784,7 +1832,7 @@ public final class Skript extends JavaPlugin implements Listener {
             if (Skript.logHigh())
                 info("Unregistering tasks and event listeners..");
             Bukkit.getScheduler().cancelTasks(this);
-            HandlerList.unregisterAll((JavaPlugin) this);
+            HandlerList.unregisterAll((Plugin) this);
 
             if (Skript.logHigh())
                 info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");

@@ -24,14 +24,18 @@ package ch.njol.skript
 
 import ch.njol.skript.config.Config
 import ch.njol.skript.config.SectionNode
+import ch.njol.skript.util.Version
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.easymock.EasyMock.createMock
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import java.io.IOException
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * @author Peter Güttinger
@@ -41,6 +45,16 @@ class SkriptTest {
     @Test
     fun testVersion() {
         assertNotNull(Skript.getLatestVersion(Throwable::printStackTrace, false))
+
+        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, VersionRegistry.STABLE_2_2_15.version), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}")
+        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 20)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 20))}")
+
+        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 100)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 100))}")
+        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 0)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 0))}")
+
+        assertThrows(IllegalArgumentException::class.java) { Version("2.x-SNAPSHOT") }
+
+        assertFalse(Version("2.x-SNAPSHOT", true).isStable)
     }
 
     companion object {

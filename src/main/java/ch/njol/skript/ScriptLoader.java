@@ -42,12 +42,16 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.ExceptionUtils;
+import ch.njol.skript.util.ScriptOptions;
+import ch.njol.skript.util.Version;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
@@ -55,6 +59,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 
 /**
@@ -62,6 +67,9 @@ import java.util.regex.Matcher;
  */
 public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
+
+    // We don't use static initializer because Skript may not be initialized in that time,
+    // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
     public static final List<Loop> currentLoops = new ArrayList<>();
     static final HashMap<String, String> currentOptions = new HashMap<>();
     /**
@@ -73,6 +81,7 @@ public final class ScriptLoader {
             m_no_scripts = new Message("skript.no scripts");
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
+    private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
     /**
      * must be synchronized
      */
@@ -84,7 +93,22 @@ public final class ScriptLoader {
     private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     @Nullable
     public static Config currentScript;
+    public static Version currentScriptVersion;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
+    private static Version cachedDefaultScriptVersion;
+    public static final Supplier<Version> defaultScriptVersion = () -> {
+        if (cachedDefaultScriptVersion == null) {
+            final Version skriptVersion = Skript.getVersion();
+
+            final int major = skriptVersion.getMajor();
+            final int minor = skriptVersion.getMinor();
+            final int revision = skriptVersion.getRevision();
+
+            // Dividing the revision by 10 drops the last digit, e.g 2.2.14 becomes 2.2.1
+            return cachedDefaultScriptVersion = new Version(major, minor, revision / 10);
+        } else
+            return cachedDefaultScriptVersion;
+    };
     /**
      * use {@link #setCurrentEvent(String, Class...)}
      */
@@ -98,6 +122,42 @@ public final class ScriptLoader {
     private static String indentation = "";
 
     private ScriptLoader() {
+    }
+
+    public static final boolean isErrorAllowed(final Version versionAdded) {
+        return isErrorAllowed(versionAdded, ScriptLoader.currentScriptVersion);
+    }
+
+    public static final boolean isErrorAllowed(final Version versionAdded, final Version scriptVersion) {
+        return isWarningAllowed(versionAdded, scriptVersion);
+    }
+
+    public static final boolean isWarningAllowed(final Version versionAdded) {
+        return isWarningAllowed(versionAdded, ScriptLoader.currentScriptVersion);
+    }
+
+    public static final boolean isWarningAllowed(final Version versionAdded, final Version scriptVersion) {
+        if (scriptVersion.isSmallerThan(versionAdded) || getSourceVersionFrom(scriptVersion).isSmallerThan(getSourceVersionFrom(versionAdded)))
+            return false;
+
+        return getSourceVersionFrom(scriptVersion).isLargerThan(getSourceVersionFrom(versionAdded));
+    }
+
+    public static final Version getSourceVersionFrom(final Version normalVersion) {
+        final int sourceRevision = Double.valueOf(Math.ceil(normalVersion.getRevision() / 10)).intValue();
+
+        final int major = normalVersion.getMajor();
+        final int minor = normalVersion.getMinor();
+
+        //noinspection UnnecessaryCallToStringValueOf
+        final String sourceRevisionStr = String.valueOf(major) + String.valueOf(minor) + String.valueOf(sourceRevision);
+        Version sourceVersion = sourceRevisionMap.get(sourceRevisionStr);
+
+        if (sourceVersion == null) {
+            sourceRevisionMap.put(sourceRevisionStr, sourceVersion = new Version(normalVersion.getMajor(), normalVersion.getMinor(), sourceRevision));
+        }
+
+        return sourceVersion;
     }
 
     @Nullable
@@ -232,7 +292,8 @@ public final class ScriptLoader {
     }
 
     @SuppressWarnings({"unchecked", "null"})
-    public static final ScriptInfo loadScript(final File f) {
+    public static final ScriptInfo loadScript(final @NonNull File f) {
+        assert f != null;
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -305,6 +366,8 @@ public final class ScriptLoader {
             int numCommands = 0;
             int numFunctions = 0;
 
+            Version scriptVersion = defaultScriptVersion.get();
+
             currentAliases.clear();
             currentOptions.clear();
             currentScript = config;
@@ -314,7 +377,10 @@ public final class ScriptLoader {
             final CountingLogHandler numErrors = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
 
             try {
+                int index = 0;
                 for (final Node cnode : config.getMainNode()) {
+                    index++;
+
                     if (!(cnode instanceof SectionNode)) {
                         Skript.error("invalid line - all code has to be put into triggers");
                         continue;
@@ -414,7 +480,82 @@ public final class ScriptLoader {
                             Variables.setVariable(name, o, null, false);
                         }
                         continue;
-                    }
+                    } else if ("configuration".equalsIgnoreCase(event)) {
+                        if (index != 1) {
+                            Skript.error("configuration should be on top of the script");
+                            continue;
+                        }
+                        node.convertToEntries(0);
+                        final List<String> duplicateCheckList = new ArrayList<>();
+                        for (final Node n : node) {
+                            if (!(n instanceof EntryNode)) {
+                                Skript.error("invalid line in the configuration");
+                                continue;
+                            }
+                            final String key = n.getKey();
+                            final String value = ((EntryNode) n).getValue();
+
+                            try {
+                                if (key.equalsIgnoreCase("source")) {
+                                    if (duplicateCheckList.contains("source")) {
+                                        Skript.error("Duplicate source configuration setting");
+                                        continue;
+                                    }
+                                    scriptVersion = new Version(value, true);
+                                    currentScriptVersion = scriptVersion;
+                                    duplicateCheckList.add("source");
+                                } else if (key.equalsIgnoreCase("target")) {
+                                    if (duplicateCheckList.contains("target")) {
+                                        Skript.error("Duplicate target configuration setting");
+                                        continue;
+                                    }
+                                    // Source: The version that script is written and tested with.
+                                    // Target: Actual minimum version that script supports.
+                                    if (Skript.getVersion().isSmallerThan(new Version(value, true))) {
+                                        Skript.error("This script requires Skript version " + value);
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
+                                    }
+                                    duplicateCheckList.add("target");
+                                } else if (key.equalsIgnoreCase("loops")) {
+                                    if (duplicateCheckList.contains("loops")) {
+                                        Skript.error("Duplicate loops configuration setting");
+                                        continue;
+                                    }
+                                    if (value.equalsIgnoreCase("old")) {
+                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), false);
+                                    } else {
+                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), true);
+                                    }
+                                    duplicateCheckList.add("loops");
+                                } else if (key.equalsIgnoreCase("requires minecraft")) {
+                                    if (duplicateCheckList.contains("requires minecraft")) {
+                                        Skript.error("Duplicate requires minecraft configuration setting");
+                                        continue;
+                                    }
+                                    if (Skript.getMinecraftVersion().isSmallerThan(new Version(value, true))) {
+                                        Skript.error("This script requires Minecraft version " + value);
+                                        return new ScriptInfo();
+                                    }
+                                    duplicateCheckList.add("requires minecraft");
+                                } else if (key.equalsIgnoreCase("requires plugin")) {
+                                    // This can be duplicateable to require more than one plugin
+                                    if (!Bukkit.getPluginManager().isPluginEnabled(value)) {
+                                        if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
+                                            Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
+                                        else // it does not exist at all
+                                            Skript.error("This script requires plugin " + value);
+                                        return new ScriptInfo();
+                                    }
+                                }
+                            } catch (final IllegalArgumentException e) {
+                                Skript.error(e.getLocalizedMessage());
+                                return new ScriptInfo();
+                            }
+                        }
+                        duplicateCheckList.clear();
+                        continue;
+                    } else
+                        currentScriptVersion = scriptVersion;
 
                     if (!SkriptParser.validateLine(event))
                         continue;
@@ -496,7 +637,7 @@ public final class ScriptLoader {
 
                 if (Skript.logHigh() && startDate != null) {
                     final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' in " + loadTime + " seconds.");
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + "x" : "") + " in " + loadTime + " seconds.");
                 }
 
                 currentScript = null;
@@ -531,7 +672,7 @@ public final class ScriptLoader {
 //			}
 
             loadedFiles.add(f);
-            return new ScriptInfo(1, numTriggers, numCommands, numFunctions);
+            return new ScriptInfo(1, numTriggers, numCommands, numFunctions, scriptVersion);
         } catch (final IOException e) {
             Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
         } catch (final Throwable tw) {
@@ -804,16 +945,28 @@ public final class ScriptLoader {
     }
 
     public static final class ScriptInfo {
+        /**
+         * The Skript version that this script is written.
+         * This not used currently; but maybe used in future.
+         */
+        private final @Nullable
+        Version scriptVersion;
         public int files, triggers, commands, functions;
 
         public ScriptInfo() {
+            this(0, 0, 0, 0);
         }
 
         public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions) {
+            this(numFiles, numTriggers, numCommands, numFunctions, null);
+        }
+
+        public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions, final @Nullable Version scriptVersion) {
             files = numFiles;
             triggers = numTriggers;
             commands = numCommands;
             functions = numFunctions;
+            this.scriptVersion = scriptVersion;
         }
 
         public void add(final ScriptInfo other) {
@@ -828,6 +981,18 @@ public final class ScriptLoader {
             triggers -= other.triggers;
             commands -= other.commands;
             functions -= other.functions;
+        }
+
+        /**
+         * Gets the source version of this script.
+         *
+         * @return The source version of this script.
+         */
+        @NonNull
+        public Version getScriptVersion() {
+            if (scriptVersion == null)
+                return defaultScriptVersion.get();
+            return scriptVersion;
         }
     }
 
