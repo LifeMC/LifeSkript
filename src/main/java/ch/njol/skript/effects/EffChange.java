@@ -73,7 +73,9 @@ public final class EffChange extends Effect {
             // Set
 
             {"set %~objects% to %objects%", ChangeMode.SET},
-            {"%~objects% = %objects%", ChangeMode.SET},
+
+            // TODO Implement this in 2.2.16
+            //{"%~objects% = %objects%", ChangeMode.SET},
 
             // Remove All
 
