@@ -53,7 +53,6 @@
 
 # We don't want anything - just optimize whatever possible. But these may be commented out for debugging purposes.
 -dontnote
--ignorewarnings
 
 # Remove comment from this for debugging or analyzing purposes - it gives useful information, not like notes, warnings etc.
 -verbose

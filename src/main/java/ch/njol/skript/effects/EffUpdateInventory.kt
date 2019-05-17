@@ -51,7 +51,7 @@ class EffUpdateInventory : Effect() {
     }
 
     override fun execute(e: Event?) {
-        for(player in players!!.getAll(e))
+        for (player in players!!.getAll(e))
             PlayerUtils.updateInventory(player)
     }
 

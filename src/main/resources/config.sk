@@ -1,3 +1,6 @@
+
+#
+#
 #     __________________________________________________________
 #    / /                                                   / /\ \
 #    \_\___________________________________________________\_\/ /
@@ -14,9 +17,11 @@
 # == Introduction ==
 # This file contains Skript's general options. To write scripts, create a new .sk file in the scripts folder or edit any existing one.
 #
+#
 # Script files prefixed with a hyphen (-) will not be loaded, e.g. renaming 'plant with hoe.sk' to '-plant with hoe.sk' will disable the whole file.
 # This can e.g. be used to temporarily disable scripts and is also used for Skript's example scripts.
 # You can also use the command '/skript enable/disable <script>' to enable/disable a script which will automatically rename it.
+#
 #
 # === !!! PLEASE NOTE !!! ===
 # This file, all scripts and other files ending in .sk are NOT .yml/YAML files, but very similar!
@@ -25,10 +30,12 @@
 # - '#' starts a comment like in YAML. If you don't want it to start a comment simply double it: '##' (You also have to double these in "quoted text")
 # - If you use special characters (§, äöü, éèàôç, ñ, etc.) you have to encode the file in UTF-8.
 #
+#
 
 
 
 # ==== General Options ====
+
 
 language: english
 # Which language to use. Currently english and german are included in the download, but custom languages can be created as well.
@@ -36,10 +43,12 @@ language: english
 # If you want to translate Skript to your language please read the readme.txt located in the /lang/ folder in the jar
 # (open the jar as zip or rename it to Skript.zip to access it)
 
+
 check for new version: true
 # Whatever Skript should check for a new version of Skript is available when the server starts.
 # If this set to false, the update checking is disabled and not possible at all. You can however check manually :P
 # Setting to false is only recommended if you stuck to some old version of Skript for reasons, or the updater is broken.
+
 
 enable effect commands: true
 effect command token: !
@@ -82,7 +91,7 @@ use player UUIDs in variable names: false
 date format: default
 # The date format to be used when dates should be displayed.
 # This can be 'default' to use Java's default date format for the system's language.
-# The format is that of Java's SimpleDateFormat as defined here: http://docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html
+# The format is that of Java's SimpleDateFormat as defined here: http://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html
 # some examples:
 #  d/M/yyyy h:mm a => 15/7/2012 8:53 PM
 #  dd.MM.yyyy HH:mm => 16.03.2013 09:33
@@ -123,14 +132,15 @@ number accuracy: 2
 # Zeroes will never be displayed at all, so this setting only applies to numbers that actually have a decimal part with one or more non-zero digits.
 # Money bypasses this setting and is displayed as configured in your economy plugin if you have one.
 
-allow scripts from subfolders: true
-# If true, skript will also load scripts from any subfolder below scripts directory.
-# Changing this to false may improve performance if you have many folders / files that are not scripts.
-
 maximum target block distance: 100
 # How far to search for a player's targeted block in blocks/meters.
 # Lower values improve performance, but might reduce the usability of your scripts.
 # This value is limited by the server (e.g. by 'view-distance' in the server.properties), but is guaranteed to work up to 100 meters.
+
+
+allow scripts from subfolders: true
+# If true, skript will also load scripts from any subfolder below scripts directory.
+# Changing this to false may improve performance if you have many folders / files that are not scripts.
 
 
 case sensitive: false
@@ -138,13 +148,16 @@ case sensitive: false
 # This e.g. applies to the effect 'replace' and the conditions 'contains' and 'is/is not'.
 # Variable names are case-insensitive irrespective of this setting.
 
+
 allow function calls before definitions: true
 # Whether scripts should be allowed to call functions that are not yet loaded.
 # If enabled, functions existence are checked after loading ALL scripts.
 
+
 disable documentation generation: false
 # Change to true for disabling documentation generation at startup.
 # I don't recommend you to touch this settings but you're free to change.
+
 
 disable variable will not be saved warnings: false
 # Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
@@ -187,10 +200,12 @@ disable use native effect instead of command warnings: false
 # It recommends in warning to replace these with their native Skript version, e.g: "add 1000 to player's balance"
 # It is generally faster and better because it is in native Skript, however you can disable these warnings if you want.
 
+
 warn when using none values in strings: false
 # If this option is true, skript sends a warning message to console
 # That indicating a variable is none, or an expression is returned none when converting to string.
 # It usually happens by a bug. You should set a default value in such situation.
+
 
 enable timings: true
 # When enabled, triggers in scripts will be present in timings reports.
@@ -215,7 +230,7 @@ databases:
 	database 1:
 		# an example database to describe all possible options.
 		
-		type: disabled
+		type: disabled # change to line below to enable this database
 		# The type of this database. Allowed values are 'CSV', 'SQLite', 'MySQL' and 'disabled'.
 		# CSV uses a text file to store the variables, while SQLite and MySQL use databases, and 'disabled' makes Skript ignore the database as if it wasn't defined at all.
 		
@@ -245,7 +260,7 @@ databases:
 		# Where to save the variables to. For a CSV file, the file extension '.csv' is recommended, but not required, but SQLite database files must end in '.db' (SQLibrary forces this).
 		# The file path can either be absolute (e.g. 'C:\whatever\...' [Windows] or '/usr/whatever/...' [Unix]), or relative to the server directory (e.g. './plugins/Skript/...').
 		
-		backup interval: 2 hours
+		backup interval: 8 hours
 		# Creates a backup of the file every so often. This can be useful if you ever want to revert variables to an older state.
 		# Variables are saved constantly no matter what is set here, thus a server crash will never make you loose any variables.
 		# Set this to 0 to disable this feature.
@@ -279,7 +294,8 @@ databases:
 		file: ./plugins/Skript/variables.db
 		# SQLite databases must end in '.db'
     	
-		backup interval: 2 hours
+		backup interval: 4 hours
+		
 		monitor changes: false
 		monitor interval: 20 seconds
 	

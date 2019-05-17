@@ -9,8 +9,7 @@
 # == WICHTIG: DIESE GEGENSTANDSNAMEN SIND NOCH NICHT ALLE ÜBERSETZT!
 #   bitte melde dich bei mir (njol@gmx.ch) falls du beim Übersetzen helfen möchtest :)
 #
-# Fix for MC 1.8 items by mrschmock (mrschmock@julcraft.de)
- 
+
 item = Gegenst¦and¦ände @m
 block = Bl¦ock¦öcke @m
 

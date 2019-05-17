@@ -482,8 +482,8 @@ public final class Utils {
      * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
      */
     public static final int parseInt(final String s) {
-        assert s.matches("-?\\d+");
-        assert SkriptParser.isInteger(s);
+        assert s.matches("-?\\d+") : s + " does not match regex";
+        assert SkriptParser.isInteger(s) : s + " is not a valid integer";
         try {
             return Integer.parseInt(s);
         } catch (final NumberFormatException e) {
@@ -500,7 +500,7 @@ public final class Utils {
      * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
      */
     public static final long parseLong(final String s) {
-        assert s.matches("-?\\d+");
+        assert s.matches("-?\\d+") : s + " does not match regex";
         try {
             return Long.parseLong(s);
         } catch (final NumberFormatException e) {
