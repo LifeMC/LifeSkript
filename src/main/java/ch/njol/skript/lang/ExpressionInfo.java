@@ -22,10 +22,6 @@
 
 package ch.njol.skript.lang;
 
-import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.Objects;
-
 public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElementInfo<E> {
 
     public final Class<T> returnType;
@@ -35,19 +31,4 @@ public final class ExpressionInfo<E extends Expression<T>, T> extends SyntaxElem
         this.returnType = returnType;
     }
 
-    @Override
-    public boolean equals(final @Nullable Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final ExpressionInfo<?, ?> that = (ExpressionInfo<?, ?>) o;
-
-        return Objects.equals(returnType, that.returnType);
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public int hashCode() {
-        return returnType != null ? returnType.hashCode() : 0;
-    }
 }

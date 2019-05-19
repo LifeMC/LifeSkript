@@ -63,6 +63,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Peter Güttinger
  */
 public final class ScriptCommand implements CommandExecutor {
+
     public static final ConcurrentMap<String, ScriptCommand> commandMap =
             new ConcurrentHashMap<>();
 
@@ -490,52 +491,4 @@ public final class ScriptCommand implements CommandExecutor {
         return trigger.getScript();
     }
 
-    @Override
-    public boolean equals(final @Nullable Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final ScriptCommand that = (ScriptCommand) o;
-
-        if (executableBy != that.executableBy) return false;
-        if (!Objects.equals(name, that.name)) return false;
-        if (!Objects.equals(usage, that.usage)) return false;
-        if (!Objects.equals(trigger, that.trigger)) return false;
-        if (!Objects.equals(label, that.label)) return false;
-        if (!Objects.equals(aliases, that.aliases)) return false;
-        if (!Objects.equals(permission, that.permission)) return false;
-        if (!Objects.equals(permissionMessage, that.permissionMessage))
-            return false;
-        if (!Objects.equals(description, that.description)) return false;
-        if (!Objects.equals(cooldown, that.cooldown)) return false;
-        if (!Objects.equals(cooldownMessage, that.cooldownMessage))
-            return false;
-        if (!Objects.equals(cooldownBypass, that.cooldownBypass))
-            return false;
-        if (!Objects.equals(cooldownStorage, that.cooldownStorage))
-            return false;
-        if (!Objects.equals(pattern, that.pattern)) return false;
-        return Objects.equals(arguments, that.arguments);
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (usage != null ? usage.hashCode() : 0);
-        result = 31 * result + (trigger != null ? trigger.hashCode() : 0);
-        result = 31 * result + executableBy;
-        result = 31 * result + (label != null ? label.hashCode() : 0);
-        result = 31 * result + (aliases != null ? aliases.hashCode() : 0);
-        result = 31 * result + (permission != null ? permission.hashCode() : 0);
-        result = 31 * result + (permissionMessage != null ? permissionMessage.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (cooldown != null ? cooldown.hashCode() : 0);
-        result = 31 * result + (cooldownMessage != null ? cooldownMessage.hashCode() : 0);
-        result = 31 * result + (cooldownBypass != null ? cooldownBypass.hashCode() : 0);
-        result = 31 * result + (cooldownStorage != null ? cooldownStorage.hashCode() : 0);
-        result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
-        result = 31 * result + (arguments != null ? arguments.hashCode() : 0);
-        return result;
-    }
 }

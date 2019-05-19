@@ -47,7 +47,7 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
-    public static final Listener listener = new Listener() {
+    private static final Listener listener = new Listener() {
         /* empty */
     };
     static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();

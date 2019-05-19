@@ -24,9 +24,6 @@ package ch.njol.skript.command;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
-import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.Objects;
 
 /**
  * @author Peter Güttinger
@@ -69,19 +66,4 @@ public final class ScriptCommandEvent extends CommandEvent {
         return handlers;
     }
 
-    @Override
-    public boolean equals(final @Nullable Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final ScriptCommandEvent that = (ScriptCommandEvent) o;
-
-        return Objects.equals(skriptCommand, that.skriptCommand);
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public int hashCode() {
-        return skriptCommand != null ? skriptCommand.hashCode() : 0;
-    }
 }
