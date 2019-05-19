@@ -129,7 +129,7 @@ public final class FlatFileStorage extends VariablesStorage {
      */
     @SuppressWarnings({"deprecation", "unused", "null"})
     @Override
-    protected boolean load_i(final SectionNode n) {
+    protected final boolean load_i(final SectionNode n) {
         SkriptLogger.setNode(null);
 
         IOException ioEx = null;
@@ -251,7 +251,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     @Override
-    protected void allLoaded() {
+    protected final void allLoaded() {
         // no transaction support
     }
 
@@ -267,7 +267,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings({"resource", "unused", "null"})
     @Override
-    protected boolean save(final String name, final @Nullable String type, final @Nullable byte[] value) {
+    protected final boolean save(final String name, final @Nullable String type, final @Nullable byte[] value) {
         synchronized (connectionLock) {
             synchronized (changesWriter) {
                 if (!loaded && type == null)
@@ -291,7 +291,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings("null")
     @Override
-    protected void disconnect() {
+    protected final void disconnect() {
         synchronized (connectionLock) {
             clearChangesQueue();
             synchronized (changesWriter) {
@@ -306,7 +306,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings({"unused", "null", "resource"})
     @Override
-    protected boolean connect() {
+    protected final boolean connect() {
         synchronized (connectionLock) {
             synchronized (changesWriter) {
                 if (changesWriter.get() != null)
@@ -324,7 +324,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     @Override
-    public void close() {
+    public final void close() {
         clearChangesQueue();
         super.close();
         saveVariables(true); // also closes the writer
@@ -336,7 +336,7 @@ public final class FlatFileStorage extends VariablesStorage {
      * @param finalSave whatever this is the last save in this session or not.
      */
     @SuppressWarnings({"null", "unused"})
-    public void saveVariables(final boolean finalSave) {
+    public final void saveVariables(final boolean finalSave) {
         if (finalSave) {
             final Task st = saveTask;
             if (st != null)
@@ -403,7 +403,7 @@ public final class FlatFileStorage extends VariablesStorage {
      * @param map
      */
     @SuppressWarnings({"unchecked", "null"})
-    private void save(final PrintWriter pw, final String parent, final TreeMap<String, Object> map) {
+    private final void save(final PrintWriter pw, final String parent, final TreeMap<String, Object> map) {
         outer:
         for (final Entry<String, Object> e : map.entrySet()) {
             final Object val = e.getValue();

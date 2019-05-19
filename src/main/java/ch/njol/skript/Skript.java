@@ -168,7 +168,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
     /**
      * Checks if currently running skript version is the experimental optimized version.
-     * This can be faked by removing nullable class - but at least it works.
+     * This can be faked by removing {@link org.eclipse.jdt.annotation.NonNullByDefault} class - but at least it works.
      * <p>
      * We use proguard to optimize and shrink, proguard also removes this class.
      * So, with this, we can check if the user is using optimized one, or the normal one.
