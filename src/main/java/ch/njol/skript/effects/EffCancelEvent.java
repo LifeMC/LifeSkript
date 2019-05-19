@@ -33,6 +33,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Cancellable;
@@ -59,11 +60,17 @@ public final class EffCancelEvent extends Effect {
 
     private boolean cancel;
 
+    @Nullable
+    private String script;
+
+    @Nullable
+    private int line;
+
     @Override
     @SuppressWarnings("null")
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         if (isDelayed == Kleenean.TRUE) {
-            Skript.error("Can't cancel an event anymore after is has already passed", ErrorQuality.SEMANTIC_ERROR);
+            Skript.error("Can't cancel an event anymore after is has already passed, remove the wait statements!", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         if (ScriptLoader.isCurrentEvent(PlayerLoginEvent.class)) {
@@ -78,6 +85,10 @@ public final class EffCancelEvent extends Effect {
         }
         final Class<? extends Event> e = es[0];
         if (Cancellable.class.isAssignableFrom(e) || InventoryInteractEvent.class.isAssignableFrom(e) || PlayerInteractEvent.class.isAssignableFrom(e) || BlockCanBuildEvent.class.isAssignableFrom(e) || PlayerDropItemEvent.class.isAssignableFrom(e)) {
+            if (Skript.logVeryHigh()) {
+                script = ScriptLoader.currentScript.getFileName();
+                line = SkriptLogger.getNode().getLine();
+            }
             return true;
         }
         Skript.error(Utils.A(ScriptLoader.getCurrentEventName()) + " event cannot be cancelled", ErrorQuality.SEMANTIC_ERROR);
@@ -86,27 +97,44 @@ public final class EffCancelEvent extends Effect {
 
     @Override
     public void execute(final Event e) {
+        boolean cancelled = false;
+
         if (e instanceof Cancellable) {
             ((Cancellable) e).setCancelled(cancel);
+            cancelled = true;
         }
+
         if (e instanceof InventoryInteractEvent) {
             ((InventoryInteractEvent) e).setResult(cancel ? Result.DENY : Result.DEFAULT);
+            cancelled = true;
         }
+
         if (e instanceof PlayerInteractEvent) {
             ((PlayerInteractEvent) e).setUseItemInHand(cancel ? Result.DENY : Result.DEFAULT);
             ((PlayerInteractEvent) e).setUseInteractedBlock(cancel ? Result.DENY : Result.DEFAULT);
+            cancelled = true;
         }
+
         if (e instanceof BlockCanBuildEvent) {
             ((BlockCanBuildEvent) e).setBuildable(!cancel);
+            cancelled = true;
         }
+
         if (e instanceof PlayerDropItemEvent) {
             PlayerUtils.updateInventory(((PlayerDropItemEvent) e).getPlayer());
+            cancelled = true;
         }
+
+        assert cancelled : "The " + e.getClass().getCanonicalName() + " event cannot be cancelled!";
+
+        //noinspection ConstantConditions
+        if (cancelled && Skript.logVeryHigh())
+            Skript.info("The " + e.getClass().getCanonicalName() + " event is cancelled" + (script != null ? " (" + script + ", line " + line + ")" : ""));
     }
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return (cancel ? "" : "un") + "cancel event";
+        return (cancel ? "" : "un") + "cancel the event";
     }
 
 }

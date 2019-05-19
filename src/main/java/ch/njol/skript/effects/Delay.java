@@ -123,7 +123,7 @@ public final class Delay extends Effect {
                     SkriptAgentKt.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
             };
             final long ticks = duration.getTicks_i();
-            if (ticks > 0)
+            if (ticks != 0L)
                 Bukkit.getScheduler().runTaskLater(Skript.instance, task, ticks);
             else {
                 if (debug)

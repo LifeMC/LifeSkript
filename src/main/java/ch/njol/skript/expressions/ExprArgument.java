@@ -39,11 +39,11 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
-import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -71,13 +71,25 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
     private int matchedPattern;
 
+    @Nullable
+    private String script;
+
+    @Nullable
+    private int line;
+
     @Override
     @SuppressWarnings({"null", "unused"})
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         this.matchedPattern = matchedPattern;
         final List<Argument<?>> currentArguments = Commands.currentArguments;
         if (currentArguments == null) {
-            if ((ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class) || ScriptLoader.isCurrentEvent(ServerCommandEvent.class)) && !ScriptLoader.isCurrentEvent(ScriptCommandEvent.class)) {
+            if ((ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class) || ScriptLoader.isCurrentEvent(ServerCommandEvent.class)) && !ScriptLoader.isCurrentEvent(ScriptCommandEvent.class) && !ScriptLoader.isCurrentEvent(CommandEvent.class)) {
+                if (Skript.debug()) {
+                    Skript.info("Using dynamic argument");
+
+                    script = ScriptLoader.currentScript.getFileName();
+                    line = SkriptLogger.getNode().getLine();
+                }
                 dynamic = true;
             } else {
                 Skript.error("The expression 'argument' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
@@ -182,7 +194,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
                 final ServerCommandEvent ev = (ServerCommandEvent) e;
                 event = new CommandEvent(ev.getSender(), ev.getCommand(), ev.getCommand().split(" "));
             } else
-                assert false;
+                assert false : e.getClass().getCanonicalName();
 
             final String[] args = event.getArgs();
 
@@ -194,8 +206,12 @@ public final class ExprArgument extends SimpleExpression<Object> {
             if (finalIndex >= args.length)
                 return null;
 
-            return CollectionUtils.array(args[finalIndex]);
+            if (Skript.debug())
+                Skript.info("Getting dynamic argument at the index " + finalIndex + (script != null ? " (" + script + ", line " + line + ")" : ""));
+
+            return new String[] { args[finalIndex] };
         }
+        assert false : e.getClass().getCanonicalName();
         return null;
     }
 
