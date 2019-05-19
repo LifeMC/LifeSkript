@@ -251,7 +251,7 @@ public final class Commands {
                 SkriptEventHandler.last = null;
                 SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
             } catch (final EventException ex) {
-                Skript.exception(ex, "Error when handling player command \"" + e.getCommand() + "\"");
+                Skript.exception(ex, "Error when handling player command \"" + command + "\"");
             }
         }
     }
