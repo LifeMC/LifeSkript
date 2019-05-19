@@ -238,7 +238,7 @@ public final class Variable<T> implements Expression<T> {
      */
     @SuppressWarnings({"deprecation"})
     @Nullable
-    Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t) {
+    final Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t) {
         if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
             final Player p = (Player) t;
             if (!p.isValid() && p.isOnline()) {
@@ -250,7 +250,7 @@ public final class Variable<T> implements Expression<T> {
         return t;
     }
 
-    public Iterator<Pair<String, Object>> variablesIterator(final Event e) {
+    public final Iterator<Pair<String, Object>> variablesIterator(final Event e) {
         if (!list)
             throw new SkriptAPIException("Looping a non-list variable");
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
@@ -299,7 +299,7 @@ public final class Variable<T> implements Expression<T> {
     }
 
     @Override
-    public Iterator<T> iterator(final Event e) {
+    public final Iterator<T> iterator(final Event e) {
         if (!list)
             throw new SkriptAPIException("Looping a non-list variable");
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
@@ -374,7 +374,7 @@ public final class Variable<T> implements Expression<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Class<?>[] acceptChange(final ChangeMode mode) {
+    public final Class<?>[] acceptChange(final ChangeMode mode) {
         if (!list && mode == ChangeMode.SET)
             return CollectionUtils.array(Object.class);
         return CollectionUtils.array(Object[].class);

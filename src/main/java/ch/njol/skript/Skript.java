@@ -172,8 +172,11 @@ public final class Skript extends JavaPlugin implements Listener {
      * <p>
      * We use proguard to optimize and shrink, proguard also removes this class.
      * So, with this, we can check if the user is using optimized one, or the normal one.
+     * <p>
+     * We use some hacky way to construct the string argument because proguard tries to
+     * detect reflection calls and not removes the reflectively accessed classes.
      */
-    public static final boolean isOptimized = !classExists("org.eclipse.jdt.annotation.NonNullByDefault");
+    public static final boolean isOptimized = !classExists(new String(new char[] { 'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't' }).trim());
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
@@ -1140,7 +1143,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? "(optimized, experimental)" : ""));
+            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");

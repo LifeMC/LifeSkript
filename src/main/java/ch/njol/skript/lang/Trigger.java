@@ -61,7 +61,7 @@ public final class Trigger extends TriggerSection {
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         return walk(e, true);
     }
 

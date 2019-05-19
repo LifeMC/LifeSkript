@@ -75,7 +75,7 @@ public final class Loop extends TriggerSection {
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         Iterator<?> iter = currentIter.get(e);
         if (iter == null) {
             iter = expr instanceof Variable ? ((Variable<?>) expr).variablesIterator(e) : expr.iterator(e);

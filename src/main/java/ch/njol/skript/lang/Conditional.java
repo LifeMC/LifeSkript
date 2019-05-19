@@ -50,7 +50,7 @@ public final class Conditional extends TriggerSection {
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         if (cond.run(e)) {
             return walk(e, true);
         }
@@ -65,7 +65,7 @@ public final class Conditional extends TriggerSection {
         return cond.toString(e, debug);
     }
 
-    public void loadElseClause(final SectionNode node) {
+    public final void loadElseClause(final SectionNode node) {
         if (elseClause != null) {
             if (elseClause instanceof Conditional) { // an 'else if'
                 ((Conditional) elseClause).loadElseClause(node);
@@ -88,7 +88,7 @@ public final class Conditional extends TriggerSection {
         }.setParent(getParent()).setNext(getNext());
     }
 
-    public void loadElseIf(final Condition cond, final SectionNode n) {
+    public final void loadElseIf(final Condition cond, final SectionNode n) {
         assert elseClause == null || elseClause instanceof Conditional;
         if (elseClause != null) {
             ((Conditional) elseClause).loadElseIf(cond, n);

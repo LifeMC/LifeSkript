@@ -603,6 +603,12 @@
                                 <!-- Unrequired kotlin files - we already remove some of them with proguard. -->
                                 <exclude>**/*.kotlin_metadata</exclude>
                                 <exclude>**/*.kotlin_builtins</exclude>
+								
+								<exclude>META-INF/Skript.kotlin_module</exclude>
+								<exclude>META-INF/LICENSE.txt</exclude>
+								
+								<exclude>META-INF/maven/com.google.code.findbugs/</exclude>
+								<exclude>META-INF/maven/javax.annotation/</exclude>
 
                                 <exclude>META-INF/kotlin-stdlib.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib_coroutinesExperimental.kotlin_module</exclude>

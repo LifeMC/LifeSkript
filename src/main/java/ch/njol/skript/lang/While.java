@@ -48,7 +48,7 @@ public final class While extends TriggerSection {
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         if (c.check(e)) {
             return walk(e, true);
         }
