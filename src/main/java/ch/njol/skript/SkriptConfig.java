@@ -79,6 +79,8 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", false);
     public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", false);
     public static final Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);
+    public static final Option<Boolean> disableEmptyConfigurationSectionWarnings = new Option<>("disable empty configuration section warnings", false);
+    public static final Option<Boolean> disableEmptyScriptWarnings = new Option<>("disable empty script warnings", false);
     public static final Option<Boolean> disableUsingIdInsteadOfAliasWarnings = new Option<>("disable using id instead of an alias warnings", false);
     public static final Option<Boolean> disableStartingWithExpressionWarnings = new Option<>("disable variable name starting with expression warnings", false);
     public static final Option<Boolean> disableStartStopEventWarnings = new Option<>("disable start stop event warnings", false);

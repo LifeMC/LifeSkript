@@ -23,6 +23,7 @@
 package ch.njol.skript.config;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.config.validate.SectionValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -69,7 +70,7 @@ public final class Config {
             this.defaultSeparator = defaultSeparator;
             separator = defaultSeparator;
 
-            if (source.available() == 0) {
+            if (source.available() == 0 && !SkriptConfig.disableEmptyScriptWarnings.value()) {
                 main = new SectionNode(this);
                 Skript.warning("'" + getFileName() + "' is empty");
                 return;

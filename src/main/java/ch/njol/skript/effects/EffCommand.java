@@ -67,13 +67,19 @@ public final class EffCommand extends Effect {
             senders = (Expression<CommandSender>) exprs[0];
             commands = (Expression<String>) exprs[1];
         }
-        if (commands instanceof Literal && !SkriptConfig.disableUseNativeEffectInsteadWarnings.value()) {
+        if (commands instanceof Literal) {
             for (final String command : ((Literal<String>) commands).getAll()) {
-                if (command.contains("eco") && (command.contains("give") ||
-                        command.contains("take"))) {
-                    Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
-                } else if (command.contains("give ")) {
-                    Skript.warning("Use native 'give' effect instead of executing a console command and depending on other plugins, e.g: 'give 1 diamond to player'");
+                if (command.trim().equalsIgnoreCase("") || command.trim().equalsIgnoreCase("/")) {
+                    Skript.error("Executing empty commands is not possible");
+                    return false;
+                }
+                if (!SkriptConfig.disableUseNativeEffectInsteadWarnings.value()) {
+                    if (command.contains("eco") && (command.contains("give") ||
+                            command.contains("take"))) {
+                        Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
+                    } else if (command.contains("give ")) {
+                        Skript.warning("Use native 'give' effect instead of executing a console command and depending on other plugins, e.g: 'give 1 diamond to player'");
+                    }
                 }
             }
         }
@@ -87,7 +93,7 @@ public final class EffCommand extends Effect {
         for (String command : commands.getArray(e)) {
             assert command != null;
             if (command.startsWith("/"))
-                command = "" + command.substring(1);
+                command = command.substring(1);
             if (senders != null) {
                 for (final CommandSender sender : senders.getArray(e)) {
                     assert sender != null;

@@ -72,6 +72,7 @@ public abstract class Parser<T> {
      * @param mode
      * @return A string representation of the given object.
      */
+    @SuppressWarnings("null")
     public final String toString(final T o, final StringMode mode) {
         switch (mode) {
             case MESSAGE:

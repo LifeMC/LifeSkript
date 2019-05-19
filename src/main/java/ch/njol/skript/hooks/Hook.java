@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public abstract class Hook<P extends Plugin> {
 
-    private static final ArgsMessage m_hooked = new ArgsMessage("hooks.hooked"),
+    public static final ArgsMessage m_hooked = new ArgsMessage("hooks.hooked"),
             m_hook_error = new ArgsMessage("hooks.error");
 
     public final P plugin;

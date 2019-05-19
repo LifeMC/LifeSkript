@@ -25,7 +25,6 @@ package ch.njol.skript.effects;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
-import ch.njol.skript.VersionRegistry;
 import ch.njol.skript.agents.SkriptAgentKt;
 import ch.njol.skript.agents.events.end.DelayEndEvent;
 import ch.njol.skript.agents.events.start.DelayStartEvent;
@@ -81,7 +80,7 @@ public final class Delay extends Effect {
             final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
             if (millis > 86400000L && !SkriptConfig.disableTooLongDelayWarnings.value())
                 Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
-            if (millis < 0 || ((Literal<Timespan>) duration).getSingle().getTicks_i() < 0 && ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.getVersion())) {
+            if (millis < 0 || ((Literal<Timespan>) duration).getSingle().getTicks_i() < 0) {
                 Skript.error("Waiting negative amount of time is not possible");
                 return false;
             }

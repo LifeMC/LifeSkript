@@ -382,7 +382,7 @@ public final class Variable<T> implements Expression<T> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public final void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         switch (mode) {
             case DELETE:
                 set(e, null);

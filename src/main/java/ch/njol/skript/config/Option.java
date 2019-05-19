@@ -50,7 +50,7 @@ public final class Option<T> {
     private Setter<? super T> setter;
 
     public Option(final String key, final T defaultValue) {
-        this.key = "" + key.toLowerCase(Locale.ENGLISH);
+        this.key = key.toLowerCase(Locale.ENGLISH);
         this.defaultValue = defaultValue;
         parsedValue = defaultValue;
         @SuppressWarnings("unchecked") final Class<T> c = (Class<T>) defaultValue.getClass();

@@ -90,7 +90,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
 
             final int offset = ss.length == 3 && !s.contains(".") || ss.length == 4 ? 0 : 1;
             for (int i = 0; i < ss.length; i++) {
-                t += times[offset + i] * Utils.parseLong("" + ss[i]);
+                t += times[offset + i] * Utils.parseLong(ss[i]);
             }
         } else {
             final String[] subs = s.toLowerCase(Locale.ENGLISH).split("\\s+");

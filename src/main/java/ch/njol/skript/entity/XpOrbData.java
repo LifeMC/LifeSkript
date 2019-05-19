@@ -112,7 +112,7 @@ public final class XpOrbData extends EntityData<ExperienceOrb> {
         return xp == other.xp;
     }
 
-    //		return "" + xp;
+    //		return xp;
     @Override
     protected boolean deserialize(final String s) {
         try {

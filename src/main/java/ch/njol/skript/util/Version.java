@@ -46,14 +46,12 @@ public final class Version implements Serializable, Comparable<Version> {
     public Version(final int... version) {
         final int[] ver = new int[3];
 
-        int index = 0;
-
-        for (final int i : version) {
-            ver[index] = i;
-            index++;
+        for (int i = 0; i < version.length; i++) {
+            if (ver.length > i && version.length > i)
+                ver[i] = version[i];
         }
 
-        System.arraycopy(version, 0, this.version, 0, version.length);
+        System.arraycopy(ver, 0, this.version, 0, ver.length);
         postfix = null;
     }
 
@@ -88,46 +86,45 @@ public final class Version implements Serializable, Comparable<Version> {
         Matcher m = versionPattern.matcher(version.trim());
         String postfixStr = "";
 
-        if (!m.matches())
+        if (!m.matches()) {
             if (!failSafe)
                 throw new IllegalArgumentException("'" + version + "' is not a valid version string");
-            else {
-                // Remove any non-digit character to get a "meaningful" version string.
-                final StringBuilder stringBuilder = new StringBuilder();
-                final StringBuilder postfixBuilder = new StringBuilder();
+            // Remove any non-digit character to get a "meaningful" version string.
+            final StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder postfixBuilder = new StringBuilder();
 
-                int index = 0;
+            int index = 0;
 
-                final char[] characters = version.toCharArray();
+            final char[] characters = version.toCharArray();
 
-                for (final char ch : characters) {
-                    // Continue if it's not a digit between 0 and 9 (and it's not a dot)
-                    // We don't use Character#isDigit because it also includes some
-                    // strange numbers in different locales.
-                    if ((ch < '0' || ch > '9') && (ch != '.' || index == characters.length))
-                        postfixBuilder.append(ch);
-                    else
-                        stringBuilder.append(ch);
+            for (final char ch : characters) {
+                // Continue if it's not a digit between 0 and 9 (and it's not a dot)
+                // We don't use Character#isDigit because it also includes some
+                // strange numbers in different locales.
+                if ((ch < '0' || ch > '9') && (ch != '.' || index == characters.length))
+                    postfixBuilder.append(ch);
+                else
+                    stringBuilder.append(ch);
 
-                    index++;
-                }
-
-                version = stringBuilder.toString().trim();
-
-                if (version.endsWith("."))
-                    version = version.substring(0, version.length() - 1);
-
-                if (version.length() == 1)
-                    version += ".0";
-
-                m = versionPattern.matcher(version.trim());
-
-                // If it still fails.. Then probably it's a bad argument.
-                if (!m.matches())
-                    throw new IllegalArgumentException("'" + version + "' is not a valid version string");
-
-                postfixStr = postfixBuilder.toString().trim();
+                index++;
             }
+
+            version = stringBuilder.toString().trim();
+
+            if (version.endsWith("."))
+                version = version.substring(0, version.length() - 1);
+
+            if (version.length() == 1)
+                version += ".0";
+
+            m = versionPattern.matcher(version.trim());
+
+            // If it still fails.. Then probably it's a bad argument.
+            if (!m.matches())
+                throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+
+            postfixStr = postfixBuilder.toString().trim();
+        }
 
         for (int i = 0; i < 3; i++) {
             if (m.group(i + 1) != null)

@@ -64,7 +64,7 @@ public final class EmptyArrays {
     public static final Boolean[] EMPTY_WRAPPER_BOOLEAN_ARRAY = new Boolean[0];
     public static final Double[] EMPTY_WRAPPER_DOUBLE_ARRAY = new Double[0];
 
-    public static final Class[] EMPTY_CLASS_ARRAY = new Class[0];
+    public static final Class<?>[] EMPTY_CLASS_ARRAY = new Class<?>[0];
     public static final ItemType[] EMPTY_ITEMTYPE_ARRAY = new ItemType[0];
 
     public static final Direction[] EMPTY_DIRECTION_ARRAY = new Direction[0];

@@ -24,6 +24,7 @@ package ch.njol.skript.config;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.config.validate.EntryValidator;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.log.SkriptLogger;
@@ -294,7 +295,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
                     Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + " " + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
                     continue;
                 }
-                if (parent != null && !config.allowEmptySections && isEmpty()) {
+                if (parent != null && !config.allowEmptySections && isEmpty() && !SkriptConfig.disableEmptyConfigurationSectionWarnings.value()) {
                     Skript.warning("Empty configuration section! You might want to indent one or more of the subsequent lines to make them belong to this section" + " or remove the colon at the end of the line if you don't want this line to start a section.");
                 }
                 r.reset();

@@ -64,7 +64,7 @@ public final class Time implements YggdrasilSerializable {
             hours = (hours + 1) % 24;
             minutes -= 60;
         }
-        return "" + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+        return hours + ":" + (minutes < 10 ? "0" : "") + minutes;
     }
 
     /**
@@ -82,12 +82,12 @@ public final class Time implements YggdrasilSerializable {
             if (hours == 24) { // allows to write 24:00 - 24:59 instead of 0:00-0:59
                 hours = 0;
             } else if (hours > 24) {
-                Skript.error("" + m_error_24_hours);
+                Skript.error(m_error_24_hours.toString());
                 return null;
             }
             final int minutes = Utils.parseInt(s.split(":")[1]);
             if (minutes >= 60) {
-                Skript.error("" + m_error_60_minutes);
+                Skript.error(m_error_60_minutes.toString());
                 return null;
             }
             return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
@@ -98,14 +98,14 @@ public final class Time implements YggdrasilSerializable {
             if (hours == 12) {
                 hours = 0;
             } else if (hours > 12) {
-                Skript.error("" + m_error_12_hours);
+                Skript.error(m_error_12_hours.toString());
                 return null;
             }
             int minutes = 0;
             if (m.group(3) != null)
                 minutes = Utils.parseInt(m.group(3));
             if (minutes >= 60) {
-                Skript.error("" + m_error_60_minutes);
+                Skript.error(m_error_60_minutes.toString());
                 return null;
             }
             if ("pm".equalsIgnoreCase(m.group(4)))

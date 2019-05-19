@@ -266,7 +266,7 @@ public final class EffChange extends Effect {
     }
 
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         final Expression<?> changer = this.changer;
         final Object[] delta = changer == null ? null : changer.getArray(e);
         if (delta != null && delta.length == 0)
@@ -286,6 +286,7 @@ public final class EffChange extends Effect {
 //		}, mode);
     }
 
+    @SuppressWarnings("null")
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         final Expression<?> changer = this.changer;

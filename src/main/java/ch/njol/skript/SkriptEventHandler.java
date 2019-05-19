@@ -289,7 +289,7 @@ public final class SkriptEventHandler {
 //			while (m == null) {
 //				try {
 //					m = event.getDeclaredMethod("getHandlerList");
-//				} catch (NoSuchMethodException e) {
+//				} catch (final NoSuchMethodException e) {
 //					event = (Class<? extends Event>) event.getSuperclass();
 //					if (event == Event.class) {
 //						assert false;

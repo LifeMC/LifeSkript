@@ -41,6 +41,7 @@ import java.util.Iterator;
 public abstract class Effect extends Statement {
 
     protected Effect() {
+        super();
     }
 
     @SuppressWarnings({"rawtypes", "unchecked", "null"})

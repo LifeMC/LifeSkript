@@ -4,8 +4,6 @@
 # Output folders
 /target
 /out
-/dep
-/bin
 
 # Idea personal files
 .idea/dictionaries

@@ -683,7 +683,24 @@ public final class Classes {
         if (s == null) // value cannot be saved
             return null;
 
-        assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
+        /* FIXME Fix this error
+        [00:51:05] [Craft Scheduler Thread - 1037/WARN]: Uncaught exception in thread "Craft Scheduler Thread - 1037"
+        [00:51:05] [Craft Scheduler Thread - 1037/WARN]: org.apache.commons.lang.UnhandledException: Plugin Skript v2.2.15 generated an exception while executing task 110
+            at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:55)
+            at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+            at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+            at java.lang.Thread.run(Thread.java:813)
+        Caused by: java.lang.AssertionError
+            at ch.njol.skript.registrations.Classes.serialize(Classes.java:686)
+            at ch.njol.skript.variables.FlatFileStorage.save(FlatFileStorage.java:419)
+            at ch.njol.skript.variables.FlatFileStorage.save(FlatFileStorage.java:413)
+            at ch.njol.skript.variables.FlatFileStorage.saveVariables(FlatFileStorage.java:377)
+            at ch.njol.skript.variables.FlatFileStorage$1.run(FlatFileStorage.java:241)
+            at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftTask.run(CraftTask.java:59)
+            at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:52)
+            ... 3 more
+         */
+        //assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         try (final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout)) {

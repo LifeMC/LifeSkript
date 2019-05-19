@@ -57,14 +57,14 @@ public final class CommandHelp {
 
     public CommandHelp(final String command, final Color argsColor, final String langNode) {
         this.command = command;
-        this.argsColor = "" + argsColor.getChat();
+        this.argsColor = argsColor.getChat();
         this.langNode = langNode;
         description = new Message(langNode + "." + DEFAULTENTRY);
     }
 
     public CommandHelp(final String command, final Color argsColor) {
         this.command = command;
-        this.argsColor = "" + argsColor.getChat();
+        this.argsColor = argsColor.getChat();
     }
 
     public CommandHelp add(final String argument) {
@@ -145,9 +145,10 @@ public final class CommandHelp {
         }
     }
 
+    @SuppressWarnings("null")
     @Override
     public String toString() {
-        return "" + description;
+        return description.toString();
     }
 
 }

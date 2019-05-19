@@ -70,10 +70,6 @@ public final class EffPush extends Effect {
         entities = (Expression<Entity>) exprs[0];
         direction = (Expression<Direction>) exprs[1];
         speed = (Expression<Number>) exprs[2];
-        if (hasNoCheatPlus && !hookNotified) {
-            Skript.info("Hooked to NoCheatPlus");
-            hookNotified = true;
-        }
         return true;
     }
 

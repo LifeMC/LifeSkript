@@ -118,7 +118,7 @@ plugin priority: normal
 
 throw on command only for plugin commands: true
 # When this false, all commands, either skript command or a plugin command, will throw the on command event.
-# Until Skript 2.2-V13b this not possible, skript commands are not triggering on command events.
+# Until Skript 2.2.13 this not possible, skript commands are not triggering on command events.
 # The default value is true because of compatibility reasons and it is fine in most situtations.
 # However if you want this behaviour instead of the old one, change this to false.
 
@@ -166,6 +166,16 @@ disable variable will not be saved warnings: false
 disable expression is already a text warnings: false
 # Disables the "... is already a text, so you should not put it in one" warnings.
 # You should remove redundant %% used to make string conversions to fix these warnings.
+
+disable empty configuration section warnings: false
+# Disables the "Empty configuration section! You might want to ..." warnings.
+# You should make this true only if you need it, or you hate the warnings.
+# Warnings are not errors and allows you to enchance your script, so not disable unless you want.
+
+disable empty script warnings: false
+# Disables the "script.sk is empty" warnings. This not a recommended option.
+# You should not use empty scripts as they don't make any sense.
+# You can instead delete empty scripts or write some code to them.
 
 disable using id instead of an alias warnings: false
 # Disables the "... using an ID instead of an alias is discouraged ..." warnings.

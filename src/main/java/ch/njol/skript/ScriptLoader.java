@@ -51,7 +51,6 @@ import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
@@ -91,9 +90,11 @@ public final class ScriptLoader {
     private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     @Nullable
     public static Config currentScript;
-    public static Version currentScriptVersion;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
-    private static Version cachedDefaultScriptVersion;
+    private static @Nullable
+    Version currentScriptVersion;
+    private static @Nullable
+    Version cachedDefaultScriptVersion;
     // We don't use static initializer because Skript may not be initialized in that time,
     // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
     public static final Supplier<Version> defaultScriptVersion = () -> {
@@ -123,8 +124,8 @@ public final class ScriptLoader {
                 default:
                     return cachedDefaultScriptVersion = new Version(defaultSourceVersion);
             }
-        } else
-            return cachedDefaultScriptVersion;
+        }
+        return cachedDefaultScriptVersion;
     };
     /**
      * use {@link #setCurrentEvent(String, Class...)}
@@ -142,7 +143,7 @@ public final class ScriptLoader {
     }
 
     public static final boolean isErrorAllowed(final Version versionAdded) {
-        return isErrorAllowed(versionAdded, ScriptLoader.currentScriptVersion);
+        return isErrorAllowed(versionAdded, ScriptLoader.getCurrentScriptVersion());
     }
 
     public static final boolean isErrorAllowed(final Version versionAdded, final Version scriptVersion) {
@@ -150,7 +151,7 @@ public final class ScriptLoader {
     }
 
     public static final boolean isWarningAllowed(final Version versionAdded) {
-        return isWarningAllowed(versionAdded, ScriptLoader.currentScriptVersion);
+        return isWarningAllowed(versionAdded, ScriptLoader.getCurrentScriptVersion());
     }
 
     public static final boolean isWarningAllowed(final Version versionAdded, final Version scriptVersion) {
@@ -309,8 +310,7 @@ public final class ScriptLoader {
     }
 
     @SuppressWarnings({"unchecked", "null"})
-    public static final ScriptInfo loadScript(final @NonNull File f) {
-        assert f != null;
+    public static final ScriptInfo loadScript(final File f) {
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -539,9 +539,8 @@ public final class ScriptLoader {
                                     if (Skript.getVersion().isSmallerThan(target)) {
                                         Skript.error("This script requires Skript version " + value);
                                         return new ScriptInfo(); // we return empty script info to abort parsing
-                                    } else
-                                        if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
-                                            Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
+                                    } else if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
+                                        Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
                                     duplicateCheckList.add("target");
                                 } else if (key.equalsIgnoreCase("loops")) {
                                     if (duplicateCheckList.contains("loops")) {
@@ -664,7 +663,7 @@ public final class ScriptLoader {
 
                 if (Skript.logHigh() && startDate != null) {
                     final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion : "") + " in " + loadTime + " seconds.");
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion : "") + "in " + loadTime + " seconds.");
                 }
 
                 currentScript = null;
@@ -971,6 +970,13 @@ public final class ScriptLoader {
         return currentEvents;
     }
 
+    public static final Version getCurrentScriptVersion() {
+        final Version localCurrentScriptVersion = currentScriptVersion;
+        if (localCurrentScriptVersion != null)
+            return localCurrentScriptVersion;
+        return defaultScriptVersion.get();
+    }
+
     public static final class ScriptInfo {
         /**
          * The Skript version that this script is written.
@@ -1015,11 +1021,11 @@ public final class ScriptLoader {
          *
          * @return The source version of this script.
          */
-        @NonNull
         public Version getScriptVersion() {
-            if (scriptVersion == null)
+            final @Nullable Version localScriptVersion = scriptVersion;
+            if (localScriptVersion == null)
                 return defaultScriptVersion.get();
-            return scriptVersion;
+            return localScriptVersion;
         }
     }
 

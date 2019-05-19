@@ -55,6 +55,8 @@ class SkriptTest {
         assertThrows(IllegalArgumentException::class.java) { Version("2.x-SNAPSHOT") }
 
         assertFalse(Version("2.x-SNAPSHOT", true).isStable)
+
+        assertFalse(Version(2).isSmallerThan(Version(2, 0)))
     }
 
     companion object {

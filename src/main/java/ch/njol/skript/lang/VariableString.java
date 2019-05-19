@@ -235,11 +235,12 @@ public final class VariableString implements Expression<String> {
         if (string.size() == 1 && string.get(0) instanceof String)
             return new VariableString(String.valueOf(string.get(0)));
         final Object[] sa = string.toArray();
+        //noinspection ConstantConditions
         assert sa != null;
         if (string.size() == 1 && string.get(0) instanceof ExpressionInfo && ((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class && ((ExpressionInfo) string.get(0)).expr.isSingle()) {
             final String expr = ((ExpressionInfo) string.get(0)).expr.toString(null, false);
             if (!SkriptConfig.disableExpressionAlreadyTextWarnings.value())
-                Skript.warning(expr + " is already a text, so you should not put it in one (e.g. " + expr + " instead of " + "\"%" + expr.replace("\"", "\"\"") + "%\")");
+                Skript.warning(expr + " is already a text, so you should not put it in percent signs (e.g. " + expr + " instead of " + "\"%" + expr.replace("\"", "\"\"") + "%\")");
         }
         return new VariableString(orig, sa, mode);
     }
@@ -252,7 +253,7 @@ public final class VariableString implements Expression<String> {
             final Config script = ScriptLoader.currentScript;
             if (script != null) {
                 if (!SkriptConfig.disableStartingWithExpressionWarnings.value()) {
-                    Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "." + name + "}");
+                    Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "::" + name + "}");
                 }
             }
         }
@@ -281,8 +282,11 @@ public final class VariableString implements Expression<String> {
         }
         if (!SkriptConfig.disableVariableConflictWarnings.value()) {
             for (final Entry<String, Pattern> e : variableNames.entrySet()) {
-                if (e.getValue().matcher(name).matches() || pattern.matcher(e.getKey()).matches()) {
-                    Skript.warning("Possible name conflict of variables {" + name + "} and {" + e.getKey() + "} (there might be more conflicts).");
+                final String other = e.getKey();
+                if (e.getValue().matcher(name).matches() || pattern.matcher(other).matches()) {
+                    if (name.contains("::*") || other.contains("::*"))
+                        continue;
+                    Skript.warning("Possible name conflict of variables {" + name + "} and {" + other + "} (there might be more conflicts).");
                     break;
                 }
             }
@@ -321,6 +325,7 @@ public final class VariableString implements Expression<String> {
         }
         if (j != args.length)
             strings = Arrays.copyOf(strings, j);
+        //noinspection ConstantConditions
         assert strings != null;
         return strings;
     }
@@ -602,7 +607,7 @@ public final class VariableString implements Expression<String> {
                 modifiersField.setAccessible(true);
                 modifiersField.setInt(allowedCharacters, allowedCharacters.getModifiers() & ~Modifier.FINAL);
                 allowedChars = (String) allowedCharacters.get(null);
-            } catch (Throwable e) {
+            } catch (final Throwable tw) {
                 allowedChars = null;
                 allowedCharacters = null;
             }

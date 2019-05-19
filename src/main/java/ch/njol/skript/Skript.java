@@ -28,6 +28,7 @@ import ch.njol.skript.classes.data.*;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Documentation;
+import ch.njol.skript.effects.EffPush;
 import ch.njol.skript.events.EvtSkript;
 import ch.njol.skript.expressions.ExprEntities;
 import ch.njol.skript.expressions.ExprTargetedBlock;
@@ -172,7 +173,7 @@ public final class Skript extends JavaPlugin implements Listener {
      * We use proguard to optimize and shrink, proguard also removes this class.
      * So, with this, we can check if the user is using optimized one, or the normal one.
      */
-    public static final boolean isOptimized = !classExists("org.eclipse.jdt.annotation.Nullable");
+    public static final boolean isOptimized = !classExists("org.eclipse.jdt.annotation.NonNullByDefault");
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
@@ -965,13 +966,11 @@ public final class Skript extends JavaPlugin implements Listener {
         return r;
     }
 
-    // ================ COMMANDS ================
-
     public static final Collection<SkriptEventInfo<?>> getEvents() {
         return events;
     }
 
-    // ================ LOGGING ================
+    // ================ COMMANDS ================
 
     /**
      * Dispatches a command with calling command events
@@ -995,10 +994,13 @@ public final class Skript extends JavaPlugin implements Listener {
                 return false;
             return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
         } catch (final Throwable tw) {
-            Skript.exception(tw, "Error occurred when executing command " + command);
+            if (Skript.testing() || !tw.getMessage().contains("GroupManager")) // Shitty group manager causes random errors (works but gives errors, so we ignore it)
+                Skript.exception(tw, "Error occurred when executing command " + command);
             return false;
         }
     }
+
+    // ================ LOGGING ================
 
     public static final boolean logNormal() {
         return logHigh() || SkriptLogger.log(Verbosity.NORMAL);
@@ -1543,6 +1545,11 @@ public final class Skript extends JavaPlugin implements Listener {
                     // Regardless of that option, print it if we are on debug verbosity (or the assertions are enabled).
                     if (testing() || debug())
                         throwable.printStackTrace();
+                }
+
+                if (EffPush.hasNoCheatPlus && !EffPush.hookNotified) {
+                    Skript.info(Hook.m_hooked.toString("NoCheatPlus"));
+                    EffPush.hookNotified = true;
                 }
 
                 Language.setUseLocal(false);

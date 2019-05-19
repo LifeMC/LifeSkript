@@ -34,7 +34,7 @@
 # Field propagation, marking private etc.: Breaks binary compatibility and it's bugged
 # Enum class unboxing: Gives strange errors on runtime
 # Code allocation: Changes variable stack map and causes runtime strange errors
--optimizations !class/merging/**,!class/marking/final,!method/marking/final,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
+-optimizations !class/merging/**,!class/marking/final,!method/marking/final,!method/propagation/**,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
 
 # We moslty use optimization, and we want a powerful optimization. This maybe increased, but 10 looks powerful enough.
 # We also don't want to wait too much when building the project, so don't increase this too much.
@@ -70,16 +70,21 @@
 -keep,allowoptimization class ch.njol.yggdrasil.** { *; }
 
 # For enumeration classes, without this, it gives runtime errors.
--keepclassmembers enum ** { *; }
+-keepclassmembers,allowoptimization enum ** { *; }
 
 # For serializable classes - we use serialization.
--keepclassmembers class ** implements java.io.Serializable {
+-keepclassmembers,allowoptimization class ** implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
     private void writeObject(java.io.ObjectOutputStream);
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
+}
+
+# Keep native methods - we don't use them directly, but libraries may use.
+-keepclasseswithmembernames,allowoptimization,includedescriptorclasses class ** {
+    native <methods>;
 }
 
 # Ignore kotlin null checks at runtime - we have compile time checks.
