@@ -663,7 +663,7 @@ public final class ScriptLoader {
 
                 if (Skript.logHigh() && startDate != null) {
                     final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion : "") + "in " + loadTime + " seconds.");
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + loadTime + " seconds.");
                 }
 
                 currentScript = null;
