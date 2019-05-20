@@ -63,7 +63,6 @@ public final class EffCancelEvent extends Effect {
     @Nullable
     private String script;
 
-    @Nullable
     private int line;
 
     @Override

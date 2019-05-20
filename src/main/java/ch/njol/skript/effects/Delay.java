@@ -74,7 +74,7 @@ public final class Delay extends Effect {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         duration = (Expression<Timespan>) exprs[0];
         if (duration instanceof Literal) {
             final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
@@ -92,7 +92,7 @@ public final class Delay extends Effect {
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         debug(e, true);
         final Timespan duration = this.duration.getSingle(e);
         if (duration == null)
@@ -100,12 +100,11 @@ public final class Delay extends Effect {
         final TriggerItem next = getNext();
         if (next != null) {
             delayed.add(e);
-            final boolean debug = Skript.debug();
             final boolean trackingEnabled = SkriptAgentKt.isTrackingEnabled();
-            final long start = debug ? System.nanoTime() : 0L;
+            final long start = Skript.debug() ? System.nanoTime() : 0L;
             if (trackingEnabled)
                 SkriptAgentKt.throwEvent(new DelayStartEvent(duration));
-            final Runnable task = () -> {
+            Bukkit.getScheduler().runTaskLater(Skript.instance, () -> {
                 if (Skript.debug())
                     Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
@@ -121,26 +120,18 @@ public final class Delay extends Effect {
                     SkriptTimings.stop(timing); // Stop timing if it was even started
                 if (trackingEnabled)
                     SkriptAgentKt.throwEvent(new DelayEndEvent(duration, startTime, /* endTime: */ System.nanoTime()));
-            };
-            final long ticks = duration.getTicks_i();
-            if (ticks != 0L)
-                Bukkit.getScheduler().runTaskLater(Skript.instance, task, ticks);
-            else {
-                if (debug)
-                    Skript.debug("Running task on next tick (" + ticks + " ticks requested)");
-                Bukkit.getScheduler().runTask(Skript.instance, task);
-            }
+            }, duration.getTicks_i());
         }
         return null;
     }
 
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return "wait for " + duration.toString(e, debug) + (e == null ? "" : "...");
     }
 

@@ -128,7 +128,7 @@ final class Main {
         for (final var line : lines) {
             //if (debug)
             //System.out.println(line);
-            if ((line.contains("static") && !line.contains("statically") && !line.contains("non-static") && !line.contains("static {")) && line.contains("(") && !line.contains("static final") && !noMethodFinalWarning)
+            if ((line.contains("static") && !line.contains("statically") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !noMethodFinalWarning)
                 System.out.println("Method maybe final (" + file.getName() + ", line " + i + ")");
             if ((line.contains("\"\"+") || line.contains("\"\" +")) && !line.contains("\\\"\"") && !noConcenationWarning)
                 System.out.println("Redundant string concenation (" + file.getName() + ", line " + i + ")");

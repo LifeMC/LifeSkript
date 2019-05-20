@@ -151,13 +151,11 @@ public final class Variables {
             return false;
         }
 
-        Skript.closeOnDisable(Variables::close);
-
         // reports once per second how many variables were loaded. Useful to make clear that Skript is still doing something if it's loading many variables
         final Thread loadingLoggerThread = Skript.newThread(() -> {
             while (Skript.isSkriptRunning()) {
                 try {
-                    Thread.sleep(Skript.logHigh() ? 1000 : Skript.logNormal() ? 3000 : 5000); // low verbosity won't disable these messages, but makes them more rare
+                    Thread.sleep(Skript.logHigh() ? 1000L : Skript.logNormal() ? 3000L : 5000L); // low verbosity won't disable these messages, but makes them more rare
                 } catch (final InterruptedException e) {
                     break;
                 }
@@ -173,6 +171,8 @@ public final class Variables {
         }, "Skript variable load tracker thread");
         loadingLoggerThread.setPriority(Thread.MIN_PRIORITY);
         loadingLoggerThread.start();
+
+        Skript.closeOnDisable(Variables::close);
 
         try {
             boolean successful = true;
@@ -224,7 +224,7 @@ public final class Variables {
                         assert tvs != null;
                         d = tvs.size() - x;
                     }
-                    if (Skript.logVeryHigh())
+                    if (Skript.logHigh())
                         Skript.info("Loaded " + d + " variables from the database '" + n.getKey() + "' in " + (System.currentTimeMillis() - start) / 100 / 10.0 + " seconds");
                 } else {
                     Skript.error("Invalid line in databases: databases must be defined as sections");
@@ -403,7 +403,8 @@ public final class Variables {
     private static final int onStoragesLoaded() {
         if (loadConflicts > MAX_CONFLICT_WARNINGS)
             Skript.warning("A total of " + loadConflicts + " variables were loaded more than once from different databases");
-        Skript.debug("Databases loaded, setting variables...");
+        if (Skript.logHigh())
+            Skript.info("Databases loaded, setting variables...");
 
         synchronized (tempVars) {
             final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();

@@ -48,8 +48,8 @@ import java.util.regex.Pattern;
 public final class Functions {
 
     public static final String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
-    public static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>(24);
-    public static final Map<String, FunctionData> functions = new HashMap<>(24);
+    public static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>(25);
+    public static final Map<String, FunctionData> functions = new HashMap<>(25);
     private static final List<FunctionReference<?>> postCheckNeeded = new ArrayList<>();
     @SuppressWarnings("null")
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),

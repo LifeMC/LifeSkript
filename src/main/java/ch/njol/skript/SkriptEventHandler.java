@@ -47,10 +47,10 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
+    static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
     private static final Listener listener = new Listener() {
         /* empty */
     };
-    static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
     private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>();
     /**
      * Stores which events are currently registered with Bukkit

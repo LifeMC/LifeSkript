@@ -74,7 +74,6 @@ public final class ExprArgument extends SimpleExpression<Object> {
     @Nullable
     private String script;
 
-    @Nullable
     private int line;
 
     @Override
@@ -209,7 +208,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
             if (Skript.debug())
                 Skript.info("Getting dynamic argument at the index " + finalIndex + (script != null ? " (" + script + ", line " + line + ")" : ""));
 
-            return new String[] { args[finalIndex] };
+            return new String[]{args[finalIndex]};
         }
         assert false : e.getClass().getCanonicalName();
         return null;

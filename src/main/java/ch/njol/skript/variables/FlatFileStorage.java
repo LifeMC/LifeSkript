@@ -23,6 +23,7 @@
 package ch.njol.skript.variables;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptCommand;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.lang.Variable;
 import ch.njol.skript.log.SkriptLogger;
@@ -59,6 +60,8 @@ public final class FlatFileStorage extends VariablesStorage {
      */
     @SuppressWarnings("null")
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
+    private static boolean savingVariables = true;
+    private static long savedVariables;
     final AtomicInteger changes = new AtomicInteger(0);
     /**
      * A Lock on this object must be acquired after connectionLock (if that lock is used) (and thus also after {@link Variables#getReadLock()}).
@@ -331,7 +334,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     /**
-     * Completely rewrites the while file
+     * Completely rewrites the whole file
      *
      * @param finalSave whatever this is the last save in this session or not.
      */
@@ -354,7 +357,9 @@ public final class FlatFileStorage extends VariablesStorage {
                         assert false : this;
                         return;
                     }
+
                     disconnect();
+
                     if (loadError) {
                         try {
                             final File backup = FileUtils.backup(f);
@@ -367,18 +372,55 @@ public final class FlatFileStorage extends VariablesStorage {
                             return;
                         }
                     }
+
                     final File tempFile = new File(Skript.getInstance().getDataFolder(), "variables.csv.temp");
+
                     try (PrintWriter pw = new PrintWriter(tempFile, "UTF-8")) {
                         pw.println("# === Skript's variable storage ===");
                         pw.println("# Please do not modify this file manually!");
                         pw.println("#");
                         pw.println("# version: " + Skript.getVersion());
                         pw.println();
+
+                        SkriptCommand.setPriority();
+
+                        if (Skript.logHigh())
+                            Skript.info("Saving all variables...");
+
+                        savingVariables = true;
+
+                        // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's loading many variables
+                        final Thread savingLoggerThread = Skript.newThread(() -> {
+                            while (savingVariables) {
+                                try {
+                                    Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 10000L : 15000L); // low verbosity won't disable these messages, but makes them more rare
+                                } catch (final InterruptedException e) {
+                                    break;
+                                }
+                                if (savedVariables == 0 && (!Skript.debug() && !Skript.testing()))
+                                    continue;
+                                Skript.info("Saved " + savedVariables + " variables so far...");
+                            }
+                            Thread.currentThread().interrupt();
+                        }, "Skript variable save tracker thread");
+
+                        savingLoggerThread.setPriority(Thread.MIN_PRIORITY);
+                        savingLoggerThread.start();
+
                         save(pw, "", Variables.getVariables());
+
+                        if (Skript.logHigh())
+                            Skript.info("Saved all variables!");
+
                         pw.println();
                         pw.flush();
                         pw.close();
+
                         FileUtils.move(tempFile, f, true);
+
+                        SkriptCommand.resetPriority();
+
+                        savingVariables = false;
                     } catch (final IOException e) {
                         Skript.error("Unable to make a final save of the database '" + databaseName + "' (no variables are lost): " + ExceptionUtils.toString(e));
                     }
@@ -420,6 +462,7 @@ public final class FlatFileStorage extends VariablesStorage {
                             if (value != null)
                                 writeCSV(pw, name, value.type, encode(value.data));
                         }
+                        savedVariables++;
                         continue outer;
                     }
                 }

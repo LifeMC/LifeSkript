@@ -513,19 +513,25 @@
                 </executions>
                 <configuration>
                     <args>
-                        <arg>-Xjsr305=strict</arg>
+                        <arg>-Xjsr305=ignore</arg>
                         <arg>-Xjvm-default=compatibility</arg>
                         <!-- It creates a runtime overhead,
                             we already have compile time null-safety. -->
                         <arg>-Xno-param-assertions</arg>
                         <arg>-Xno-call-assertions</arg>
+                        <arg>-Xno-receiver-assertions</arg>
+
+                        <arg>-Xassertions=jvm</arg>
+
+                        <arg>-Xskip-runtime-version-check</arg>
+                        <!--<arg>-Xsuppress-missing-builtins-error</arg>-->
+
+                        <arg>-Xno-exception-on-explicit-equals-for-boxed-null</arg>
                     </args>
                     <!-- Target and arguments same as with javac. -->
                     <jvmTarget>1.8</jvmTarget>
                     <javacOptions>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <!-- It's a runtime property - passed optionally -->
-                        <javacOption>${compilerArgument}</javacOption>
+                        <javacOption>-O</javacOption>
                     </javacOptions>
                     <!-- Strictly define language and api version. -->
                     <languageVersion>1.3</languageVersion>
@@ -546,11 +552,19 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <optimize>true</optimize>
+                    <fork>true</fork>
+                    <forceJavacCompilerUse>false</forceJavacCompilerUse>
                     <compilerId>eclipse</compilerId>
                     <compilerVersion>1.8</compilerVersion>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <!-- It's a runtime property - passed optionally -->
-                    <compilerArgs>${compilerArgument}</compilerArgs>
+                    <compilerArgs>
+                        <arg>-properties</arg>
+                        <arg>.settings/org.eclipse.jdt.core.prefs</arg>
+
+                        <arg>-encoding</arg>
+                        <arg>UTF-8</arg>
+
+                        <arg>-O</arg>
+                    </compilerArgs>
                 </configuration>
                 <dependencies>
                     <dependency>

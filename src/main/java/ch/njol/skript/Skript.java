@@ -178,15 +178,15 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
     @SuppressWarnings("null")
-    private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>());
+    private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
-    private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(100);
-    private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(100);
-    private static final Collection<SyntaxElementInfo<? extends Statement>> statements = new ArrayList<>(100);
-    private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(300);
+    private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(300);
+    private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(500);
+    private static final Collection<SyntaxElementInfo<? extends Statement>> statements = new ArrayList<>(500);
+    private static final List<ExpressionInfo<?, ?>> expressions = new ArrayList<>(800);
     private static final int[] expressionTypesStartIndices = new int[ExpressionType.values().length];
-    private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(100);
-    private static final Collection<String> duplicatePatternCheckList = new ArrayList<>(100);
+    private static final Collection<SkriptEventInfo<?>> events = new ArrayList<>(300);
+    private static final Collection<String> duplicatePatternCheckList = new ArrayList<>(300);
     private static final String EXCEPTION_PREFIX = "#!#! ";
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
@@ -1182,7 +1182,7 @@ public final class Skript extends JavaPlugin implements Listener {
             for (final SkriptAddon addon : addons.values()) {
                 if (addon.plugin instanceof Skript)
                     continue;
-                stringBuilder.append(addon.getName()).append(" v").append(addon.plugin.getDescription().getVersion());
+                stringBuilder.append(addon.plugin.getDescription().getFullName());
                 if (i < addons.size() - 1)
                     stringBuilder.append(", ");
                 i++;
@@ -1831,6 +1831,8 @@ public final class Skript extends JavaPlugin implements Listener {
                 return;
             disabled = true;
 
+            SkriptCommand.setPriority();
+
             if (Skript.logHigh())
                 info("Triggering on server stop events - if server freezes here, consider removing such events from skript code.");
             EvtSkript.onSkriptStop();
@@ -1855,6 +1857,8 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             if (Skript.logHigh())
                 info("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
+
+            SkriptCommand.resetPriority();
 
             // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
             // async to not slow down server reload, delayed to not slow down server shutdown
