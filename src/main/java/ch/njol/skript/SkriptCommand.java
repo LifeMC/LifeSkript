@@ -137,8 +137,8 @@ public final class SkriptCommand implements CommandExecutor {
 
     @Nullable
     private static final File getScriptFromArgs(final CommandSender sender, final String[] args, final int start) {
-        String script = StringUtils.join(args, " ", start, args.length);
-        File f = getScriptFromName(script);
+        final String script = StringUtils.join(args, " ", start, args.length);
+        final File f = getScriptFromName(script);
         if (f == null) {
             Skript.error(sender, (script.endsWith("/") || script.endsWith("\\") ? m_invalid_folder : m_invalid_script).toString(script));
             return null;

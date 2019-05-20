@@ -397,7 +397,7 @@ public final class FlatFileStorage extends VariablesStorage {
                                 } catch (final InterruptedException e) {
                                     break;
                                 }
-                                if (savedVariables == 0 && (!Skript.debug() && !Skript.testing()))
+                                if (savedVariables == 0 && !Skript.debug() && !Skript.testing())
                                     continue;
                                 Skript.info("Saved " + savedVariables + " variables so far...");
                             }
