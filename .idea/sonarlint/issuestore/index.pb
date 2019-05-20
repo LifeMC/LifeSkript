@@ -1180,8 +1180,6 @@ u
 Esrc/main/java/ch/njol/skript/agents/events/start/ForLoopStartEvent.kt,3\f\3f1d2ba9b3105b618bf4741fcbee46955e961b2a
 v
 Fsrc/main/java/ch/njol/skript/agents/events/start/FunctionStartEvent.kt,7\c\7c3be788f3f6733e1a4c35325de3c7f0b69c6da5
-w
-Gsrc/main/java/ch/njol/skript/agents/events/start/WhileLoopStartEvent.kt,0\2\0239b168f2a0d0e7cef745f80558cd06df93cb37
 y
 Isrc/main/java/ch/njol/skript/agents/events/start/UnresolvedPlayerEvent.kt,a\3\a32ced5b41b0d60ede8d39a49c35fabbc8a3123e
 p
@@ -1226,8 +1224,6 @@ G
 build-with-warnings.cmd,e\4\e4c7db486dfc869a35ab9692816c42a99a505805
 H
 build-with-mvn-debug.cmd,d\7\d7fa2a38e49e8947f12c67db189e398d6481fe5b
-s
-Csrc/main/java/ch/njol/skript/agents/events/end/WhileLoopEndEvent.kt,f\1\f18cb0a40eae2c2d71c0c955260d103b2daa3779
 x
 Hsrc/main/java/ch/njol/skript/agents/events/end/VariableChangeEndEvent.kt,e\7\e76d7d76a915e8ef714e673c0a6ce355f12dddc8
 |

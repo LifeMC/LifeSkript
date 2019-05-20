@@ -103,8 +103,7 @@ public final class ExprParse extends SimpleExpression<Object> {
         } else {
             c = ((Literal<ClassInfo<?>>) exprs[1]).getSingle();
             if (c.getC() == String.class) {
-                Skript.error("Parsing as text is useless as only things that are already text may be parsed");
-                return false;
+                Skript.warning("Parsing as text is useless as only things that are already text may be parsed");
             }
             final Parser<?> p = c.getParser();
             if (p == null || !p.canParse(ParseContext.COMMAND)) { // TODO special parse context?
