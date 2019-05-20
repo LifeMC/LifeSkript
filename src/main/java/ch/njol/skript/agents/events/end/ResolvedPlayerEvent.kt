@@ -27,7 +27,7 @@ package ch.njol.skript.agents.events.end
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.bukkitutil.UnresolvedOfflinePlayer
 
-data class ResolvedPlayerEvent(
+class ResolvedPlayerEvent(
         /**
          * The player that resolved. Still uses UnresolvedOfflinePlayer
          * instance because implementation is still safe to use after resolution.

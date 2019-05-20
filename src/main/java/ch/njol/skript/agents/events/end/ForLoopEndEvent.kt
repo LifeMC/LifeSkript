@@ -26,7 +26,7 @@ package ch.njol.skript.agents.events.end
 
 import ch.njol.skript.agents.AgentEvent
 
-data class ForLoopEndEvent(
+class ForLoopEndEvent(
         /**
          * How many times loop will execute?
          */

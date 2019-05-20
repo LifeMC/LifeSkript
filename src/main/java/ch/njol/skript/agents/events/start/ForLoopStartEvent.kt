@@ -26,7 +26,7 @@ package ch.njol.skript.agents.events.start
 
 import ch.njol.skript.agents.AgentEvent
 
-data class ForLoopStartEvent(
+class ForLoopStartEvent(
         /**
          * How many times loop will execute?
          */

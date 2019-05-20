@@ -33,7 +33,7 @@ import ch.njol.skript.util.Timespan
  *
  * @since 2.2-V13b
  */
-data class DelayEndEvent(
+class DelayEndEvent(
         /**
          * The duration of the delay
          */

@@ -28,16 +28,14 @@ import ch.njol.skript.Skript
 import ch.njol.skript.agents.SkriptAgent
 import ch.njol.skript.agents.TrackerAgent
 import ch.njol.skript.agents.events.end.ForLoopEndEvent
-import ch.njol.skript.agents.events.end.WhileLoopEndEvent
 import ch.njol.skript.agents.events.start.ForLoopStartEvent
-import ch.njol.skript.agents.events.start.WhileLoopStartEvent
 import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
-data class LoopTrackerAgent(
+class LoopTrackerAgent(
         /**
          * The out, we report statistics to it.
          */
@@ -68,12 +66,9 @@ data class LoopTrackerAgent(
             when (event) {
                 is ForLoopEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
                 is ForLoopStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times now...")
-                // TODO Implement the while tracker
-                is WhileLoopEndEvent -> out.sendMessage("")
-                is WhileLoopStartEvent -> out.sendMessage("")
                 else -> assert(false) { event.javaClass.name }
             }
-        }, ForLoopStartEvent::class.java, ForLoopEndEvent::class.java, WhileLoopStartEvent::class.java, WhileLoopEndEvent::class.java)
+        }, ForLoopStartEvent::class.java, ForLoopEndEvent::class.java)
         return this
     }
 

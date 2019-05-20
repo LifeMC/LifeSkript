@@ -34,7 +34,7 @@ import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.function.Consumer
 
-data class ResolverTrackerAgent(
+class ResolverTrackerAgent(
         /**
          * The out, we report statistics to it.
          */

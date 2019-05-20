@@ -44,7 +44,7 @@ import java.util.function.Consumer
  *
  * @since 2.2-V13b
  */
-data class TaskTrackerAgent
+class TaskTrackerAgent
 
 /**
  * Creates a new TaskTrackerAgent for given out.

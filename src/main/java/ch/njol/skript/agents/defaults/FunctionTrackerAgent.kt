@@ -35,7 +35,7 @@ import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
-data class FunctionTrackerAgent(
+class FunctionTrackerAgent(
         /**
          * The out, we report statistics to it.
          */

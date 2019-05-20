@@ -27,7 +27,7 @@ package ch.njol.skript.agents.events.start
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.bukkitutil.UnresolvedOfflinePlayer
 
-data class UnresolvedPlayerEvent(
+class UnresolvedPlayerEvent(
         /**
          * The player that added to the queue.
          */

@@ -27,7 +27,7 @@ package ch.njol.skript.agents.events.start
 import ch.njol.skript.agents.AgentEvent
 import ch.njol.skript.lang.function.Function
 
-data class FunctionStartEvent(
+class FunctionStartEvent(
         /**
          * The function that started executing.
          */
@@ -37,23 +37,4 @@ data class FunctionStartEvent(
          * The arguments used to execute function.
          */
         @JvmField val arguments: Array<Array<Any>>
-) : AgentEvent() {
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as FunctionStartEvent
-
-        if (function != other.function) return false
-        if (!arguments.contentDeepEquals(other.arguments)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = function.hashCode()
-        result = 31 * result + arguments.contentDeepHashCode()
-        return result
-    }
-}
+) : AgentEvent()
