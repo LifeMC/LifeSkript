@@ -514,18 +514,23 @@ public final class SkriptParser {
         if (context == ParseContext.COMMAND)
             return i + 1;
         final char c = expr.charAt(i);
-        if (c == '"') {
-            final int i2 = nextQuote(expr, i + 1);
-            return i2 < 0 ? -1 : i2 + 1;
-        } else if (c == '{') {
-            final int i2 = VariableString.nextVariableBracket(expr, i + 1);
-            return i2 < 0 ? -1 : i2 + 1;
-        } else if (c == '(') {
-            for (int j = i + 1; j >= 0 && j < expr.length(); j = next(expr, j, context)) {
-                if (expr.charAt(j) == ')')
-                    return j + 1;
+        switch (c) {
+            case '"': {
+                final int i2 = nextQuote(expr, i + 1);
+                return i2 < 0 ? -1 : i2 + 1;
             }
-            return -1;
+            case '{': {
+                final int i2 = VariableString.nextVariableBracket(expr, i + 1);
+                return i2 < 0 ? -1 : i2 + 1;
+            }
+            case '(':
+                for (int j = i + 1; j >= 0 && j < expr.length(); j = next(expr, j, context)) {
+                    if (expr.charAt(j) == ')')
+                        return j + 1;
+                }
+                return -1;
+            default:
+                break;
         }
         return i + 1;
     }
@@ -535,14 +540,20 @@ public final class SkriptParser {
         int level = 0;
         for (int i = 0; i < j; i++) {
             final char c = pattern.charAt(i);
-            if (c == '\\') {
-                i++;
-            } else if (c == '(') {
-                level++;
-            } else if (c == ')') {
-                if (level == 0)
-                    throw new MalformedPatternException(pattern, "Unexpected closing bracket ')'");
-                level--;
+            switch (c) {
+                case '\\':
+                    i++;
+                    break;
+                case '(':
+                    level++;
+                    break;
+                case ')':
+                    if (level == 0)
+                        throw new MalformedPatternException(pattern, "Unexpected closing bracket ')'");
+                    level--;
+                    break;
+                default:
+                    break;
             }
         }
         return level;
@@ -564,58 +575,71 @@ public final class SkriptParser {
         int last = 0;
         for (int i = 0; i < pattern.length(); i++) {
             final char c = pattern.charAt(i);
-            if (c == '(') {
-                groupLevel++;
-                groups.addLast(c);
-            } else if (c == '|') {
-                if (groupLevel == 0 || groups.peekLast() != '(' && groups.peekLast() != '|')
-                    return error("Cannot use the pipe character '|' outside of groups. Escape it if you want to match a literal pipe: '\\|'");
-                groups.removeLast();
-                groups.addLast(c);
-            } else if (c == ')') {
-                if (groupLevel == 0 || groups.peekLast() != '(' && groups.peekLast() != '|')
-                    return error("Unexpected closing group bracket ')'. Escape it if you want to match a literal bracket: '\\)'");
-                if (groups.peekLast() == '(')
-                    return error("(...|...) groups have to contain at least one pipe character '|' to separate it into parts. Escape the brackets if you want to match literal brackets: \"\\(not a group\\)\"");
-                groupLevel--;
-                groups.removeLast();
-            } else if (c == '[') {
-                optionalLevel++;
-                groups.addLast(c);
-            } else if (c == ']') {
-                if (optionalLevel == 0 || groups.peekLast() != '[')
-                    return error("Unexpected closing optional bracket ']'. Escape it if you want to match a literal bracket: '\\]'");
-                optionalLevel--;
-                groups.removeLast();
-            } else if (c == '<') {
-                final int j = pattern.indexOf('>', i + 1);
-                if (j == -1)
-                    return error("Missing closing regex bracket '>'. Escape the '<' if you want to match a literal bracket: '\\<'");
-                try {
-                    Pattern.compile(pattern.substring(i + 1, j));
-                } catch (final PatternSyntaxException e) {
-                    return error("Invalid regular expression '" + pattern.substring(i + 1, j) + "': " + e.getLocalizedMessage());
+            switch (c) {
+                case '(':
+                    groupLevel++;
+                    groups.addLast(c);
+                    break;
+                case '|':
+                    if (groupLevel == 0 || groups.peekLast() != '(' && groups.peekLast() != '|')
+                        return error("Cannot use the pipe character '|' outside of groups. Escape it if you want to match a literal pipe: '\\|'");
+                    groups.removeLast();
+                    groups.addLast(c);
+                    break;
+                case ')':
+                    if (groupLevel == 0 || groups.peekLast() != '(' && groups.peekLast() != '|')
+                        return error("Unexpected closing group bracket ')'. Escape it if you want to match a literal bracket: '\\)'");
+                    if (groups.peekLast() == '(')
+                        return error("(...|...) groups have to contain at least one pipe character '|' to separate it into parts. Escape the brackets if you want to match literal brackets: \"\\(not a group\\)\"");
+                    groupLevel--;
+                    groups.removeLast();
+                    break;
+                case '[':
+                    optionalLevel++;
+                    groups.addLast(c);
+                    break;
+                case ']':
+                    if (optionalLevel == 0 || groups.peekLast() != '[')
+                        return error("Unexpected closing optional bracket ']'. Escape it if you want to match a literal bracket: '\\]'");
+                    optionalLevel--;
+                    groups.removeLast();
+                    break;
+                case '<': {
+                    final int j = pattern.indexOf('>', i + 1);
+                    if (j == -1)
+                        return error("Missing closing regex bracket '>'. Escape the '<' if you want to match a literal bracket: '\\<'");
+                    try {
+                        Pattern.compile(pattern.substring(i + 1, j));
+                    } catch (final PatternSyntaxException e) {
+                        return error("Invalid regular expression '" + pattern.substring(i + 1, j) + "': " + e.getLocalizedMessage());
+                    }
+                    i = j;
+                    break;
                 }
-                i = j;
-            } else if (c == '>') {
-                return error("Unexpected closing regex bracket '>'. Escape it if you want to match a literal bracket: '\\>'");
-            } else if (c == '%') {
-                final int j = pattern.indexOf('%', i + 1);
-                if (j == -1)
-                    return error("Missing end sign '%' of expression. Escape the percent sign to match a literal '%': '\\%'");
-                final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(pattern.substring(i + 1, j));
-                final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(p.getFirst());
-                if (ci == null)
-                    return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
-                ps.add(p.getSecond());
-                b.append(pattern, last, i + 1);
-                b.append(Utils.toEnglishPlural(ci.getCodeName(), p.getSecond()));
-                last = j;
-                i = j;
-            } else if (c == '\\') {
-                if (i == pattern.length() - 1)
-                    return error("Pattern must not end in an unescaped backslash. Add another backslash to escape it, or remove it altogether.");
-                i++;
+                case '>':
+                    return error("Unexpected closing regex bracket '>'. Escape it if you want to match a literal bracket: '\\>'");
+                case '%': {
+                    final int j = pattern.indexOf('%', i + 1);
+                    if (j == -1)
+                        return error("Missing end sign '%' of expression. Escape the percent sign to match a literal '%': '\\%'");
+                    final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(pattern.substring(i + 1, j));
+                    final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(p.getFirst());
+                    if (ci == null)
+                        return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
+                    ps.add(p.getSecond());
+                    b.append(pattern, last, i + 1);
+                    b.append(Utils.toEnglishPlural(ci.getCodeName(), p.getSecond()));
+                    last = j;
+                    i = j;
+                    break;
+                }
+                case '\\':
+                    if (i == pattern.length() - 1)
+                        return error("Pattern must not end in an unescaped backslash. Add another backslash to escape it, or remove it altogether.");
+                    i++;
+                    break;
+                default:
+                    break;
             }
         }
         b.append(pattern.substring(last));
