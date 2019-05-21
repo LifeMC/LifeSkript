@@ -584,7 +584,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 classLoader = ClassLoader.getSystemClassLoader();
             Class.forName(className, /* initialize: */ false, classLoader);
             return true;
-        } catch (final ClassNotFoundException e) {
+        } catch (final ClassNotFoundException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The class \"" + className + "\" does not exist in classpath.");
             return false;
@@ -606,7 +606,7 @@ public final class Skript extends JavaPlugin implements Listener {
             return null;
         try {
             return Class.forName(className);
-        } catch (final ClassNotFoundException ex) {
+        } catch (final ClassNotFoundException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The class \"" + className + "\" does not exist in classpath.");
             return null;
@@ -630,7 +630,7 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             c.getDeclaredMethod(methodName, parameterTypes);
             return true;
-        } catch (final NoSuchMethodException | SecurityException e) {
+        } catch (final NoSuchMethodException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
             return false;
@@ -657,7 +657,7 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             final Method m = c.getDeclaredMethod(methodName, parameterTypes);
             return m.getReturnType() == returnType;
-        } catch (final NoSuchMethodException | SecurityException e) {
+        } catch (final NoSuchMethodException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
             return false;
@@ -680,7 +680,7 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             c.getDeclaredField(fieldName);
             return true;
-        } catch (final NoSuchFieldException | SecurityException e) {
+        } catch (final NoSuchFieldException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The field \"" + fieldName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
             return false;
@@ -1220,10 +1220,10 @@ public final class Skript extends JavaPlugin implements Listener {
         if (lines == null || lines.length < 1)
             return;
         if (lines.length == 1)
-            SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + lines[0]);
+            SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + "{0}", lines[0]);
         else {
             for (final String line : lines)
-                SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX + line);
+                SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + "{0}", line);
         }
     }
 
@@ -1319,6 +1319,26 @@ public final class Skript extends JavaPlugin implements Listener {
                         !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
                     first = true;
                     try {
+                        // Delete aliases to re-create when upgrading
+                        // or downgrading from an incompatible version.
+                        final File config = new File(getDataFolder(), "config.sk");
+
+                        if (config.isFile() && config.exists()) {
+                            final List<String> lines = Files.readAllLines(Paths.get(getDataFolder().getPath(), "config.sk"));
+
+                            for (final String line : lines) {
+                                if (line.contains("version: 2.1") || (line.contains("version: 2.2") && !line.contains("version: 2.2.1")) || line.contains("version: V8") || line.contains("version: dev")) {
+                                    if (Skript.logVeryHigh())
+                                        Skript.info("Deleting old aliases...");
+
+                                    Files.delete(Paths.get(getDataFolder().getPath(), "aliases-english.sk"));
+                                    Files.delete(Paths.get(getDataFolder().getPath(), "aliases-german.sk"));
+
+                                    break;
+                                }
+                            }
+                        }
+
                         // Get server directory / folder
                         final File serverDirectory = getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
@@ -1327,7 +1347,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
                         // Find and detect paper file and automatically disable velocity warnings
                         final File paperFile = new File(serverDirectory, "paper.yml");
-                        if (paperFile.exists()) {
+                        if (paperFile.isFile() && paperFile.exists()) {
                             final Path filePath = paperFile.toPath();
                             final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
                             // See: https://github.com/LifeMC/LifeSkript/issues/25
@@ -1354,8 +1374,12 @@ public final class Skript extends JavaPlugin implements Listener {
 
                         if (startupScripts != null) {
                             for (final File startupScript : startupScripts) {
+                                if (!startupScript.isFile())
+                                    continue;
+
                                 final Path filePath = startupScript.toPath();
                                 final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+
                                 if (contents.contains("java") && contents.contains("-jar ")) {
                                     String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
                                     if (afterJar.contains(System.lineSeparator()))
@@ -1388,6 +1412,8 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (madeChanges)
                             info("Automatically made some compatibility settings. Restart your server to apply them.");
                     } catch (final Throwable tw) {
+                        if (Skript.testing() || Skript.debug())
+                            Skript.exception(tw);
                         //Skript.exception(tw);
                     }
                 }
@@ -1589,7 +1615,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     protected void beforeErrors() {
                         logEx();
                         logEx("===!!!=== Skript variable load error ===!!!===");
-                        logEx("Unable to load (all) variables:");
+                        logEx("Unable to load variables:");
                     }
 
                     @Override

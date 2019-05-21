@@ -184,8 +184,8 @@ public final class SkriptConfig {
             Config mc;
             try {
                 mc = new Config(configFile, false, false, ":");
-            } catch (final IOException e) {
-                Skript.error("Could not load the main config: " + e.getLocalizedMessage());
+            } catch (final Throwable tw) {
+                Skript.error("Could not load the main config: " + tw.getLocalizedMessage());
                 return false;
             }
             mainConfig = mc;
@@ -223,11 +223,13 @@ public final class SkriptConfig {
                             final SectionNode def = (SectionNode) newDBs.get("default");
                             assert def != null;
                             def.set("backup interval", "" + mc.get("variables backup interval"));
-                        } catch (final Exception e) {
+                        } catch (final Throwable tw) {
                             Skript.error("An error occurred while trying to update the config's database section.");
                             Skript.error("You'll have to update the config yourself:");
                             Skript.error("Open the new config.sk as well as the created backup, and move the 'database' section from the backup to the start of the 'databases' section");
                             Skript.error("of the new config (i.e. the line 'databases:' should be directly above 'database:'), and add a tab in front of every line that you just copied.");
+                            if (Skript.testing() || Skript.logVeryHigh())
+                                Skript.exception(tw);
                             return false;
                         }
                     }
