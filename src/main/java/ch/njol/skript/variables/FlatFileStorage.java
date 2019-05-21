@@ -405,6 +405,7 @@ public final class FlatFileStorage extends VariablesStorage {
                         }, "Skript variable save tracker thread");
 
                         savingLoggerThread.setPriority(Thread.MIN_PRIORITY);
+                        savingLoggerThread.setDaemon(true);
                         savingLoggerThread.start();
 
                         save(pw, "", Variables.getVariables());
