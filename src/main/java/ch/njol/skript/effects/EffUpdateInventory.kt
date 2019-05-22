@@ -24,6 +24,10 @@ package ch.njol.skript.effects
 
 import ch.njol.skript.Skript
 import ch.njol.skript.bukkitutil.PlayerUtils
+import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
@@ -31,6 +35,10 @@ import ch.njol.util.Kleenean
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 
+@Name("Update Inventory")
+@Description("Updates the inventory of a player. This maybe used to fix some bugs, but please keep in mind that it may create more bugs.")
+@Examples("on inventory close:\n\tupdate inventory of player # to fix the skquery item stole bug")
+@Since("2.2.15")
 class EffUpdateInventory : Effect() {
     companion object {
         init {

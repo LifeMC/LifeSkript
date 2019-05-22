@@ -24,6 +24,10 @@ package ch.njol.skript.effects;
 
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.events.bukkit.ScriptEvent;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -37,6 +41,10 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * @author Peter Güttinger
  */
+@Name("Script Option: Loops")
+@Description("Sets the algorithm used when looping. Using old loops is not recommended.")
+@Examples("use old loops # not recommended")
+@Since("2.2.15")
 public final class EffScriptOptionLoops extends Effect {
 
     //use (1¦old|2¦new|1¦2.1.2|2¦2.2) loops

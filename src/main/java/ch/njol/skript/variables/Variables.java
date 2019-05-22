@@ -49,6 +49,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -70,10 +71,11 @@ public final class Variables {
      */
     static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>());
     static final BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
+    static final BlockingQueue<SerializedVariable> saveQueue = queue;
     private static final String configurationSerializablePrefix = "ConfigurationSerializable_";
     @SuppressWarnings("null")
     private static final Pattern variableNameSplitPattern = Pattern.compile(Pattern.quote(Variable.SEPARATOR));
-    private static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
+    static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
     /**
      * must be locked with {@link #variablesLock}.
      */
@@ -82,6 +84,10 @@ public final class Variables {
      * Not accessed concurrently
      */
     private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
+    /**
+     * Changes to variables that have not yet been written.
+     */
+    private static final Queue<VariableChange> changeQueue = new ConcurrentLinkedQueue<>();
     private static final int MAX_CONFLICT_WARNINGS = 10;
     static volatile boolean closed;
     private static final Thread saveThread = Skript.newThread(() -> {
@@ -293,11 +299,61 @@ public final class Variables {
                 return null;
             return map.getVariable(name);
         }
+        // Prevent race conditions from returning variables with incorrect values
+        if (!changeQueue.isEmpty()) {
+            for (VariableChange change : changeQueue) {
+                if (change.name.equals(name))
+                    return change.value;
+            }
+        }
         try {
             variablesLock.readLock().lock();
             return variables.getVariable(name);
         } finally {
             variablesLock.readLock().unlock();
+        }
+    }
+
+    /**
+     * A variable change name-value pair.
+     */
+    private static final class VariableChange {
+        public final String name;
+
+        @Nullable
+        public final Object value;
+
+        public VariableChange(final String name, final @Nullable Object value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+    /**
+     * Queues a variable change. Only to be called when direct write is not
+     * possible, but thread cannot be allowed to block.
+     *
+     * @param name The variable name.
+     * @param value New value.
+     */
+    private static final void queueVariableChange(final String name, final @Nullable Object value) {
+        changeQueue.add(new VariableChange(name, value));
+    }
+
+
+    /**
+     * Processes all entries in variable change queue. Note that caller MUST
+     * acquire write lock before calling this, then release it.
+     */
+    static final void processChangeQueue() {
+        while (!closed) {
+            final VariableChange change = changeQueue.poll();
+
+            if (change == null)
+                break;
+
+            variables.setVariable(change.name, change.value);
+            saveVariableChange(change.name, change.value);
         }
     }
 
@@ -329,13 +385,19 @@ public final class Variables {
     }
 
     static final void setVariable(final String name, @Nullable final Object value) {
-        try {
-            variablesLock.writeLock().lock();
-            variables.setVariable(name, value);
-        } finally {
-            variablesLock.writeLock().unlock();
+        boolean gotLock = variablesLock.writeLock().tryLock();
+        if (gotLock) {
+            try {
+                variables.setVariable(name, value);
+                saveVariableChange(name, value);
+                processChangeQueue(); // Process all previously queued writes
+            } finally {
+                variablesLock.writeLock().unlock();
+            }
+            saveVariableChange(name, value);
+        } else { // Can't block here, queue the change
+            queueVariableChange(name, value);
         }
-        saveVariableChange(name, value);
     }
 
     /**
@@ -445,6 +507,13 @@ public final class Variables {
     }
 
     public static final void close() {
+        try { // Ensure that all changes are to save soon
+            variablesLock.writeLock().lock();
+            processChangeQueue();
+        } finally {
+            variablesLock.writeLock().unlock();
+        }
+
         while (!queue.isEmpty()) {
             try {
                 Thread.sleep(10);
@@ -452,6 +521,7 @@ public final class Variables {
                 break;
             }
         }
+
         closed = true;
         saveThread.interrupt();
     }

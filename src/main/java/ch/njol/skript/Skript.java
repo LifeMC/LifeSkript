@@ -1327,9 +1327,8 @@ public final class Skript extends JavaPlugin implements Listener {
                             final List<String> lines = Files.readAllLines(Paths.get(getDataFolder().getPath(), "config.sk"));
 
                             for (final String line : lines) {
-                                if (line.contains("version: 2.1") || (line.contains("version: 2.2") && !line.contains("version: 2.2.1")) || line.contains("version: V8") || line.contains("version: dev")) {
-                                    if (Skript.logVeryHigh())
-                                        Skript.info("Deleting old aliases...");
+                                if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: dev")) {
+                                    Skript.info("Deleting old aliases...");
 
                                     Files.delete(Paths.get(getDataFolder().getPath(), "aliases-english.sk"));
                                     Files.delete(Paths.get(getDataFolder().getPath(), "aliases-german.sk"));
@@ -1659,6 +1658,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
                 if (Skript.logVeryHigh()) {
                     info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
+                    Bukkit.getLogger().info("");
                 }
 
                 // No need to add debug code everytime to test the exception handler (:

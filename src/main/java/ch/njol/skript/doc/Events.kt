@@ -29,8 +29,8 @@ package ch.njol.skript.doc
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 annotation class Events(
-        /**
-         * A list of [name(s)][ch.njol.skript.lang.SkriptEventInfo.getName] of [events][ch.njol.skript.lang.SkriptEvent] this expression is useful for.
-         */
-        vararg val value: String
+    /**
+     * A list of [name(s)][ch.njol.skript.lang.SkriptEventInfo.getName] of [events][ch.njol.skript.lang.SkriptEvent] this expression is useful for.
+     */
+    @JvmField vararg val value: String
 )

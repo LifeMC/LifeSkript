@@ -28,4 +28,4 @@ package ch.njol.skript.doc
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class Examples(vararg val value: String)
+annotation class Examples(@JvmField vararg val value: String)

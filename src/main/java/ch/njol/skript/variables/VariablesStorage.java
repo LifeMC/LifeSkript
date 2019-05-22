@@ -38,6 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -161,7 +162,7 @@ public abstract class VariablesStorage implements Closeable {
 
             if (!"0".equals(getValue(n, "backup interval"))) {
                 final Timespan backupInterval = getValue(n, "backup interval", Timespan.class);
-                if (backupInterval != null && backupInterval.getMilliSeconds() > 0)
+                if (backupInterval != null && TimeUnit.MILLISECONDS.toSeconds(backupInterval.getMilliSeconds()) >= 1L)
                     startBackupTask(backupInterval);
             }
         }

@@ -239,13 +239,8 @@ public final class FlatFileStorage extends VariablesStorage {
             @Override
             public void run() {
                 if (changes.get() >= REQUIRED_CHANGES_FOR_RESAVE) {
-                    try {
-                        Variables.getReadLock().lock();
-                        saveVariables(false);
-                        changes.set(0);
-                    } finally {
-                        Variables.getReadLock().unlock();
-                    }
+                    saveVariables(false);
+                    changes.set(0);
                 }
             }
         };
@@ -433,6 +428,14 @@ public final class FlatFileStorage extends VariablesStorage {
             }
         } finally {
             Variables.getReadLock().unlock();
+            boolean gotLock = Variables.variablesLock.writeLock().tryLock();
+            if (gotLock) { // Only process queue now if it doesn't require us to wait
+                try {
+                    Variables.processChangeQueue();
+                } finally {
+                    Variables.variablesLock.writeLock().unlock();
+                }
+            }
         }
     }
 

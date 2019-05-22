@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -123,16 +124,17 @@ public final class SkriptAddon {
                     }
                     if (load) {
                         final String c = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
-                        // TODO Actually test this - it might break some things.
-                        //if (c.contains("$"))
-                        //Skript.debug("Skipping loading of \"" + c + "\", it contains illegal characters, probably a lambda or such.");
+                        if ((c.toLowerCase(Locale.ENGLISH).contains("guardian") || c.toLowerCase(Locale.ENGLISH).contains("rabbit")) && !Skript.isRunningMinecraft(1, 8)) {
+                            // Ooh, we're on 1.7! Skip those classes. We already ignore exceptions when not on the very high verbosity, but anyway.
+                            continue;
+                        }
                         try {
                             Class.forName(c, true, plugin.getClass().getClassLoader());
                             loadedClasses.incrementAndGet(); // successfully loaded
                         } catch (final NoClassDefFoundError ncdfe) {
                             // not supported or not available on this version, skip it.
                             if (Skript.logHigh()) {
-                                if (!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from a addon)
+                                if (!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from an addon)
                                     Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
                                 } else {
                                     // Probably Skript is running ona unsupported or half supported server version,
@@ -156,7 +158,6 @@ public final class SkriptAddon {
                             Skript.exception(ex, "Cannot load class " + c + " from " + this);
                             unloadableClasses.incrementAndGet();
                         }
-
                     }
                 }
             }

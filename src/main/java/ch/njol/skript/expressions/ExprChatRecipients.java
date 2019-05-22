@@ -25,11 +25,16 @@ package ch.njol.skript.expressions;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Player;
@@ -40,8 +45,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.Set;
 
 /**
- * @author Mirreducki, Eugenio GuzmÃ¡n
+ * @author Mirreducki
  */
+@Name("Chat Recipients")
+@Description("The recipients of a message.")
+@Examples("chat recipients")
+@Since("2.2+ (from mirreski)")
 public final class ExprChatRecipients extends SimpleExpression<Player> {
 
     static {
@@ -85,7 +94,7 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
     protected Player[] get(final Event e) {
         final AsyncPlayerChatEvent ae = (AsyncPlayerChatEvent) e;
         final Set<Player> playerSet = ae.getRecipients();
-        return playerSet.toArray(new Player[0]);
+        return playerSet.toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
     }
 
     @SuppressWarnings({"incomplete-switch", "null"})

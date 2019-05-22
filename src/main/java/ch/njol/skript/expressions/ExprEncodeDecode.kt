@@ -23,6 +23,10 @@
 package ch.njol.skript.expressions
 
 import ch.njol.skript.Skript
+import ch.njol.skript.doc.Description
+import ch.njol.skript.doc.Examples
+import ch.njol.skript.doc.Name
+import ch.njol.skript.doc.Since
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.SkriptParser
@@ -32,6 +36,10 @@ import ch.njol.util.coll.CollectionUtils
 import org.bukkit.event.Event
 import java.util.*
 
+@Name("Encode / Decode")
+@Description("Encodes or decodes the given string. This uses base 64 encoding and decoding. It is **not** safe to use this for things like passwords.")
+@Examples("encoded \"hello world\" # aGVsbG8gd29ybGQ=", "decoded \"aGVsbG8gd29ybGQ=\" # hello world")
+@Since("2.2.14")
 class ExprEncodeDecode : SimpleExpression<String>() {
     companion object {
         init {

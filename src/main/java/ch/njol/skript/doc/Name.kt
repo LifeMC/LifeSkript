@@ -28,4 +28,4 @@ package ch.njol.skript.doc
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class Name(val value: String)
+annotation class Name(@JvmField val value: String)

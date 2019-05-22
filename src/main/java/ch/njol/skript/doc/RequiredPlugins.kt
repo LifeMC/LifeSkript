@@ -31,4 +31,4 @@ package ch.njol.skript.doc
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FILE)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-annotation class RequiredPlugins(vararg val value: String)
+annotation class RequiredPlugins(@JvmField vararg val value: String)
