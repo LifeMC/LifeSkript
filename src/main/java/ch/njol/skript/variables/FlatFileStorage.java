@@ -379,8 +379,15 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         SkriptCommand.setPriority();
 
+                        final Date start = new Date();
+
+                        final TreeMap<String, Object> variables = Variables.getVariables();
+
+                        final int count = variables.size();
+                        final String fileName = file.getName();
+
                         if (Skript.logHigh())
-                            Skript.info("Saving all variables...");
+                            Skript.info("Saving " + count + " variables to '" + fileName + "'");
 
                         savingVariables = true;
 
@@ -394,7 +401,7 @@ public final class FlatFileStorage extends VariablesStorage {
                                 }
                                 if (savedVariables == 0 && !Skript.debug() && !Skript.testing())
                                     continue;
-                                Skript.info("Saved " + savedVariables + " variables so far...");
+                                Skript.info("Saved " + savedVariables + " variables" + (Skript.logHigh() ? " to '" + fileName + "'" : "") + " so far...");
                             }
                             Thread.currentThread().interrupt();
                         }, "Skript variable save tracker thread");
@@ -403,17 +410,18 @@ public final class FlatFileStorage extends VariablesStorage {
                         savingLoggerThread.setDaemon(true);
                         savingLoggerThread.start();
 
-                        save(pw, "", Variables.getVariables());
+                        save(pw, "", variables);
 
-                        if (Skript.logHigh())
-                            Skript.info("Saved all variables!");
+                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
+
+                        savedVariables = 0; // Method may be called multiple times
 
                         pw.println();
+
                         pw.flush();
                         pw.close();
 
                         FileUtils.move(tempFile, f, true);
-
                         SkriptCommand.resetPriority();
 
                         savingVariables = false;
