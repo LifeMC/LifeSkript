@@ -48,8 +48,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"push the player upwards", "push the victim downwards at speed 0.5"})
 @Since("1.4.6")
 public final class EffPush extends Effect {
-    public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")
-            && Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && (System.getProperty("skript.disableNcpHook") == null || !Boolean.parseBoolean(System.getProperty("skript.disableNpcHook")));
+    public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().getPlugin("NoCheatPlus") != null
+            && Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && (System.getProperty("skript.disableNcpHook") == null || !Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")));
 
     public static boolean hookNotified;
 

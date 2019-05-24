@@ -72,10 +72,10 @@ public final class Variables {
     static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>());
     static final BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
     static final BlockingQueue<SerializedVariable> saveQueue = queue;
+    static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
     private static final String configurationSerializablePrefix = "ConfigurationSerializable_";
     @SuppressWarnings("null")
     private static final Pattern variableNameSplitPattern = Pattern.compile(Pattern.quote(Variable.SEPARATOR));
-    static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
     /**
      * must be locked with {@link #variablesLock}.
      */
@@ -315,31 +315,15 @@ public final class Variables {
     }
 
     /**
-     * A variable change name-value pair.
-     */
-    private static final class VariableChange {
-        public final String name;
-
-        @Nullable
-        public final Object value;
-
-        public VariableChange(final String name, final @Nullable Object value) {
-            this.name = name;
-            this.value = value;
-        }
-    }
-
-    /**
      * Queues a variable change. Only to be called when direct write is not
      * possible, but thread cannot be allowed to block.
      *
-     * @param name The variable name.
+     * @param name  The variable name.
      * @param value New value.
      */
     private static final void queueVariableChange(final String name, final @Nullable Object value) {
         changeQueue.add(new VariableChange(name, value));
     }
-
 
     /**
      * Processes all entries in variable change queue. Note that caller MUST
@@ -532,6 +516,21 @@ public final class Variables {
             return variables.hashMap.size();
         } finally {
             variablesLock.readLock().unlock();
+        }
+    }
+
+    /**
+     * A variable change name-value pair.
+     */
+    private static final class VariableChange {
+        public final String name;
+
+        @Nullable
+        public final Object value;
+
+        public VariableChange(final String name, final @Nullable Object value) {
+            this.name = name;
+            this.value = value;
         }
     }
 

@@ -50,7 +50,7 @@ public final class Workarounds {
 
     static {
         if (Skript.isBukkitRunning()) {
-            // allows to properly remove a player's tool in right click events
+            // Allows to properly remove a player's tool in right click events
 
             Bukkit.getPluginManager().registerEvent(PlayerInteractEvent.class, new Listener() {
                 /* empty */

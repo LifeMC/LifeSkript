@@ -49,7 +49,7 @@ public final class WebUtils {
      * The current chrome user agent.
      */
     public static final String USER_AGENT =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36";
 
     /**
      * Static magic.
@@ -74,7 +74,26 @@ public final class WebUtils {
      */
     @Nullable
     public static final String getResponse(final String address) throws IOException {
-        return getResponse(address, "application/json; charset=utf-8");
+        return getResponse(address, true);
+    }
+
+    /**
+     * Connects to the given address and returns the web response as
+     * {@link java.lang.String String}.
+     * This the overloaded version of the original
+     * {@link WebUtils#getResponse(String, String)} method. This overloaded version
+     * of the original method is just uses the default content type (json).
+     *
+     * @param address - The url (address) of the web server / web site to connect
+     *                and get response from it.
+     * @return The web response from the given url as {@link java.lang.String
+     * String}, maybe null in some cases.
+     * @throws IOException If any connection errors occured when making the http
+     *                     request to the address.
+     */
+    @Nullable
+    public static final String getResponse(final String address, final boolean useWorkarounds) throws IOException {
+        return getResponse(address, "application/json; charset=utf-8", useWorkarounds);
     }
 
     /**
@@ -92,7 +111,27 @@ public final class WebUtils {
      */
     @Nullable
     public static final String getResponse(final String address, final String contentType) throws IOException {
-        Workarounds.initIfNotAlready();
+        return getResponse(address, contentType, true);
+    }
+
+    /**
+     * Connects to the given address and returns the web response as
+     * {@link java.lang.String String}.
+     *
+     * @param address        - The url (address) of the web server / web site to
+     *                       connect and get response from it.
+     * @param contentType    - The content type header of the http web request to the
+     *                       selected address / url.
+     * @param useWorkarounds - Pass false to not use workarounds.
+     * @return The web response from the given url as {@link java.lang.String
+     * String}, maybe null in some cases.
+     * @throws IOException If any connection errors occured when making the http
+     *                     request to the address.
+     */
+    @Nullable
+    public static final String getResponse(final String address, final String contentType, final boolean useWorkarounds) throws IOException {
+        if (useWorkarounds)
+            Workarounds.initIfNotAlready();
 
         String response;
 
