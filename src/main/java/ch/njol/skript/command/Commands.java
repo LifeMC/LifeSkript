@@ -54,7 +54,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventException;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -95,58 +94,12 @@ public final class Commands {
     private static final Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
     @SuppressWarnings("null")
     private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
-    /**
-     * @deprecated Only for reference
-     */
-    @Deprecated
-    @Nullable
-    private static final Listener pre1_3chatListener = Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent") ? null : new Listener() {
-        @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onPlayerChat(final PlayerChatEvent e) {
-            assert false;
-            Commands.onPlayerChat(e);
-        }
-    };
-    /**
-     * @deprecated Only for reference
-     */
-    @Deprecated
-    @Nullable
-    private static final Listener post1_3chatListener = pre1_3chatListener != null ? null : new Listener() {
-        @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onAsyncPlayerChat(final AsyncPlayerChatEvent e) {
-            assert false;
-            Commands.onAsyncPlayerChat(e);
-        }
-    };
     @SuppressWarnings("null")
     private static final Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
     @Nullable
     public static List<Argument<?>> currentArguments;
     static boolean suppressUnknownCommandMessage;
-    /**
-     * @deprecated Only for reference
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    private static final Listener commandListener = new Listener() {
-        @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-            assert false;
-            Commands.onPlayerCommand(e);
-        }
-
-        @SuppressWarnings("null")
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public final void onServerCommand(final ServerCommandEvent e) {
-            assert false;
-            Commands.onServerCommand(e);
-        }
-    };
     @Nullable
     private static SimpleCommandMap commandMap;
     @Nullable
@@ -185,14 +138,17 @@ public final class Commands {
 
                 try {
                     // Aliases field is removed in new versions. (probably 1.7+)
-                    //noinspection JavaReflectionMemberAccess
-                    final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
-                    aliasesField.setAccessible(true);
-                    cmAliases = (Set<String>) aliasesField.get(commandMap);
+                    if (!Skript.isRunningMinecraft(1,7, 10)) {
+                        //noinspection JavaReflectionMemberAccess
+                        final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
+                        aliasesField.setAccessible(true);
+                        cmAliases = (Set<String>) aliasesField.get(commandMap);
+                    }
                 } catch (final NoSuchFieldException ignored) {
                     /* ignored */
                 }
-            }
+            } else if (Skript.logHigh())
+                Skript.warning("Your server is using an unsupported plugin manager. Commands will NOT be registered.");
         } catch (final SecurityException e) {
             Skript.error("Please disable the security manager");
             commandMap = null;
@@ -327,7 +283,7 @@ public final class Commands {
         try {
             command = command.substring(SkriptConfig.effectCommandToken.value().length()).trim();
             if (command.isEmpty()) {
-                info(sender, "Please enter a effect, expression or condition");
+                info(sender, "Please enter an effect, expression or condition");
                 return true;
             }
             final RetainingLogHandler log = SkriptLogger.startRetainingLog();
@@ -624,24 +580,27 @@ public final class Commands {
                     onServerCommand((ServerCommandEvent) event);
             }, Skript.getInstance(), true);
 
-            if (post1_3chatListener != null) {
+            if (Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent")) {
                 Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
                     /* ignored */
                 }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof AsyncPlayerChatEvent)
                         onAsyncPlayerChat((AsyncPlayerChatEvent) event);
                 }, Skript.getInstance(), true);
-            } else {
+            } else if (Skript.classExists("org.bukkit.event.player.PlayerChatEvent")) {
+                if (Skript.logHigh())
+                    Skript.warning("Using non-async chat event, performance may drop!");
                 Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, new Listener() {
                     /* ignored */
                 }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof PlayerChatEvent)
                         onPlayerChat((PlayerChatEvent) event);
                 }, Skript.getInstance(), true);
-            }
+            } else
+                Skript.outdatedError(new UnsupportedOperationException("Can't find chat event"));
 
-            // If we use these methods, it will use reflection to access methods
-            // to it's super slow, and we are handling the events manually to fix performance impact.
+            // If we use these methods, Bukkit will use reflection to access @EventHandler methods
+            // so it's super slow, and we are handling the events manually to fix performance impact.
 
             //Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
             //Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
