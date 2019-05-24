@@ -97,6 +97,8 @@ public final class Delay extends Effect {
         final Timespan duration = this.duration.getSingle(e);
         if (duration == null)
             return null;
+        if (!Skript.isBukkitRunning())
+            return null;
         final TriggerItem next = getNext();
         if (next != null) {
             delayed.add(e);
