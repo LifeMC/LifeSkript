@@ -57,7 +57,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 
@@ -113,14 +112,7 @@ public final class ScriptLoader {
                     }
                     return cachedDefaultScriptVersion = Skript.getVersion();
                 case "default":
-                    final Version skriptVersion = Skript.getVersion();
-
-                    final int major = skriptVersion.getMajor();
-                    final int minor = skriptVersion.getMinor();
-                    final int revision = skriptVersion.getRevision();
-
-                    // Dividing the revision by 10 drops the last digit, e.g 2.2.14 becomes 2.2.1
-                    return cachedDefaultScriptVersion = new Version(major, minor, revision / 10);
+                    return cachedDefaultScriptVersion = getSourceVersionFrom(Skript.getVersion());
                 default:
                     return cachedDefaultScriptVersion = new Version(defaultSourceVersion);
             }
@@ -662,8 +654,7 @@ public final class ScriptLoader {
                 }
 
                 if (Skript.logHigh() && startDate != null) {
-                    final long loadTime = TimeUnit.MILLISECONDS.toSeconds(startDate.difference(new Date()).getMilliSeconds());
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + loadTime + " seconds.");
+                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + startDate.difference(new Date()));
                 }
 
                 currentScript = null;
