@@ -68,19 +68,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Filter;
@@ -179,6 +184,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
+    private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
     private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(300);
     private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(500);
@@ -191,6 +197,7 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final boolean isUnsupportedTerminal = "jline.UnsupportedTerminal".equals(System.getProperty("jline.terminal")) || "org.bukkit.craftbukkit.libs.jline.UnsupportedTerminal".equals(System.getProperty("org.bukkit.craftbukkit.libs.jline.terminal"));
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
     static final boolean runningCraftBukkit = isCraftBukkit;
+    private static final Method findLoadedClass = methodForName(ClassLoader.class, "findLoadedClass", true, String.class);
     private static final boolean debugProperty = System.getProperty("skript.debug") != null
             && Boolean.parseBoolean(System.getProperty("skript.debug"));
     /**
@@ -562,6 +569,39 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
+     * Gets the Bukkit class loader if running on a bukkit platform,
+     * when running tests or outside of the Bukkit API, it returns
+     * the system class loader.
+     *
+     * @return The Bukkit class loader or the system class loader.
+     */
+    public static final ClassLoader getTrueClassLoader() {
+        ClassLoader classLoader = Skript.class.getClassLoader();
+        if (classLoader == null)
+            classLoader = ClassLoader.getSystemClassLoader();
+        return classLoader;
+    }
+
+    /**
+     * Checks if the given class is currently loaded, or not.
+     * Does not load the class if it is not loaded. This check is done
+     * via reflection but method object is cached, so performance impact is minimal.
+     *
+     * @param qualifiedName The full qualified binary name of the class.
+     *                      Binary means you have to use $ for sub classes, etc.
+     * @return True if the given class is currently loaded, false if not loaded.
+     */
+    public static final boolean isClassLoaded(final String qualifiedName) {
+        final ClassLoader classLoader = Skript.getTrueClassLoader();
+        try {
+            return findLoadedClass.invoke(classLoader, qualifiedName) != null;
+        } catch (final IllegalAccessException | InvocationTargetException ignored) {
+            assert false;
+        }
+        return false;
+    }
+
+    /**
      * Tests whatever a given class exists in the classpath.
      * <p>
      * Constantly calling this method does not cache values -
@@ -579,10 +619,7 @@ public final class Skript extends JavaPlugin implements Listener {
             return false;
         try {
             // Don't initialize the class just for checking if it exists.
-            ClassLoader classLoader = Skript.class.getClassLoader();
-            if (classLoader == null)
-                classLoader = ClassLoader.getSystemClassLoader();
-            Class.forName(className, /* initialize: */ false, classLoader);
+            Class.forName(className, /* initialize: */ false, Skript.getTrueClassLoader());
             return true;
         } catch (final ClassNotFoundException ignored) {
             //if (Skript.testing() && Skript.debug())
@@ -656,11 +693,111 @@ public final class Skript extends JavaPlugin implements Listener {
             return false;
         try {
             final Method m = c.getDeclaredMethod(methodName, parameterTypes);
-            return m.getReturnType() == returnType;
+            if (m.getReturnType() == returnType)
+                return true;
+            // Lookup needed, hope there are not so many methods!
+            for (final Method method : c.getDeclaredMethods()) {
+                if (method.getName().equalsIgnoreCase(methodName) && method.getReturnType() == returnType)
+                    return true;
+            }
+            //if (Skript.testing() && Skript.debug())
+            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return false; // There is no such method!
         } catch (final NoSuchMethodException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
             return false;
+        }
+    }
+
+    /**
+     * Returns the specified method from the specified class, returns
+     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     *
+     * @param c              The class to get the specified method.
+     * @param methodName     The method name to get from the given class.
+     * @param parameterTypes The parameter types of the method.
+     * @return The method, store the results in a static final variable for maximum
+     * runtime performance.
+     */
+    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>... parameterTypes) {
+        return methodForName(c, methodName, false, parameterTypes);
+    }
+
+    /**
+     * Returns the specified method from the specified class, returns
+     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     *
+     * @param c              The class to get the specified method.
+     * @param methodName     The method name to get from the given class.
+     * @param parameterTypes The parameter types of the method.
+     * @param setAccessible  True to set the method as accessible.
+     * @return The method, store the results in a static final variable for maximum
+     * runtime performance.
+     */
+    @SuppressWarnings("null")
+    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final boolean setAccessible, final Class<?>... parameterTypes) {
+        if (c == null || methodName == null)
+            return null;
+        try {
+            final Method method = c.getDeclaredMethod(methodName, parameterTypes);
+            if (setAccessible)
+                method.setAccessible(true);
+            return method;
+        } catch (final NoSuchMethodException | SecurityException ignored) {
+            //if (Skript.testing() && Skript.debug())
+            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return null;
+        }
+    }
+
+    /**
+     * Returns the specified method from the specified class, returns
+     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     *
+     * @param c              The class to get the specified method.
+     * @param methodName     The method name to get from the given class.
+     * @param parameterTypes The parameter types of the method.
+     * @param returnType     The return type of the method to get.
+     * @return The method, store the results in a static final variable for maximum
+     * runtime performance.
+     */
+    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+        return methodForName(c, methodName, parameterTypes, returnType, false);
+    }
+
+    /**
+     * Returns the specified method from the specified class, returns
+     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     *
+     * @param c              The class to get the specified method.
+     * @param methodName     The method name to get from the given class.
+     * @param parameterTypes The parameter types of the method.
+     * @param returnType     The return type of the method to get.
+     * @param setAccessible  True to set the method as accessible.
+     * @return The method, store the results in a static final variable for maximum
+     * runtime performance.
+     */
+    @SuppressWarnings("null")
+    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType, final boolean setAccessible) {
+        if (c == null || methodName == null)
+            return null;
+        try {
+            final Method m = c.getDeclaredMethod(methodName, parameterTypes);
+            if (m.getReturnType() == returnType)
+                return m;
+            // Lookup needed, hope there are not so many methods!
+            for (final Method method : c.getDeclaredMethods()) {
+                if (method.getName().equalsIgnoreCase(methodName) && method.getReturnType() == returnType)
+                    return method;
+            }
+            //if (Skript.testing() && Skript.debug())
+            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return null; // There is no such method!
+        } catch (final NoSuchMethodException | SecurityException ignored) {
+            //if (Skript.testing() && Skript.debug())
+            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return null;
         }
     }
 
@@ -743,6 +880,17 @@ public final class Skript extends JavaPlugin implements Listener {
      */
     public static final void closeOnDisable(final Closeable closeable) {
         closeOnDisable.add(closeable);
+    }
+
+    /**
+     * Registers a Closeable that should be closed when this plugin is enabled.
+     * <p>
+     * All registered Closeables will be closed after the plugin is enabled.
+     *
+     * @param closeable The closeable to close when enabling the plugin.
+     */
+    public static final void closeOnEnable(final Closeable closeable) {
+        closeOnEnable.add(closeable);
     }
 
     public static final void outdatedError() {
@@ -1248,16 +1396,16 @@ public final class Skript extends JavaPlugin implements Listener {
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), permission);
     }
 
-//	static {
-//		Language.addListener(new LanguageChangeListener() {
-//			@Override
-//			public void onLanguageChange() {
-//				final String s = Language.get_("skript.prefix");
-//				if (s != null)
-//					SKRIPT_PREFIX = Utils.replaceEnglishChatStyles(s) + ChatColor.RESET + " ";
-//			}
-//		});
-//	}
+//  static {
+//      Language.addListener(new LanguageChangeListener() {
+//          @Override
+//          public void onLanguageChange() {
+//              final String s = Language.get_("skript.prefix");
+//              if (s != null)
+//                  SKRIPT_PREFIX = Utils.replaceEnglishChatStyles(s) + ChatColor.RESET + " ";
+//          }
+//      });
+//  }
 
     public static final void adminBroadcast(final String message) {
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
@@ -1291,138 +1439,283 @@ public final class Skript extends JavaPlugin implements Listener {
         return instance.getClassLoader();
     }
 
-    @Override
-    public void onLoad() {
-        try {
-            SkriptCommand.setPriority();
-        } catch (final Throwable tw) {
-            // Ignore if not debug, we are on early load
-            if (testing() || debug())
-                exception(tw);
-        }
+    /**
+     * Invokes the given statements on an object, and returns it. Useful for
+     * making chained calls on void methods without using variables.
+     *
+     * @param obj        The object.
+     * @param statements The statements.
+     * @param <T>        The type of the object.
+     * @return The object.
+     */
+    public static final <T> T invoke(final T obj, final Consumer<T> statements) {
+        return invoke(obj, (o) -> {
+            statements.accept(o);
+            return o;
+        });
     }
 
-    @SuppressWarnings("null")
-    @Override
-    public void onEnable() {
-        try {
+    /**
+     * Invokes the given function on the given object, and returns the
+     * result.
+     *
+     * @param obj      The object.
+     * @param function The function.
+     * @param <T>      The type of the object.
+     * @param <R>      The return type.
+     * @return The result of the function.
+     */
+    public static final <T, R> R invoke(final T obj, final Function<T, R> function) {
+        return function.apply(obj);
+    }
 
-            if (disabled) {
-                Skript.error(m_invalid_reload.toString());
-                Bukkit.getPluginManager().disablePlugin(this);
-                return;
-            }
+    @Override
+    public final void onLoad() {
+        try {
+            SkriptCommand.setPriority();
 
             if (!first) {
 
                 if (System.getProperty("-Dskript.disableAutomaticChanges") == null ||
                         !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
                     first = true;
-                    try {
-                        // Delete aliases to re-create when upgrading
-                        // or downgrading from an incompatible version.
-                        final File config = new File(getDataFolder(), "config.sk");
 
-                        if (config.isFile() && config.exists()) {
-                            final List<String> lines = Files.readAllLines(Paths.get(getDataFolder().getPath(), "config.sk"));
+                    // Get server directory / folder
+                    final File dataFolder = getDataFolder();
+                    final File serverDirectory = dataFolder.getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
-                            for (final String line : lines) {
-                                if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: dev")) {
-                                    Skript.info("Deleting old aliases...");
+                    // Flag to track changes and warn the user
+                    boolean madeChanges = false;
 
-                                    Files.delete(Paths.get(getDataFolder().getPath(), "aliases-english.sk"));
-                                    Files.delete(Paths.get(getDataFolder().getPath(), "aliases-german.sk"));
+                    // Delete aliases to re-create when upgrading
+                    // or downgrading from an incompatible version.
+                    final File config = new File(dataFolder, "config.sk");
 
-                                    break;
+                    if (config.isFile() && config.exists()) {
+                        final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
+
+                        for (final String line : lines) {
+                            if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: dev")) {
+                                Skript.info("Deleting old aliases...");
+
+                                Files.delete(Paths.get(dataFolder.getPath(), "aliases-english.sk"));
+                                Files.delete(Paths.get(dataFolder.getPath(), "aliases-german.sk"));
+
+                                madeChanges = true;
+
+                                break;
+                            }
+                        }
+                    }
+
+                    // Fix Skellet hanging event errors
+                    final File skelletConfig = new File(serverDirectory, "plugins/Skellet/SyntaxToggles.yml");
+
+                    if (skelletConfig.isFile() && skelletConfig.exists()) {
+                        final Path filePath = skelletConfig.toPath();
+                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                        final String replacedContents = contents.replace("Hanging: true", "Hanging: false").trim();
+                        if (!contents.equalsIgnoreCase(replacedContents)) {
+                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                            madeChanges = true;
+                        }
+                    }
+
+                    // Find and detect paper file and automatically disable velocity warnings
+                    final File paperFile = new File(serverDirectory, "paper.yml");
+                    if (paperFile.isFile() && paperFile.exists()) {
+                        final Path filePath = paperFile.toPath();
+                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                        // See: https://github.com/LifeMC/LifeSkript/issues/25
+                        final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
+                        if (!contents.equalsIgnoreCase(replacedContents)) {
+                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                            madeChanges = true;
+                        }
+                    }
+
+                    // Find the startup script and automatically add log strip color option
+                    final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
+                            name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
+                                    || name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
+                    );
+
+                    if (startupScripts != null) {
+                        for (final File startupScript : startupScripts) {
+                            if (!startupScript.isFile())
+                                continue;
+
+                            final Path filePath = startupScript.toPath();
+                            final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+
+                            if (contents.contains("java") && contents.contains("-jar ")) {
+                                String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                                if (afterJar.contains(System.lineSeparator()))
+                                    afterJar = afterJar.split(System.lineSeparator())[0];
+                                String stripColor = afterJar;
+                                // Strip color is required for not showing strange characters on log when using jansi colors
+                                if (!afterJar.contains("--log-strip-color")) {
+                                    stripColor += " --log-strip-color";
+                                }
+                                String replacedContents = contents.replace(afterJar, stripColor);
+                                if (!contents.equalsIgnoreCase(replacedContents)) {
+                                    String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
+                                    if (beforeJar.contains(System.lineSeparator()))
+                                        beforeJar = beforeJar.split(System.lineSeparator())[0];
+                                    String fileEncoding = beforeJar;
+                                    // This is required on some locales to fix some issues with localization and other plugins
+                                    if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
+                                        fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
+                                    replacedContents = replacedContents.replace(beforeJar, fileEncoding);
+                                    if (!contents.equalsIgnoreCase(replacedContents)) {
+                                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                                        madeChanges = true;
+                                    }
                                 }
                             }
                         }
+                    }
 
-                        // Get server directory / folder
-                        final File serverDirectory = getDataFolder().getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                    // Fix incompatibility with SharpSK
+                    final File sharpSkJar = new File(serverDirectory, "plugins/SharpSK.jar");
 
-                        // Flag to track changes and warn the user
-                        boolean madeChanges = false;
+                    String sharpSkversion = null;
+                    boolean notUsingFixedSharpSk = false;
 
-                        // Find and detect paper file and automatically disable velocity warnings
-                        final File paperFile = new File(serverDirectory, "paper.yml");
-                        if (paperFile.isFile() && paperFile.exists()) {
-                            final Path filePath = paperFile.toPath();
-                            final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-                            // See: https://github.com/LifeMC/LifeSkript/issues/25
-                            final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
-                            if (!contents.equalsIgnoreCase(replacedContents)) {
-                                Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                                madeChanges = true;
-                            }
-                        }
+                    if (sharpSkJar.isFile() && sharpSkJar.exists()) {
+                        try (final JarFile sharpSk = new JarFile(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar")) {
+                            final JarEntry entry = sharpSk.getJarEntry("plugin.yml");
 
-                        // Find the startup script and automatically add log strip color option
-                        final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
-                                name.toLowerCase(Locale.ENGLISH).trim()
-                                        .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
-                                        || name.toLowerCase(Locale.ENGLISH).trim()
-                                        .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
-                                        || name.toLowerCase(Locale.ENGLISH).trim()
-                                        .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
-                                        || name.toLowerCase(Locale.ENGLISH).trim()
-                                        .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
-                                        || name.toLowerCase(Locale.ENGLISH).trim()
-                                        .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
-                        );
+                            try (final InputStream in = sharpSk.getInputStream(entry);
+                                 final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 
-                        if (startupScripts != null) {
-                            for (final File startupScript : startupScripts) {
-                                if (!startupScript.isFile())
-                                    continue;
+                                final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
 
-                                final Path filePath = startupScript.toPath();
-                                final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-
-                                if (contents.contains("java") && contents.contains("-jar ")) {
-                                    String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
-                                    if (afterJar.contains(System.lineSeparator()))
-                                        afterJar = afterJar.split(System.lineSeparator())[0];
-                                    String stripColor = afterJar;
-                                    // Strip color is required for not showing strange characters on log when using jansi colors
-                                    if (!afterJar.contains("--log-strip-color")) {
-                                        stripColor += " --log-strip-color";
+                                if (resp != null) { // The error is already printed if we're on debug verbosity
+                                    for (final String line : resp.split("\n")) {
+                                        if (line.startsWith("version: ")) {
+                                            sharpSkversion = line.replace("version: ", "").trim();
+                                        }
                                     }
-                                    String replacedContents = contents.replace(afterJar, stripColor);
-                                    if (!contents.equalsIgnoreCase(replacedContents)) {
-                                        String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
-                                        if (beforeJar.contains(System.lineSeparator()))
-                                            beforeJar = beforeJar.split(System.lineSeparator())[0];
-                                        String fileEncoding = beforeJar;
-                                        // This is required on some locales to fix some issues with localization and other plugins
-                                        if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
-                                            fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
-                                        replacedContents = replacedContents.replace(beforeJar, fileEncoding);
-                                        if (!contents.equalsIgnoreCase(replacedContents)) {
-                                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                                            madeChanges = true;
+
+                                    if (sharpSkversion != null) {
+                                        String line;
+
+                                        while ((line = br.readLine()) != null) {
+                                            line = line.trim();
+
+                                            if (!line.contains("version: " + sharpSkversion)) { // Not using the latest fixed version
+                                                notUsingFixedSharpSk = true;
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+                        if (notUsingFixedSharpSk) { // Not using the latest fixed version
+                            try (final InputStream stream = Skript.invoke(new URL("https://github.com/TheDGOfficial/SharpSK/releases/download/" + sharpSkversion + "/SharpSK-" + sharpSkversion + ".jar").openConnection(), (connection) -> {
+                                try {
+                                    connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
+                                    connection.setRequestProperty("Accept", "application/octet-stream");
 
-                        // Warn the user that server needs a restart
-                        if (madeChanges)
-                            info("Automatically made some compatibility settings. Restart your server to apply them.");
-                    } catch (final Throwable tw) {
-                        if (Skript.testing() || Skript.debug())
-                            Skript.exception(tw);
-                        //Skript.exception(tw);
+                                    return connection.getInputStream();
+                                } catch (final IOException e) {
+                                    if (Skript.testing() || Skript.debug())
+                                        Skript.exception(e);
+                                    return null;
+                                }
+                            });
+
+                                 final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
+                                 final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSK.jar").toString());
+                                 final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                                fileOutputStream.getChannel()
+                                        .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                            }
+
+                            try {
+                                Skript.closeOnEnable(() -> {
+                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater")) {
+                                        Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
+                                    }
+                                });
+                                Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                            } catch (final IOException e) { // If file system does not allow deleting locked / running files
+                                // Lock the file so SharpSKUpdater can't update it, and we can delete the SharpSKUpdater when server stops.
+
+                                @SuppressWarnings("resource")
+                                // We can't do anything about that, we must lock the file until server stops.
+                                final FileInputStream is = new FileInputStream(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar");
+
+                                @SuppressWarnings("resource")
+                                // We can't do anything about that, we must lock the file until server stops.
+                                final FileLock lock = is.getChannel().tryLock(0L, Long.MAX_VALUE, true);
+
+                                Skript.closeOnDisable(() -> {
+                                    try {
+                                        lock.release();
+                                        is.close();
+
+                                        try {
+                                            Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                                        } catch (final IOException ignored) {
+                                            /* ignored */
+                                        }
+                                    } catch (final IOException io) {
+                                        if (Skript.testing() || Skript.debug())
+                                            Skript.exception(io);
+                                    }
+                                });
+                            }
+
+                            madeChanges = true;
+                        }
                     }
+
+                    // Warn the user that server needs a restart
+                    if (madeChanges)
+                        info("Automatically made some compatibility settings. Restart your server to apply them.");
                 }
             }
 
             //System.setOut(new FilterPrintStream(System.out));
+        } catch (final Throwable tw) {
+            // Ignore if not debug, we are on early load
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(tw);
+        }
+    }
 
-            Language.loadDefault(getAddonInstance());
+    @SuppressWarnings("null")
+    @Override
+    public final void onEnable() {
+        try {
+            if (disabled) {
+                Skript.error(m_invalid_reload.toString());
+                Bukkit.getPluginManager().disablePlugin(this);
+                return;
+            }
 
             Workarounds.init();
+
+            for (final Closeable c : closeOnEnable) {
+                try {
+                    c.close();
+                } catch (final Throwable tw) {
+                    Skript.exception(tw, "An error occurred while on enable cleanup.", "This might or might not cause any issues.");
+                }
+            }
+
+            Language.loadDefault(getAddonInstance());
 
             try {
                 version = new Version(getDescription().getVersion());
@@ -1578,6 +1871,15 @@ public final class Skript extends JavaPlugin implements Listener {
                 if (EffPush.hasNoCheatPlus && !EffPush.hookNotified) {
                     Skript.info(Hook.m_hooked.toString("NoCheatPlus"));
                     EffPush.hookNotified = true;
+                } else if (Skript.testing() && Skript.debug()) {
+                    if (Bukkit.getPluginManager().getPlugin("NoCheatPlus") == null)
+                        Skript.debug("Can't hook to NoCheatPlus: NoCheatPlus not found");
+                    else if (!Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager"))
+                        Skript.debug("Can't hook to NoCheatPlus: Can't find exemption manager");
+                    else if (System.getProperty("skript.disableNcpHook") != null && Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")))
+                        Skript.debug("Can't hook to NoCheatPlus: Disabled by system property");
+                    else
+                        assert false;
                 }
 
                 Language.setUseLocal(false);
@@ -1596,7 +1898,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 final long vls = System.currentTimeMillis();
 
                 final LogHandler h = SkriptLogger.startLogHandler(new ErrorDescLogHandler() {
-//						private final List<LogEntry> log = new ArrayList<LogEntry>();
+//                        private final List<LogEntry> log = new ArrayList<LogEntry>();
 
                     @Override
                     public LogResult log(final LogEntry entry) {
@@ -1605,8 +1907,8 @@ public final class Skript extends JavaPlugin implements Listener {
                             logEx(entry.message); // no [Skript] prefix
                             return LogResult.DO_NOT_LOG;
                         }
-                        //								log.add(entry);
-//								return LogResult.CACHED;
+                        //                                log.add(entry);
+//                                return LogResult.CACHED;
                         return LogResult.LOG;
                     }
 
@@ -1627,7 +1929,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     @Override
                     protected void onStop() {
                         super.onStop();
-//							SkriptLogger.logAll(log);
+//                            SkriptLogger.logAll(log);
                     }
                 });
 
@@ -1760,7 +2062,9 @@ public final class Skript extends JavaPlugin implements Listener {
 
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+                        final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
+
+                        Bukkit.getScheduler().runTask(this, emptyPrinter);
 
                         if (latest == null) {
                             Bukkit.getScheduler().runTask(this, () -> warning("Can't check for updates, probably you don't have internet connection, or the web server is down?"));
@@ -1779,27 +2083,41 @@ public final class Skript extends JavaPlugin implements Listener {
                             try {
                                 final Version latestVer = new Version(latestTrimmed);
 
-                                if (latestVer.isSmallerThan(version)) {
+                                if (latestVer.isSmallerThan(version)) { // Running an unreleased build, probably self built
                                     updateChecked = true;
                                     latestVersion = latest;
                                     developmentVersion = true;
 
                                     Bukkit.getScheduler().runTask(this, () -> warning("You are running a development build. Report issues to GitHub."));
-                                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+                                    Bukkit.getScheduler().runTask(this, emptyPrinter);
                                     Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
 
                                     printed = true;
-                                } else
+                                } else if (latestVer.getMajor() == version.getMajor()
+                                        && latestVer.getMinor() == version.getMinor()
+                                        && latestVer.getRevision() == version.getRevision()
+                                        && latestVer.isStable() && !version.isStable()) { // Running a beta build (e.g 2.2.15b)
+
+                                    updateChecked = true;
+                                    latestVersion = latest;
+                                    developmentVersion = true;
+
+                                    Bukkit.getScheduler().runTask(this, () -> warning("You are running a beta release. Report issues to GitHub."));
+                                    Bukkit.getScheduler().runTask(this, emptyPrinter);
+                                    Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
+
+                                    printed = true;
+                                } else // Probably a custom version, a fork, or user changed the version from plugin.yml
                                     customVersion = true;
                             } catch (final IllegalArgumentException ignored) {
                                 // Web server may return errors
-                                if (!latest.contains("error"))
+                                if (!latest.contains("error")) // Not parsable latest version and web server not returned an error, interesting...
                                     customVersion = true;
                             }
 
-                            if (customVersion) {
+                            if (customVersion) { // Running a custom version
                                 Bukkit.getScheduler().runTask(this, () -> warning("You are running a custom version of Skript."));
-                                Bukkit.getScheduler().runTask(this, () -> Bukkit.getLogger().info(""));
+                                Bukkit.getScheduler().runTask(this, emptyPrinter);
                                 Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
                                 printed = true;
                             }
@@ -1850,7 +2168,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     @Override
-    public void onDisable() {
+    public final void onDisable() {
         try {
 
             if (disabled)
@@ -1888,10 +2206,6 @@ public final class Skript extends JavaPlugin implements Listener {
 
             // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
             // async to not slow down server reload, delayed to not slow down server shutdown
-            final Skript instance = this;
-            // we are saving instance because in lambda we can't access it
-            // and using getInstance method causes IllegalStateException since
-            // we are un setting fields, we also unset the instance field.
             final Thread t = newThread(() -> {
                 try {
                     Thread.sleep(10000L);
@@ -1905,7 +2219,13 @@ public final class Skript extends JavaPlugin implements Listener {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
                                 try {
-                                    final Class<?> c = Class.forName(e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length()), false, getBukkitClassLoader(instance));
+                                    final String name = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
+
+                                    if (!isClassLoaded(name))
+                                        continue;
+
+                                    final Class<?> c = Class.forName(name, false, getTrueClassLoader());
+
                                     for (final Field f : c.getDeclaredFields()) {
                                         if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
                                             if (Modifier.isFinal(f.getModifiers())) {
