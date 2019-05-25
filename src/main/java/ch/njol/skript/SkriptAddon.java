@@ -204,14 +204,15 @@ public final class SkriptAddon {
             return file;
         } catch (final NoSuchMethodException | IllegalArgumentException e) {
             Skript.outdatedError(e);
+            return null;
         } catch (final IllegalAccessException e) {
             assert false;
+            return null;
         } catch (final SecurityException e) {
             throw new RuntimeException(e);
         } catch (final InvocationTargetException e) {
             throw new RuntimeException(e.getCause());
         }
-        return null;
     }
 
 }

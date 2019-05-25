@@ -127,8 +127,8 @@ public final class EffCancelEvent extends Effect {
         assert cancelled : "The " + e.getClass().getCanonicalName() + " event cannot be cancelled!";
 
         //noinspection ConstantConditions
-        if (cancelled && Skript.logVeryHigh())
-            Skript.info("The " + e.getClass().getCanonicalName() + " event is cancelled" + (script != null ? " (" + script + ", line " + line + ")" : ""));
+        if (cancelled && Skript.logHigh())
+            Skript.info("The " + e.getClass().getCanonicalName() + " event is cancelled by a script" + (script != null ? " (" + script + ", line " + line + ")" : ""));
     }
 
     @Override
