@@ -22,6 +22,7 @@
 
 package ch.njol.skript.effects;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.doc.Description;
@@ -33,6 +34,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.VariableString;
+import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.StringMode;
 import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
@@ -56,6 +58,13 @@ public final class EffCommand extends Effect {
     private Expression<CommandSender> senders;
     @SuppressWarnings("null")
     private Expression<String> commands;
+
+    @Nullable
+    private String script;
+
+    private int line;
+
+    private boolean flag;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
@@ -84,6 +93,10 @@ public final class EffCommand extends Effect {
             }
         }
         commands = VariableString.setStringMode(commands, StringMode.COMMAND);
+        if ((flag = Skript.debug())) {
+            script = ScriptLoader.currentScript.getFileName();
+            line = SkriptLogger.getNode().getLine();
+        }
         return true;
     }
 
@@ -97,9 +110,13 @@ public final class EffCommand extends Effect {
             if (senders != null) {
                 for (final CommandSender sender : senders.getArray(e)) {
                     assert sender != null;
+                    if (flag)
+                        Skript.info("Executing command \"" + command + "\" as " + sender.getName() + (script != null ? " (" + script + ", line " + line + ")" : ""));
                     Skript.dispatchCommand(sender, command);
                 }
             } else {
+                if (flag)
+                    Skript.info("Executing command \"" + command + "\" as console" + (script != null ? " (" + script + ", line " + line + ")" : ""));
                 Skript.dispatchCommand(Bukkit.getConsoleSender(), command);
             }
         }

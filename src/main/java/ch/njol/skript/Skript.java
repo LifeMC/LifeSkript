@@ -1707,6 +1707,8 @@ public final class Skript extends JavaPlugin implements Listener {
 
             Workarounds.init();
 
+            final boolean firstRun = !getDataFolder().exists();
+
             for (final Closeable c : closeOnEnable) {
                 try {
                     c.close();
@@ -1751,7 +1753,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (e.isDirectory())
                             continue;
                         File saveTo = null;
-                        if (e.getName().startsWith(SCRIPTSFOLDER + "/")) {
+                        if (!firstRun && e.getName().startsWith(SCRIPTSFOLDER + "/")) {
                             final String fileName = e.getName().substring(e.getName().lastIndexOf('/') + 1);
                             final File file = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
                             if (!file.exists())
