@@ -184,7 +184,7 @@ public final class Commands {
 
     @SuppressWarnings("null")
     public static final void onServerCommand(final ServerCommandEvent e) {
-        if (e.getCommand() == null || e.getCommand().isEmpty())
+        if (e.getCommand() == null || e.getCommand().isEmpty() || (cancellableServerCommand && e.isCancelled()))
             return;
         boolean effectCommand = false;
         if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
@@ -197,9 +197,9 @@ public final class Commands {
             return;
         }
         final String command = e.getCommand();
-        e.setCommand("");
         if (cancellableServerCommand)
             e.setCancelled(true);
+        e.setCommand("");
         suppressUnknownCommandMessage = true;
         if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
             try {

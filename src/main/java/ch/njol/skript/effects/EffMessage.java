@@ -32,15 +32,17 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.Event;
+import org.bukkit.event.server.ServerCommandEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * @author Peter Güttinger
  */
-@Name("Message")
-@Description("Sends a message to the given player.")
-@Examples({"message \"A wild %player% appeared!\"", "message \"This message is a distraction. Mwahaha!\"", "send \"Your kill streak is %{kill streak.%player%}%.\" to player", "if the targeted entity exists:", "	message \"You're currently looking at a %type of the targeted entity%!\""})
+@Name("Send / Message")
+@Description("Sends a message to the given player or console.")
+@Examples({"send \"A wild %player% appeared!\"", "send \"This message is a distraction. Mwahaha!\"", "send \"Your kill streak is %{kill streak.%player%}%.\" to player", "if the targeted entity exists:", "	send \"You're currently looking at a %type of the targeted entity%!\""})
 @Since("1.0")
 public final class EffMessage extends Effect {
     static {
@@ -64,7 +66,11 @@ public final class EffMessage extends Effect {
     protected void execute(final Event e) {
         for (final String message : messages.getArray(e)) {
 //			message = StringUtils.fixCapitalization(message);
-            for (final CommandSender s : recipients.getArray(e)) {
+            final CommandSender[] recipientsArray = recipients.getArray(e);
+            if (recipientsArray.length == 0 || (recipientsArray.length == 1 && !(recipientsArray[0] instanceof ConsoleCommandSender) && e instanceof ServerCommandEvent)) {
+                Skript.warning("Command used from console, but send message uses the form of explicit \"to player\". For clarification, limit the command to the players, or remove the \"to player\" part.");
+            }
+            for (final CommandSender s : recipientsArray) {
                 s.sendMessage(message);
             }
         }

@@ -93,7 +93,8 @@ public final class EffCommand extends Effect {
             }
         }
         commands = VariableString.setStringMode(commands, StringMode.COMMAND);
-        if ((flag = Skript.debug())) {
+        flag = Skript.debug();
+        if (flag) {
             script = ScriptLoader.currentScript.getFileName();
             line = SkriptLogger.getNode().getLine();
         }

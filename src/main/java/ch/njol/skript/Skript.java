@@ -305,13 +305,13 @@ public final class Skript extends JavaPlugin implements Listener {
         try {
             if (Skript.testing() && Skript.debug()) {
                 if (isUnsupportedTerminal)
-                    System.out.println("Unsupported terminal");
-                if (craftbukkitMain == null)
-                    System.out.println("Null craftbukkit main");
-                if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useJline").get(null))
-                    System.out.println("False useJline");
-                if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useConsole").get(null))
-                    System.out.println("No console");
+                    System.out.println("[Skript] Can't enable JLine support: Unsupported terminal or -nojline argument");
+                else if (craftbukkitMain == null)
+                    System.out.println("[Skript] Can't enable JLine support: Null craftbukkit main - probably unsupported server software");
+                else if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useJline").get(null))
+                    System.out.println("[Skript] Can't enable JLine support: False useJline - probably disabled by reflection");
+                else if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useConsole").get(null))
+                    System.out.println("[Skript] Can't enable JLine support: No console - probably an unsupported OS");
             }
             return hasJLineSupport = !isUnsupportedTerminal && craftbukkitMain != null && (boolean) craftbukkitMain.getField("useJline").get(null) && (boolean) craftbukkitMain.getField("useConsole").get(null);
         } catch (final ClassCastException | NoSuchFieldException | IllegalAccessException | IllegalArgumentException | NullPointerException e) {
@@ -1141,11 +1141,11 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             final ServerCommandEvent e = new ServerCommandEvent(sender, command);
             Bukkit.getPluginManager().callEvent(e);
-            if (e.getCommand() == null || e.getCommand().isEmpty())
+            if (e.getCommand() == null || e.getCommand().isEmpty() || (Commands.cancellableServerCommand && e.isCancelled()))
                 return false;
             return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
         } catch (final Throwable tw) {
-            if (Skript.testing() || !tw.getMessage().contains("GroupManager")) // Shitty group manager causes random errors (works but gives errors, so we ignore it)
+            if (Skript.testing() && Skript.debug() || !tw.getMessage().contains("GroupManager")) // Shitty group manager causes random errors (works but gives errors, so we ignore it)
                 Skript.exception(tw, "Error occurred when executing command " + command);
             return false;
         }
@@ -1487,6 +1487,10 @@ public final class Skript extends JavaPlugin implements Listener {
                     // Flag to track changes and warn the user
                     boolean madeChanges = false;
 
+                    // The above flag just recommends restarting the server,
+                    // but this clarifies that things we do not work without a restart.
+                    boolean restartNeeded = false;
+
                     // Delete aliases to re-create when upgrading
                     // or downgrading from an incompatible version.
                     final File config = new File(dataFolder, "config.sk");
@@ -1612,7 +1616,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                         while ((line = br.readLine()) != null) {
                                             line = line.trim();
 
-                                            if (!line.contains("version: " + sharpSkversion)) { // Not using the latest fixed version
+                                            if (line.contains("version: ") && !line.contains("version: " + sharpSkversion)) { // Not using the latest fixed version
                                                 notUsingFixedSharpSk = true;
                                             }
                                         }
@@ -1643,9 +1647,24 @@ public final class Skript extends JavaPlugin implements Listener {
                             }
 
                             try {
+                                // For safety, we must disable the SharpSK.
                                 Skript.closeOnEnable(() -> {
-                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater")) {
+                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSK"))
+                                        Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
+                                    else {
+                                        Bukkit.getScheduler().runTask(this, () -> {
+                                            Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
+                                        });
+                                    }
+                                });
+                                // Required to non-downgrade automatically.
+                                Skript.closeOnEnable(() -> {
+                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater"))
                                         Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
+                                    else {
+                                        Bukkit.getScheduler().runTask(this,() -> {
+                                            Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
+                                        });
                                     }
                                 });
                                 Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
@@ -1665,25 +1684,79 @@ public final class Skript extends JavaPlugin implements Listener {
                                         lock.release();
                                         is.close();
 
-                                        try {
-                                            Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
-                                        } catch (final IOException ignored) {
-                                            /* ignored */
-                                        }
+                                        // This loop probably runs until Bukkit is shutdowned and SharpSKUpdater JAR file lock is released.
+                                        final Thread thread = Skript.newThread(() -> {
+                                            boolean flag = false;
+                                            Path sharpSkUpdater = null;
+
+                                            try {
+                                                sharpSkUpdater = Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar");
+                                            } catch (final IOException io) {
+                                                Skript.exception(io);
+                                            }
+
+                                            while(!flag || Files.exists(sharpSkUpdater)) {
+                                                try {
+                                                    Files.delete(sharpSkUpdater);
+                                                    flag = true; // Deleted successfully, task is complete! We fixed compatibility problem, yey!
+                                                    if (Skript.testing() && Skript.debug())
+                                                        Skript.debug("Deleted the sharp sk updater successfully");
+                                                } catch (final IOException ignored) {
+                                                    /* ignore, re-try in loop */
+                                                }
+                                            }
+                                        }, "Skript incompatible plugin fixer");
+
+                                        thread.setPriority(Thread.MIN_PRIORITY);
+                                        thread.setDaemon(false); // Run even when Bukkit is stopped
+                                        thread.start();
                                     } catch (final IOException io) {
                                         if (Skript.testing() || Skript.debug())
                                             Skript.exception(io);
                                     }
                                 });
+
+                                // In case the file is not deleted yet...
+
+                                Runtime.getRuntime().addShutdownHook(Skript.newThread(() -> {
+                                    try {
+                                        Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                                    } catch (final IOException io) {
+                                        /* ignore, bad things happening! */
+                                    }
+                                }, "Skript incompatible plugin remover"));
                             }
 
+                            // Suppress sharp sk errors on first install.
+                            BukkitLoggerFilter.addFilter((record) -> {
+                                if (record.getLevel() == Level.SEVERE) {
+                                    final boolean flag = !record.getMessage().contains("SharpSK");
+                                    if (!flag && Skript.testing() && Skript.debug())
+                                        Skript.debug("Ignoring error messages from incompatible plugins");
+                                    return flag;
+                                }
+                                return true;
+                            });
+
                             madeChanges = true;
+                            restartNeeded = true;
                         }
                     }
 
                     // Warn the user that server needs a restart
                     if (madeChanges)
                         info("Automatically made some compatibility settings. Restart your server to apply them.");
+
+                    // Warn the user and automatically restart the server
+                    if (restartNeeded) {
+                        Skript.closeOnEnable(() -> {
+                            Bukkit.getScheduler().runTask(this, () -> {
+                               Bukkit.getLogger().warning("");
+                               warning("Some compatibility changes we made requires a restart. Please restart your server.");
+                               Bukkit.getLogger().warning("");
+                            });
+                        });
+                    }
                 }
             }
 
@@ -1707,6 +1780,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
             Workarounds.init();
 
+            final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
             final boolean firstRun = !getDataFolder().exists();
 
             for (final Closeable c : closeOnEnable) {
@@ -1962,7 +2036,7 @@ public final class Skript extends JavaPlugin implements Listener {
 
                 if (Skript.logVeryHigh()) {
                     info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
-                    Bukkit.getLogger().info("");
+                    emptyPrinter.run();
                 }
 
                 // No need to add debug code everytime to test the exception handler (:
@@ -1979,7 +2053,7 @@ public final class Skript extends JavaPlugin implements Listener {
                     info("Using " + (Color.getWoolData ? "new" : "old") + " method for color data.");
                     info("Using " + (ExprEntities.getNearbyEntities ? "new" : "old") + " method for entities expression.");
                     info("Using " + (ExprTargetedBlock.set ? "new" : "old") + " method for target block expression.");
-                    Bukkit.getLogger().info("");
+                    emptyPrinter.run();
                 });
             }
 
@@ -1995,6 +2069,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities (if there is another implementation that supports getNearbyEntities, we respect them and not advertise LifeSpigot :C)
                             warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or upgrade to newer versions. Report this if it is a bug.");
                             warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
+                            emptyPrinter.run();
                         }
                     } else if (minecraftVersion.compareTo(1, 8, 8) == 0) { // If running on Minecraft 1.8.8
                         if (getServerPlatform() != ServerPlatform.BUKKIT_TACO) { // If not using TacoSpigot
@@ -2004,12 +2079,14 @@ public final class Skript extends JavaPlugin implements Listener {
                                 // So, people should not use Bukkit or CraftBukkit on versions newer than 1.7.10. On 1.7.10, people can use Bukkit because Spigot has protocal patch and breaking changes.
                                 warning("We recommend using either Spigot or TacoSpigot with Minecraft 1.8.8, because there is no official Bukkit for Minecraft 1.8.8 already. It is compatible with Bukkit plugins.");
                                 warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
+                                emptyPrinter.run();
                             } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
                                 // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
                                 // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
                                 if (Skript.logHigh()) {
                                     info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
                                     info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
+                                    emptyPrinter.run();
                                 }
                             } else {
                                 // PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
@@ -2017,6 +2094,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                 if (Skript.logHigh()) {
                                     warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
                                     warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
+                                    emptyPrinter.run();
                                 }
                             }
                         }
@@ -2064,7 +2142,6 @@ public final class Skript extends JavaPlugin implements Listener {
 
                         if (!isEnabled())
                             return;
-                        final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
 
                         Bukkit.getScheduler().runTask(this, emptyPrinter);
 

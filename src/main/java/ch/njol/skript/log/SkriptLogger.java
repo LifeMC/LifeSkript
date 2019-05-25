@@ -122,7 +122,7 @@ public final class SkriptLogger {
     @Nullable
     static final StackTraceElement getCaller() {
         for (final StackTraceElement e : Thread.currentThread().getStackTrace()) {
-            if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName()) && !e.toString().contains("java.lang.Thread.getStackTrace"))
+            if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName()) && !e.toString().contains("java.lang.Thread.getStackTrace") && !e.toString().contains("java.lang.Thread.currentThread"))
                 return e;
         }
         return null;
