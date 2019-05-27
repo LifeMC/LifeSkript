@@ -605,7 +605,7 @@ public final class Aliases {
                 d = d.intersection(data);
             }
             if (!isAlias && d != null && !SkriptConfig.disableUsingIdInsteadOfAliasWarnings.value()) {
-                Skript.warning("Using an ID instead of an alias is discouraged and will likely not be supported in future versions of Skript anymore. " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
+                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
             }
             t.add(d);
             return t;

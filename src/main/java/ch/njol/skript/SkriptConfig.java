@@ -60,13 +60,24 @@ public final class SkriptConfig {
     public static final Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
     public static final Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
         try {
+            if (s.equalsIgnoreCase("default"))
+                return EventPriority.NORMAL;
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
             Skript.error("The plugin priority has to be one of lowest, low, normal, high, highest or monitor.");
             return EventPriority.NORMAL;
         }
     });
-    public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()));
+    public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()), s -> {
+        try {
+            if (s.equalsIgnoreCase("default"))
+                return getPreviousPriority(defaultEventPriority.value());
+            return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
+        } catch (final IllegalArgumentException e) {
+            Skript.error("The command priority has to be one of lowest, low, normal, high, highest or monitor.");
+            return EventPriority.NORMAL;
+        }
+    });
     public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
     public static final Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
@@ -91,7 +102,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableUseNativeEffectInsteadWarnings = new Option<>("disable use native effect instead of command warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
-    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", false)
+    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
     public static final Option<Boolean> enableTimings = new Option<>("enable timings", true)
             .setter(t -> {

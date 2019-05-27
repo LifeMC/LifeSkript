@@ -137,8 +137,18 @@ public final class SkriptEventHandler {
         }
 
         if (e instanceof Cancellable && ((Cancellable) e).isCancelled() && !(e instanceof PlayerInteractEvent && (((PlayerInteractEvent) e).getAction() == Action.LEFT_CLICK_AIR || ((PlayerInteractEvent) e).getAction() == Action.RIGHT_CLICK_AIR) && ((PlayerInteractEvent) e).useItemInHand() != Result.DENY) || e instanceof ServerCommandEvent && (((ServerCommandEvent) e).getCommand() == null || ((ServerCommandEvent) e).getCommand().isEmpty())) {
-            if (Skript.logHigh())
-                Skript.info(e.getClass().getSimpleName() + " was cancelled by a plugin");
+            if (Skript.logHigh()) {
+                final String eventName = Skript.testing() && Skript.debug() ? e.getClass().getCanonicalName() : e.getClass().getSimpleName();
+
+                boolean skript = false;
+
+                if (Commands.cancelledEvent.get()) {
+                    skript = true;
+                    Commands.cancelledEvent.set(false);
+                }
+
+                Skript.info(eventName + " was cancelled by " + (skript ? "Skript" : "a plugin"));
+            }
             return;
         }
 

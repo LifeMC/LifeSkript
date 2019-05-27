@@ -188,7 +188,7 @@ aliases:
 	empty alias: '%s' results in an empty alias (i.e. it doesn't map to any id/data), it will thus be ignored
 	unknown variation: The variation {%s} was never defined
 	starting with number: Aliases must not start with a number
-	missing aliases: There are no aliases defined for the following ids:
+	missing aliases: The aliases for the following ids are not available on current minecraft version:
 	empty string: '' is not an item type
 	invalid item data: '%s' is not a valid item data
 	invalid id: There doesn't exist a material with id %s!

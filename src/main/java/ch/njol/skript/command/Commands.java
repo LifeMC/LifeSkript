@@ -70,6 +70,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,6 +109,9 @@ public final class Commands {
     private static Set<String> cmAliases;
     private static boolean registeredListeners;
 
+    public static final AtomicBoolean cancelledEvent =
+            new AtomicBoolean();
+
     static {
         init(); // separate method for the annotation
     }
@@ -138,7 +142,7 @@ public final class Commands {
 
                 try {
                     // Aliases field is removed in new versions. (probably 1.7+)
-                    if (!Skript.isRunningMinecraft(1,7, 10)) {
+                    if (!Skript.isRunningMinecraft(1, 7, 10)) {
                         //noinspection JavaReflectionMemberAccess
                         final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
                         aliasesField.setAccessible(true);
@@ -170,6 +174,7 @@ public final class Commands {
     public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
         if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
             e.setCancelled(true);
+            cancelledEvent.set(true);
             if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
                 try {
                     // We cancelled the current event, execute this one instead.
@@ -200,6 +205,7 @@ public final class Commands {
         if (cancellableServerCommand)
             e.setCancelled(true);
         e.setCommand("");
+        cancelledEvent.set(true);
         suppressUnknownCommandMessage = true;
         if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
             try {
@@ -217,8 +223,10 @@ public final class Commands {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
         if (!e.isAsynchronous()) {
-            if (handleEffectCommand(e.getPlayer(), e.getMessage()))
+            if (handleEffectCommand(e.getPlayer(), e.getMessage())) {
                 e.setCancelled(true);
+                cancelledEvent.set(true);
+            }
         } else {
             final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
             try {
@@ -242,8 +250,10 @@ public final class Commands {
     public static final void onPlayerChat(final PlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
-        if (handleEffectCommand(e.getPlayer(), e.getMessage()))
+        if (handleEffectCommand(e.getPlayer(), e.getMessage())) {
             e.setCancelled(true);
+            cancelledEvent.set(true);
+        }
     }
 
     /**
@@ -263,10 +273,10 @@ public final class Commands {
         }
         final ScriptCommand c = commands.get(cmd[0]);
         if (c != null) {
-//			if (cmd.length == 2 && cmd[1].equals("?")) {
-//				c.sendHelp(sender);
-//				return true;
-//			}
+//            if (cmd.length == 2 && cmd[1].equals("?")) {
+//                c.sendHelp(sender);
+//                return true;
+//            }
             if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
             c.execute(sender, cmd[0], cmd.length == 1 ? "" : cmd[1]);
@@ -332,10 +342,10 @@ public final class Commands {
         }
     }
 
-//	public static final boolean skriptCommandExists(final String command) {
-//		final ScriptCommand c = commands.get(command);
-//		return c != null && c.getName().equals(command);
-//	}
+//    public static final boolean skriptCommandExists(final String command) {
+//        final ScriptCommand c = commands.get(command);
+//        return c != null && c.getName().equals(command);
+//    }
 
     @SuppressWarnings("null")
     @Nullable
@@ -566,9 +576,14 @@ public final class Commands {
 
     public static final void registerListeners() {
         if (!registeredListeners) {
+            final EventPriority commandPriority = SkriptConfig.commandPriority.value();
+
+            if (Skript.debug())
+                Skript.debug("Using command priority " + commandPriority.name().toLowerCase(Locale.ENGLISH));
+
             Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, new Listener() {
                 /* ignored */
-            }, EventPriority.MONITOR, (listener, event) -> {
+            }, commandPriority, (listener, event) -> {
                 if (event instanceof PlayerCommandPreprocessEvent)
                     onPlayerCommand((PlayerCommandPreprocessEvent) event);
             }, Skript.getInstance(), true);
@@ -604,6 +619,7 @@ public final class Commands {
 
             //Bukkit.getPluginManager().registerEvents(commandListener, Skript.getInstance());
             //Bukkit.getPluginManager().registerEvents(post1_3chatListener != null ? post1_3chatListener : pre1_3chatListener, Skript.getInstance());
+
             registeredListeners = true;
         }
     }

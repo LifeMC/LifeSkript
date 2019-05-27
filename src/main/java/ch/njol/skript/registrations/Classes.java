@@ -220,7 +220,16 @@ public final class Classes {
 
     @SuppressWarnings({"null", "unused"})
     private static final void removeNullElements() {
-        tempClassInfos.removeIf(ci -> ci.getC() == null);
+        if (Skript.testing() && Skript.debug()) {
+            for (final Iterator<ClassInfo<?>> iterator = tempClassInfos.iterator(); iterator.hasNext(); ) {
+                final ClassInfo<?> ci = iterator.next();
+                if (ci.getC() == null) {
+                    Skript.warning("The class info \"" + ci.getCodeName() + "\" does not have a valid backing java class, and it removed from the class info list.");
+                    iterator.remove();
+                }
+            }
+        } else
+            tempClassInfos.removeIf(ci -> ci.getC() == null);
     }
 
     private static final void checkAllowClassInfoInteraction() {
