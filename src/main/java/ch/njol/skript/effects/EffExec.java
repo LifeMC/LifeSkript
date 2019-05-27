@@ -46,9 +46,9 @@ import java.util.List;
 @Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 if the player has permission \"skript.eval\""})
 @Since("2.2-Fixes-V10c")
 public final class EffExec extends Effect {
-    public static volatile boolean lastExecuteState;
+    public static boolean lastExecuteState;
     @Nullable
-    public static volatile String lastExecuteErrors;
+    public static String lastExecuteErrors;
 
     static {
         Skript.registerEffect(EffExec.class, "(exec[ute]|eval[uate]) %string%");

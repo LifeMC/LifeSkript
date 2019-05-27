@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Command")
 @Description("Executes a command. This can be useful to use other plugins in triggers.")
-@Examples({"make player execute command \"/suicide\"", "execute console command \"/say Hello everyone!\""})
+@Examples({"make player execute the command \"/suicide\"", "execute console command \"/say Hello everyone!\""})
 @Since("1.0")
 public final class EffCommand extends Effect {
     static {
@@ -85,9 +85,9 @@ public final class EffCommand extends Effect {
                 if (!SkriptConfig.disableUseNativeEffectInsteadWarnings.value()) {
                     if (command.contains("eco") && (command.contains("give") ||
                             command.contains("take"))) {
-                        Skript.warning("Use native vault & economy hook instead, e.g: 'add 1000 to player's balance' or 'remove 1000 from player's balance'");
+                        Skript.warning("Use the native vault & economy hook instead, e.g: 'add 1000 to the player's balance' or 'remove 1000 from the player's balance'");
                     } else if (command.contains("give ")) {
-                        Skript.warning("Use native 'give' effect instead of executing a console command and depending on other plugins, e.g: 'give 1 diamond to player'");
+                        Skript.warning("Use the native 'give' effect instead of executing a console command and depending on other plugins, e.g: 'give 1 diamond to the player'");
                     }
                 }
             }
