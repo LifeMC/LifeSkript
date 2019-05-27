@@ -62,7 +62,7 @@ public final class FlatFileStorage extends VariablesStorage {
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
     private static boolean savingVariables = true;
     private static long savedVariables;
-    final AtomicInteger changes = new AtomicInteger(0);
+    final AtomicInteger changes = new AtomicInteger();
     /**
      * A Lock on this object must be acquired after connectionLock (if that lock is used) (and thus also after {@link Variables#getReadLock()}).
      */
@@ -387,8 +387,10 @@ public final class FlatFileStorage extends VariablesStorage {
                         final String fileName = file.getName();
 
                         if (Skript.logHigh())
-                            Skript.info("Saving " + count + " variables to '" + fileName + "'");
+                            // Unfortunately, this only displays the non-list variable counts.
+                            Skript.info("Saving approximately " + count + " variables to '" + fileName + "'");
 
+                        savedVariables = 0; // Method may be called multiple times
                         savingVariables = true;
 
                         // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's loading many variables
@@ -414,7 +416,10 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
 
+                        savingVariables = false;
                         savedVariables = 0; // Method may be called multiple times
+
+                        savingLoggerThread.interrupt(); // In case if not interrupted
 
                         pw.println();
 
@@ -424,7 +429,6 @@ public final class FlatFileStorage extends VariablesStorage {
                         FileUtils.move(tempFile, f, true);
                         SkriptCommand.resetPriority();
 
-                        savingVariables = false;
                     } catch (final IOException e) {
                         Skript.error("Unable to make a final save of the database '" + databaseName + "' (no variables are lost): " + ExceptionUtils.toString(e));
                     }
@@ -471,10 +475,11 @@ public final class FlatFileStorage extends VariablesStorage {
                     if (s.accept(name)) {
                         if (s == this) {
                             final SerializedVariable.Value value = Classes.serialize(val);
-                            if (value != null)
+                            if (value != null) {
                                 writeCSV(pw, name, value.type, encode(value.data));
+                                savedVariables++;
+                            }
                         }
-                        savedVariables++;
                         continue outer;
                     }
                 }

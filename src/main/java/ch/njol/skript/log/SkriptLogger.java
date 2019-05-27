@@ -51,11 +51,10 @@ public final class SkriptLogger {
     @Nullable
     private static Node node;
     private static Verbosity verbosity = Verbosity.NORMAL;
-    @Nullable
-    private static List<LogEntry> suppressed;
-    private static volatile boolean suppressing;
-    private static volatile boolean suppressWarnings;
-    private static volatile boolean suppressErrors;
+    private static final List<LogEntry> suppressed = new ArrayList<>();
+    private static boolean suppressing;
+    private static boolean suppressWarnings;
+    private static boolean suppressErrors;
 
     /**
      * Shorthand for <tt>{@link #startLogHandler(LogHandler) startLogHandler}(new {@link RetainingLogHandler}());</tt>
@@ -181,7 +180,7 @@ public final class SkriptLogger {
                 case LOG:
             }
         }
-        if (suppressing && suppressed != null) {
+        if (suppressing) {
             suppressed.add(entry);
             return;
         }
@@ -204,20 +203,17 @@ public final class SkriptLogger {
     }
 
     public static final void startSuppressing() {
-        suppressed = new ArrayList<>();
+        suppressed.clear();
         suppressing = true;
     }
 
     @SuppressWarnings("null")
     public static final List<LogEntry> stopSuppressing() {
-        if (suppressed == null) {
-            return new ArrayList<>();
-        }
         return suppressed;
     }
 
     public static final void cleanSuppressState() {
-        suppressed = null;
+        suppressed.clear();
     }
 
     public static final String format(final LogEntry entry) {

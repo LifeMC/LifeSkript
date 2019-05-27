@@ -63,7 +63,7 @@ public final class ExprEntities extends SimpleExpression<Entity> {
     // World#getNearbyEntities only available on 1.8 and above.
     public static final boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
     // We don't want to try the World#getNearbyEntities method everytime in case of a fail.
-    public volatile static boolean hardFail;
+    public static boolean hardFail;
 
     static {
         Skript.registerExpression(ExprEntities.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[all] %*entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] entities of type[s] %entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] %*entitydatas% (within|[with]in radius) %number% [(block[s]|met(er|re)[s])] (of|around) %location%", "[all] entities of type[s] %entitydatas% in radius %number% (of|around) %location%");
