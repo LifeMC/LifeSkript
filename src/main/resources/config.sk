@@ -122,6 +122,12 @@ throw on command only for plugin commands: true
 # The default value is true because of compatibility reasons and it is fine in most situtations.
 # However if you want this behaviour instead of the old one, change this to false.
 
+command priority: default
+# Allowed values: lowest, low, normal, high, highest, monitor
+# Do not set this to a higher value than 'plugin priority' to avoid issues and conflicts.
+# The default value will always be a lower value than plugin priority, e.g if plugin priority
+# is normal, then the command priority will be 'low' if set to default.
+
 log player commands: true
 # Whether Skript should log the usage of custom commands.
 # They will be logged as [INFO] in this format: '<player>: /<command> <arguments>'
@@ -158,6 +164,11 @@ disable documentation generation: false
 # Change to true for disabling documentation generation at startup.
 # I don't recommend you to touch this settings but you're free to change.
 
+
+disable explicit player use warnings on console: false
+# When you use explicit "to player" in "send" effect and the sender is console,
+# the effect will not do anything because there is no player when sender is the console.
+# Skript tries to catch these and gives a warning for explicit use of player.
 
 disable variable will not be saved warnings: false
 # Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.

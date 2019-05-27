@@ -51,7 +51,7 @@ public final class SkriptConfig {
             Skript.error("No language file found for '" + s + "'!");
         }
     });
-    public static final Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", false);
+    public static final Option<Boolean> enableEffectCommands = new Option<>("enable effect commands", true);
     public static final Option<String> effectCommandToken = new Option<>("effect command token", "!");
     public static final Option<Boolean> allowOpsToUseEffectCommands = new Option<>("allow ops to use effect commands", true);
     // everything handled by Variables
@@ -62,10 +62,11 @@ public final class SkriptConfig {
         try {
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
-            Skript.error("The plugin priority has to be one of lowest, low, normal, high, or highest.");
+            Skript.error("The plugin priority has to be one of lowest, low, normal, high, highest or monitor.");
             return EventPriority.NORMAL;
         }
     });
+    public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()));
     public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
     public static final Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
@@ -76,6 +77,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
     public static final Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
     public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
+    public static final Option<Boolean> disableExplicitPlayerUseWarnings = new Option<>("disable explicit player use warnings on console", false);
     public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", false);
     public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", false);
     public static final Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);
@@ -89,9 +91,9 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableUseNativeEffectInsteadWarnings = new Option<>("disable use native effect instead of command warnings", false);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
-    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
+    public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", false)
             .optional(true);
-    public static final Option<Boolean> enableTimings = new Option<>("enable timings", false)
+    public static final Option<Boolean> enableTimings = new Option<>("enable timings", true)
             .setter(t -> {
                 if (Skript.classExists("co.aikar.timings.Timings")) { // Check for Paper or LifeSpigot server
                     if (t)
@@ -148,6 +150,30 @@ public final class SkriptConfig {
         synchronized (format) {
             return "" + format.format(timestamp);
         }
+    }
+
+    public static final EventPriority getPreviousPriority(final EventPriority priority) {
+        EventPriority previousPriority;
+
+        switch(priority) {
+            case MONITOR:
+                previousPriority = EventPriority.HIGHEST;
+                break;
+            case HIGHEST:
+                previousPriority = EventPriority.HIGH;
+                break;
+            case HIGH:
+                previousPriority = EventPriority.NORMAL;
+                break;
+            case NORMAL:
+                previousPriority = EventPriority.LOW;
+                break;
+            default:
+                previousPriority = EventPriority.LOWEST;
+                break;
+        }
+
+        return previousPriority;
     }
 
     /**
