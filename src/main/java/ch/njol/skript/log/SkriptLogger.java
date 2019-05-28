@@ -27,6 +27,7 @@ import ch.njol.skript.config.Node;
 import ch.njol.skript.log.LogHandler.LogResult;
 import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
+import org.fusesource.jansi.Ansi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,8 +166,10 @@ public final class SkriptLogger {
     }
 
     public static final void log(final @Nullable LogEntry entry) {
-        if (entry == null)
+        if (entry == null) {
+            assert false;
             return;
+        }
         if (Skript.testing() && node != null && node.debug())
             System.out.print("---> " + entry.level + "/" + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
         for (final LogHandler h : handlers) {
@@ -184,14 +187,15 @@ public final class SkriptLogger {
             suppressed.add(entry);
             return;
         }
-        if (suppressWarnings && entry.getLevel() == Level.WARNING) {
+        final Level level = entry.getLevel();
+        if (suppressWarnings && level == Level.WARNING) {
             return;
         }
-        if (suppressErrors && entry.getLevel() == Level.SEVERE) {
+        if (suppressErrors && level == Level.SEVERE) {
             return;
         }
         entry.logged();
-        LOGGER.log(entry.getLevel(), format(entry));
+        LOGGER.log(level, format(entry));
     }
 
     public static final void suppressWarnings(final boolean suppressWarnings) {
@@ -217,7 +221,18 @@ public final class SkriptLogger {
     }
 
     public static final String format(final LogEntry entry) {
-        return SKRIPT_PREFIX_CONSOLE + entry.getMessage();
+        final Level level = entry.getLevel();
+
+        String prefix = SKRIPT_PREFIX_CONSOLE;
+        String suffix = "";
+
+        if (Skript.hasJLineSupport() && Skript.hasJansi()) {
+            suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
+            if (level == Level.SEVERE)
+                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.RED).boldOff().toString();
+        }
+
+        return prefix + entry.getMessage() + suffix;
     }
 
     public static final void logAll(final Iterable<LogEntry> entries) {
