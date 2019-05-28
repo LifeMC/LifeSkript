@@ -38,6 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,11 +68,13 @@ public final class FlatFileStorage extends VariablesStorage {
      * A Lock on this object must be acquired after connectionLock (if that lock is used) (and thus also after {@link Variables#getReadLock()}).
      */
     private final NotifyingReference<PrintWriter> changesWriter = new NotifyingReference<>();
-    private final int REQUIRED_CHANGES_FOR_RESAVE = 1000;
+    public static final int REQUIRED_CHANGES_FOR_RESAVE = System.getProperty("skript.requiredVariableChangesForSave") != null ? Integer.parseInt(System.getProperty("skript.requiredVariableChangesForSave")) : 1000;
     private volatile boolean loaded;
     @Nullable
     private Task saveTask;
     private boolean loadError;
+    @Nullable
+    private static Date lastSave;
 
     protected FlatFileStorage(final String name) {
         super(name);
@@ -111,7 +114,7 @@ public final class FlatFileStorage extends VariablesStorage {
         }
         if (lastEnd != line.length())
             return null;
-        return r.toArray(new String[0]);
+        return r.toArray(EmptyArrays.EMPTY_STRING_ARRAY);
     }
 
     private static final void writeCSV(final PrintWriter pw, final String... values) {
@@ -342,7 +345,12 @@ public final class FlatFileStorage extends VariablesStorage {
             final Task bt = backupTask;
             if (bt != null)
                 bt.cancel();
-        }
+        } else if (!finalSave && lastSave != null && TimeUnit.MILLISECONDS.toMinutes(lastSave.difference(new Date()).getMilliSeconds()) < 1L) {
+            if (Skript.debug())
+                Skript.debug("Skipping save of variables, the last save happened on " + lastSave);
+            return; // Skip, this not the final (the one in the shutdown) save and last save is happened <= 1 minutes ago.
+        } else if (!finalSave && !Skript.isSkriptRunning())
+			return; // Prevent multiple saves when shutting down - it may or may not cause issues but anyway.
         try {
             Variables.getReadLock().lock();
             synchronized (connectionLock) {
@@ -377,9 +385,11 @@ public final class FlatFileStorage extends VariablesStorage {
                         pw.println("# version: " + Skript.getVersion());
                         pw.println();
 
-                        SkriptCommand.setPriority();
+                        if (finalSave)
+                            SkriptCommand.setPriority();
 
                         final Date start = new Date();
+                        lastSave = start;
 
                         final TreeMap<String, Object> variables = Variables.getVariables();
 
@@ -410,11 +420,15 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         savingLoggerThread.setPriority(Thread.MIN_PRIORITY);
                         savingLoggerThread.setDaemon(true);
-                        savingLoggerThread.start();
+
+                        if (finalSave || Skript.logVeryHigh()) {
+                            savingLoggerThread.start();
+                        }
 
                         save(pw, "", variables);
 
-                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
+                        if (Skript.logHigh())
+                            Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
 
                         savingVariables = false;
                         savedVariables = 0; // Method may be called multiple times
@@ -427,7 +441,9 @@ public final class FlatFileStorage extends VariablesStorage {
                         pw.close();
 
                         FileUtils.move(tempFile, f, true);
-                        SkriptCommand.resetPriority();
+
+                        if (finalSave)
+                            SkriptCommand.resetPriority();
 
                     } catch (final IOException e) {
                         Skript.error("Unable to make a final save of the database '" + databaseName + "' (no variables are lost): " + ExceptionUtils.toString(e));

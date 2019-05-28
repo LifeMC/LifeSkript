@@ -22,7 +22,7 @@ name: Skript
 
 description: Customize Minecraft's mechanics with simple scripts written in plain English sentences.
 
-authors: [Njol, Mirreski, TheDGOfficial]
+authors: [Njol, Mirreski, LifeMCServer]
 website: https://github.com/LifeMC/LifeSkript
 
 main: ch.njol.skript.Skript

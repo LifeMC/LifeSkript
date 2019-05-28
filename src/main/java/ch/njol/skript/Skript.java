@@ -198,8 +198,10 @@ public final class Skript extends JavaPlugin implements Listener {
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
     static final boolean runningCraftBukkit = isCraftBukkit;
     private static final Method findLoadedClass = methodForName(ClassLoader.class, "findLoadedClass", true, String.class);
-    private static final boolean debugProperty = System.getProperty("skript.debug") != null
+    private static final boolean debug = System.getProperty("skript.debug") != null
             && Boolean.parseBoolean(System.getProperty("skript.debug"));
+    private static final boolean logSpam = System.getProperty("skript.logSpam") != null
+            && Boolean.parseBoolean(System.getProperty("skript.logSpam"));
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -949,7 +951,7 @@ public final class Skript extends JavaPlugin implements Listener {
             throw new IllegalArgumentException("The addon " + p.getName() + " is already registered!");
         final SkriptAddon addon = new SkriptAddon(p);
         addons.put(p.getName(), addon);
-        if (Skript.logVeryHigh())
+        if (Skript.testing() && Skript.debug())
             Skript.info("The addon " + p.getDescription().getFullName() + " was registered to Skript successfully.");
         return addon;
     }
@@ -980,21 +982,27 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Checks for duplicate patterns
+     * Checks for duplicate patterns. It does not prevent
+     * duplicate patterns. This method is only used for debugging purposes.
      *
      * @param element  The element
-     * @param patterns The patterns
      * @param name     The name of element
+     * @param patterns The patterns
      */
-    public static final void checkDuplicatePatterns(final Class<?> element, final String[] patterns, final String name) {
+    public static final void checkDuplicatePatterns(final Class<?> element, final String name, final String... patterns) {
+        assert Skript.testing() && Skript.debug();
         for (final String pattern : patterns)
             if (duplicatePatternCheckList.contains(pattern))
                 Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
+        final boolean flag = System.getProperty("skript.showRegisteredNonSkript") != null && Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
+        if (Skript.logSpam() || flag)
+            if (!flag || !element.getCanonicalName().startsWith("ch.njol.skript."))
+                Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join(",", patterns));
         Collections.addAll(duplicatePatternCheckList, patterns);
     }
 
     /**
-     * registers a {@link Condition}.
+     * Registers a {@link Condition}.
      *
      * @param condition The condition's class
      * @param patterns  Skript patterns to match this condition
@@ -1002,7 +1010,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final <E extends Condition> void registerCondition(final Class<E> condition, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(condition, patterns, "condition");
+            checkDuplicatePatterns(condition, "condition", patterns);
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, condition);
         conditions.add(info);
         statements.add(info);
@@ -1019,7 +1027,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(effect, patterns, "effect");
+            checkDuplicatePatterns(effect, "effect", patterns);
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, effect);
         effects.add(info);
         statements.add(info);
@@ -1038,7 +1046,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Registers an expression.
+     * Registers an {@link Expression}.
      *
      * @param expression The expression's class
      * @param returnType The superclass of all values returned by the expression
@@ -1051,7 +1059,7 @@ public final class Skript extends JavaPlugin implements Listener {
         if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
             throw new IllegalArgumentException("returnType must be a normal type");
         if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(expression, patterns, "expression");
+            checkDuplicatePatterns(expression, "expression", patterns);
         final ExpressionInfo<E, T> info = new ExpressionInfo<>(patterns, returnType, expression);
         for (int i = type.ordinal() + 1; i < ExpressionType.values().length; i++) {
             expressionTypesStartIndices[i]++;
@@ -1080,7 +1088,7 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     /**
-     * Registers an event.
+     * Registers an {@link Event}.
      *
      * @param name     Capitalised name of the event without leading "On" which is added automatically (Start the name with an asterisk to prevent this). Used for error messages and
      *                 the documentation.
@@ -1093,14 +1101,14 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(c, patterns, "event");
+            checkDuplicatePatterns(c, "event", patterns);
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, CollectionUtils.array(event));
         events.add(r);
         return r;
     }
 
     /**
-     * Registers an event.
+     * Registers an {@link Event}.
      *
      * @param name     The name of the event, used for error messages
      * @param c        The event's class
@@ -1111,7 +1119,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, final String... patterns) {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(c, patterns, "event");
+            checkDuplicatePatterns(c, "event", patterns);
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, events);
         Skript.events.add(r);
         return r;
@@ -1166,7 +1174,11 @@ public final class Skript extends JavaPlugin implements Listener {
     }
 
     public static final boolean debug() {
-        return debugProperty || SkriptLogger.debug();
+        return debug || SkriptLogger.debug();
+    }
+
+    public static final boolean logSpam() {
+        return logSpam;
     }
 
     public static final boolean testing() {

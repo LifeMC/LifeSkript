@@ -7,7 +7,7 @@ on break of glass:
 	drop event-block
 
 # also same for thin glass
-on break of thin glass:
+on break of glass pane:
 	drop event-block
 
 # bookshelf drops books, this changes this behaviour with

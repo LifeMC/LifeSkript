@@ -680,6 +680,9 @@ entities:
 	villager:
 		name: villager¦s
 		pattern: <age> villager(|1¦s)|(4¦)[villager] (kid(|1¦s)|child(|1¦ren))
+	normal:
+		name: villager¦s
+		pattern: <age> villager(|1¦s)|(4¦)[villager] (kid(|1¦s)|child(|1¦ren))
 	farmer:
 		name: farmer¦s
 		pattern: <age> farmer(|1¦s)|(4¦)farmer (kid(|1¦s)|child(|1¦ren))
