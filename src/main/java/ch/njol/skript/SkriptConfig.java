@@ -88,7 +88,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
     public static final Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
     public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
-    public static final Option<Boolean> disableExplicitPlayerUseWarnings = new Option<>("disable explicit player use warnings on console", false);
+    public static final Option<Boolean> enableExplicitPlayerUseWarnings = new Option<>("warn when using explicit player pattern", false);
     public static final Option<Boolean> disableVariableConflictWarnings = new Option<>("disable variable conflict warnings", false);
     public static final Option<Boolean> disableObjectCannotBeSavedWarnings = new Option<>("disable variable will not be saved warnings", false);
     public static final Option<Boolean> disableExpressionAlreadyTextWarnings = new Option<>("disable expression is already a text warnings", false);

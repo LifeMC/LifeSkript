@@ -165,11 +165,6 @@ disable documentation generation: false
 # I don't recommend you to touch this settings but you're free to change.
 
 
-disable explicit player use warnings on console: false
-# When you use explicit "to player" in "send" effect and the sender is console,
-# the effect will not do anything because there is no player when sender is the console.
-# Skript tries to catch these and gives a warning for explicit use of player.
-
 disable variable will not be saved warnings: false
 # Disables the "... i.e contents cannot be saved ..." warning when reloading and something in your scripts sets a variable(non local) to a value that is not serializable.
 # Only recommended to disable if it is spamming, but rather than that, you should fix the issue instead of suppressing.
@@ -226,6 +221,11 @@ warn when using none values in strings: false
 # If this option is true, skript sends a warning message to console
 # That indicating a variable is none, or an expression is returned none when converting to string.
 # It usually happens by a bug. You should set a default value in such situation.
+
+warn when using explicit player pattern: false
+# When you use explicit "to player" in "send" effect and the sender is console,
+# the effect will not do anything because there is no player when sender is the console.
+# Skript tries to catch these and gives a warning for explicit use of player if this option is true.
 
 
 enable timings: true
