@@ -107,6 +107,8 @@ public final class DefaultComparators {
         entityMaterials.put(Slime.class, Material.SLIME_BALL);
         if (Skript.classExists("org.bukkit.entity.ItemFrame"))
             entityMaterials.put(ItemFrame.class, Material.ITEM_FRAME);
+        if (Skript.classExists("org.bukkit.entity.ArmorStand"))
+            entityMaterials.put(ArmorStand.class, Material.ARMOR_STAND);
         if (Skript.classExists("org.bukkit.entity.Firework"))
             entityMaterials.put(Firework.class, Material.FIREWORK);
         if (Skript.classExists("org.bukkit.entity.minecart.StorageMinecart")) {
