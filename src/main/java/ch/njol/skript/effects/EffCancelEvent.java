@@ -84,7 +84,7 @@ public final class EffCancelEvent extends Effect {
         }
         final Class<? extends Event> e = es[0];
         if (Cancellable.class.isAssignableFrom(e) || InventoryInteractEvent.class.isAssignableFrom(e) || PlayerInteractEvent.class.isAssignableFrom(e) || BlockCanBuildEvent.class.isAssignableFrom(e) || PlayerDropItemEvent.class.isAssignableFrom(e)) {
-            if (Skript.logVeryHigh()) {
+            if (Skript.logHigh()) {
                 script = ScriptLoader.currentScript.getFileName();
                 line = SkriptLogger.getNode().getLine();
             }

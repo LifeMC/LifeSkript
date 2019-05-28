@@ -82,7 +82,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
 
     @SuppressWarnings({"null", "unused"})
     @Override
-    public Collection<? extends Region> getRegionsAt_i(final Location l) {
+    public Collection<? extends Region> getRegionsAt_i(final @Nullable Location l) {
         if (l == null)
             return Collections.emptyList();
         if (l.getWorld() == null)

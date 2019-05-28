@@ -46,6 +46,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * @author Peter Güttinger
@@ -237,7 +238,7 @@ public final class DefaultComparators {
         Comparators.registerComparator(OfflinePlayer.class, OfflinePlayer.class, new Comparator<OfflinePlayer, OfflinePlayer>() {
             @Override
             public Relation compare(final OfflinePlayer p1, final OfflinePlayer p2) {
-                return Relation.get(p1.getName().equals(p2.getName()));
+                return Relation.get(Objects.equals(p1.getName(), p2.getName()));
             }
 
             @Override
@@ -250,7 +251,6 @@ public final class DefaultComparators {
         Comparators.registerComparator(OfflinePlayer.class, String.class, new Comparator<OfflinePlayer, String>() {
             @Override
             public Relation compare(final OfflinePlayer p, final String name) {
-                /* patch from bensku */
                 final String offlineName = p.getName();
                 return offlineName == null ? Relation.NOT_EQUAL : Relation.get(offlineName.equalsIgnoreCase(name));
             }

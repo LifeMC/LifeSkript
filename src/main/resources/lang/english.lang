@@ -726,7 +726,7 @@ entities:
 		name: zombie¦s
 		pattern: <age> zombie(|1¦s)|(4¦)zombie (kid(|1¦s)|child(|1¦ren))
 	xp-orb:
-		name: exprerience orb¦s @an
+		name: experience orb¦s @an
 		pattern: ([e]xp|experience)( |-)orb(|1¦s)
 		format: %2$s-%1$s
 	firework:

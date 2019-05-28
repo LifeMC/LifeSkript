@@ -464,7 +464,7 @@ public final class Aliases {
             missing.append("<any>, ");
             r++;
         }
-        if (r > 0 && Skript.logHigh())
+        if (r > 0 && Skript.testing() && Skript.debug())
             Skript.warning(missing.substring(0, missing.length() - 2));
         return r;
     }
@@ -605,7 +605,7 @@ public final class Aliases {
                 d = d.intersection(data);
             }
             if (!isAlias && d != null && !SkriptConfig.disableUsingIdInsteadOfAliasWarnings.value()) {
-                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please crate an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
+                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
             }
             t.add(d);
             return t;

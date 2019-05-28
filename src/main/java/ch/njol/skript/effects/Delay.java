@@ -86,7 +86,7 @@ public final class Delay extends Effect {
             }
         }
         if (ScriptLoader.isCurrentEvent(FunctionEvent.class) && !SkriptConfig.disableDelaysInFunctionsWarnings.value())
-            Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use a delay in functions.");
+            Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use delays in functions.");
         return true;
     }
 
