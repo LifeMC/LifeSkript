@@ -60,7 +60,7 @@ public final class ExprWorlds extends SimpleExpression<World> {
 
     @Override
     public boolean isSingle() {
-        return Bukkit.getWorlds().size() == 1;
+        return false;
     }
 
     @Override

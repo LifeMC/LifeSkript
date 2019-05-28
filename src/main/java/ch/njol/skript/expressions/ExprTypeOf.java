@@ -30,6 +30,8 @@ import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.util.ConvertedExpression;
 import ch.njol.skript.registrations.Converters;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -42,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4")
 public final class ExprTypeOf extends SimplePropertyExpression<Object, Object> {
     static {
-        register(ExprTypeOf.class, Object.class, "type", "entitydatas/itemstacks");
+        register(ExprTypeOf.class, Object.class, "type", "entitydatas/itemstacks/inventories/blocks");
     }
 
     @Override
@@ -50,6 +52,7 @@ public final class ExprTypeOf extends SimplePropertyExpression<Object, Object> {
         return "type";
     }
 
+    @SuppressWarnings("deprecated")
     @Override
     @Nullable
     public Object convert(final Object o) {
@@ -57,6 +60,10 @@ public final class ExprTypeOf extends SimplePropertyExpression<Object, Object> {
             return ((EntityData<?>) o).getSuperType();
         } else if (o instanceof ItemStack) {
             return new ItemStack(((ItemStack) o).getType(), 1, ((ItemStack) o).getDurability());
+        } else if (o instanceof Inventory) {
+            return ((Inventory) o).getType();
+        } else if (o instanceof Block) {
+            return new ItemStack(((Block) o).getType(), 1, ((Block) o).getData());
         }
         assert false;
         return null;

@@ -70,19 +70,41 @@ public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
     @Override
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
-        if (mode == ChangeMode.SET || mode == ChangeMode.RESET)
+        if (mode == ChangeMode.SET || mode == ChangeMode.RESET || mode == ChangeMode.ADD || mode == ChangeMode.REMOVE)
             return new Class[]{Number.class};
         return null;
     }
 
     @Override
     public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
-        final float d = delta == null ? 0 : Math2.fit(-1, ((Number) delta[0]).floatValue(), 1);
+        final float input = delta == null ? 0 : ((Number) delta[0]).floatValue();
+
         for (final Player p : getExpr().getArray(e)) {
+            float oldSpeed = walk ? p.getWalkSpeed() : p.getFlySpeed();
+            float newSpeed;
+
+            switch (mode) {
+                case SET:
+                    newSpeed = input;
+                    break;
+                case ADD:
+                    newSpeed = oldSpeed + input;
+                    break;
+                case REMOVE:
+                    newSpeed = oldSpeed - input;
+                    break;
+                //$CASES-OMITTED$
+                default:
+                    newSpeed = walk ? 0.2f : 0.1f;
+                    break;
+            }
+
+            final float d = Math2.fit(-1, newSpeed, 1);
+
             if (walk)
-                p.setWalkSpeed(delta == null ? 0.2f : d);
+                p.setWalkSpeed(d);
             else
-                p.setFlySpeed(delta == null ? 0.1f : d);
+                p.setFlySpeed(d);
         }
     }
 

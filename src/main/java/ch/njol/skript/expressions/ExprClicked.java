@@ -37,6 +37,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.eclipse.jdt.annotation.Nullable;
@@ -52,6 +53,8 @@ import java.lang.reflect.Array;
 @Since("1.0")
 @Events("click")
 public final class ExprClicked extends SimpleExpression<Object> {
+    private static final boolean hasInteractAtEntityEvent = Skript.classExists("org.bukkit.event.player.PlayerInteractAtEntityEvent");
+
     static {
         Skript.registerExpression(ExprClicked.class, Object.class, ExpressionType.SIMPLE, "[the] clicked (block|%-*itemtype/entitydata%)");
     }
@@ -69,7 +72,7 @@ public final class ExprClicked extends SimpleExpression<Object> {
         final Object type = exprs[0] == null ? null : ((Literal<?>) exprs[0]).getSingle();
         if (type instanceof EntityData) {
             entityType = (EntityData<?>) type;
-            if (!ScriptLoader.isCurrentEvent(PlayerInteractEntityEvent.class)) {
+            if (!ScriptLoader.isCurrentEvent(PlayerInteractEntityEvent.class) && (hasInteractAtEntityEvent && !ScriptLoader.isCurrentEvent(PlayerInteractAtEntityEvent.class))) {
                 Skript.error("The expression 'clicked entity' can only be used in a click event", ErrorQuality.SEMANTIC_ERROR);
                 return false;
             }

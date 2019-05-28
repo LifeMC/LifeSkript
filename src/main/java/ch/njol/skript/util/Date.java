@@ -26,19 +26,29 @@ import ch.njol.skript.SkriptConfig;
 import ch.njol.yggdrasil.YggdrasilSerializable;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.TimeZone;
+
 /**
  * @author Peter Güttinger
  */
 public final class Date implements Comparable<Date>, YggdrasilSerializable {
 
+    /**
+     * Timestamp. Should always be in computer time/UTC/GMT+0.
+     */
     private long timestamp;
 
     public Date() {
-        timestamp = System.currentTimeMillis();
+        this(System.currentTimeMillis());
     }
 
     public Date(final long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Date(final long timestamp, final TimeZone zone) {
+        final long offset = zone.getOffset(timestamp);
+        this.timestamp = timestamp - offset;
     }
 
     public Timespan difference(final Date other) {

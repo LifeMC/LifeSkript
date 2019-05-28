@@ -22,32 +22,109 @@
 
 package ch.njol.skript.expressions;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
-import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.util.Kleenean;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
-/**
- * @author Peter Güttinger
- */
+import java.net.InetAddress;
+import java.util.stream.Stream;
+
 @Name("IP")
-@Description("The IP address of a player.")
-@Examples({"IP-ban the player # is equal to the next line", "ban the IP-address of the player", "broadcast \"Banned the IP %IP of player%\""})
-@Since("1.4")
-public final class ExprIP extends SimplePropertyExpression<Player, String> {
+@Description("The IP address of a player, or the connected player in a <a href='events.html#connect'>connect</a> event, " +
+        "or the pinger in a <a href='events.html#server_list_ping'>server list ping</a> event.")
+@Examples({"ban the IP address of the player",
+        "broadcast \"Banned the IP %IP of player%\"",
+        "",
+        "on connect:",
+        "\tlog \"[%now%] %player% (%ip%) is connected to the server.\"",
+        "",
+        "on server list ping:",
+        "\tsend \"%IP-address%\" to the console"})
+@Since("1.4, 2.2.16 (when used in server list ping or connect events)")
+public final class ExprIP extends SimpleExpression<String> {
+
     static {
-        Skript.registerExpression(ExprIP.class, String.class, ExpressionType.PROPERTY, "IP[s][( |-)address[es]] of %players%", "%players%'[s] IP[s][( |-)address[es]]");
+        Skript.registerExpression(ExprIP.class, String.class, ExpressionType.PROPERTY,
+                "IP[s][( |-)address[es]] of %players%",
+                "%players%'[s] IP[s][( |-)address[es]]",
+                "IP[( |-)address]");
+    }
+
+    @SuppressWarnings("null")
+    private Expression<Player> players;
+
+    private boolean isConnectEvent, isProperty;
+
+    @SuppressWarnings({"null", "unchecked"})
+    @Override
+    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+        isProperty = matchedPattern < 2;
+        isConnectEvent = ScriptLoader.isCurrentEvent(PlayerLoginEvent.class);
+        boolean isServerPingEvent = ScriptLoader.isCurrentEvent(ServerListPingEvent.class);
+        if (isProperty) {
+            players = (Expression<Player>) exprs[0];
+        } else if (!isConnectEvent && !isServerPingEvent) {
+            Skript.error("You must specify players whose IP addresses to get outside of server list ping and connect events.");
+            return false;
+        }
+        return true;
     }
 
     @Override
     @Nullable
-    public String convert(final Player p) {
-        return p.getAddress().getAddress().getHostAddress();
+    protected String[] get(Event e) {
+        if (!isProperty) {
+            InetAddress address;
+            if (isConnectEvent)
+                // Return IP address of the connected player in connect event
+                address = ((PlayerLoginEvent) e).getAddress();
+            else
+                // Return IP address of the pinger in server list ping event
+                address = ((ServerListPingEvent) e).getAddress();
+            return CollectionUtils.array(address == null ? "unknown" : address.getHostAddress());
+        }
+
+        return Stream.of(players.getArray(e))
+                .map(player -> {
+                    assert player != null;
+                    return getIP(player, e);
+                })
+                .toArray(String[]::new);
+    }
+
+    private String getIP(Player player, Event e) {
+        InetAddress address;
+        // The player has no IP yet in a connect event, but the event has it
+        // It is a "feature" of Spigot, apparently
+        if (isConnectEvent && ((PlayerLoginEvent) e).getPlayer().equals(player))
+            address = ((PlayerLoginEvent) e).getAddress();
+        else if (e instanceof ServerListPingEvent)
+            address = ((ServerListPingEvent) e).getAddress();
+        else
+            address = player.getAddress().getAddress();
+
+        String hostAddress = address == null ? "unknown" : address.getHostAddress();
+        assert hostAddress != null;
+        return hostAddress;
+    }
+
+    @Override
+    public boolean isSingle() {
+        return !isProperty || players.isSingle();
     }
 
     @Override
@@ -56,8 +133,10 @@ public final class ExprIP extends SimplePropertyExpression<Player, String> {
     }
 
     @Override
-    protected String getPropertyName() {
-        return "IP address" + (getExpr().isSingle() ? "" : "es");
+    public String toString(@Nullable Event e, boolean debug) {
+        if (e == null || !isProperty)
+            return "the IP address";
+        return "the IP address of " + players.toString(e, debug);
     }
 
 }
