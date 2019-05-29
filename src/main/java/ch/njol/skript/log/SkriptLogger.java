@@ -48,11 +48,11 @@ public final class SkriptLogger {
     @SuppressWarnings("null")
     public static final Logger LOGGER = Bukkit.getServer() != null ? Bukkit.getLogger() : Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); // cannot use Bukkit in tests
     private static final HandlerList handlers = new HandlerList();
+    private static final List<LogEntry> suppressed = new ArrayList<>();
     static boolean debug;
     @Nullable
     private static Node node;
     private static Verbosity verbosity = Verbosity.NORMAL;
-    private static final List<LogEntry> suppressed = new ArrayList<>();
     private static boolean suppressing;
     private static boolean suppressWarnings;
     private static boolean suppressErrors;

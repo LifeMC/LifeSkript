@@ -301,7 +301,7 @@ public final class Variables {
         }
         // Prevent race conditions from returning variables with incorrect values
         if (!changeQueue.isEmpty()) {
-            for (VariableChange change : changeQueue) {
+            for (final VariableChange change : changeQueue) {
                 if (change.name.equals(name))
                     return change.value;
             }
@@ -369,7 +369,7 @@ public final class Variables {
     }
 
     static final void setVariable(final String name, @Nullable final Object value) {
-        boolean gotLock = variablesLock.writeLock().tryLock();
+        final boolean gotLock = variablesLock.writeLock().tryLock();
         if (gotLock) {
             try {
                 variables.setVariable(name, value);

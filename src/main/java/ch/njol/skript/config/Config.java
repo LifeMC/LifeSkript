@@ -66,7 +66,7 @@ public final class Config {
      */
     private String indentationName = "tab";
 
-    public Config(final InputStream source, final String fileName, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
+    public Config(final BufferedInputStream source, final String fileName, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
         try {
             this.fileName = fileName;
             this.simple = simple;
@@ -97,6 +97,10 @@ public final class Config {
         } finally {
             source.close();
         }
+    }
+
+    public Config(final InputStream source, final String fileName, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
+        this(source instanceof BufferedInputStream ? (BufferedInputStream) source : new BufferedInputStream(source), fileName, simple, allowEmptySections, defaultSeparator);
     }
 
     @SuppressWarnings("resource")

@@ -53,12 +53,13 @@ import java.util.regex.Pattern;
 public final class FlatFileStorage extends VariablesStorage {
 
     /**
-     * @deprecated Use {@link StandardCharsets}
-     *
      * @see StandardCharsets
+     * @deprecated Use {@link StandardCharsets}
      */
-    @Deprecated @SuppressWarnings("null")
+    @Deprecated
+    @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
+    public static final int REQUIRED_CHANGES_FOR_RESAVE = System.getProperty("skript.requiredVariableChangesForSave") != null ? Integer.parseInt(System.getProperty("skript.requiredVariableChangesForSave")) : 1000;
     @SuppressWarnings("null")
     private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
     /**
@@ -66,20 +67,19 @@ public final class FlatFileStorage extends VariablesStorage {
      */
     @SuppressWarnings("null")
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
-    private static boolean savingVariables = false;
+    static boolean savingVariables = false;
     private static long savedVariables;
+    @Nullable
+    private static Date lastSave;
     final AtomicInteger changes = new AtomicInteger();
     /**
      * A Lock on this object must be acquired after connectionLock (if that lock is used) (and thus also after {@link Variables#getReadLock()}).
      */
     private final NotifyingReference<PrintWriter> changesWriter = new NotifyingReference<>();
-    public static final int REQUIRED_CHANGES_FOR_RESAVE = System.getProperty("skript.requiredVariableChangesForSave") != null ? Integer.parseInt(System.getProperty("skript.requiredVariableChangesForSave")) : 1000;
     private volatile boolean loaded;
     @Nullable
     private Task saveTask;
     private boolean loadError;
-    @Nullable
-    private static Date lastSave;
 
     protected FlatFileStorage(final String name) {
         super(name);
@@ -245,7 +245,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
         saveTask = new Task(Skript.getInstance(), 5 * 60 * 20, 5 * 60 * 20, true) {
             @Override
-            public void run() {
+            public final void run() {
                 if (changes.get() >= REQUIRED_CHANGES_FOR_RESAVE && !savingVariables) {
                     saveVariables(false);
                     changes.set(0);
@@ -461,7 +461,7 @@ public final class FlatFileStorage extends VariablesStorage {
             }
         } finally {
             Variables.getReadLock().unlock();
-            boolean gotLock = Variables.variablesLock.writeLock().tryLock();
+            final boolean gotLock = Variables.variablesLock.writeLock().tryLock();
             if (gotLock) { // Only process queue now if it doesn't require us to wait
                 try {
                     Variables.processChangeQueue();

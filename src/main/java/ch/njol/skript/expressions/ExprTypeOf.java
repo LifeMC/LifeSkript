@@ -53,7 +53,6 @@ public final class ExprTypeOf extends SimplePropertyExpression<Object, Object> {
         return "type";
     }
 
-    @SuppressWarnings("deprecated")
     @Override
     @Nullable
     public Object convert(final Object o) {

@@ -37,11 +37,11 @@ import java.nio.charset.StandardCharsets;
 public final class ConfigReader extends BufferedReader {
 
     /**
-     * @deprecated Use {@link StandardCharsets}
-     *
      * @see StandardCharsets
+     * @deprecated Use {@link StandardCharsets}
      */
-    @Deprecated @SuppressWarnings("null")
+    @Deprecated
+    @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     @Nullable
@@ -91,10 +91,9 @@ public final class ConfigReader extends BufferedReader {
     }
 
     /**
+     * @see ConfigReader#getLineNumber()
      * @deprecated Bad naming, backwards
      * compatibility.
-     *
-     * @see ConfigReader#getLineNumber()
      */
     @Deprecated
     public int getLineNum() {

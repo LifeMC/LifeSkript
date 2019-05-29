@@ -40,12 +40,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Represents a {@link OfflinePlayer} but not resolved yet.
- *
+ * <p>
  * You should use this class for speeding up the UUID resolving process.
- *
+ * <p>
  * If a method requires the player to be resolved and method has return value, then the player is resolved in
  * the caller thread (usually main thread), and the method is processed normally.
- *
+ * <p>
  * IF method has no return value, the method's action runs after the player is resolved.
  *
  * @author Njol (idea and first version), TheDGOfficial (recode)
@@ -153,7 +153,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
         }
 
         if (Skript.testing() && Skript.debug())
-            Skript.debug("Resolving unresolved offline player \"" + this.getName() + "\" immediately because it is needed for something!");
+            Skript.debug("Resolving unresolved offline player \"" + getName() + "\" immediately because it is needed for something!");
 
         bukkitOfflinePlayer = Bukkit.getOfflinePlayer(name); // Resolve now.
         // Javadoc says: "This method may involve a blocking web request to get the UUID for the given name."
@@ -204,7 +204,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     @SuppressWarnings("null")
     public final String getName() {
         // We already know its name, just to ensure, return from the real Bukkit offline player if available.
-        return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getName() : this.name;
+        return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getName() : name;
     }
 
     /**

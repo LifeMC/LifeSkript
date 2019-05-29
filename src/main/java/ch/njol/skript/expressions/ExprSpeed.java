@@ -80,7 +80,7 @@ public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
         final float input = delta == null ? 0 : ((Number) delta[0]).floatValue();
 
         for (final Player p : getExpr().getArray(e)) {
-            float oldSpeed = walk ? p.getWalkSpeed() : p.getFlySpeed();
+            final float oldSpeed = walk ? p.getWalkSpeed() : p.getFlySpeed();
             float newSpeed;
 
             switch (mode) {

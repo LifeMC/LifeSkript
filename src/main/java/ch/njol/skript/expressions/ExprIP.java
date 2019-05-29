@@ -74,10 +74,10 @@ public final class ExprIP extends SimpleExpression<String> {
 
     @SuppressWarnings({"null", "unchecked"})
     @Override
-    public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult) {
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         isProperty = matchedPattern < 2;
         isConnectEvent = ScriptLoader.isCurrentEvent(PlayerLoginEvent.class);
-        boolean isServerPingEvent = ScriptLoader.isCurrentEvent(ServerListPingEvent.class);
+        final boolean isServerPingEvent = ScriptLoader.isCurrentEvent(ServerListPingEvent.class);
         if (isProperty) {
             players = (Expression<Player>) exprs[0];
         } else if (!isConnectEvent && !isServerPingEvent) {
@@ -89,7 +89,7 @@ public final class ExprIP extends SimpleExpression<String> {
 
     @Override
     @Nullable
-    protected String[] get(Event e) {
+    protected String[] get(final Event e) {
         if (!isProperty) {
             InetAddress address;
             if (isConnectEvent)
@@ -109,7 +109,7 @@ public final class ExprIP extends SimpleExpression<String> {
                 .toArray(String[]::new);
     }
 
-    private String getIP(Player player, Event e) {
+    private String getIP(final Player player, final Event e) {
         InetAddress address;
         // The player has no IP yet in a connect event, but the event has it
         // It is a "feature" of Spigot, apparently
@@ -120,7 +120,7 @@ public final class ExprIP extends SimpleExpression<String> {
         else
             address = player.getAddress().getAddress();
 
-        String hostAddress = address == null ? "unknown" : address.getHostAddress();
+        final String hostAddress = address == null ? "unknown" : address.getHostAddress();
         assert hostAddress != null;
         return hostAddress;
     }
@@ -136,7 +136,7 @@ public final class ExprIP extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(@Nullable Event e, boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null || !isProperty)
             return "the IP address";
         return "the IP address of " + players.toString(e, debug);

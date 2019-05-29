@@ -85,11 +85,10 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
 
     /**
      * A non-critical ID remapping for syntax elements to register using a class multiple times.
-     *
+     * <p>
      * Only used for Skript's documentation.
      *
      * @param id The ID remapping for syntax elements to register using a class multiple times.
-     *
      * @return This SkriptEventInfo object
      */
     public SkriptEventInfo<E> documentationID(final String id) {
@@ -100,11 +99,10 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
 
     /**
      * Other plugin dependencies for a syntax element
-     *
+     * <p>
      * Only used for Skript's documentation
      *
      * @param pluginNames The required plugin names.
-     *
      * @return This SkriptEventInfo object
      */
     public SkriptEventInfo<E> requiredPlugins(final String... pluginNames) {
