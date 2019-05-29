@@ -36,6 +36,7 @@ import ch.njol.util.coll.iterator.SingleItemIterable;
 import ch.njol.yggdrasil.Fields;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
@@ -144,26 +145,26 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return buf;
     }
 
-    private static final boolean addTo(final @Nullable ItemStack is, final ItemStack[] buf) {
-        if (is == null || is.getTypeId() == 0)
+    private static final boolean addTo(final @Nullable ItemStack item, final ItemStack[] buf) {
+        if (item == null || item.getType() == Material.AIR)
             return true;
         int added = 0;
         for (final ItemStack element : buf) {
-            if (Utils.itemStacksEqual(is, element)) {
-                final int toAdd = Math.min(element.getMaxStackSize() - element.getAmount(), is.getAmount() - added);
+            if (Utils.itemStacksEqual(item, element)) {
+                final int toAdd = Math.min(element.getMaxStackSize() - element.getAmount(), item.getAmount() - added);
                 added += toAdd;
                 element.setAmount(element.getAmount() + toAdd);
-                if (added == is.getAmount())
+                if (added == item.getAmount())
                     return true;
             }
         }
         for (int i = 0; i < buf.length; i++) {
             if (buf[i] == null) {
-                final int toAdd = Math.min(is.getMaxStackSize(), is.getAmount() - added);
+                final int toAdd = Math.min(item.getMaxStackSize(), item.getAmount() - added);
                 added += toAdd;
-                buf[i] = is.clone();
+                buf[i] = item.clone();
                 buf[i].setAmount(toAdd);
-                if (added == is.getAmount())
+                if (added == item.getAmount())
                     return true;
             }
         }
