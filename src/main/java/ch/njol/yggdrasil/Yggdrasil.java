@@ -278,7 +278,7 @@ public final class Yggdrasil {
 
     @Nullable
     public <T> T loadFromFile(final File f, final Class<T> expectedType) throws IOException {
-        try (FileInputStream fin = new FileInputStream(f); YggdrasilInputStream yin = newInputStream(fin)) {
+        try (final BufferedInputStream fin = new BufferedInputStream(new FileInputStream(f)); YggdrasilInputStream yin = newInputStream(fin)) {
             return yin.readObject(expectedType);
         }
     }

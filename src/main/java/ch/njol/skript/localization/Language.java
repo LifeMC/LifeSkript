@@ -221,7 +221,7 @@ public final class Language {
         final File f = new File(addon.plugin.getDataFolder(), addon.getLanguageFileDirectory() + File.separator + name + ".lang");
         try {
             if (f.exists())
-                l.putAll(load(new FileInputStream(f), name));
+                l.putAll(load(new BufferedInputStream(new FileInputStream(f)), name));
         } catch (final FileNotFoundException e) {
             assert false;
         }

@@ -52,7 +52,12 @@ import java.util.regex.Pattern;
  */
 public final class FlatFileStorage extends VariablesStorage {
 
-    @SuppressWarnings("null")
+    /**
+     * @deprecated Use {@link StandardCharsets}
+     *
+     * @see StandardCharsets
+     */
+    @Deprecated @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
     @SuppressWarnings("null")
     private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
@@ -61,7 +66,7 @@ public final class FlatFileStorage extends VariablesStorage {
      */
     @SuppressWarnings("null")
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
-    private static boolean savingVariables = true;
+    private static boolean savingVariables = false;
     private static long savedVariables;
     final AtomicInteger changes = new AtomicInteger();
     /**
@@ -149,7 +154,7 @@ public final class FlatFileStorage extends VariablesStorage {
         final Version v2_1 = new Version(2, 1);
         boolean update2_1 = false;
 
-        try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8))) {
+        try (final BufferedReader r = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), StandardCharsets.UTF_8))) {
             String line;
             int lineNum = 0;
             while ((line = r.readLine()) != null) {
@@ -241,7 +246,7 @@ public final class FlatFileStorage extends VariablesStorage {
         saveTask = new Task(Skript.getInstance(), 5 * 60 * 20, 5 * 60 * 20, true) {
             @Override
             public void run() {
-                if (changes.get() >= REQUIRED_CHANGES_FOR_RESAVE) {
+                if (changes.get() >= REQUIRED_CHANGES_FOR_RESAVE && !savingVariables) {
                     saveVariables(false);
                     changes.set(0);
                 }
@@ -257,12 +262,12 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     @Override
-    protected boolean requiresFile() {
+    protected final boolean requiresFile() {
         return true;
     }
 
     @Override
-    protected File getFile(final String file) {
+    protected final File getFile(final String file) {
         return new File(file);
     }
 
@@ -313,7 +318,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 if (changesWriter.get() != null)
                     return true;
                 try {
-                    changesWriter.set(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), UTF_8)));
+                    changesWriter.set(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8)));
                     loaded = true;
                     return true;
                 } catch (final FileNotFoundException e) {
@@ -345,12 +350,12 @@ public final class FlatFileStorage extends VariablesStorage {
             final Task bt = backupTask;
             if (bt != null)
                 bt.cancel();
-        } else if (!finalSave && lastSave != null && TimeUnit.MILLISECONDS.toMinutes(lastSave.difference(new Date()).getMilliSeconds()) < 1L) {
+        } else if (lastSave != null && TimeUnit.MILLISECONDS.toMinutes(lastSave.difference(new Date()).getMilliSeconds()) < 1L) {
             if (Skript.debug())
                 Skript.debug("Skipping save of variables, the last save happened on " + lastSave);
             return; // Skip, this not the final (the one in the shutdown) save and last save is happened <= 1 minutes ago.
-        } else if (!finalSave && !Skript.isSkriptRunning())
-			return; // Prevent multiple saves when shutting down - it may or may not cause issues but anyway.
+        } else if (!Skript.isSkriptRunning())
+            return; // Prevent multiple saves when shutting down - it may or may not cause issues but anyway.
         try {
             Variables.getReadLock().lock();
             synchronized (connectionLock) {
@@ -391,6 +396,9 @@ public final class FlatFileStorage extends VariablesStorage {
                         final Date start = new Date();
                         lastSave = start;
 
+                        savedVariables = 0; // Method may be called multiple times
+                        savingVariables = true;
+
                         final TreeMap<String, Object> variables = Variables.getVariables();
 
                         final int count = variables.size();
@@ -399,9 +407,6 @@ public final class FlatFileStorage extends VariablesStorage {
                         if (Skript.logHigh())
                             // Unfortunately, this only displays the non-list variable counts.
                             Skript.info("Saving approximately " + count + " variables to '" + fileName + "'");
-
-                        savedVariables = 0; // Method may be called multiple times
-                        savingVariables = true;
 
                         // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's loading many variables
                         final Thread savingLoggerThread = Skript.newThread(() -> {
@@ -430,11 +435,6 @@ public final class FlatFileStorage extends VariablesStorage {
                         if (Skript.logHigh())
                             Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
 
-                        savingVariables = false;
-                        savedVariables = 0; // Method may be called multiple times
-
-                        savingLoggerThread.interrupt(); // In case if not interrupted
-
                         pw.println();
 
                         pw.flush();
@@ -444,6 +444,11 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         if (finalSave)
                             SkriptCommand.resetPriority();
+
+                        savingVariables = false;
+                        savedVariables = 0; // Method may be called multiple times
+
+                        savingLoggerThread.interrupt(); // In case if not interrupted
 
                     } catch (final IOException e) {
                         Skript.error("Unable to make a final save of the database '" + databaseName + "' (no variables are lost): " + ExceptionUtils.toString(e));
