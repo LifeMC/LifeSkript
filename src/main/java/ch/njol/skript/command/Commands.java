@@ -277,7 +277,9 @@ public final class Commands {
 //                c.sendHelp(sender);
 //                return true;
 //            }
-            if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
+            if (Skript.logHigh())
+                Skript.info("Executing script command \"/" + command + "\" as " + (sender instanceof Player ? sender.getName() : "console"));
+            else if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
             c.execute(sender, cmd[0], cmd.length == 1 ? "" : cmd[1]);
             return true;
