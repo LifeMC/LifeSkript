@@ -89,6 +89,8 @@ public final class Commands {
     public static final Message m_correct_usage = new Message("commands.correct usage");
     public static final Message m_internal_error = new Message("commands.internal error");
     public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
+    public static final AtomicBoolean cancelledEvent =
+            new AtomicBoolean();
     private static final Map<String, ScriptCommand> commands = new HashMap<>();
     private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
@@ -108,9 +110,6 @@ public final class Commands {
     @Nullable
     private static Set<String> cmAliases;
     private static boolean registeredListeners;
-
-    public static final AtomicBoolean cancelledEvent =
-            new AtomicBoolean();
 
     static {
         init(); // separate method for the annotation
@@ -189,7 +188,7 @@ public final class Commands {
 
     @SuppressWarnings("null")
     public static final void onServerCommand(final ServerCommandEvent e) {
-        if (e.getCommand() == null || e.getCommand().isEmpty() || (cancellableServerCommand && e.isCancelled()))
+        if (e.getCommand() == null || e.getCommand().isEmpty() || cancellableServerCommand && e.isCancelled())
             return;
         boolean effectCommand = false;
         if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
