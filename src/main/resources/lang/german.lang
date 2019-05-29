@@ -679,6 +679,9 @@ entities:
 	villager:
 		name: Dorfbewohner @m
 		pattern: <age> Dorfbewohner
+	normal:
+		name: Dorfbewohner @m
+		pattern: <age> Dorfbewohner
 	farmer:
 		name: Bauer|n @m
 		pattern: <age> Bauer[n]
