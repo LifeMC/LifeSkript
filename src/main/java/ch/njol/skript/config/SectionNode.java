@@ -66,7 +66,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 
     static final SectionNode load(final String name, final String comment, final SectionNode parent, final ConfigReader r) throws IOException {
         parent.config.level++;
-        final SectionNode node = new SectionNode(name, comment, parent, r.getLineNum()).load_i(r);
+        final SectionNode node = new SectionNode(name, comment, parent, r.getLineNumber()).load_i(r);
         SkriptLogger.setNode(parent);
         parent.config.level--;
         return node;
@@ -283,14 +283,14 @@ public final class SectionNode extends Node implements Iterable<Node> {
                     config.setIndentation(s);
                     indentationSet = true;
                 } else {
-                    nodes.add(new InvalidNode(value, comment, this, r.getLineNum()));
+                    nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
                     Skript.error("indentation error: indent must only consist of either spaces or tabs, but not mixed (found " + readableWhitespace(s) + ")");
                     continue;
                 }
             }
             if (!value.matches("\\s*") && !value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\S.*")) {
                 if (value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\s.*") || !value.matches("^(" + config.getIndentation() + ")*\\S.*")) {
-                    nodes.add(new InvalidNode(value, comment, this, r.getLineNum()));
+                    nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
                     final String s = "" + value.replaceFirst("\\S.*$", "");
                     Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + " " + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
                     continue;
@@ -305,7 +305,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
             value = value.trim();
 
             if (value.isEmpty()) {
-                nodes.add(new VoidNode(value, comment, this, r.getLineNum()));
+                nodes.add(new VoidNode(value, comment, this, r.getLineNumber()));
                 continue;
             }
 
@@ -339,9 +339,9 @@ public final class SectionNode extends Node implements Iterable<Node> {
             }
 
             if (config.simple) {
-                nodes.add(new SimpleNode(value, comment, r.getLineNum(), this));
+                nodes.add(new SimpleNode(value, comment, r.getLineNumber(), this));
             } else {
-                nodes.add(getEntry(value, comment, r.getLineNum(), config.separator));
+                nodes.add(getEntry(value, comment, r.getLineNumber(), config.separator));
             }
 
         }

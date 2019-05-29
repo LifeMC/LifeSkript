@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -39,6 +40,9 @@ import java.util.Map;
  * @author Peter Güttinger
  */
 public final class Config {
+
+    public static final int GLOBAL_BUFFER_LENGTH = System.getProperty("skript.bufferLength") != null
+            ? Integer.valueOf(System.getProperty("skript.bufferLength")) : -1;
 
     final String defaultSeparator;
     final boolean allowEmptySections;
@@ -79,8 +83,16 @@ public final class Config {
             if (Skript.logVeryHigh())
                 Skript.info("Loading '" + fileName + "'");
 
-            try (ConfigReader r = new ConfigReader(source)) {
-                main = SectionNode.load(this, r);
+            if (GLOBAL_BUFFER_LENGTH != -1) {
+                if (GLOBAL_BUFFER_LENGTH < 8192) // The default is 8192, below will cause performance drop
+                    throw new IllegalArgumentException("Please enter a valid buffer length that is higher than 8192, in bytes. (given " + GLOBAL_BUFFER_LENGTH + " bytes)");
+                try (final ConfigReader r = new ConfigReader(source, GLOBAL_BUFFER_LENGTH)) {
+                    main = SectionNode.load(this, r);
+                }
+            } else {
+                try (final ConfigReader r = new ConfigReader(source)) {
+                    main = SectionNode.load(this, r);
+                }
             }
         } finally {
             source.close();
@@ -89,7 +101,7 @@ public final class Config {
 
     @SuppressWarnings("resource")
     public Config(final File file, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
-        this(new FileInputStream(file), file.getName(), simple, allowEmptySections, defaultSeparator);
+        this(new BufferedInputStream(new FileInputStream(file)), file.getName(), simple, allowEmptySections, defaultSeparator);
         this.file = file;
     }
 
@@ -104,7 +116,7 @@ public final class Config {
      * @throws IOException
      */
     public Config(final String s, final String fileName, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
-        this(new ByteArrayInputStream(s.getBytes(ConfigReader.UTF_8)), fileName, simple, allowEmptySections, defaultSeparator);
+        this(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)), fileName, simple, allowEmptySections, defaultSeparator);
     }
 
     String getIndentation() {

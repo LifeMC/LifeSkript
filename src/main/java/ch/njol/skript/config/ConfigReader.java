@@ -36,18 +36,28 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ConfigReader extends BufferedReader {
 
-    @SuppressWarnings("null")
+    /**
+     * @deprecated Use {@link StandardCharsets}
+     *
+     * @see StandardCharsets
+     */
+    @Deprecated @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     @Nullable
     private String line;
+
     private boolean reset;
     private int ln;
 
     private boolean hasNonEmptyLine;
 
     public ConfigReader(final InputStream source) {
-        super(new InputStreamReader(source, UTF_8));
+        super(new InputStreamReader(source, StandardCharsets.UTF_8));
+    }
+
+    public ConfigReader(final InputStream source, final int bufferLength) {
+        super(new InputStreamReader(source, StandardCharsets.UTF_8), bufferLength);
     }
 
     @Override
@@ -80,7 +90,18 @@ public final class ConfigReader extends BufferedReader {
         reset = true;
     }
 
+    /**
+     * @deprecated Bad naming, backwards
+     * compatibility.
+     *
+     * @see ConfigReader#getLineNumber()
+     */
+    @Deprecated
     public int getLineNum() {
+        return ln;
+    }
+
+    public int getLineNumber() {
         return ln;
     }
 
@@ -91,7 +112,7 @@ public final class ConfigReader extends BufferedReader {
 
     @Override
     public boolean markSupported() {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
