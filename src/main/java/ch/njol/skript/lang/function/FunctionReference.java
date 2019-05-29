@@ -182,6 +182,15 @@ public final class FunctionReference<T> {
         return function.returnType.getC();
     }
 
+    @Nullable
+    public Function<? extends T> getFunction() {
+        return function;
+    }
+
+    public boolean resetReturnValue() {
+        return function.resetReturnValue();
+    }
+
     @SuppressWarnings("null")
     public String toString(@Nullable final Event e, final boolean debug) {
         final StringBuilder b = new StringBuilder(functionName + "(");

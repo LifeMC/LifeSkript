@@ -129,6 +129,14 @@ public abstract class Function<T> {
     @Nullable
     public abstract T[] execute(FunctionEvent<? extends T> e, final Object[][] params);
 
+    /**
+     * Resets the return value of the {@code Function}.
+     * Should be called right after execution.
+     *
+     * @return Whether or not the return value was successfully reset
+     */
+    public abstract boolean resetReturnValue();
+
     @Override
     public String toString() {
         return "function " + name;

@@ -96,4 +96,9 @@ public abstract class JavaFunction<T> extends Function<T> {
         return since;
     }
 
+    @Override
+    public boolean resetReturnValue() {
+        return true;
+    }
+
 }
