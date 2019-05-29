@@ -50,6 +50,7 @@ import org.bukkit.event.server.ServerCommandEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.List;
+import java.util.regex.MatchResult;
 
 /**
  * @author Peter Güttinger
@@ -109,7 +110,19 @@ public final class ExprArgument extends SimpleExpression<Object> {
                 break;
             case 1:
             case 2:
-                @SuppressWarnings("null") final int i = Utils.parseInt(parser.regexes.get(0).group(1));
+                // Figure out in which format (1st, 2nd, 3rd, Nth) argument was given in
+                final MatchResult regex = parser.regexes.get(0);
+                String argMatch = null;
+
+                for (int i = 1; i <= 4; i++) {
+                    argMatch = regex.group(i);
+                    if (argMatch != null)
+                        break; // Found format
+                }
+
+                assert argMatch != null;
+                final int i = Utils.parseInt(argMatch);
+
                 if (!dynamic) {
                     assert currentArguments != null;
                     if (i > currentArguments.size()) {
