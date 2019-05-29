@@ -113,6 +113,11 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
         return StringUtils.join(names, ", ");
     }
 
+    @Nullable
+    public Object getEffect() {
+        return type.effect;
+    }
+
     @SuppressWarnings("null")
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {

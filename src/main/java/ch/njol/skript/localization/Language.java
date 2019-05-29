@@ -35,6 +35,8 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
+//import ch.njol.skript.util.Date;
+
 /**
  * @author Peter Güttinger
  */
@@ -169,24 +171,36 @@ public final class Language {
     }
 
     public static final void loadDefault(final SkriptAddon addon) {
+//        final boolean flag = addon.plugin instanceof Skript && Skript.logHigh();
+//        Date start = null;
+
+//        if (flag)
+//            start = new Date();
+
         if (addon.getLanguageFileDirectory() == null)
             return;
         Map<String, String> en;
         try (final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang")) {
             if (din == null)
                 throw new IllegalStateException(addon + " is missing the required english.lang file!");
-            en = new Config(din, "english.lang", false, false, ":").toMap(".");
+            en = new Config(new BufferedInputStream(din), "english.lang", false, false, ":").toMap(".");
         } catch (final Throwable tw) {
             throw Skript.exception(tw, "Could not load " + addon + "'s default language file!");
         }
         final String v = en.get("version");
-        //if (v == null)
-        //Skript.warning("Missing version in english.lang");
+        if (v == null && Skript.testing() && Skript.debug())
+            Skript.warning("Missing version in english.lang");
         langVersion.put(addon.plugin, v == null ? Skript.getVersion() : new Version(v));
         en.remove("version");
         english.putAll(en);
         for (final LanguageChangeListener l : listeners)
             l.onLanguageChange();
+
+//        if (flag) {
+//            assert start != null : flag;
+//
+//            Skript.info("Loaded language files in " + start.difference(new Date()));
+//        }
     }
 
     public static final boolean load(String name) {
@@ -213,7 +227,7 @@ public final class Language {
         return true;
     }
 
-    @SuppressWarnings("resource") // closed in line 277.
+    @SuppressWarnings("resource")
     private static final boolean load(final SkriptAddon addon, final String name) {
         if (addon.getLanguageFileDirectory() == null)
             return false;
@@ -253,7 +267,7 @@ public final class Language {
         if (in == null)
             return new HashMap<>();
         try {
-            return new Config(in, name + ".lang", false, false, ":").toMap(".");
+            return new Config(in instanceof BufferedInputStream ? in : new BufferedInputStream(in), name + ".lang", false, false, ":").toMap(".");
         } catch (final IOException e) {
             Skript.exception(e, "Could not load the language file '" + name + ".lang': " + ExceptionUtils.toString(e));
             return new HashMap<>();

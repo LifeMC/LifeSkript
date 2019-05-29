@@ -31,6 +31,7 @@ import ch.njol.skript.util.FileUtils;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+
+//import ch.njol.skript.util.Date;
 
 /**
  * @author Peter Güttinger
@@ -166,7 +169,7 @@ public final class SkriptConfig {
     public static final EventPriority getPreviousPriority(final EventPriority priority) {
         EventPriority previousPriority;
 
-        switch(priority) {
+        switch (priority) {
             case MONITOR:
                 previousPriority = EventPriority.HIGHEST;
                 break;
@@ -197,6 +200,10 @@ public final class SkriptConfig {
 
     // also used for reloading
     static final boolean load() {
+//        final boolean flag = Skript.logHigh();
+//        Date start = null;
+//        if (flag)
+//            start = new Date();
         try {
             final File oldConfigFile = new File(Skript.getInstance().getDataFolder(), "config.cfg");
             final File configFile = new File(Skript.getInstance().getDataFolder(), "config.sk");
@@ -234,7 +241,7 @@ public final class SkriptConfig {
                         Skript.printDownloadLink();
                         return false;
                     }
-                    final Config newConfig = new Config(in, "Skript.jar/config.sk", false, false, ":");
+                    final Config newConfig = new Config(new BufferedInputStream(in), "Skript.jar/config.sk", false, false, ":");
                     in.close();
 
                     boolean forceUpdate = false;
@@ -295,6 +302,12 @@ public final class SkriptConfig {
 
 //			if (!keepConfigsLoaded.value())
 //				mainConfig = null;
+
+//            if(flag) {
+//                assert start != null : flag;
+//
+//                Skript.info("Loaded config in " + start.difference(new Date()));
+//            }
         } catch (final Throwable tw) {
             Skript.exception(tw, "An error occurred while loading the config");
             return false;
