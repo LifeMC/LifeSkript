@@ -48,6 +48,7 @@ import java.io.StreamCorruptedException;
 public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
+    public static final boolean DISABLE_BYTE_SHORT_FLOAT = System.getProperty("skript.disableByteShortFloat") != null && Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"));
 
     private JavaClasses() {
         throw new UnsupportedOperationException();
@@ -335,7 +336,7 @@ public final class JavaClasses {
         }).math(Number.class, new NumberArithmetic()));
 
         // FIXME Implement SkriptParser#isByte , SkriptParser#isShort and SkriptParser#isFloat to improve the performance without disabling the parsers.
-        if (System.getProperty("skript.disableByteShortFloat") == null || !Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"))) {
+        if (!DISABLE_BYTE_SHORT_FLOAT) {
             Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1f, true)).parser(new Parser<Float>() {
                 @Override
                 @Nullable
@@ -458,7 +459,7 @@ public final class JavaClasses {
             }
         }));
 
-        if (System.getProperty("skript.disableByteShortFloat") == null || !Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"))) {
+        if (!DISABLE_BYTE_SHORT_FLOAT) {
             Classes.registerClass(new ClassInfo<>(Short.class, "short").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>((short) 1, true)).parser(new Parser<Short>() {
                 @Override
                 @Nullable
@@ -518,7 +519,7 @@ public final class JavaClasses {
             }).math(Number.class, new NumberArithmetic()));
         }
 
-        if (System.getProperty("skript.disableByteShortFloat") == null || !Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"))) {
+        if (!DISABLE_BYTE_SHORT_FLOAT) {
             Classes.registerClass(new ClassInfo<>(Byte.class, "byte").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>((byte) 1, true)).parser(new Parser<Byte>() {
                 @Override
                 @Nullable
