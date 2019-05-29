@@ -24,17 +24,12 @@ package ch.njol.yggdrasil;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import static ch.njol.yggdrasil.Tag.*;
 
 public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
-
-    @SuppressWarnings("null")
-    private static final Charset UTF_8 = StandardCharsets.UTF_8;
-
     private final OutputStream out;
 
     private final short version;
@@ -73,7 +68,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
         } else {
             if (nextShortStringID < 0)
                 throw new YggdrasilException("Too many field names/class IDs (max: " + Integer.MAX_VALUE + ")");
-            final byte[] d = s.getBytes(UTF_8);
+            final byte[] d = s.getBytes(StandardCharsets.UTF_8);
             if (d.length >= (T_REFERENCE.tag & 0xFF))
                 throw new YggdrasilException("Field name or Class ID too long: " + s);
             write(d.length);
@@ -186,7 +181,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 
     @Override
     protected void writeStringValue(final String s) throws IOException {
-        final byte[] d = s.getBytes(UTF_8);
+        final byte[] d = s.getBytes(StandardCharsets.UTF_8);
         writeUnsignedInt(d.length);
         out.write(d);
     }

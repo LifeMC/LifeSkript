@@ -52,7 +52,6 @@ import org.bukkit.Chunk;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -70,8 +69,6 @@ public final class Classes {
      * Consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */
     private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
-    @SuppressWarnings("null")
-    private static final Charset UTF_8 = StandardCharsets.UTF_8;
     @Nullable
     private static ClassInfo<?>[] classInfos;
 
@@ -651,7 +648,7 @@ public final class Classes {
         assert Enum.class.isAssignableFrom(Kleenean.class) && Tag.getType(Kleenean.class) == Tag.T_ENUM : Tag.getType(Kleenean.class); // TODO why is this check here?
         final Tag t = Tag.getType(c.getC());
         assert t.isWrapper() || t == Tag.T_STRING || t == Tag.T_OBJECT || t == Tag.T_ENUM;
-        final byte[] cn = t == Tag.T_OBJECT || t == Tag.T_ENUM ? Variables.yggdrasil.getID(c.getC()).getBytes(UTF_8) : null;
+        final byte[] cn = t == Tag.T_OBJECT || t == Tag.T_ENUM ? Variables.yggdrasil.getID(c.getC()).getBytes(StandardCharsets.UTF_8) : null;
         final byte[] r = new byte[YGGDRASIL_START.length + 1 + (cn == null ? 0 : 1 + cn.length)];
         int i = 0;
         for (; i < YGGDRASIL_START.length; i++)

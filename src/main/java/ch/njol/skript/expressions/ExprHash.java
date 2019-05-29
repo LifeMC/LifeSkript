@@ -35,7 +35,6 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -52,8 +51,6 @@ import java.security.NoSuchAlgorithmException;
 public final class ExprHash extends PropertyExpression<String, String> {
     @Nullable
     static final MessageDigest algorithm;
-    @SuppressWarnings("null")
-    private static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     static {
         Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
@@ -93,7 +90,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
         assert algorithm != null;
         final String[] r = new String[source.length];
         for (int i = 0; i < r.length; i++)
-            r[i] = toHex(algorithm.digest(source[i].getBytes(UTF_8)));
+            r[i] = toHex(algorithm.digest(source[i].getBytes(StandardCharsets.UTF_8)));
         return r;
     }
 
