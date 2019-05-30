@@ -27,6 +27,7 @@ package ch.njol.skript.timings
 import ch.njol.skript.Skript
 import co.aikar.timings.Timing
 import co.aikar.timings.Timings
+import org.bukkit.Bukkit
 import org.eclipse.jdt.annotation.Nullable
 
 @Volatile
@@ -34,12 +35,17 @@ private var enabled: Boolean = false
 
 private var skript: Skript? = null // Initialized on Skript load, before any timings would be used anyway
 
+private val syncMethods: Boolean = Skript.methodExists(Timings::class.java, "startTimingIfSync")
+
 @Nullable
 fun start(name: String): Any? {
     if (!enabled()) // Timings disabled
         return null
     val timing = Timings.of(skript!!, name)
-    timing!!.startTimingIfSync() // No warning spam in async code
+    if (syncMethods)
+        timing!!.startTimingIfSync() // No warning spam in async code
+    else if (Bukkit.isPrimaryThread())
+        timing!!.startTiming()
     @Suppress("SENSELESS_COMPARISON")
     assert(timing != null)
     return timing
@@ -48,7 +54,14 @@ fun start(name: String): Any? {
 fun stop(@Nullable timing: Any?) {
     if (timing == null) // Timings disabled
         return
-    (timing as Timing).stopTimingIfSync()
+    if (!enabled())
+        return
+    if (timing is Timing) {
+        if (syncMethods)
+            timing.stopTimingIfSync()
+        else if (Bukkit.isPrimaryThread())
+            timing.stopTiming()
+    }
 }
 
 fun enabled(): Boolean {
