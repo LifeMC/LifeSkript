@@ -40,12 +40,19 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+//import ch.njol.skript.util.Date;
 
 /**
  * @author Peter Güttinger
@@ -720,8 +727,14 @@ public final class Aliases {
         materialNames_localised.clear();
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "resource"})
     public static final void load() {
+//        final boolean flag = Skript.logHigh();
+
+//        Date start = null;
+
+//        if (flag)
+//            start = new Date();
 
         final boolean wasLocal = Language.isUsingLocal();
         try {
@@ -730,13 +743,30 @@ public final class Aliases {
                 if (l == 1 && !Language.isUsingLocal())
                     break;
 
+                final String dataFolder = Skript.getInstance().getDataFolder().getPath();
+                final String aliasesFileName = "aliases-" + Language.getName() + ".sk";
+
+                @Nullable
+                InputStream stream = null;
+
                 final Config aliasConfig;
-                try {
-                    final File file = new File(Skript.getInstance().getDataFolder(), "aliases-" + Language.getName() + ".sk");
-                    if (!file.exists()) {
-                        Skript.error("Could not find the " + Language.getName() + " aliases file " + file.getName());
+
+                try(final JarFile jar = new JarFile(Skript.getInstance().getFile())) {
+                    File file = new File(Paths.get(dataFolder, aliasesFileName).toString());
+                    if (!file.exists()) { // If it's not exists in the data folder (plugins/Skript)
+                        final JarEntry entry = jar.getJarEntry(aliasesFileName);
+                        if (entry != null) {
+                            stream = jar.getInputStream(entry);
+                            file = null;
+                        }
+                        if (file != null && !file.exists()) // If it's also not exists on the JAR file
+                            Skript.error("Could not find the " + Language.getName() + " aliases file " + file.getName());
                     }
-                    aliasConfig = new Config(file, false, true, "=");
+                    assert file != null || stream != null;
+                    if (file != null)
+                        aliasConfig = new Config(file, false, true, "=");
+                    else
+                        aliasConfig = new Config(new BufferedInputStream(stream), aliasesFileName, false, true, "=");
                 } catch (final IOException e) {
                     Skript.error("Could not load the " + Language.getName() + " aliases config: " + e.getLocalizedMessage());
                     return;
@@ -831,6 +861,8 @@ public final class Aliases {
             Language.setUseLocal(wasLocal);
         }
 
+//        if (flag)
+//            Skript.info("Loaded aliases in " + start.difference(new Date()));
     }
 
     static final class Variations extends HashMap<String, HashMap<String, ItemType>> {

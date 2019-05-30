@@ -34,22 +34,22 @@ public class HandlerList implements Iterable<LogHandler> {
 
     private final LinkedList<LogHandler> list = new LinkedList<>();
 
-    public void add(final LogHandler h) {
+    public final void add(final LogHandler h) {
         list.addFirst(h);
     }
 
     @Nullable
-    public LogHandler remove() {
+    public final LogHandler remove() {
         return list.pop();
     }
 
     @SuppressWarnings("null")
     @Override
-    public Iterator<LogHandler> iterator() {
+    public final Iterator<LogHandler> iterator() {
         return list.iterator();
     }
 
-    public boolean contains(final LogHandler h) {
+    public final boolean contains(final LogHandler h) {
         return list.contains(h);
     }
 

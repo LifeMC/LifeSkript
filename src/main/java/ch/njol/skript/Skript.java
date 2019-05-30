@@ -26,6 +26,7 @@ import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.bukkitutil.Workarounds;
 import ch.njol.skript.classes.data.*;
 import ch.njol.skript.command.Commands;
+import ch.njol.skript.config.Config;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Documentation;
 import ch.njol.skript.effects.EffPush;
@@ -42,7 +43,9 @@ import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.timings.SkriptTimings;
+import ch.njol.skript.util.Date;
 import ch.njol.skript.util.*;
+import ch.njol.skript.variables.FlatFileStorage;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Closeable;
 import ch.njol.util.StringUtils;
@@ -123,7 +126,7 @@ import java.util.zip.ZipFile;
  * @see ch.njol.skript.registrations.Comparators#registerComparator(Class, Class, ch.njol.skript.classes.Comparator)
  * @see Converters#registerConverter(Class, Class, ch.njol.skript.classes.Converter)
  */
-public final class Skript extends JavaPlugin implements Listener {
+public final class Skript extends JavaPlugin implements NonReflectiveAddon, Listener {
 
     // ================ CONSTANTS ================
 
@@ -185,6 +188,8 @@ public final class Skript extends JavaPlugin implements Listener {
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));
+    private static boolean closedOnEnable = false;
+    private static boolean closedOnDisable = false;
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
     private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(300);
     private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(500);
@@ -202,6 +207,8 @@ public final class Skript extends JavaPlugin implements Listener {
             && Boolean.parseBoolean(System.getProperty("skript.debug"));
     private static final boolean logSpam = System.getProperty("skript.logSpam") != null
             && Boolean.parseBoolean(System.getProperty("skript.logSpam"));
+    private static final boolean showRegisteredNonSkript = System.getProperty("skript.showRegisteredNonSkript") != null
+            && Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -310,9 +317,9 @@ public final class Skript extends JavaPlugin implements Listener {
                     System.out.println("[Skript] Can't enable JLine support: Unsupported terminal or -nojline argument");
                 else if (craftbukkitMain == null)
                     System.out.println("[Skript] Can't enable JLine support: Null craftbukkit main - probably unsupported server software");
-                else if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useJline").get(null))
+                else if (!(boolean) craftbukkitMain.getField("useJline").get(null))
                     System.out.println("[Skript] Can't enable JLine support: False useJline - probably disabled by reflection");
-                else if (craftbukkitMain != null && !(boolean) craftbukkitMain.getField("useConsole").get(null))
+                else if (!(boolean) craftbukkitMain.getField("useConsole").get(null))
                     System.out.println("[Skript] Can't enable JLine support: No console - probably an unsupported OS");
             }
             return hasJLineSupport = !isUnsupportedTerminal && craftbukkitMain != null && (boolean) craftbukkitMain.getField("useJline").get(null) && (boolean) craftbukkitMain.getField("useConsole").get(null);
@@ -492,8 +499,6 @@ public final class Skript extends JavaPlugin implements Listener {
         return minecraftVersion;
     }
 
-    // ================ CONSTANTS, OPTIONS & OTHER ================
-
     /**
      * Returns whatever this server is running CraftBukkit.
      *
@@ -503,6 +508,8 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final boolean isRunningCraftBukkit() {
         return getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT;
     }
+
+    // ================ CONSTANTS, OPTIONS & OTHER ================
 
     /**
      * Returns whatever this server is running the given Minecraft <tt>major.minor</tt> <b>or higher</b>
@@ -596,6 +603,7 @@ public final class Skript extends JavaPlugin implements Listener {
     public static final boolean isClassLoaded(final String qualifiedName) {
         final ClassLoader classLoader = Skript.getTrueClassLoader();
         try {
+            assert findLoadedClass != null;
             return findLoadedClass.invoke(classLoader, qualifiedName) != null;
         } catch (final IllegalAccessException | InvocationTargetException ignored) {
             assert false;
@@ -826,8 +834,6 @@ public final class Skript extends JavaPlugin implements Listener {
         }
     }
 
-    // ================ REGISTRATIONS ================
-
     /**
      * Clears triggers, commands, functions and variable names
      */
@@ -837,6 +843,8 @@ public final class Skript extends JavaPlugin implements Listener {
         Commands.clearCommands();
         Functions.clearFunctions();
     }
+
+    // ================ REGISTRATIONS ================
 
     /**
      * Prints errors from reloading the config & scripts
@@ -863,8 +871,6 @@ public final class Skript extends JavaPlugin implements Listener {
         SkriptConfig.load();
     }
 
-    // ================ ADDONS ================
-
     /**
      * Prints errors
      */
@@ -872,6 +878,8 @@ public final class Skript extends JavaPlugin implements Listener {
         Aliases.clear();
         Aliases.load();
     }
+
+    // ================ ADDONS ================
 
     /**
      * Registers a Closeable that should be closed when this plugin is disabled.
@@ -881,6 +889,8 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param closeable The closeable to close when disabling the plugin.
      */
     public static final void closeOnDisable(final Closeable closeable) {
+        if (closedOnDisable)
+            throw new SkriptAPIException("Can't close the closeable on plugin disable when Skript is already disabled!");
         closeOnDisable.add(closeable);
     }
 
@@ -892,6 +902,8 @@ public final class Skript extends JavaPlugin implements Listener {
      * @param closeable The closeable to close when enabling the plugin.
      */
     public static final void closeOnEnable(final Closeable closeable) {
+        if (closedOnEnable)
+            throw new SkriptAPIException("Can't close the closeable on plugin enables when Skript is already enabled!");
         closeOnEnable.add(closeable);
     }
 
@@ -925,12 +937,12 @@ public final class Skript extends JavaPlugin implements Listener {
         return acceptRegistrations;
     }
 
-    // ================ CONDITIONS & EFFECTS ================
-
     public static final void checkAcceptRegistrations() {
         if (!acceptRegistrations)
             throw new SkriptAPIException("Registering is disabled after initialization!");
     }
+
+    // ================ CONDITIONS & EFFECTS ================
 
     static final void stopAcceptingRegistrations() {
         acceptRegistrations = false;
@@ -994,10 +1006,9 @@ public final class Skript extends JavaPlugin implements Listener {
         for (final String pattern : patterns)
             if (duplicatePatternCheckList.contains(pattern))
                 Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
-        final boolean flag = System.getProperty("skript.showRegisteredNonSkript") != null && Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
-        if (Skript.logSpam() || flag)
-            if (!flag || !element.getCanonicalName().startsWith("ch.njol.skript."))
-                Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join(",", patterns));
+        if (Skript.logSpam() || showRegisteredNonSkript)
+            if (!showRegisteredNonSkript || !element.getCanonicalName().startsWith("ch.njol.skript."))
+                Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join("," + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ")", patterns));
         Collections.addAll(duplicatePatternCheckList, patterns);
     }
 
@@ -1016,8 +1027,6 @@ public final class Skript extends JavaPlugin implements Listener {
         statements.add(info);
     }
 
-    // ================ EXPRESSIONS ================
-
     /**
      * Registers an {@link Effect}.
      *
@@ -1032,6 +1041,8 @@ public final class Skript extends JavaPlugin implements Listener {
         effects.add(info);
         statements.add(info);
     }
+
+    // ================ EXPRESSIONS ================
 
     public static final Collection<SyntaxElementInfo<? extends Statement>> getStatements() {
         return statements;
@@ -1067,12 +1078,12 @@ public final class Skript extends JavaPlugin implements Listener {
         expressions.add(expressionTypesStartIndices[type.ordinal()], info);
     }
 
-    // ================ EVENTS ================
-
     @SuppressWarnings("null")
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions() {
         return expressions.iterator();
     }
+
+    // ================ EVENTS ================
 
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
         return new CheckedIterator<>(getExpressions(), i -> {
@@ -1129,8 +1140,6 @@ public final class Skript extends JavaPlugin implements Listener {
         return events;
     }
 
-    // ================ COMMANDS ================
-
     /**
      * Dispatches a command with calling command events
      *
@@ -1149,7 +1158,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             final ServerCommandEvent e = new ServerCommandEvent(sender, command);
             Bukkit.getPluginManager().callEvent(e);
-            if (e.getCommand() == null || e.getCommand().isEmpty() || (Commands.cancellableServerCommand && e.isCancelled()))
+            if (e.getCommand() == null || e.getCommand().isEmpty() || Commands.cancellableServerCommand && e.isCancelled())
                 return false;
             return Bukkit.dispatchCommand(e.getSender(), e.getCommand());
         } catch (final Throwable tw) {
@@ -1159,11 +1168,13 @@ public final class Skript extends JavaPlugin implements Listener {
         }
     }
 
-    // ================ LOGGING ================
+    // ================ COMMANDS ================
 
     public static final boolean logNormal() {
         return logHigh() || SkriptLogger.log(Verbosity.NORMAL);
     }
+
+    // ================ LOGGING ================
 
     public static final boolean logHigh() {
         return logVeryHigh() || SkriptLogger.log(Verbosity.HIGH);
@@ -1303,7 +1314,7 @@ public final class Skript extends JavaPlugin implements Listener {
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + getVersion() + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
+            logEx("  Skript: " + (version != null ? version : "unknown") + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1408,6 +1419,10 @@ public final class Skript extends JavaPlugin implements Listener {
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), permission);
     }
 
+    public static final void adminBroadcast(final String message) {
+        Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
+    }
+
 //  static {
 //      Language.addListener(new LanguageChangeListener() {
 //          @Override
@@ -1418,10 +1433,6 @@ public final class Skript extends JavaPlugin implements Listener {
 //          }
 //      });
 //  }
-
-    public static final void adminBroadcast(final String message) {
-        Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
-    }
 
     /**
      * Similar to {@link #info(CommandSender, String)} but no [Skript] prefix is added.
@@ -1481,9 +1492,20 @@ public final class Skript extends JavaPlugin implements Listener {
         return function.apply(obj);
     }
 
+    /**
+     * Returns the file which contains this plugin
+     *
+     * @return File containing this plugin
+     */
+    @Override
+    public File getFile() {
+        return super.getFile();
+    }
+
     @Override
     public final void onLoad() {
         try {
+            Workarounds.initIfNotAlready();
             SkriptCommand.setPriority();
 
             if (!first) {
@@ -1511,7 +1533,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                         for (final String line : lines) {
-                            if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: dev")) {
+                            if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: V7") || line.contains("version: V9") || line.contains("version: dev")) {
                                 Skript.info("Deleting old aliases...");
 
                                 Files.delete(Paths.get(dataFolder.getPath(), "aliases-english.sk"));
@@ -1664,9 +1686,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                     if (Bukkit.getPluginManager().isPluginEnabled("SharpSK"))
                                         Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
                                     else {
-                                        Bukkit.getScheduler().runTask(this, () -> {
-                                            Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
-                                        });
+                                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK")));
                                     }
                                 });
                                 // Required to non-downgrade automatically.
@@ -1674,9 +1694,7 @@ public final class Skript extends JavaPlugin implements Listener {
                                     if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater"))
                                         Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
                                     else {
-                                        Bukkit.getScheduler().runTask(this,() -> {
-                                            Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
-                                        });
+                                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater")));
                                     }
                                 });
                                 Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
@@ -1707,8 +1725,9 @@ public final class Skript extends JavaPlugin implements Listener {
                                                 Skript.exception(io);
                                             }
 
-                                            while(!flag || Files.exists(sharpSkUpdater)) {
+                                            while (!flag || Files.exists(sharpSkUpdater)) {
                                                 try {
+                                                    assert sharpSkUpdater != null;
                                                     Files.delete(sharpSkUpdater);
                                                     flag = true; // Deleted successfully, task is complete! We fixed compatibility problem, yey!
                                                     if (Skript.testing() && Skript.debug())
@@ -1761,13 +1780,11 @@ public final class Skript extends JavaPlugin implements Listener {
 
                     // Warn the user and automatically restart the server
                     if (restartNeeded) {
-                        Skript.closeOnEnable(() -> {
-                            Bukkit.getScheduler().runTask(this, () -> {
-                               Bukkit.getLogger().warning("");
-                               warning("Some compatibility changes we made requires a restart. Please restart your server.");
-                               Bukkit.getLogger().warning("");
-                            });
-                        });
+                        Skript.closeOnEnable(() -> Bukkit.getScheduler().runTask(this, () -> {
+                            Bukkit.getLogger().warning("");
+                            warning("Some compatibility changes we made requires a restart. Please restart your server.");
+                            Bukkit.getLogger().warning("");
+                        }));
                     }
                 }
             }
@@ -1795,6 +1812,8 @@ public final class Skript extends JavaPlugin implements Listener {
             final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
             final boolean firstRun = !getDataFolder().exists();
 
+            closedOnEnable = true;
+
             for (final Closeable c : closeOnEnable) {
                 try {
                     c.close();
@@ -1803,7 +1822,17 @@ public final class Skript extends JavaPlugin implements Listener {
                 }
             }
 
+            Date languageStart = null;
+
+            if (debug)
+                languageStart = new Date();
+
             Language.loadDefault(getAddonInstance());
+
+            Date languageEnd = null;
+
+            if (languageStart != null)
+                languageEnd = new Date();
 
             try {
                 version = new Version(getDescription().getVersion());
@@ -1831,7 +1860,7 @@ public final class Skript extends JavaPlugin implements Listener {
                 getDataFolder().mkdirs();
 
             final File scripts = new File(getDataFolder(), SCRIPTSFOLDER);
-            if (!scripts.isDirectory() || !Files.exists(Paths.get(getDataFolder() + File.separator + "aliases-english.sk")) || !Files.exists(Paths.get(getDataFolder() + File.separator + "aliases-german.sk"))) {
+            if (!scripts.isDirectory() || !Files.exists(Paths.get(getDataFolder().getPath(), "config.sk"))) {
                 if (!scripts.exists() && !scripts.mkdirs())
                     Skript.exception(new IOException("Could not create the directory " + scripts), "Error generating the default files");
                 try (final ZipFile f = new ZipFile(getFile())) {
@@ -1839,7 +1868,7 @@ public final class Skript extends JavaPlugin implements Listener {
                         if (e.isDirectory())
                             continue;
                         File saveTo = null;
-                        if (!firstRun && e.getName().startsWith(SCRIPTSFOLDER + "/")) {
+                        if (!firstRun && (e.getName().startsWith(SCRIPTSFOLDER + "/") || e.getName().startsWith(SCRIPTSFOLDER + "\\"))) {
                             final String fileName = e.getName().substring(e.getName().lastIndexOf('/') + 1);
                             final File file = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
                             if (!file.exists())
@@ -1848,11 +1877,16 @@ public final class Skript extends JavaPlugin implements Listener {
                             final File cf = new File(getDataFolder(), e.getName());
                             if (!cf.exists())
                                 saveTo = cf;
-                        } else if (e.getName().startsWith("aliases-") && e.getName().endsWith(".sk") && !e.getName().contains("/")) {
-                            final File af = new File(getDataFolder(), e.getName());
-                            if (!af.exists())
-                                saveTo = af;
                         }
+//                      else if (e.getName().startsWith("aliases-") && e.getName().endsWith(".sk") && !e.getName().contains("/")) {
+//                          final File af = new File(getDataFolder(), e.getName());
+//                          if (!af.exists())
+//                              saveTo = af;
+//                      } else if (e.getName().startsWith("features.sk")) {
+//                          final File af = new File(getDataFolder(), e.getName());
+//                          if (!af.exists())
+//                              saveTo = af;
+//                      }
                         if (saveTo != null) {
                             try (InputStream in = f.getInputStream(e)) {
                                 assert in != null;
@@ -1860,7 +1894,7 @@ public final class Skript extends JavaPlugin implements Listener {
                             }
                         }
                     }
-                    info("Successfully generated the config, the example scripts and the aliases files.");
+                    info("Successfully generated the config" + (firstRun ? " and example scripts." : "."));
                 } catch (final ZipException e) {
                     if (Skript.logVeryHigh())
                         Skript.exception(e);
@@ -1880,6 +1914,11 @@ public final class Skript extends JavaPlugin implements Listener {
                 printDownloadLink();
             }
 
+            Date defaultsStart = null;
+
+            if (debug)
+                defaultsStart = new Date();
+
             JavaClasses.init();
             BukkitClasses.init();
             BukkitEventValues.init();
@@ -1889,7 +1928,22 @@ public final class Skript extends JavaPlugin implements Listener {
             DefaultConverters.init();
             DefaultFunctions.init();
 
+            Date defaultsEnd = null;
+
+            if (defaultsStart != null)
+                defaultsEnd = new Date();
+
+            Date configStart = null;
+
+            if (debug)
+                configStart = new Date();
+
             SkriptConfig.load();
+
+            Date configEnd = null;
+
+            if (configStart != null)
+                configEnd = new Date();
 
             try {
                 getAddonInstance().loadClasses("ch.njol.skript", "conditions", "effects", "events", "expressions", "entity");
@@ -1910,9 +1964,28 @@ public final class Skript extends JavaPlugin implements Listener {
                 warning("Server is running with the online mode enabled, we recommend making \"use player UUIDs in variable names\" setting true in config.");
             }
 
+            Date aliasesStart = null;
+
+            if (debug)
+                aliasesStart = new Date();
+
             Language.setUseLocal(true);
             Aliases.load();
             Commands.registerListeners();
+
+            Date aliasesEnd = null;
+
+            if (debug)
+                aliasesEnd = new Date();
+
+            if (languageStart != null)
+                Skript.info("Loaded language file in " + languageStart.difference(languageEnd));
+            if (defaultsStart != null)
+                Skript.info("Registered defaults in " + defaultsStart.difference(defaultsEnd));
+            if (configStart != null)
+                Skript.info("Loaded config file in " + configStart.difference(configEnd));
+            if (aliasesStart != null)
+                Skript.info("Loaded aliases file in " + aliasesStart.difference(aliasesEnd));
 
             // Always print copyright, can't be suppressed by lowering verbosity C:
             info(Language.get("skript.copyright"));
@@ -2065,6 +2138,10 @@ public final class Skript extends JavaPlugin implements Listener {
                     info("Using " + (Color.getWoolData ? "new" : "old") + " method for color data.");
                     info("Using " + (ExprEntities.getNearbyEntities ? "new" : "old") + " method for entities expression.");
                     info("Using " + (ExprTargetedBlock.set ? "new" : "old") + " method for target block expression.");
+                    emptyPrinter.run();
+                    info("Byte, short and float types are " + (JavaClasses.DISABLE_BYTE_SHORT_FLOAT ? "disabled" : "enabled"));
+                    info("Required variable changes for save " + FlatFileStorage.REQUIRED_CHANGES_FOR_RESAVE);
+                    info("Global buffer length in bytes is " + (Config.GLOBAL_BUFFER_LENGTH != -1 ? Config.GLOBAL_BUFFER_LENGTH : "the java default"));
                     emptyPrinter.run();
                 });
             }
@@ -2281,6 +2358,8 @@ public final class Skript extends JavaPlugin implements Listener {
             Bukkit.getScheduler().cancelTasks(this);
             HandlerList.unregisterAll((Plugin) this);
 
+            closedOnDisable = true;
+
             if (Skript.logHigh())
                 info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
             for (final Closeable c : closeOnDisable) {
@@ -2355,6 +2434,8 @@ public final class Skript extends JavaPlugin implements Listener {
             t.setPriority(Thread.MIN_PRIORITY);
             t.setDaemon(true);
             t.start();
+
+            assert closedOnEnable;
 
         } catch (final Throwable tw) {
             if (System.getProperty("skript.disableShutdownErrors") == null ||

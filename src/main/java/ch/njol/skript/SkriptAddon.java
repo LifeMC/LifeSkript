@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
  */
 public final class SkriptAddon {
 
+    public static final Method getFile =
+            Skript.methodForName(JavaPlugin.class, "getFile", true);
+
     public final JavaPlugin plugin;
     public final Version version;
     private final String name;
@@ -105,7 +108,7 @@ public final class SkriptAddon {
      * @return This SkriptAddon
      * @throws IOException If some error occurred attempting to read the plugin's jar file.
      */
-    public SkriptAddon loadClasses(String basePackage, final String... subPackages) throws IOException {
+    public final SkriptAddon loadClasses(String basePackage, final String... subPackages) throws IOException {
         assert subPackages != null;
         //noinspection AssertWithSideEffects
         assert getFile() != null;
@@ -192,23 +195,20 @@ public final class SkriptAddon {
      * @return The jar file of the plugin. The first invocation of this method uses reflection to invoke the protected method {@link JavaPlugin#getFile()} to get the plugin's jar
      * file. The file is then cached and returned upon subsequent calls to this method to reduce usage of reflection.
      */
-    @SuppressWarnings("JavadocReference")
     @Nullable
-    public File getFile() {
+    @SuppressWarnings("JavadocReference")
+    public final File getFile() {
         if (file != null)
             return file;
+        if (plugin instanceof NonReflectiveAddon)
+            return file = ((NonReflectiveAddon) plugin).getFile();
         try {
-            final Method getFile = JavaPlugin.class.getDeclaredMethod("getFile");
-            getFile.setAccessible(true);
             file = (File) getFile.invoke(plugin);
             return file;
-        } catch (final NoSuchMethodException | IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             Skript.outdatedError(e);
             return null;
-        } catch (final IllegalAccessException e) {
-            assert false;
-            return null;
-        } catch (final SecurityException e) {
+        } catch (final IllegalAccessException | SecurityException e) {
             throw new RuntimeException(e);
         } catch (final InvocationTargetException e) {
             throw new RuntimeException(e.getCause());

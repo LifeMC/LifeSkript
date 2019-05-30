@@ -25,7 +25,7 @@ package ch.njol.skript.log;
 /**
  * @author Peter Güttinger
  */
-public abstract class LogHandler {
+public abstract class LogHandler/* implements AutoCloseable */{
 
     /**
      * @param entry
@@ -37,6 +37,7 @@ public abstract class LogHandler {
      * Called just after the handler is removed from the active handlers stack.
      */
     protected void onStop() {
+        /* empty, override-able */
     }
 
     public final void stop() {
@@ -44,7 +45,7 @@ public abstract class LogHandler {
         onStop();
     }
 
-    public boolean isStopped() {
+    public final boolean isStopped() {
         return SkriptLogger.isStopped(this);
     }
 
@@ -52,12 +53,16 @@ public abstract class LogHandler {
         LOG, CACHED, DO_NOT_LOG
     }
 
-//	/**
-//	 * Will be useful should Skript ever be written in Java 7
-//	 */
-//	@Override
-//	public final void close() throws Exception {
-//		stop();
-//	}
+    /**
+     * Stops the log handler.
+     *
+     * Useful on Java 7 and above.
+     *
+     * @see LogHandler#stop()
+     */
+//    @Override
+//    public final void close() {
+//        stop();
+//    }
 
 }

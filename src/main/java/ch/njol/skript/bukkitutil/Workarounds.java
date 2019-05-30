@@ -49,7 +49,9 @@ public final class Workarounds {
     private static boolean init;
 
     static {
-        if (Skript.isBukkitRunning()) {
+        Skript.closeOnEnable(() -> {
+            assert Skript.isBukkitRunning();
+
             // Allows to properly remove a player's tool in right click events
 
             Bukkit.getPluginManager().registerEvent(PlayerInteractEvent.class, new Listener() {
@@ -71,7 +73,7 @@ public final class Workarounds {
                 }
             }, Skript.getInstance());
             */
-        }
+        });
     }
 
     private Workarounds() {
@@ -97,6 +99,10 @@ public final class Workarounds {
         final Thread.UncaughtExceptionHandler handler = (t, e) -> {
             if (e instanceof EmptyStacktraceException)
                 return;
+
+            assert e != null : t;
+            assert t != null : e;
+
             System.err.println("Uncaught exception in thread \"" + t.getName() + "\"");
             e.printStackTrace();
         };
@@ -108,8 +114,12 @@ public final class Workarounds {
         Thread.currentThread().setUncaughtExceptionHandler(handler);
 
         // Server Thread
-        if (Skript.isBukkitRunning())
-            Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Thread.currentThread().setUncaughtExceptionHandler(handler));
+        final Runnable bukkitHandler = () -> Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Thread.currentThread().setUncaughtExceptionHandler(handler));
+
+        if (Skript.isSkriptRunning())
+            bukkitHandler.run();
+        else
+            Skript.closeOnEnable(bukkitHandler::run);
 
         /* System properties */
         oldValues.clear();

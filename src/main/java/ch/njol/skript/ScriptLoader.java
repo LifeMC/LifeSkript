@@ -41,9 +41,7 @@ import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.Date;
-import ch.njol.skript.util.ExceptionUtils;
-import ch.njol.skript.util.ScriptOptions;
-import ch.njol.skript.util.Version;
+import ch.njol.skript.util.*;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
@@ -52,11 +50,13 @@ import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
+import org.fusesource.jansi.Ansi;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 
@@ -64,6 +64,9 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 public final class ScriptLoader {
+    public static final boolean COLOR_BASED_ON_LOAD_TIMES = System.getProperty("skript.colorBasedOnLoadTimes") != null
+            && Boolean.parseBoolean("skript.colorBasedOnLoadTimes");
+
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
     public static final List<Loop> currentLoops = new ArrayList<>();
@@ -502,7 +505,7 @@ public final class ScriptLoader {
                         }
                         hasConfiguraton = true;
                         node.convertToEntries(0);
-                        final List<String> duplicateCheckList = new ArrayList<>();
+                        final ArrayList<String> duplicateCheckList = new ArrayList<>();
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
                                 Skript.error("invalid line in the configuration");
@@ -654,7 +657,21 @@ public final class ScriptLoader {
                 }
 
                 if (Skript.logHigh() && startDate != null) {
-                    Skript.info("Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + startDate.difference(new Date()));
+                    String prefix = "";
+                    String suffix = "";
+
+                    final Timespan difference = startDate.difference(new Date());
+                    final long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(difference.getMilliSeconds());
+
+                    if (Skript.hasJLineSupport() && Skript.hasJansi() && COLOR_BASED_ON_LOAD_TIMES) {
+                        suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
+                        if (differenceInSeconds > 5L) // Script take longer than 5 seconds to load
+                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.RED).bold().toString();
+                        else if (differenceInSeconds > 3L) // Script take longer than 3 seconds to load
+                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString();
+                    }
+
+                    Skript.info(prefix + "Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + difference + suffix);
                 }
 
                 currentScript = null;
