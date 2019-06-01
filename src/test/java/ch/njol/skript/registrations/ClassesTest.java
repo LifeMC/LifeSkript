@@ -77,10 +77,26 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Snowball;
 */
 
+import ch.njol.skript.Skript;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertTrue;
+
 /**
  * @author Peter Güttinger
  */
 public final class ClassesTest {
+
+    /**
+     * Dummy test to not show class as empty
+     */
+    @Test
+    @SuppressWarnings("static-method")
+    public void testDummy() {
+        assertTrue(Skript.methodExists(ClassesTest.class, "testDummy"));
+
+        assertTrue(Skript.classExists("ch.njol.skript.Skript"));
+    }
 
     /*
     @Before
@@ -137,7 +153,8 @@ public final class ClassesTest {
     */
 
     /*
-    @org.junit.Test
+    @Test
+    @SuppressWarnings("static-method")
     public void testClasses() {
         final Object[] random = {
                 // Java
@@ -148,16 +165,16 @@ public final class ClassesTest {
                 Color.BLACK, StructureType.RED_MUSHROOM, WeatherType.THUNDER,
                 new Date(System.currentTimeMillis()), new Timespan(1337), new Time(12000), new Timeperiod(1000, 23000),
                 new Experience(15), new Direction(0, Math.PI, 10), new Direction(new double[] {0, 1, 0}),
-                new EntityType(new SimpleEntityData(HumanEntity.class), 300), new CreeperData(), new SimpleEntityData(Snowball.class), new HorseData(Variant.SKELETON_HORSE), new WolfData(), new XpOrbData(50),
+                new EntityType(new SimpleEntityData(HumanEntity.class), 300), new CreeperData(), new SimpleEntityData(Snowball.class), new HorseData(Horse.Variant.SKELETON_HORSE), new WolfData(), new XpOrbData(50),
 
                 // Bukkit - simple classes only
-                GameMode.ADVENTURE, Biome.EXTREME_HILLS, DamageCause.FALL,
+                GameMode.ADVENTURE, Biome.EXTREME_HILLS, EntityDamageEvent.DamageCause.FALL,
 
-                // there is also at least one variable for each class on my test server which are tested whenever the server shuts down.
+                // there is also at least one variable for each class on my test server, which are tested whenever the server shuts down.
         };
 
         for (final Object o : random) {
-            Classes.serialize(o); // includes a deserialisation test
+            Classes.serialize(o); // includes a deserialization test
         }
     }
     */
