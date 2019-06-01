@@ -40,13 +40,13 @@ import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.Set;
 
 /**
  * @author Mirreducki
  */
+@SuppressWarnings("deprecation")
 @Name("Chat Recipients")
 @Description("The recipients of a message.")
 @Examples("chat recipients")
@@ -70,14 +70,14 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
-        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.DELETE || mode == ChangeMode.REMOVE)
+        if (mode == ChangeMode.ADD || mode == ChangeMode.SET || mode == ChangeMode.DELETE || mode == ChangeMode.REMOVE || mode == ChangeMode.REMOVE_ALL)
             return CollectionUtils.array(Player[].class);
         return null;
     }
 
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        if (!ScriptLoader.isCurrentEvent(AsyncPlayerChatEvent.class)) {
+        if (!ScriptLoader.isCurrentEvent(AsyncPlayerChatEvent.class) && !ScriptLoader.isCurrentEvent(PlayerChatEvent.class)) {
             Skript.error("Cannot use chat recipients expression outside of a chat event", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
@@ -93,8 +93,7 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
     @Nullable
     protected Player[] get(final Event e) {
         final AsyncPlayerChatEvent ae = (AsyncPlayerChatEvent) e;
-        final Set<Player> playerSet = ae.getRecipients();
-        return playerSet.toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
+        return ae.getRecipients().toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
     }
 
     @SuppressWarnings({"incomplete-switch", "null"})
@@ -106,19 +105,25 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
             case REMOVE:
                 for (final Player p : playerArray)
                     a.getRecipients().remove(p);
-                break;
+                return;
+            case REMOVE_ALL:
+                a.getRecipients().clear();
+                return;
             case DELETE:
                 a.getRecipients().clear();
-                break;
+                return;
             case ADD:
                 for (final Player p : playerArray)
                     a.getRecipients().add(p);
-                break;
+                return;
             case SET:
                 a.getRecipients().clear();
                 for (final Player p : playerArray)
                     a.getRecipients().add(p);
-                break;
+                return;
+            //$CASES-OMITTED$
+            default:
+                assert false;
         }
     }
 }
