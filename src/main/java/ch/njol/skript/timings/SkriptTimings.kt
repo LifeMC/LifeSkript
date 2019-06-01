@@ -37,6 +37,7 @@ private var enabled: Boolean = false
 private var skript: Skript? = null // Initialized on Skript load, before any timings would be used anyway
 
 private val syncMethods: Boolean = Skript.methodExists(Timings::class.java, "startTimingIfSync")
+private val isEnabledMethod: Boolean = Skript.methodExists(Timings::class.java, "isTimingsEnabled")
 
 @JvmField
 var timingsEnabled: Boolean = false
@@ -71,7 +72,7 @@ fun stop(@Nullable timing: Any?) {
 fun enabled(): Boolean {
     // First check if we can run timings (enabled in settings + running Paper or LifeSpigot)
     // After that (we know that class exists), check if server has timings running
-    return enabled && Timings.isTimingsEnabled() && timingsEnabled && (Bukkit.getPluginManager() !is SimplePluginManager || (Bukkit.getPluginManager() as SimplePluginManager).useTimings())
+    return enabled && (!isEnabledMethod || Timings.isTimingsEnabled()) && timingsEnabled && (Bukkit.getPluginManager() !is SimplePluginManager || (Bukkit.getPluginManager() as SimplePluginManager).useTimings())
 }
 
 fun setEnabled(flag: Boolean) {

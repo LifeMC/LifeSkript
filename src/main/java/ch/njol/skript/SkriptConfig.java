@@ -107,16 +107,16 @@ public final class SkriptConfig {
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
     public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
             .optional(true);
-    public static final Option<Boolean> enableTimings = new Option<>("enable timings", false)
+    public static final Option<Boolean> enableTimings = new Option<>("enable timings", true)
             .setter(t -> {
-                if (Skript.classExists("co.aikar.timings.Timings")) { // Check for Paper or LifeSpigot server
+                if (Skript.classExists("co.aikar.timings.Timings")) { // Check for PaperSpigot, TacoSpigot or LifeSpigot server
                     if (t)
                         Skript.info("Timings support enabled");
                     SkriptTimings.setEnabled(t); // Config option will be used
-                } else { // Not running Paper or LifeSpigot
-                    if (t) // Warn the console that timings won't work
-                        Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
-                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
+//                } else { // Not running Paper or LifeSpigot
+//                    if (t) // Warn the console that timings won't work
+//                        Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
+//                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
                 }
             });
     public static final Option<String> defaultSourceVersion = new Option<>("default source version", "default");

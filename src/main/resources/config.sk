@@ -231,11 +231,10 @@ warn when using explicit player pattern: false
 # Skript tries to catch these and gives a warning for explicit use of player if this option is true.
 
 
-enable timings: false
+enable timings: true
 # When enabled, triggers in scripts will be present in timings reports.
-# Note that this requires Paper or LifeSpigot to work; on Bukkit/Spigot this option gives errors if true.
-# When false, timings are not enabled for scripts even if you're running Paper or LifeSpigot.
-# We recommend using false on production, use true for only testing purposes because timings is not free!
+# Note that this requires PaperSpigot, TacoSpigot or LifeSpigot to work; on Bukkit/Spigot this option does nothing.
+# When false, timings are not enabled for scripts even if you're running PaperSpigot, TacoSpigot or LifeSpigot.
 
 
 default source version: default
