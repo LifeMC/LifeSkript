@@ -123,14 +123,13 @@ public final class SkriptLogger {
     /**
      * Finds method caller, excluding the SkriptLogger package
      * and required java methods.
-     *
+     * <p>
      * This mostly will return the caller of this method
      * if called outside of the SkriptLogger.
-     *
+     * <p>
      * So don't use this. Its package private for a reason.
      *
      * @return The caller as a {@link StackTraceElement}
-     *
      * @see SkriptLogger#findCaller(String...)
      */
     @Nullable
@@ -141,24 +140,23 @@ public final class SkriptLogger {
     /**
      * Finds method caller, excluding the SkriptLogger package,
      * required java methods and given package names.
-     *
+     * <p>
      * This should return the caller of the method which calls
      * this method.
-     *
+     * <p>
      * Do not use this method with a name of package "ch.njol.skript.log",
      * it excludes that.
-     *
+     * <p>
      * It also excludes required java methods, e.g "java.lang.Thread.getStackTrace"
      *
      * @param exclusions The exclusions to exclude.
-     *
      * @return The caller of the method which calls this method.
      */
     @Nullable
     public static final StackTraceElement findCaller(final @Nullable String... exclusions) {
         for (final StackTraceElement e : Thread.currentThread().getStackTrace()) {
             if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName()) && !e.toString().contains("java.lang.Thread.getStackTrace") && !e.toString().contains("java.lang.Thread.currentThread")) {
-                if(exclusions != null && exclusions.length > 0) {
+                if (exclusions != null && exclusions.length > 0) {
                     for (final String exclusion : exclusions)
                         if (!e.getClassName().startsWith(exclusion))
                             return e;
@@ -277,9 +275,8 @@ public final class SkriptLogger {
     }
 
     /**
-     * @deprecated Only for binary compatibility with old code.
-     *
      * @see SkriptLogger#logAll(Iterable)
+     * @deprecated Only for binary compatibility with old code.
      */
     @Deprecated
     public static final void logAll(final Collection<LogEntry> entries) {

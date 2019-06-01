@@ -50,6 +50,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Contract;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -279,6 +280,8 @@ public final class Classes {
     @SuppressWarnings("unchecked")
     @Nullable
     public static final <T> ClassInfo<T> getExactClassInfo(final @Nullable Class<T> c) {
+        if (c == ch.njol.skript.util.slot.Slot.class)
+            return (ClassInfo<T>) exactClassInfos.get(ch.njol.skript.util.Slot.class);
         return (ClassInfo<T>) exactClassInfos.get(c);
     }
 
@@ -288,7 +291,7 @@ public final class Classes {
      * @param c
      * @return The closest superclass's info
      */
-    @SuppressWarnings({"unchecked", "null"})
+    @SuppressWarnings({"unchecked", "null"}) @Contract("null->null")
     public static final <T> ClassInfo<? super T> getSuperClassInfo(final @Nullable Class<T> c) {
         // Check null status
         if (c == null)
@@ -756,8 +759,10 @@ public final class Classes {
 
     @Nullable
     public static final Object deserialize(final ClassInfo<?> type, InputStream value) {
-        Serializer<?> s;
-        assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
+        if (Skript.testing()) {
+            Serializer<?> s;
+            assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
+        }
         YggdrasilInputStream in = null;
         try {
             value = new SequenceInputStream(new ByteArrayInputStream(getYggdrasilStart(type)), value);
