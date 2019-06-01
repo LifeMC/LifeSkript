@@ -48,7 +48,7 @@ import java.io.StreamCorruptedException;
 public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
-    public static final boolean DISABLE_BYTE_SHORT_FLOAT = System.getProperty("skript.disableByteShortFloat") != null && Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"));
+    public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"));
 
     private JavaClasses() {
         throw new UnsupportedOperationException();
@@ -124,6 +124,7 @@ public final class JavaClasses {
                         try {
                             return Integer.valueOf(s);
                         } catch (final NumberFormatException ignored) {
+                            /* continue, re-try with double */
                         }
                         try {
                             return Double.valueOf(s);
@@ -335,7 +336,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        // FIXME Implement SkriptParser#isByte , SkriptParser#isShort and SkriptParser#isFloat to improve the performance without disabling the parsers.
+        // FIXME Implement SkriptParser#isByte , SkriptParser#isShort and SkriptParser#isFloat to improve the performance without disabling the parsers
         if (!DISABLE_BYTE_SHORT_FLOAT) {
             Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1f, true)).parser(new Parser<Float>() {
                 @Override
@@ -450,6 +451,7 @@ public final class JavaClasses {
                     return Boolean.TRUE;
                 if ("false".equals(s))
                     return Boolean.FALSE;
+                assert false;
                 return null;
             }
 

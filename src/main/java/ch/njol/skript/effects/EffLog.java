@@ -60,8 +60,10 @@ public final class EffLog extends AsyncEffect {
 
     static {
         Skript.closeOnDisable(() -> {
-            for (final PrintWriter pw : writers.values())
-                pw.close();
+            for (final PrintWriter pw : writers.values()) {
+                pw.flush(); // Guarantee everything is printed
+                pw.close(); // Close it afterwards
+            }
         });
     }
 
@@ -104,7 +106,10 @@ public final class EffLog extends AsyncEffect {
                         }
                     }
                     w.println("[" + SkriptConfig.formatDate(System.currentTimeMillis()) + "] " + message);
-                    w.flush();
+                    // Specifying this system property can speedup log write performance, but may cause loss of
+                    // log files if server shutdowns, so it is not the default behaviour, and it must be used carefully.
+                    if (!Boolean.parseBoolean(System.getProperty("skript.flushAllLogsOnShutdownOnly")))
+                        w.flush();
                 }
             } else {
                 final Trigger t = getTrigger();

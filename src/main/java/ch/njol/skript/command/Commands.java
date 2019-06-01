@@ -40,6 +40,7 @@ import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Timespan;
 import ch.njol.skript.util.Utils;
@@ -84,6 +85,10 @@ import static ch.njol.skript.Skript.*;
  */
 @SuppressWarnings("deprecation")
 public final class Commands {
+
+    private Commands() {
+        throw new UnsupportedOperationException("Static class");
+    }
 
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
     public static final Message m_correct_usage = new Message("commands.correct usage");
@@ -169,9 +174,22 @@ public final class Commands {
         return unescape.matcher(s).replaceAll("$0");
     }
 
+    public static final void checkTimings(final String command) {
+        if (command.equalsIgnoreCase("timings on") && !SkriptTimings.timingsEnabled) {
+            SkriptTimings.timingsEnabled = true;
+            Skript.info("Timings mode enabled");
+        } else if (command.equalsIgnoreCase("timings off") && SkriptTimings.timingsEnabled) {
+            SkriptTimings.timingsEnabled = false;
+            Skript.info("Timings mode disabled");
+        }
+    }
+
     @SuppressWarnings("null")
     public static final void onPlayerCommand(final PlayerCommandPreprocessEvent e) {
-        if (handleCommand(e.getPlayer(), e.getMessage().substring(1))) {
+        final String command = e.getMessage().substring(1);
+        checkTimings(command);
+
+        if (handleCommand(e.getPlayer(), command)) {
             e.setCancelled(true);
             cancelledEvent.set(true);
             if (!SkriptConfig.throwOnCommandOnlyForPluginCommands.value()) {
@@ -190,6 +208,7 @@ public final class Commands {
     public static final void onServerCommand(final ServerCommandEvent e) {
         if (e.getCommand() == null || e.getCommand().isEmpty() || cancellableServerCommand && e.isCancelled())
             return;
+        checkTimings(e.getCommand());
         boolean effectCommand = false;
         if (SkriptConfig.enableEffectCommands.value() && e.getCommand().startsWith(SkriptConfig.effectCommandToken.value())) {
             if (!handleEffectCommand(e.getSender(), e.getCommand())) {
@@ -242,10 +261,10 @@ public final class Commands {
     }
 
     /**
-     * @see Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)
+     * @deprecated {@link Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)}
      */
-    @SuppressWarnings("null")
     @Deprecated
+    @SuppressWarnings("null")
     public static final void onPlayerChat(final PlayerChatEvent e) {
         if (!SkriptConfig.enableEffectCommands.value() || !e.getMessage().startsWith(SkriptConfig.effectCommandToken.value()))
             return;
@@ -260,7 +279,7 @@ public final class Commands {
      * @param command full command string without the slash
      * @return whatever to cancel the event
      */
-    static final boolean handleCommand(final CommandSender sender, final String command) {
+    public static final boolean handleCommand(final CommandSender sender, final String command) {
         final String[] cmd = command.split("\\s+", 2);
         cmd[0] = cmd[0].toLowerCase(Locale.ENGLISH);
         if (cmd[0].endsWith("?")) {
@@ -287,7 +306,7 @@ public final class Commands {
     }
 
     @SuppressWarnings("unchecked")
-    static final boolean handleEffectCommand(final CommandSender sender, String command) {
+    public static final boolean handleEffectCommand(final CommandSender sender, String command) {
         if (!(sender instanceof ConsoleCommandSender || sender.hasPermission("skript.effectcommands") || SkriptConfig.allowOpsToUseEffectCommands.value() && sender.isOp()))
             return false;
         final boolean wasLocal = Language.setUseLocal(false);

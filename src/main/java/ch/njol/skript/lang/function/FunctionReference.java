@@ -68,13 +68,13 @@ public final class FunctionReference<T> {
     public boolean validateFunction(final boolean first) {
         final Function<?> newFunc = Functions.getFunction(functionName);
         SkriptLogger.setNode(node);
-        //if (newFunc == null) {
-        //if (first)
-        //Skript.error("The function '" + functionName + "' does not exist.");
-        //else
-        //Skript.error("The function '" + functionName + "' was deleted or renamed, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
-        //return false;
-        //}
+        if (newFunc == null) {
+            if (first)
+                Skript.error("The function '" + functionName + "' does not exist.");
+            else
+                Skript.error("The function '" + functionName + "' was deleted or renamed, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
+            return false;
+        }
         if (newFunc == function)
             return true;
 
@@ -105,18 +105,16 @@ public final class FunctionReference<T> {
 
         // check number of parameters only if the function does not have a single parameter that accepts multiple values
         singleUberParam = newFunc.getMaxParameters() == 1 && !newFunc.parameters[0].single;
-        if (!singleUberParam) {
-            if (parameters.length > newFunc.getMaxParameters()) {
-                if (first) {
-                    if (newFunc.getMaxParameters() == 0)
-                        Skript.error("The function '" + functionName + "' has no arguments, but " + parameters.length + " are given." + " To call a function without parameters, just write the function name followed by '()', e.g. 'func()'.");
-                    else
-                        Skript.error("The function '" + functionName + "' has only " + newFunc.getMaxParameters() + " argument" + (newFunc.getMaxParameters() == 1 ? "" : "s") + "," + " but " + parameters.length + " are given." + " If you want to use lists in function calls, you have to use additional parentheses, e.g. 'give(player, (iron ore and gold ore))'");
-                } else {
-                    Skript.error("The function '" + functionName + "' was redefined with a different, incompatible amount of arguments, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
-                }
-                return false;
+        if (!singleUberParam && parameters.length > newFunc.getMaxParameters()) {
+            if (first) {
+                if (newFunc.getMaxParameters() == 0)
+                    Skript.error("The function '" + functionName + "' has no arguments, but " + parameters.length + " are given." + " To call a function without parameters, just write the function name followed by '()', e.g. 'func()'.");
+                else
+                    Skript.error("The function '" + functionName + "' has only " + newFunc.getMaxParameters() + " argument" + (newFunc.getMaxParameters() == 1 ? "" : "s") + "," + " but " + parameters.length + " are given." + " If you want to use lists in function calls, you have to use additional parentheses, e.g. 'give(player, (iron ore and gold ore))'");
+            } else {
+                Skript.error("The function '" + functionName + "' was redefined with a different, incompatible amount of arguments, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
             }
+            return false;
         }
         if (parameters.length < newFunc.getMinParameters()) {
             if (first)

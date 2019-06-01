@@ -46,9 +46,8 @@ public class Message {
                 synchronized (m) {
                     m.revalidate = true;
                 }
-                if (firstChange && Skript.testing()) {
-                    if (!Language.english.containsKey(m.key))
-                        Language.missingEntryError(m.key);
+                if (firstChange && Skript.testing() && (!Language.english.containsKey(m.key))) {
+                    Language.missingEntryError(m.key);
                 }
             }
             firstChange = false;
@@ -64,9 +63,8 @@ public class Message {
     public Message(final String key) {
         this.key = key.toLowerCase(Locale.ENGLISH);
         messages.add(this);
-        if (Skript.testing() && !Language.english.isEmpty()) {
-            if (!Language.english.containsKey(this.key))
-                Language.missingEntryError(this.key);
+        if (Skript.testing() && !Language.english.isEmpty() && (!Language.english.containsKey(this.key))) {
+            Language.missingEntryError(this.key);
         }
     }
 
