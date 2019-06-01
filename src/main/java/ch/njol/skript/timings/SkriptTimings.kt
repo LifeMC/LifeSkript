@@ -36,8 +36,10 @@ private var enabled: Boolean = false
 
 private var skript: Skript? = null // Initialized on Skript load, before any timings would be used anyway
 
-private val syncMethods: Boolean = Skript.methodExists(Timings::class.java, "startTimingIfSync")
-private val isEnabledMethod: Boolean = Skript.methodExists(Timings::class.java, "isTimingsEnabled")
+private val timings: Boolean = Skript.classExists("co.aikar.timings.Timings") && Skript.classExists("co.aikar.timings.Timing")
+
+private val syncMethods: Boolean = timings && Skript.methodExists(Timings::class.java, "startTimingIfSync")
+private val isEnabledMethod: Boolean = timings && Skript.methodExists(Timings::class.java, "isTimingsEnabled")
 
 @JvmField
 var timingsEnabled: Boolean = false

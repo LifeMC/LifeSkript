@@ -44,8 +44,10 @@ public abstract class AsyncEffect extends Effect {
     @Nullable
     protected TriggerItem walk(final Event e) {
         debug(e, true);
+        if (!Skript.isBukkitRunning() || Delay.delayingDisabled)
+            return null;
         final TriggerItem next = getNext();
-        Delay.addDelayedEvent(e);
+        Delay.delayed.add(e);
         Bukkit.getScheduler().runTaskAsynchronously(Skript.getInstance(), () -> {
             execute(e); // Execute this effect
             if (next != null) {
