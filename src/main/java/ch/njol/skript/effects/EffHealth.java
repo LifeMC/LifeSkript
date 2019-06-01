@@ -63,11 +63,9 @@ public final class EffHealth extends Effect {
     @Override
     public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         damageables = vars[0];
-        if (ItemStack.class.isAssignableFrom(damageables.getReturnType())) {
-            if (!ChangerUtils.acceptsChange(damageables, ChangeMode.SET, ItemStack.class)) {
-                Skript.error(damageables + " cannot be changed, thus it cannot be damaged or repaired.");
-                return false;
-            }
+        if (ItemStack.class.isAssignableFrom(damageables.getReturnType()) && !ChangerUtils.acceptsChange(damageables, ChangeMode.SET, ItemStack.class)) {
+            Skript.error(damageables + " cannot be changed, thus it cannot be damaged or repaired.");
+            return false;
         }
         damage = (Expression<Number>) vars[1];
         heal = matchedPattern >= 1;

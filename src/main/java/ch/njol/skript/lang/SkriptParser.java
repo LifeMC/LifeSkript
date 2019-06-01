@@ -1102,11 +1102,9 @@ public final class SkriptParser {
 
             if (isLiteralList) {
                 final Literal<T>[] ls = ts.toArray(new Literal[0]);
-                assert ls != null;
                 return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
             final Expression<T>[] es = ts.toArray(new Expression[0]);
-            assert es != null;
             return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
         } finally {
             log.stop();

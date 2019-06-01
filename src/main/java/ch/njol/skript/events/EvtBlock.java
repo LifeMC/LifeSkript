@@ -76,9 +76,8 @@ public final class EvtBlock extends SkriptEvent {
     @SuppressWarnings("null")
     @Override
     public boolean check(final Event e) {
-        if (mine && e instanceof BlockBreakEvent) {
-            if (((BlockBreakEvent) e).getBlock().getDrops(((BlockBreakEvent) e).getPlayer().getItemInHand()).isEmpty())
-                return false;
+        if (mine && e instanceof BlockBreakEvent && ((BlockBreakEvent) e).getBlock().getDrops(((BlockBreakEvent) e).getPlayer().getItemInHand()).isEmpty()) {
+            return false;
         }
         if (types == null)
             return true;

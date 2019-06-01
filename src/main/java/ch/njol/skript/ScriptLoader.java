@@ -64,8 +64,7 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 public final class ScriptLoader {
-    public static final boolean COLOR_BASED_ON_LOAD_TIMES = System.getProperty("skript.colorBasedOnLoadTimes") != null
-            && Boolean.parseBoolean("skript.colorBasedOnLoadTimes");
+    public static final boolean COLOR_BASED_ON_LOAD_TIMES = Boolean.parseBoolean("skript.colorBasedOnLoadTimes");
 
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
@@ -81,6 +80,8 @@ public final class ScriptLoader {
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
     private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
+    private static final Collection<String> skipFiles = new ArrayList<>();
+    private static final Collection<String> loadedScriptFiles = new ArrayList<>();
     /**
      * must be synchronized
      */
@@ -208,8 +209,12 @@ public final class ScriptLoader {
         return currentAliases;
     }
 
+    public static final File getScriptsFolder() {
+        return new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
+    }
+
     static final ScriptInfo loadScripts() {
-        final File scriptsFolder = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator);
+        final File scriptsFolder = getScriptsFolder();
         if (!scriptsFolder.isDirectory())
             //noinspection ResultOfMethodCallIgnored
             scriptsFolder.mkdirs();
@@ -261,6 +266,8 @@ public final class ScriptLoader {
             assert files != null;
             Arrays.sort(files);
             for (final File f : files) {
+                if (skipFiles.contains(f.getName()))
+                    continue;
                 if (f.isDirectory()) {
                     i.add(loadScripts(f));
                 } else {
@@ -306,6 +313,13 @@ public final class ScriptLoader {
 
     @SuppressWarnings({"unchecked", "null"})
     public static final ScriptInfo loadScript(final File f) {
+        assert f != null;
+
+        assert !loadedFiles.contains(f);
+        assert !loadedScriptFiles.contains(f.getName());
+
+        assert currentScript == null;
+
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
 //			cache = new File(f.getParentFile(), "cache" + File.separator + f.getName() + "c");
@@ -361,6 +375,7 @@ public final class ScriptLoader {
 //				}
 //			}
 //		}
+
         try {
 
             @Nullable
@@ -405,7 +420,109 @@ public final class ScriptLoader {
                     if (event == null)
                         continue;
 
-                    if ("aliases".equalsIgnoreCase(event)) {
+                    if ("configuration".equalsIgnoreCase(event)) {
+                        if (hasConfiguraton) {
+                            Skript.error("duplicate configuration section");
+                            continue;
+                        }
+                        if (index != 1) {
+                            Skript.error("configuration should be on top of the script");
+                            continue;
+                        }
+                        hasConfiguraton = true;
+                        node.convertToEntries(0);
+                        final ArrayList<String> duplicateCheckList = new ArrayList<>();
+                        for (final Node n : node) {
+                            if (!(n instanceof EntryNode)) {
+                                Skript.error("invalid line in the configuration");
+                                continue;
+                            }
+                            final String key = n.getKey();
+                            final String value = ((EntryNode) n).getValue();
+
+                            try {
+                                if (key.equalsIgnoreCase("source")) {
+                                    if (duplicateCheckList.contains("source")) {
+                                        Skript.error("Duplicate source configuration setting");
+                                        continue;
+                                    }
+                                    scriptVersion = new Version(value, true);
+                                    currentScriptVersion = scriptVersion;
+                                    duplicateCheckList.add("source");
+                                } else if (key.equalsIgnoreCase("target")) {
+                                    final Version target = new Version(value, true);
+                                    if (duplicateCheckList.contains("target")) {
+                                        Skript.error("Duplicate target configuration setting");
+                                        continue;
+                                    }
+                                    // Source: The version that script is written and tested with.
+                                    // Target: Actual minimum version that script supports.
+                                    if (Skript.getVersion().isSmallerThan(target)) {
+                                        Skript.error("This script requires Skript version " + value);
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
+                                    } else if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
+                                        Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
+                                    duplicateCheckList.add("target");
+                                } else if (key.equalsIgnoreCase("loops")) {
+                                    if (duplicateCheckList.contains("loops")) {
+                                        Skript.error("Duplicate loops configuration setting");
+                                        continue;
+                                    }
+                                    if (value.equalsIgnoreCase("old")) {
+                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), false);
+                                    } else {
+                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), true);
+                                    }
+                                    duplicateCheckList.add("loops");
+                                } else if (key.equalsIgnoreCase("requires minecraft")) {
+                                    if (duplicateCheckList.contains("requires minecraft")) {
+                                        Skript.error("Duplicate requires minecraft configuration setting");
+                                        continue;
+                                    }
+                                    if (Skript.getMinecraftVersion().isSmallerThan(new Version(value, true))) {
+                                        Skript.error("This script requires Minecraft version " + value);
+                                        return new ScriptInfo();
+                                    }
+                                    duplicateCheckList.add("requires minecraft");
+                                } else if (key.equalsIgnoreCase("requires plugin") && !Bukkit.getPluginManager().isPluginEnabled(value)) {
+                                    // This can be duplicateable to require more than one plugin
+
+                                    if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
+                                        Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
+                                    else // it does not exist at all
+                                        Skript.error("This script requires plugin " + value);
+                                    return new ScriptInfo();
+                                } else if (key.equalsIgnoreCase("load after")) { // This also can be duplicateable to require more than one script
+                                    // This can be used to require a script (not generally), or defer loading of this script after a specific script is loaded.
+                                    // it also can be used for functions, etc., when not using 'allow function calls before definitions'
+                                    final File file = new File(getScriptsFolder(), value.endsWith(".sk") ? value : value + ".sk"); // .sk suffix can be omitted
+
+                                    if (!file.exists()) {
+                                        // This generally should not be used to require a script because user may change names of the scripts
+                                        Skript.error("Can't find required script " + value);
+                                        return new ScriptInfo();
+                                    }
+
+                                    if (!loadedScriptFiles.contains(file.getName())) { // If the script is not already loaded
+                                        if (Skript.logHigh())
+                                            Skript.info("Loading script '" + file.getName() + "' because the script '" + f.getName() + "' requires it");
+                                        skipFiles.add(file.getName()); // Required to skip this script in iteration
+
+                                        // Set to null, method call re-sets it
+                                        currentScript = null;
+                                        loadScript(file); // Load the required script before continuing to parse this script
+                                        currentScript = config; // Re-set the current script to this script
+                                    }
+                                }
+                            } catch (final IllegalArgumentException e) {
+                                // Probably an illegal version string is passed
+                                Skript.error(e.getLocalizedMessage());
+                                return new ScriptInfo();
+                            }
+                        }
+                        duplicateCheckList.clear();
+                        continue;
+                    } else if ("aliases".equalsIgnoreCase(event)) {
                         node.convertToEntries(0, "=");
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
@@ -493,87 +610,6 @@ public final class ScriptLoader {
                             }
                             Variables.setVariable(name, o, null, false);
                         }
-                        continue;
-                    } else if ("configuration".equalsIgnoreCase(event)) {
-                        if (hasConfiguraton) {
-                            Skript.error("duplicate configuration section");
-                            continue;
-                        }
-                        if (index != 1) {
-                            Skript.error("configuration should be on top of the script");
-                            continue;
-                        }
-                        hasConfiguraton = true;
-                        node.convertToEntries(0);
-                        final ArrayList<String> duplicateCheckList = new ArrayList<>();
-                        for (final Node n : node) {
-                            if (!(n instanceof EntryNode)) {
-                                Skript.error("invalid line in the configuration");
-                                continue;
-                            }
-                            final String key = n.getKey();
-                            final String value = ((EntryNode) n).getValue();
-
-                            try {
-                                if (key.equalsIgnoreCase("source")) {
-                                    if (duplicateCheckList.contains("source")) {
-                                        Skript.error("Duplicate source configuration setting");
-                                        continue;
-                                    }
-                                    scriptVersion = new Version(value, true);
-                                    currentScriptVersion = scriptVersion;
-                                    duplicateCheckList.add("source");
-                                } else if (key.equalsIgnoreCase("target")) {
-                                    final Version target = new Version(value, true);
-                                    if (duplicateCheckList.contains("target")) {
-                                        Skript.error("Duplicate target configuration setting");
-                                        continue;
-                                    }
-                                    // Source: The version that script is written and tested with.
-                                    // Target: Actual minimum version that script supports.
-                                    if (Skript.getVersion().isSmallerThan(target)) {
-                                        Skript.error("This script requires Skript version " + value);
-                                        return new ScriptInfo(); // we return empty script info to abort parsing
-                                    } else if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
-                                        Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
-                                    duplicateCheckList.add("target");
-                                } else if (key.equalsIgnoreCase("loops")) {
-                                    if (duplicateCheckList.contains("loops")) {
-                                        Skript.error("Duplicate loops configuration setting");
-                                        continue;
-                                    }
-                                    if (value.equalsIgnoreCase("old")) {
-                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), false);
-                                    } else {
-                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), true);
-                                    }
-                                    duplicateCheckList.add("loops");
-                                } else if (key.equalsIgnoreCase("requires minecraft")) {
-                                    if (duplicateCheckList.contains("requires minecraft")) {
-                                        Skript.error("Duplicate requires minecraft configuration setting");
-                                        continue;
-                                    }
-                                    if (Skript.getMinecraftVersion().isSmallerThan(new Version(value, true))) {
-                                        Skript.error("This script requires Minecraft version " + value);
-                                        return new ScriptInfo();
-                                    }
-                                    duplicateCheckList.add("requires minecraft");
-                                } else if (key.equalsIgnoreCase("requires plugin")) {
-                                    // This can be duplicateable to require more than one plugin
-                                    if (!Bukkit.getPluginManager().isPluginEnabled(value)) {
-                                        if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
-                                            Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
-                                        else // it does not exist at all
-                                            Skript.error("This script requires plugin " + value);
-                                        return new ScriptInfo();
-                                    }
-                                }
-                            } catch (final IllegalArgumentException e) {
-                                Skript.error(e.getLocalizedMessage());
-                                return new ScriptInfo();
-                            }
-                        }
-                        duplicateCheckList.clear();
                         continue;
                     } else
                         currentScriptVersion = scriptVersion;
@@ -706,6 +742,8 @@ public final class ScriptLoader {
 //			}
 
             loadedFiles.add(f);
+            loadedScriptFiles.add(f.getName());
+
             return new ScriptInfo(1, numTriggers, numCommands, numFunctions, scriptVersion);
         } catch (final IOException e) {
             Skript.error("Could not load " + f.getName() + ": " + ExceptionUtils.toString(e));
@@ -832,6 +870,7 @@ public final class ScriptLoader {
                     } finally {
                         h.stop();
                     }
+                    assert loopedExpr != null;
                     if (loopedExpr.isSingle()) {
                         Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
                         continue;
