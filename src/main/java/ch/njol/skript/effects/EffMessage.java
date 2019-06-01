@@ -84,8 +84,8 @@ public final class EffMessage extends Effect {
             if (SkriptConfig.enableExplicitPlayerUseWarnings.value() && recipientsArray.length == 1 && !(recipientsArray[0] instanceof ConsoleCommandSender) && e instanceof ServerCommandEvent) {
                 Skript.warning("Command used from console, but send message uses the form of explicit \"to player\". For clarification, limit the command to the players, or remove the \"to player\" part." + (script != null ? " (" + script + ", line " + line + ")" : ""));
             }
-            for (final CommandSender s : recipientsArray) {
-                s.sendMessage(message);
+            for (final CommandSender receiver : recipientsArray) {
+                receiver.sendMessage(message);
             }
         }
     }

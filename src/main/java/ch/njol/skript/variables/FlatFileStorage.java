@@ -281,7 +281,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 PrintWriter cw;
                 while ((cw = changesWriter.get()) == null) {
                     try {
-                        changesWriter.wait();
+                        changesWriter.wait(); //FIXME sonarlint
                     } catch (final InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
@@ -432,6 +432,11 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         save(pw, "", variables);
 
+                        savingVariables = false;
+                        savedVariables = 0; // Method may be called multiple times
+
+                        savingLoggerThread.interrupt(); // In case if not interrupted
+
                         if (Skript.logHigh())
                             Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
 
@@ -444,11 +449,6 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         if (finalSave)
                             SkriptCommand.resetPriority();
-
-                        savingVariables = false;
-                        savedVariables = 0; // Method may be called multiple times
-
-                        savingLoggerThread.interrupt(); // In case if not interrupted
 
                     } catch (final IOException e) {
                         Skript.error("Unable to make a final save of the database '" + databaseName + "' (no variables are lost): " + ExceptionUtils.toString(e));

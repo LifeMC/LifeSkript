@@ -113,7 +113,7 @@ public final class LogEntry {
 
     void discarded(final String info) {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Exception().getStackTrace()[1] + "; " + info);
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Throwable().getStackTrace()[1] + "; " + info); //FIXME replace with Thread#getStackTrace
     }
 
     void logged() {

@@ -66,4 +66,9 @@ public final class EnumParser<E extends Enum<E>> implements Converter<String, E>
         }
     }
 
+    @Override
+    public String toString() {
+        return "EnumParser[enum=" + enumType + ",allowedValues=" + allowedValues + ",type=" + type + "]";
+    }
+
 }

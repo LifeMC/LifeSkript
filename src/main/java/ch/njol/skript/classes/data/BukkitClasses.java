@@ -388,7 +388,7 @@ public final class BukkitClasses {
             @Nullable
             public Player parse(final String s, final ParseContext context) {
                 if (context == ParseContext.COMMAND) {
-                    @SuppressWarnings("deprecation") final List<Player> ps = Bukkit.matchPlayer(s);
+                    @SuppressWarnings("deprecation") final List<Player> ps = Bukkit.matchPlayer(s); //FIXME deprecated
                     if (ps.size() == 1)
                         return ps.get(0);
                     if (ps.isEmpty())
@@ -443,6 +443,9 @@ public final class BukkitClasses {
                         Skript.error("The player name \"" + s + "\" is not a valid player name");
                         return null;
                     }
+                    final Player player = Bukkit.getPlayerExact(s);
+                    if (player != null)
+                        return player; // Player extends OfflinePlayer
                     return new UnresolvedOfflinePlayer(s);
                 }
 //						if (s.matches("\"\\S+\""))

@@ -101,8 +101,8 @@ public final class DefaultConverters {
             return null;
         }, Converter.NO_COMMAND_ARGUMENTS);
 
-        // Block - ItemStack
-        Converters.registerConverter(Block.class, ItemStack.class, b -> new ItemStack(b.getTypeId(), 1, b.getData()), Converter.NO_LEFT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
+        // Block - ItemType
+        Converters.registerConverter(Block.class, ItemType.class, ItemType::new, Converter.NO_LEFT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
 
         // Location - Block
 //		Converters.registerConverter(Location.class, Block.class, new Converter<Location, Block>() {
@@ -173,7 +173,7 @@ public final class DefaultConverters {
             if (s instanceof InventoryHolder)
                 return (InventoryHolder) s;
             return null;
-        }, Converter.NO_COMMAND_ARGUMENTS);
+        }, Converter.NO_RIGHT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
 //		Skript.registerConverter(InventoryHolder.class, Block.class, new Converter<InventoryHolder, Block>() {
 //			@Override
 //			public Block convert(final InventoryHolder h) {

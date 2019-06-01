@@ -60,4 +60,9 @@ public final class ChainedConverter<F, M, T> implements Converter<F, T> {
         return second.convert(m);
     }
 
+    @Override
+    public String toString() {
+        return "ChainedConverter[first=" + first + ",second=" + second + "]";
+    }
+
 }

@@ -241,6 +241,7 @@ public final class DefaultChangers {
                         assert false;
                 }
                 if (invi.getHolder() instanceof Player) {
+                    // FIXME Change with PlayerUtils#updateInventory?
                     ((Player) invi.getHolder()).updateInventory();
                 }
             }
