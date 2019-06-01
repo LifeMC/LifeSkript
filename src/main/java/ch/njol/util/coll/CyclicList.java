@@ -24,6 +24,7 @@ package ch.njol.util.coll;
 
 import ch.njol.util.Math2;
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.AbstractList;
@@ -175,6 +176,7 @@ public final class CyclicList<E> extends AbstractList<E> {
         return toArray(new Object[items.length]);
     }
 
+    @NotNull
     @SuppressWarnings("unchecked")
     @Override
     public <T> T[] toArray(final @Nullable T[] array) {

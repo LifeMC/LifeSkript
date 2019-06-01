@@ -22,6 +22,8 @@
 
 package ch.njol.util.coll.iterator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Iterator;
 
 /**
@@ -35,6 +37,7 @@ public final class IteratorIterable<T> implements Iterable<T> {
         this.iter = iter;
     }
 
+    @NotNull
     @Override
     public Iterator<T> iterator() {
         return iter;

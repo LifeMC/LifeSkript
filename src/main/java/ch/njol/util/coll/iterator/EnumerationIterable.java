@@ -23,6 +23,7 @@
 package ch.njol.util.coll.iterator;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -42,6 +43,7 @@ public final class EnumerationIterable<T> implements Iterable<T> {
         this.e = e;
     }
 
+    @NotNull
     @Override
     public Iterator<T> iterator() {
         final Enumeration<? extends T> e = this.e;

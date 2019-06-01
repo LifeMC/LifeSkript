@@ -24,6 +24,7 @@ package ch.njol.util.coll;
 
 import ch.njol.util.coll.iterator.ReversedListIterator;
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -71,6 +72,7 @@ public final class ReversedListView<T> implements List<T> {
         return new ReversedListIterator<>(list, index);
     }
 
+    @NotNull
     @Override
     public Object[] toArray() {
         final Object[] r = new Object[size()];
@@ -80,6 +82,7 @@ public final class ReversedListView<T> implements List<T> {
         return r;
     }
 
+    @NotNull
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public <R> R[] toArray(final R[] a) {

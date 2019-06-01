@@ -23,6 +23,7 @@
 package ch.njol.util;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -71,6 +72,7 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
         return false;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return s;

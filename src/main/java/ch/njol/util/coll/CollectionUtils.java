@@ -26,6 +26,7 @@ import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Pair;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Contract;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -347,6 +348,7 @@ public final class CollectionUtils {
     @SafeVarargs
     @SuppressWarnings("null")
     @NonNull
+    @Contract("null->null")
     public static final <T> T[] array(final @Nullable T... array) {
         return array;
     }

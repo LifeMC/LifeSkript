@@ -23,6 +23,7 @@
 package ch.njol.util.coll.iterator;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
@@ -38,6 +39,7 @@ public final class EmptyIterable<T> implements Iterable<T> {
         return (EmptyIterable<T>) instance;
     }
 
+    @NotNull
     @Override
     public Iterator<T> iterator() {
         return EmptyIterator.get();
