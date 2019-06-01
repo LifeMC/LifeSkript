@@ -46,8 +46,8 @@ public final class BukkitLoggerFilter {
         Skript.closeOnDisable(filter);
     }
 
-    public BukkitLoggerFilter() {
-        super();
+    private BukkitLoggerFilter() {
+        throw new UnsupportedOperationException("Static class");
     }
 
     /**

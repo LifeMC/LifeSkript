@@ -139,7 +139,7 @@ public final class RetainingLogHandler extends LogHandler {
         assert !printedErrorOrLog;
         printedErrorOrLog = true;
         stop();
-        SkriptLogger.logAll(log);
+        SkriptLogger.logAll((Iterable<LogEntry>) log); // Cast is required to not use deprecated method
     }
 
     public boolean hasErrors() {

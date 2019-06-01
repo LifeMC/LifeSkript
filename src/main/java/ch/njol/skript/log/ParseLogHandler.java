@@ -79,7 +79,7 @@ public class ParseLogHandler extends LogHandler {
     public void printLog() {
         printedErrorOrLog = true;
         stop();
-        SkriptLogger.logAll(log);
+        SkriptLogger.logAll((Iterable<LogEntry>) log); // Cast is required to not use deprecated method
         if (error != null)
             error.discarded("not printed");
     }
