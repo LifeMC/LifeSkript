@@ -23,6 +23,7 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.bukkitutil.Workarounds;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -93,7 +94,7 @@ public final class ExprProperty extends SimpleExpression<String> {
         final String key = propertyName.getSingle(e);
         if (key == null || key.isEmpty())
             return null;
-        return new String[]{System.getProperty(key)};
+        return new String[]{Workarounds.getOriginalProperty(key)};
     }
 
 }
