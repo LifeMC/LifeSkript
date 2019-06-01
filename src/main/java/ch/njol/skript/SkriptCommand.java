@@ -63,10 +63,10 @@ public final class SkriptCommand implements CommandExecutor {
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
     private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")).add(new CommandHelp("track", Color.DARK_RED).add("delays").add("variables").add("loops")).add(new CommandHelp("untrack", Color.DARK_RED).add("delays").add("variables").add("loops")
-            //			).add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
-//					.add("set", "Creates a new variable or changes an existing one")
-//					.add("delete", "Deletes a variable")
-//					.add("find", "Find variables")
+            //          ).add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
+//                  .add("set", "Creates a new variable or changes an existing one")
+//                  .add("delete", "Deletes a variable")
+//                  .add("find", "Find variables")
     ).add("help");
     private static final ArgsMessage m_reloading = new ArgsMessage(NODE + ".reload.reloading");
     private static final ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
@@ -350,6 +350,7 @@ public final class SkriptCommand implements CommandExecutor {
                     return true;
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
+                /*
                 if ("check".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 } else if ("changes".equalsIgnoreCase(args[1])) {
@@ -357,6 +358,8 @@ public final class SkriptCommand implements CommandExecutor {
                 } else if ("download".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
                 }
+                */
+                Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());
             } else if ("track".equalsIgnoreCase(args[0]) || "untrack".equalsIgnoreCase(args[0])) {
                 if ("delays".equalsIgnoreCase(args[1])) {
                     if ("track".equalsIgnoreCase(args[0])) {
@@ -364,14 +367,13 @@ public final class SkriptCommand implements CommandExecutor {
                         final TimeUnit unit = TimeUnit.NANOSECONDS;
 
                         for (final TrackerAgent agent : registeredTrackers)
-                            if (agent instanceof TaskTrackerAgent)
-                                if (((TaskTrackerAgent) agent).out == sender) {
-                                    /* TODO This just an experimental agent & tracker & debugger system
-                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
-                                        but it should be done at some point. */
-                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a delay tracker!");
-                                    return true;
-                                }
+                            if (agent instanceof TaskTrackerAgent && ((TaskTrackerAgent) agent).out == sender) {
+                                /* TODO This just an experimental agent & tracker & debugger system
+                                    and it's not localized, I'm too lazy to localize, and I don't know german language,
+                                    but it should be done at some point. */
+                                sender.sendMessage(ChatColor.DARK_RED + "You already have a delay tracker!");
+                                return true;
+                            }
 
                         registeredTrackers.add(
                                 new TaskTrackerAgent(sender, limit, unit).registerTracker()
@@ -381,12 +383,11 @@ public final class SkriptCommand implements CommandExecutor {
                         boolean hasTracker = false;
                         for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
                             final TrackerAgent agent = it.next();
-                            if (agent instanceof TaskTrackerAgent)
-                                if (((TaskTrackerAgent) agent).out == sender) {
-                                    agent.unregisterTracker();
-                                    it.remove();
-                                    hasTracker = true;
-                                }
+                            if (agent instanceof TaskTrackerAgent && ((TaskTrackerAgent) agent).out == sender) {
+                                agent.unregisterTracker();
+                                it.remove();
+                                hasTracker = true;
+                            }
                         }
                         if (hasTracker)
                             sender.sendMessage(ChatColor.RED + "Unregistered your delay tracker!");
@@ -396,14 +397,13 @@ public final class SkriptCommand implements CommandExecutor {
                 } else if ("variables".equalsIgnoreCase(args[1])) {
                     if ("track".equalsIgnoreCase(args[0])) {
                         for (final TrackerAgent agent : registeredTrackers)
-                            if (agent instanceof VariableTrackerAgent)
-                                if (((VariableTrackerAgent) agent).out == sender) {
-                                    /* TODO This just an experimental agent & tracker & debugger system
-                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
-                                        but it should be done at some point. */
-                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a variable tracker!");
-                                    return true;
-                                }
+                            if (agent instanceof VariableTrackerAgent && ((VariableTrackerAgent) agent).out == sender) {
+                                /* TODO This just an experimental agent & tracker & debugger system
+                                    and it's not localized, I'm too lazy to localize, and I don't know german language,
+                                    but it should be done at some point. */
+                                sender.sendMessage(ChatColor.DARK_RED + "You already have a variable tracker!");
+                                return true;
+                            }
 
                         registeredTrackers.add(
                                 new VariableTrackerAgent(sender).registerTracker()
@@ -413,12 +413,11 @@ public final class SkriptCommand implements CommandExecutor {
                         boolean hasTracker = false;
                         for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
                             final TrackerAgent agent = it.next();
-                            if (agent instanceof VariableTrackerAgent)
-                                if (((VariableTrackerAgent) agent).out == sender) {
-                                    agent.unregisterTracker();
-                                    it.remove();
-                                    hasTracker = true;
-                                }
+                            if (agent instanceof VariableTrackerAgent && ((VariableTrackerAgent) agent).out == sender) {
+                                agent.unregisterTracker();
+                                it.remove();
+                                hasTracker = true;
+                            }
                         }
                         if (hasTracker)
                             sender.sendMessage(ChatColor.RED + "Unregistered your variable tracker!");
@@ -428,14 +427,13 @@ public final class SkriptCommand implements CommandExecutor {
                 } else if ("loops".equalsIgnoreCase(args[1])) {
                     if ("track".equalsIgnoreCase(args[0])) {
                         for (final TrackerAgent agent : registeredTrackers)
-                            if (agent instanceof LoopTrackerAgent)
-                                if (((LoopTrackerAgent) agent).out == sender) {
-                                    /* TODO This just an experimental agent & tracker & debugger system
-                                        and it's not localized, I'm too lazy to localize, and I don't know german language,
-                                        but it should be done at some point. */
-                                    sender.sendMessage(ChatColor.DARK_RED + "You already have a loop tracker!");
-                                    return true;
-                                }
+                            if (agent instanceof LoopTrackerAgent && ((LoopTrackerAgent) agent).out == sender) {
+                                /* TODO This just an experimental agent & tracker & debugger system
+                                   and it's not localized, I'm too lazy to localize, and I don't know german language,
+                                   but it should be done at some point. */
+                                sender.sendMessage(ChatColor.DARK_RED + "You already have a loop tracker!");
+                                return true;
+                            }
 
                         registeredTrackers.add(
                                 new LoopTrackerAgent(sender).registerTracker()
@@ -445,12 +443,11 @@ public final class SkriptCommand implements CommandExecutor {
                         boolean hasTracker = false;
                         for (final Iterator<TrackerAgent> it = registeredTrackers.iterator(); it.hasNext(); ) {
                             final TrackerAgent agent = it.next();
-                            if (agent instanceof LoopTrackerAgent)
-                                if (((LoopTrackerAgent) agent).out == sender) {
-                                    agent.unregisterTracker();
-                                    it.remove();
-                                    hasTracker = true;
-                                }
+                            if (agent instanceof LoopTrackerAgent && ((LoopTrackerAgent) agent).out == sender) {
+                                agent.unregisterTracker();
+                                it.remove();
+                                hasTracker = true;
+                            }
                         }
                         if (hasTracker)
                             sender.sendMessage(ChatColor.RED + "Unregistered your loop tracker!");

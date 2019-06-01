@@ -25,7 +25,7 @@ package ch.njol.skript.log;
 /**
  * @author Peter Güttinger
  */
-public abstract class LogHandler/* implements AutoCloseable */{
+public abstract class LogHandler/* implements AutoCloseable */ {
 
     /**
      * @param entry
@@ -57,6 +57,8 @@ public abstract class LogHandler/* implements AutoCloseable */{
      * Stops the log handler.
      *
      * Useful on Java 7 and above.
+     *
+     * FIXME Implement this
      *
      * @see LogHandler#stop()
      */
