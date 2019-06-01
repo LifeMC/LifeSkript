@@ -28,6 +28,7 @@ import ch.njol.skript.Skript
 import co.aikar.timings.Timing
 import co.aikar.timings.Timings
 import org.bukkit.Bukkit
+import org.bukkit.plugin.SimplePluginManager
 import org.eclipse.jdt.annotation.Nullable
 
 @Volatile
@@ -36,6 +37,9 @@ private var enabled: Boolean = false
 private var skript: Skript? = null // Initialized on Skript load, before any timings would be used anyway
 
 private val syncMethods: Boolean = Skript.methodExists(Timings::class.java, "startTimingIfSync")
+
+@JvmField
+var timingsEnabled: Boolean = false
 
 @Nullable
 fun start(name: String): Any? {
@@ -67,7 +71,7 @@ fun stop(@Nullable timing: Any?) {
 fun enabled(): Boolean {
     // First check if we can run timings (enabled in settings + running Paper or LifeSpigot)
     // After that (we know that class exists), check if server has timings running
-    return enabled && Timings.isTimingsEnabled()
+    return enabled && Timings.isTimingsEnabled() && timingsEnabled && (Bukkit.getPluginManager() !is SimplePluginManager || (Bukkit.getPluginManager() as SimplePluginManager).useTimings())
 }
 
 fun setEnabled(flag: Boolean) {
