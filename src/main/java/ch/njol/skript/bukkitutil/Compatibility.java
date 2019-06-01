@@ -53,7 +53,7 @@ public final class Compatibility {
      */
     @NonNull
     @SuppressWarnings({"null", "unused"})
-    public static final <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<Superclass> superClass) {
+    public static final <S> Class<? extends S> getClass(@NonNull final String oldClass, @NonNull final String newClass, @Nullable final Class<S> superClass) {
 
         if (Skript.classExists(newClass)) {
             final Class<?> clazz = Skript.classForName(newClass);
@@ -64,7 +64,7 @@ public final class Compatibility {
             if (clazz == null)
                 return superClass;
 
-            return (Class<? extends Superclass>) clazz;
+            return (Class<? extends S>) clazz;
         } else if (Skript.classExists(oldClass)) {
             final Class<?> clazz = Skript.classForName(oldClass);
 
@@ -74,7 +74,7 @@ public final class Compatibility {
             if (clazz == null)
                 return superClass;
 
-            return (Class<? extends Superclass>) clazz;
+            return (Class<? extends S>) clazz;
         } else {
             // Should be never happen
             if (Skript.testing() || Skript.logHigh())
@@ -95,7 +95,7 @@ public final class Compatibility {
      */
     @Nullable
     @SuppressWarnings("null")
-    public static final <Superclass> Class<? extends Superclass> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
+    public static final <S> Class<? extends S> getClass(@NonNull final String oldClass, @NonNull final String newClass) {
         return Compatibility.getClass(oldClass, newClass, null);
     }
 
