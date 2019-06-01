@@ -36,6 +36,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -65,7 +66,7 @@ public final class EffKick extends Effect {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "kick " + players.toString(e, debug) + (reason != null ? " on account of " + reason.toString(e, debug) : "");
+        return "kick " + players.toString(e, debug) + (reason != null ? " because " + reason.toString(e, debug) : "");
     }
 
     @Override
@@ -78,6 +79,8 @@ public final class EffKick extends Effect {
                 ((PlayerLoginEvent) e).disallow(Result.KICK_OTHER, r);
             } else if (e instanceof PlayerKickEvent && p.equals(((PlayerKickEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
                 ((PlayerKickEvent) e).setLeaveMessage(r);
+            } else if (e instanceof PlayerQuitEvent && p.equals(((PlayerQuitEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
+                ((PlayerQuitEvent) e).setQuitMessage(r);
             } else {
                 p.kickPlayer(r);
             }
