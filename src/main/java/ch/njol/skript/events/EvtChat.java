@@ -52,18 +52,23 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
     private static final EventExecutor executor = new EventExecutor() {
 
         final void execute(final Event e) {
-            SkriptEventHandler.logEventStart(e);
+            final boolean flag = Skript.logVeryHigh();
+            if (flag)
+                SkriptEventHandler.logEventStart(e);
             for (final Trigger t : triggers) {
                 assert t != null : triggers;
-                SkriptEventHandler.logTriggerStart(t);
+                if (flag)
+                    SkriptEventHandler.logTriggerStart(t);
                 t.execute(e);
-                SkriptEventHandler.logTriggerEnd(t);
+                if (flag)
+                    SkriptEventHandler.logTriggerEnd(t);
             }
-            SkriptEventHandler.logEventEnd();
+            if (flag)
+                SkriptEventHandler.logEventEnd();
         }
 
         @Override
-        public void execute(final @Nullable Listener l, final @Nullable Event e) throws EventException {
+        public final void execute(final @Nullable Listener l, final @Nullable Event e) throws EventException {
             if (e == null)
                 return;
             if (!triggers.isEmpty()) {
@@ -85,17 +90,17 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         return true;
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return "chat";
     }
 
     @Override
-    public void register(final Trigger t) {
+    public final void register(final Trigger t) {
         triggers.add(t);
         if (!registeredExecutor) {
             PlayerChatEventHandler.registerChatEvent(SkriptConfig.defaultEventPriority.value(), executor, true);
@@ -104,12 +109,12 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public void unregister(final Trigger t) {
+    public final void unregister(final Trigger t) {
         triggers.remove(t);
     }
 
     @Override
-    public void unregisterAll() {
+    public final void unregisterAll() {
         triggers.clear();
     }
 

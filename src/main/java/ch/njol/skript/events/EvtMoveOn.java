@@ -159,7 +159,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     }
 
     @Override
-    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
 //		if (parser.regexes.get(0).group().equalsIgnoreCase("<block>")/* && isValidatingInput*/)
 //			return true;
 //		final Matcher m = Pattern.compile("<block:(.+)>").matcher(parser.regexes.get(0).group());
@@ -196,13 +196,13 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return "walk on " + Classes.toString(types, false);
 //		return "walk on " + (types != null ? Skript.toString(types, false) : "<block:" + world.getName() + ":" + x + "," + y + "," + z + ">");
     }
 
     @Override
-    public void register(final Trigger trigger) {
+    public final void register(final Trigger trigger) {
 //		if (types == null) {
 //			final BlockLocation l = new BlockLocation(world, x, y, z);
 //			List<Trigger> ts = blockTriggers.get(l);
@@ -228,7 +228,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     }
 
     @Override
-    public void unregister(final Trigger t) {
+    public final void unregister(final Trigger t) {
 //		final Iterator<Entry<BlockLocation, List<Trigger>>> i = blockTriggers.entrySet().iterator();
 //		while (i.hasNext()) {
 //			final List<Trigger> ts = i.next().getValue();
@@ -246,7 +246,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     }
 
     @Override
-    public void unregisterAll() {
+    public final void unregisterAll() {
 //		blockTriggers.clear();
         itemTypeTriggers.clear();
     }

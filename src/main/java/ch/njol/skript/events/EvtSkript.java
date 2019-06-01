@@ -65,9 +65,8 @@ public final class EvtSkript extends SelfRegisteringSkriptEvent {
     @Override
     public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         isStart = matchedPattern == 0;
-        if (parser.mark == 0) {
-            if (!SkriptConfig.disableStartStopEventWarnings.value())
-                Skript.warning("Server start/stop events are actually called when skript is started or stopped. It is thus recommended to use 'on load/stop' instead.");
+        if (parser.mark == 0 && !SkriptConfig.disableStartStopEventWarnings.value()) {
+            Skript.warning("Server start/stop events are actually called when skript is started or stopped. It is thus recommended to use 'on load/stop' instead.");
         }
         return true;
     }

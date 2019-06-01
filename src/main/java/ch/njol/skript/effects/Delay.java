@@ -55,7 +55,8 @@ import java.util.WeakHashMap;
 @Since("1.4")
 public final class Delay extends Effect {
     @SuppressWarnings("null")
-    static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>());
+    public static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>());
+    public static boolean delayingDisabled;
 
     static {
         Skript.registerEffect(Delay.class, "(wait|halt) [for] %timespan%");
@@ -97,7 +98,7 @@ public final class Delay extends Effect {
         final Timespan duration = this.duration.getSingle(e);
         if (duration == null)
             return null;
-        if (!Skript.isBukkitRunning())
+        if (!Skript.isBukkitRunning() || delayingDisabled)
             return null;
         final TriggerItem next = getNext();
         if (next != null) {

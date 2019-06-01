@@ -24,6 +24,7 @@ package ch.njol.skript.events;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptEventHandler;
+import ch.njol.skript.effects.Delay;
 import ch.njol.skript.events.bukkit.ScheduledEvent;
 import ch.njol.skript.events.bukkit.ScheduledNoWorldEvent;
 import ch.njol.skript.lang.Literal;
@@ -59,7 +60,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         period = ((Literal<Timespan>) args[0]).getSingle();
         if (args.length > 1 && args[1] != null) {
             worlds = ((Literal<World>) args[1]).getArray();
@@ -67,18 +68,25 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
         return true;
     }
 
-    void execute(final @Nullable World w) {
+    final void execute(final @Nullable World w) {
         final Trigger t = this.t;
         if (t == null) {
             assert false;
             return;
         }
+        if (Delay.delayingDisabled)
+            return;
         final ScheduledEvent e = w == null ? new ScheduledNoWorldEvent() : new ScheduledEvent(w);
-        SkriptEventHandler.logEventStart(e);
-        SkriptEventHandler.logTriggerStart(t);
+        final boolean flag = Skript.logVeryHigh();
+        if (flag) {
+            SkriptEventHandler.logEventStart(e);
+            SkriptEventHandler.logTriggerStart(t);
+        }
         t.execute(e);
-        SkriptEventHandler.logTriggerEnd(t);
-        SkriptEventHandler.logEventEnd();
+        if (flag) {
+            SkriptEventHandler.logTriggerEnd(t);
+            SkriptEventHandler.logEventEnd();
+        }
     }
 
     @SuppressWarnings("null")
