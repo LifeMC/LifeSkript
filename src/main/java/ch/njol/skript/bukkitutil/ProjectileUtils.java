@@ -37,6 +37,9 @@ import java.lang.reflect.Method;
 @SuppressWarnings({"null", "CanBeFinal"})
 public final class ProjectileUtils {
 
+    private static final boolean getShooterSupport = Skript.methodExists(Projectile.class, "getShooter");
+    private static final boolean setShooterSupport = Skript.classExists("org.bukkit.projectiles.ProjectileSource") && Skript.methodExists(Projectile.class, "setShooter", ProjectileSource.class);
+
     private static Method getShooter;
     private static Method setShooter;
 
@@ -51,7 +54,7 @@ public final class ProjectileUtils {
         } catch (final NoSuchMethodException e) {
             Skript.outdatedError(e);
         } catch (final SecurityException e) {
-            Skript.exception(e, "security manager present");
+            Skript.exception(e, "Security manager present");
         }
     }
 
@@ -63,6 +66,9 @@ public final class ProjectileUtils {
     public static final Object getShooter(final @Nullable Projectile p) {
         if (p == null)
             return null;
+        // Not sure why Njol used reflection, method seems to be public
+        if (getShooterSupport)
+            return p.getShooter();
         try {
             return getShooter.invoke(p);
         } catch (final IllegalAccessException | IllegalArgumentException e) {
@@ -75,6 +81,11 @@ public final class ProjectileUtils {
     }
 
     public static final void setShooter(final Projectile p, final @Nullable Object shooter) {
+        // Not sure why Njol used reflection, method seems to be public
+        if (setShooterSupport) {
+            p.setShooter((ProjectileSource) shooter);
+            return;
+        }
         try {
             setShooter.invoke(p, shooter);
         } catch (final IllegalAccessException e) {

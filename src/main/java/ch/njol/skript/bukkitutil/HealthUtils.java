@@ -39,33 +39,30 @@ import java.lang.reflect.Method;
 public final class HealthUtils {
 
     private static final boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);
+
     private static Method getHealth;
     private static Method setHealth;
+
     private static Method getMaxHealth;
     private static Method setMaxHealth;
+
     private static Method damage;
+
     private static Method getDamage;
     private static Method setDamage;
 
     static {
         if (!supportsDoubles) {
+            Skript.warning("Server version or implementation does not support health operations with doubles; server performance may suffer");
             try {
                 getHealth = Damageable.class.getDeclaredMethod("getHealth");
                 setHealth = Damageable.class.getDeclaredMethod("setHealth", int.class);
+
                 getMaxHealth = Damageable.class.getDeclaredMethod("getMaxHealth");
                 setMaxHealth = Damageable.class.getDeclaredMethod("setMaxHealth", int.class);
-                damage = Damageable.class.getDeclaredMethod("damage", int.class);
-            } catch (final NoSuchMethodException e) {
-                Skript.outdatedError(e);
-            } catch (final SecurityException e) {
-                Skript.exception(e);
-            }
-        }
-    }
 
-    static {
-        if (!supportsDoubles) {
-            try {
+                damage = Damageable.class.getDeclaredMethod("damage", int.class);
+
                 getDamage = EntityDamageEvent.class.getDeclaredMethod("getDamage");
                 setDamage = EntityDamageEvent.class.getDeclaredMethod("setDamage", int.class);
             } catch (final NoSuchMethodException e) {

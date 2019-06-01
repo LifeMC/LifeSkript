@@ -78,7 +78,7 @@ public final class PlayerUtils {
             return Bukkit.getOnlinePlayers();
         }
         // Return directly to improve performance and fix some bugs
-        // Hope everything goes well and it works. :C
+        // Hope everything goes well, and it works. :C
         if (cached) {
             return Bukkit.getOnlinePlayers();
         }
