@@ -64,11 +64,11 @@ public final class SkriptConfig {
     public static final Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
         try {
             if (s.equalsIgnoreCase("default"))
-                return EventPriority.NORMAL;
+                return EventPriority.MONITOR;
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
             Skript.error("The plugin priority has to be one of lowest, low, normal, high, highest or monitor.");
-            return EventPriority.NORMAL;
+            return EventPriority.MONITOR;
         }
     });
     public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()), s -> {
@@ -78,7 +78,7 @@ public final class SkriptConfig {
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
             Skript.error("The command priority has to be one of lowest, low, normal, high, highest or monitor.");
-            return EventPriority.NORMAL;
+            return getPreviousPriority(defaultEventPriority.value());
         }
     });
     public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
