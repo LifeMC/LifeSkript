@@ -41,6 +41,10 @@ import java.util.Arrays;
 @SuppressWarnings("deprecation")
 public final class BlockUtils {
 
+    private BlockUtils() {
+        throw new UnsupportedOperationException("Static class");
+    }
+
     private static final BlockFace[] torch = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN
     };
 
