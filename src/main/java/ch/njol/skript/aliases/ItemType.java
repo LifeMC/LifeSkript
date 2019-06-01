@@ -695,15 +695,14 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * REMIND If this ItemType represents multiple items with OR, this function will immediately return false.<br/>
      * CondCanHold currently blocks aliases without 'every'/'all' as temporary solution.
      *
-     * @param invi
+     * @param inventory The inventory to check if has space
      * @return Whatever this item type can be added to the given inventory
      */
-    public boolean hasSpace(final Inventory invi) {
-        if (!isAll()) {
-            if (getItem().types.size() != 1 || getItem().types.get(0).hasDataRange() || getItem().types.get(0).typeid == -1)
-                return false;
+    public boolean hasSpace(final Inventory inventory) {
+        if (!isAll() && (getItem().types.size() != 1 || getItem().types.get(0).hasDataRange() || getItem().types.get(0).typeid == -1)) {
+            return false;
         }
-        return addTo(getCopiedContents(invi));
+        return addTo(getCopiedContents(inventory));
     }
 
     /**
