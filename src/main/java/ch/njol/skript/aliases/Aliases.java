@@ -441,9 +441,18 @@ public final class Aliases {
     }
 
     /**
-     * @return The ietm's gender or -1 if no name is found
+     * @return The gender of item or -1 if no name is found
+     * @deprecated {@link Aliases#getGender(int)}
      */
+    @Deprecated
     public static final int getGender(final int id, final short dataMin, final short dataMax) {
+        return getGender(id); // Not sure why Njol added these unused arguments
+    }
+
+    /**
+     * @return The gender of item or -1 if no name is found
+     */
+    public static final int getGender(final int id) {
         final MaterialName n = getMaterialNames().get(id);
         if (n != null)
             return n.gender;
@@ -751,7 +760,7 @@ public final class Aliases {
 
                 final Config aliasConfig;
 
-                try(final JarFile jar = new JarFile(Skript.getInstance().getFile())) {
+                try (final JarFile jar = new JarFile(Skript.getInstance().getFile())) {
                     File file = new File(Paths.get(dataFolder, aliasesFileName).toString());
                     if (!file.exists()) { // If it's not exists in the data folder (plugins/Skript)
                         final JarEntry entry = jar.getJarEntry(aliasesFileName);
@@ -792,10 +801,8 @@ public final class Aliases {
                 }, false).setAllowUndefinedSections(true));
 
                 for (final Node node : aliasConfig.getMainNode()) {
-                    if (node instanceof SectionNode) {
-                        if (!aliasNodes.contains(node.getKey())) {
-                            Skript.error(m_invalid_section.toString(node.getKey()));
-                        }
+                    if (node instanceof SectionNode && !aliasNodes.contains(node.getKey())) {
+                        Skript.error(m_invalid_section.toString(node.getKey()));
                     }
                 }
 

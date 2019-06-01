@@ -131,7 +131,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
      * @return The item's gender or -1 if no name is found
      */
     public int getGender() {
-        return Aliases.getGender(typeid, dataMin, dataMax);
+        return Aliases.getGender(typeid);
     }
 
     @Override
