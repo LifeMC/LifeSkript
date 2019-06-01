@@ -424,7 +424,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     writeQuery.setString(i++, name);
                     writeQuery.setString(i++, type);
                     writeQuery.setBytes(i++, value); // SQLite doesn't support setBlob
-                    writeQuery.setString(i++, guid);
+                    writeQuery.setString(i, guid);
                     writeQuery.executeUpdate();
                 }
             } catch (final SQLException e) {
@@ -520,12 +520,12 @@ public final class DatabaseStorage extends VariablesStorage {
                     }
                     final String type = r.getString(i++);
                     final byte[] value = r.getBytes(i++); // Blob not supported by SQLite
-                    lastRowID = r.getLong(i++);
+                    lastRowID = r.getLong(i);
                     if (value == null) {
                         Variables.variableLoaded(name, null, DatabaseStorage.this);
                     } else {
                         final ClassInfo<?> c = Classes.getClassInfoNoError(type);
-                        @SuppressWarnings("unused") final Serializer<?> s;
+                        //@SuppressWarnings("unused") final Serializer<?> s;
                         if (c == null || c.getSerializer() == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database '" + databaseName + "', because the type '" + type + "' cannot be recognised or cannot be stored in variables");
                             continue;
@@ -650,7 +650,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     }
                     final String type = r.getString(i++);
                     final String value = r.getString(i++);
-                    lastRowID = r.getLong(i++);
+                    lastRowID = r.getLong(i);
                     if (type == null || value == null) {
                         Variables.variableLoaded(name, null, hadNewTable ? temp : DatabaseStorage.this);
                     } else {
