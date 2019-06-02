@@ -1,44 +1,36 @@
 
-Hsquid:S16598",Declare "MAX_VALUE_SIZE" on a separate line.(¶Ûßúùÿÿÿÿ
-asquid:HiddenFieldCheck¥">Rename "writeQuery" which hides the field declared at line 85.(¦ÜÉ¾
-Rsquid:S1141”"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141ô"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-gsquid:HiddenFieldCheckŸ"?Rename "deleteQuery" which hides the field declared at line 92.(ï”Š‘ûÿÿÿÿ
-[squid:HiddenFieldCheck"8Rename "type" which hides the field declared at line 69.(áß²Ú
-Gsquid:S00108˜")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
 ]squid:S1193‡"@Replace the usage of the "instanceof" operator by a catch block.(î€ı†ıÿÿÿÿ
-Gsquid:S00108é")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
-Gsquid:S00108ğ")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+^squid:HiddenFieldCheckş"6Rename "db" which hides the field declared at line 67.(¯ˆ¹–úÿÿÿÿ
+asquid:HiddenFieldCheck¦">Rename "writeQuery" which hides the field declared at line 85.(¦ÜÉ¾
 Hsquid:S1659;",Declare "OLD_TABLE_NAME" on a separate line.(©›àéşÿÿÿÿ
-u
-squid:S135†"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
-u
-squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
-csquid:HiddenFieldCheckÑ"@Rename "monitorQuery" which hides the field declared at line 99.(ˆÜ‹È
-isquid:HiddenFieldCheckè"GRename "monitorCleanUpQuery" which hides the field declared at line 76.(†Ï†?
-Rsquid:S1133Ğ"5Do not forget to remove this deprecated code someday.(”ô÷½ıÿÿÿÿ
-Vsquid:MissingDeprecatedCheckĞ"(Add the missing @deprecated Javadoc tag.(”ô÷½ıÿÿÿÿ
-Gsquid:S00108ª")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
-`squid:HiddenFieldCheckÊ"=Rename "lastRowID" which hides the field declared at line 78.(Áá
-Gsquid:S00108ı")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
-Ysquid:HiddenFieldCheckº"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
-_$squid:AssignmentInSubExpressionCheck…".Extract the assignment out of this expression.(‰²äŠ
-^squid:HiddenFieldCheck„"6Rename "db" which hides the field declared at line 67.(¯ˆ¹–úÿÿÿÿ
+gsquid:HiddenFieldCheck "?Rename "deleteQuery" which hides the field declared at line 92.(ï”Š‘ûÿÿÿÿ
+Rsquid:S1141”"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+`squid:HiddenFieldCheckË"=Rename "lastRowID" which hides the field declared at line 78.(Áá
 Ssquid:S16597"7Declare "MAX_CLASS_CODENAME_LENGTH" on a separate line.(éÔıãÿÿÿÿÿ
-Ysquid:HiddenFieldCheckÊ"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
-Rsquid:S1141æ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Gsquid:S00108")Either remove or fill this block of code.(¶‡Óşÿÿÿÿ
-zsquid:S4144ø"]Update this method so that its implementation is not identical to "requiresFile" on line 609.(š»¨Œûÿÿÿÿ
-Ysquid:HiddenFieldCheck€"6Rename "db" which hides the field declared at line 67.(‰±ÕŒ
-Rsquid:S1141í"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-asquid:CallToDeprecatedMethod¦"8Remove this use of "oldLoadVariables"; it is deprecated.(¦°Íë
-[squid:HiddenFieldCheckˆ"8Rename "type" which hides the field declared at line 69.(áß²Ú
-Ysquid:HiddenFieldCheckã"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
-Lsquid:S1854ª"5Remove this useless assignment to local variable "i".(˜²
-isquid:S00117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º±æÚ
-Ysquid:HiddenFieldCheckŒ"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
-Gsquid:S00108÷")Either remove or fill this block of code.(­å¡¹ÿÿÿÿÿ
+~squid:S00115>"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÈØ”Ëúÿÿÿÿ8ïşµ®©-
+Ysquid:HiddenFieldCheck"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
 Rsquid:S1141ú"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141Î"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Jsquid:S1481‘"&Remove this unused "s" local variable.(©ÌØêÿÿÿÿÿ8ïşµ®©-
-~squid:S00115>"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÎÒ¡øÿÿÿÿ8ïşµ®©-
+zsquid:S4144÷"]Update this method so that its implementation is not identical to "requiresFile" on line 608.(š»¨Œûÿÿÿÿ
+csquid:HiddenFieldCheckÒ"@Rename "monitorQuery" which hides the field declared at line 99.(ˆÜ‹È
+Rsquid:S1141ã"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+asquid:CallToDeprecatedMethod¥"8Remove this use of "oldLoadVariables"; it is deprecated.(¦°Íë
+Rsquid:S1141È"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Vsquid:MissingDeprecatedCheckÏ"(Add the missing @deprecated Javadoc tag.(”ô÷½ıÿÿÿÿ
+Rsquid:S1141ë"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Ysquid:HiddenFieldCheck»"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+Ysquid:HiddenFieldCheckÇ"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+Ysquid:HiddenFieldCheck€"6Rename "db" which hides the field declared at line 67.(‰±ÕŒ
+Rsquid:S1133Ï"5Do not forget to remove this deprecated code someday.(”ô÷½ıÿÿÿÿ
+u
+squid:S135„"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
+Hsquid:S16598",Declare "MAX_VALUE_SIZE" on a separate line.(¶Ûßúùÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck…".Extract the assignment out of this expression.(‰²äŠ
+Ysquid:HiddenFieldCheckà"6Rename "db" which hides the field declared at line 67.(Ò„ŞÈ
+Rsquid:S1141ó"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+u
+squid:S135‚"YReduce the total number of break and continue statements in this loop to use at most one.(÷œ«Õúÿÿÿÿ
+[squid:HiddenFieldCheck‹"8Rename "type" which hides the field declared at line 69.(áß²Ú
+isquid:HiddenFieldChecké"GRename "monitorCleanUpQuery" which hides the field declared at line 76.(†Ï†?
+isquid:S00117z"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º±æÚ
+[squid:HiddenFieldCheck‰"8Rename "type" which hides the field declared at line 69.(áß²Ú
+Jsquid:S1481"&Remove this unused "s" local variable.(Ş¤øÌüÿÿÿÿ8Î«„„±-

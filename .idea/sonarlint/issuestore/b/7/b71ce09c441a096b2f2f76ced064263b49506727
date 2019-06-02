@@ -1,7 +1,7 @@
 
-Jsquid:S1444B".Make this "public static hardFail" field final(ä€À˜ÿÿÿÿÿ
-\squid:S3358•"DExtract this nested ternary operation into an independent statement.(¾‚”’
-‡"squid:ClassVariableVisibilityCheckB"TMake hardFail a static final constant or non-public and provide accessors if needed.(ä€À˜ÿÿÿÿÿ
-–squid:S1845`"zRename method "getNearbyEntities" to prevent any misunderstanding/clash with field "getNearbyEntities" defined on line 64.(ë™Ýšÿÿÿÿÿ
-osquid:ModifiersOrderCheckB"EReorder the modifiers to comply with the Java Language Specification.(ä€À˜ÿÿÿÿÿ
 ysquid:S00115@"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(÷õ¡ê8¯í¶®©-
+‚"squid:ClassVariableVisibilityCheckB"TMake hardFail a static final constant or non-public and provide accessors if needed.(µöÀÓ
+‘squid:S1845`"zRename method "getNearbyEntities" to prevent any misunderstanding/clash with field "getNearbyEntities" defined on line 64.(»ÁùÏ
+Esquid:S1444B".Make this "public static hardFail" field final(µöÀÓ
+\squid:S3358“"DExtract this nested ternary operation into an independent statement.(¾‚”’
+Usquid:S2589u"7Remove this expression which always evaluates to "true"(¬Ÿ»Ç8ÿ©ƒ„±-

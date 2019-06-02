@@ -1,15 +1,14 @@
 
-jsquid:S1871µ"MThis branch's code block is the same as the block for the branch on line 307.(ÒÉ¨óÿÿÿÿÿ
-Rsquid:S1141Ù"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141„"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141–"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141ê"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141 "5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-jsquid:S1871·"MThis branch's code block is the same as the block for the branch on line 307.(¨ºÌğùÿÿÿÿ
-Rsquid:S1141Á"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Nsquid:S1066Â"/Merge this if statement with the enclosing one.(àÕÎ8úÖ¶®©-
-Nsquid:S1066Ó"/Merge this if statement with the enclosing one.(àÕÎ8úÖ¶®©-
-Ssquid:S1066â"/Merge this if statement with the enclosing one.(¸òı‚øÿÿÿÿ8úÖ¶®©-
-Ssquid:S1066ó"/Merge this if statement with the enclosing one.(¸òı‚øÿÿÿÿ8úÖ¶®©-
-Nsquid:S1066‚"/Merge this if statement with the enclosing one.( ßôË8úÖ¶®©-
-Nsquid:S1066“"/Merge this if statement with the enclosing one.( ßôË8úÖ¶®©-
+Rsquid:S1141®"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141Í"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+jsquid:S1871æ"MThis branch's code block is the same as the block for the branch on line 353.(¨ºÌğùÿÿÿÿ
+Rsquid:S1141Ã"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141ÿ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+jsquid:S1871ä"MThis branch's code block is the same as the block for the branch on line 353.(ÒÉ¨óÿÿÿÿÿ
+Rsquid:S1141å"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Psquid:S1066"/Merge this if statement with the enclosing one.(¸òı‚øÿÿÿÿ8úÖ¶®©-
+Ksquid:S1066"/Merge this if statement with the enclosing one.( ßôË8úÖ¶®©-
+Rsquid:S1141’"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Ksquid:S1066"/Merge this if statement with the enclosing one.( ßôË8úÖ¶®©-
+Tsquid:S1444P"1Make this "public static oldPriority" field final(Æ¦ºÓüÿÿÿÿ8Œö‚„±-
+‘"squid:ClassVariableVisibilityCheckP"WMake oldPriority a static final constant or non-public and provide accessors if needed.(Æ¦ºÓüÿÿÿÿ8Œö‚„±-

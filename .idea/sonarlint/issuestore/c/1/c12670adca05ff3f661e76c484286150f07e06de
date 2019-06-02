@@ -1,11 +1,13 @@
 
+Dsquid:S1066"/Merge this if statement with the enclosing one.(¸Îª€
+>squid:S1168Ö"&Return an empty array instead of null.(¥¹ï
 7squid:S1659"Declare "b" on a separate line.(ã¨ÓŒ
->squid:S1168—"&Return an empty array instead of null.(¥¹ï
-Gsquid:S1066ÿ"/Merge this if statement with the enclosing one.(¸Îª€
-bsquid:HiddenFieldCheck©":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
-bsquid:HiddenFieldCheck¾":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
-bsquid:HiddenFieldCheck€":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
->squid:S1168Ô"&Return an empty array instead of null.(¥¹ï
-¤%squid:RedundantThrowsDeclarationCheck›"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-h squid:LabelsShouldNotBeUsedCheckˆ";Refactor the code to remove this label and the need for it.(†âü»
+¤%squid:RedundantThrowsDeclarationCheck"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+>squid:S1168™"&Return an empty array instead of null.(¥¹ï
+bsquid:HiddenFieldCheck‚":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
+bsquid:HiddenFieldCheck«":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
+h squid:LabelsShouldNotBeUsedCheck†";Refactor the code to remove this label and the need for it.(†âü»
+bsquid:HiddenFieldCheckÀ":Rename "string" which hides the field declared at line 65.(£Óå—üÿÿÿÿ
 @squid:S2386>"Make this member "protected".(¾ìäşûÿÿÿÿ8Çâµ®©-
+w
+squid:S135š"YReduce the total number of break and continue statements in this loop to use at most one.(÷ú½8µ „„±-

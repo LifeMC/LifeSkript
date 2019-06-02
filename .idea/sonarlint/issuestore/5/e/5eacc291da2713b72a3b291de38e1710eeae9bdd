@@ -1,65 +1,78 @@
 
-Gsquid:S2093Î
-"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
-@squid:S1604©"(Make this anonymous inner class a lambda(šû£‰
-Esquid:S1185ù"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
-Gsquid:S1659"0Declare "m_finished_loading" on a separate line.(”º©—
-Rsquid:S1141ì	"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141µ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Xsquid:S2184—"@Cast one of the operands of this integer division to a "double".(Ó§³
-[squid:S2629”	"7Use the built-in formatting to construct this argument.(‹ÀÛ¹şÿÿÿÿ8§¸ŒÎ¢-
-¡%squid:RedundantThrowsDeclarationCheckÈ"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
-Rsquid:S1141‰"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141ó
-"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheck£".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
-Rsquid:S1141Î
-"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-ksquid:S1871"NThis branch's code block is the same as the block for the branch on line 1421.(êõ±§şÿÿÿÿ
-Lsquid:S1066"/Merge this if statement with the enclosing one.(óäÙµúÿÿÿÿ
-:squid:S1643™
-"Use a StringBuilder instead.(ËŸÈ]8Ôå¶®©-
-;squid:S1643£
-"Use a StringBuilder instead.(çóà8Ôå¶®©-
-¦%squid:RedundantThrowsDeclarationCheck®"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(–®·Õ8Ôå¶®©-
-¦%squid:RedundantThrowsDeclarationCheck»"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÈË¹£8Ôå¶®©-
-«%squid:RedundantThrowsDeclarationCheckÙ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(‹ıæşÿÿÿÿ8Ôå¶®©-
-[squid:S2629‘	"7Use the built-in formatting to construct this argument.(Îšùşûÿÿÿÿ8Ôå¶®©-
-dsquid:S1193ö"@Replace the usage of the "instanceof" operator by a catch block.(ßŒ“¼üÿÿÿÿ8Ôå¶®©-
-dsquid:S1193ú"@Replace the usage of the "instanceof" operator by a catch block.(êó²†ÿÿÿÿÿ8Ôå¶®©-
-dsquid:S1193ş"@Replace the usage of the "instanceof" operator by a catch block.(ù§œŠşÿÿÿÿ8Ôå¶®©-
-Msquid:S1066É"/Merge this if statement with the enclosing one.(†ºß	8Ôå¶®©-
-Rsquid:S1444°".Make this "public static instance" field final(›Ğ‘±ıÿÿÿÿ8Ôå¶®©-
-Esquid:S1452Ä"&Remove usage of generic wildcard type.(ÃõÎ8Ôå¶®©-
-Jsquid:S1452È"&Remove usage of generic wildcard type.(—Å‰ìüÿÿÿÿ8Ôå¶®©-
-Dsquid:S1452Ì"&Remove usage of generic wildcard type.(¿ÈN8Ôå¶®©-
-Esquid:S1452å"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
-Esquid:S1452å"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
-Jsquid:S1452ë"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
-Jsquid:S1452ë"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
-Esquid:S1452š"&Remove usage of generic wildcard type.(Ü½˜ô8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheck‘".Extract the assignment out of this expression.(Ã†‡İ8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheckª".Extract the assignment out of this expression.(Ğà¯ù8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheck¬".Extract the assignment out of this expression.(Ì×ÂÏ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheck®".Extract the assignment out of this expression.(¼İ›Õüÿÿÿÿ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheck°".Extract the assignment out of this expression.(ˆ”Öëøÿÿÿÿ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheck²".Extract the assignment out of this expression.(Ş²Ú¤şÿÿÿÿ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheckµ".Extract the assignment out of this expression.(‚Ş¥ıÿÿÿÿ8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheck·".Extract the assignment out of this expression.(£ÉŒÄ8Ôå¶®©-
-Ysquid:S3725Ì
-":Replace this with a call to the "toFile().exists()" method(Ó¢¤Ë8Ôå¶®©-
-Ysquid:S3725Ì
-":Replace this with a call to the "toFile().exists()" method(Ó¢¤Ë8Ôå¶®©-
+Xsquid:S2184º"@Cast one of the operands of this integer division to a "double".(Ó§³
+d$squid:AssignmentInSubExpressionCheckß".Extract the assignment out of this expression.(­Šçóûÿÿÿÿ
+squid:S00115Ì"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÏâŠºùÿÿÿÿ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheckè".Extract the assignment out of this expression.(‚Ş¥ıÿÿÿÿ8Ôå¶®©-
+squid:S00115²"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ô°æûÿÿÿÿ8Ôå¶®©-
+Esquid:S1185©"(Remove this method to simply inherit it.(èüù±ùÿÿÿÿ
+Jsquid:S1452¾"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
+Rsquid:S1141˜"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+¦%squid:RedundantThrowsDeclarationCheckŠ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÈË¹£8Ôå¶®©-
+dsquid:S1193ú"@Replace the usage of the "instanceof" operator by a catch block.(ù§œŠşÿÿÿÿ8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheckÄ".Extract the assignment out of this expression.(Ã†‡İ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheckå".Extract the assignment out of this expression.(Ş²Ú¤şÿÿÿÿ8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheckê".Extract the assignment out of this expression.(£ÉŒÄ8Ôå¶®©-
+Esquid:S1452•"&Remove usage of generic wildcard type.(ÃõÎ8Ôå¶®©-
+Jsquid:S1452¾"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
 |
-squid:S135ç"YReduce the total number of break and continue statements in this loop to use at most one.(«çùËÿÿÿÿÿ8Ôå¶®©-
-lsquid:HiddenFieldCheckÙ"=Rename "instance" which hides the field declared at line 175.(§Öêæûÿÿÿÿ8Ôå¶®©-
-Ysquid:S1141é"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ôå¶®©-
-[squid:S2589Ÿ	"7Remove this expression which always evaluates to "true"(ãğƒäùÿÿÿÿ8Ôå¶®©-
-Wsquid:S2589	"8Remove this expression which always evaluates to "false"(„Èâö8Ôå¶®©-
-Tsquid:S1133•"5Do not forget to remove this deprecated code someday.(»ö¢8Ôå¶®©-
-hsquid:S3358È"DExtract this nested ternary operation into an independent statement.(†Á­Ëıÿÿÿÿ8Ôå¶®©-
-ysquid:S00115º"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®°öM8Ôå¶®©-
-zsquid:S00115¿"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ù˜ëß8Ôå¶®©-
-squid:S00115À"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ô°æûÿÿÿÿ8Ôå¶®©-
-squid:S00115Á"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÏâŠºùÿÿÿÿ8Ôå¶®©-
-zsquid:S00115Ê"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¹øÛß8Ôå¶®©-
+squid:S135İ"YReduce the total number of break and continue statements in this loop to use at most one.(«çùËÿÿÿÿÿ8Ôå¶®©-
+Rsquid:S1141"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Dsquid:S1452"&Remove usage of generic wildcard type.(¿ÈN8Ôå¶®©-
+Rsquid:S1141«"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+f$squid:AssignmentInSubExpressionCheckß".Extract the assignment out of this expression.(Ì×ÂÏ8Ôå¶®©-
+[squid:S2589ş
+"7Remove this expression which always evaluates to "true"(ãğƒäùÿÿÿÿ8Ôå¶®©-
+Tsquid:S1133¿"5Do not forget to remove this deprecated code someday.(»ö¢8Ôå¶®©-
+k$squid:AssignmentInSubExpressionCheckã".Extract the assignment out of this expression.(ˆ”Öëøÿÿÿÿ8Ôå¶®©-
+Ysquid:S1141Ä"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ôå¶®©-
+ysquid:S00115Ê"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®°öM8Ôå¶®©-
+zsquid:S00115Ë"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ù˜ëß8Ôå¶®©-
+f$squid:AssignmentInSubExpressionCheckİ".Extract the assignment out of this expression.(Ğà¯ù8Ôå¶®©-
+¦%squid:RedundantThrowsDeclarationCheckû"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(–®·Õ8Ôå¶®©-
+Hsquid:S1659"0Declare "m_finished_loading" on a separate line.(”º©—
+Esquid:S1452¸"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
+Rsquid:S1141š"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1444Õ".Make this "public static instance" field final(›Ğ‘±ıÿÿÿÿ8Ôå¶®©-
+¡%squid:RedundantThrowsDeclarationCheckî"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
+Esquid:S1452ñ"&Remove usage of generic wildcard type.(Ü½˜ô8Ôå¶®©-
+Jsquid:S1452™"&Remove usage of generic wildcard type.(—Å‰ìüÿÿÿÿ8Ôå¶®©-
+k$squid:AssignmentInSubExpressionChecká".Extract the assignment out of this expression.(¼İ›Õüÿÿÿÿ8Ôå¶®©-
+dsquid:S1193ö"@Replace the usage of the "instanceof" operator by a catch block.(êó²†ÿÿÿÿÿ8Ôå¶®©-
+Esquid:S1452¸"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
+Rsquid:S1141Ñ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+dsquid:S1193ò"@Replace the usage of the "instanceof" operator by a catch block.(ßŒ“¼üÿÿÿÿ8Ôå¶®©-
+:squid:S1643À"Use a StringBuilder instead.(ËŸÈ]8Ôå¶®©-
+:squid:S1643Ê"Use a StringBuilder instead.(ó¬ğ8¢šƒ„±-
+¦%squid:RedundantThrowsDeclarationCheckª"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ı“ß¹8¢šƒ„±-
+Tsquid:S1444Ö"5Make this "public static updateAvailable" field final(‹«é‚8¢šƒ„±-
+Wsquid:S1444×"3Make this "public static updateChecked" field final(ãÛôñıÿÿÿÿ8¢šƒ„±-
+\squid:S1444Ø"8Make this "public static developmentVersion" field final(†ÿÅ´üÿÿÿÿ8¢šƒ„±-
+Rsquid:S1444Ù"3Make this "public static customVersion" field final(›±ÌÏ8¢šƒ„±-
+Œsquid:S2637¥"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(ŸüÁÎüÿÿÿÿ8¢šƒ„±-
+‡squid:S2637©"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
+‡squid:S2637™"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
+‡squid:S2637÷"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
+‡squid:S2637î"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
+Vsquid:S3725":Replace this with a call to the "toFile().exists()" method(ñ³ƒ¾8¢šƒ„±-
+Vsquid:S3725":Replace this with a call to the "toFile().exists()" method(Ù‡•Ù8¢šƒ„±-
+qsquid:S2095¦"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(Á‘‘ßûÿÿÿÿ8¢šƒ„±-
+Ysquid:S1141È"5Extract this nested try block into a separate method.(öøâœûÿÿÿÿ8¢šƒ„±-
+Ysquid:S1141»"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8¢šƒ„±-
+Ysquid:S1141ß"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8¢šƒ„±-
+‘"squid:ClassVariableVisibilityCheckÖ"[Make updateAvailable a static final constant or non-public and provide accessors if needed.(‹«é‚8¢šƒ„±-
+”"squid:ClassVariableVisibilityCheck×"YMake updateChecked a static final constant or non-public and provide accessors if needed.(ãÛôñıÿÿÿÿ8¢šƒ„±-
+™"squid:ClassVariableVisibilityCheckØ"^Make developmentVersion a static final constant or non-public and provide accessors if needed.(†ÿÅ´üÿÿÿÿ8¢šƒ„±-
+"squid:ClassVariableVisibilityCheckÙ"YMake customVersion a static final constant or non-public and provide accessors if needed.(›±ÌÏ8¢šƒ„±-
+csquid:S3358£
+"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
+csquid:S3358£
+"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
+csquid:S3358£
+"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
+Ssquid:S1611Á"/Remove the parentheses around the "o" parameter(¼Ù—¤ùÿÿÿÿ8¢šƒ„±-
+Wsquid:S1611ú"8Remove the parentheses around the "connection" parameter(º¦÷ç8¢šƒ„±-
+Xsquid:S1611à"4Remove the parentheses around the "record" parameter(†é’ıÿÿÿÿ8¢šƒ„±-
+zsquid:S00115½"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¶òè‹8¢šƒ„±-
+squid:S00115Î"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ëõ½™ûÿÿÿÿ8¢šƒ„±-
+zsquid:S00115Ï"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Æ£¸8¢šƒ„±-
+zsquid:S00115Ğ"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¹ƒ–®8¢šƒ„±-

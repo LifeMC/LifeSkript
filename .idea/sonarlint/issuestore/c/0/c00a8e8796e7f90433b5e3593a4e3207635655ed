@@ -1,9 +1,9 @@
 
-]squid:HiddenFieldCheckN";Rename "pattern" which hides the field declared at line 65.(âí™å
-\squid:HiddenFieldCheckV"5Rename "c" which hides the field declared at line 70.(éÕâÓùÿÿÿÿ
-=squid:S1168|"&Return an empty array instead of null.(¥¹ï
-… squid:ForLoopCounterChangedCheck–"XRefactor the code in order to not assign to this loop counter from within the loop body.( ¢è†
-¨squid:S4449–"Annotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.( ¢è†
+=squid:S1168{"&Return an empty array instead of null.(¥¹ï
+>squid:S1168œ"&Return an empty array instead of null.(¥¹ï
+¨squid:S4449•"Annotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.( ¢è†
 „ squid:ForLoopCounterChangedCheckZ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
->squid:S1168"&Return an empty array instead of null.(¥¹ï
-§squid:S4449–"Annotate the parameter with @javax.annotation.Nullable in method 'getArray' declaration, or make sure that null can not be passed as argument.( ¢è†
+\squid:HiddenFieldCheckV"5Rename "c" which hides the field declared at line 70.(éÕâÓùÿÿÿÿ
+… squid:ForLoopCounterChangedCheck•"XRefactor the code in order to not assign to this loop counter from within the loop body.( ¢è†
+§squid:S4449•"Annotate the parameter with @javax.annotation.Nullable in method 'getArray' declaration, or make sure that null can not be passed as argument.( ¢è†
+]squid:HiddenFieldCheckN";Rename "pattern" which hides the field declared at line 65.(âí™å

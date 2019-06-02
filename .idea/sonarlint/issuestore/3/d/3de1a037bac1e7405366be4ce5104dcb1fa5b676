@@ -1,11 +1,11 @@
 
-zsquid:S1845^"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 41.(ö¥«ç
-<squid:S1659ä"Declare "c" on a separate line.(èê≠Ü˝ˇˇˇˇ
 ;squid:S1659^"$Declare "plural" on a separate line.(ö¥«ç
-t
-squid:S135;"YReduce the total number of break and continue statements in this loop to use at most one.(ë¶‰íˇˇˇˇˇ
-asquid:S3358ë"DExtract this nested ternary operation into an independent statement.(–‡πûˇˇˇˇˇ
-psquid:S4144Ù"YUpdate this method so that its implementation is not identical to "toString" on line 278.(àÑ∫q
-asquid:S3358≥"DExtract this nested ternary operation into an independent statement.(‚—œ∆˘ˇˇˇˇ
 Esquid:S1659)"'Declare "NO_GENDER" on a separate line.(õ›éÁ8±ó∂Æ©-
 Ksquid:S1659*"-Declare "NO_GENDER_TOKEN" on a separate line.(ˆë˜8±ó∂Æ©-
+<squid:S1659ä"Declare "c" on a separate line.(èê≠Ü˝ˇˇˇˇ
+psquid:S4144Ù"YUpdate this method so that its implementation is not identical to "toString" on line 278.(àÑ∫q
+zsquid:S1845^"cRename field "plural" to prevent any misunderstanding/clash with field "PLURAL" defined on line 41.(ö¥«ç
+asquid:S3358ë"DExtract this nested ternary operation into an independent statement.(–‡πûˇˇˇˇˇ
+asquid:S3358≥"DExtract this nested ternary operation into an independent statement.(‚—œ∆˘ˇˇˇˇ
+t
+squid:S135;"YReduce the total number of break and continue statements in this loop to use at most one.(ë¶‰íˇˇˇˇˇ

@@ -1,6 +1,6 @@
 
-\squid:HiddenFieldCheck·"9Rename "other" which hides the field declared at line 39.(™­ˆÞ
-ksquid:S2975›"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(³äÊœ
-vsquid:S2293œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜™âñùÿÿÿÿ
-`squid:S1182›"HUse super.clone() to create and seed the cloned instance to be returned.(³äÊœ
-Vsquid:S2259^"?A "NullPointerException" could be thrown; "m" is nullable here.(ýœ„Ì
+]squid:S1182"HUse super.clone() to create and seed the cloned instance to be returned.(³äÊœ
+hsquid:S2975"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(³äÊœ
+\squid:HiddenFieldCheck¹"9Rename "other" which hides the field declared at line 39.(™­ˆÞ
+vsquid:S2293ž"YReplace the type specification in this constructor call with the diamond operator ("<>").(˜™âñùÿÿÿÿ
+Tsquid:S2259"?A "NullPointerException" could be thrown; "m" is nullable here.(ýœ„Ì

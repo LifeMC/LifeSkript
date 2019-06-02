@@ -1,8 +1,8 @@
 
-\squid:HiddenFieldCheckS":Rename "reason" which hides the field declared at line 60.(žäºü
+~squid:S001154"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(é½‰—ÿÿÿÿÿ8Š‹·®©-
 Ysquid:CallToDeprecatedMethodl"1Remove this use of "setBanned"; it is deprecated.(²†áé
-Ysquid:CallToDeprecatedMethod‡"1Remove this use of "setBanned"; it is deprecated.(áŠÅ\
 `squid:S1134h"DTake the required action to fix the issue indicated by this comment.(’¸”øøÿÿÿÿ
+\squid:HiddenFieldCheckS":Rename "reason" which hides the field declared at line 60.(žäºü
 `squid:CallToDeprecatedMethod‡"8Remove this use of "getOfflinePlayer"; it is deprecated.(áŠÅ\
 ^squid:CallToDeprecatedMethodv"1Remove this use of "setBanned"; it is deprecated.(±¸¿ªûÿÿÿÿ
-~squid:S001154"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(é½‰—ÿÿÿÿÿ8Š‹·®©-
+Ysquid:CallToDeprecatedMethod‡"1Remove this use of "setBanned"; it is deprecated.(áŠÅ\

@@ -1,0 +1,4 @@
+
+Psquid:S14446"2Make this "public static hookNotified" field final(¶ÚµÚ8Ô÷ƒ„±-
+"squid:ClassVariableVisibilityCheck6"XMake hookNotified a static final constant or non-public and provide accessors if needed.(¶ÚµÚ8Ô÷ƒ„±-
+~squid:S001153"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ë¬üÂüÿÿÿÿ8Ô÷ƒ„±-

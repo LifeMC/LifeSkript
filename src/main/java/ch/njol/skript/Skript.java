@@ -29,6 +29,7 @@ import ch.njol.skript.command.Commands;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Documentation;
+import ch.njol.skript.effects.Delay;
 import ch.njol.skript.effects.EffPush;
 import ch.njol.skript.events.EvtSkript;
 import ch.njol.skript.expressions.ExprEntities;
@@ -47,6 +48,7 @@ import ch.njol.skript.util.Date;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.FlatFileStorage;
 import ch.njol.skript.variables.Variables;
+import ch.njol.skript.variables.VariablesStorage;
 import ch.njol.util.Closeable;
 import ch.njol.util.StringUtils;
 import ch.njol.util.WebUtils;
@@ -188,8 +190,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));
-    private static boolean closedOnEnable = false;
-    private static boolean closedOnDisable = false;
     private static final HashMap<String, SkriptAddon> addons = new HashMap<>();
     private static final Collection<SyntaxElementInfo<? extends Condition>> conditions = new ArrayList<>(300);
     private static final Collection<SyntaxElementInfo<? extends Effect>> effects = new ArrayList<>(500);
@@ -203,12 +203,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
     static final boolean runningCraftBukkit = isCraftBukkit;
     private static final Method findLoadedClass = methodForName(ClassLoader.class, "findLoadedClass", true, String.class);
-    private static final boolean debug = System.getProperty("skript.debug") != null
-            && Boolean.parseBoolean(System.getProperty("skript.debug"));
-    private static final boolean logSpam = System.getProperty("skript.logSpam") != null
-            && Boolean.parseBoolean(System.getProperty("skript.logSpam"));
-    private static final boolean showRegisteredNonSkript = System.getProperty("skript.showRegisteredNonSkript") != null
-            && Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
+    private static final boolean debug = Boolean.parseBoolean(System.getProperty("skript.debug"));
+    private static final boolean logSpam = Boolean.parseBoolean(System.getProperty("skript.logSpam"));
+    private static final boolean showRegisteredNonSkript = Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -222,14 +219,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     @Nullable
     static String latestVersion;
     static Version minecraftVersion = new Version(999);
+    private static boolean closedOnEnable = false;
+    private static boolean closedOnDisable = false;
     private static boolean first;
     private static @Nullable
     ServerPlatform serverPlatform;
     private static @Nullable
     Boolean hasJLineSupport = null;
-    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     @Nullable
     private static Version version;
+    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
@@ -1006,9 +1005,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         for (final String pattern : patterns)
             if (duplicatePatternCheckList.contains(pattern))
                 Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
-        if (Skript.logSpam() || showRegisteredNonSkript)
-            if (!showRegisteredNonSkript || !element.getCanonicalName().startsWith("ch.njol.skript."))
-                Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join("," + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ")", patterns));
+        if ((Skript.logSpam() || showRegisteredNonSkript) && (!showRegisteredNonSkript || !element.getCanonicalName().startsWith("ch.njol.skript.")))
+            Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join("," + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ")", patterns));
         Collections.addAll(duplicatePatternCheckList, patterns);
     }
 
@@ -1472,7 +1470,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The object.
      */
     public static final <T> T invoke(final T obj, final Consumer<T> statements) {
-        return invoke(obj, (o) -> {
+        return invoke(obj, o -> {
             statements.accept(o);
             return o;
         });
@@ -1508,285 +1506,285 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             Workarounds.initIfNotAlready();
             SkriptCommand.setPriority();
 
-            if (!first) {
+            if (!first && !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
 
-                if (System.getProperty("-Dskript.disableAutomaticChanges") == null ||
-                        !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
-                    first = true;
+                first = true;
 
-                    // Get server directory / folder
-                    final File dataFolder = getDataFolder();
-                    final File serverDirectory = dataFolder.getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                // Get server directory / folder
+                final File dataFolder = getDataFolder();
+                final File serverDirectory = dataFolder.getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
-                    // Flag to track changes and warn the user
-                    boolean madeChanges = false;
+                // Flag to track changes and warn the user
+                boolean madeChanges = false;
 
-                    // The above flag just recommends restarting the server,
-                    // but this clarifies that things we do not work without a restart.
-                    boolean restartNeeded = false;
+                // The above flag just recommends restarting the server,
+                // but this clarifies that things we do not work without a restart.
+                boolean restartNeeded = false;
 
-                    // Delete aliases to re-create when upgrading
-                    // or downgrading from an incompatible version.
-                    final File config = new File(dataFolder, "config.sk");
+                // Delete aliases to re-create when upgrading
+                // or downgrading from an incompatible version.
+                final File config = new File(dataFolder, "config.sk");
 
-                    if (config.isFile() && config.exists()) {
-                        final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
+                if (config.isFile() && config.exists()) {
+                    final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
-                        for (final String line : lines) {
-                            if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: V7") || line.contains("version: V9") || line.contains("version: dev")) {
-                                Skript.info("Deleting old aliases...");
+                    for (final String line : lines) {
+                        if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: V7") || line.contains("version: V9") || line.contains("version: dev")) {
+                            Skript.info("Deleting old aliases...");
 
-                                Files.delete(Paths.get(dataFolder.getPath(), "aliases-english.sk"));
-                                Files.delete(Paths.get(dataFolder.getPath(), "aliases-german.sk"));
-
-                                madeChanges = true;
-
-                                break;
-                            }
-                        }
-                    }
-
-                    // Fix Skellet hanging event errors
-                    final File skelletConfig = new File(serverDirectory, "plugins/Skellet/SyntaxToggles.yml");
-
-                    if (skelletConfig.isFile() && skelletConfig.exists()) {
-                        final Path filePath = skelletConfig.toPath();
-                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-                        final String replacedContents = contents.replace("Hanging: true", "Hanging: false").trim();
-                        if (!contents.equalsIgnoreCase(replacedContents)) {
-                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                            madeChanges = true;
-                        }
-                    }
-
-                    // Find and detect paper file and automatically disable velocity warnings
-                    final File paperFile = new File(serverDirectory, "paper.yml");
-                    if (paperFile.isFile() && paperFile.exists()) {
-                        final Path filePath = paperFile.toPath();
-                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-                        // See: https://github.com/LifeMC/LifeSkript/issues/25
-                        final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
-                        if (!contents.equalsIgnoreCase(replacedContents)) {
-                            Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                            madeChanges = true;
-                        }
-                    }
-
-                    // Find the startup script and automatically add log strip color option
-                    final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
-                            name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
-                                    || name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
-                    );
-
-                    if (startupScripts != null) {
-                        for (final File startupScript : startupScripts) {
-                            if (!startupScript.isFile())
-                                continue;
-
-                            final Path filePath = startupScript.toPath();
-                            final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
-
-                            if (contents.contains("java") && contents.contains("-jar ")) {
-                                String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
-                                if (afterJar.contains(System.lineSeparator()))
-                                    afterJar = afterJar.split(System.lineSeparator())[0];
-                                String stripColor = afterJar;
-                                // Strip color is required for not showing strange characters on log when using jansi colors
-                                if (!afterJar.contains("--log-strip-color")) {
-                                    stripColor += " --log-strip-color";
-                                }
-                                String replacedContents = contents.replace(afterJar, stripColor);
-                                if (!contents.equalsIgnoreCase(replacedContents)) {
-                                    String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
-                                    if (beforeJar.contains(System.lineSeparator()))
-                                        beforeJar = beforeJar.split(System.lineSeparator())[0];
-                                    String fileEncoding = beforeJar;
-                                    // This is required on some locales to fix some issues with localization and other plugins
-                                    if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
-                                        fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
-                                    replacedContents = replacedContents.replace(beforeJar, fileEncoding);
-                                    if (!contents.equalsIgnoreCase(replacedContents)) {
-                                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
-                                        madeChanges = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Fix incompatibility with SharpSK
-                    final File sharpSkJar = new File(serverDirectory, "plugins/SharpSK.jar");
-
-                    String sharpSkversion = null;
-                    boolean notUsingFixedSharpSk = false;
-
-                    if (sharpSkJar.isFile() && sharpSkJar.exists()) {
-                        try (final JarFile sharpSk = new JarFile(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar")) {
-                            final JarEntry entry = sharpSk.getJarEntry("plugin.yml");
-
-                            try (final InputStream in = sharpSk.getInputStream(entry);
-                                 final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-
-                                final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
-
-                                if (resp != null) { // The error is already printed if we're on debug verbosity
-                                    for (final String line : resp.split("\n")) {
-                                        if (line.startsWith("version: ")) {
-                                            sharpSkversion = line.replace("version: ", "").trim();
-                                        }
-                                    }
-
-                                    if (sharpSkversion != null) {
-                                        String line;
-
-                                        while ((line = br.readLine()) != null) {
-                                            line = line.trim();
-
-                                            if (line.contains("version: ") && !line.contains("version: " + sharpSkversion)) { // Not using the latest fixed version
-                                                notUsingFixedSharpSk = true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (notUsingFixedSharpSk) { // Not using the latest fixed version
-                            try (final InputStream stream = Skript.invoke(new URL("https://github.com/TheDGOfficial/SharpSK/releases/download/" + sharpSkversion + "/SharpSK-" + sharpSkversion + ".jar").openConnection(), (connection) -> {
-                                try {
-                                    connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
-                                    connection.setRequestProperty("Accept", "application/octet-stream");
-
-                                    return connection.getInputStream();
-                                } catch (final IOException e) {
-                                    if (Skript.testing() || Skript.debug())
-                                        Skript.exception(e);
-                                    return null;
-                                }
-                            });
-
-                                 final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
-                                 final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSK.jar").toString());
-                                 final FileChannel fileChannel = fileOutputStream.getChannel()) {
-
-                                fileOutputStream.getChannel()
-                                        .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                            }
-
-                            try {
-                                // For safety, we must disable the SharpSK.
-                                Skript.closeOnEnable(() -> {
-                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSK"))
-                                        Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
-                                    else {
-                                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK")));
-                                    }
-                                });
-                                // Required to non-downgrade automatically.
-                                Skript.closeOnEnable(() -> {
-                                    if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater"))
-                                        Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
-                                    else {
-                                        Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater")));
-                                    }
-                                });
-                                Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
-                            } catch (final IOException e) { // If file system does not allow deleting locked / running files
-                                // Lock the file so SharpSKUpdater can't update it, and we can delete the SharpSKUpdater when server stops.
-
-                                @SuppressWarnings("resource")
-                                // We can't do anything about that, we must lock the file until server stops.
-                                final FileInputStream is = new FileInputStream(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar");
-
-                                @SuppressWarnings("resource")
-                                // We can't do anything about that, we must lock the file until server stops.
-                                final FileLock lock = is.getChannel().tryLock(0L, Long.MAX_VALUE, true);
-
-                                Skript.closeOnDisable(() -> {
-                                    try {
-                                        lock.release();
-                                        is.close();
-
-                                        // This loop probably runs until Bukkit is shutdowned and SharpSKUpdater JAR file lock is released.
-                                        final Thread thread = Skript.newThread(() -> {
-                                            boolean flag = false;
-                                            Path sharpSkUpdater = null;
-
-                                            try {
-                                                sharpSkUpdater = Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar");
-                                            } catch (final IOException io) {
-                                                Skript.exception(io);
-                                            }
-
-                                            while (!flag || Files.exists(sharpSkUpdater)) {
-                                                try {
-                                                    assert sharpSkUpdater != null;
-                                                    Files.delete(sharpSkUpdater);
-                                                    flag = true; // Deleted successfully, task is complete! We fixed compatibility problem, yey!
-                                                    if (Skript.testing() && Skript.debug())
-                                                        Skript.debug("Deleted the sharp sk updater successfully");
-                                                } catch (final IOException ignored) {
-                                                    /* ignore, re-try in loop */
-                                                }
-                                            }
-                                        }, "Skript incompatible plugin fixer");
-
-                                        thread.setPriority(Thread.MIN_PRIORITY);
-                                        thread.setDaemon(false); // Run even when Bukkit is stopped
-                                        thread.start();
-                                    } catch (final IOException io) {
-                                        if (Skript.testing() || Skript.debug())
-                                            Skript.exception(io);
-                                    }
-                                });
-
-                                // In case the file is not deleted yet...
-
-                                Runtime.getRuntime().addShutdownHook(Skript.newThread(() -> {
-                                    try {
-                                        Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
-                                    } catch (final IOException io) {
-                                        /* ignore, bad things happening! */
-                                    }
-                                }, "Skript incompatible plugin remover"));
-                            }
-
-                            // Suppress sharp sk errors on first install.
-                            BukkitLoggerFilter.addFilter((record) -> {
-                                if (record.getLevel() == Level.SEVERE) {
-                                    final boolean flag = !record.getMessage().contains("SharpSK");
-                                    if (!flag && Skript.testing() && Skript.debug())
-                                        Skript.debug("Ignoring error messages from incompatible plugins");
-                                    return flag;
-                                }
-                                return true;
-                            });
+                            Files.delete(Paths.get(dataFolder.getPath(), "aliases-english.sk"));
+                            Files.delete(Paths.get(dataFolder.getPath(), "aliases-german.sk"));
 
                             madeChanges = true;
-                            restartNeeded = true;
+
+                            break;
                         }
-                    }
-
-                    // Warn the user that server needs a restart
-                    if (madeChanges)
-                        info("Automatically made some compatibility settings. Restart your server to apply them.");
-
-                    // Warn the user and automatically restart the server
-                    if (restartNeeded) {
-                        Skript.closeOnEnable(() -> Bukkit.getScheduler().runTask(this, () -> {
-                            Bukkit.getLogger().warning("");
-                            warning("Some compatibility changes we made requires a restart. Please restart your server.");
-                            Bukkit.getLogger().warning("");
-                        }));
                     }
                 }
+
+                // Fix Skellet hanging event errors
+                final File skelletConfig = new File(serverDirectory, "plugins/Skellet/SyntaxToggles.yml");
+
+                if (skelletConfig.isFile() && skelletConfig.exists()) {
+                    final Path filePath = skelletConfig.toPath();
+                    final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                    final String replacedContents = contents.replace("Hanging: true", "Hanging: false").trim();
+                    if (!contents.equalsIgnoreCase(replacedContents)) {
+                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                        madeChanges = true;
+                    }
+                }
+
+                // Find and detect paper file and automatically disable velocity warnings
+                final File paperFile = new File(serverDirectory, "paper.yml");
+                if (paperFile.isFile() && paperFile.exists()) {
+                    final Path filePath = paperFile.toPath();
+                    final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                    // See: https://github.com/LifeMC/LifeSkript/issues/25
+                    final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
+                    if (!contents.equalsIgnoreCase(replacedContents)) {
+                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                        madeChanges = true;
+                    }
+                }
+
+                // Find the startup script and automatically add log strip color option
+                final File[] startupScripts = serverDirectory.listFiles((dir, name) ->
+                        name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".bat".toLowerCase(Locale.ENGLISH).trim())
+                                || name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".batch".toLowerCase(Locale.ENGLISH).trim())
+                                || name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".cmd".toLowerCase(Locale.ENGLISH).trim())
+                                || name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".sh".toLowerCase(Locale.ENGLISH).trim())
+                                || name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
+                );
+
+                if (startupScripts != null) {
+                    for (final File startupScript : startupScripts) {
+                        if (!startupScript.isFile())
+                            continue;
+
+                        final Path filePath = startupScript.toPath();
+                        final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+
+                        if (contents.contains("java") && contents.contains("-jar ")) {
+                            String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
+                            if (afterJar.contains(System.lineSeparator()))
+                                afterJar = afterJar.split(System.lineSeparator())[0];
+                            String stripColor = afterJar;
+                            // Strip color is required for not showing strange characters on log when using jansi colors
+                            if (!afterJar.contains("--log-strip-color")) {
+                                stripColor += " --log-strip-color"; // FIXME use StringBuilder
+                            }
+                            String replacedContents = contents.replace(afterJar, stripColor);
+                            if (!contents.equalsIgnoreCase(replacedContents)) {
+                                String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
+                                if (beforeJar.contains(System.lineSeparator()))
+                                    beforeJar = beforeJar.split(System.lineSeparator())[0];
+                                String fileEncoding = beforeJar;
+                                // This is required on some locales to fix some issues with localization and other plugins
+                                if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
+                                    fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
+                                replacedContents = replacedContents.replace(beforeJar, fileEncoding);
+                                if (!contents.equalsIgnoreCase(replacedContents)) {
+                                    Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                                    madeChanges = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Fix incompatibility with SharpSK
+                final File sharpSkJar = new File(serverDirectory, "plugins/SharpSK.jar");
+
+                String sharpSkversion = null;
+                boolean notUsingFixedSharpSk = false;
+
+                if (sharpSkJar.isFile() && sharpSkJar.exists()) {
+                    try (final JarFile sharpSk = new JarFile(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar")) {
+                        final JarEntry entry = sharpSk.getJarEntry("plugin.yml");
+
+                        try (final InputStream in = sharpSk.getInputStream(entry);
+                             final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+
+                            final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
+
+                            if (resp != null) { // The error is already printed if we're on debug verbosity
+                                for (final String line : resp.split("\n")) {
+                                    if (line.startsWith("version: ")) {
+                                        sharpSkversion = line.replace("version: ", "").trim();
+                                    }
+                                }
+
+                                if (sharpSkversion != null) {
+                                    String line;
+
+                                    while ((line = br.readLine()) != null) {
+                                        line = line.trim();
+
+                                        if (line.contains("version: ") && !line.contains("version: " + sharpSkversion)) { // Not using the latest fixed version
+                                            notUsingFixedSharpSk = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (notUsingFixedSharpSk) { // Not using the latest fixed version
+                        try (final InputStream stream = Skript.invoke(new URL("https://github.com/TheDGOfficial/SharpSK/releases/download/" + sharpSkversion + "/SharpSK-" + sharpSkversion + ".jar").openConnection(), connection -> {
+                            try {
+                                connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
+                                connection.setRequestProperty("Accept", "application/octet-stream");
+
+                                return connection.getInputStream();
+                            } catch (final IOException e) {
+                                if (Skript.testing() || Skript.debug())
+                                    Skript.exception(e);
+                                return null;
+                            }
+                        });
+
+                             final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
+                             final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSK.jar").toString());
+                             final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                            fileOutputStream.getChannel()
+                                    .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                        }
+
+                        try {
+                            // For safety, we must disable the SharpSK.
+                            Skript.closeOnEnable(() -> {
+                                if (Bukkit.getPluginManager().isPluginEnabled("SharpSK"))
+                                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK"));
+                                else {
+                                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSK")));
+                                }
+                            });
+                            // Required to non-downgrade automatically.
+                            Skript.closeOnEnable(() -> {
+                                if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater"))
+                                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
+                                else {
+                                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater")));
+                                }
+                            });
+                            Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                        } catch (final IOException e) { // If file system does not allow deleting locked / running files
+                            // Lock the file so SharpSKUpdater can't update it, and we can delete the SharpSKUpdater when server stops.
+
+                            @SuppressWarnings("resource")
+                            // We can't do anything about that, we must lock the file until server stops.
+                            final FileInputStream is = new FileInputStream(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar");
+
+                            @SuppressWarnings("resource")
+                            // We can't do anything about that, we must lock the file until server stops.
+                            final FileLock lock = is.getChannel().tryLock(0L, Long.MAX_VALUE, true);
+
+                            Skript.closeOnDisable(() -> {
+                                try {
+                                    lock.release();
+                                    is.close();
+
+                                    // This loop probably runs until Bukkit is shutdowned and SharpSKUpdater JAR file lock is released.
+                                    final Thread thread = Skript.newThread(() -> {
+                                        boolean flag = false;
+                                        Path sharpSkUpdater = null;
+
+                                        try {
+                                            sharpSkUpdater = Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar");
+                                        } catch (final IOException io) {
+                                            Skript.exception(io);
+                                        }
+
+                                        assert sharpSkUpdater != null;
+
+                                        while (!flag || sharpSkUpdater.toFile().exists()) {
+                                            try {
+                                                assert sharpSkUpdater != null;
+                                                Files.delete(sharpSkUpdater);
+                                                flag = true; // Deleted successfully, task is complete! We fixed compatibility problem, yey!
+                                                if (Skript.testing() && Skript.debug())
+                                                    Skript.debug("Deleted the sharp sk updater successfully");
+                                            } catch (final IOException ignored) {
+                                                /* ignore, re-try in loop */
+                                            }
+                                        }
+                                    }, "Skript incompatible plugin fixer");
+
+                                    thread.setPriority(Thread.MIN_PRIORITY);
+                                    thread.setDaemon(false); // Run even when Bukkit is stopped
+                                    thread.start();
+                                } catch (final IOException io) {
+                                    if (Skript.testing() || Skript.debug())
+                                        Skript.exception(io);
+                                }
+                            });
+
+                            // In case the file is not deleted yet...
+
+                            Runtime.getRuntime().addShutdownHook(Skript.newThread(() -> {
+                                try {
+                                    Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                                } catch (final IOException io) {
+                                    /* ignore, bad things happening! */
+                                }
+                            }, "Skript incompatible plugin remover"));
+                        }
+
+                        // Suppress sharp sk errors on first install.
+                        BukkitLoggerFilter.addFilter(record -> {
+                            if (record.getLevel() == Level.SEVERE) {
+                                final boolean flag = !record.getMessage().contains("SharpSK");
+                                if (!flag && Skript.testing() && Skript.debug())
+                                    Skript.debug("Ignoring error messages from incompatible plugins");
+                                return flag;
+                            }
+                            return true;
+                        });
+
+                        madeChanges = true;
+                        restartNeeded = true;
+                    }
+                }
+
+                // Warn the user that server needs a restart
+                if (madeChanges)
+                    info("Automatically made some compatibility settings. Restart your server to apply them.");
+
+                // Warn the user and automatically restart the server
+                if (restartNeeded) {
+                    Skript.closeOnEnable(() -> Bukkit.getScheduler().runTask(this, () -> {
+                        Bukkit.getLogger().warning("");
+                        warning("Some compatibility changes we made requires a restart. Please restart your server.");
+                        Bukkit.getLogger().warning("");
+                    }));
+                }
+
             }
 
             //System.setOut(new FilterPrintStream(System.out));
@@ -1835,7 +1833,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 languageEnd = new Date();
 
             try {
-                version = new Version(getDescription().getVersion());
+                version = new Version(getDescription().getVersion(), true);
             } catch (final IllegalArgumentException e) {
                 Skript.error("Malformed plugin.yml version detecded; some skript features will **not** work. You can try re-downloading the plugin.");
                 printDownloadLink();
@@ -1860,7 +1858,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 getDataFolder().mkdirs();
 
             final File scripts = new File(getDataFolder(), SCRIPTSFOLDER);
-            if (!scripts.isDirectory() || !Files.exists(Paths.get(getDataFolder().getPath(), "config.sk"))) {
+            if (!scripts.isDirectory() || !Paths.get(getDataFolder().getPath(), "config.sk").toFile().exists()) {
                 if (!scripts.exists() && !scripts.mkdirs())
                     Skript.exception(new IOException("Could not create the directory " + scripts), "Error generating the default files");
                 try (final ZipFile f = new ZipFile(getFile())) {
@@ -2037,7 +2035,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         Skript.debug("Can't hook to NoCheatPlus: NoCheatPlus not found");
                     else if (!Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager"))
                         Skript.debug("Can't hook to NoCheatPlus: Can't find exemption manager");
-                    else if (System.getProperty("skript.disableNcpHook") != null && Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")))
+                    else if (Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")))
                         Skript.debug("Can't hook to NoCheatPlus: Disabled by system property");
                     else
                         assert false;
@@ -2087,18 +2085,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         logEx();
                     }
 
-                    @Override
-                    protected void onStop() {
-                        super.onStop();
+//                    @Override
+//                    protected void onStop() {
+//                        super.onStop();
 //                            SkriptLogger.logAll(log);
-                    }
+//                    }
                 });
 
                 final CountingLogHandler c2 = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
                 try {
-                    if (!Variables.load())
-                        if (c2.getCount() == 0)
-                            error("(no information available)");
+                    if (!Variables.load() && c2.getCount() == 0)
+                        error("(no information available)");
                 } finally {
                     c2.stop();
                     h.stop();
@@ -2125,8 +2122,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 }
 
                 // No need to add debug code everytime to test the exception handler (:
-                if (System.getProperty("skript.throwTestError") != null
-                        && Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
+                if (Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
                     Skript.exception(new Throwable(), "Test error");
                 }
 
@@ -2151,8 +2147,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             // Check server platform and version, ensure everything works fine.
 
-            if (System.getProperty("skript.disableRecommendations") == null ||
-                    !Boolean.parseBoolean("skript.disableRecommendations")) {
+            if (!Boolean.parseBoolean("skript.disableRecommendations")) {
                 Bukkit.getScheduler().runTask(this, () -> {
                     if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
                         if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities (if there is another implementation that supports getNearbyEntities, we respect them and not advertise LifeSpigot :C)
@@ -2160,31 +2155,29 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
                             emptyPrinter.run();
                         }
-                    } else if (minecraftVersion.compareTo(1, 8, 8) == 0) { // If running on Minecraft 1.8.8
-                        if (getServerPlatform() != ServerPlatform.BUKKIT_TACO) { // If not using TacoSpigot
-                            if (getServerPlatform() == ServerPlatform.BUKKIT_UNKNOWN || getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT) { // If running Bukkit or CraftBukkit on 1.8.8
-                                // Make user first switch to Spigot, and give warnings (not infos as on taco) because there is no "official" Bukkit or CraftBukkit in 1.8 already.
-                                // The Bukkit and CraftBukkit that spigot provides after Minecraft 1.7.10 is unofficial, and it only exists for historical & development related reasons.
-                                // So, people should not use Bukkit or CraftBukkit on versions newer than 1.7.10. On 1.7.10, people can use Bukkit because Spigot has protocal patch and breaking changes.
-                                warning("We recommend using either Spigot or TacoSpigot with Minecraft 1.8.8, because there is no official Bukkit for Minecraft 1.8.8 already. It is compatible with Bukkit plugins.");
-                                warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
+                    } else if (minecraftVersion.compareTo(1, 8, 8) == 0 && getServerPlatform() != ServerPlatform.BUKKIT_TACO) { // If running on Minecraft 1.8.8 and not using TacoSpigot
+                        if (getServerPlatform() == ServerPlatform.BUKKIT_UNKNOWN || getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT) { // If running Bukkit or CraftBukkit on 1.8.8
+                            // Make user first switch to Spigot, and give warnings (not infos as on taco) because there is no "official" Bukkit or CraftBukkit in 1.8 already.
+                            // The Bukkit and CraftBukkit that spigot provides after Minecraft 1.7.10 is unofficial, and it only exists for historical & development related reasons.
+                            // So, people should not use Bukkit or CraftBukkit on versions newer than 1.7.10. On 1.7.10, people can use Bukkit because Spigot has protocal patch and breaking changes.
+                            warning("We recommend using either Spigot or TacoSpigot with Minecraft 1.8.8, because there is no official Bukkit for Minecraft 1.8.8 already. It is compatible with Bukkit plugins.");
+                            warning("You can get Spigot 1.8.8 from: https://cdn.getbukkit.org/spigot/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar");
+                            emptyPrinter.run();
+                        } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
+                            // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
+                            // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
+                            if (Skript.logHigh()) {
+                                info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
+                                info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
                                 emptyPrinter.run();
-                            } else if (getServerPlatform() != ServerPlatform.BUKKIT_PAPER) {
-                                // Just give infos: Only a recommendation. New features and fixes are great, but maybe cause more errors or bugs, and thus maybe unstable.
-                                // TODO Make this also appear on normal verbosity after making sure TacoSpigot (and PaperSpigot) does NOT break some plugins that work on Spigot.
-                                if (Skript.logHigh()) {
-                                    info("We recommend using TacoSpigot instead of Spigot in 1.8.8 - because it has fixes, timings v2 and other bunch of stuff. It is compatible with Spigot plugins.");
-                                    info("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
-                                    emptyPrinter.run();
-                                }
-                            } else {
-                                // PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
-                                // TODO TacoSpigot is a bit unstable - it's JAR file has bigger size, it's version format is complicated etc.
-                                if (Skript.logHigh()) {
-                                    warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
-                                    warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
-                                    emptyPrinter.run();
-                                }
+                            }
+                        } else {
+                            // PaperSpigot on 1.8.8 is just same as TacoSpigot 1.8.8, TacoSpigot only adds extras and more performance.
+                            // TODO TacoSpigot is a bit unstable - it's JAR file has bigger size, it's version format is complicated etc.
+                            if (Skript.logHigh()) {
+                                warning("We recommend using TacoSpigot instead of PaperSpigot in 1.8.8 - because it has more fixes, performance and other bunch of stuff. It is compatible with Paper and Spigot plugins.");
+                                warning("You can get TacoSpigot 1.8.8 from: https://ci.techcable.net/job/TacoSpigot-1.8.8/lastSuccessfulBuild/artifact/build/TacoSpigot.jar");
+                                emptyPrinter.run();
                             }
                         }
                     }
@@ -2249,7 +2242,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             boolean printed = false;
 
                             try {
-                                final Version latestVer = new Version(latestTrimmed);
+                                final Version latestVer = new Version(latestTrimmed, true);
 
                                 if (latestVer.isSmallerThan(version)) { // Running an unreleased build, probably self built
                                     updateChecked = true;
@@ -2327,8 +2320,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
 
         } catch (final Throwable tw) {
-            if (System.getProperty("skript.disableStartupErrors") == null ||
-                    !Boolean.parseBoolean("skript.disableStartupErrors")) {
+            if (!Boolean.parseBoolean("skript.disableStartupErrors")) {
                 exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
             }
         }
@@ -2353,6 +2345,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 info("Disabling scripts..");
             disableScripts();
 
+            // Ensure no new tasks are quued before cancelling existing ones
+
+            Delay.delayingDisabled = true;
+            Delay.delayed.clear();
+
             if (Skript.logHigh())
                 info("Unregistering tasks and event listeners..");
             Bukkit.getScheduler().cancelTasks(this);
@@ -2369,8 +2366,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
                 }
             }
+
             if (Skript.logHigh())
-                info("Freed up memory - starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
+                info("Freed up memory - Saving variables, this may take a long time based on your variable count, please wait...");
+
+            // Special variables calls, not on the closeable list to ensure it lastly closes.
+
+            assert VariablesStorage.instance != null;
+
+            VariablesStorage.instance.close();
+            Variables.close();
+
+            if (Skript.logHigh())
+                info("Saved variables - Starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
 
             SkriptCommand.resetPriority();
 
@@ -2438,8 +2446,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             assert closedOnEnable;
 
         } catch (final Throwable tw) {
-            if (System.getProperty("skript.disableShutdownErrors") == null ||
-                    !Boolean.parseBoolean("skript.disableShutdownErrors")) {
+            if (!Boolean.parseBoolean("skript.disableShutdownErrors")) {
                 exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when disabling Skript");
             }
         }

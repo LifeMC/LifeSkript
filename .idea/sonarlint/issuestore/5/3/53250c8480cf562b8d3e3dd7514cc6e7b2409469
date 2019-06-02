@@ -1,8 +1,8 @@
 
-_squid:HiddenFieldCheck4"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
 _squid:HiddenFieldCheckz"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
-Vsquid:MissingDeprecatedCheckЪ"(Add the missing @deprecated Javadoc tag.(ШїК≠ъ€€€€
-_squid:HiddenFieldCheck<"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
-Rsquid:S1133Ъ"5Do not forget to remove this deprecated code someday.(ШїК≠ъ€€€€
-_squid:HiddenFieldCheckD"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
 csquid:S00112S"FDefine and throw a dedicated exception instead of using a generic one.(“В“йь€€€€
+_squid:HiddenFieldCheckD"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
+Rsquid:S1133Ъ"5Do not forget to remove this deprecated code someday.(ШїК≠ъ€€€€
+_squid:HiddenFieldCheck<"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€
+Vsquid:MissingDeprecatedCheckЪ"(Add the missing @deprecated Javadoc tag.(ШїК≠ъ€€€€
+_squid:HiddenFieldCheck4"8Rename "info" which hides the field declared at line 41.(йј€ны€€€€

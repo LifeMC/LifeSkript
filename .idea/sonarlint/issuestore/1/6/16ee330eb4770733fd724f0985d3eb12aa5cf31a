@@ -1,6 +1,7 @@
 
-=squid:S1452e"&Remove usage of generic wildcard type.(¯å³¾
-Bsquid:S1452P"&Remove usage of generic wildcard type.(ğ¿¨ıÿÿÿÿ
+=squid:S1452e"&Remove usage of generic wildcard type.(Åê«Ñ
+Bsquid:S1452i"&Remove usage of generic wildcard type.(ÀùÁùÿÿÿÿ
+Bsquid:S1452T"&Remove usage of generic wildcard type.(ûªØÄøÿÿÿÿ
+Bsquid:S1452P"&Remove usage of generic wildcard type.(ÁÎğåøÿÿÿÿ
 8squid:S1214%""Move constants to a class or enum.(ˆ¤Ò{
-=squid:S1452i"&Remove usage of generic wildcard type.(Îœ
-=squid:S1452T"&Remove usage of generic wildcard type.(ÌÇÏ
+]squid:S1118N":Add a private constructor to hide the implicit public one.(öØäúÿÿÿÿ8µ‚ƒ„±-

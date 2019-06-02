@@ -1,5 +1,4 @@
 
-`squid:CallToDeprecatedMethodf"1Remove this use of "ItemStack"; it is deprecated.(‰Ø¥ú8¶’ß§£-
-5squid:S1118È"Hide this public constructor.(Š¡ÆÅ
-`squid:CallToDeprecatedMethodf"1Remove this use of "getTypeId"; it is deprecated.(‰Ø¥ú8¶’ß§£-
-^squid:CallToDeprecatedMethodf"/Remove this use of "getData"; it is deprecated.(‰Ø¥ú8¶’ß§£-
+^squid:CallToDeprecatedMethod"1Remove this use of "getTypeId"; it is deprecated.(‰Ø¥ú8¶’ß§£-
+\squid:CallToDeprecatedMethod"/Remove this use of "getData"; it is deprecated.(‰Ø¥ú8¶’ß§£-
+^squid:CallToDeprecatedMethod"1Remove this use of "ItemStack"; it is deprecated.(‰Ø¥ú8¶’ß§£-

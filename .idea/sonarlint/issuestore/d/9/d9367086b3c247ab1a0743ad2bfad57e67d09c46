@@ -1,6 +1,6 @@
 
-Rsquid:S1141¥"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141®"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Rsquid:S1141¼"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-vsquid:ModifiersOrderCheckK"EReorder the modifiers to comply with the Java Language Specification.(Ø‘¡úÿÿÿÿ8ì×¶®©-
-Jsquid:S1068s"-Remove this unused "verbosity" private field.(®¬³H8ì×¶®©-
+Rsquid:S1141å"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Rsquid:S1141û"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+Ksquid:S1068—"-Remove this unused "verbosity" private field.(®¬³H8ì×¶®©-
+†squid:S4087õ"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(€¶º‡ıÿÿÿÿ8Öö‚„±-
+Ysquid:S1141î"5Extract this nested try block into a separate method.(ÿ¿äúÿÿÿÿ8Öö‚„±-

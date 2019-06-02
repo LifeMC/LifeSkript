@@ -1,11 +1,11 @@
 
-]squid:CallToDeprecatedMethodd"5Remove this use of "depositPlayer"; it is deprecated.(¶åª¿
-csquid:CallToDeprecatedMethodT"6Remove this use of "withdrawPlayer"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
-_squid:CallToDeprecatedMethod7"2Remove this use of "getBalance"; it is deprecated.(ÄÛ¼Æøÿÿÿÿ
-csquid:CallToDeprecatedMethod`"6Remove this use of "withdrawPlayer"; it is deprecated.(ñâşôÿÿÿÿÿ
-^squid:CallToDeprecatedMethodg"6Remove this use of "withdrawPlayer"; it is deprecated.(¡È€
-_squid:CallToDeprecatedMethodT"2Remove this use of "getBalance"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
-_squid:CallToDeprecatedMethod\"2Remove this use of "getBalance"; it is deprecated.(§Œ½¨øÿÿÿÿ
-]squid:CallToDeprecatedMethod^"5Remove this use of "depositPlayer"; it is deprecated.(Ê°À
-=squid:S1168I"&Return an empty array instead of null.(¥¹ï
-£%squid:RedundantThrowsDeclarationCheckO"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+^squid:CallToDeprecatedMethodi"6Remove this use of "withdrawPlayer"; it is deprecated.(¡È€
+csquid:CallToDeprecatedMethodU"6Remove this use of "withdrawPlayer"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
+]squid:CallToDeprecatedMethod`"5Remove this use of "depositPlayer"; it is deprecated.(Ê°À
+£%squid:RedundantThrowsDeclarationCheckP"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
+]squid:CallToDeprecatedMethodf"5Remove this use of "depositPlayer"; it is deprecated.(¶åª¿
+csquid:CallToDeprecatedMethodb"6Remove this use of "withdrawPlayer"; it is deprecated.(ñâşôÿÿÿÿÿ
+_squid:CallToDeprecatedMethod8"2Remove this use of "getBalance"; it is deprecated.(ÄÛ¼Æøÿÿÿÿ
+_squid:CallToDeprecatedMethodU"2Remove this use of "getBalance"; it is deprecated.(ÿ·¿Œıÿÿÿÿ
+=squid:S1168J"&Return an empty array instead of null.(¥¹ï
+_squid:CallToDeprecatedMethod]"2Remove this use of "getBalance"; it is deprecated.(§Œ½¨øÿÿÿÿ

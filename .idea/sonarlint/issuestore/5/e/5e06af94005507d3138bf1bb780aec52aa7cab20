@@ -1,7 +1,7 @@
 
-Wsquid:HiddenFieldCheckX"5Rename "e" which hides the field declared at line 79.(–—¢É
-]squid:HiddenFieldChecke";Rename "current" which hides the field declared at line 82.(à†††
-„ squid:ForLoopCounterChangedCheckØ"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
-]squid:HiddenFieldCheckW";Rename "current" which hides the field declared at line 82.(¸’áò
-„ squid:ForLoopCounterChangedCheckå"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
-Fsquid:S1604="(Make this anonymous inner class a lambda(Áæòñ8üöµ®©-
+„ squid:ForLoopCounterChangedCheckä"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
+]squid:HiddenFieldCheckV";Rename "current" which hides the field declared at line 81.(¸’áò
+Wsquid:HiddenFieldCheckW"5Rename "e" which hides the field declared at line 78.(–—¢É
+]squid:HiddenFieldCheckd";Rename "current" which hides the field declared at line 81.(à†††
+„ squid:ForLoopCounterChangedCheckñ"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
+Hsquid:S1444<"*Make this "public static last" field final(‘³¿•8ºª„„±-

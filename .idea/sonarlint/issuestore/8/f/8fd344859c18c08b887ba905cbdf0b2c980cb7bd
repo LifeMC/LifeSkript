@@ -1,4 +1,5 @@
 
-Fsquid:S1066m"/Merge this if statement with the enclosing one.(Ñç¾À
->squid:S1168Ÿ"&Return an empty array instead of null.(¥¹ï
+Dsquid:S1066"/Merge this if statement with the enclosing one.(Ñç¾À
 fsquid:HiddenFieldCheckQ"?Rename "returnTypes" which hides the field declared at line 50.(è›Œ¯ùÿÿÿÿ
+>squid:S1168"&Return an empty array instead of null.(¥¹ï
+Dsquid:S1452¸"&Remove usage of generic wildcard type.(¦³‡+8ÿŸ„„±-

@@ -1,4 +1,4 @@
 
-=squid:S1168e"&Return an empty array instead of null.(•πÔç
-®squid:S4449S"âAnnotate the parameter with @javax.annotation.Nullable in method 'get' declaration, or make sure that null can not be passed as argument.(†ﬂä“8ÆôµÆ©-
 Æsquid:S4449S"èAnnotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.(†ﬂä“8ÆôµÆ©-
+®squid:S4449S"âAnnotate the parameter with @javax.annotation.Nullable in method 'get' declaration, or make sure that null can not be passed as argument.(†ﬂä“8ÆôµÆ©-
+=squid:S1168e"&Return an empty array instead of null.(•πÔç

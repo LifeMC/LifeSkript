@@ -1,5 +1,4 @@
 
-[squid:S4351k"?Refactor this method so that its argument is of type 'Version'.(Å‘Œˆüÿÿÿÿ
-\squid:S3358”"DExtract this nested ternary operation into an independent statement.(¦âÂ©
-lsquid:S39811"UThe length of "version" is always ">=0", so update this test to either "==0" or ">0".(ì»šĞ
+\squid:S4351¯"?Refactor this method so that its argument is of type 'Version'.(Å‘Œˆüÿÿÿÿ
+\squid:S3358Ø"DExtract this nested ternary operation into an independent statement.(¦âÂ©
 2squid:S1700'"Rename field "version"(·¨öİûÿÿÿÿ

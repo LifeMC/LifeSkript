@@ -1,7 +1,7 @@
 
-=squid:S1168\"&Return an empty array instead of null.(¥¹ï
-\squid:HiddenFieldCheckZ":Rename "number" which hides the field declared at line 61.(÷ğ›¯
-=squid:S1168Q"&Return an empty array instead of null.(¥¹ï
 [squid:S3358u"DExtract this nested ternary operation into an independent statement.(Ê—ıå
-=squid:S1168V"&Return an empty array instead of null.(¥¹ï
+=squid:S1168\"&Return an empty array instead of null.(¥¹ï
 =squid:S1168a"&Return an empty array instead of null.(¥¹ï
+\squid:HiddenFieldCheckZ":Rename "number" which hides the field declared at line 61.(÷ğ›¯
+=squid:S1168V"&Return an empty array instead of null.(¥¹ï
+=squid:S1168Q"&Return an empty array instead of null.(¥¹ï

@@ -388,7 +388,7 @@ public final class BukkitClasses {
             @Nullable
             public Player parse(final String s, final ParseContext context) {
                 if (context == ParseContext.COMMAND) {
-                    @SuppressWarnings("deprecation") final List<Player> ps = Bukkit.matchPlayer(s); //FIXME deprecated
+                    @SuppressWarnings("deprecation") final List<Player> ps = Bukkit.matchPlayer(s);
                     if (ps.size() == 1)
                         return ps.get(0);
                     if (ps.isEmpty())

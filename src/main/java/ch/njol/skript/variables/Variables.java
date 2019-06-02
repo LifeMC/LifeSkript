@@ -178,7 +178,7 @@ public final class Variables {
         loadingLoggerThread.setPriority(Thread.MIN_PRIORITY);
         loadingLoggerThread.start();
 
-        Skript.closeOnDisable(Variables::close);
+        //Skript.closeOnDisable(Variables::close);
 
         try {
             boolean successful = true;

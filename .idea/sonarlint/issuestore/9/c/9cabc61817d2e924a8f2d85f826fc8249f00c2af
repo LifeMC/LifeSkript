@@ -1,17 +1,17 @@
 
-9squid:S16598""Declare "WEST" on a separate line.(œ£ƒ»
+:squid:S16599"#Declare "SOUTH" on a separate line.(œ£ƒ»
+?squid:S1659:"(Declare "NORTH_WEST" on a separate line.(¯ñ¶“
+asquid:HiddenFieldCheck´">Rename "relativeTo" which hides the field declared at line 75.(ƒ©ö®
 \squid:S3358µ"DExtract this nested ternary operation into an independent statement.(µ’
-P"squid:SwitchLastCaseIsDefaultCheckR""Add a default case to this switch.(¬£Ãæ
-?squid:S16599"(Declare "SOUTH_EAST" on a separate line.(¯ñ¶“
-\squid:S3358µ"DExtract this nested ternary operation into an independent statement.(µ’
-?squid:S16599"(Declare "NORTH_WEST" on a separate line.(¯ñ¶“
-asquid:HiddenFieldCheck´">Rename "relativeTo" which hides the field declared at line 74.(ƒ©ö®
-:squid:S16598"#Declare "NORTH" on a separate line.(œ£ƒ»
-?squid:S16599"(Declare "SOUTH_WEST" on a separate line.(¯ñ¶“
-9squid:S16598""Declare "EAST" on a separate line.(œ£ƒ»
-?squid:S16599"(Declare "NORTH_EAST" on a separate line.(¯ñ¶“
-Ysquid:HiddenFieldCheck•"7Rename "yaw" which hides the field declared at line 76.(œ¬™?
+?squid:S1659:"(Declare "SOUTH_WEST" on a separate line.(¯ñ¶“
+:squid:S16599"#Declare "NORTH" on a separate line.(œ£ƒ»
+?squid:S1659:"(Declare "SOUTH_EAST" on a separate line.(¯ñ¶“
+9squid:S16599""Declare "WEST" on a separate line.(œ£ƒ»
+9squid:S16599""Declare "EAST" on a separate line.(œ£ƒ»
+P"squid:SwitchLastCaseIsDefaultCheckS""Add a default case to this switch.(¬£Ãæ
 \squid:S3358µ"DExtract this nested ternary operation into an independent statement.(µ’
 \squid:S3358µ"DExtract this nested ternary operation into an independent statement.(µ’
-:squid:S16598"#Declare "SOUTH" on a separate line.(œ£ƒ»
-Esquid:S16597""Declare "DOWN" on a separate line.(¿´Ø’ıÿÿÿÿ8Ô°¶®©-
+\squid:S3358µ"DExtract this nested ternary operation into an independent statement.(µ’
+?squid:S1659:"(Declare "NORTH_EAST" on a separate line.(¯ñ¶“
+Ysquid:HiddenFieldCheck–"7Rename "yaw" which hides the field declared at line 77.(œ¬™?
+Esquid:S16598""Declare "DOWN" on a separate line.(¿´Ø’ıÿÿÿÿ8Ô°¶®©-

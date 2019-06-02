@@ -1,12 +1,12 @@
 
-[squid:HiddenFieldCheckÜ"8Rename "name" which hides the field declared at line 73.(óšÜï
-[squid:HiddenFieldCheck€"8Rename "name" which hides the field declared at line 73.(óšÜï
-Gsquid:S1905«"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
-Usquid:S2589î"8Remove this expression which always evaluates to "false"(åĞªûÿÿÿÿ
-[squid:HiddenFieldCheck±"8Rename "name" which hides the field declared at line 73.(óšÜï
-Lsquid:S1066€"/Merge this if statement with the enclosing one.(ËÕ³öûÿÿÿÿ
-¤%squid:RedundantThrowsDeclarationCheck"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-Usquid:S2589ë"8Remove this expression which always evaluates to "false"(éØéıÿÿÿÿ
-Ssquid:S2589R"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
-^squid:CallToDeprecatedMethodõ"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
 ~squid:S00115C"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¤ëæøÿÿÿÿ8îÚ¶®©-
+^squid:CallToDeprecatedMethodô"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
+¤%squid:RedundantThrowsDeclarationCheck€"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Ö†â¶
+[squid:HiddenFieldCheck°"8Rename "name" which hides the field declared at line 71.(óšÜï
+[squid:HiddenFieldCheckÿ"8Rename "name" which hides the field declared at line 71.(óšÜï
+Ssquid:S2589R"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
+Isquid:S1066"/Merge this if statement with the enclosing one.(ËÕ³öûÿÿÿÿ
+[squid:HiddenFieldCheckÛ"8Rename "name" which hides the field declared at line 71.(óšÜï
+Gsquid:S1905ª"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
+|
+squid:S135¹"YReduce the total number of break and continue statements in this loop to use at most one.(¾¸ùÿÿÿÿ8£ÿ‚„±-

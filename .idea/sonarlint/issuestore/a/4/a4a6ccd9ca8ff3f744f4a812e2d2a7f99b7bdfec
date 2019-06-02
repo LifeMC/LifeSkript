@@ -1,8 +1,6 @@
 
-w
-squid:S135 "YReduce the total number of break and continue statements in this loop to use at most one.(È£ˆ´8×§„Û¢-
-Isquid:S00108½")Either remove or fill this block of code.(ç¤Ğ¾8×§„Û¢-
-n squid:LabelsShouldNotBeUsedCheckŸ";Refactor the code to remove this label and the need for it.(–‹L8×§„Û¢-
-]squid:S11189":Add a private constructor to hide the implicit public one.(¡Å•ùÿÿÿÿ8˜éÌÌ¢-
-‹squid:S1845H"hRename method "generate" to prevent any misunderstanding/clash with field "generate" defined on line 59.(˜Ï³Óúÿÿÿÿ8„Õ¶®©-
 ysquid:S00115?"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Í£ïà8„Õ¶®©-
+‹squid:S1845L"hRename method "generate" to prevent any misunderstanding/clash with field "generate" defined on line 63.(˜Ï³Óúÿÿÿÿ8„Õ¶®©-
+w
+squid:S135¢"YReduce the total number of break and continue statements in this loop to use at most one.(È£ˆ´8×§„Û¢-
+n squid:LabelsShouldNotBeUsedCheck¡";Refactor the code to remove this label and the need for it.(–‹L8×§„Û¢-

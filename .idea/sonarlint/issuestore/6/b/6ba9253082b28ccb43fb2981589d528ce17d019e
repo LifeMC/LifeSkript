@@ -1,13 +1,12 @@
 
+6squid:S1700R"Rename field "variables"(œîƒ8õûµ®©-
+fsquid:S3824ê"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(¬Ò–
+d$squid:AssignmentInSubExpressionCheckì".Extract the assignment out of this expression.(Æ¼ºÉıÿÿÿÿ
 p
-squid:S135¶"YReduce the total number of break and continue statements in this loop to use at most one.(Ç»Ø¨
-usquid:S1171n"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheckÈ".Extract the assignment out of this expression.(Æ¼ºÉıÿÿÿÿ
-]squid:S2184ç"@Cast one of the operands of this integer division to a "double".(Â¾ÆÖıÿÿÿÿ
-fsquid:S3824Æ"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(¬Ò–
-hsquid:S3358£"DExtract this nested ternary operation into an independent statement.(ƒÇĞÛûÿÿÿÿ8öß§£-
+squid:S135¹"YReduce the total number of break and continue statements in this loop to use at most one.(Ç»Ø¨
+]squid:S2184ê"@Cast one of the operands of this integer division to a "double".(Â¾ÆÖıÿÿÿÿ
+usquid:S1171q"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
 v
-squid:S135¡"YReduce the total number of break and continue statements in this loop to use at most one.(›ùC8õûµ®©-
-Ksquid:S1604W"(Make this anonymous inner class a lambda(„’—ˆÿÿÿÿÿ8õûµ®©-
-~squid:S00115I"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¾µÂşÿÿÿÿ8õûµ®©-
-6squid:S1700P"Rename field "variables"(œîƒ8õûµ®©-
+squid:S135¢"YReduce the total number of break and continue statements in this loop to use at most one.(›ùC8õûµ®©-
+~squid:S00115L"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¾µÂşÿÿÿÿ8õûµ®©-
+hsquid:S3358¤"DExtract this nested ternary operation into an independent statement.(›‡°½ûÿÿÿÿ8‘«„„±-

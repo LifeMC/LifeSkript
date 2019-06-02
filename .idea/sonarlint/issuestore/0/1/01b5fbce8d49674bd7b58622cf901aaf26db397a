@@ -1,11 +1,11 @@
 
-\squid:CallToDeprecatedMethodZ"4Remove this use of "getBlockData"; it is deprecated.(Û“ÂÎ
 \squid:HiddenFieldCheck—"9Rename "types" which hides the field declared at line 57.(÷«Ïø
-Zsquid:CallToDeprecatedMethodc"2Remove this use of "getBlockId"; it is deprecated.(¸éªø
-Qsquid:MissingDeprecatedCheck£"(Add the missing @deprecated Javadoc tag.(›ËÁý
-Msquid:S1133£"5Do not forget to remove this deprecated code someday.(›ËÁý
-^$squid:AssignmentInSubExpressionCheck@".Extract the assignment out of this expression.(£·÷â
-Zsquid:CallToDeprecatedMethodZ"2Remove this use of "getBlockId"; it is deprecated.(Û“ÂÎ
-Fsquid:S1066@"/Merge this if statement with the enclosing one.(£·÷â
-asquid:CallToDeprecatedMethodv"9Remove this use of "spawnFallingBlock"; it is deprecated.(¹˜Çò
 \squid:CallToDeprecatedMethodc"4Remove this use of "getBlockData"; it is deprecated.(¸éªø
+Dsquid:S1066"/Merge this if statement with the enclosing one.(£·÷â
+Zsquid:CallToDeprecatedMethodZ"2Remove this use of "getBlockId"; it is deprecated.(Û“ÂÎ
+Zsquid:CallToDeprecatedMethodc"2Remove this use of "getBlockId"; it is deprecated.(¸éªø
+asquid:CallToDeprecatedMethodv"9Remove this use of "spawnFallingBlock"; it is deprecated.(¹˜Çò
+Qsquid:MissingDeprecatedCheck£"(Add the missing @deprecated Javadoc tag.(›ËÁý
+\squid:CallToDeprecatedMethodZ"4Remove this use of "getBlockData"; it is deprecated.(Û“ÂÎ
+Msquid:S1133£"5Do not forget to remove this deprecated code someday.(›ËÁý
+\$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(£·÷â

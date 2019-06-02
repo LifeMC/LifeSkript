@@ -1,10 +1,10 @@
 
-%squid:RedundantThrowsDeclarationCheckî"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(ë©áëøÿÿÿÿ
-Csquid:S1452•"&Remove usage of generic wildcard type.(Ä÷íîşÿÿÿÿ
-%squid:RedundantThrowsDeclarationCheckÚ"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(ğÿ»æşÿÿÿÿ
-=squid:S14521"&Remove usage of generic wildcard type.(ÕÕÏŸ
+%squid:RedundantThrowsDeclarationCheckî"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(Çˆ‚’ÿÿÿÿÿ
+=squid:S14521"&Remove usage of generic wildcard type.(¿¸ÚÒ
+=squid:S14521"&Remove usage of generic wildcard type.(¿¸ÚÒ
 >squid:S1168¦"&Return an empty array instead of null.(¥¹ï
-=squid:S14521"&Remove usage of generic wildcard type.(ÕÕÏŸ
 5squid:S1700)"Rename field "converters"(ƒã¢ëıÿÿÿÿ
-Csquid:S1452•"&Remove usage of generic wildcard type.(Ä÷íîşÿÿÿÿ
-lsquid:S00100 "NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ËÃô‡şÿÿÿÿ
+™%squid:RedundantThrowsDeclarationCheckÚ"gRemove the declaration of thrown exception 'java.lang.ClassCastException' which is a runtime exception.(ÇÇÉ¯
+Jsquid:S1452”"&Remove usage of generic wildcard type.(”¤Şäûÿÿÿÿ8ÿ²„„±-
+Jsquid:S1452”"&Remove usage of generic wildcard type.(”¤Şäûÿÿÿÿ8ÿ²„„±-
+ssquid:S00100Ÿ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿı£¤ıÿÿÿÿ8ÿ²„„±-

@@ -1,13 +1,13 @@
 
-psquid:S2293~"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌÏ‹
-psquid:S2293x"YReplace the type specification in this constructor call with the diamond operator ("<>").(Âùƒà
-Bsquid:S1452S"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
-ksquid:S00100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íæõ¬üÿÿÿÿ
+:squid:S2386,"Make this member "protected".(¯ˆ°T8º’¶®©-
+ksquid:S00100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œ ÅŸøÿÿÿÿ
+psquid:S2293e"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÇŒ
+Bsquid:S1452S"&Remove usage of generic wildcard type.(ÃêÖÖıÿÿÿÿ
+Bsquid:S1452S"&Remove usage of generic wildcard type.(ÃêÖÖıÿÿÿÿ
 =squid:S1659˜" Declare "c2" on a separate line.(Ó×š´ùÿÿÿÿ
+7squid:S1700,"Rename field "comparators"(¯ˆ°T8º’¶®©-
+psquid:S2293~"YReplace the type specification in this constructor call with the diamond operator ("<>").(âÌÏ‹
 _squid:HiddenFieldCheck¯"7Rename "c1" which hides the field declared at line 150.(ò¸µúÿÿÿÿ
 Zsquid:HiddenFieldCheck³"7Rename "c2" which hides the field declared at line 150.(¦ı§•
-psquid:S2293e"YReplace the type specification in this constructor call with the diamond operator ("<>").(çÇŒ
-Bsquid:S1452S"&Remove usage of generic wildcard type.(éúÛšøÿÿÿÿ
+psquid:S2293x"YReplace the type specification in this constructor call with the diamond operator ("<>").(Âùƒà
 qsquid:S2293Š"YReplace the type specification in this constructor call with the diamond operator ("<>").(€­Èª
-:squid:S2386,"Make this member "protected".(¯ˆ°T8º’¶®©-
-7squid:S1700,"Rename field "comparators"(¯ˆ°T8º’¶®©-

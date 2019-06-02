@@ -1,4 +1,4 @@
 
-csquid:CallToDeprecatedMethodj"6Remove this use of "getTargetBlock"; it is deprecated.(ê¿Ž…üÿÿÿÿ
-wsquid:S001159"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(šŒ“²ûÿÿÿÿ
-gsquid:S11348"DTake the required action to fix the issue indicated by this comment.(†õ˜½øÿÿÿÿ8ëž¶®©-
+gsquid:S11349"DTake the required action to fix the issue indicated by this comment.(†õ˜½øÿÿÿÿ8ëž¶®©-
+csquid:CallToDeprecatedMethodk"6Remove this use of "getTargetBlock"; it is deprecated.(ê¿Ž…üÿÿÿÿ
+~squid:S00115:"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(©Æ“ƒýÿÿÿÿ8¶¹„„±-

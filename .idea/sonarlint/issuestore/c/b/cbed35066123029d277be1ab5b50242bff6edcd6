@@ -1,8 +1,8 @@
 
-<squid:S1659-" Declare "c2" on a separate line.(¿ÀÉÖúÿÿÿÿ
-;squid:S1659+"Declare "j" on a separate line.(á”æåþÿÿÿÿ
-7squid:S1659/" Declare "j2" on a separate line.(¼þ‡Ã
-<squid:S16590" Declare "n2" on a separate line.(¶Ùø‹øÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheck‡".Extract the assignment out of this expression.(°¤íÿþÿÿÿÿ
 o
-squid:S135~"YReduce the total number of break and continue statements in this loop to use at most one.(ÌÙª‡
+squid:S135}"YReduce the total number of break and continue statements in this loop to use at most one.(ÌÙª‡
+<squid:S1659-" Declare "c2" on a separate line.(¿ÀÉÖúÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheck†".Extract the assignment out of this expression.(°¤íÿþÿÿÿÿ
+<squid:S16590" Declare "n2" on a separate line.(¶Ùø‹øÿÿÿÿ
+7squid:S1659/" Declare "j2" on a separate line.(¼þ‡Ã
+;squid:S1659+"Declare "j" on a separate line.(á”æåþÿÿÿÿ

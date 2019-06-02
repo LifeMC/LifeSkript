@@ -1,25 +1,39 @@
 
-gsquid:S2259‰"HA "NullPointerException" could be thrown; "loopedExpr" is nullable here.(ÕÜ™Ì8ÍûäÍ¢-
-nsquid:S00100¤"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°±·ï8ÍûäÍ¢-
-Esquid:S1659›"&Declare "commands" on a separate line.(©ıÃù8ÍûäÍ¢-
 w
-squid:S135×"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
-‡"squid:ClassVariableVisibilityCheck›"QMake files a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
-‹"squid:ClassVariableVisibilityCheck›"UMake functions a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
-Fsquid:S1659›"'Declare "functions" on a separate line.(©ıÃù8ÍûäÍ¢-
+squid:S135‘"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
 w
-squid:S135À"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
-Š"squid:ClassVariableVisibilityCheck›"TMake commands a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
-9squid:S2386@"Make this member "protected".(‘„–øÿÿÿÿ
+squid:S135¨"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
+Fsquid:S1659Œ"'Declare "functions" on a separate line.(©ıÃù8ÍûäÍ¢-
+Esquid:S1659Œ"&Declare "commands" on a separate line.(©ıÃù8ÍûäÍ¢-
+Wsquid:S1444`"4Make this "public static hasDelayBefore" field final(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
+w
+squid:S135µ"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
+”"squid:ClassVariableVisibilityCheck`"ZMake hasDelayBefore a static final constant or non-public and provide accessors if needed.(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
 v
-squid:S135³"YReduce the total number of break and continue statements in this loop to use at most one.(¨Ê§28ÍûäÍ¢-
-@squid:S1659D"*Declare "m_no_scripts" on a separate line.(³Ğ‘
-Esquid:S1659›"&Declare "triggers" on a separate line.(©ıÃù8ÍûäÍ¢-
+squid:S135œ"YReduce the total number of break and continue statements in this loop to use at most one.(¨Ê§28ÍûäÍ¢-
+Esquid:S1659Œ"&Declare "triggers" on a separate line.(©ıÃù8ÍûäÍ¢-
+Š"squid:ClassVariableVisibilityCheckŒ"TMake commands a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+@squid:S1659O"*Declare "m_no_scripts" on a separate line.(³Ğ‘
+Osquid:S1444_"3Make this "public static currentScript" field final(ÆÓÊøÿÿÿÿ
+‹"squid:ClassVariableVisibilityCheckŒ"UMake functions a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+@squid:S2386G"Make this member "protected".(ó‚±¶şÿÿÿÿ8øá¶®©-
+9squid:S2386E"Make this member "protected".(‘„–øÿÿÿÿ
+gsquid:S2259ì"HA "NullPointerException" could be thrown; "loopedExpr" is nullable here.(ÕÜ™Ì8ÍûäÍ¢-
+‡"squid:ClassVariableVisibilityCheckŒ"QMake files a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+Š"squid:ClassVariableVisibilityCheckŒ"TMake triggers a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
+Csquid:S2185¡"%Remove this silly call to "Math.ceil"(Œ¶ÅI8ù‘ƒ„±-
+`squid:S2184¡"BCast one of the operands of this division operation to a "double".(Œ¶ÅI8ù‘ƒ„±-
+msquid:S3824¨"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(øÔˆğ8ù‘ƒ„±-
+d$squid:AssignmentInSubExpressionCheckm".Extract the assignment out of this expression.(’åä8ù‘ƒ„±-
+j$squid:AssignmentInSubExpressionCheckq".Extract the assignment out of this expression.(¾Ø“­ÿÿÿÿÿ8ù‘ƒ„±-
+d$squid:AssignmentInSubExpressionChecku".Extract the assignment out of this expression.(’åä8ù‘ƒ„±-
+e$squid:AssignmentInSubExpressionCheckw".Extract the assignment out of this expression.(“ùºå8ù‘ƒ„±-
+j$squid:AssignmentInSubExpressionChecky".Extract the assignment out of this expression.(²¿ÊÁûÿÿÿÿ8ù‘ƒ„±-
+k$squid:AssignmentInSubExpressionCheck«".Extract the assignment out of this expression.(©öæ®úÿÿÿÿ8ù‘ƒ„±-
 w
-squid:S135ã"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ÍûäÍ¢-
-Š"squid:ClassVariableVisibilityCheck›"TMake triggers a static final constant or non-public and provide accessors if needed.(©ıÃù8ÍûäÍ¢-
-”"squid:ClassVariableVisibilityCheckR"ZMake hasDelayBefore a static final constant or non-public and provide accessors if needed.(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
-Osquid:S1444Q"3Make this "public static currentScript" field final(ÆÓÊøÿÿÿÿ
-Wsquid:S1444R"4Make this "public static hasDelayBefore" field final(·Îª„ıÿÿÿÿ8ÍûäÍ¢-
-ssquid:S00100¾"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âÙüÿÿÿÿ8ÍûäÍ¢-
-@squid:S2386A"Make this member "protected".(ó‚±¶şÿÿÿÿ8øá¶®©-
+squid:S135Æ"YReduce the total number of break and continue statements in this loop to use at most one.(Û³æÆ8ù‘ƒ„±-
+fsquid:S1126Ù"BReplace this if-then-else statement by a single method invocation.(¯ƒ³¶üÿÿÿÿ8ù‘ƒ„±-
+Ysquid:S1141½"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ù‘ƒ„±-
+nsquid:S00100†"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ“å¢8ù‘ƒ„±-
+msquid:S00100 "NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ø¤‡8ù‘ƒ„±-
+<squid:S2153¡"Remove the boxing to "Double".(Œ¶ÅI8ù‘ƒ„±-

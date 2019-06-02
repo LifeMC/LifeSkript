@@ -1,28 +1,28 @@
 
-Vsquid:S2589Æ"7Remove this expression which always evaluates to "true"(Ê÷Èù8é¿Î¢-
-Tsquid:S2065£"0Remove the "transient" modifier from this field.(ÃÉÓ¬øÿÿÿÿ8é¿Î¢-
-Ksquid:S2390Š",Remove this reference to "SimpleEntityData".(‘ˆƒ’8é¿Î¢-
-¤%squid:RedundantThrowsDeclarationCheckñ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(üøÿÿÿÿ
-\squid:S3358ğ"DExtract this nested ternary operation into an independent statement.(œÂÂ‚
-nsquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óŒ“Ó8é¿Î¢-
-[squid:S2589ó"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
-ssquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÃÁúúÿÿÿÿ8é¿Î¢-
-\squid:S3358ö"DExtract this nested ternary operation into an independent statement.(±ğ×ä
-Csquid:S1452Ê"&Remove usage of generic wildcard type.( Šøıÿÿÿÿ
->squid:S1452Á"&Remove usage of generic wildcard type.(İİ®
-Msquid:S1133æ"5Do not forget to remove this deprecated code someday.(›ËÁı
-¤%squid:RedundantThrowsDeclarationCheck¶"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÌÈ¹¥úÿÿÿÿ
+Tsquid:S2065¢"0Remove the "transient" modifier from this field.(ÃÉÓ¬øÿÿÿÿ8é¿Î¢-
+ssquid:S00100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÃÁúúÿÿÿÿ8é¿Î¢-
+¤%squid:RedundantThrowsDeclarationCheckï"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(üøÿÿÿÿ
+[squid:S2589ñ"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
+nsquid:S00100ÿ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óŒ“Ó8é¿Î¢-
+\squid:S3358È"DExtract this nested ternary operation into an independent statement.(ÏÀìÎ
+Msquid:S1133ä"5Do not forget to remove this deprecated code someday.(›ËÁı
 <squid:S1659A"%Declare "m_adult" on a separate line.(òŸÃÔ
+Vsquid:S2589Ä"7Remove this expression which always evaluates to "true"(Ê÷Èù8é¿Î¢-
+\squid:S3358Å"DExtract this nested ternary operation into an independent statement.(­Ñ£Ô
 Psquid:MissingDeprecatedChecko"(Add the missing @deprecated Javadoc tag.(ìæê€
+\squid:S3358î"DExtract this nested ternary operation into an independent statement.(œÂÂ‚
+[squid:HiddenFieldCheck]"9Rename "info" which hides the field declared at line 162.(¿ı„
+[squid:S2589ñ"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
+Qsquid:MissingDeprecatedCheckä"(Add the missing @deprecated Javadoc tag.(›ËÁı
 Lsquid:S1133o"5Do not forget to remove this deprecated code someday.(ìæê€
->squid:S1452­"&Remove usage of generic wildcard type.(•ÒĞˆ
-\squid:S3358Ç"DExtract this nested ternary operation into an independent statement.(­Ñ£Ô
->squid:S1452Ú"&Remove usage of generic wildcard type.(Ê¨ÊÏ
-\squid:S3358Ê"DExtract this nested ternary operation into an independent statement.(ÏÀìÎ
-¤%squid:RedundantThrowsDeclarationCheck²"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(‘Áñ¾ùÿÿÿÿ
-[squid:HiddenFieldCheck]"9Rename "info" which hides the field declared at line 163.(¿ı„
-Hsquid:S1172²"+Remove this unused method parameter "name".(‘Áñ¾ùÿÿÿÿ
-Csquid:S1452©"&Remove usage of generic wildcard type.(Àè¢şÿÿÿÿ
-[squid:S2589ó"7Remove this expression which always evaluates to "true"(ê‚”õùÿÿÿÿ8é¿Î¢-
-Csquid:S1452æ"&Remove usage of generic wildcard type.(­øßÑÿÿÿÿÿ
-Qsquid:MissingDeprecatedCheckæ"(Add the missing @deprecated Javadoc tag.(›ËÁı
+\squid:S3358ô"DExtract this nested ternary operation into an independent statement.(±ğ×ä
+Ksquid:S2390‰",Remove this reference to "SimpleEntityData".(‘ˆƒ’8é¿Î¢-
+¦%squid:RedundantThrowsDeclarationCheck±"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(Á‘§ª8©ƒ„±-
+«%squid:RedundantThrowsDeclarationCheckµ"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ïµîûÿÿÿÿ8©ƒ„±-
+Jsquid:S1452À"&Remove usage of generic wildcard type.(Ğû€Úüÿÿÿÿ8©ƒ„±-
+Esquid:S1452É"&Remove usage of generic wildcard type.(ªÖ‹İ8©ƒ„±-
+Jsquid:S1452Ù"&Remove usage of generic wildcard type.(ãœû×úÿÿÿÿ8©ƒ„±-
+Esquid:S1452å"&Remove usage of generic wildcard type.(÷ñÑ8©ƒ„±-
+Esquid:S1452§"&Remove usage of generic wildcard type.(âßÈ8©ƒ„±-
+Esquid:S1452«"&Remove usage of generic wildcard type.(ĞæÃš8©ƒ„±-
+Jsquid:S1172±"+Remove this unused method parameter "name".(Á‘§ª8©ƒ„±-

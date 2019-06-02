@@ -1,11 +1,16 @@
 
-Vsquid:S2629ü"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
-Usquid:S1444‰"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
-Xsquid:S1141y"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-Lsquid:S1659‡"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
-Ysquid:S1141Ì"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-Jsquid:S2386é"+Make member "currentArguments" "protected".(·ÓôË8´ƒÿÌ¢-
-ksquid:CallToDeprecatedMethode"7Remove this use of "PlayerChatEvent"; it is deprecated.(…«¡Çùÿÿÿÿ8´ƒÿÌ¢-
-Nsquid:S00108Ò")Either remove or fill this block of code.(¢ÙÁÀÿÿÿÿÿ8Š¤„Û¢-
-Gsquid:S1604²"(Make this anonymous inner class a lambda(ã¥¨”8´ƒÿÌ¢-
-5squid:S1700["Rename field "commands"(‡û–8„Ù¶®©-
+Ysquid:S1141“"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+Ysquid:S1141û"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+5squid:S1700c"Rename field "commands"(‡û–8„Ù¶®©-
+Vsquid:S2629­"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
+Ksquid:S1659k"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
+Tsquid:S1444m"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
+Tsquid:S1133Œ"5Do not forget to remove this deprecated code someday.(äÒ§ˆ8í÷‚„±-
+Xsquid:MissingDeprecatedCheckŒ"(Add the missing @deprecated Javadoc tag.(äÒ§ˆ8í÷‚„±-
+lsquid:CallToDeprecatedMethodô"7Remove this use of "PlayerChatEvent"; it is deprecated.(‚óù™úÿÿÿÿ8í÷‚„±-
+lsquid:CallToDeprecatedMethod÷"7Remove this use of "PlayerChatEvent"; it is deprecated.(Ùû¢üÿÿÿÿ8í÷‚„±-
+isquid:CallToDeprecatedMethodø"4Remove this use of "onPlayerChat"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
+lsquid:CallToDeprecatedMethodø"7Remove this use of "PlayerChatEvent"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
+]squid:S1118W":Add a private constructor to hide the implicit public one.(÷ÇùŞúÿÿÿÿ8í÷‚„±-
+Osquid:S2386š"+Make member "currentArguments" "protected".(ã„İ°ûÿÿÿÿ8í÷‚„±-
+ysquid:S00115`"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ßÒš‰8í÷‚„±-

@@ -1,7 +1,7 @@
 
-d$squid:AssignmentInSubExpressionCheck¬".Extract the assignment out of this expression.(…áºÉþÿÿÿÿ
+<squid:S1452~"&Remove usage of generic wildcard type.(ßÁÉO
 Fsquid:S1905¯")Remove this unnecessary cast to "Getter".(À£õ·üÿÿÿÿ
-=squid:S1452~"&Remove usage of generic wildcard type.(ÅÉ¶Î
-=squid:S1452~"&Remove usage of generic wildcard type.(ÅÉ¶Î
-d$squid:AssignmentInSubExpressionCheckˆ".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
 _$squid:AssignmentInSubExpressionCheck™".Extract the assignment out of this expression.(±Ô¼Ð
+d$squid:AssignmentInSubExpressionCheckˆ".Extract the assignment out of this expression.(¹Åá“øÿÿÿÿ
+d$squid:AssignmentInSubExpressionCheck¬".Extract the assignment out of this expression.(…áºÉþÿÿÿÿ
+<squid:S1452~"&Remove usage of generic wildcard type.(ßÁÉO

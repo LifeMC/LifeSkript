@@ -44,6 +44,21 @@ import java.util.regex.PatternSyntaxException;
 
 // FIXME ! large databases (>25 MB) cause the server to be unresponsive instead of loading slowly
 
+/*
+    More details about the slow loading / saving issue
+
+    The loading is not slow, but maybe setting variables
+    after load can be slow. I tested with > 60MB variables.csv file
+
+    and it loaded in like 10~ seconds, setted variables and fully
+    finished in 24~ seconds.
+
+    But saving is a horrible mess. It takes 5 minutes to save my
+    720.000~ variables.
+
+    It is mostly caused by recursive list variables.
+ */
+
 /**
  * @author Peter Güttinger
  */
@@ -52,6 +67,8 @@ public abstract class VariablesStorage implements Closeable {
     private static final int QUEUE_SIZE = 1000, FIRST_WARNING = 300;
     private static final int WARNING_INTERVAL = 10;
     private static final int ERROR_INTERVAL = 10;
+    @Nullable
+    public static VariablesStorage instance;
     protected final String databaseName;
     /**
      * Must be locked after {@link Variables#getReadLock()} (if that lock is used at all)
@@ -74,6 +91,8 @@ public abstract class VariablesStorage implements Closeable {
     private long lastError = Long.MIN_VALUE;
 
     protected VariablesStorage(final String name) {
+        instance = this;
+
         databaseName = name;
         writeThread = Skript.newThread(() -> {
             while (!closed) {
@@ -171,7 +190,7 @@ public abstract class VariablesStorage implements Closeable {
             return false;
 
         writeThread.start();
-        Skript.closeOnDisable(this);
+        //Skript.closeOnDisable(this);
 
         return true;
     }

@@ -1,22 +1,21 @@
 
-Zsquid:CallToDeprecatedMethodx"2Remove this use of "getRawData"; it is deprecated.(ã•¾ı
-Xsquid:CallToDeprecatedMethod‰"/Remove this use of "getById"; it is deprecated.(ĞÛÎ
-\squid:S1134š"DTake the required action to fix the issue indicated by this comment.(±†ø
-Ysquid:CallToDeprecatedMethodx"1Remove this use of "getTypeId"; it is deprecated.(ã•¾ı
-xsquid:CallToDeprecatedMethod²"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(à„İ°ùÿÿÿÿ
-Vsquid:CallToDeprecatedMethod…"-Remove this use of "getId"; it is deprecated.(ğ¤›’
-vsquid:S1171¿"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
-fsquid:CallToDeprecatedMethodŠ"8Remove this use of "getOfflinePlayer"; it is deprecated.(ıšË—ùÿÿÿÿ
 Ysquid:CallToDeprecatedMethodx"1Remove this use of "ItemStack"; it is deprecated.(ã•¾ı
-xsquid:CallToDeprecatedMethodˆ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ö¡‰·ùÿÿÿÿ
-7squid:S1659³"Declare "z" on a separate line.(ıïóÑ
-ssquid:CallToDeprecatedMethod×"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(öÙÖ÷
-csquid:CallToDeprecatedMethod‡"3Remove this use of "matchPlayer"; it is deprecated.(ÕË©‘8¥¤„Û¢-
-asquid:CallToDeprecatedMethod•"8Remove this use of "getOfflinePlayer"; it is deprecated.(Ëœ¬Æ
-ssquid:CallToDeprecatedMethod½"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(úÂ±¡
+ssquid:CallToDeprecatedMethod…"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ƒÃ…æ
+Xsquid:CallToDeprecatedMethod‡"/Remove this use of "getById"; it is deprecated.(ĞÛÎ
+Zsquid:CallToDeprecatedMethodx"2Remove this use of "getRawData"; it is deprecated.(ã•¾ı
 <squid:S1659"Declare "z" on a separate line.(šÁ³…ıÿÿÿÿ
+Ysquid:CallToDeprecatedMethodx"1Remove this use of "getTypeId"; it is deprecated.(ã•¾ı
+asquid:CallToDeprecatedMethod“"8Remove this use of "getOfflinePlayer"; it is deprecated.(Ëœ¬Æ
+ssquid:CallToDeprecatedMethod»"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(úÂ±¡
+ssquid:CallToDeprecatedMethod×"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(öÙÖ÷
+fsquid:CallToDeprecatedMethod‰"8Remove this use of "getOfflinePlayer"; it is deprecated.(ıšË—ùÿÿÿÿ
 <squid:S1659"Declare "y" on a separate line.(šÁ³…ıÿÿÿÿ
-ssquid:CallToDeprecatedMethod‡"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ƒÃ…æ
-Qsquid:S1118B":Add a private constructor to hide the implicit public one.(˜ç
-xsquid:CallToDeprecatedMethodŞ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(§‹Ô¥ûÿÿÿÿ
-xsquid:CallToDeprecatedMethod”"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÛÓ­’üÿÿÿÿ
+xsquid:CallToDeprecatedMethod²"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(à„İ°ùÿÿÿÿ
+vsquid:S1171½"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+xsquid:CallToDeprecatedMethodÜ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(§‹Ô¥ûÿÿÿÿ
+7squid:S1659±"Declare "z" on a separate line.(ıïóÑ
+xsquid:CallToDeprecatedMethod’"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÛÓ­’üÿÿÿÿ
+csquid:CallToDeprecatedMethod‡"3Remove this use of "matchPlayer"; it is deprecated.(ÕË©‘8¥¤„Û¢-
+Vsquid:CallToDeprecatedMethodƒ"-Remove this use of "getId"; it is deprecated.(ğ¤›’
+\squid:S1134š"DTake the required action to fix the issue indicated by this comment.(±†ø
+xsquid:CallToDeprecatedMethodˆ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ö¡‰·ùÿÿÿÿ

@@ -1,7 +1,7 @@
 
-^squid:HiddenFieldCheck`"=Rename "direction" which hides the field declared at line 65.(±Ö¯
-_squid:HiddenFieldCheck¥"7Rename "end" which hides the field declared at line 63.(Æ…˜üùÿÿÿÿ
-_squid:HiddenFieldCheck©"=Rename "direction" which hides the field declared at line 65.(±Ö¯
+^squid:HiddenFieldChecka"=Rename "direction" which hides the field declared at line 66.(±Ö¯
+Usquid:S3516G"9Refactor this method to not always return the same value.(Ï¼ßıÿÿÿÿ
+_squid:HiddenFieldCheck©"=Rename "direction" which hides the field declared at line 66.(±Ö¯
+^squid:HiddenFieldCheckz"=Rename "direction" which hides the field declared at line 66.(±Ö¯
 csquid:S2583«"DChange this condition so that it does not always evaluate to "false"(ìíı8Â¢„Û¢-
-Usquid:S3516F"9Refactor this method to not always return the same value.(Ï¼ßıÿÿÿÿ
-^squid:HiddenFieldChecky"=Rename "direction" which hides the field declared at line 65.(±Ö¯
+_squid:HiddenFieldCheck¥"7Rename "end" which hides the field declared at line 64.(Æ…˜üùÿÿÿÿ
