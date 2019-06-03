@@ -22,7 +22,6 @@
 
 package ch.njol.skript.util;
 
-import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.classes.Converter;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -58,7 +57,7 @@ public final class FileUtils {
      */
     @Nullable
     public static final File backup(final File f) throws IOException {
-        if (SkriptConfig.disableBackupsCompletely.value())
+        if (Boolean.parseBoolean(System.getProperty("skript.disableBackupsCompletely")))
             return null;
         String name = f.getName();
         final int c = name.lastIndexOf('.');

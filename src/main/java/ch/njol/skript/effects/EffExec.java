@@ -80,11 +80,10 @@ public final class EffExec extends Effect {
         if (eff != null) {
             eff.run(e);
         } else {
-            final StringBuilder errorBuilder = new StringBuilder();
+            final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
                 errorBuilder.append(SkriptLogger.format(entry)).append("\n");
             }
-            assert errorBuilder != null;
             lastExecuteErrors = errorBuilder.toString();
         }
 

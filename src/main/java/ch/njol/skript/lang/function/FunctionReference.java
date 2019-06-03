@@ -177,7 +177,9 @@ public final class FunctionReference<T> {
 
     @SuppressWarnings("null")
     public Class<? extends T> getReturnType() {
-        return function.returnType.getC();
+        if (function != null && function.returnType != null)
+            return function.returnType.getC();
+        return null; // FIXME backport function signatures
     }
 
     @Nullable

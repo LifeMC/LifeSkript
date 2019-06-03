@@ -63,7 +63,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> enablePlayerVariableFix = new Option<>("player variable fix", true);
     public static final Option<EventPriority> defaultEventPriority = new Option<>("plugin priority", EventPriority.NORMAL, s -> {
         try {
-            if (s.equalsIgnoreCase("default"))
+            if ("default".equalsIgnoreCase(s))
                 return EventPriority.MONITOR;
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
@@ -73,7 +73,7 @@ public final class SkriptConfig {
     });
     public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()), s -> {
         try {
-            if (s.equalsIgnoreCase("default"))
+            if ("default".equalsIgnoreCase(s))
                 return getPreviousPriority(defaultEventPriority.value());
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
         } catch (final IllegalArgumentException e) {
@@ -244,7 +244,7 @@ public final class SkriptConfig {
                     final Config newConfig = new Config(new BufferedInputStream(in), "Skript.jar/config.sk", false, false, ":");
                     in.close();
 
-                    boolean forceUpdate = false;
+                    boolean forceUpdate = Boolean.parseBoolean(System.getProperty("skript.forceConfigUpdates"));
 
                     if (mc.getMainNode().get("database") != null) { // old database layout
                         forceUpdate = true;
@@ -278,7 +278,7 @@ public final class SkriptConfig {
                         }
                     }
 
-                    if (newConfig.setValues(mc, version.key, databases.key) || forceUpdate) { // new config is different
+                    if (newConfig.setValues(mc, version.key, databases.key) || forceUpdate) { // new config is different or updates are forced
                         final File bu = FileUtils.backup(configFile);
                         newConfig.getMainNode().set(version.key, Skript.getVersion().toString());
                         if (mc.getMainNode().get(databases.key) != null)

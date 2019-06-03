@@ -145,7 +145,7 @@ public final class Utils {
 
     public static final String join(final Object[] objects) {
         assert objects != null;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (int i = 0; i < objects.length; i++) {
             if (i != 0)
                 b.append(", ");
@@ -156,7 +156,7 @@ public final class Utils {
 
     public static final String join(final Iterable<?> objects) {
         assert objects != null;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         boolean first = true;
         for (final Object o : objects) {
             if (!first)

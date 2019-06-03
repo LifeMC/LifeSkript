@@ -39,14 +39,18 @@ commands:
 # Load Skript after some plugins just for safety and interactions with these plugins.
 soft-depend: [Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
 
+# Hack to force strict utf-8 encoding when loading Skript
+awareness:
+  - !@UTF8
+
 permissions:
   skript.*:
-    default: false
+    default: op
     children:
       skript.effectcommands: true
       skript.admin: true
   skript.effectcommands:
-    default: false
+    default: op
     description: Allows to use effects as commands, e.g. '!set health to 10'
   skript.admin:
     default: op

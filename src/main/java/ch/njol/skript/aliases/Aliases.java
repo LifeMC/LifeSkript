@@ -157,7 +157,7 @@ public final class Aliases {
     @SuppressWarnings("null")
     private static final String concatenate(final String... parts) {
         assert parts.length >= 2;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (final String part : parts) {
             if (part.isEmpty())
                 continue;
@@ -775,7 +775,7 @@ public final class Aliases {
                     if (file != null)
                         aliasConfig = new Config(file, false, true, "=");
                     else
-                        aliasConfig = new Config(new BufferedInputStream(stream), aliasesFileName, false, true, "=");
+                        aliasConfig = new Config(new BufferedInputStream(stream), "Skript.jar/" + aliasesFileName, false, true, "=");
                 } catch (final IOException e) {
                     Skript.error("Could not load the " + Language.getName() + " aliases config: " + e.getLocalizedMessage());
                     return;

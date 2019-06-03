@@ -25,6 +25,7 @@ package ch.njol.skript.hooks.regions;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.classes.Region;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.AABB;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.coll.iterator.EmptyIterator;
@@ -46,6 +47,7 @@ import java.io.StreamCorruptedException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -56,6 +58,10 @@ import java.util.List;
  */
 @RequiredPlugins("GriefPrevention")
 public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
+
+    public static final boolean getClaimPublic = Skript.classExists("me.ryanhamshire.GriefPrevention.DataStore")
+            && Skript.methodExists(DataStore.class, "getClaim", long.class)
+            && Modifier.isPublic(Skript.methodForName(DataStore.class, "getClaim", long.class).getModifiers());
 
     static {
         Variables.yggdrasil.registerSingleClass(GriefPreventionRegion.class);
@@ -73,6 +79,8 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
     @SuppressWarnings("null")
     @Override
     protected boolean init() {
+        if (!getClaimPublic)
+            Skript.warning("Grief prevention version or implementation does not provide a public get claim method, performance may suffer");
         // ownerID is a public field
         supportsUUIDs = Skript.fieldExists(Claim.class, "ownerID");
         try {
@@ -102,6 +110,8 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 
     @Nullable
     Claim getClaim(final long id) {
+        if (getClaimPublic)
+            return plugin.dataStore.getClaim(id);
         if (getClaim != null) {
             try {
                 return (Claim) getClaim.invoke(plugin.dataStore, id);
@@ -150,11 +160,14 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
     @Nullable
     public Region getRegion_i(final World world, final String name) {
         try {
+            if (!SkriptParser.isInteger(name))
+                return null;
             final Claim c = getClaim(Long.parseLong(name));
             if (c != null && world.equals(c.getLesserBoundaryCorner().getWorld()))
                 return new GriefPreventionRegion(c);
             return null;
         } catch (final NumberFormatException e) {
+            Skript.exception(e);
             return null;
         }
     }
@@ -199,6 +212,8 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 
         @Override
         public boolean isOwner(final OfflinePlayer p) {
+            if (supportsUUIDs)
+                return p.getUniqueId().equals(claim.ownerID);
             return p.getName().equalsIgnoreCase(claim.getOwnerName());
         }
 

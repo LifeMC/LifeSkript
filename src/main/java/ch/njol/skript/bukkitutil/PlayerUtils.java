@@ -23,6 +23,7 @@
 package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ public final class PlayerUtils {
         }
     };
 
-    private static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", new Class[0], Collection.class);
+    public static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", EmptyArrays.EMPTY_CLASS_ARRAY, Collection.class);
 
     @Nullable
     private static Method getOnlinePlayers;
@@ -78,11 +79,11 @@ public final class PlayerUtils {
             return Bukkit.getOnlinePlayers();
         }
         // Return directly to improve performance and fix some bugs
-        // Hope everything goes well, and it works. :C
+        // Hope everything goes well, and it works. C:
         if (cached) {
             return Bukkit.getOnlinePlayers();
         }
-        // Is running minecraft mehod checks if version is - at least - >= given version.
+        // Is running minecraft method checks if version is - at least - >= given version.
         cached = Skript.isRunningMinecraft(1, 7, 10);
         if (cached)
             return Bukkit.getOnlinePlayers();
@@ -99,13 +100,14 @@ public final class PlayerUtils {
         try {
             final Object o = getOnlinePlayers.invoke(null);
             if (o instanceof Collection<?>)
-                return (Collection<? extends Player>) o;
+                throw new IllegalStateException("Skript unable to detect collection return type");
             return Arrays.asList((Player[]) o);
         } catch (final IllegalAccessException | IllegalArgumentException e) {
             Skript.outdatedError(e);
         } catch (final InvocationTargetException e) {
             throw Skript.exception(e);
         }
+        Skript.warning("Can't get online players");
         throw new EmptyStackException();
     }
 

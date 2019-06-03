@@ -45,7 +45,7 @@ public class HandlerList implements Iterable<LogHandler> {
 
     @SuppressWarnings("null")
     @Override
-    public final Iterator<LogHandler> iterator() {
+    public Iterator<LogHandler> iterator() {
         return list.iterator();
     }
 

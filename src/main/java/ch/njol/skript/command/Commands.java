@@ -405,7 +405,7 @@ public final class Commands {
         }
 
         final String arguments = m.group(3) == null ? "" : m.group(3);
-        final StringBuilder pattern = new StringBuilder();
+        final StringBuilder pattern = new StringBuilder(4096);
 
         final List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
         m = argumentPattern.matcher(arguments);

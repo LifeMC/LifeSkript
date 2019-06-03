@@ -253,7 +253,7 @@ public final class Direction implements YggdrasilRobustSerializable {
     @SuppressWarnings("null")
     private static final String toString(final double[] mod, final Message[] names) {
         assert mod.length == 3 && names.length == 6;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (int i = 0; i < 3; i++) {
             toString(b, mod[i], names[2 * i], names[2 * i + 1], b.length() != 0);
         }

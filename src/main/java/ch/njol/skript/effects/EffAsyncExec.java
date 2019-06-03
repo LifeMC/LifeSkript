@@ -77,11 +77,10 @@ public final class EffAsyncExec extends AsyncEffect {
         if (eff != null) {
             eff.run(e);
         } else {
-            final StringBuilder errorBuilder = new StringBuilder();
+            final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
                 errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
             }
-            assert errorBuilder != null;
             EffExec.lastExecuteErrors = errorBuilder.toString();
         }
 

@@ -279,7 +279,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
         abstract String get(@Nullable Object o);
 
         String getFrom() {
-            final StringBuilder b = new StringBuilder();
+            final StringBuilder b = new StringBuilder(4096);
             for (int i = 0; i < types.length; i++) {
                 if ((from & 1 << i) == 0)
                     continue;

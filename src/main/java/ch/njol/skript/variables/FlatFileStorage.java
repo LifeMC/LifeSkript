@@ -145,7 +145,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
         IOException ioEx = null;
         int unsuccessful = 0;
-        final StringBuilder invalid = new StringBuilder();
+        final StringBuilder invalid = new StringBuilder(4096);
 
         Version varVersion; // will be set later
 
@@ -433,12 +433,13 @@ public final class FlatFileStorage extends VariablesStorage {
                         save(pw, "", variables);
 
                         savingVariables = false;
-                        savedVariables = 0; // Method may be called multiple times
 
                         savingLoggerThread.interrupt(); // In case if not interrupted
 
                         if (Skript.logHigh())
                             Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
+
+                        savedVariables = 0; // Method may be called multiple times
 
                         pw.println();
 

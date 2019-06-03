@@ -68,7 +68,7 @@ public final class Version implements Serializable, Comparable<Version> {
         version[0] = major;
         version[1] = minor;
 
-        final StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder(4096);
 
         if (postfix != null)
             for (final String str : postfix)
@@ -90,8 +90,8 @@ public final class Version implements Serializable, Comparable<Version> {
             if (!failSafe)
                 throw new IllegalArgumentException("'" + version + "' is not a valid version string");
             // Remove any non-digit character to get a "meaningful" version string.
-            final StringBuilder stringBuilder = new StringBuilder();
-            final StringBuilder postfixBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder(4096);
+            final StringBuilder postfixBuilder = new StringBuilder(4096);
 
             int index = 0;
 

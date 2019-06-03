@@ -23,6 +23,7 @@
 package ch.njol.skript;
 
 import ch.njol.skript.aliases.Aliases;
+import ch.njol.skript.bukkitutil.PlayerUtils;
 import ch.njol.skript.bukkitutil.Workarounds;
 import ch.njol.skript.classes.data.*;
 import ch.njol.skript.command.Commands;
@@ -172,7 +173,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * The maximum data value of Minecraft, i.e. Short.MAX_VALUE - Short.MIN_VALUE.
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
-    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
+    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + (Skript.fieldExists(ChatColor.class, "RESET") ? ChatColor.RESET : "§r") + " ";
     public static final @Nullable
     Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
@@ -839,8 +840,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     static final void disableScripts() {
         VariableString.variableNames.clear();
         SkriptEventHandler.removeAllTriggers();
+
         Commands.clearCommands();
         Functions.clearFunctions();
+
+        ScriptLoader.loadedFiles.clear();
+        ScriptLoader.loadedScriptFiles.clear();
     }
 
     // ================ REGISTRATIONS ================
@@ -850,8 +855,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     static final void reload() {
         disableScripts();
+
         reloadMainConfig();
         reloadAliases();
+
         ScriptLoader.loadScripts();
     }
 
@@ -1346,7 +1353,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language") + "-" + Workarounds.getOriginalProperty("user.country") + ")");
             logEx("Encoding: " + "file = " + Workarounds.getOriginalProperty("file.encoding") + " , jnu = " + Workarounds.getOriginalProperty("sun.jnu.encoding") + " , stderr = " + Workarounds.getOriginalProperty("sun.stderr.encoding") + " , stdout = " + Workarounds.getOriginalProperty("sun.stdout.encoding"));
             logEx();
-            final StringBuilder stringBuilder = new StringBuilder();
+            final StringBuilder stringBuilder = new StringBuilder(4096);
             int i = 0;
             for (final SkriptAddon addon : addons.values()) {
                 if (addon.plugin instanceof Skript)
@@ -1389,10 +1396,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         if (lines == null || lines.length < 1)
             return;
         if (lines.length == 1)
-            SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + "{0}", lines[0]);
+            SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + lines[0]);
         else {
             for (final String line : lines)
-                SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + "{0}", line);
+                SkriptLogger.LOGGER.log(Level.SEVERE, EXCEPTION_PREFIX + line);
         }
     }
 
@@ -1529,16 +1536,40 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: 2.1") || line.contains("version: V8") || line.contains("version: V7") || line.contains("version: V9") || line.contains("version: dev")) {
-                            Skript.info("Deleting old aliases...");
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta"))) {
+                            final File english = new File(dataFolder, "aliases-english.sk");
+                            final File german = new File(dataFolder, "aliases-german.sk");
 
-                            Files.delete(Paths.get(dataFolder.getPath(), "aliases-english.sk"));
-                            Files.delete(Paths.get(dataFolder.getPath(), "aliases-german.sk"));
+                            final File features = new File(dataFolder, "features.sk");
 
-                            madeChanges = true;
+                            if (english.exists() || german.exists()) {
 
-                            break;
-                        }
+                                Skript.info("Deleting old aliases...");
+
+                                if (english.exists()) {
+                                    FileUtils.backup(english);
+                                    english.delete();
+                                }
+
+                                if (german.exists()) {
+                                    FileUtils.backup(german);
+                                    german.delete();
+                                }
+
+                                if (features.exists()) {
+                                    Skript.info("Deleting old features file...");
+
+                                    FileUtils.backup(features);
+                                    features.delete();
+                                }
+
+                                madeChanges = true;
+
+                                break;
+
+                            }
+                        } else if (line.contains("disable backups completely: true"))
+                            System.setProperty("skript.disableBackupsCompletely", "true");
                     }
                 }
 
@@ -1725,7 +1756,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         while (!flag || sharpSkUpdater.toFile().exists()) {
                                             try {
-                                                assert sharpSkUpdater != null;
                                                 Files.delete(sharpSkUpdater);
                                                 flag = true; // Deleted successfully, task is complete! We fixed compatibility problem, yey!
                                                 if (Skript.testing() && Skript.debug())
@@ -1808,7 +1838,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             Workarounds.init();
 
             final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
-            final boolean firstRun = !getDataFolder().exists();
 
             closedOnEnable = true;
 
@@ -1857,8 +1886,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 //noinspection ResultOfMethodCallIgnored
                 getDataFolder().mkdirs();
 
+            final File config = new File(getDataFolder(), "config.sk");
             final File scripts = new File(getDataFolder(), SCRIPTSFOLDER);
-            if (!scripts.isDirectory() || !Paths.get(getDataFolder().getPath(), "config.sk").toFile().exists()) {
+
+            final boolean generateExamples = !scripts.isDirectory() || !scripts.exists();
+
+            if (generateExamples || !config.exists()) {
                 if (!scripts.exists() && !scripts.mkdirs())
                     Skript.exception(new IOException("Could not create the directory " + scripts), "Error generating the default files");
                 try (final ZipFile f = new ZipFile(getFile())) {
@@ -1866,15 +1899,14 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         if (e.isDirectory())
                             continue;
                         File saveTo = null;
-                        if (!firstRun && (e.getName().startsWith(SCRIPTSFOLDER + "/") || e.getName().startsWith(SCRIPTSFOLDER + "\\"))) {
+                        if (generateExamples && (e.getName().startsWith(SCRIPTSFOLDER + "/") || e.getName().startsWith(SCRIPTSFOLDER + "\\"))) {
                             final String fileName = e.getName().substring(e.getName().lastIndexOf('/') + 1);
                             final File file = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
                             if (!file.exists())
                                 saveTo = file;
                         } else if ("config.sk".equals(e.getName())) {
-                            final File cf = new File(getDataFolder(), e.getName());
-                            if (!cf.exists())
-                                saveTo = cf;
+                            if (!config.exists())
+                                saveTo = config;
                         }
 //                      else if (e.getName().startsWith("aliases-") && e.getName().endsWith(".sk") && !e.getName().contains("/")) {
 //                          final File af = new File(getDataFolder(), e.getName());
@@ -1892,7 +1924,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
                         }
                     }
-                    info("Successfully generated the config" + (firstRun ? " and example scripts." : "."));
+                    info("Successfully generated the config" + (generateExamples ? " and example scripts." : "."));
                 } catch (final ZipException e) {
                     if (Skript.logVeryHigh())
                         Skript.exception(e);
@@ -2126,8 +2158,43 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     Skript.exception(new Throwable(), "Test error");
                 }
 
+                // Reset the tps as it has been confused for slow loading of scripts or variables
+                // if the server has too many scripts or variables. This does not reset external plugin listeners.
+                final String mappingVersion = invoke(Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", ""), version -> version.startsWith(".") ? version.substring(1) : version);
+                final String nmsPackage = "net.minecraft.server" + (!mappingVersion.isEmpty() ? "" : ".") + mappingVersion;
+
+                // Note: May break in future if the format is changed, but it will not in the near future
+                if (mappingVersion.isEmpty() || (mappingVersion.contains("v") && mappingVersion.contains("_") && mappingVersion.contains("R"))) {
+                    if (Skript.debug())
+                        Skript.info("Detected NMS mapping version of " + mappingVersion + ", using it now...");
+
+                    if (Skript.classExists(nmsPackage + ".MinecraftServer")) {
+                        final Class<?> minecraftServer = Skript.classForName(nmsPackage + ".MinecraftServer");
+
+                        if (Skript.fieldExists(minecraftServer, "recentTps")) {
+                            try {
+                                invoke(minecraftServer.getDeclaredField("recentTps"), (Consumer<Field>) field -> field.setAccessible(true)).set(null, new double[] {25.00D, 25.00D, 25.00D});
+
+                                if (Skript.debug())
+                                    Skript.info("Reset ticks per second after loading everything to not confuse the server");
+                            } catch (IllegalAccessException | NoSuchFieldException e) {
+                                Skript.outdatedError(e);
+                                assert false : e;
+                            }
+                        } else
+                            assert false : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
+                    } else
+                        assert false : nmsPackage + " (nms version: " + mappingVersion + ")";
+                } else {
+                    if (Skript.logVeryHigh())
+                        Skript.info("Invalid NMS mapping version detected: " + mappingVersion);
+                }
+
                 SkriptCommand.resetPriority();
             });
+
+            if (!PlayerUtils.hasCollecionGetOnlinePlayers)
+                warning("Server version or implementation does not support getting online players as collection, performance may suffer");
 
             if (Skript.testing() && Skript.logHigh() || Skript.logVeryHigh()) {
                 Bukkit.getScheduler().runTask(this, () -> {
@@ -2372,9 +2439,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             // Special variables calls, not on the closeable list to ensure it lastly closes.
 
-            assert VariablesStorage.instance != null;
+            if (VariablesStorage.instance != null)
+                VariablesStorage.instance.close();
 
-            VariablesStorage.instance.close();
             Variables.close();
 
             if (Skript.logHigh())

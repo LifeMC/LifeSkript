@@ -194,7 +194,7 @@ public final class Classes {
 
         // check for circular dependencies
         if (!tempClassInfos.isEmpty()) {
-            final StringBuilder b = new StringBuilder();
+            final StringBuilder b = new StringBuilder(4096);
             for (final ClassInfo<?> c : tempClassInfos) {
                 if (b.length() != 0)
                     b.append(", ");
@@ -205,7 +205,7 @@ public final class Classes {
 
         // debug message
         if (Skript.debug()) {
-            final StringBuilder b = new StringBuilder();
+            final StringBuilder b = new StringBuilder(4096);
             for (final ClassInfo<?> ci : classInfos) {
                 if (b.length() != 0)
                     b.append(", ");
@@ -591,7 +591,7 @@ public final class Classes {
                     Skript.warning("Usage of none is detected - probably some list variable or expression is empty (type: " + o.getClass().getCanonicalName() + ")");
                 return Language.get("none");
             }
-            final StringBuilder b = new StringBuilder();
+            final StringBuilder b = new StringBuilder(4096);
             boolean first = true;
             for (final Object i : (Object[]) o) {
                 if (!first)
@@ -632,7 +632,7 @@ public final class Classes {
             return toString(null);
         if (os.length == 1)
             return toString(os[0], mode, flags);
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (int i = 0; i < os.length; i++) {
             if (i != 0) {
                 if (c != null)
@@ -709,9 +709,9 @@ public final class Classes {
             at org.bukkit.craftbukkit.v1_7_R4.scheduler.CraftAsyncTask.run(CraftAsyncTask.java:52)
             ... 3 more
          */
-        //assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread();
+        //assert !s.mustSyncDeserialization() || Bukkit.isPrimaryThread() : o.getClass().getCanonicalName();
 
-        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream(4096);
         try (final YggdrasilOutputStream yout = Variables.yggdrasil.newOutputStream(bout)) {
             yout.writeObject(o);
             yout.flush();

@@ -32,6 +32,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -64,6 +65,8 @@ public final class CondPermission extends Condition {
     @Override
     public boolean check(final Event e) {
         return senders.check(e, s -> permissions.check(e, perm -> {
+            if (s instanceof ConsoleCommandSender)
+                return true;
             if (s.hasPermission(perm))
                 return true;
             // player has perm skript.foo.bar if he has skript.foo.* or skript.*, but not for other plugin's permissions since they can define their own *

@@ -45,7 +45,7 @@ public final class Adjective extends Message {
     }
 
     public static final String toString(final Adjective[] adjectives, final int gender, final int flags, final boolean and) {
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (int i = 0; i < adjectives.length; i++) {
             if (i != 0) {
                 if (i == adjectives.length - 1)

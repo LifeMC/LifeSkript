@@ -258,7 +258,7 @@ public final class VariableString implements Expression<String> {
 
         final Pattern pattern;
         if (string != null) {
-            final StringBuilder p = new StringBuilder();
+            final StringBuilder p = new StringBuilder(4096);
             stringLoop:
             for (final Object o : string) {
                 if (o instanceof Expression) {
@@ -385,7 +385,7 @@ public final class VariableString implements Expression<String> {
         }
         final Object[] string = this.string;
         assert string != null;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (final Object o : string) {
             if (o instanceof Expression<?>) {
                 assert mode != StringMode.MESSAGE;
@@ -447,7 +447,7 @@ public final class VariableString implements Expression<String> {
         }
         final Object[] string = this.string;
         assert string != null;
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
         for (final Object o : string) {
             if (o instanceof Expression) {
                 b.append("<").append(Classes.getSuperClassInfo(((Expression<?>) o).getReturnType()).getCodeName()).append(">");

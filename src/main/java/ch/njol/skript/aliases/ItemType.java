@@ -1002,7 +1002,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     private String toString(final boolean debug, final int flags, final @Nullable Adjective a) {
-        final StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder(4096);
 //		if (types.size() == 1 && !types.get(0).hasDataRange()) {
 //			if (getAmount() != 1)
 //				b.append(amount + " ");

@@ -247,7 +247,7 @@ public final class Documentation {
     }
 
     private static final void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
-        final StringBuilder params = new StringBuilder();
+        final StringBuilder params = new StringBuilder(4096);
         for (final Parameter<?> p : func.getParameters()) {
             if (params.length() != 0)
                 params.append(", ");

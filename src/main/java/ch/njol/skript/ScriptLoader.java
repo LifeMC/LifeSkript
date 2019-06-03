@@ -81,7 +81,7 @@ public final class ScriptLoader {
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
     private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
     private static final Collection<String> skipFiles = new ArrayList<>();
-    private static final Collection<String> loadedScriptFiles = new ArrayList<>();
+    static final Collection<String> loadedScriptFiles = new ArrayList<>();
     /**
      * must be synchronized
      */
@@ -279,6 +279,7 @@ public final class ScriptLoader {
                 Language.setUseLocal(true);
         }
         Functions.postCheck(); // Check that all functions which are called exist.
+        skipFiles.clear();
         return i;
     }
 
@@ -803,6 +804,7 @@ public final class ScriptLoader {
             loadedScripts.subtract(info);
         }
         loadedFiles.remove(script);
+        loadedScriptFiles.remove(script.getName());
         return info;
     }
 

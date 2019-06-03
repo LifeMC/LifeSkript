@@ -30,18 +30,18 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Entity;
 
 /**
  * @author Peter Güttinger
  */
-@Name("Is Alive")
-@Description("Checks whetehr an entity is alive. This is mostly useful to check whatever an entity stored in a variable does still exist")
+@Name("Is Alive / Dead")
+@Description("Checks whatever an entity is alive. This is mostly useful to check whatever an entity stored in a variable does still exist")
 @Examples({"{villagerbuddy.%player%} is dead"})
-@Since("2.0")
-public final class CondIsAlive extends PropertyCondition<LivingEntity> {
+@Since("2.0, 2.2.16 (non-living entity support)")
+public final class CondIsAlive extends PropertyCondition<Entity> {
     static {
-        register(CondIsAlive.class, "(1¦alive|0¦dead)", "livingentities");
+        register(CondIsAlive.class, "(1¦alive|0¦dead)", "entities");
     }
 
     private boolean alive;

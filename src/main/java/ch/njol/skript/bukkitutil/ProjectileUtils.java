@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * @author Peter Güttinger
@@ -37,8 +38,11 @@ import java.lang.reflect.Method;
 @SuppressWarnings({"null", "CanBeFinal"})
 public final class ProjectileUtils {
 
-    private static final boolean getShooterSupport = Skript.methodExists(Projectile.class, "getShooter");
-    private static final boolean setShooterSupport = Skript.classExists("org.bukkit.projectiles.ProjectileSource") && Skript.methodExists(Projectile.class, "setShooter", ProjectileSource.class);
+    private static final boolean getShooterSupport = Skript.methodExists(Projectile.class, "getShooter")
+            && Modifier.isPublic(Skript.methodForName(Projectile.class, "getShooter").getModifiers());
+
+    private static final boolean setShooterSupport = Skript.classExists("org.bukkit.projectiles.ProjectileSource")
+            && Skript.methodExists(Projectile.class, "setShooter", ProjectileSource.class) && Modifier.isPublic(Skript.methodForName(Projectile.class, "setShooter", ProjectileSource.class).getModifiers());
 
     private static Method getShooter;
     private static Method setShooter;
@@ -71,10 +75,7 @@ public final class ProjectileUtils {
             return p.getShooter();
         try {
             return getShooter.invoke(p);
-        } catch (final IllegalAccessException | IllegalArgumentException e) {
-            assert false;
-            return null;
-        } catch (final InvocationTargetException e) {
+        } catch (final IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             Skript.exception(e);
             return null;
         }
@@ -88,12 +89,10 @@ public final class ProjectileUtils {
         }
         try {
             setShooter.invoke(p, shooter);
-        } catch (final IllegalAccessException e) {
-            assert false;
+        } catch (final IllegalAccessException | InvocationTargetException e) {
+            Skript.exception(e);
         } catch (final IllegalArgumentException e) {
             Skript.exception(e, "invalid parameter passed to (" + p + ").setShooter: " + shooter);
-        } catch (final InvocationTargetException e) {
-            Skript.exception(e);
         }
     }
 

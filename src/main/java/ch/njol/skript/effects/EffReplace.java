@@ -36,6 +36,8 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.regex.Matcher;
@@ -44,44 +46,62 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 @Name("Replace")
-@Description("Replaces all occurrences of a given text with another text. Please note that you can only change variables and a few expressions, e.g. a <a href='../expressions/#ExprMessage'>message</a> or a line of a sign.")
-@Examples({"replace \"<item>\" in {textvar} with \"%item%\"", "replace every \"&\" with \"§\" in line 1", "# The following acts as a simple chat censor, but it will e.g. censor mass, hassle, assassin, etc. as well:", "on chat:", "	replace all \"fuck\", \"bitch\" and \"ass\" with \"****\" in the message"})
-@Since("2.0")
-// TODO add 'replace all <items> in <inventories> with <item>'
+@Description({"Replaces all occurrences of a given text with another text. Please note that you can only change variables and a few expressions, e.g. a <a href='../expressions.html#ExprMessage'>message</a> or a line of a sign.",
+        "Starting with 2.2.16, you can replace items in an inventory too."})
+@Examples({"replace \"<item>\" in {textvar} with \"%item%\"",
+        "replace every \"&\" with \"§\" in line 1",
+        "# The following acts as a simple chat censor, but it will e.g. censor mass, hassle, assassin, etc. as well:",
+        "on chat:",
+        "	replace all \"kys\", \"idiot\" and \"noob\" with \"****\" in the message",
+        " ",
+        "replace all stone and dirt in player's inventory and player's top inventory with diamond"})
+@Since("2.0, 2.2.16 (replace in muliple strings and replace items in inventory)")
 public final class EffReplace extends Effect {
     static {
-        Skript.registerEffect(EffReplace.class, "replace (all|every|) %strings% in %string% with %strings%", "replace (all|every|) %strings% with %string% in %strings%");
+        Skript.registerEffect(EffReplace.class,
+                "replace (all|every|) %strings% in %strings% with %string%",
+                "replace (all|every|) %strings% with %string% in %strings%",
+                "replace (all|every|) %itemstacks% in %inventories% with %itemstack%",
+                "replace (all|every|) %itemstacks% with %itemstack% in %inventories%");
     }
 
     @SuppressWarnings("null")
-    private Expression<String> haystack, needles, replacement;
+    private Expression<?> haystack, needles, replacement;
+    private boolean replaceString = true;
 
+    @SuppressWarnings({"null"})
     @Override
-    @SuppressWarnings({"unchecked", "null"})
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        haystack = (Expression<String>) exprs[1 + matchedPattern];
-        if (!ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
+        haystack =  exprs[1 + matchedPattern % 2];
+        replaceString = matchedPattern < 2;
+        if (replaceString && !ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
             Skript.error(haystack + " cannot be changed and can thus not have parts replaced.");
             return false;
         }
-        needles = (Expression<String>) exprs[0];
-        replacement = (Expression<String>) exprs[2 - matchedPattern];
+        needles = exprs[0];
+        replacement = exprs[2 - matchedPattern % 2];
         return true;
     }
 
-    @Override
     @SuppressWarnings("null")
+    @Override
     protected void execute(final Event e) {
-        String h = haystack.getSingle(e);
-        final String[] ns = needles.getAll(e);
-        final String r = replacement.getSingle(e);
-        if (h == null || ns.length == 0 || r == null)
+        final Object[] haystack = this.haystack.getAll(e);
+        final Object[] needles = this.needles.getAll(e);
+        final Object replacement = this.replacement.getSingle(e);
+        if (replacement == null || haystack == null || haystack.length == 0 || needles == null || needles.length == 0)
             return;
-        for (final String n : ns) {
-            assert n != null;
-            h = StringUtils.replace(h, n, Matcher.quoteReplacement(r), SkriptConfig.caseSensitive.value());
+        if (replaceString) {
+            for (int x = 0; x < haystack.length; x++)
+                for (final Object n : needles)
+                    haystack[x] = StringUtils.replace((String)haystack[x], (String)n, Matcher.quoteReplacement((String)replacement), SkriptConfig.caseSensitive.value());
+            this.haystack.change(e, haystack, ChangeMode.SET);
+        } else {
+            for (final Inventory inv : (Inventory[]) haystack)
+                for (final ItemStack item : (ItemStack[]) needles)
+                    for (final int slot : inv.all(item).keySet())
+                        inv.setItem(slot, (ItemStack) replacement);
         }
-        haystack.change(e, new String[]{h}, ChangeMode.SET);
     }
 
     @Override
