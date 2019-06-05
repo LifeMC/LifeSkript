@@ -76,6 +76,7 @@ public final class ExprNone extends SimpleExpression<Object> {
         return noneType.getReturnType();
     }
 
+    @Override
     @SuppressWarnings("null")
     public String toString(final @Nullable Event e, final boolean debug) {
         return "none value of " + getReturnType().getSimpleName().toLowerCase(Locale.ENGLISH);

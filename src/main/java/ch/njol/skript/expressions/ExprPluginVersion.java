@@ -56,6 +56,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     /**
      * @see ch.njol.skript.lang.Expression#isSingle()
      */
+    @Override
     public boolean isSingle() {
         return true;
     }
@@ -63,6 +64,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     /**
      * @see ch.njol.skript.lang.Expression#getReturnType()
      */
+    @Override
     public Class<? extends String> getReturnType() {
         return String.class;
     }
@@ -70,6 +72,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     /**
      * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
      */
+    @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         pluginName = (Expression<String>) exprs[0];
         return true;
@@ -78,6 +81,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     /**
      * @see ch.njol.skript.lang.Debuggable#toString(org.bukkit.event.Event, boolean)
      */
+    @Override
     @SuppressWarnings("null")
     public String toString(@Nullable final Event e, final boolean debug) {
         return "version of plugin \"" + pluginName.getSingle(e) + "\" (" + (get(e) != null ? get(e) : "") + ")";

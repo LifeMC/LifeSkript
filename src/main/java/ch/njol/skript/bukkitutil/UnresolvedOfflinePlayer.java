@@ -166,6 +166,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.permissions.ServerOperator#isOp()
      */
+    @Override
     @SuppressWarnings("null")
     public final boolean isOp() {
         resolveNow();
@@ -175,6 +176,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.permissions.ServerOperator#setOp(boolean)
      */
+    @Override
     @SuppressWarnings("null")
     public final void setOp(final boolean value) {
         actionQueue.add(() -> bukkitOfflinePlayer.setOp(value));
@@ -183,6 +185,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.configuration.serialization.ConfigurationSerializable#serialize()
      */
+    @Override
     @SuppressWarnings("null")
     public final Map<String, Object> serialize() {
         resolveNow();
@@ -192,6 +195,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#isOnline()
      */
+    @Override
     @SuppressWarnings("null")
     public final boolean isOnline() {
         // Don't resolve just to check the online status. Try to get online player version.
@@ -201,6 +205,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getName()
      */
+    @Override
     @SuppressWarnings("null")
     public final String getName() {
         // We already know its name, just to ensure, return from the real Bukkit offline player if available.
@@ -210,6 +215,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getUniqueId()
      */
+    @Override
     @SuppressWarnings("null")
     public final UUID getUniqueId() {
         resolveNow();
@@ -219,6 +225,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#isBanned()
      */
+    @Override
     @SuppressWarnings("null")
     public final boolean isBanned() {
         resolveNow();
@@ -228,6 +235,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#setBanned(boolean)
      */
+    @Override
     @SuppressWarnings({"null", "deprecation"})
     @Deprecated
     public final void setBanned(final boolean banned) {
@@ -237,6 +245,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#isWhitelisted()
      */
+    @Override
     @SuppressWarnings({"null", "unused"})
     public final boolean isWhitelisted() {
         if (bukkitOfflinePlayer != null)
@@ -252,6 +261,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#setWhitelisted(boolean)
      */
+    @Override
     @SuppressWarnings("null")
     public final void setWhitelisted(final boolean value) {
         actionQueue.add(() -> bukkitOfflinePlayer.setWhitelisted(value));
@@ -260,6 +270,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getPlayer()
      */
+    @Override
     @SuppressWarnings({"null", "deprecation"})
     public final Player getPlayer() {
         return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getPlayer() : Bukkit.getPlayerExact(name);
@@ -268,6 +279,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getFirstPlayed()
      */
+    @Override
     @SuppressWarnings("null")
     public final long getFirstPlayed() {
         resolveNow();
@@ -277,6 +289,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getLastPlayed()
      */
+    @Override
     @SuppressWarnings("null")
     public final long getLastPlayed() {
         resolveNow();
@@ -286,6 +299,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#hasPlayedBefore()
      */
+    @Override
     @SuppressWarnings("null")
     public final boolean hasPlayedBefore() {
         resolveNow();
@@ -295,6 +309,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     /**
      * @see org.bukkit.OfflinePlayer#getBedSpawnLocation()
      */
+    @Override
     @SuppressWarnings("null")
     public final Location getBedSpawnLocation() {
         resolveNow();

@@ -40,7 +40,7 @@ public final class CondIsBlock extends PropertyCondition<ItemStack> {
     }
 
     @Override
-    public boolean check(ItemStack i) {
+    public boolean check(final ItemStack i) {
         return i.getType().isBlock();
     }
 

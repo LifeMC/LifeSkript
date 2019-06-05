@@ -86,10 +86,6 @@ import static ch.njol.skript.Skript.*;
 @SuppressWarnings("deprecation")
 public final class Commands {
 
-    private Commands() {
-        throw new UnsupportedOperationException("Static class");
-    }
-
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
     public static final Message m_correct_usage = new Message("commands.correct usage");
     public static final Message m_internal_error = new Message("commands.internal error");
@@ -130,6 +126,10 @@ public final class Commands {
             }
             return true;
         });
+    }
+
+    private Commands() {
+        throw new UnsupportedOperationException("Static class");
     }
 
     @SuppressWarnings("unchecked")

@@ -72,7 +72,7 @@ public final class EffReplace extends Effect {
     @SuppressWarnings({"null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        haystack =  exprs[1 + matchedPattern % 2];
+        haystack = exprs[1 + matchedPattern % 2];
         replaceString = matchedPattern < 2;
         if (replaceString && !ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
             Skript.error(haystack + " cannot be changed and can thus not have parts replaced.");
@@ -94,7 +94,7 @@ public final class EffReplace extends Effect {
         if (replaceString) {
             for (int x = 0; x < haystack.length; x++)
                 for (final Object n : needles)
-                    haystack[x] = StringUtils.replace((String)haystack[x], (String)n, Matcher.quoteReplacement((String)replacement), SkriptConfig.caseSensitive.value());
+                    haystack[x] = StringUtils.replace((String) haystack[x], (String) n, Matcher.quoteReplacement((String) replacement), SkriptConfig.caseSensitive.value());
             this.haystack.change(e, haystack, ChangeMode.SET);
         } else {
             for (final Inventory inv : (Inventory[]) haystack)

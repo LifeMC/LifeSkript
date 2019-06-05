@@ -40,6 +40,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.net.InetSocketAddress;
+
 /**
  * @author Peter Güttinger
  */
@@ -71,7 +73,10 @@ public final class CondIsBanned extends Condition {
         return players.check(e, (Checker<Object>) o -> {
             if (o instanceof Player) {
                 if (ipBanned) {
-                    return Bukkit.getIPBans().contains(((Player) o).getAddress().getAddress().getHostAddress());
+                    final InetSocketAddress address = ((Player) o).getAddress();
+                    if (address == null)
+                        return false; // Assume not banned, never played here
+                    return Bukkit.getIPBans().contains(address.getAddress().getHostAddress());
                 }
                 return ((Player) o).isBanned();
             } else if (o instanceof OfflinePlayer) {

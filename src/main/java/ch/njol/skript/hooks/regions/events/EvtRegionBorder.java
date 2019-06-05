@@ -68,9 +68,9 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
             last = event;
             final PlayerMoveEvent e = (PlayerMoveEvent) event;
             final Location to = e.getTo(), from = e.getFrom();
-			if (to != null && to.equals(from))
-				return;
-			if (to != null && from != null && to.getWorld().equals(from.getWorld()) && to.distanceSquared(from) < 2)
+            if (to != null && to.equals(from))
+                return;
+            if (to != null && from != null && to.getWorld().equals(from.getWorld()) && to.distanceSquared(from) < 2)
                 return;
             final Set<? extends Region> oldRs = RegionsPlugin.getRegionsAt(from), newRs = RegionsPlugin.getRegionsAt(to);
             for (final Region r : oldRs) {

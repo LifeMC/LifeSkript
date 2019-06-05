@@ -46,11 +46,12 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"# set vampire players standing in bright sunlight on fire", "every 5 seconds:", "	loop all players:", "		{vampire.%loop-player%} is true", "		sunlight level at the loop-player is greater than 10", "		ignite the loop-player for 5 seconds"})
 @Since("1.3.4")
 public final class ExprLightLevel extends PropertyExpression<Location, Byte> {
+    private static final int SKY = 1, BLOCK = 2, ANY = SKY | BLOCK;
+
     static {
         Skript.registerExpression(ExprLightLevel.class, Byte.class, ExpressionType.PROPERTY, "[(1¦sky|1¦sun|2¦block)[ ]]light[ ]level [(of|%direction%) %location%]");
     }
 
-    private static final int SKY = 1, BLOCK = 2, ANY = SKY | BLOCK;
     int whatLight = ANY;
 
     @SuppressWarnings({"unchecked", "null"})

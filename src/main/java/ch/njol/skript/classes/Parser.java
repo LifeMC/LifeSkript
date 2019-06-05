@@ -52,7 +52,7 @@ public abstract class Parser<T> {
     /**
      * @return Whatever {@link #parse(String, ParseContext)} can actually return something other that null for the given context
      */
-    public boolean canParse(final ParseContext context) {
+    public boolean canParse(@SuppressWarnings("unused") final ParseContext context) {
         return true;
     }
 

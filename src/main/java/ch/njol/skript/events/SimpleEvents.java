@@ -39,10 +39,6 @@ import org.bukkit.event.world.*;
 @SuppressWarnings("unchecked")
 public final class SimpleEvents {
 
-    private SimpleEvents() {
-        throw new UnsupportedOperationException("Static class");
-    }
-
     static {
         Skript.registerEvent("Can Build Check", SimpleEvent.class, BlockCanBuildEvent.class, "[block] can build check").description("Called when a player rightclicks on a block while holding a block or a placeable item. You can either cancel the event to prevent the block from being built, or uncancel it to allow it.", "Please note that the <a href='../expressions/#ExprDurability'>data value</a> of the block to be placed is not available in this event, only its <a href='../expressions/#ExprIdOf'>ID</a>.").examples("").since("1.0 (basic), 2.0 ([un]cancellable)");
         Skript.registerEvent("Block Damage", SimpleEvent.class, BlockDamageEvent.class, "block damage").description("Called when a player starts to break a block. You can usually just use the leftclick event for this.").examples("").since("1.0");
@@ -110,5 +106,9 @@ public final class SimpleEvents {
         Skript.registerEvent("World Load", SimpleEvent.class, WorldLoadEvent.class, "world load[ing]").description("Called when a world is loaded. As with the world init event, this event will not be called for the server's default world(s).").examples("").since("1.0");
         Skript.registerEvent("World Save", SimpleEvent.class, WorldSaveEvent.class, "world sav(e|ing)").description("Called when a world is saved to disk. Usually all worlds are saved simultaneously, but world management plugins could change this.").examples("").since("1.0");
         Skript.registerEvent("World Unload", SimpleEvent.class, WorldUnloadEvent.class, "world unload[ing]").description("Called when a world is unloaded. This event might never be called if you don't have a world management plugin.").examples("").since("1.0");
+    }
+
+    private SimpleEvents() {
+        throw new UnsupportedOperationException("Static class");
     }
 }

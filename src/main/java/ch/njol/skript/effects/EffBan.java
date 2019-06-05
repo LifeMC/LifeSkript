@@ -38,6 +38,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.net.InetSocketAddress;
 import java.util.Date;
 
 /**
@@ -69,7 +70,7 @@ public final class EffBan extends Effect {
         players = exprs[0];
         reason = exprs.length > 1 ? (Expression<String>) exprs[1] : null;
         if (!hasBanList && reason != null) {
-            Skript.error("Bukkit 1.7.2 R0.4 or later is required to ban players with a reason.");
+            Skript.error("Bukkit 1.7.2 R0.4 or higher is required to ban players with a reason.");
             return false;
         }
         ban = matchedPattern % 2 == 0;
@@ -81,12 +82,15 @@ public final class EffBan extends Effect {
     @Override
     protected void execute(final Event e) {
         final String reason = this.reason != null ? this.reason.getSingle(e) : null; // don't check for null, just ignore an invalid reason
-        final Date expires = null;
+        final Date expires = null; //FIXME add expiration time support
         final String source = "Skript ban effect";
         for (final Object o : players.getArray(e)) {
             if (o instanceof Player) {
                 if (ipBan) {
-                    final String ip = ((Player) o).getAddress().getAddress().getHostAddress();
+                    final InetSocketAddress address = ((Player) o).getAddress();
+                    if (address == null)
+                        return; // Can't ban unknown IP
+                    final String ip = address.getAddress().getHostAddress();
                     if (hasBanList) {
                         if (ban)
                             Bukkit.getBanList(BanList.Type.IP).addBan(ip, reason, expires, source);
@@ -110,10 +114,13 @@ public final class EffBan extends Effect {
                 }
             } else if (o instanceof OfflinePlayer) {
                 if (hasBanList) {
+                    final String name = ((OfflinePlayer) o).getName();
+                    if (name == null)
+                        return; // Can't ban, name unknown
                     if (ban)
-                        Bukkit.getBanList(BanList.Type.NAME).addBan(((OfflinePlayer) o).getName(), reason, expires, source);
+                        Bukkit.getBanList(BanList.Type.NAME).addBan(name, reason, expires, source);
                     else
-                        Bukkit.getBanList(BanList.Type.NAME).pardon(((OfflinePlayer) o).getName());
+                        Bukkit.getBanList(BanList.Type.NAME).pardon(name);
                 } else {
                     ((OfflinePlayer) o).setBanned(ban);
                 }

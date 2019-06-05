@@ -94,7 +94,7 @@ public final class ExprGameMode extends PropertyExpression<Player, GameMode> {
     public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final GameMode m = delta == null ? Bukkit.getDefaultGameMode() : (GameMode) delta[0];
         for (final Player p : getExpr().getArray(e)) {
-            if (getTime() >= 0 && e instanceof PlayerGameModeChangeEvent && ((PlayerGameModeChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e) && (((PlayerGameModeChangeEvent) e).getNewGameMode() != m)) {
+            if (getTime() >= 0 && e instanceof PlayerGameModeChangeEvent && ((PlayerGameModeChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e) && ((PlayerGameModeChangeEvent) e).getNewGameMode() != m) {
                 ((PlayerGameModeChangeEvent) e).setCancelled(true);
             }
             p.setGameMode(m);

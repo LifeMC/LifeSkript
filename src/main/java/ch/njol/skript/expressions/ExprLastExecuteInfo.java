@@ -91,6 +91,7 @@ public final class ExprLastExecuteInfo extends SimpleExpression<Object> {
         return mark == 0 ? Boolean.class : String.class;
     }
 
+    @Override
     public String toString(@Nullable final Event e, final boolean debug) {
         return "the " + getExpressionName();
     }

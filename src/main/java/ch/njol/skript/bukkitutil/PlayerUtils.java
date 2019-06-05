@@ -40,8 +40,8 @@ import java.util.*;
  */
 public final class PlayerUtils {
 
+    public static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", EmptyArrays.EMPTY_CLASS_ARRAY, Collection.class);
     static final Set<Player> inviUpdate = new HashSet<>();
-
     // created when first used
     static final Task task = new Task(Skript.getInstance(), 1, 1) {
         @SuppressWarnings("deprecation")
@@ -57,9 +57,6 @@ public final class PlayerUtils {
             inviUpdate.clear();
         }
     };
-
-    public static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", EmptyArrays.EMPTY_CLASS_ARRAY, Collection.class);
-
     @Nullable
     private static Method getOnlinePlayers;
     private static boolean cached;

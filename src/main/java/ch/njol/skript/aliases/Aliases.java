@@ -445,7 +445,7 @@ public final class Aliases {
      * @deprecated {@link Aliases#getGender(int)}
      */
     @SuppressWarnings("unused")
-	@Deprecated
+    @Deprecated
     public static final int getGender(final int id, final short dataMin, final short dataMax) {
         return getGender(id); // Not sure why Njol added these unused arguments
     }
