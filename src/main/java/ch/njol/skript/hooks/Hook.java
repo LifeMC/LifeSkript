@@ -50,8 +50,7 @@ public abstract class Hook<P extends Plugin> {
             return;
         }
         loadClasses();
-        if (Skript.logHigh())
-            Skript.info(m_hooked.toString(p.getName()));
+        Skript.info(m_hooked.toString(p.getName()));
     }
 
     public final P getPlugin() {

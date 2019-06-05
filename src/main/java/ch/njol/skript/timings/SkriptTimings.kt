@@ -74,7 +74,7 @@ fun stop(@Nullable timing: Any?) {
 fun enabled(): Boolean {
     // First check if we can run timings (enabled in settings + running Paper or LifeSpigot)
     // After that (we know that class exists), check if server has timings running
-    return enabled && (!isEnabledMethod || Timings.isTimingsEnabled()) && timingsEnabled && (Bukkit.getPluginManager() !is SimplePluginManager || (Bukkit.getPluginManager() as SimplePluginManager).useTimings())
+    return enabled && (!isEnabledMethod || Timings.isTimingsEnabled()) && timingsEnabled && (Bukkit.getPluginManager() !is SimplePluginManager || (Bukkit.getPluginManager() as? SimplePluginManager)?.useTimings() == true)
 }
 
 fun setEnabled(flag: Boolean) {

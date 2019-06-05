@@ -82,7 +82,7 @@ public final class EnchantmentType implements YggdrasilSerializable {
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public static final String toString(final Enchantment e, final int flags) {
+    public static final String toString(final Enchantment e, @SuppressWarnings("unused") final int flags) {
         return enchantmentNames.get(e);
     }
 

@@ -26,6 +26,7 @@ import ch.njol.skript.config.Config
 import ch.njol.skript.config.SectionNode
 import ch.njol.skript.util.Version
 import org.bukkit.Bukkit
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
@@ -88,7 +89,7 @@ class SkriptTest {
 
         internal fun test() {
             val t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player")!!)!!
-            t.execute(PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, null))
+            t.execute(PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, BlockFace.SELF))
         }
 
         private fun nodeFromString(s: String): SectionNode? {

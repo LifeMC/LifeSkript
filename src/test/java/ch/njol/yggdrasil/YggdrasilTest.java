@@ -185,7 +185,7 @@ public final class YggdrasilTest {
 //        }
 //    }
 
-    @SuppressWarnings("EmptyMethod")
+    @SuppressWarnings({"EmptyMethod", "unused"})
     private static final void print(final @Nullable Object o, final byte[] d) {
         /*
         System.out.print(o);

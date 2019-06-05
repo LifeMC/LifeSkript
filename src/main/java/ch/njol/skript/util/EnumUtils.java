@@ -80,8 +80,9 @@ public final class EnumUtils<E extends Enum<E>> {
         return parseMap.get(s.toLowerCase(Locale.ENGLISH));
     }
 
+    // REMIND flags?
     @SuppressWarnings("null")
-    public String toString(final E e, final int flags) {
+    public String toString(final E e, @SuppressWarnings("unused") final int flags) {
         validate(false);
         return names[e.ordinal()];
     }

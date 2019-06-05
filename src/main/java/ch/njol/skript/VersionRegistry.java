@@ -25,7 +25,8 @@ package ch.njol.skript;
 import ch.njol.skript.util.Version;
 
 public enum VersionRegistry {
-    STABLE_2_2_15(new Version(2, 2, 15));
+    STABLE_2_2_15(new Version(2, 2, 15)),
+    STABLE_2_2_16(new Version(2, 2, 16));
 
     private final Version version;
 

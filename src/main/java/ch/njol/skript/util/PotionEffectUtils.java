@@ -84,7 +84,7 @@ public final class PotionEffectUtils {
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public static final String toString(final PotionEffectType t, final int flags) {
+    public static final String toString(final PotionEffectType t, @SuppressWarnings("unused") final int flags) {
         return names[t.getId()];
     }
 

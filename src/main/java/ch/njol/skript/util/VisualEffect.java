@@ -214,7 +214,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
          * Converts the data from the pattern to the data required by Bukkit
          */
         @Nullable
-        public Object getData(final @Nullable Object raw, final Location l) {
+        public Object getData(final @Nullable Object raw, @SuppressWarnings("unused") final Location l) {
             assert raw == null;
             return null;
         }

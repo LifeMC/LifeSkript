@@ -457,25 +457,21 @@ public final class DatabaseStorage extends VariablesStorage {
     protected void checkDatabase() {
         try {
             final long lastRowID; // local variable as this is used to clean the database below
-            ResultSet r = null;
-            try {
-                synchronized (db) {
-                    if (closed || db.get() == null)
-                        return;
-                    lastRowID = this.lastRowID;
-                    final PreparedStatement monitorQuery = this.monitorQuery;
-                    assert monitorQuery != null;
-                    monitorQuery.setLong(1, lastRowID);
-                    monitorQuery.setString(2, guid);
-                    monitorQuery.execute();
-                    r = monitorQuery.getResultSet();
-                    assert r != null;
-                }
+            
+            synchronized (db) {
+                if (closed || db.get() == null)
+                    return;
+                lastRowID = this.lastRowID;
+                final PreparedStatement monitorQuery = this.monitorQuery;
+                assert monitorQuery != null;
+                monitorQuery.setLong(1, lastRowID);
+                monitorQuery.setString(2, guid);
+                monitorQuery.execute();
+            }
+            
+            try(final ResultSet r = monitorQuery.getResultSet()) {
                 if (!closed)
                     loadVariables(r);
-            } finally {
-                if (r != null)
-                    r.close();
             }
 
             if (!closed) { // Skript may have been disabled in the meantime // TODO not fixed

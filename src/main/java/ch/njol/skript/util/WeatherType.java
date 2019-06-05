@@ -111,7 +111,7 @@ public enum WeatherType {
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public String toString(final int flags) {
+    public String toString(@SuppressWarnings("unused") final int flags) {
         return names[0];
     }
 

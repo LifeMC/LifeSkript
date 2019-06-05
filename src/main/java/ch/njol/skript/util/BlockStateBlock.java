@@ -333,7 +333,8 @@ public final class BlockStateBlock implements Block {
         return loc;
     }
 
-    public void setType(final Material type, final boolean applyPhysics) {
+    @Override
+	public void setType(final Material type, final boolean applyPhysics) {
         setType(type); //REMIND Generate seperate method for applyPhysics
     }
 
