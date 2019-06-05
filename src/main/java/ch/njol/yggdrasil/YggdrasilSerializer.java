@@ -29,7 +29,7 @@ import java.io.StreamCorruptedException;
 
 /**
  * Utility to be able to save and load classes with Yggdrasil that the user has no control of, e.g. classes of an external API.
- *
+ * <p>
  * TODO Convert to interface (with default methods)
  *
  * @author Peter Güttinger

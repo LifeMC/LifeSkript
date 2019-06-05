@@ -457,7 +457,7 @@ public final class DatabaseStorage extends VariablesStorage {
     protected void checkDatabase() {
         try {
             final long lastRowID; // local variable as this is used to clean the database below
-            
+
             synchronized (db) {
                 if (closed || db.get() == null)
                     return;
@@ -468,8 +468,8 @@ public final class DatabaseStorage extends VariablesStorage {
                 monitorQuery.setString(2, guid);
                 monitorQuery.execute();
             }
-            
-            try(final ResultSet r = monitorQuery.getResultSet()) {
+
+            try (final ResultSet r = monitorQuery.getResultSet()) {
                 if (!closed)
                     loadVariables(r);
             }

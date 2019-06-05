@@ -75,13 +75,13 @@ public final class ScriptLoader {
      */
     @SuppressWarnings("null")
     static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>());
+    static final Collection<String> loadedScriptFiles = new ArrayList<>();
     private static final Message m_no_errors = new Message("skript.no errors"),
             m_no_scripts = new Message("skript.no scripts");
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
     private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
     private static final Collection<String> skipFiles = new ArrayList<>();
-    static final Collection<String> loadedScriptFiles = new ArrayList<>();
     /**
      * must be synchronized
      */

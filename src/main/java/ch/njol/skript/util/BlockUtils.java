@@ -41,31 +41,20 @@ import java.util.Arrays;
 @SuppressWarnings("deprecation")
 public final class BlockUtils {
 
-    private BlockUtils() {
-        throw new UnsupportedOperationException("Static class");
-    }
-
     private static final BlockFace[] torch = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN
     };
-
     private static final BlockFace[] button = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, null, null, null, null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH
     };
-
     private static final BlockFace[] ladder = new BlockFace[]{null, null, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
     }, wallSign = ladder;
-
     private static final BlockFace[] trapdoor = new BlockFace[]{BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
     };
-
     private static final BlockFace[] lever = new BlockFace[]{BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP, BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP
     };
-
     private static final BlockFace[] cocoa = new BlockFace[]{BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
     };
-
     private static final BlockFace[] tripwireHook = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
     };
-
     private static final BlockFace[][] attached = new BlockFace[Skript.MAXBLOCKID + 1][];
     private static final BlockFace[] bed = new BlockFace[]{BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
     };
@@ -96,6 +85,10 @@ public final class BlockUtils {
     static {
         for (final int i : solid)
             isSolid[i] = true;
+    }
+
+    private BlockUtils() {
+        throw new UnsupportedOperationException("Static class");
     }
 
     /**

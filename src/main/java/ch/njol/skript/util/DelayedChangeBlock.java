@@ -332,7 +332,7 @@ public final class DelayedChangeBlock implements Block {
     }
 
     @Override
-	public void setType(final Material type, final boolean applyPhysics) {
+    public void setType(final Material type, final boolean applyPhysics) {
         setType(type); //REMIND Generate seperate method for applyPhysics
     }
 

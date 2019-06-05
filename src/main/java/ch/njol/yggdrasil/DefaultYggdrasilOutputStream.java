@@ -200,7 +200,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 
     @Override
     protected void writeArrayEnd() throws IOException {
-    	/* empty */
+        /* empty */
     }
 
     // Class
@@ -282,7 +282,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
 
     @Override
     protected void writeObjectEnd() throws IOException {
-    	/* empty */
+        /* empty */
     }
 
     // Reference
