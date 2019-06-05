@@ -21,6 +21,8 @@
   ~
   -->
 
+<!DOCTYPE project-shared-configuration>
+
 <project-shared-configuration>
     <!--
 This file contains additional configuration written by modules in the NetBeans IDE.
