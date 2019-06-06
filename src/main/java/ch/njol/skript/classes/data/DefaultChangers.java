@@ -240,9 +240,10 @@ public final class DefaultChangers {
                     case RESET:
                         assert false;
                 }
-                if (invi.getHolder() instanceof Player) {
+                final InventoryHolder holder = invi.getHolder();
+                if (holder instanceof Player) {
                     // FIXME Change with PlayerUtils#updateInventory?
-                    ((Player) invi.getHolder()).updateInventory();
+                    ((Player) holder).updateInventory();
                 }
             }
         }
