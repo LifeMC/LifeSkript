@@ -291,7 +291,8 @@ public final class Classes {
      * @param c
      * @return The closest superclass's info
      */
-    @SuppressWarnings({"unchecked", "null"}) @Contract("null->null")
+    @SuppressWarnings({"unchecked", "null"})
+    @Contract("null->null")
     public static final <T> ClassInfo<? super T> getSuperClassInfo(final @Nullable Class<T> c) {
         // Check null status
         if (c == null)
@@ -758,32 +759,29 @@ public final class Classes {
     }
 
     @Nullable
-    public static final Object deserialize(final ClassInfo<?> type, InputStream value) {
+    public static final Object deserialize(final ClassInfo<?> type, final InputStream value) {
         if (Skript.testing()) {
             Serializer<?> s;
             assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
         }
-        YggdrasilInputStream in = null;
-        try {
-            value = new SequenceInputStream(new ByteArrayInputStream(getYggdrasilStart(type)), value);
-            in = Variables.yggdrasil.newInputStream(value);
+        BufferedInputStream buf = null;
+        try (final InputStream newValue = new SequenceInputStream(new ByteArrayInputStream(getYggdrasilStart(type)), value instanceof BufferedInputStream ? value : (buf = new BufferedInputStream(value)));
+             final YggdrasilInputStream in = Variables.yggdrasil.newInputStream(newValue)) {
+
             return in.readObject();
         } catch (final IOException e) { // i.e. invalid save
-            if (Skript.testing())
-                e.printStackTrace();
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
             return null;
         } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (final IOException ignored) {
-                    /* ignored */
-                }
-            }
             try {
                 value.close();
-            } catch (final IOException ignored) {
-                /* ignored */
+
+                if (buf != null)
+                    buf.close();
+            } catch (final IOException e) {
+                if (Skript.testing() || Skript.debug())
+                    Skript.exception(e);
             }
         }
     }

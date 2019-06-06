@@ -70,7 +70,8 @@ public final class RetainingLogHandler extends LogHandler {
         return printErrors(def, ErrorQuality.SEMANTIC_ERROR);
     }
 
-    public final boolean printErrors(final @Nullable String def, final ErrorQuality quality) {
+    // FIXME actually use the quality parameter?
+    public final boolean printErrors(final @Nullable String def, @SuppressWarnings("unused") final ErrorQuality quality) {
         assert !printedErrorOrLog;
         printedErrorOrLog = true;
         stop();

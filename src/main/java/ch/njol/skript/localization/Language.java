@@ -266,14 +266,18 @@ public final class Language {
     private static final Map<String, String> load(final @Nullable InputStream in, final String name) {
         if (in == null)
             return new HashMap<>();
+        BufferedInputStream buf = null;
         try {
-            return new Config(in instanceof BufferedInputStream ? in : new BufferedInputStream(in), name + ".lang", false, false, ":").toMap(".");
+            return new Config(in instanceof BufferedInputStream ? in : (buf = new BufferedInputStream(in)), name + ".lang", false, false, ":").toMap(".");
         } catch (final IOException e) {
             Skript.exception(e, "Could not load the language file '" + name + ".lang': " + ExceptionUtils.toString(e));
             return new HashMap<>();
         } finally {
             try {
                 in.close();
+
+                if (buf != null)
+                    buf.close();
             } catch (final IOException ignored) {
                 /* ignored */
             }
