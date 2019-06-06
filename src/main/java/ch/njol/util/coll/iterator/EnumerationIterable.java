@@ -30,8 +30,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * TODO this should actually only be an Iterator
- *
  * @author Peter Güttinger
  */
 public final class EnumerationIterable<T> implements Iterable<T> {

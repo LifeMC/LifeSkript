@@ -398,9 +398,6 @@ public final class SkriptCommand implements CommandExecutor {
                     if ("track".equalsIgnoreCase(args[0])) {
                         for (final TrackerAgent agent : registeredTrackers)
                             if (agent instanceof VariableTrackerAgent && ((VariableTrackerAgent) agent).out == sender) {
-                                /* TODO This just an experimental agent & tracker & debugger system
-                                    and it's not localized, I'm too lazy to localize, and I don't know german language,
-                                    but it should be done at some point. */
                                 sender.sendMessage(ChatColor.DARK_RED + "You already have a variable tracker!");
                                 return true;
                             }
@@ -428,9 +425,6 @@ public final class SkriptCommand implements CommandExecutor {
                     if ("track".equalsIgnoreCase(args[0])) {
                         for (final TrackerAgent agent : registeredTrackers)
                             if (agent instanceof LoopTrackerAgent && ((LoopTrackerAgent) agent).out == sender) {
-                                /* TODO This just an experimental agent & tracker & debugger system
-                                   and it's not localized, I'm too lazy to localize, and I don't know german language,
-                                   but it should be done at some point. */
                                 sender.sendMessage(ChatColor.DARK_RED + "You already have a loop tracker!");
                                 return true;
                             }
