@@ -83,13 +83,8 @@ public final class DefaultComparators {
     static {
         // to fix comparisons of eggs, arrows, etc. (e.g. 'projectile is an arrow')
         // TODO !Update with every version [entities]
-        if (Skript.classExists("org.bukkit.entity.Boat")) {
-            try {
-                entityMaterials.put(Boat.class, Material.BOAT);
-            } catch (final NoSuchFieldError ignored) {
-                /* ignored */
-            }
-        }
+        if (Skript.fieldExists(Material.class, "BOAT"))
+            entityMaterials.put(Boat.class, Material.BOAT);
         entityMaterials.put(Painting.class, Material.PAINTING);
         entityMaterials.put(Arrow.class, Material.ARROW);
         entityMaterials.put(Egg.class, Material.EGG);

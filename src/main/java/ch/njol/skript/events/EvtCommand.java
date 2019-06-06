@@ -37,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @SuppressWarnings("unchecked")
-public final class EvtCommand extends SkriptEvent { // TODO condition to check whatever a given command exists
+public final class EvtCommand extends SkriptEvent {
     static {
         Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), "command [%-string%]").description("Called when a player enters a command (not neccessarily a Skript command).").examples("on command", "on command \"/stop\"", "on command \"pm Njol \"").since("2.0");
     }

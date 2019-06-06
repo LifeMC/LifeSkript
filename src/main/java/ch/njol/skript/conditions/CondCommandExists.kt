@@ -32,20 +32,40 @@ import ch.njol.skript.lang.Condition
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
+import org.bukkit.Bukkit
+import org.bukkit.command.CommandMap
 import org.bukkit.event.Event
+import org.bukkit.plugin.SimplePluginManager
 
 /**
  * @author TheDGOfficial
  */
-@Name("Is Script Command")
-@Description("Checks whatever a command is a script command.",
-        "If the given command is not exists, this returns false.")
-@Examples("command is a script command")
-@Since("2.2-V13b")
-class CondIsScriptCommand : Condition() {
+@Name("Command Exists")
+@Description("Checks whatever the given command is exists or not.")
+@Examples("if command \"help\" exists")
+@Since("2.2.16")
+class CondCommandExists : Condition() {
     companion object {
+        @JvmField
+        val commandMap: CommandMap? = getCommandMap()
+
         init {
-            Skript.registerCondition(CondIsScriptCommand::class.java, "command %string% is[ a] script[ command]", "[command ]%string% is[ a] script command")
+            Skript.registerCondition(CondCommandExists::class.java, "command %string% [is[ a] ](valid|existing|exists)[ command]", "[command ]%string% [is[ a] ](valid|existing|exists) command")
+        }
+
+        private fun getCommandMap(): CommandMap? {
+            val pluginManager = Bukkit.getPluginManager()
+
+            if (pluginManager is SimplePluginManager) {
+                val commandMap = pluginManager.javaClass.getDeclaredField("commandMap")
+
+                if (!commandMap.isAccessible)
+                    commandMap.isAccessible = true
+
+                return commandMap.get(pluginManager) as? CommandMap?
+            }
+
+            return null
         }
     }
 
@@ -64,10 +84,11 @@ class CondIsScriptCommand : Condition() {
         if (name?.startsWith("/") == true)
             name = name.substring(1)
 
-        return ScriptCommand.commandMap[name] != null
+        return ScriptCommand.commandMap[name] != null || Bukkit.getPluginCommand(name) != null || Bukkit.getServer().helpMap.getHelpTopic(name) != null
+                || commandMap?.getCommand(name) != null
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
-        return "${command!!.getSingle(e)} is a script command"
+        return "command ${command!!.getSingle(e)} is exists"
     }
 }

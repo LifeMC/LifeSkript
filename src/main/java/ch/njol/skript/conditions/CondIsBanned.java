@@ -75,7 +75,7 @@ public final class CondIsBanned extends Condition {
                 if (ipBanned) {
                     final InetSocketAddress address = ((Player) o).getAddress();
                     if (address == null)
-                        return false; // Assume not banned, never played here
+                        return false; // Assume not banned, never played before
                     return Bukkit.getIPBans().contains(address.getAddress().getHostAddress());
                 }
                 return ((Player) o).isBanned();
