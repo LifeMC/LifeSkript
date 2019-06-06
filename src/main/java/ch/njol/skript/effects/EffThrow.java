@@ -22,6 +22,7 @@
 
 package ch.njol.skript.effects;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
@@ -30,6 +31,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -37,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Custom Warn / Error")
 @Description("Throws a custom warning / error.")
 @Examples({"on load:", "\tset {id} to random uuid", "\tif {id} is not set:", "\t\tthrow new error \"Failed to set ID, please reload!\"", "\t\tstop # Throw does not stops execution, you must add stop!"})
-@Since("2.2-Fixes-V10c, 2.2.14 (throwing java errors)")
+@Since("2.2-Fixes-V10c, 2.2.14 (throwing java errors), 2.2.16 (finalized java errors)")
 public final class EffThrow extends Effect {
     static {
         Skript.registerEffect(EffThrow.class, "throw[ a] [new] (0¦warning|1¦error|2¦java error) %string%");
@@ -45,6 +47,10 @@ public final class EffThrow extends Effect {
 
     private boolean error;
     private boolean java;
+
+    private @Nullable
+    String script;
+    private int line;
 
     @SuppressWarnings("null")
     private Expression<?> detail;
@@ -55,6 +61,10 @@ public final class EffThrow extends Effect {
         error = parseResult.mark > 0;
         java = parseResult.mark > 1;
         detail = exprs[0];
+        if (ScriptLoader.currentScript != null)
+            script = ScriptLoader.currentScript.getFileName();
+        if (SkriptLogger.getNode() != null)
+            line = SkriptLogger.getNode().getLine();
         return true;
     }
 
@@ -68,7 +78,7 @@ public final class EffThrow extends Effect {
         if (error) {
             if (java) {
                 // Bad things happening - throw it to caller!
-                throw new ScriptError(String.valueOf(detail.getSingle(e)));
+                throw new ScriptError(script, line, String.valueOf(detail.getSingle(e)));
             }
             Skript.error(String.valueOf(detail.getSingle(e)));
         } else {
@@ -87,6 +97,18 @@ public final class EffThrow extends Effect {
          * serialVersionUID
          */
         private static final long serialVersionUID = 1255223120346309260L;
+
+        private @Nullable
+        String script;
+
+        private int line;
+
+        public ScriptError(final String script, final int line, final String detail) {
+            this(detail);
+
+            this.script = script;
+            this.line = line;
+        }
 
         /**
          *
@@ -125,6 +147,15 @@ public final class EffThrow extends Effect {
          */
         public ScriptError(final Throwable cause) {
             super(cause);
+        }
+
+        public @Nullable
+        String getScript() {
+            return script;
+        }
+
+        public int getLine() {
+            return line;
         }
 
     }
