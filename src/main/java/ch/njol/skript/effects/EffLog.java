@@ -39,6 +39,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -51,14 +52,9 @@ import java.util.logging.Level;
 @Examples({"on place of TNT:", "	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
-    private static final boolean flushAllLogsOnShutdownOnly = Boolean.parseBoolean(System.getProperty("skript.flushAllLogsOnShutdownOnly")); //FIXME test this
-
     static final HashMap<String, PrintWriter> writers = new HashMap<>();
+    private static final boolean flushAllLogsOnShutdownOnly = Boolean.parseBoolean(System.getProperty("skript.flushAllLogsOnShutdownOnly")); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
-
-    static {
-        Skript.registerEffect(EffLog.class, "log %strings% [(to|in) [file[s]] %-strings%]");
-    }
 
     static {
         Skript.closeOnDisable(() -> {
@@ -67,6 +63,8 @@ public final class EffLog extends AsyncEffect {
                 pw.close(); // Close it afterwards
             }
         });
+
+        Skript.registerEffect(EffLog.class, "log %strings% [(to|in) [file[s]] %-strings%]");
     }
 
     @SuppressWarnings("null")
@@ -76,7 +74,7 @@ public final class EffLog extends AsyncEffect {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         messages = (Expression<String>) exprs[0];
         files = (Expression<String>) exprs[1];
         return true;
@@ -84,7 +82,9 @@ public final class EffLog extends AsyncEffect {
 
     @SuppressWarnings("resource")
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
+        PrintWriter w = null;
+
         for (final String message : messages.getArray(e)) {
             if (files != null) {
                 for (String s : files.getArray(e)) {
@@ -95,12 +95,12 @@ public final class EffLog extends AsyncEffect {
                         SkriptLogger.LOGGER.log(Level.INFO, message);
                         continue;
                     }
-                    PrintWriter w = writers.get(s);
+                    w = writers.get(s);
                     if (w == null) {
                         final File f = new File(logsFolder, s); // REMIND what if s contains '..'?
                         try {
                             f.getParentFile().mkdirs();
-                            w = new PrintWriter(new BufferedWriter(new FileWriter(f, true)));
+                            w = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f, true), StandardCharsets.UTF_8)));
                             writers.put(s, w);
                         } catch (final IOException ex) {
                             Skript.error("Cannot write to log file '" + s + "' (" + f.getPath() + "): " + ExceptionUtils.toString(ex));
@@ -108,10 +108,6 @@ public final class EffLog extends AsyncEffect {
                         }
                     }
                     w.println("[" + SkriptConfig.formatDate(System.currentTimeMillis()) + "] " + message);
-                    // Specifying this system property can speedup log write performance, but may cause loss of
-                    // log files if server shutdowns, so it is not the default behaviour, and it must be used carefully.
-                    if (!flushAllLogsOnShutdownOnly)
-                        w.flush();
                 }
             } else {
                 final Trigger t = getTrigger();
@@ -119,10 +115,15 @@ public final class EffLog extends AsyncEffect {
                 Skript.info("[" + (script != null ? script.getName() : "---") + "] " + message);
             }
         }
+
+        // Specifying this system property can speedup log write performance, but may cause loss of
+        // log files if server shutdowns, so it is not the default behaviour, and it must be used carefully.
+        if (!flushAllLogsOnShutdownOnly && w != null)
+            w.flush();
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return "log " + messages.toString(e, debug) + (files != null ? " to " + files.toString(e, debug) : "");
     }
 }

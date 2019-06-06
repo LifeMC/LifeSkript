@@ -22,7 +22,6 @@
 
 package ch.njol.skript.hooks.economy.expressions;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
@@ -50,9 +49,8 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
     public Money convert(final OfflinePlayer p) {
         try {
             return new Money(VaultHook.economy.getBalance(p));
-        } catch (final Exception e) {
-            if (Skript.logHigh()) //FIXME remove after debugging
-                Skript.exception(e);
+        } catch (final NoSuchMethodError e) {
+            // Happens on Vault < 1.4 (before UUIDs)
             return new Money(VaultHook.economy.getBalance(p.getName()));
         }
     }

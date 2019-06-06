@@ -44,7 +44,7 @@ public interface SyntaxElement {
      * @param matchedPattern The index of the pattern which matched
      * @param isDelayed      Whatever this expression is used after a delay or not (i.e. if the event has already passed when this expression will be called)
      * @param parseResult    Additional information about the match.
-     * @return Whatever this expression was initialised successfully. An error should be printed prior to returning false to specify the cause.
+     * @return Whatever this expression was initialized successfully. An error should be printed prior to returning false to specify the cause.
      * @see ScriptLoader#isCurrentEvent(Class...)
      */
     boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult);
