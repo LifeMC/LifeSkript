@@ -1866,185 +1866,196 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
                 }
 
-                if (!Skript.isRunningMinecraft(1, 8, 9)) { // These workarounds not work on new versions, but some bugs still exists
-                    // Fix console colors displaying on logs as strange characters
-                    final File[] serverJarFiles = serverDirectory.listFiles((dir, name) ->
-                            name.toLowerCase(Locale.ENGLISH).trim()
-                                    .endsWith(".jar".toLowerCase(Locale.ENGLISH).trim())
-                    );
+                if (Skript.debug())
+                    Skript.info("Preparing to patch server JAR file...");
 
-                    if (serverJarFiles != null && serverJarFiles.length > 0) {
-                        outer: for (final File serverJarFile : serverJarFiles) {
-                            if (!serverJarFile.isFile())
-                                continue;
+                // Fix console colors displaying on logs as strange characters
+                final File[] serverJarFiles = serverDirectory.listFiles((dir, name) ->
+                        name.toLowerCase(Locale.ENGLISH).trim()
+                                .endsWith(".jar".toLowerCase(Locale.ENGLISH).trim())
+                );
 
-                            String contents = null;
+                if (serverJarFiles != null && serverJarFiles.length > 0) {
+                    outer: for (final File serverJarFile : serverJarFiles) {
+                        if (Skript.debug())
+                            Skript.info("Preparing to process file \"" + serverJarFile.getName() + "\"");
 
-                            try (final JarFile jarFile = new JarFile(serverJarFile)) {
-                                if (jarFile.getEntry("org/bukkit/Bukkit.class") == null) { // If it's not a Bukkit JAR
-                                    if (Skript.debug())
-                                        Skript.debug("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + "\"");
+                        if (!serverJarFile.isFile()) {
+                            if (Skript.debug())
+                                Skript.info("Skipping directory \"" + serverJarFile.getName() + "\"");
 
-                                    continue /* outer*/; // Re-try on next server JAR, if it exists
-                                }
+                            continue /* outer*/;
+                        }
 
-                                for (final JarEntry entry : new EnumerationIterable<>(jarFile.entries())) {
-                                    final String name = entry.getName();
+                        String contents = null;
 
-                                    entry.setTime(System.currentTimeMillis());
+                        try (final JarFile jarFile = new JarFile(serverJarFile)) {
+                            if (jarFile.getEntry("org/bukkit/Bukkit.class") == null) { // If it's not a Bukkit JAR
+                                if (Skript.debug())
+                                    Skript.info("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + "\"");
 
-                                    final FileTime now = FileTime.from(Instant.now());
-
-                                    entry.setCreationTime(now);
-
-                                    entry.setLastAccessTime(now);
-                                    entry.setLastModifiedTime(now);
-
-                                    if (!"log4j2.xml".equals(name))
-                                        continue;
-
-                                    try (final BufferedInputStream in = new BufferedInputStream(jarFile.getInputStream(entry));
-                                         final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-
-                                        final StringBuilder builder = new StringBuilder();
-
-                                        String line;
-
-                                        while ((line = br.readLine()) != null) {
-                                            builder.append(line).append("\n");
-                                        }
-
-                                        contents = builder.toString().replace("\n\n", "\n");
-                                    } catch (final SecurityException ignored) {
-                                        continue outer;
-                                    }
-                                }
-                            } catch (final IOException e) {
-                                if (Skript.testing() || Skript.debug())
-                                    Skript.exception(e);
+                                continue /* outer*/; // Re-try on next server JAR, if it exists
                             }
 
-                            if (contents != null) {
-                                final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
+                            for (final JarEntry entry : new EnumerationIterable<>(jarFile.entries())) {
+                                final String name = entry.getName();
 
-                                final String original = prefix + "%msg%n";
-                                final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
+                                entry.setTime(System.currentTimeMillis());
 
-                                String replacedContents = null;
+                                final FileTime now = FileTime.from(Instant.now());
 
-                                // Some versions has bugged log4j2.xml file that does not close the console tag, it does not cause any issues but anyway, fix it.
-                                if (!contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>") && contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">")) {
-                                    contents = contents.replace("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">", "<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>");
-                                }
+                                entry.setCreationTime(now);
 
-                                if (contents.contains(original) && !contents.contains(replaced)) {
-                                    replacedContents = contents.replace(original, replaced);
-                                }
+                                entry.setLastAccessTime(now);
+                                entry.setLastModifiedTime(now);
 
-                                if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
-                                    final File temp = File.createTempFile("log4j2.xml-", ".TMP");
+                                if (!"log4j2.xml".equals(name))
+                                    continue;
 
-                                    if (!temp.exists()) // This should not happen, but anyway...
-                                        temp.createNewFile();
+                                try (final BufferedInputStream in = new BufferedInputStream(jarFile.getInputStream(entry));
+                                     final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 
-                                    try (final PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), StandardCharsets.UTF_8)))) {
-                                        pw.print(replacedContents);
-                                        pw.flush();
+                                    final StringBuilder builder = new StringBuilder();
+
+                                    String line;
+
+                                    while ((line = br.readLine()) != null) {
+                                        builder.append(line).append("\n");
                                     }
 
-                                    final File certFile = new File(serverDirectory, "yggdrasil_session_pubkey.der");
+                                    contents = builder.toString().replace("\n\n", "\n");
+                                } catch (final SecurityException ignored) {
+                                    continue outer;
+                                }
+                            }
+                        } catch (final IOException e) {
+                            if (Skript.testing() || Skript.debug())
+                                Skript.exception(e);
+                        }
 
-                                    try (final InputStream stream = Skript.invoke(new URL("https://github.com/LifeMC/LifeSkript/raw/master/lib/yggdrasil_session_pubkey.der").openConnection(), connection -> {
-                                        try {
-                                            connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
-                                            connection.setRequestProperty("Accept", "application/octet-stream");
+                        if (contents != null) {
+                            final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
 
-                                            return connection.getInputStream();
-                                        } catch (final IOException e) {
-                                            if (Skript.testing() || Skript.debug())
-                                                Skript.exception(e);
-                                            return null;
+                            final String original = prefix + "%msg%n";
+                            final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
+
+                            String replacedContents = null;
+
+                            // Some versions has bugged log4j2.xml file that does not close the console tag, it does not cause any issues but anyway, fix it.
+                            if (!contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>") && contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">")) {
+                                contents = contents.replace("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">", "<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>");
+                            }
+
+                            if (contents.contains(original) && !contents.contains(replaced)) {
+                                replacedContents = contents.replace(original, replaced);
+                            }
+
+                            if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
+                                final File temp = File.createTempFile("log4j2.xml-", ".TMP");
+
+                                if (!temp.exists()) // This should not happen, but anyway...
+                                    temp.createNewFile();
+
+                                try (final PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), StandardCharsets.UTF_8)))) {
+                                    pw.print(replacedContents);
+                                    pw.flush();
+                                }
+
+                                final File certFile = new File(serverDirectory, "yggdrasil_session_pubkey.der");
+
+                                try (final InputStream stream = Skript.invoke(new URL("https://github.com/LifeMC/LifeSkript/raw/master/lib/yggdrasil_session_pubkey.der").openConnection(), connection -> {
+                                    try {
+                                        connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
+                                        connection.setRequestProperty("Accept", "application/octet-stream");
+
+                                        return connection.getInputStream();
+                                    } catch (final IOException e) {
+                                        if (Skript.testing() || Skript.debug())
+                                            Skript.exception(e);
+                                        return null;
+                                    }
+                                });
+
+                                     final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
+                                     final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/yggdrasil_session_pubkey.der").toString());
+                                     final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                                    fileOutputStream.getChannel()
+                                            .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                                }
+
+                                final Map<String, String> env = new HashMap<>();
+
+                                env.put("create", "true");
+                                env.put("encoding", "UTF-8");
+
+                                final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName() + ".TMP");
+
+                                Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                                try (java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
+                                    final Path tempFile = temp.toPath();
+                                    final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
+
+                                    Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
+                                    Files.copy(certFile.toPath(), jarFileSystem.getPath("/yggdrasil_session_pubkey.der"), StandardCopyOption.REPLACE_EXISTING);
+                                }
+
+                                if (temp.exists())
+                                    temp.delete(); // Delete file after we've done with it
+
+                                if (certFile.exists())
+                                    certFile.delete();
+
+                                try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
+
+                                     final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
+                                     final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                                    // Disable automatic log4j config updates, because it is running on another thread
+                                    // and causes strnage errors while we are replacing the current jar and the config
+
+                                    if (Skript.classExists("org.apache.logging.log4j.core.config.FileConfigurationMonitor")) {
+                                        if (Skript.debug())
+                                            Skript.info("Disabling automatic log4j updates...");
+
+                                        final Object context = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class).invoke(null, false);
+                                        final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
+
+                                        final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
+
+                                        final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+
+                                        nextCheck.setAccessible(true);
+                                        nextCheck.set(monitor, Long.MAX_VALUE);
+                                    }
+
+                                    // In case it still gives errors, just ignore them and warn the server admin to restart
+
+                                    BukkitLoggerFilter.addFilter(record -> {
+                                        if (record.getLevel() == Level.SEVERE || record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
+                                            System.out.println("Please restart the server - we fixed the compatibility!");
+
+                                            return false;
                                         }
+                                        return true;
                                     });
 
-                                         final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
-                                         final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/yggdrasil_session_pubkey.der").toString());
-                                         final FileChannel fileChannel = fileOutputStream.getChannel()) {
+                                    // Overwrite the current server JAR file, may cause problems, but its tested
 
-                                        fileOutputStream.getChannel()
-                                                .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
-                                    }
+                                    Skript.info("Patching the server JAR file, please restart your server if it closes!");
 
-                                    final Map<String, String> env = new HashMap<>();
+                                    fileOutputStream.getChannel()
+                                            .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
 
-                                    env.put("create", "true");
-                                    env.put("encoding", "UTF-8");
-
-                                    final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName() + ".TMP");
-
-                                    Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-                                    try (java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
-                                        final Path tempFile = temp.toPath();
-                                        final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
-
-                                        Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
-                                        Files.copy(certFile.toPath(), jarFileSystem.getPath("/yggdrasil_session_pubkey.der"), StandardCopyOption.REPLACE_EXISTING);
-                                    }
-
-                                    if (temp.exists())
-                                        temp.delete(); // Delete file after we've done with it
-
-                                    try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
-
-                                         final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
-                                         final FileChannel fileChannel = fileOutputStream.getChannel()) {
-
-                                        // Disable automatic log4j config updates, because it is running on another thread
-                                        // and causes strnage errors while we are replacing the current jar and the config
-
-                                        if (Skript.classExists("org.apache.logging.log4j.core.config.FileConfigurationMonitor")) {
-                                            if (Skript.testing() && Skript.debug())
-                                                Skript.info("Disabling automatic log4j updates...");
-
-                                            final Object context = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class).invoke(null, false);
-                                            final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
-
-                                            final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
-
-                                            final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
-
-                                            nextCheck.setAccessible(true);
-                                            nextCheck.set(monitor, Long.MAX_VALUE);
-                                        }
-
-                                        // In case it still gives errors, just ignore them and warn the server admin to restart
-
-                                        BukkitLoggerFilter.addFilter(record -> {
-                                            if (record.getLevel() == Level.SEVERE || record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
-                                                System.out.println("Please restart the server - we fixed the compatibility!");
-
-                                                return false;
-                                            }
-                                            return true;
-                                        });
-
-                                        // Overwrite the current server JAR file, may cause problems, but its tested
-
-                                        Skript.info("Patching the server JAR file, please restart your server if it closes!");
-
-                                        fileOutputStream.getChannel()
-                                                .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
-
-                                        madeChanges = true;
-                                        restartNeeded = true;
-                                    }
-
-                                    // Remove the temporary server JAR file
-
-                                    if (tempServerJarFile.exists())
-                                        tempServerJarFile.delete();
+                                    madeChanges = true;
+                                    restartNeeded = true;
                                 }
+
+                                // Remove the temporary server JAR file
+
+                                if (tempServerJarFile.exists())
+                                    tempServerJarFile.delete();
                             }
                         }
                     }
@@ -2405,6 +2416,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 if (Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
                     Skript.exception(new Throwable(), "Test error");
                 }
+
+                // Disable the sharp sk updater, if running the fixed one, it will automatically downgrade otherwise
+                if (Bukkit.getPluginManager().getPlugin("SharpSKUpdater") != null)
+                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
 
                 // Reset the tps as it has been confused for slow loading of scripts or variables
                 // if the server has too many scripts or variables. This does not reset external plugin listeners.
