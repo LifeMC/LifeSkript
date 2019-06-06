@@ -56,6 +56,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Consumer;
 
 /**
  * This class is used for user-defined commands.
@@ -63,6 +64,9 @@ import java.util.concurrent.ConcurrentMap;
  * @author Peter Güttinger
  */
 public final class ScriptCommand implements CommandExecutor {
+
+    public static final Constructor<PluginCommand> pluginCommandConstructor =
+            Skript.invoke(Skript.getConstructor(PluginCommand.class, String.class, Plugin.class), (Consumer<Constructor<PluginCommand>>) constructor -> constructor.setAccessible(true));
 
     public static final ConcurrentMap<String, ScriptCommand> commandMap =
             new ConcurrentHashMap<>();
@@ -147,23 +151,25 @@ public final class ScriptCommand implements CommandExecutor {
 
         bukkitCommand = setupBukkitCommand();
 
-        commandMap.put(name, this);
+        commandMap.put(name.startsWith("/") ? name.substring(1) : name, this);
     }
 
-    private PluginCommand setupBukkitCommand() {
+    private final PluginCommand setupBukkitCommand() {
         try {
-            final Constructor<PluginCommand> c = PluginCommand.class.getDeclaredConstructor(String.class, Plugin.class);
-            c.setAccessible(true);
-            final PluginCommand bukkitCommand = c.newInstance(name, Skript.getInstance());
+            final PluginCommand bukkitCommand = pluginCommandConstructor.newInstance(name, Skript.getInstance());
+
             bukkitCommand.setAliases(aliases);
             bukkitCommand.setDescription(description);
             bukkitCommand.setLabel(label);
             bukkitCommand.setPermission(permission);
+
             // We can only set the message if it's available at parse time (aka a literal)
             if (permissionMessage instanceof Literal)
                 bukkitCommand.setPermissionMessage(((Literal<String>) permissionMessage).getSingle());
+
             bukkitCommand.setUsage(usage);
             bukkitCommand.setExecutor(this);
+
             return bukkitCommand;
         } catch (final Throwable tw) {
             Skript.outdatedError(tw);
@@ -173,22 +179,30 @@ public final class ScriptCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
-        if (sender == null || label == null || args == null)
+        if (sender == null || args == null)
             return false;
-        execute(sender, label, StringUtils.join(args, " "));
-        return true;
+        execute(sender, StringUtils.join(args, " "));
+        return true; // Skript will print its own usage message anyway
+    }
+
+    /**
+     * @deprecated {@link ScriptCommand#execute(CommandSender, String)}
+     */
+    @Deprecated
+    public final boolean execute(final CommandSender sender, @SuppressWarnings("unused") final String commandLabel, final String rest) {
+        return execute(sender, rest);
     }
 
     @SuppressWarnings("null")
-    public boolean execute(final CommandSender sender, final String commandLabel, final String rest) {
+    public final boolean execute(final CommandSender sender, final String rest) {
         if (sender instanceof Player) {
             if ((executableBy & PLAYERS) == 0) {
-                sender.sendMessage("" + m_executable_by_console);
+                sender.sendMessage(m_executable_by_console.toString());
                 return false;
             }
         } else {
             if ((executableBy & CONSOLE) == 0) {
-                sender.sendMessage("" + m_executable_by_players);
+                sender.sendMessage(m_executable_by_players.toString());
                 return false;
             }
         }
@@ -224,14 +238,14 @@ public final class ScriptCommand implements CommandExecutor {
         }
 
         if (Bukkit.isPrimaryThread()) {
-            execute2(event, sender, commandLabel, rest);
+            execute2(event, sender, rest);
             if (sender instanceof Player && !event.isCooldownCancelled()) {
                 setLastUsage(((Player) sender).getUniqueId(), event, new Date());
             }
         } else {
             // must not wait for the command to complete as some plugins call commands in such a way that the server will deadlock
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
-                execute2(event, sender, commandLabel, rest);
+                execute2(event, sender, rest);
                 if (sender instanceof Player && !event.isCooldownCancelled()) {
                     setLastUsage(((Player) sender).getUniqueId(), event, new Date());
                 }
@@ -240,7 +254,15 @@ public final class ScriptCommand implements CommandExecutor {
         return true; // Skript prints its own error message anyway
     }
 
-    boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String commandLabel, final String rest) {
+    /**
+     * @deprecated {@link ScriptCommand#execute2(ScriptCommandEvent, CommandSender, String)}
+     */
+    @Deprecated
+    final boolean execute2(final ScriptCommandEvent event, final CommandSender sender, @SuppressWarnings("unused") final String commandLabel, final String rest) {
+        return execute2(event, sender, rest);
+    }
+
+    final boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             final boolean ok = SkriptParser.parseArguments(rest, ScriptCommand.this, event);
