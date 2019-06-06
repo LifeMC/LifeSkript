@@ -22,6 +22,8 @@
 
 package ch.njol.skript.config;
 
+import ch.njol.skript.ScriptLoader;
+import ch.njol.skript.Skript;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -97,9 +99,27 @@ public abstract class Node {
      * @return A pair (value, comment).
      */
     public static final NonNullPair<String, String> splitLine(final String line) {
+        if (!line.contains("#"))
+            return new NonNullPair<>(line, "");
         final Matcher m = linePattern.matcher(line);
-        if (m.matches())
-            return new NonNullPair<>(m.group(1).replace("##", "#"), m.group(2));
+        try {
+            if (m.matches())
+                return new NonNullPair<>(m.group(1).replace("##", "#"), m.group(2));
+        } catch (final StackOverflowError e) { // JDK bug? (see https://github.com/LifeMC/LifeSkript/issues/26)
+            final Config config = ScriptLoader.currentScript;
+            final Node node = SkriptLogger.getNode();
+
+            String additionalInfo = "";
+
+            if (config != null && node != null) {
+                final String script = config.getFileName();
+                final int lineNumber = node.getLine();
+
+                additionalInfo += " (" + script + ", line " + lineNumber + ")";
+            }
+
+            Skript.error("There was an error when parsing line! You should avoid very long and/or lists, very long lines and such!" + additionalInfo);
+        }
         return new NonNullPair<>(line.replace("##", "#"), "");
     }
 

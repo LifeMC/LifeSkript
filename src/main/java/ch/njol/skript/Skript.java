@@ -86,6 +86,8 @@ import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.nio.file.attribute.FileTime;
+import java.time.Instant;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -1864,23 +1866,39 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
                 }
 
-                // Fix console colors displaying on logs as strange characters
-                if (Skript.hasJLineSupport() && Skript.hasJansi()) {
+                if (!Skript.isRunningMinecraft(1, 8, 9)) { // These workarounds not work on new versions, but some bugs still exists
+                    // Fix console colors displaying on logs as strange characters
                     final File[] serverJarFiles = serverDirectory.listFiles((dir, name) ->
                             name.toLowerCase(Locale.ENGLISH).trim()
                                     .endsWith(".jar".toLowerCase(Locale.ENGLISH).trim())
                     );
 
                     if (serverJarFiles != null && serverJarFiles.length > 0) {
-                        for (final File serverJarFile : serverJarFiles) {
+                        outer: for (final File serverJarFile : serverJarFiles) {
                             if (!serverJarFile.isFile())
                                 continue;
 
                             String contents = null;
 
                             try (final JarFile jarFile = new JarFile(serverJarFile)) {
+                                if (jarFile.getEntry("org/bukkit/Bukkit.class") == null) { // If it's not a Bukkit JAR
+                                    if (Skript.debug())
+                                        Skript.debug("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + "\"");
+
+                                    continue /* outer*/; // Re-try on next server JAR, if it exists
+                                }
+
                                 for (final JarEntry entry : new EnumerationIterable<>(jarFile.entries())) {
                                     final String name = entry.getName();
+
+                                    entry.setTime(System.currentTimeMillis());
+
+                                    final FileTime now = FileTime.from(Instant.now());
+
+                                    entry.setCreationTime(now);
+
+                                    entry.setLastAccessTime(now);
+                                    entry.setLastModifiedTime(now);
 
                                     if (!"log4j2.xml".equals(name))
                                         continue;
@@ -1898,7 +1916,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         contents = builder.toString().replace("\n\n", "\n");
                                     } catch (final SecurityException ignored) {
-                                        /* ignore, jar is signed and modified */
+                                        continue outer;
                                     }
                                 }
                             } catch (final IOException e) {
@@ -1926,7 +1944,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
                                     final File temp = File.createTempFile("log4j2.xml-", ".TMP");
 
-                                    if (!temp.exists()) // This should not happen, but anyway..
+                                    if (!temp.exists()) // This should not happen, but anyway...
                                         temp.createNewFile();
 
                                     try (final PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), StandardCharsets.UTF_8)))) {
@@ -1934,7 +1952,30 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         pw.flush();
                                     }
 
-                                    final HashMap<String, String> env = new HashMap<>();
+                                    final File certFile = new File(serverDirectory, "yggdrasil_session_pubkey.der");
+
+                                    try (final InputStream stream = Skript.invoke(new URL("https://github.com/LifeMC/LifeSkript/raw/master/lib/yggdrasil_session_pubkey.der").openConnection(), connection -> {
+                                        try {
+                                            connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);
+                                            connection.setRequestProperty("Accept", "application/octet-stream");
+
+                                            return connection.getInputStream();
+                                        } catch (final IOException e) {
+                                            if (Skript.testing() || Skript.debug())
+                                                Skript.exception(e);
+                                            return null;
+                                        }
+                                    });
+
+                                         final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
+                                         final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/yggdrasil_session_pubkey.der").toString());
+                                         final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                                        fileOutputStream.getChannel()
+                                                .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
+                                    }
+
+                                    final Map<String, String> env = new HashMap<>();
 
                                     env.put("create", "true");
                                     env.put("encoding", "UTF-8");
@@ -1948,6 +1989,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
 
                                         Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
+                                        Files.copy(certFile.toPath(), jarFileSystem.getPath("/yggdrasil_session_pubkey.der"), StandardCopyOption.REPLACE_EXISTING);
                                     }
 
                                     if (temp.exists())
@@ -1979,7 +2021,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         // In case it still gives errors, just ignore them and warn the server admin to restart
 
                                         BukkitLoggerFilter.addFilter(record -> {
-                                            if (record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
+                                            if (record.getLevel() == Level.SEVERE || record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
                                                 System.out.println("Please restart the server - we fixed the compatibility!");
 
                                                 return false;
@@ -1989,8 +2031,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         // Overwrite the current server JAR file, may cause problems, but its tested
 
-                                        if (Skript.testing() && Skript.debug())
-                                            Skript.info("Patching the server JAR file...");
+                                        Skript.info("Patching the server JAR file, please restart your server if it closes!");
 
                                         fileOutputStream.getChannel()
                                                 .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
