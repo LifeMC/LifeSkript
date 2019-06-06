@@ -32,6 +32,7 @@ import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Documentation;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.effects.EffPush;
+import ch.njol.skript.effects.EffThrow.ScriptError;
 import ch.njol.skript.events.EvtSkript;
 import ch.njol.skript.expressions.ExprEntities;
 import ch.njol.skript.expressions.ExprTargetedBlock;
@@ -76,19 +77,15 @@ import org.fusesource.jansi.Ansi;
 
 import java.io.*;
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -503,10 +500,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * Returns whatever this server is running CraftBukkit.
      *
      * @return Whatever this server is running CraftBukkit.
-     * @see Skript#getServerPlatform()
+     * @deprecated {@link Skript#getServerPlatform()}
      */
+    @Deprecated
     public static final boolean isRunningCraftBukkit() {
-        return getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT;
+        return isCraftBukkit;
     }
 
     // ================ CONSTANTS, OPTIONS & OTHER ================
@@ -807,6 +805,28 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         } catch (final NoSuchMethodException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return null;
+        }
+    }
+
+    /**
+     * Gets a constructor from the given class with the given arguments.
+     * Returns null on any exception (for example {@link java.lang.NoSuchMethodException})
+     *
+     * @param c              The class to get the constructor with given parameter types.
+     * @param parameterTypes The parameter types to get constructor from the given class.
+     * @return The constructor, store the results in a static final variable for maximum
+     * runtime performance.
+     */
+    @SuppressWarnings("null")
+    public static final <T> Constructor<T> getConstructor(final @Nullable Class<T> c, final @Nullable Class<?>... parameterTypes) {
+        if (c == null)
+            return null;
+        try {
+            if (parameterTypes == null)
+                return c.getDeclaredConstructor();
+            return c.getDeclaredConstructor(parameterTypes);
+        } catch (NoSuchMethodException | SecurityException ignored) {
             return null;
         }
     }
@@ -1281,28 +1301,54 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         // We change that variable later to handle inner exceptions
         final Throwable originalCause = cause;
 
-        try {
+        boolean headerPrinted = false;
+
+        if (originalCause instanceof EmptyStacktraceException) {
+            assert false : originalCause;
+            return new RuntimeException(originalCause);
+        }
+
+        if (originalCause instanceof ScriptError) {
+            final ScriptError scriptError = (ScriptError) originalCause;
+
             logEx();
-            logEx("[Skript] Severe Error:");
+            logEx("[Skript] Script Error:");
             if (info != null)
                 logEx(info);
             logEx();
-            logEx("Something went horribly wrong with Skript.");
-            logEx("This issue is NOT your fault! You probably can't fix it yourself, either.");
+            logEx("Script: " + scriptError.getScript());
+            logEx("Line: " + scriptError.getLine());
             logEx();
-            logEx("If you're a server admin please go to " + ISSUES_LINK);
-            logEx("and check if this issue has already been reported.");
+            logEx("Error Message: " + scriptError.getLocalizedMessage());
             logEx();
-            logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
-            logEx("and describe what you did before it happened and/or what you think caused the error.");
-            logEx();
-            logEx("If you think that it's a code that's causing the error please post the code as well.");
-            logEx("By following this guide fixing the error should be easy and done fast.");
-            logEx();
-            // Print hint message only if the at least one condition in the hint message is met.
-            if (Skript.testing() || Skript.logHigh() || Skript.hasAddons()) {
-                logEx("Also removing the -ea java argument, lowering the verbosity or removing the problematic addons may help.");
+
+            headerPrinted = true;
+        }
+
+        try {
+            if (!headerPrinted) {
                 logEx();
+                logEx("[Skript] Severe Error:");
+                if (info != null)
+                    logEx(info);
+                logEx();
+                logEx("Something went horribly wrong with Skript.");
+                logEx("This issue is NOT your fault! You probably can't fix it yourself, either.");
+                logEx();
+                logEx("If you're a server admin please go to " + ISSUES_LINK);
+                logEx("and check if this issue has already been reported.");
+                logEx();
+                logEx("If not please create a new issue with a meaningful title, copy & paste this whole error into it,");
+                logEx("and describe what you did before it happened and/or what you think caused the error.");
+                logEx();
+                logEx("If you think that it's a code that's causing the error please post the code as well.");
+                logEx("By following this guide fixing the error should be easy and done fast.");
+                logEx();
+                // Print hint message only if the at least one condition in the hint message is met.
+                if (Skript.testing() || Skript.logHigh() || Skript.hasAddons()) {
+                    logEx("Also removing the -ea java argument, lowering the verbosity or removing the problematic addons may help.");
+                    logEx();
+                }
             }
             logEx("Stack trace:");
             if (cause == null || cause.getStackTrace().length == 0) {
@@ -1350,7 +1396,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
             logEx();
-            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language") + "-" + Workarounds.getOriginalProperty("user.country") + ")");
+            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language").toLowerCase(Locale.ENGLISH) + "-" + Workarounds.getOriginalProperty("user.country") + ")");
             logEx("Encoding: " + "file = " + Workarounds.getOriginalProperty("file.encoding") + " , jnu = " + Workarounds.getOriginalProperty("sun.jnu.encoding") + " , stderr = " + Workarounds.getOriginalProperty("sun.stderr.encoding") + " , stdout = " + Workarounds.getOriginalProperty("sun.stdout.encoding"));
             logEx();
             final StringBuilder stringBuilder = new StringBuilder(4096);
@@ -1513,6 +1559,22 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             Workarounds.initIfNotAlready();
             SkriptCommand.setPriority();
 
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                // We are exiting - either a shutdown or a crash!
+
+                Delay.delayingDisabled = true;
+
+                final Skript instance = Skript.instance;
+
+                if (instance != null && instance.isEnabled() && Skript.isBukkitRunning()) {
+                    Bukkit.getScheduler().cancelTasks(this);
+                    HandlerList.unregisterAll((Plugin) this);
+
+                    onDisable(); // Do it if we can
+                }
+
+            }, "Skript last minute cleanup thread"));
+
             if (!first && !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
 
                 first = true;
@@ -1613,7 +1675,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 .endsWith(".bash".toLowerCase(Locale.ENGLISH).trim())
                 );
 
-                if (startupScripts != null) {
+                if (startupScripts != null && startupScripts.length > 0) {
                     for (final File startupScript : startupScripts) {
                         if (!startupScript.isFile())
                             continue;
@@ -1628,7 +1690,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             String stripColor = afterJar;
                             // Strip color is required for not showing strange characters on log when using jansi colors
                             if (!afterJar.contains("--log-strip-color")) {
-                                stripColor += " --log-strip-color"; // FIXME use StringBuilder
+                                stripColor += " --log-strip-color";
                             }
                             String replacedContents = contents.replace(afterJar, stripColor);
                             if (!contents.equalsIgnoreCase(replacedContents)) {
@@ -1659,7 +1721,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     try (final JarFile sharpSk = new JarFile(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar")) {
                         final JarEntry entry = sharpSk.getJarEntry("plugin.yml");
 
-                        try (final InputStream in = sharpSk.getInputStream(entry);
+                        try (final InputStream in = new BufferedInputStream(sharpSk.getInputStream(entry));
                              final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 
                             final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
@@ -1802,11 +1864,156 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
                 }
 
+                // Fix console colors displaying on logs as strange characters
+                if (Skript.hasJLineSupport() && Skript.hasJansi()) {
+                    final File[] serverJarFiles = serverDirectory.listFiles((dir, name) ->
+                            name.toLowerCase(Locale.ENGLISH).trim()
+                                    .endsWith(".jar".toLowerCase(Locale.ENGLISH).trim())
+                    );
+
+                    if (serverJarFiles != null && serverJarFiles.length > 0) {
+                        for (final File serverJarFile : serverJarFiles) {
+                            if (!serverJarFile.isFile())
+                                continue;
+
+                            String contents = null;
+
+                            try (final JarFile jarFile = new JarFile(serverJarFile)) {
+                                for (final JarEntry entry : new EnumerationIterable<>(jarFile.entries())) {
+                                    final String name = entry.getName();
+
+                                    if (!"log4j2.xml".equals(name))
+                                        continue;
+
+                                    try (final BufferedInputStream in = new BufferedInputStream(jarFile.getInputStream(entry));
+                                         final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+
+                                        final StringBuilder builder = new StringBuilder();
+
+                                        String line;
+
+                                        while ((line = br.readLine()) != null) {
+                                            builder.append(line).append("\n");
+                                        }
+
+                                        contents = builder.toString().replace("\n\n", "\n");
+                                    } catch (final SecurityException ignored) {
+                                        /* ignore, jar is signed and modified */
+                                    }
+                                }
+                            } catch (final IOException e) {
+                                if (Skript.testing() || Skript.debug())
+                                    Skript.exception(e);
+                            }
+
+                            if (contents != null) {
+                                final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
+
+                                final String original = prefix + "%msg%n";
+                                final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
+
+                                String replacedContents = null;
+
+                                // Some versions has bugged log4j2.xml file that does not close the console tag, it does not cause any issues but anyway, fix it.
+                                if (!contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>") && contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">")) {
+                                    contents = contents.replace("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">", "<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>");
+                                }
+
+                                if (contents.contains(original) && !contents.contains(replaced)) {
+                                    replacedContents = contents.replace(original, replaced);
+                                }
+
+                                if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
+                                    final File temp = File.createTempFile("log4j2.xml-", ".TMP");
+
+                                    if (!temp.exists()) // This should not happen, but anyway..
+                                        temp.createNewFile();
+
+                                    try (final PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), StandardCharsets.UTF_8)))) {
+                                        pw.print(replacedContents);
+                                        pw.flush();
+                                    }
+
+                                    final HashMap<String, String> env = new HashMap<>();
+
+                                    env.put("create", "true");
+                                    env.put("encoding", "UTF-8");
+
+                                    final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName() + ".TMP");
+
+                                    Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                                    try (java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
+                                        final Path tempFile = temp.toPath();
+                                        final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
+
+                                        Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
+                                    }
+
+                                    if (temp.exists())
+                                        temp.delete(); // Delete file after we've done with it
+
+                                    try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
+
+                                         final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
+                                         final FileChannel fileChannel = fileOutputStream.getChannel()) {
+
+                                        // Disable automatic log4j config updates, because it is running on another thread
+                                        // and causes strnage errors while we are replacing the current jar and the config
+
+                                        if (Skript.classExists("org.apache.logging.log4j.core.config.FileConfigurationMonitor")) {
+                                            if (Skript.testing() && Skript.debug())
+                                                Skript.info("Disabling automatic log4j updates...");
+
+                                            final Object context = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class).invoke(null, false);
+                                            final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
+
+                                            final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
+
+                                            final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+
+                                            nextCheck.setAccessible(true);
+                                            nextCheck.set(monitor, Long.MAX_VALUE);
+                                        }
+
+                                        // In case it still gives errors, just ignore them and warn the server admin to restart
+
+                                        BukkitLoggerFilter.addFilter(record -> {
+                                            if (record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
+                                                System.out.println("Please restart the server - we fixed the compatibility!");
+
+                                                return false;
+                                            }
+                                            return true;
+                                        });
+
+                                        // Overwrite the current server JAR file, may cause problems, but its tested
+
+                                        if (Skript.testing() && Skript.debug())
+                                            Skript.info("Patching the server JAR file...");
+
+                                        fileOutputStream.getChannel()
+                                                .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
+
+                                        madeChanges = true;
+                                        restartNeeded = true;
+                                    }
+
+                                    // Remove the temporary server JAR file
+
+                                    if (tempServerJarFile.exists())
+                                        tempServerJarFile.delete();
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // Warn the user that server needs a restart
                 if (madeChanges)
                     info("Automatically made some compatibility settings. Restart your server to apply them.");
 
-                // Warn the user and automatically restart the server
+                // Warn the user that server really needs a restart
                 if (restartNeeded) {
                     Skript.closeOnEnable(() -> Bukkit.getScheduler().runTask(this, () -> {
                         Bukkit.getLogger().warning("");
@@ -2161,10 +2368,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 // Reset the tps as it has been confused for slow loading of scripts or variables
                 // if the server has too many scripts or variables. This does not reset external plugin listeners.
                 final String mappingVersion = invoke(Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", ""), version -> version.startsWith(".") ? version.substring(1) : version);
-                final String nmsPackage = "net.minecraft.server" + (!mappingVersion.isEmpty() ? "" : ".") + mappingVersion;
+                final String nmsPackage = "net.minecraft.server" + (mappingVersion.isEmpty() ? "" : ".") + mappingVersion;
 
                 // Note: May break in future if the format is changed, but it will not in the near future
-                if (mappingVersion.isEmpty() || (mappingVersion.contains("v") && mappingVersion.contains("_") && mappingVersion.contains("R"))) {
+                if (mappingVersion.isEmpty() || mappingVersion.contains("v") && mappingVersion.contains("_") && mappingVersion.contains("R")) {
                     if (Skript.debug())
                         Skript.info("Detected NMS mapping version of " + mappingVersion + ", using it now...");
 
@@ -2173,11 +2380,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                         if (Skript.fieldExists(minecraftServer, "recentTps")) {
                             try {
-                                invoke(minecraftServer.getDeclaredField("recentTps"), (Consumer<Field>) field -> field.setAccessible(true)).set(null, new double[] {25.00D, 25.00D, 25.00D});
+                                final Field recentTps = minecraftServer.getDeclaredField("recentTps");
+
+                                if (!recentTps.isAccessible())
+                                    recentTps.setAccessible(true);
+
+                                final double[] recentTpsArray = (double[]) recentTps.get(Skript.methodForName(minecraftServer, "getServer", true).invoke(null));
+
+                                for (int i = 0; i < recentTpsArray.length; i++)
+                                    recentTpsArray[i] = 25.00D;
 
                                 if (Skript.debug())
                                     Skript.info("Reset ticks per second after loading everything to not confuse the server");
-                            } catch (IllegalAccessException | NoSuchFieldException e) {
+                            } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
                                 Skript.outdatedError(e);
                                 assert false : e;
                             }
