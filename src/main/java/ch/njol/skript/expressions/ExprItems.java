@@ -113,6 +113,7 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
 
                 @Override
                 public void remove() {
+                    throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
                 }
 
             };
@@ -144,6 +145,7 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
 
                 @Override
                 public void remove() {
+                    throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
                 }
 
             };

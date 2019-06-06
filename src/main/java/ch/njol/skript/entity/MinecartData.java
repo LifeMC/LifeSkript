@@ -90,6 +90,7 @@ public final class MinecartData extends EntityData<Minecart> {
 
     @Override
     public void set(final Minecart entity) {
+        throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
     }
 
     @Override

@@ -32,6 +32,8 @@ import ch.njol.skript.command.Argument;
 import ch.njol.skript.command.Commands;
 import ch.njol.skript.command.ScriptCommand;
 import ch.njol.skript.command.ScriptCommandEvent;
+import ch.njol.skript.config.Config;
+import ch.njol.skript.config.Node;
 import ch.njol.skript.lang.function.ExprFunctionCall;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.FunctionReference;
@@ -86,11 +88,11 @@ public final class SkriptParser {
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
+    private static final boolean disableAndOrHack = Boolean.parseBoolean(System.getProperty("skript.disableAndOrHack")); // FIXME test this
     public final ParseContext context;
     final String expr;
     private final int flags;
     private boolean suppressMissingAndOrWarnings;
-    private static final boolean disableAndOrHack = Boolean.parseBoolean("skript.disableAndOrHack"); // FIXME test this
 
     public SkriptParser(final String expr) {
         this(expr, ALL_FLAGS);
@@ -629,7 +631,8 @@ public final class SkriptParser {
                         return error("The type '" + p.getFirst() + "' could not be found. Please check your spelling or escape the percent signs if you want to match literal %s: \"\\%not an expression\\%\"");
                     ps.add(p.getSecond());
                     b.append(pattern, last, i + 1);
-                    b.append(Utils.toEnglishPlural(ci.getCodeName(), p.getSecond()));
+                    //noinspection ConstantConditions
+                    b.append(Utils.toEnglishPlural(ci.getCodeName(), p.getSecond())); // it's a non-null pair
                     last = j;
                     i = j;
                     break;
@@ -707,7 +710,8 @@ public final class SkriptParser {
         for (int i = 0; i < classes.length; i++) {
             final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(classes[i]);
             r.classes[i] = Classes.getClassInfo(p.getFirst());
-            r.isPlural[i] = p.getSecond();
+            //noinspection ConstantConditions
+            r.isPlural[i] = p.getSecond(); // it's also a non-null pair
         }
         return r;
     }
@@ -809,14 +813,35 @@ public final class SkriptParser {
                                 }
                                 x = x2;
                             }
-                            final T t = info.c.newInstance();
+                            final Class<? extends T> clazz = info.c;
+                            if (!clazz.getPackage().getName().startsWith("ch.njol")) { // If it's not a native Skript expression
+                                final Config config = ScriptLoader.currentScript;
+                                final Node node = SkriptLogger.getNode();
+
+                                if (config != null && node != null) {
+                                    final String script = config.getFileName();
+                                    final int line = node.getLine();
+
+                                    final String name = clazz.getCanonicalName();
+
+                                    if (Skript.logSpam()) // Don't print unless we explicitly want it
+                                        Skript.info("Using expression " + name + " (" + script + ", line " + line + ")"); // Conditions etc. are also expressions
+
+                                    // Those are un required and laggy expressions that hangs the parser
+                                    // FIXME Add config option for suppressing this warning
+                                    // TODO Refuse to register those conditions in future
+                                    if ("com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name))
+                                        Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ")");
+                                }
+                            }
+                            final T t = clazz.newInstance();
                             if (t.init(res.exprs, i, ScriptLoader.hasDelayBefore, res)) {
                                 log.printLog();
                                 return t;
                             }
                         }
                     } catch (final InstantiationException | IllegalAccessException e) {
-                        assert false;
+                        assert false : e;
                     }
                 }
             }
@@ -1103,7 +1128,8 @@ public final class SkriptParser {
             for (int i = 0; i < ts.size(); i++)
                 exprRetTypes[i] = ts.get(i).getReturnType();
 
-            if (isLiteralList) {
+            if (isLiteralList) { // If it's a literal list
+                //noinspection SuspiciousToArrayCall
                 final Literal<T>[] ls = ts.toArray(new Literal[0]);
                 return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
@@ -1210,9 +1236,10 @@ public final class SkriptParser {
                         assert pattern != null;
                         final ParseResult res = parse_i(pattern, 0, 0);
                         if (res != null) {
+                            if (Skript.logSpam() && !info.c.getPackage().getName().startsWith("ch.njol")) // Log spam and it's not a native Skript event
+                                Skript.info("Using event " + info.c.getCanonicalName());
                             final SkriptEvent e = info.c.newInstance();
                             final Literal<?>[] ls = Arrays.copyOf(res.exprs, res.exprs.length, Literal[].class);
-                            assert ls != null;
                             if (!e.init(ls, i, res)) {
                                 log.printError();
                                 return null;
@@ -1221,7 +1248,7 @@ public final class SkriptParser {
                             return new NonNullPair<>(info, e);
                         }
                     } catch (final InstantiationException | IllegalAccessException e) {
-                        assert false;
+                        assert false : e;
                     }
                 }
             }
@@ -1486,6 +1513,7 @@ public final class SkriptParser {
     }
 
     private static final class ExprInfo {
+
         final ClassInfo<?>[] classes;
 
         final boolean[] isPlural;
@@ -1498,6 +1526,7 @@ public final class SkriptParser {
             classes = new ClassInfo[length];
             isPlural = new boolean[length];
         }
+
     }
 
 }
