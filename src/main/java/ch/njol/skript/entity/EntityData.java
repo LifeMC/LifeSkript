@@ -175,7 +175,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     public static final <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final String codeName) throws IllegalArgumentException {
-        register(dataClass, codeName, entityClass, 0, codeName);
+        register(dataClass, name, entityClass, 0, codeName); //FIXME test this change?
     }
 
     public static final <E extends Entity, T extends EntityData<E>> void register(final Class<T> dataClass, final String name, final Class<E> entityClass, final int defaultName, final String... codeNames) throws IllegalArgumentException {
@@ -481,7 +481,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     @Deprecated
-    protected boolean deserialize(final String s) {
+    protected boolean deserialize(@SuppressWarnings("unused") final String s) {
         return false;
     }
 
