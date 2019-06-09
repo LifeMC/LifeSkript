@@ -44,6 +44,7 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -201,10 +202,10 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
             if (e instanceof PlayerCommandPreprocessEvent) {
                 final PlayerCommandPreprocessEvent ev = (PlayerCommandPreprocessEvent) e;
-                event = new CommandEvent(ev.getPlayer(), ev.getMessage(), ev.getMessage().split(" "));
+                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getPlayer(), ev.getMessage(), ev.getMessage().split(" "));
             } else if (e instanceof ServerCommandEvent) {
                 final ServerCommandEvent ev = (ServerCommandEvent) e;
-                event = new CommandEvent(ev.getSender(), ev.getCommand(), ev.getCommand().split(" "));
+                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getSender(), ev.getCommand(), ev.getCommand().split(" "));
             } else
                 assert false : e.getClass().getCanonicalName();
 

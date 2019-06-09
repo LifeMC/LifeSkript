@@ -24,6 +24,7 @@ package ch.njol.skript.hooks.regions.events;
 
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.hooks.regions.classes.Region;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -42,7 +43,13 @@ public final class RegionBorderEvent extends Event implements Cancellable {
     private final boolean enter;
     private boolean cancelled;
 
+    @Deprecated
     public RegionBorderEvent(final Region region, final Player player, final boolean enter) {
+        this(!Bukkit.isPrimaryThread(), region, player, enter);
+    }
+
+    public RegionBorderEvent(final boolean async, final Region region, final Player player, final boolean enter) {
+        super(async);
         this.region = region;
         this.player = player;
         this.enter = enter;

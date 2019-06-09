@@ -22,6 +22,7 @@
 
 package ch.njol.skript.lang.function;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.eclipse.jdt.annotation.Nullable;
@@ -41,7 +42,13 @@ public final class FunctionEvent<T> extends Event {
         this(null);
     }
 
+    @Deprecated
     public FunctionEvent(final @Nullable Function<? extends T> function) {
+        this(!Bukkit.isPrimaryThread(), function);
+    }
+
+    public FunctionEvent(final boolean async, final @Nullable Function<? extends T> function) {
+        super(async);
         this.function = function;
     }
 

@@ -55,13 +55,13 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
 
         final ExperienceSpawnEvent es;
         if (e instanceof BlockExpEvent) {
-            es = new ExperienceSpawnEvent(((BlockExpEvent) e).getExpToDrop(), ((BlockExpEvent) e).getBlock().getLocation().add(0.5, 0.5, 0.5));
+            es = new ExperienceSpawnEvent(!Bukkit.isPrimaryThread(), ((BlockExpEvent) e).getExpToDrop(), ((BlockExpEvent) e).getBlock().getLocation().add(0.5, 0.5, 0.5));
         } else if (e instanceof EntityDeathEvent) {
-            es = new ExperienceSpawnEvent(((EntityDeathEvent) e).getDroppedExp(), ((EntityDeathEvent) e).getEntity().getLocation());
+            es = new ExperienceSpawnEvent(!Bukkit.isPrimaryThread(), ((EntityDeathEvent) e).getDroppedExp(), ((EntityDeathEvent) e).getEntity().getLocation());
         } else if (e instanceof ExpBottleEvent) {
-            es = new ExperienceSpawnEvent(((ExpBottleEvent) e).getExperience(), ((ExpBottleEvent) e).getEntity().getLocation());
+            es = new ExperienceSpawnEvent(!Bukkit.isPrimaryThread(), ((ExpBottleEvent) e).getExperience(), ((ExpBottleEvent) e).getEntity().getLocation());
         } else if (e instanceof PlayerFishEvent) {
-            es = new ExperienceSpawnEvent(((PlayerFishEvent) e).getExpToDrop(), ((PlayerFishEvent) e).getPlayer().getLocation());
+            es = new ExperienceSpawnEvent(!Bukkit.isPrimaryThread(), ((PlayerFishEvent) e).getExpToDrop(), ((PlayerFishEvent) e).getPlayer().getLocation());
         } else {
             assert false;
             return;

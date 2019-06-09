@@ -22,6 +22,7 @@
 
 package ch.njol.skript.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -39,7 +40,13 @@ public class CommandEvent extends Event {
     @Nullable
     private final String[] args;
 
+    @Deprecated
     public CommandEvent(final CommandSender sender, final String command, final @Nullable String[] args) {
+        this(!Bukkit.isPrimaryThread(), sender, command, args);
+    }
+
+    public CommandEvent(final boolean async, final CommandSender sender, final String command, final @Nullable String[] args) {
+        super(async);
         this.sender = sender;
         this.command = command;
         this.args = args;

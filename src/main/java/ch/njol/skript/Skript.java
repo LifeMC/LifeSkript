@@ -172,7 +172,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * The maximum data value of Minecraft, i.e. Short.MAX_VALUE - Short.MIN_VALUE.
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
-    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + (Skript.fieldExists(ChatColor.class, "RESET") ? ChatColor.RESET : "§r") + " ";
+    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
     public static final @Nullable
     Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
@@ -1033,6 +1033,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         assert Skript.testing() && Skript.debug();
         for (final String pattern : patterns)
             if (duplicatePatternCheckList.contains(pattern))
+                //FIXME Show which pattern is duplicated (e.g duplicated by ch.njol.skript.effects.EffUpdateInventory.kt)
                 Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
         if ((Skript.logSpam() || showRegisteredNonSkript) && (!showRegisteredNonSkript || !element.getCanonicalName().startsWith("ch.njol.skript.")))
             Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join("," + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ")", patterns));
@@ -1183,6 +1184,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     return false;
                 return Bukkit.dispatchCommand(e.getPlayer(), e.getMessage().substring(1));
             }
+            // FIXME Add config option for disabling command events when using 'execute console command'
             final ServerCommandEvent e = new ServerCommandEvent(sender, command);
             Bukkit.getPluginManager().callEvent(e);
             if (e.getCommand() == null || e.getCommand().isEmpty() || Commands.cancellableServerCommand && e.isCancelled())
@@ -1600,7 +1602,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta"))) {
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta") || line.contains("2.2.16-pre1"))) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
 
@@ -1866,6 +1868,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
                 }
 
+                //FIXME Fix first start causes server to give errors and shutdown
+                // possible solution: patch the server JAR on disable
                 if (Skript.debug())
                     Skript.info("Preparing to patch server JAR file...");
 
@@ -1956,6 +1960,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (!temp.exists()) // This should not happen, but anyway...
                                     temp.createNewFile();
 
+                                temp.setLastModified(System.currentTimeMillis());
+
+                                temp.setReadable(true, false);
+                                temp.setWritable(true, false);
+
                                 try (final PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(temp), StandardCharsets.UTF_8)))) {
                                     pw.print(replacedContents);
                                     pw.flush();
@@ -1984,6 +1993,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                             .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                                 }
 
+                                certFile.setLastModified(System.currentTimeMillis());
+
+                                certFile.setReadable(true, false);
+                                certFile.setWritable(true, false);
+
                                 final Map<String, String> env = new HashMap<>();
 
                                 env.put("create", "true");
@@ -1993,9 +2007,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
+                                tempServerJarFile.setLastModified(System.currentTimeMillis());
+
+                                tempServerJarFile.setReadable(true, false);
+                                tempServerJarFile.setWritable(true, false);
+
+                                tempServerJarFile.setExecutable(true, false);
+
                                 try (java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
                                     final Path tempFile = temp.toPath();
                                     final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
+
+                                    //FIXME Also add JNA or jline-terminal to fix Spigot 1.8 JLine error
 
                                     Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
                                     Files.copy(certFile.toPath(), jarFileSystem.getPath("/yggdrasil_session_pubkey.der"), StandardCopyOption.REPLACE_EXISTING);
@@ -2013,21 +2036,25 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                      final FileChannel fileChannel = fileOutputStream.getChannel()) {
 
                                     // Disable automatic log4j config updates, because it is running on another thread
-                                    // and causes strnage errors while we are replacing the current jar and the config
+                                    // and causes strange errors while we are replacing the current jar and the config
 
                                     if (Skript.classExists("org.apache.logging.log4j.core.config.FileConfigurationMonitor")) {
                                         if (Skript.debug())
                                             Skript.info("Disabling automatic log4j updates...");
 
-                                        final Object context = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class).invoke(null, false);
-                                        final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
+                                        final Method getContext = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class);
 
-                                        final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
+                                        if (getContext != null) {
+                                            final Object context = getContext.invoke(null, false);
+                                            final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
 
-                                        final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+                                            final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
 
-                                        nextCheck.setAccessible(true);
-                                        nextCheck.set(monitor, Long.MAX_VALUE);
+                                            final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+
+                                            nextCheck.setAccessible(true);
+                                            nextCheck.set(monitor, Long.MAX_VALUE);
+                                        }
                                     }
 
                                     // In case it still gives errors, just ignore them and warn the server admin to restart
@@ -2413,6 +2440,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 }
 
                 // No need to add debug code everytime to test the exception handler (:
+                // FIXME It still downgrades automatically, sad story :/
                 if (Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
                     Skript.exception(new Throwable(), "Test error");
                 }
@@ -2441,13 +2469,20 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (!recentTps.isAccessible())
                                     recentTps.setAccessible(true);
 
-                                final double[] recentTpsArray = (double[]) recentTps.get(Skript.methodForName(minecraftServer, "getServer", true).invoke(null));
+                                final Method getServer = Skript.methodForName(minecraftServer, "getServer", true);
 
-                                for (int i = 0; i < recentTpsArray.length; i++)
-                                    recentTpsArray[i] = 25.00D;
+                                if (getServer != null) {
+                                    final Object serverInstance = getServer.invoke(null);
 
-                                if (Skript.debug())
-                                    Skript.info("Reset ticks per second after loading everything to not confuse the server");
+                                    final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
+
+                                    for (int i = 0; i < recentTpsArray.length; i++)
+                                        recentTpsArray[i] = 25.00D;
+
+                                    if (Skript.debug())
+                                        Skript.info("Reset ticks per second after loading everything to not confuse the server");
+                                } else
+                                    assert false : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
                             } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
                                 Skript.outdatedError(e);
                                 assert false : e;

@@ -25,6 +25,7 @@ package ch.njol.skript.events.bukkit;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Experience;
 import ch.njol.skript.util.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -56,7 +57,13 @@ public final class ExperienceSpawnEvent extends Event implements Cancellable {
     private int xp;
     private boolean cancelled;
 
+    @Deprecated
     public ExperienceSpawnEvent(final int xp, final Location l) {
+        this(!Bukkit.isPrimaryThread(), xp, l);
+    }
+
+    public ExperienceSpawnEvent(final boolean async, final int xp, final Location l) {
+        super(async);
         this.xp = xp;
         this.l = l;
     }

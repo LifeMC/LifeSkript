@@ -27,6 +27,7 @@ import ch.njol.skript.agents.events.end.FunctionEndEvent;
 import ch.njol.skript.agents.events.start.FunctionStartEvent;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.util.coll.CollectionUtils;
+import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
@@ -100,7 +101,7 @@ public abstract class Function<T> {
         }
         final Object[][] ps = params.length < parameters.length ? Arrays.copyOf(params, parameters.length) : params;
         assert ps != null;
-        final FunctionEvent<? extends T> e = new FunctionEvent<>(this);
+        final FunctionEvent<? extends T> e = new FunctionEvent<>(!Bukkit.isPrimaryThread(), this);
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
             final Object[] val = i < params.length ? params[i] : p.def != null ? p.def.getArray(e) : null;

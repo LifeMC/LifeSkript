@@ -108,7 +108,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
     static final void callEvent(final Region r, final PlayerMoveEvent me, final boolean enter) {
         final Player p = me.getPlayer();
         assert p != null;
-        final RegionBorderEvent e = new RegionBorderEvent(r, p, enter);
+        final RegionBorderEvent e = new RegionBorderEvent(!Bukkit.isPrimaryThread(), r, p, enter);
         e.setCancelled(me.isCancelled());
         for (final Trigger t : triggers) {
             if (((EvtRegionBorder) t.getEvent()).applies(e))
