@@ -334,7 +334,7 @@ public final class Commands {
                     sender.sendMessage(ChatColor.GRAY + "executing '" + ChatColor.stripColor(command) + "'");
                     if (SkriptConfig.logPlayerCommands.value() && !(sender instanceof ConsoleCommandSender))
                         info(sender.getName() + " issued effect command: " + command);
-                    TriggerItem.walk(e, new EffectCommandEvent(sender, command));
+                    TriggerItem.walk(e, new EffectCommandEvent(!Bukkit.isPrimaryThread(), sender, command));
                 } else {
                     if (sender == Bukkit.getConsoleSender()) // log as SEVERE instead of INFO like printErrors below
                         error("Error in: " + ChatColor.stripColor(command));

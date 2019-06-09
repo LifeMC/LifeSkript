@@ -22,6 +22,7 @@
 
 package ch.njol.skript.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 
@@ -35,8 +36,13 @@ public final class ScriptCommandEvent extends CommandEvent {
     private final ScriptCommand skriptCommand;
     private boolean cooldownCancelled;
 
+    @Deprecated
     public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
-        super(sender, command.getLabel(), null);
+        this(!Bukkit.isPrimaryThread(), command, sender);
+    }
+
+    public ScriptCommandEvent(final boolean async, final ScriptCommand command, final CommandSender sender) {
+        super(async, sender, command.getLabel(), null);
         skriptCommand = command;
     }
 

@@ -2044,17 +2044,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         final Method getContext = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class);
 
-                                        if (getContext != null) {
-                                            final Object context = getContext.invoke(null, false);
-                                            final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
+                                        assert getContext != null;
 
-                                            final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
+                                        final Object context = getContext.invoke(null, false);
+                                        final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
 
-                                            final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+                                        final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
 
-                                            nextCheck.setAccessible(true);
-                                            nextCheck.set(monitor, Long.MAX_VALUE);
-                                        }
+                                        final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+
+                                        nextCheck.setAccessible(true);
+                                        nextCheck.set(monitor, Long.MAX_VALUE);
                                     }
 
                                     // In case it still gives errors, just ignore them and warn the server admin to restart
@@ -2471,18 +2471,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 final Method getServer = Skript.methodForName(minecraftServer, "getServer", true);
 
-                                if (getServer != null) {
-                                    final Object serverInstance = getServer.invoke(null);
+                                assert getServer != null : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
 
-                                    final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
+                                final Object serverInstance = getServer.invoke(null);
 
-                                    for (int i = 0; i < recentTpsArray.length; i++)
-                                        recentTpsArray[i] = 25.00D;
+                                final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
 
-                                    if (Skript.debug())
-                                        Skript.info("Reset ticks per second after loading everything to not confuse the server");
-                                } else
-                                    assert false : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
+                                for (int i = 0; i < recentTpsArray.length; i++)
+                                    recentTpsArray[i] = 25.00D;
+
+                                if (Skript.debug())
+                                    Skript.info("Reset ticks per second after loading everything to not confuse the server");
                             } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
                                 Skript.outdatedError(e);
                                 assert false : e;

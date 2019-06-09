@@ -22,6 +22,7 @@
 
 package ch.njol.skript.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 
@@ -33,8 +34,13 @@ public final class EffectCommandEvent extends CommandEvent {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
 
+    @Deprecated
     public EffectCommandEvent(final CommandSender sender, final String command) {
-        super(sender, command, new String[0]);
+        this(!Bukkit.isPrimaryThread(), sender, command);
+    }
+
+    public EffectCommandEvent(final boolean async, final CommandSender sender, final String command) {
+        super(async, sender, command, new String[0]);
     }
 
     public static final HandlerList getHandlerList() {
