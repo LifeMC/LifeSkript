@@ -834,6 +834,28 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
+     * Gets a field from the given class.
+     * <p>
+     * Save the result to a static final variable for maximum performance.
+     *
+     * @param c         The class
+     * @param fieldName The name of the field
+     * @return The field.
+     */
+    @SuppressWarnings("null")
+    public static final Field fieldForName(final @Nullable Class<?> c, final @Nullable String fieldName) {
+        if (c == null || fieldName == null)
+            return null;
+        try {
+            return c.getDeclaredField(fieldName);
+        } catch (final NoSuchFieldException | SecurityException ignored) {
+            //if (Skript.testing() && Skript.debug())
+            //debug("The field \"" + fieldName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
+            return null;
+        }
+    }
+
+    /**
      * Tests whatever a field exists in the given class.
      * <p>
      * Save the result to a static final variable for maximum performance.
@@ -1184,7 +1206,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     return false;
                 return Bukkit.dispatchCommand(e.getPlayer(), e.getMessage().substring(1));
             }
-            // FIXME Add config option for disabling command events when using 'execute console command'
+            // FIXME Add config option for disabling command events when using 'execute console command' to improve performance
             final ServerCommandEvent e = new ServerCommandEvent(sender, command);
             Bukkit.getPluginManager().callEvent(e);
             if (e.getCommand() == null || e.getCommand().isEmpty() || Commands.cancellableServerCommand && e.isCancelled())
