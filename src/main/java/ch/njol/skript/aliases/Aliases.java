@@ -610,7 +610,8 @@ public final class Aliases {
             return t;
         } else if (type.matches("\\d+")) {
             ItemData d = new ItemData(Utils.parseInt(type));
-            if (Material.getMaterial(d.getId()) == null) {
+            final Material m = Material.getMaterial(d.getId());
+            if (m == null) {
                 Skript.error(m_invalid_id.toString(d.getId()));
                 return null;
             }
@@ -625,6 +626,8 @@ public final class Aliases {
                 Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
             }
             t.add(d);
+            if (Skript.fieldForName(Material.class, m.name()).isAnnotationPresent(Deprecated.class))
+                Skript.warning("Material \"" + m.name() + "\" is deprecated");
             return t;
         } else if ((i = getAlias(type)) != null) {
             for (ItemData d : i) {
