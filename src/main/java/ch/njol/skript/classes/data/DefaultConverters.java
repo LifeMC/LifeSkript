@@ -37,6 +37,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -198,5 +199,15 @@ public final class DefaultConverters {
         // Enchantment - EnchantmentType
         Converters.registerConverter(Enchantment.class, EnchantmentType.class, e -> new EnchantmentType(e, -1));
 
+        // CommandSender - Block
+        Converters.registerConverter(CommandSender.class, Block.class, s -> {
+            if (s instanceof Block) // Already a block?
+                return (Block) s;
+            if (s instanceof BlockCommandSender) // Command block or such
+                return ((BlockCommandSender) s).getBlock();
+            if (s instanceof Entity) // A Player, assuming other Entities can't use commands
+                return ((Entity) s).getLocation().getBlock();
+            return null; // This not our problem C:
+        });
     }
 }
