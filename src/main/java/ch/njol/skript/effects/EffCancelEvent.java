@@ -69,7 +69,7 @@ public final class EffCancelEvent extends Effect {
     @SuppressWarnings("null")
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         if (isDelayed == Kleenean.TRUE) {
-            Skript.error("Can't cancel an event anymore after is has already passed, remove the wait statements!", ErrorQuality.SEMANTIC_ERROR);
+            Skript.error("Can't cancel an event anymore after it has been already passed, remove the wait statements!", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         if (ScriptLoader.isCurrentEvent(PlayerLoginEvent.class)) {
@@ -79,7 +79,7 @@ public final class EffCancelEvent extends Effect {
         cancel = matchedPattern == 0;
         final Class<? extends Event>[] es = ScriptLoader.getCurrentEvents();
         if (es == null || es.length < 1) {
-            Skript.error("The cancel event effect only usable in a event", ErrorQuality.SEMANTIC_ERROR);
+            Skript.error("The cancel event effect only usable in an event", ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         final Class<? extends Event> e = es[0];

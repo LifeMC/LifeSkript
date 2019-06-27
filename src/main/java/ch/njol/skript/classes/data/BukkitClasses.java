@@ -567,7 +567,7 @@ public final class BukkitClasses {
 
         Classes.registerClass(new ClassInfo<>(InventoryHolder.class, "inventoryholder").name(ClassInfo.NO_DOC).defaultExpression(new EventValueExpression<>(InventoryHolder.class)));
 
-        Classes.registerClass(new ClassInfo<>(GameMode.class, "gamemode").user("game ?modes?").name("Game Mode").description("The game modes survival, creative and adventure.").usage("creative/survival/adventure").examples("player's gamemode is survival", "set the player argument's game mode to creative").since("1.0").defaultExpression(new SimpleLiteral<>(GameMode.SURVIVAL, true)).parser(new Parser<GameMode>() {
+        Classes.registerClass(new ClassInfo<>(GameMode.class, "gamemode").user("game ?modes?").name("Game Mode").description("The game modes survival, creative, adventure and spectator.").usage("creative/survival/adventure/spectator").examples("player's gamemode is survival", "set the player argument's game mode to creative").since("1.0").defaultExpression(new SimpleLiteral<>(GameMode.SURVIVAL, true)).parser(new Parser<GameMode>() {
             private final Message[] names = new Message[GameMode.values().length];
 
             {
@@ -846,7 +846,7 @@ public final class BukkitClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<>(Enchantment.class, "enchantment").user("enchantments?").name("Enchantment").description("An enchantment, e.g. 'sharpness' or 'furtune'. Unlike <a href='#enchantmenttype'>enchantment type</a> this type has no level, but you usually don't need to use this type anyway.").usage(StringUtils.join(EnchantmentType.getNames(), ", ")).examples("").since("1.4.6").before("enchantmenttype").parser(new Parser<Enchantment>() {
+        Classes.registerClass(new ClassInfo<>(Enchantment.class, "enchantment").user("enchantments?").name("Enchantment").description("An enchantment, e.g. 'sharpness' or 'fortune'. Unlike <a href='#enchantmenttype'>enchantment type</a> this type has no level, but you usually don't need to use this type anyway.").usage(StringUtils.join(EnchantmentType.getNames(), ", ")).examples("").since("1.4.6").before("enchantmenttype").parser(new Parser<Enchantment>() {
             @Override
             @Nullable
             public Enchantment parse(final String s, final ParseContext context) {
