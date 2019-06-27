@@ -71,8 +71,15 @@ public final class SkriptConfig {
             return EventPriority.MONITOR;
         }
     });
+    public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
     public static final Option<EventPriority> commandPriority = new Option<>("command priority", getPreviousPriority(defaultEventPriority.value()), s -> {
         try {
+            if (defaultEventPriority.value() == EventPriority.LOWEST) {
+                if (!throwOnCommandOnlyForPluginCommands.value())
+                    Skript.warning("Default event priority is lowest and throwing on command events for plugin commands is enabled. This may cause critical issues regarding double events firing, etc.");
+                else
+                    Skript.warning("When the default event priority is lowest, command bugs may occur. We recommend at least using low or normal. (tip: use 'default' as value for a silent fix)");
+            }
             if ("default".equalsIgnoreCase(s))
                 return getPreviousPriority(defaultEventPriority.value());
             return EventPriority.valueOf(s.toUpperCase(Locale.ENGLISH));
@@ -81,7 +88,6 @@ public final class SkriptConfig {
             return getPreviousPriority(defaultEventPriority.value());
         }
     });
-    public static final Option<Boolean> throwOnCommandOnlyForPluginCommands = new Option<>("throw on command only for plugin commands", true);
     public static final Option<Boolean> logPlayerCommands = new Option<>("log player commands", true);
     /**
      * Maximum number of digits to display after the period for floats and doubles
