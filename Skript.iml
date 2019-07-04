@@ -12,7 +12,7 @@
     <facet type="kotlin-language" name="Kotlin">
       <configuration version="3" platform="JVM 1.8" useProjectSettings="false">
         <compilerSettings>
-          <option name="additionalArguments" value="-Xassertions=jvm -Xjsr305=ignore -Xjvm-default=compatibility -Xno-call-assertions -Xno-exception-on-explicit-equals-for-boxed-null -Xno-param-assertions -Xno-receiver-assertions -Xskip-runtime-version-check" />
+          <option name="additionalArguments" value="-Xassertions=jvm -Xjsr305=ignore -Xjvm-default=compatibility -Xno-call-assertions -Xno-exception-on-explicit-equals-for-boxed-null -Xno-param-assertions -Xno-receiver-assertions -Xskip-runtime-version-check -Xsuppress-missing-builtins-error" />
         </compilerSettings>
         <compilerArguments>
           <option name="jvmTarget" value="1.8" />

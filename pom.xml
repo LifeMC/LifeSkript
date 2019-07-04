@@ -524,7 +524,7 @@
                         <arg>-Xassertions=jvm</arg>
 
                         <arg>-Xskip-runtime-version-check</arg>
-                        <!--<arg>-Xsuppress-missing-builtins-error</arg>-->
+                        <arg>-Xsuppress-missing-builtins-error</arg>
 
                         <arg>-Xno-exception-on-explicit-equals-for-boxed-null</arg>
                     </args>
@@ -611,12 +611,14 @@
                                 <exclude>bundle.properties</exclude>
                                 <exclude>src/</exclude>
                                 <exclude>about.html</exclude>
+
                                 <exclude>**/*.html</exclude>
                                 <exclude>.api_description</exclude>
 
                                 <!-- Unrequired kotlin files - we already remove some of them with proguard. -->
                                 <exclude>**/*.kotlin_metadata</exclude>
                                 <exclude>**/*.kotlin_builtins</exclude>
+								<exclude>**/*.kotlin_module</exclude>
 
                                 <exclude>META-INF/Skript.kotlin_module</exclude>
                                 <exclude>META-INF/LICENSE.txt</exclude>
@@ -625,8 +627,11 @@
                                 <exclude>META-INF/maven/javax.annotation/</exclude>
 
                                 <exclude>META-INF/kotlin-stdlib.kotlin_module</exclude>
+
                                 <exclude>META-INF/kotlin-stdlib_coroutinesExperimental.kotlin_module</exclude>
+								<exclude>META-INF/kotlin-stdlib-coroutines.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-common.kotlin_module</exclude>
+
                                 <exclude>META-INF/kotlin-stdlib-common-coroutines.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-jdk7.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-jdk8.kotlin_module</exclude>

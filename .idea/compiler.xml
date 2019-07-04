@@ -22,7 +22,7 @@
     <option name="PROCEED_ON_ERROR" value="false" />
     <option name="ECJ_TOOL_PATH" value="$MAVEN_REPOSITORY$/org/eclipse/jdt/core/compiler/ecj/4.12M1/ecj-4.12M1.jar" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Skript" options="-encoding UTF-8 -O" />
+      <module name="Skript" options="-properties .settings/org.eclipse.jdt.core.prefs -encoding UTF-8 -O" />
     </option>
   </component>
 </project>

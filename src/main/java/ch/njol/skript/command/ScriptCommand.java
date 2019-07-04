@@ -207,7 +207,7 @@ public final class ScriptCommand implements CommandExecutor {
             }
         }
 
-        final ScriptCommandEvent event = new ScriptCommandEvent(ScriptCommand.this, sender);
+        final ScriptCommandEvent event = new ScriptCommandEvent(!Bukkit.isPrimaryThread(), ScriptCommand.this, sender);
 
         if (!permission.isEmpty() && !(sender instanceof ConsoleCommandSender) && !sender.hasPermission(permission)) {
             sender.sendMessage(permissionMessage.getSingle(event));
