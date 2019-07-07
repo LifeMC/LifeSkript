@@ -39,6 +39,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -101,6 +102,8 @@ public final class EffTeleport extends Effect {
             loc.getChunk().load();
             if (e instanceof PlayerRespawnEvent && entity.equals(((PlayerRespawnEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
                 ((PlayerRespawnEvent) e).setRespawnLocation(loc);
+            } else if (e instanceof PlayerMoveEvent && entity.equals(((PlayerMoveEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
+                ((PlayerMoveEvent) e).setTo(loc);
             } else {
                 entity.teleport(loc);
             }
