@@ -183,7 +183,7 @@ public final class Language {
         try (final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang")) {
             if (din == null)
                 throw new IllegalStateException(addon + " is missing the required english.lang file!");
-            en = new Config(new BufferedInputStream(din), "english.lang", false, false, ":").toMap(".");
+            en = new Config(new BufferedInputStream(din), new File(addon.getLanguageFileDirectory(), "english.lang").exists() ? "english.lang" : Objects.requireNonNull(addon.getFile()).getName() + "/" + addon.getLanguageFileDirectory() + "/english.lang", false, false, ":").toMap(".");
         } catch (final Throwable tw) {
             throw Skript.exception(tw, "Could not load " + addon + "'s default language file!");
         }

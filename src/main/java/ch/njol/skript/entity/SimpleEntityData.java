@@ -164,7 +164,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
 
     @Override
     public void set(final Entity entity) {
-        throw new UnsupportedOperationException(); //FIXME also test this
+        //throw new UnsupportedOperationException(); //FIXME also test this
     }
 
     @Override
