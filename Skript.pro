@@ -10,8 +10,7 @@
 -libraryjars '<user.home>/.m2/repository/co/aikar/timings/1.8.8-SNAPSHOT/timings-1.8.8-SNAPSHOT.jar'
 
 # Hooks of Skript - All of them are optional.
--libraryjars '<user.home>/.m2/repository/net/milkbowl/vault/VaultAPI/1.7/VaultAPI-1.7.jar'
--libraryjars '<user.home>/.m2/repository/net/milkbowl/vault/vault-plugin/1.7.1/vault-plugin-1.7.1.jar'
+-libraryjars '<user.home>/.m2/repository/net/milkbowl/vault/vault/1.5.6/vault-1.5.6.jar'
 -libraryjars '<user.home>/.m2/repository/me/ryanhamshire/griefprevention/13.9.1/griefprevention-13.9.1.jar'
 -libraryjars '<user.home>/.m2/repository/com/sk89q/worldguard/6.1.2/worldguard-6.1.2.jar'
 -libraryjars '<user.home>/.m2/repository/com/sk89q/worldedit/6.1.9/worldedit-6.1.9.jar'
