@@ -26,6 +26,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.util.Utils;
 import ch.njol.skript.util.Version;
 import ch.njol.util.coll.iterator.EnumerationIterable;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -41,16 +42,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for Skript addons. Use {@link Skript#registerAddon(JavaPlugin)} to create a SkriptAddon instance for your plugin.
+ * Utility class for Skript addons. Use {@link Skript#registerAddon(Plugin)} to create a SkriptAddon instance for your plugin.
  *
  * @author Peter Güttinger
  */
 public final class SkriptAddon {
 
     public static final Method getFile =
-            Skript.methodForName(JavaPlugin.class, "getFile", true);
+            Skript.methodForName(Plugin.class, "getFile", true);
 
-    public final JavaPlugin plugin;
+    public final Plugin plugin;
     public final Version version;
     private final String name;
 
@@ -62,11 +63,20 @@ public final class SkriptAddon {
     private File file;
 
     /**
-     * Package-private constructor. Use {@link Skript#registerAddon(JavaPlugin)} to get a SkriptAddon for your plugin.
+     * @param p The plugin that this add-on refers to.
+     * @deprecated Backwards compatibility. Use {@link SkriptAddon#SkriptAddon(Plugin)}
+     */
+    @Deprecated
+    SkriptAddon(final JavaPlugin p) {
+        this((Plugin) p);
+    }
+
+    /**
+     * Package-private constructor. Use {@link Skript#registerAddon(Plugin)} to get a SkriptAddon for your plugin.
      *
      * @param p The plugin that this add-on refers to.
      */
-    SkriptAddon(final JavaPlugin p) {
+    SkriptAddon(final Plugin p) {
         plugin = p;
         name = p.getName();
         Version v;
@@ -83,19 +93,19 @@ public final class SkriptAddon {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return name;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public int getLoadedClassCount() {
+    public final int getLoadedClassCount() {
         return loadedClasses.get();
     }
 
-    public int getUnloadableClassCount() {
+    public final int getUnloadableClassCount() {
         return unloadableClasses.get();
     }
 
@@ -169,7 +179,7 @@ public final class SkriptAddon {
     }
 
     @Nullable
-    public String getLanguageFileDirectory() {
+    public final String getLanguageFileDirectory() {
         return languageFileDirectory;
     }
 
@@ -180,7 +190,7 @@ public final class SkriptAddon {
      * @param directory Directory name
      * @return This SkriptAddon
      */
-    public SkriptAddon setLanguageFileDirectory(String directory) {
+    public final SkriptAddon setLanguageFileDirectory(String directory) {
         if (languageFileDirectory != null)
             throw new IllegalStateException();
         directory = directory.replace('\\', '/');
