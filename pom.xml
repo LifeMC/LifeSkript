@@ -107,18 +107,6 @@
             <url>https://repo.techcable.net/content/repositories/public/</url>
         </repository>
         <repository>
-            <id>lifemc-repo</id>
-            <name>Most Important Repository</name> <!-- :P -->
-            <url>https://www.lifemcserver.com/</url>
-        </repository>
-        <repository>
-            <id>vault-repo</id>
-            <name>Unsecure Vault-API Repository</name> <!-- :P -->
-            <!-- Let's Encrypt and CloudFlare gives free SSL certificates and it's 2019 but vault's repo don't have an
-                    valid SSL certificate, interesting. -->
-            <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
-        </repository>
-        <repository>
             <id>md_5-snapshots</id>
             <name>md_5's Snapshot Repository</name>
             <url>https://repo.md-5.net/content/repositories/snapshots/</url>
@@ -129,14 +117,6 @@
             <url>https://repo.md-5.net/content/repositories/releases/</url>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>lifemc-repo</id>
-            <name>Most Important Repository</name> <!-- :P -->
-            <url>https://www.lifemcserver.com/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -214,21 +194,8 @@
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-            <exclusions>
-                <!-- Duplicates bukkit and other dependencies -->
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>vault-plugin</artifactId>
-            <version>1.7.1</version>
+            <artifactId>vault</artifactId>
+            <version>1.5.6</version>
             <scope>provided</scope>
             <exclusions>
                 <!-- Duplicates bukkit and other dependencies -->
@@ -575,7 +542,7 @@
                     <dependency>
                         <groupId>org.eclipse.jdt.core.compiler</groupId>
                         <artifactId>ecj</artifactId>
-                        <version>4.12RC1a</version>
+                        <version>4.12</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -618,7 +585,7 @@
                                 <!-- Unrequired kotlin files - we already remove some of them with proguard. -->
                                 <exclude>**/*.kotlin_metadata</exclude>
                                 <exclude>**/*.kotlin_builtins</exclude>
-								<exclude>**/*.kotlin_module</exclude>
+                                <exclude>**/*.kotlin_module</exclude>
 
                                 <exclude>META-INF/Skript.kotlin_module</exclude>
                                 <exclude>META-INF/LICENSE.txt</exclude>
@@ -629,7 +596,7 @@
                                 <exclude>META-INF/kotlin-stdlib.kotlin_module</exclude>
 
                                 <exclude>META-INF/kotlin-stdlib_coroutinesExperimental.kotlin_module</exclude>
-								<exclude>META-INF/kotlin-stdlib-coroutines.kotlin_module</exclude>
+                                <exclude>META-INF/kotlin-stdlib-coroutines.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-common.kotlin_module</exclude>
 
                                 <exclude>META-INF/kotlin-stdlib-common-coroutines.kotlin_module</exclude>
