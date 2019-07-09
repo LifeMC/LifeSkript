@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
 public final class SkriptAddon {
 
     public static final Method getFile =
-            Skript.methodForName(Plugin.class, "getFile", true);
+            Skript.methodForName(JavaPlugin.class, "getFile", true);
 
     public final Plugin plugin;
     public final Version version;
