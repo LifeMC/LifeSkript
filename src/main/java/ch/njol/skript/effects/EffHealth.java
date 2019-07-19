@@ -109,7 +109,7 @@ public final class EffHealth extends Effect {
                 }
                 ((Slot) damageable).setItem(is);
             } else if (damageable instanceof LivingEntity) {
-				//FIXME Fix stackoverflow error when damaging player on a damage event
+                //FIXME Fix stackoverflow error when damaging player on a damage event
                 if (this.damage == null) {
                     HealthUtils.setHealth((LivingEntity) damageable, HealthUtils.getMaxHealth((LivingEntity) damageable));
                 } else {
