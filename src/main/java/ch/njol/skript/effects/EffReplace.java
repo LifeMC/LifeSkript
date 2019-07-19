@@ -46,7 +46,7 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 @Name("Replace")
-@Description({"Replaces all occurrences of a given text with another text. Please note that you can only change variables and a few expressions, e.g. a <a href='../expressions.html#ExprMessage'>message</a> or a line of a sign.",
+@Description({"Replaces all occurrences of a given text with another text. Please note that you can only change variables and a few expressions, e.g. a message or a line of a sign.",
         "Starting with 2.2.16, you can replace items in an inventory too."})
 @Examples({"replace \"<item>\" in {textvar} with \"%item%\"",
         "replace every \"&\" with \"§\" in line 1",
