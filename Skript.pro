@@ -35,7 +35,7 @@
 # Code allocation: Changes variable stack map and causes runtime strange errors
 -optimizations !class/merging/**,!class/marking/final,!method/marking/final,!method/propagation/**,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
 
-# We moslty use optimization, and we want a powerful optimization. This maybe increased, but 10 looks powerful enough.
+# We mostly use optimization, and we want a powerful optimization. This maybe increased, but 10 looks powerful enough.
 # We also don't want to wait too much when building the project, so don't increase this too much.
 # If you want to speed up the optimization and shrinking process, set this to 5 because after 5 there is not so much optimizations.
 # Note: Whatever you set this number, it always stop when there is no optimization after a pass. So it still builds fast with high values.
