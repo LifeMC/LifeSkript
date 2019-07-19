@@ -168,7 +168,7 @@ public final class CondCompare extends Condition {
          * https://github.com/Mirreski/Skript/issues/10
          *
         if(Entity.class.isAssignableFrom(s)){
-            String[] split = expr.split(" ");
+            String[] split = Skript.PATTERN_ON_SPACE.split(expr);
             System.out.println(expr);
             if(!split[split.length - 1].equalsIgnoreCase("player") && EntityData.parseWithoutIndefiniteArticle(split[split.length - 1]) != null){
                 comp = Comparators.getComparator(f, EntityData.class);

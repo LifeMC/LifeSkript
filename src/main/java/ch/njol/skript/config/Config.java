@@ -24,6 +24,7 @@ package ch.njol.skript.config;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.config.validate.NodeValidator;
 import ch.njol.skript.config.validate.SectionValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -244,7 +245,17 @@ public final class Config {
         return main.toMap("", separator);
     }
 
+    /**
+     * Backwards compatibility.
+     *
+     * @see Config#validate(NodeValidator)
+     */
+    @Deprecated
     public boolean validate(final SectionValidator validator) {
+        return validate((NodeValidator) validator);
+    }
+
+    public boolean validate(final NodeValidator validator) {
         return validator.validate(getMainNode());
     }
 
