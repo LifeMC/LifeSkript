@@ -34,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class ExprSpectatorTarget extends SimplePropertyExpression<Player, Entity> {
 
     static {
-        SimplePropertyExpression.register(ExprSpectatorTarget.class, Entity.class, "spectator target", "players");
+        register(ExprSpectatorTarget.class, Entity.class, "spectator target", "players");
     }
 
     @Override
@@ -74,8 +74,12 @@ public final class ExprSpectatorTarget extends SimplePropertyExpression<Player, 
                         player.setSpectatorTarget((Entity) delta[0]);
                         break;
                     case RESET:
+                        //$FALL-THROUGH$
                     case DELETE:
                         player.setSpectatorTarget(null);
+                        //$FALL-THROUGH$
+                    default:
+                        assert false : mode.name();
                 }
             }
         }
