@@ -779,7 +779,7 @@ public final class Aliases {
                     if (file != null)
                         aliasConfig = new Config(file, false, true, "=");
                     else
-                        aliasConfig = new Config(new BufferedInputStream(stream), "Skript.jar/" + aliasesFileName, false, true, "=");
+                        aliasConfig = new Config(new BufferedInputStream(stream), Skript.getInstance().getFile().getName() + "/" + aliasesFileName, false, true, "=");
                 } catch (final IOException e) {
                     Skript.error("Could not load the " + Language.getName() + " aliases config: " + e.getLocalizedMessage());
                     return;
