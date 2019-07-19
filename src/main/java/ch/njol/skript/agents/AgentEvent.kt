@@ -27,8 +27,6 @@ package ch.njol.skript.agents
 /**
  * Represents a skript debugger event.
  *
- * It extends bukkit's event, but it's not used.
- *
  * @since 2.2-V13b
  */
 abstract class AgentEvent {
