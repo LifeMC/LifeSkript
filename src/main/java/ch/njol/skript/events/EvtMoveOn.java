@@ -88,6 +88,8 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
             return;
         final PlayerMoveEvent e = (PlayerMoveEvent) event;
         final Location from = e.getFrom(), to = e.getTo();
+        if (from.distanceSquared(to) < 1.00D)
+            return; // Prevent too many move events firing
 //			if (!blockTriggers.isEmpty()) {
 //				final List<Trigger> ts = blockTriggers.get(new BlockLocation(to.getWorld(), to.getBlockX(), to.getBlockY(), to.getBlockZ()));
 //				if (ts != null) {
