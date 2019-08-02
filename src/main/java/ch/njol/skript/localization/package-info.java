@@ -21,7 +21,7 @@
  */
 
 /**
- * Localisation code goes here.
+ * Localization code goes here.
  *
  * @author Peter Güttinger
  */

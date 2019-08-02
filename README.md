@@ -28,7 +28,7 @@ author of the Skript and don't know everything about Skript.
 # Versioning System
 * Stable Releases: No suffix. Just (generally) a major version. (like 2.2.14, 2.2.15 etc.)
 * Beta Releases (tested): Stable version + A suffix from alphabet. (like 2.2.14b, 2.2.15c etc.)
-* Nightly Builds (untested): Not available via official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
+* Nightly Builds (untested): Not available via an official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
 
 Note: Some releases may also contain hotfixes or backports from newer releases or commits.
 

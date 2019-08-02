@@ -48,7 +48,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class PseudoEnum<T extends PseudoEnum<T>> {
 
     /**
-     * Must be synchronised
+     * Must be synchronized
      */
     private static final Map<Class<? extends PseudoEnum<?>>, Info<?>> infos = new HashMap<>();
     private final String name;
@@ -202,7 +202,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
 
     /**
      * Returns this constant's pseudo-enum class, i.e. the first non-anonymous superclass of this constant. This class is the same for all constants inheriting from a common class
-     * independently from whatever they define an anonymous subclass.
+     * independently of whatever they define an anonymous subclass.
      *
      * @return This constant's pseudo-enum class.
      * @see Enum#getDeclaringClass()

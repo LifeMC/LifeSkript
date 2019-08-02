@@ -21,7 +21,7 @@
  */
 
 /**
- * Code related to generation a documentation to be published on a website for example.
+ * Code related to generation of a documentation to be published on a website for example.
  *
  * @author Peter Güttinger
  */

@@ -170,7 +170,7 @@ internal constructor(
     internal val listeners: MutableList<Class<out AgentEvent>>
 
     init {
-        this.listeners = ArrayList(Arrays.asList(*events))
+        this.listeners = ArrayList(listOf(*events))
     }
 
     /**

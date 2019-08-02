@@ -43,7 +43,7 @@ import java.util.Map;
 public final class Config {
 
     public static final int GLOBAL_BUFFER_LENGTH = System.getProperty("skript.bufferLength") != null
-            ? Integer.valueOf(System.getProperty("skript.bufferLength")) : -1;
+            ? Integer.parseInt(System.getProperty("skript.bufferLength")) : -1;
 
     final String defaultSeparator;
     final boolean allowEmptySections;

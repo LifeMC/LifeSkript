@@ -80,7 +80,7 @@ class EffAgent : Effect() {
             sender = exprs[1] as? Expression<CommandSender>?
 
         if (sender == null)
-            sender = SimpleLiteral<CommandSender>(Bukkit.getConsoleSender(), false)
+            sender = SimpleLiteral(Bukkit.getConsoleSender(), false)
 
         val copy = agent
 

@@ -56,9 +56,9 @@ public enum Color implements YggdrasilSerializable {
     static final Map<String, Color> byEnglishName = new HashMap<>();
     private static final String LANGUAGE_NODE = "colors";
     private static final Color[] byWool = new Color[16];
-    public static volatile boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
-    // We don't want a infinite method loop, java has a StackOverflowException, but just guarantee it.
-    public static volatile int infiniNumTrack;
+    public static boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
+    // We don't want an infinite method loop, java has a StackOverflowException, but just guarantee it.
+    public static int infiniNumTrack;
 
     static {
         for (final Color c : values()) {

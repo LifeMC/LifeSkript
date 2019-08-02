@@ -59,6 +59,7 @@ import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.EnumerationIterable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -2540,9 +2541,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 final Object serverInstance = getServer.invoke(null);
 
                                 final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
-
-                                for (int i = 0; i < recentTpsArray.length; i++)
-                                    recentTpsArray[i] = 25.00D;
+                                Arrays.fill(recentTpsArray, 25.00D);
 
                                 if (Skript.debug())
                                     Skript.info("Reset ticks per second after loading everything to not confuse the server");
@@ -2796,21 +2795,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 HandlerList.unregisterAll(addon.plugin);
             }
 
+            // Bukkit gives a warning when plugins manually save the worlds to disk
+
+            BukkitLoggerFilter.addFilter(record -> record.getLevel() != Level.WARNING || !record.getMessage().contains("A manual (plugin-induced) save has been detected"));
+
             // If the variable saving is deadlocked, too long or errored, this will
             // save before the variables, so no data (excluding variables) is lost.
 
             Bukkit.savePlayers();
 
-            // Bukkit gives a warning when plugins manually save the worlds to disk
-
-            //BukkitLoggerFilter.addFilter(record -> record.getLevel() != Level.WARNING || !record.getMessage().contains("A manual (plugin-induced) save has been detected"));
-
             // Now save all data because we have a risk of interruption when saving
             // the variables if the variable count is too high.
 
-            //for (final World world : Bukkit.getWorlds()) {
-                //world.save(); FIXME implement this
-            //}
+            for (final World world : Bukkit.getWorlds()) {
+                world.save();
+            }
 
             closedOnDisable = true;
 

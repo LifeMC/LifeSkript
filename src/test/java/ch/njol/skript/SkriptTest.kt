@@ -50,7 +50,7 @@ class SkriptTest {
                     if (error !is UnknownHostException) // Probably no internet access
                         error?.printStackTrace()
                 }, false) == null) {
-            System.out.println("[Skript] Can't check for updates") // Don't hard fail when no internet access
+            println("[Skript] Can't check for updates") // Don't hard fail when no internet access
         }
 
         assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, VersionRegistry.STABLE_2_2_15.version), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}")
