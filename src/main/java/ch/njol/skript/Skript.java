@@ -118,7 +118,7 @@ import java.util.zip.ZipFile;
  * methods are static.
  *
  * @author Peter Güttinger
- * @see #registerAddon(JavaPlugin)
+ * @see #registerAddon(Plugin)
  * @see #registerCondition(Class, String...)
  * @see #registerEffect(Class, String...)
  * @see #registerExpression(Class, Class, ExpressionType, String...)
@@ -187,6 +187,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * detect reflection calls and not removes the reflectively accessed classes.
      */
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
+    public static final Version invalidVersion = new Version(999);
+    public static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));
@@ -218,7 +220,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     static boolean disabled;
     @Nullable
     static String latestVersion;
-    static Version minecraftVersion = new Version(999);
+    static Version minecraftVersion = invalidVersion;
     private static boolean closedOnEnable = false;
     private static boolean closedOnDisable = false;
     private static boolean first;
@@ -481,6 +483,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         }
     }
 
+    private static final void checkInvalidVersion() {
+        assert !Skript.testing() || minecraftVersion != invalidVersion : "Tried to access version before Skript was initialized";
+    }
+
     /**
      * Returns the version that this server is running, but you don't generally need this method, use {@link Skript#classExists(String)} or
      * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
@@ -495,6 +501,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @see Skript#methodExists(Class, String, Class[])
      */
     public static final Version getMinecraftVersion() {
+        checkInvalidVersion();
         return minecraftVersion;
     }
 
@@ -526,6 +533,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @see Skript#methodExists(Class, String, Class[])
      */
     public static final boolean isRunningMinecraft(final int major, final int minor) {
+        checkInvalidVersion();
         return minecraftVersion.compareTo(major, minor) >= 0;
     }
 
@@ -544,6 +552,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @see Skript#methodExists(Class, String, Class[])
      */
     public static final boolean isRunningMinecraft(final int major, final int minor, final int revision) {
+        checkInvalidVersion();
         return minecraftVersion.compareTo(major, minor, revision) >= 0;
     }
 
@@ -562,6 +571,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @see Skript#methodExists(Class, String, Class[])
      */
     public static final boolean isRunningMinecraft(final Version v) {
+        checkInvalidVersion();
         return minecraftVersion.compareTo(v) >= 0;
     }
 
@@ -605,8 +615,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         try {
             assert findLoadedClass != null;
             return findLoadedClass.invoke(classLoader, qualifiedName) != null;
-        } catch (final IllegalAccessException | InvocationTargetException ignored) {
-            assert false;
+        } catch (final IllegalAccessException | InvocationTargetException e) {
+            assert false : e;
         }
         return false;
     }
@@ -1002,12 +1012,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
+     * @param p The plugin
+     * @deprecated Backwards compatibility. Use {@link Skript#registerAddon(Plugin)}
+     */
+    @Deprecated
+    public static final SkriptAddon registerAddon(final JavaPlugin p) {
+        return registerAddon((Plugin) p);
+    }
+
+    /**
      * Registers an addon to Skript. This is currently not required for addons to work, but the returned {@link SkriptAddon} provides useful methods for registering syntax elements
      * and adding new strings to Skript's localization system (e.g. the required "types.[type]" strings for registered classes).
      *
      * @param p The plugin
      */
-    public static final SkriptAddon registerAddon(final JavaPlugin p) {
+    public static final SkriptAddon registerAddon(final Plugin p) {
         checkAcceptRegistrations();
         if (addons.containsKey(p.getName()))
             throw new IllegalArgumentException("The addon " + p.getName() + " is already registered!");
@@ -1039,7 +1058,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final SkriptAddon getAddonInstance() {
         final SkriptAddon a = addon;
         if (a == null)
-            return addon = new SkriptAddon(Skript.getInstance()).setLanguageFileDirectory("lang");
+            return addon = new SkriptAddon((Plugin) Skript.getInstance()).setLanguageFileDirectory("lang");
         return a;
     }
 
@@ -1323,6 +1342,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param info  Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
+    //FIXME Report errors automatically, also catch errors in events (SkriptEventHandler#check)
     public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final @Nullable String... info) {
         // We change that variable later to handle inner exceptions
         final Throwable originalCause = cause;
@@ -1582,6 +1602,27 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     @Override
     public final void onLoad() {
         try {
+            try {
+                version = new Version(getDescription().getVersion(), true);
+            } catch (final IllegalArgumentException e) {
+                Skript.error("Malformed plugin.yml version detecded; some skript features will **not** work. You can try re-downloading the plugin.");
+                printDownloadLink();
+                // Just use 2.2.x, it's the last official release of Skript
+                // of course at least on GitHub, on Bukkit it was 2.1.2.
+                version = new Version(2, 2, 0); // Default source version of 2.2.0 (same as version)
+            }
+
+            //runningCraftBukkit = craftbukkitMain != null;
+            final String bukkitV = Bukkit.getBukkitVersion();
+            final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
+
+            if (!m.find()) {
+                Skript.error("The Bukkit version '" + bukkitV + "' does not contain a version number which is required for Skript to enable or disable certain features. " + "Skript will still work, but you might get random errors if you use features that are not available in your version of Bukkit.");
+                minecraftVersion = new Version(999, 0, 0);
+            } else {
+                minecraftVersion = new Version(m.group());
+            }
+
             Workarounds.initIfNotAlready();
             SkriptCommand.setPriority();
 
@@ -1890,8 +1931,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
                 }
 
-                //FIXME Fix first start causes server to give errors and shutdown
-                // possible solution: patch the server JAR on disable
                 if (Skript.debug())
                     Skript.info("Preparing to patch server JAR file...");
 
@@ -1902,7 +1941,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 );
 
                 if (serverJarFiles != null && serverJarFiles.length > 0) {
-                    outer: for (final File serverJarFile : serverJarFiles) {
+                    outer:
+                    for (final File serverJarFile : serverJarFiles) {
                         if (Skript.debug())
                             Skript.info("Preparing to process file \"" + serverJarFile.getName() + "\"");
 
@@ -1973,11 +2013,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
 
                             if (contents.contains(original) && !contents.contains(replaced)) {
-                                replacedContents = contents.replace(original, replaced);
+                                if (Skript.isRunningMinecraft(1, 7) && !Skript.isRunningMinecraft(1, 9)) {
+                                    replacedContents = contents.replace(original, replaced);
+                                }
                             }
 
                             if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
-                                final File temp = File.createTempFile("log4j2.xml-", ".TMP");
+                                final File temp = File.createTempFile("log4j2", ".xml");
 
                                 if (!temp.exists()) // This should not happen, but anyway...
                                     temp.createNewFile();
@@ -2025,9 +2067,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 env.put("create", "true");
                                 env.put("encoding", "UTF-8");
 
-                                final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName() + ".TMP");
+                                final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName().replace(".jar", "") + "-patched.jar");
 
                                 Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                                //FIXME Also unblock the file, Windows 10's smart screen adds an attribute called 'blocked'
 
                                 tempServerJarFile.setLastModified(System.currentTimeMillis());
 
@@ -2040,7 +2084,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     final Path tempFile = temp.toPath();
                                     final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
 
-                                    //FIXME Also add JNA or jline-terminal to fix Spigot 1.8 JLine error
+                                    //FIXME Also add JNA or jline-terminal to fix Spigot 1.8 JLine error on Windows platforms
 
                                     Files.copy(tempFile, fileInJar, StandardCopyOption.REPLACE_EXISTING);
                                     Files.copy(certFile.toPath(), jarFileSystem.getPath("/yggdrasil_session_pubkey.der"), StandardCopyOption.REPLACE_EXISTING);
@@ -2052,10 +2096,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (certFile.exists())
                                     certFile.delete();
 
-                                try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
+                                try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile))) {
 
-                                     final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
-                                     final FileChannel fileChannel = fileOutputStream.getChannel()) {
+                                    // We close these when the server is disabling to avoid a common errors, sorry.
+
+                                    @SuppressWarnings("resource") final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
+
+                                    @SuppressWarnings("resource") final FileChannel fileChannel = fileOutputStream.getChannel();
 
                                     // Disable automatic log4j config updates, because it is running on another thread
                                     // and causes strange errors while we are replacing the current jar and the config
@@ -2092,10 +2139,26 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                     // Overwrite the current server JAR file, may cause problems, but its tested
 
-                                    Skript.info("Patching the server JAR file, please restart your server if it closes!");
+                                    if (Skript.debug())
+                                        Skript.info("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
 
-                                    fileOutputStream.getChannel()
-                                            .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
+                                    Skript.closeOnDisable(() -> {
+                                        // Hope all classes are loaded in the VM and not cause fatal errors
+                                        try {
+                                            fileOutputStream.getChannel()
+                                                    .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
+
+                                            fileOutputStream.close();
+                                            fileChannel.close();
+
+                                            if (Skript.debug())
+                                                Skript.info("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        } catch (final IOException e) {
+                                            Skript.exception(e);
+                                            if (Skript.debug())
+                                                Skript.info("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        }
+                                    });
 
                                     madeChanges = true;
                                     restartNeeded = true;
@@ -2103,8 +2166,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 // Remove the temporary server JAR file
 
-                                if (tempServerJarFile.exists())
-                                    tempServerJarFile.delete();
+                                //if (tempServerJarFile.exists())
+                                //tempServerJarFile.delete();
                             }
                         }
                     }
@@ -2168,27 +2231,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             if (languageStart != null)
                 languageEnd = new Date();
-
-            try {
-                version = new Version(getDescription().getVersion(), true);
-            } catch (final IllegalArgumentException e) {
-                Skript.error("Malformed plugin.yml version detecded; some skript features will **not** work. You can try re-downloading the plugin.");
-                printDownloadLink();
-                // Just use 2.2.x, it's the last official release of Skript
-                // of course at least on GitHub, on Bukkit it was 2.1.2.
-                version = new Version(2, 2, 0); // Default source version of 2.2.0 (same as version)
-            }
-
-            //runningCraftBukkit = craftbukkitMain != null;
-            final String bukkitV = Bukkit.getBukkitVersion();
-            final Matcher m = Pattern.compile("\\d+\\.\\d+(\\.\\d+)?").matcher(bukkitV);
-
-            if (!m.find()) {
-                Skript.error("The Bukkit version '" + bukkitV + "' does not contain a version number which is required for Skript to enable or disable certain features. " + "Skript will still work, but you might get random errors if you use features that are not available in your version of Bukkit.");
-                minecraftVersion = new Version(999, 0, 0);
-            } else {
-                minecraftVersion = new Version(m.group());
-            }
 
             if (!getDataFolder().isDirectory())
                 //noinspection ResultOfMethodCallIgnored
@@ -2476,7 +2518,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 final String mappingVersion = invoke(Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", ""), version -> version.startsWith(".") ? version.substring(1) : version);
                 final String nmsPackage = "net.minecraft.server" + (mappingVersion.isEmpty() ? "" : ".") + mappingVersion;
 
-                // Note: May break in future if the format is changed, but it will not in the near future
+                // Note: May broke in future if the format is changed, but it will not in the near future
                 if (mappingVersion.isEmpty() || mappingVersion.contains("v") && mappingVersion.contains("_") && mappingVersion.contains("R")) {
                     if (Skript.debug())
                         Skript.info("Detected NMS mapping version of " + mappingVersion + ", using it now...");
@@ -2530,7 +2572,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     info("Using " + (ExprTargetedBlock.set ? "new" : "old") + " method for target block expression.");
                     emptyPrinter.run();
                     info("Byte, short and float types are " + (JavaClasses.DISABLE_BYTE_SHORT_FLOAT ? "disabled" : "enabled"));
-                    info("Required variable changes for save " + FlatFileStorage.REQUIRED_CHANGES_FOR_RESAVE);
+                    info("Required variable changes for saving " + FlatFileStorage.REQUIRED_CHANGES_FOR_RESAVE);
                     info("Global buffer length in bytes is " + (Config.GLOBAL_BUFFER_LENGTH != -1 ? Config.GLOBAL_BUFFER_LENGTH : "the java default"));
                     emptyPrinter.run();
                 });
@@ -2648,7 +2690,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
 
                                     printed = true;
-                                } else if (latestVer.getMajor() == version.getMajor()
+                                } else if (version != null && latestVer.getMajor() == version.getMajor()
                                         && latestVer.getMinor() == version.getMinor()
                                         && latestVer.getRevision() == version.getRevision()
                                         && latestVer.isStable() && !version.isStable()) { // Running a beta build (e.g 2.2.15b)
@@ -2736,7 +2778,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             EvtSkript.onSkriptStop();
 
             if (Skript.logHigh())
-                info("Disabling scripts..");
+                info("Disabling scripts...");
             disableScripts();
 
             // Ensure no new tasks are quued before cancelling existing ones
@@ -2745,9 +2787,30 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             Delay.delayed.clear();
 
             if (Skript.logHigh())
-                info("Unregistering tasks and event listeners..");
+                info("Unregistering tasks and event listeners...");
             Bukkit.getScheduler().cancelTasks(this);
             HandlerList.unregisterAll((Plugin) this);
+
+            for (final SkriptAddon addon : addons.values()) {
+                Bukkit.getScheduler().cancelTasks(addon.plugin);
+                HandlerList.unregisterAll(addon.plugin);
+            }
+
+            // If the variable saving is deadlocked, too long or errored, this will
+            // save before the variables, so no data (excluding variables) is lost.
+
+            Bukkit.savePlayers();
+
+            // Bukkit gives a warning when plugins manually save the worlds to disk
+
+            //BukkitLoggerFilter.addFilter(record -> record.getLevel() != Level.WARNING || !record.getMessage().contains("A manual (plugin-induced) save has been detected"));
+
+            // Now save all data because we have a risk of interruption when saving
+            // the variables if the variable count is too high.
+
+            //for (final World world : Bukkit.getWorlds()) {
+                //world.save(); FIXME implement this
+            //}
 
             closedOnDisable = true;
 

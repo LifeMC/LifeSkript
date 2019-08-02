@@ -202,10 +202,10 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
             if (e instanceof PlayerCommandPreprocessEvent) {
                 final PlayerCommandPreprocessEvent ev = (PlayerCommandPreprocessEvent) e;
-                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getPlayer(), ev.getMessage(), ev.getMessage().split(" "));
+                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getPlayer(), ev.getMessage(), Skript.PATTERN_ON_SPACE.split(ev.getMessage()));
             } else if (e instanceof ServerCommandEvent) {
                 final ServerCommandEvent ev = (ServerCommandEvent) e;
-                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getSender(), ev.getCommand(), ev.getCommand().split(" "));
+                event = new CommandEvent(!Bukkit.isPrimaryThread(), ev.getSender(), ev.getCommand(), Skript.PATTERN_ON_SPACE.split(ev.getCommand()));
             } else
                 assert false : e.getClass().getCanonicalName();
 
