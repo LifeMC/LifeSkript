@@ -266,9 +266,11 @@ public final class SkriptLogger {
         String suffix = "";
 
         if (Skript.hasJLineSupport() && Skript.hasJansi()) {
-            suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
             if (level == Level.SEVERE)
                 prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.RED).boldOff().toString();
+            else if (level == Level.WARNING)
+                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString();
+            suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
         }
 
         return prefix + entry.getMessage() + suffix;

@@ -627,7 +627,7 @@ public final class Aliases {
             }
             t.add(d);
             //if (Skript.fieldForName(Material.class, m.name()).isAnnotationPresent(Deprecated.class))
-            //Skript.warning("Material \"" + m.name() + "\" is deprecated");
+            //Skript.warning("Material \"" + m.name() + "\" is deprecated"); // FIXME implement this
             return t;
         } else if ((i = getAlias(type)) != null) {
             for (ItemData d : i) {

@@ -50,6 +50,28 @@ public final class Workarounds {
     private static final Map<String, String> oldValues =
             new HashMap<>();
     private static boolean init;
+    public static boolean exceptionsDisabled;
+    public static final Thread.UncaughtExceptionHandler uncaughtHandler = (t, e) -> {
+        if (exceptionsDisabled)
+            return;
+
+        if (e instanceof EmptyStacktraceException)
+            return;
+
+        if (t == null || e == null)
+            return;
+
+        if (System.err == null || System.err.checkError()) {
+            assert false : "Standard error output stream " + (System.err == null ? "is null" : "had an exception");
+
+            return;
+        }
+
+        System.err.println("Uncaught exception in the thread \"" + t.getName() + "\"");
+        e.printStackTrace();
+
+        System.err.flush();
+    };
 
     static {
         Skript.closeOnEnable(() -> {
@@ -98,26 +120,8 @@ public final class Workarounds {
     public static final void init() {
         init = true;
 
-        // Exception Catching
-        final Thread.UncaughtExceptionHandler handler = (t, e) -> {
-            if (e instanceof EmptyStacktraceException)
-                return;
-
-            assert e != null : t;
-            assert t != null : e;
-
-            System.err.println("Uncaught exception in thread \"" + t.getName() + "\"");
-            e.printStackTrace();
-        };
-
-        // Default Handler
-        Thread.setDefaultUncaughtExceptionHandler(handler);
-
-        // Current Thread
-        Thread.currentThread().setUncaughtExceptionHandler(handler);
-
         // Server Thread
-        final Runnable bukkitHandler = () -> Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Thread.currentThread().setUncaughtExceptionHandler(handler));
+        final Runnable bukkitHandler = () -> Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Thread.currentThread().setUncaughtExceptionHandler(uncaughtHandler));
 
         if (Skript.isSkriptRunning())
             bukkitHandler.run();
