@@ -78,13 +78,14 @@ public final class SkriptParser {
      * group 1 is null for ',', otherwise it's one of and/or/nor (not necessarily lowercase).
      */
     @SuppressWarnings("null")
-    public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(and|n?or)\\s+|\\s*,\\s*", Pattern.CASE_INSENSITIVE);
+    public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(?:and|n?or)\\s+|\\s*,\\s*");
+    public static final Matcher listSplitMatcher = listSplitPattern.matcher("");
     @SuppressWarnings("null")
-    private static final Pattern varPattern = Pattern.compile("((the )?var(iable)? )?\\{([^{}]|%\\{|}%)+}", Pattern.CASE_INSENSITIVE);
+    private static final Pattern varPattern = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}");
     private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
     private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
     @SuppressWarnings("null")
-    private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*)\\)");
+    private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*?)\\)");
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
@@ -990,7 +991,7 @@ public final class SkriptParser {
 
             final List<int[]> pieces = new ArrayList<>();
             {
-                final Matcher m = listSplitPattern.matcher(expr);
+                final Matcher m = listSplitMatcher.reset(expr);
                 int i = 0, j = 0;
                 for (; i >= 0 && i <= expr.length(); i = next(expr, i, context)) {
                     if (i == expr.length() || m.region(i, expr.length()).lookingAt()) {
@@ -1481,7 +1482,7 @@ public final class SkriptParser {
     public static final class ParseResult {
 
         public final Expression<?>[] exprs;
-        public final List<MatchResult> regexes = new ArrayList<>(1);
+        public final List<MatchResult> regexes = new ArrayList<>();
 
         public final String expr;
 
