@@ -267,9 +267,9 @@ public final class SkriptLogger {
 
         if (Skript.hasJLineSupport() && Skript.hasJansi()) {
             if (level == Level.SEVERE)
-                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.RED).boldOff().toString();
+                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().fg(Ansi.Color.RED).boldOff().toString();
             else if (level == Level.WARNING)
-                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString();
+                prefix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().fg(Ansi.Color.YELLOW).bold().toString();
             suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
         }
 

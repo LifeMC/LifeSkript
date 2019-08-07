@@ -310,8 +310,6 @@ public final class Variable<T> implements Expression<T> {
         @SuppressWarnings("unchecked") final Iterator<String> keys = new ArrayList<>(((Map<String, Object>) val).keySet()).iterator();
         return new Iterator<T>() {
             @Nullable
-            private String key;
-            @Nullable
             private T next;
 
             @SuppressWarnings({"unchecked"})
@@ -320,7 +318,7 @@ public final class Variable<T> implements Expression<T> {
                 if (next != null)
                     return true;
                 while (keys.hasNext()) {
-                    key = keys.next();
+                    final String key = keys.next();
                     if (key != null) {
                         next = Converters.convert(Variables.getVariable(name + key, e, local), types);
                         next = (T) convertIfOldPlayer(name + key, e, next);
