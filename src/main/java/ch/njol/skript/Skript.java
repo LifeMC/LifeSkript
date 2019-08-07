@@ -24,6 +24,7 @@ package ch.njol.skript;
 
 import ch.njol.skript.aliases.Aliases;
 import ch.njol.skript.bukkitutil.PlayerUtils;
+import ch.njol.skript.bukkitutil.SpikeDetector;
 import ch.njol.skript.bukkitutil.Workarounds;
 import ch.njol.skript.classes.data.*;
 import ch.njol.skript.command.Commands;
@@ -71,6 +72,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jdt.annotation.Nullable;
@@ -96,6 +98,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Filter;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -218,6 +221,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static boolean updateChecked;
     public static boolean developmentVersion;
     public static boolean customVersion;
+    @Nullable
+    public static SpikeDetector spikeDetector;
     static boolean disabled;
     @Nullable
     static String latestVersion;
@@ -237,6 +242,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static boolean acceptRegistrations = true;
     @Nullable
     private static SkriptAddon addon;
+    @Nullable
+    private static ThreadGroup rootThreadGroup;
+    @Nullable
+    private static Runnable optimizeNetty;
+    @Nullable
+    public static String ipAddress;
+    /**
+     * Null when ran from tests or outside of Bukkit
+     */
+    @Nullable
+    public static Logger minecraftLogger = Bukkit.getLogger();
 
     public Skript() throws IllegalStateException {
         super();
@@ -1521,7 +1537,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
     }
 
-//  static {
+    static {
+        // Default Handler
+        Thread.setDefaultUncaughtExceptionHandler(Workarounds.uncaughtHandler);
+
+        // Current Thread
+        Thread.currentThread().setUncaughtExceptionHandler(Workarounds.uncaughtHandler);
+
+        // Set external IP
+        try {
+            ipAddress = WebUtils.getResponse("http://checkip.amazonaws.com");
+        } catch (final IOException e) {
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
+        }
+
 //      Language.addListener(new LanguageChangeListener() {
 //          @Override
 //          public void onLanguageChange() {
@@ -1530,7 +1560,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 //                  SKRIPT_PREFIX = Utils.replaceEnglishChatStyles(s) + ChatColor.RESET + " ";
 //          }
 //      });
-//  }
+    }
 
     /**
      * Similar to {@link #info(CommandSender, String)} but no [Skript] prefix is added.
@@ -1600,6 +1630,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return super.getFile();
     }
 
+    @SuppressWarnings("null")
     @Override
     public final void onLoad() {
         try {
@@ -1642,6 +1673,39 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 }
 
             }, "Skript last minute cleanup thread"));
+
+            ThreadGroup rootGroup = Thread.currentThread().getThreadGroup();
+            ThreadGroup parentGroup;
+            while ((parentGroup = rootGroup.getParent()) != null) {
+                rootGroup = parentGroup;
+            }
+            rootThreadGroup = rootGroup;
+
+            optimizeNetty = () -> {
+                assert rootThreadGroup != null;
+
+                Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
+                while (rootThreadGroup.enumerate(threads, true) == threads.length) {
+                    threads = new Thread[threads.length * 2];
+                }
+
+                for (final Thread thread : threads) {
+                    if (thread != null) {
+                        final String name = thread.getName().toLowerCase(Locale.ENGLISH);
+                        final int priority = thread.getPriority();
+
+                        if (name.contains("netty") && priority != Thread.MAX_PRIORITY)
+                            thread.setPriority(Thread.MAX_PRIORITY);
+                        else if (name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("console handler") || name.contains("profiler") || name.contains("wait loop") || name.contains("sleep") || name.contains("watchdog") && priority != Thread.MIN_PRIORITY)
+                            thread.setPriority(Thread.MIN_PRIORITY);
+                        else if (name.contains("alive") && priority != Thread.MAX_PRIORITY)
+                            thread.setPriority(Thread.MAX_PRIORITY);
+                    }
+                }
+            };
+
+            // Run for the first time
+            optimizeNetty.run();
 
             if (!first && !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
 
@@ -2097,78 +2161,49 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (certFile.exists())
                                     certFile.delete();
 
-                                try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile))) {
+                                // Overwrite the current server JAR file, may cause problems, but its tested
 
-                                    // We close these when the server is disabling to avoid a common errors, sorry.
-
-                                    @SuppressWarnings("resource") final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
-
-                                    @SuppressWarnings("resource") final FileChannel fileChannel = fileOutputStream.getChannel();
-
-                                    // Disable automatic log4j config updates, because it is running on another thread
-                                    // and causes strange errors while we are replacing the current jar and the config
-
-                                    if (Skript.classExists("org.apache.logging.log4j.core.config.FileConfigurationMonitor")) {
+                                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                                    // Hope all classes are loaded in the VM and not cause fatal errors
+                                    try {
                                         if (Skript.debug())
-                                            Skript.info("Disabling automatic log4j updates...");
+                                            Skript.info("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
 
-                                        final Method getContext = Skript.methodForName(Skript.classForName("org.apache.logging.log4j.LogManager"), "getContext", boolean.class);
+                                        final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
+                                        final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
 
-                                        assert getContext != null;
+                                        final FileChannel fileChannel = fileOutputStream.getChannel();
+                                        final ReadableByteChannel tempChannel = Channels.newChannel(tempInputStream);
 
-                                        final Object context = getContext.invoke(null, false);
-                                        final Object configuration = Skript.methodForName(context.getClass(), "getConfiguration").invoke(context);
+                                        Workarounds.exceptionsDisabled = true;
 
-                                        final Object monitor = Skript.methodForName(configuration.getClass(), "getConfigurationMonitor").invoke(configuration);
+                                        fileOutputStream.getChannel()
+                                                .transferFrom(tempChannel, 0, Long.MAX_VALUE);
 
-                                        final Field nextCheck = monitor.getClass().getDeclaredField("nextCheck");
+                                        fileOutputStream.close();
+                                        fileChannel.close();
 
-                                        nextCheck.setAccessible(true);
-                                        nextCheck.set(monitor, Long.MAX_VALUE);
+                                        tempInputStream.close();
+                                        tempChannel.close();
+
+                                        Workarounds.exceptionsDisabled = false;
+
+                                        if (Skript.debug())
+                                            Skript.info("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
+
+                                        // Remove the temporary server JAR file
+
+                                        if (tempServerJarFile.exists())
+                                            tempServerJarFile.delete();
+                                    } catch (final Throwable tw) {
+                                        Skript.exception(tw);
+                                        if (Skript.debug())
+                                            Skript.info("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
                                     }
+                                }, "Skript server jar patcher thread"));
 
-                                    // In case it still gives errors, just ignore them and warn the server admin to restart
-
-                                    BukkitLoggerFilter.addFilter(record -> {
-                                        if (record.getLevel() == Level.SEVERE || record.getLevel() == Level.WARNING) { // Bukkit prints errors as warnings, not sure why
-                                            System.out.println("Please restart the server - we fixed the compatibility!");
-
-                                            return false;
-                                        }
-                                        return true;
-                                    });
-
-                                    // Overwrite the current server JAR file, may cause problems, but its tested
-
-                                    if (Skript.debug())
-                                        Skript.info("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
-
-                                    Skript.closeOnDisable(() -> {
-                                        // Hope all classes are loaded in the VM and not cause fatal errors
-                                        try {
-                                            fileOutputStream.getChannel()
-                                                    .transferFrom(Channels.newChannel(tempInputStream), 0, Long.MAX_VALUE);
-
-                                            fileOutputStream.close();
-                                            fileChannel.close();
-
-                                            if (Skript.debug())
-                                                Skript.info("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
-                                        } catch (final IOException e) {
-                                            Skript.exception(e);
-                                            if (Skript.debug())
-                                                Skript.info("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
-                                        }
-                                    });
-
-                                    madeChanges = true;
-                                    restartNeeded = true;
-                                }
-
-                                // Remove the temporary server JAR file
-
-                                //if (tempServerJarFile.exists())
-                                //tempServerJarFile.delete();
+                                madeChanges = true;
+                                restartNeeded = true;
                             }
                         }
                     }
@@ -2288,9 +2323,55 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             final PluginCommand command = getCommand("skript");
 
-            if (command != null)
+            if (command != null) {
                 command.setExecutor(new SkriptCommand());
-            else {
+                command.setTabCompleter((sender, cmd, alias, args) -> {
+                    if (sender instanceof ConsoleCommandSender || sender.hasPermission("skript.tabComplete") || sender.hasPermission("skript.admin") || sender.hasPermission("skript.*") || sender.isOp()) {
+                        if (args.length == 1) {
+                            final List<String> completions = Arrays.asList("reload", "enable", "disable", "update", "help");
+                            if (alias != null) {
+                                completions.sort((a, b) -> a.startsWith(args[0]) ? -1 : b.startsWith(args[0]) ? 1 : 0);
+                                return completions;
+                            }
+                        } else if (args.length == 2) {
+                            if (alias != null) {
+                                if ("reload".equalsIgnoreCase(args[0])) {
+                                    final List<String> fileNames = new ArrayList<>();
+
+                                    for (final File scriptFile : ScriptLoader.getLoadedFiles())
+                                        fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
+
+                                    final List<String> staticCompletions = Arrays.asList("all", "config", "aliases", "scripts");
+                                    final List<String> fullCompletions = new ArrayList<>(staticCompletions);
+
+                                    fullCompletions.addAll(fileNames);
+                                    fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
+                                    return fullCompletions;
+                                } else if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
+                                    final List<String> fileNames = new ArrayList<>();
+
+                                    for (final File scriptFile : ScriptLoader.getLoadedFiles())
+                                        fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
+
+                                    final List<String> staticCompletions = Collections.singletonList("all");
+                                    final List<String> fullCompletions = new ArrayList<>(staticCompletions);
+
+                                    fullCompletions.addAll(fileNames);
+                                    fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
+                                    return fullCompletions;
+                                } else if ("update".equalsIgnoreCase(args[0])) {
+                                    final List<String> completions = Arrays.asList("check", "changes", "download");
+                                    completions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+                                    return completions;
+                                }
+                            }
+                        }
+                    }
+                    return Collections.emptyList();
+                });
+            } else {
                 Skript.error("Malformed plugin.yml file detecded; skript command will **not** work. You can try re-downloading the plugin.");
                 printDownloadLink();
             }
@@ -2530,9 +2611,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         if (Skript.fieldExists(minecraftServer, "recentTps")) {
                             try {
                                 final Field recentTps = minecraftServer.getDeclaredField("recentTps");
+                                final Field serverThread = Skript.isRunningMinecraft(1, 8) ? minecraftServer.getDeclaredField("serverThread") : minecraftServer.getDeclaredField("primaryThread");
 
                                 if (!recentTps.isAccessible())
                                     recentTps.setAccessible(true);
+
+                                if (!serverThread.isAccessible())
+                                    serverThread.setAccessible(true);
 
                                 final Method getServer = Skript.methodForName(minecraftServer, "getServer", true);
 
@@ -2540,13 +2625,34 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 final Object serverInstance = getServer.invoke(null);
 
+                                final Thread mainThread = (Thread) serverThread.get(serverInstance);
+                                assert mainThread != null : serverThread.toString();
+
+                                if (!Skript.isRunningMinecraft(1, 12)) {
+                                    if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock")) {
+                                        BukkitLoggerFilter.addFilter((e) -> {
+                                            if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play"))
+                                                SpikeDetector.doStart(mainThread);
+                                            return true;
+                                        });
+                                    } else
+                                        SpikeDetector.doStart(mainThread);
+                                }
+
+                                PlayerUtils.task.run();
+
+                                if (Boolean.getBoolean("skript.testSpike"))
+                                    Thread.sleep(10000L);
+
                                 final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
+                                assert recentTpsArray != null : recentTps.toString();
+
                                 Arrays.fill(recentTpsArray, 25.00D);
 
                                 if (Skript.debug())
                                     Skript.info("Reset ticks per second after loading everything to not confuse the server");
-                            } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
-                                Skript.outdatedError(e);
+                            } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException | InterruptedException e) {
+                                Skript.exception(e);
                                 assert false : e;
                             }
                         } else
@@ -2619,12 +2725,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 });
             }
 
-            if (SkriptConfig.checkForNewVersion.value()) {
-                Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
-                    /* empty */
-                }, EventPriority.MONITOR, (listener, event) -> {
-                    if (event instanceof PlayerJoinEvent) {
-                        final PlayerJoinEvent e = (PlayerJoinEvent) event;
+            Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
+                /* empty */
+            }, EventPriority.MONITOR, (listener, event) -> {
+                if (event instanceof PlayerJoinEvent) {
+                    final PlayerJoinEvent e = (PlayerJoinEvent) event;
+
+                    if (optimizeNetty != null)
+                        optimizeNetty.run();
+                    else
+                        assert false : "Netty task is null";
+
+                    if (SkriptConfig.checkForNewVersion.value()) {
                         if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
                             new Task(Skript.this) {
                                 @Override
@@ -2639,8 +2751,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }.schedule(0L);
                         }
                     }
-                }, this, true);
-            }
+                }
+            }, this, true);
+
+            Bukkit.getPluginManager().registerEvent(ServerListPingEvent.class, new Listener() {
+                /* empty */
+            }, EventPriority.MONITOR, (listener, event) -> {
+                if (event instanceof ServerListPingEvent) {
+                    final ServerListPingEvent e = (ServerListPingEvent) event;
+
+                    if (e.getMotd().contains("Your country is banned from this server"))
+                        e.setMotd(ChatColor.translateAlternateColorCodes('&', Bukkit.getMotd()));
+                }
+            }, this, true);
 
             latestVersion = getDescription().getVersion();
 
@@ -2794,6 +2917,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 Bukkit.getScheduler().cancelTasks(addon.plugin);
                 HandlerList.unregisterAll(addon.plugin);
             }
+
+            SpikeDetector.doStop();
 
             // Bukkit gives a warning when plugins manually save the worlds to disk
 

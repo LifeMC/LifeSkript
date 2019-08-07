@@ -43,10 +43,11 @@ public final class PlayerUtils {
     public static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", EmptyArrays.EMPTY_CLASS_ARRAY, Collection.class);
     static final Set<Player> inviUpdate = new HashSet<>();
     // created when first used
-    static final Task task = new Task(Skript.getInstance(), 1, 1) {
+    public static final Task task = new Task(Skript.getInstance(), 1L, 1L) {
         @SuppressWarnings("deprecation")
         @Override
         public final void run() {
+            SpikeDetector.tick();
             try {
                 for (final Player p : inviUpdate)
                     p.updateInventory();
