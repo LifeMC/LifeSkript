@@ -35,6 +35,7 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.plugin.EventExecutor;
 import org.eclipse.jdt.annotation.Nullable;
@@ -60,12 +61,29 @@ public final class SkriptEventHandler {
     public static Event last;
     static long startTrigger;
     private static long startEvent;
+    private static long lastCall;
     public static final EventExecutor ee = (final @Nullable Listener l, final @Nullable Event e) -> {
         if (e == null)
             return;
+
         if (last == e) // an event is received multiple times if multiple superclasses of it are registered
             return;
+
         last = e;
+
+        // Event is asynchronous, but it ran from main thread
+        assert !e.isAsynchronous() || !Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is asynchronous, but it ran from main thread";
+
+        // Event is synchronous, but it ran from a different thread
+        assert e.isAsynchronous() || Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is synchronous, but it ran from a different thread";
+
+        // Skip the event if it's a frequently called event
+        // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
+        if (e instanceof PlayerMoveEvent && (System.currentTimeMillis() - lastCall) < 1000L)
+            return;
+
+        lastCall = System.currentTimeMillis();
+
         check(e);
     };
 

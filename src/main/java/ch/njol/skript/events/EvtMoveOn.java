@@ -54,6 +54,8 @@ import java.util.Map.Entry;
 @SuppressWarnings("deprecation")
 public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jump
 
+    private static long lastCall;
+
 //	private static final class BlockLocation {
 //		final World world;
 //		final int x, y, z;
@@ -88,8 +90,9 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
             return;
         final PlayerMoveEvent e = (PlayerMoveEvent) event;
         final Location from = e.getFrom(), to = e.getTo();
-        if (from.distanceSquared(to) < 1.00D)
+        if ((System.currentTimeMillis() - lastCall) < 1000L)
             return; // Prevent too many move events firing
+        lastCall = System.currentTimeMillis();
 //			if (!blockTriggers.isEmpty()) {
 //				final List<Trigger> ts = blockTriggers.get(new BlockLocation(to.getWorld(), to.getBlockX(), to.getBlockY(), to.getBlockZ()));
 //				if (ts != null) {
