@@ -57,7 +57,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     //	private static final HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
     static final HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<>();
 
-//	private static final class BlockLocation {
+    //	private static final class BlockLocation {
 //		final World world;
 //		final int x, y, z;
 //

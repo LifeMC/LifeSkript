@@ -4,5 +4,5 @@
 
 on damage:
 	if victim is a player:
-		if victim has permission "skript.god":
+		if victim has the permission "skript.god":
 			cancel event

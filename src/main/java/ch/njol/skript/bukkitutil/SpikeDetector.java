@@ -41,7 +41,7 @@ import java.util.logging.Logger;
  */
 public final class SpikeDetector extends Thread {
 
-    //public static volatile boolean hasStarted;
+    private static volatile boolean hasStarted;
 
     @Nullable
     private static SpikeDetector instance;
@@ -78,6 +78,15 @@ public final class SpikeDetector extends Thread {
             instance = new SpikeDetector(serverThread);
             instance.start();
         }
+    }
+
+    public static final void setEnabled(final boolean enabled) {
+        SpikeDetector.hasStarted = enabled;
+
+        if (enabled)
+            Skript.info("Enabled spike detector");
+        else
+            Skript.info("Spike detector is disabled");
     }
 
     public static final void tick() {
@@ -130,7 +139,7 @@ public final class SpikeDetector extends Thread {
             final long currentTime = monotonicMillis();
 
             if (this.lastTick != 0L && currentTime > this.lastTick + this.earlyWarningEvery) {
-                if (this.earlyWarningEvery <= 0L /*|| (!hasStarted)*/ || currentTime < this.lastEarlyWarning + this.earlyWarningEvery || currentTime < this.lastTick + this.earlyWarningDelay) {
+                if (this.earlyWarningEvery <= 0L || (!hasStarted) || currentTime < this.lastEarlyWarning + this.earlyWarningEvery || currentTime < this.lastTick + this.earlyWarningDelay) {
                     continue;
                 }
                 this.lastEarlyWarning = currentTime;

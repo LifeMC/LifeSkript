@@ -232,9 +232,14 @@ warn when using explicit player pattern: false
 
 
 enable timings: true
-# When enabled, triggers in scripts will be present in timings reports.
+# When true, triggers in scripts will be present in timings reports.
 # Note that this requires PaperSpigot, TacoSpigot or LifeSpigot to work; on Bukkit/Spigot this option does nothing.
 # When false, timings are not enabled for scripts even if you're running PaperSpigot, TacoSpigot or LifeSpigot.
+
+enable spike detector: default
+# When true, Skript will dedect server spikes/freezes and print useful warnings
+# for finding the cause of it. If on default and enable timings is true, it will warn only when timings is enabled.
+# It's recommended to make this true even in production because hunting spikes and lag is always good.
 
 
 default source version: default

@@ -52,7 +52,7 @@ fun start(name: String): Any? {
     if (syncMethods)
         timing!!.startTimingIfSync() // No warning spam in async code
     else if (Bukkit.isPrimaryThread())
-        timing!!.startTiming()
+        timing!!.startTiming() // FIXME fix timings on LifeSpigot
     @Suppress("SENSELESS_COMPARISON")
     assert(timing != null)
     return timing

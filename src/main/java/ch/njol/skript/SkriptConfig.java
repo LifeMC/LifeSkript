@@ -22,6 +22,7 @@
 
 package ch.njol.skript;
 
+import ch.njol.skript.bukkitutil.SpikeDetector;
 import ch.njol.skript.config.*;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
@@ -124,6 +125,13 @@ public final class SkriptConfig {
 //                        Skript.warning("Timings cannot be enabled! You are running Bukkit/Spigot, but Paper or LifeSpigot is required.");
 //                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
                 }
+            });
+    public static final Option<String> enableSpikeDedector = new Option<>("enable spike detector", "default")
+            .setter(t -> {
+                if ("default".equalsIgnoreCase(t))
+                    SpikeDetector.setEnabled(enableTimings.value());
+                else
+                    SpikeDetector.setEnabled(Boolean.parseBoolean(t));
             });
     public static final Option<String> defaultSourceVersion = new Option<>("default source version", "default");
     public static final Option<Boolean> disableBackupsCompletely = new Option<>("disable backups completely", false);

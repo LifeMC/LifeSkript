@@ -26,6 +26,7 @@ import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.SkriptEventHandler;
+import ch.njol.skript.bukkitutil.SpikeDetector;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.SectionNode;
@@ -177,9 +178,13 @@ public final class Commands {
     public static final void checkTimings(final String command) {
         if (command.equalsIgnoreCase("timings on") && !SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = true;
+            if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDedector.value()))
+                SpikeDetector.setEnabled(true);
             Skript.info("Timings mode enabled");
         } else if (command.equalsIgnoreCase("timings off") && SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = false;
+            if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDedector.value()))
+                SpikeDetector.setEnabled(false);
             Skript.info("Timings mode disabled");
         }
     }

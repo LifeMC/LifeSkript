@@ -193,6 +193,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
     public static final Version invalidVersion = new Version(999);
     public static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
+    /**
+     * Null when ran from tests or outside of Bukkit
+     */
+    @Nullable
+    public static final Logger minecraftLogger = isBukkitRunning() ? Bukkit.getLogger() : null;
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));
@@ -225,11 +230,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static SpikeDetector spikeDetector;
     @Nullable
     public static String ipAddress;
-    /**
-     * Null when ran from tests or outside of Bukkit
-     */
-    @Nullable
-    public static final Logger minecraftLogger = isBukkitRunning() ? Bukkit.getLogger() : null;
     static boolean disabled;
     @Nullable
     static String latestVersion;
