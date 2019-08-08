@@ -54,7 +54,8 @@ import java.util.Map.Entry;
 @SuppressWarnings("deprecation")
 public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jump
 
-    private static long lastCall;
+    //	private static final HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
+    static final HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<>();
 
 //	private static final class BlockLocation {
 //		final World world;
@@ -82,9 +83,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //			return world.hashCode() + 29 * (x + 17 * (y + 31 * z));
 //		}
 //	}
-
-    //	private static final HashMap<BlockLocation, List<Trigger>> blockTriggers = new HashMap<BlockLocation, List<Trigger>>();
-    static final HashMap<Integer, List<Trigger>> itemTypeTriggers = new HashMap<>();
+    private static long lastCall;
     private static final EventExecutor executor = (l, event) -> {
         if (event == null)
             return;

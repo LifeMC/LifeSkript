@@ -49,7 +49,6 @@ public final class Workarounds {
 
     private static final Map<String, String> oldValues =
             new HashMap<>();
-    private static boolean init;
     public static boolean exceptionsDisabled;
     public static final Thread.UncaughtExceptionHandler uncaughtHandler = (t, e) -> {
         if (exceptionsDisabled)
@@ -72,6 +71,7 @@ public final class Workarounds {
 
         System.err.flush();
     };
+    private static boolean init;
 
     static {
         Skript.closeOnEnable(() -> {

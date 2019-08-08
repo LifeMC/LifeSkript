@@ -97,7 +97,7 @@ public final class SpikeDetector extends Thread {
 
         log.log(Level.WARNING, prefix + "Current Thread: " + threadInfo.getThreadName());
         log.log(Level.WARNING, prefix + "\tPID: " + threadInfo.getThreadId() + " | Suspended: " + suspended + " | Native: " + threadInfo
-                .isInNative() +  " | Daemon: " + thread
+                .isInNative() + " | Daemon: " + thread
                 .isDaemon() + " | State: " + state + " | Priority: " + thread
                 .getPriority());
         if (monitorInfo.length != 0) {

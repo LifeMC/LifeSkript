@@ -223,6 +223,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static boolean customVersion;
     @Nullable
     public static SpikeDetector spikeDetector;
+    @Nullable
+    public static String ipAddress;
+    /**
+     * Null when ran from tests or outside of Bukkit
+     */
+    @Nullable
+    public static final Logger minecraftLogger = isBukkitRunning() ? Bukkit.getLogger() : null;
     static boolean disabled;
     @Nullable
     static String latestVersion;
@@ -246,13 +253,31 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static ThreadGroup rootThreadGroup;
     @Nullable
     private static Runnable optimizeNetty;
-    @Nullable
-    public static String ipAddress;
-    /**
-     * Null when ran from tests or outside of Bukkit
-     */
-    @Nullable
-    public static Logger minecraftLogger = Bukkit.getLogger();
+
+    static {
+        // Default Handler
+        Thread.setDefaultUncaughtExceptionHandler(Workarounds.uncaughtHandler);
+
+        // Current Thread
+        Thread.currentThread().setUncaughtExceptionHandler(Workarounds.uncaughtHandler);
+
+        // Set external IP
+        try {
+            ipAddress = WebUtils.getResponse("https://checkip.amazonaws.com");
+        } catch (final IOException e) {
+            if (Skript.testing() || Skript.debug())
+                Skript.exception(e);
+        }
+
+//      Language.addListener(new LanguageChangeListener() {
+//          @Override
+//          public void onLanguageChange() {
+//              final String s = Language.get_("skript.prefix");
+//              if (s != null)
+//                  SKRIPT_PREFIX = Utils.replaceEnglishChatStyles(s) + ChatColor.RESET + " ";
+//          }
+//      });
+    }
 
     public Skript() throws IllegalStateException {
         super();
@@ -522,6 +547,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return minecraftVersion;
     }
 
+    // ================ CONSTANTS, OPTIONS & OTHER ================
+
     /**
      * Returns whatever this server is running CraftBukkit.
      *
@@ -532,8 +559,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final boolean isRunningCraftBukkit() {
         return isCraftBukkit;
     }
-
-    // ================ CONSTANTS, OPTIONS & OTHER ================
 
     /**
      * Returns whatever this server is running the given Minecraft <tt>major.minor</tt> <b>or higher</b>
@@ -905,6 +930,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         }
     }
 
+    // ================ REGISTRATIONS ================
+
     /**
      * Clears triggers, commands, functions and variable names
      */
@@ -918,8 +945,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         ScriptLoader.loadedFiles.clear();
         ScriptLoader.loadedScriptFiles.clear();
     }
-
-    // ================ REGISTRATIONS ================
 
     /**
      * Prints errors from reloading the config & scripts
@@ -948,6 +973,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         SkriptConfig.load();
     }
 
+    // ================ ADDONS ================
+
     /**
      * Prints errors
      */
@@ -955,8 +982,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         Aliases.clear();
         Aliases.load();
     }
-
-    // ================ ADDONS ================
 
     /**
      * Registers a Closeable that should be closed when this plugin is disabled.
@@ -1014,12 +1039,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return acceptRegistrations;
     }
 
+    // ================ CONDITIONS & EFFECTS ================
+
     public static final void checkAcceptRegistrations() {
         if (!acceptRegistrations)
             throw new SkriptAPIException("Registering is disabled after initialization!");
     }
-
-    // ================ CONDITIONS & EFFECTS ================
 
     static final void stopAcceptingRegistrations() {
         acceptRegistrations = false;
@@ -1113,6 +1138,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         statements.add(info);
     }
 
+    // ================ EXPRESSIONS ================
+
     /**
      * Registers an {@link Effect}.
      *
@@ -1127,8 +1154,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         effects.add(info);
         statements.add(info);
     }
-
-    // ================ EXPRESSIONS ================
 
     public static final Collection<SyntaxElementInfo<? extends Statement>> getStatements() {
         return statements;
@@ -1164,12 +1189,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         expressions.add(expressionTypesStartIndices[type.ordinal()], info);
     }
 
+    // ================ EVENTS ================
+
     @SuppressWarnings("null")
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions() {
         return expressions.iterator();
     }
-
-    // ================ EVENTS ================
 
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
         return new CheckedIterator<>(getExpressions(), i -> {
@@ -1226,6 +1251,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return events;
     }
 
+    // ================ COMMANDS ================
+
     /**
      * Dispatches a command with calling command events
      *
@@ -1255,13 +1282,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         }
     }
 
-    // ================ COMMANDS ================
+    // ================ LOGGING ================
 
     public static final boolean logNormal() {
         return logHigh() || SkriptLogger.log(Verbosity.NORMAL);
     }
-
-    // ================ LOGGING ================
 
     public static final boolean logHigh() {
         return logVeryHigh() || SkriptLogger.log(Verbosity.HIGH);
@@ -1537,31 +1562,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         Bukkit.broadcast(SKRIPT_PREFIX + Utils.replaceEnglishChatStyles(message), "skript.admin");
     }
 
-    static {
-        // Default Handler
-        Thread.setDefaultUncaughtExceptionHandler(Workarounds.uncaughtHandler);
-
-        // Current Thread
-        Thread.currentThread().setUncaughtExceptionHandler(Workarounds.uncaughtHandler);
-
-        // Set external IP
-        try {
-            ipAddress = WebUtils.getResponse("http://checkip.amazonaws.com");
-        } catch (final IOException e) {
-            if (Skript.testing() || Skript.debug())
-                Skript.exception(e);
-        }
-
-//      Language.addListener(new LanguageChangeListener() {
-//          @Override
-//          public void onLanguageChange() {
-//              final String s = Language.get_("skript.prefix");
-//              if (s != null)
-//                  SKRIPT_PREFIX = Utils.replaceEnglishChatStyles(s) + ChatColor.RESET + " ";
-//          }
-//      });
-    }
-
     /**
      * Similar to {@link #info(CommandSender, String)} but no [Skript] prefix is added.
      *
@@ -1694,12 +1694,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         final String name = thread.getName().toLowerCase(Locale.ENGLISH);
                         final int priority = thread.getPriority();
 
-                        if (name.contains("netty") && priority != Thread.MAX_PRIORITY)
+                        if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive")) && priority != Thread.MAX_PRIORITY)
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        else if (name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("console handler") || name.contains("profiler") || name.contains("wait loop") || name.contains("sleep") || name.contains("watchdog") && priority != Thread.MIN_PRIORITY)
+                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("console handler") || name.contains("profiler") || name.contains("wait loop") || name.contains("sleep") || name.contains("watchdog")) && priority != Thread.MIN_PRIORITY)
                             thread.setPriority(Thread.MIN_PRIORITY);
-                        else if (name.contains("alive") && priority != Thread.MAX_PRIORITY)
-                            thread.setPriority(Thread.MAX_PRIORITY);
                     }
                 }
             };
