@@ -99,7 +99,7 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
 
     @Override
     @Nullable
-    protected TriggerItem walk(final Event e) {
+    protected final TriggerItem walk(final Event e) {
         debug(e, false);
         TriggerItem n = this;
         for (int i = breakLevels; i > 0; ) {
@@ -110,6 +110,9 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
             }
             if (type == EVERYTHING || type == CONDITIONALS && n instanceof Conditional || type == LOOPS && (n instanceof Loop || n instanceof While))
                 i--;
+        }
+        if (n instanceof Loop) {
+            ((Loop) n).getCurrentIter().remove(e);
         }
         return n instanceof Loop ? ((Loop) n).getActualNext() : n instanceof While ? ((While) n).getActualNext() : n.getNext();
     }
