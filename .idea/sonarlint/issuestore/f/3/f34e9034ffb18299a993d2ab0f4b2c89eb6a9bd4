@@ -1,4 +1,3 @@
 
 £%squid:RedundantThrowsDeclarationCheck^"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-Isquid:S1066"/Merge this if statement with the enclosing one.(×Ùüÿÿÿÿ
 =squid:S1168Z"&Return an empty array instead of null.(¥¹ï

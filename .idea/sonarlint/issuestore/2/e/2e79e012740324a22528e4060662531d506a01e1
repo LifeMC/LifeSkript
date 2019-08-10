@@ -1,7 +1,7 @@
 
-Isquid:S1659C"+Declare "FIRST_WARNING" on a separate line.(ùÓÆå8¤äµ®©-
 lsquid:S00100Ë"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™Òµòûÿÿÿÿ
-[squid:S1134-"DTake the required action to fix the issue indicated by this comment.(”½ô¢
-[squid:HiddenFieldCheck™"8Rename "file" which hides the field declared at line 66.(ŽôÓ¸
-`squid:HiddenFieldCheckä"8Rename "file" which hides the field declared at line 66.(ý —Ñÿÿÿÿÿ
 Qsquid:S1444G".Make this "public static instance" field final(¾°ÌÆýÿÿÿÿ8î „„±-
+Isquid:S1659C"+Declare "FIRST_WARNING" on a separate line.(ùÓÆå8¤äµ®©-
+[squid:HiddenFieldCheck™"8Rename "file" which hides the field declared at line 81.(ŽôÓ¸
+`squid:HiddenFieldCheckä"8Rename "file" which hides the field declared at line 81.(ý —Ñÿÿÿÿÿ
+[squid:S1134-"DTake the required action to fix the issue indicated by this comment.(”½ô¢

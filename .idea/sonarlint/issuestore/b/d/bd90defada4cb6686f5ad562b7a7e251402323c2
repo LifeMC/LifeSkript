@@ -1,5 +1,6 @@
 
-dsquid:S00112Ô"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
-dsquid:S00112Ö"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
-k$squid:AssignmentInSubExpressionCheckÌ".Extract the assignment out of this expression.(§ç‹Âÿÿÿÿÿ8Õª„„±-
-Šsquid:S1845È"fRename method "getFile" to prevent any misunderstanding/clash with field "getFile" defined on line 50.(½±Ş›şÿÿÿÿ8Õª„„±-
+dsquid:S00112Ş"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+k$squid:AssignmentInSubExpressionCheckÖ".Extract the assignment out of this expression.(§ç‹Âÿÿÿÿÿ8Õª„„±-
+Šsquid:S1845Ò"fRename method "getFile" to prevent any misunderstanding/clash with field "getFile" defined on line 51.(½±Ş›şÿÿÿÿ8Õª„„±-
+dsquid:S00112à"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
+Ssquid:S1133F"5Do not forget to remove this deprecated code someday.(²Íİş8¹æÈÇ-

@@ -1,2 +1,5 @@
 
-Tsquid:S2589ƒ"7Remove this expression which always evaluates to "true"(ğÚÅªøÿÿÿÿ
+Tsquid:S2589„"7Remove this expression which always evaluates to "true"(ğÚÅªøÿÿÿÿ
+Msquid:S5411N"*Use the primitive boolean expression here.(¼ºíıÿÿÿÿ8éÈÇ-
+Ssquid:S1133ş"5Do not forget to remove this deprecated code someday.(ò­şM8éÈÇ-
+Wsquid:MissingDeprecatedCheckş"(Add the missing @deprecated Javadoc tag.(ò­şM8éÈÇ-

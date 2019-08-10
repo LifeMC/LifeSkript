@@ -1,9 +1,9 @@
 
+fsquid:CallToDeprecatedMethod¼"8Remove this use of "getOfflinePlayer"; it is deprecated.(“êˆ¨üÿÿÿÿ
+squid:S1186@"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‰ÇÓùøÿÿÿÿ
+csquid:HiddenFieldCheckñ";Rename "region" which hides the field declared at line 125.(ˆ¢Âıÿÿÿÿ
 9squid:S1659Â"!Declare "max" on a separate line.(ã€˜½
 Xsquid:CallToDeprecatedMethod¬"/Remove this use of "isOwner"; it is deprecated.(˜ü¹·
-Lsquid:S2065}"0Remove the "transient" modifier from this field.(’ºóúüÿÿÿÿ
-fsquid:CallToDeprecatedMethod¼"8Remove this use of "getOfflinePlayer"; it is deprecated.(“êˆ¨üÿÿÿÿ
-csquid:HiddenFieldCheckñ";Rename "region" which hides the field declared at line 125.(ˆ¢Âıÿÿÿÿ
-squid:S1186@"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(‰ÇÓùøÿÿÿÿ
-Ysquid:CallToDeprecatedMethod“"0Remove this use of "isMember"; it is deprecated.(§é ë
 fsquid:CallToDeprecatedMethod£"8Remove this use of "getOfflinePlayer"; it is deprecated.(“êˆ¨üÿÿÿÿ
+Ysquid:CallToDeprecatedMethod“"0Remove this use of "isMember"; it is deprecated.(§é ë
+Lsquid:S2065}"0Remove the "transient" modifier from this field.(’ºóúüÿÿÿÿ

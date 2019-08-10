@@ -1,28 +1,27 @@
 
+`squid:HiddenFieldCheckí"8Rename "item" which hides the field declared at line 82.(Ã×¤Æúÿÿÿÿ
+>squid:S1168Ñ"&Return an empty array instead of null.(¥¹ï
+Wsquid:CallToDeprecatedMethodÂ"/Remove this use of "getData"; it is deprecated.(ª§è.
 Gsquid:S2065C"0Remove the "transient" modifier from this field.( •¯
-\squid:HiddenFieldCheck"9Rename "block" which hides the field declared at line 82.(úÌæ•
+?squid:S1659S"#Declare "block" on a separate line.(Ä²äÂüÿÿÿÿ
 `squid:HiddenFieldCheckª"8Rename "meta" which hides the field declared at line 71.(¨Ğ‘ªùÿÿÿÿ
+_squid:CallToDeprecatedMethodŒ"1Remove this use of "getTypeId"; it is deprecated.(””û½ÿÿÿÿÿ
+\squid:HiddenFieldCheck"9Rename "block" which hides the field declared at line 82.(úÌæ•
+Wsquid:CallToDeprecatedMethodq"/Remove this use of "getData"; it is deprecated.(ÈÛ·¢
+Ysquid:S1133É"5Do not forget to remove this deprecated code someday.(Ò‚ï®úÿÿÿÿ8ú›„„±-
+Zsquid:CallToDeprecatedMethodº"1Remove this use of "getTypeId"; it is deprecated.(Óı¥Õ
+`squid:S1182•"HUse super.clone() to create and seed the cloned instance to be returned.(ÒÎÒš
+fsquid:S00100í"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦öùT
+Ysquid:CallToDeprecatedMethodq"1Remove this use of "getTypeId"; it is deprecated.(ÈÛ·¢
+g squid:LabelsShouldNotBeUsedCheck¸";Refactor the code to remove this label and the need for it.(àÏÅ)
+ksquid:S2975•"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒÎÒš
+[squid:HiddenFieldCheck§"8Rename "item" which hides the field declared at line 82.(Õ§÷ê
 p
 squid:S135Ú"YReduce the total number of break and continue statements in this loop to use at most one.(ãÇâ‡
-Wsquid:CallToDeprecatedMethodq"/Remove this use of "getData"; it is deprecated.(ÈÛ·¢
 <squid:S1659y" Declare "it" on a separate line.(…ª¬…ıÿÿÿÿ
-[squid:HiddenFieldCheck§"8Rename "item" which hides the field declared at line 82.(Õ§÷ê
-fsquid:S00100í"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦öùT
-Csquid:S1066"/Merge this if statement with the enclosing one.(’Ä·8
-Zsquid:CallToDeprecatedMethodº"1Remove this use of "getTypeId"; it is deprecated.(Óı¥Õ
->squid:S1168Ñ"&Return an empty array instead of null.(¥¹ï
-ksquid:S2975•"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(ÒÎÒš
-g squid:LabelsShouldNotBeUsedCheckà";Refactor the code to remove this label and the need for it.(àÏÅ)
->squid:S1168Ë"&Return an empty array instead of null.(¥¹ï
-Gsquid:S2065H"0Remove the "transient" modifier from this field.(å¨øÒ
-`squid:HiddenFieldCheckí"8Rename "item" which hides the field declared at line 82.(Ã×¤Æúÿÿÿÿ
-Wsquid:CallToDeprecatedMethodÂ"/Remove this use of "getData"; it is deprecated.(ª§è.
-g squid:LabelsShouldNotBeUsedCheck¸";Refactor the code to remove this label and the need for it.(àÏÅ)
-Ysquid:CallToDeprecatedMethodÂ"1Remove this use of "getTypeId"; it is deprecated.(ª§è.
 ysquid:S00115:"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(È¥ÄŸ8àÉµ®©-
-Ysquid:CallToDeprecatedMethodq"1Remove this use of "getTypeId"; it is deprecated.(ÈÛ·¢
-?squid:S1659S"#Declare "block" on a separate line.(Ä²äÂüÿÿÿÿ
-_squid:CallToDeprecatedMethodŒ"1Remove this use of "getTypeId"; it is deprecated.(””û½ÿÿÿÿÿ
-`squid:S1182•"HUse super.clone() to create and seed the cloned instance to be returned.(ÒÎÒš
-Ysquid:S1133É"5Do not forget to remove this deprecated code someday.(Ò‚ï®úÿÿÿÿ8ú›„„±-
+g squid:LabelsShouldNotBeUsedCheckà";Refactor the code to remove this label and the need for it.(àÏÅ)
+Gsquid:S2065H"0Remove the "transient" modifier from this field.(å¨øÒ
 ]squid:MissingDeprecatedCheckÉ"(Add the missing @deprecated Javadoc tag.(Ò‚ï®úÿÿÿÿ8ú›„„±-
+Ysquid:CallToDeprecatedMethodÂ"1Remove this use of "getTypeId"; it is deprecated.(ª§è.
+>squid:S1168Ë"&Return an empty array instead of null.(¥¹ï

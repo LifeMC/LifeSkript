@@ -1,4 +1,6 @@
 
-zsquid:S4144@"^Update this method so that its implementation is not identical to "getHandlerList" on line 48.(ÆÂ¨úÿÿÿÿ
-Csquid:S1452;"&Remove usage of generic wildcard type.(¦³‡+8Ø”„„±-
-Xsquid:S1133("5Do not forget to remove this deprecated code someday.(Œÿè‚ıÿÿÿÿ8Ø”„„±-
+Csquid:S1452B"&Remove usage of generic wildcard type.(¦³‡+8Ø”„„±-
+Xsquid:S1133)"5Do not forget to remove this deprecated code someday.(Œÿè‚ıÿÿÿÿ8Ø”„„±-
+zsquid:S4144G"^Update this method so that its implementation is not identical to "getHandlerList" on line 55.(ÆÂ¨úÿÿÿÿ
+Ssquid:S1133."5Do not forget to remove this deprecated code someday.(û˜–®8íìÈÇ-
+Wsquid:MissingDeprecatedCheck."(Add the missing @deprecated Javadoc tag.(û˜–®8íìÈÇ-

@@ -1,16 +1,23 @@
 
-Ysquid:S1141“"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-Ysquid:S1141û"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
-5squid:S1700c"Rename field "commands"(‡û–8„Ù¶®©-
-Vsquid:S2629­"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
-Ksquid:S1659k"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
-Tsquid:S1444m"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
-Tsquid:S1133Œ"5Do not forget to remove this deprecated code someday.(äÒ§ˆ8í÷‚„±-
-Xsquid:MissingDeprecatedCheckŒ"(Add the missing @deprecated Javadoc tag.(äÒ§ˆ8í÷‚„±-
-lsquid:CallToDeprecatedMethodô"7Remove this use of "PlayerChatEvent"; it is deprecated.(‚óù™úÿÿÿÿ8í÷‚„±-
-lsquid:CallToDeprecatedMethod÷"7Remove this use of "PlayerChatEvent"; it is deprecated.(Ùû¢üÿÿÿÿ8í÷‚„±-
-isquid:CallToDeprecatedMethodø"4Remove this use of "onPlayerChat"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
-lsquid:CallToDeprecatedMethodø"7Remove this use of "PlayerChatEvent"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
-]squid:S1118W":Add a private constructor to hide the implicit public one.(÷ÇùŞúÿÿÿÿ8í÷‚„±-
-Osquid:S2386š"+Make member "currentArguments" "protected".(ã„İ°ûÿÿÿÿ8í÷‚„±-
-ysquid:S00115`"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ßÒš‰8í÷‚„±-
+Tsquid:S1444j"6Make this "public static currentArguments" field final(íÚí¼8´ƒÿÌ¢-
+Osquid:S2386Ÿ"+Make member "currentArguments" "protected".(ã„İ°ûÿÿÿÿ8í÷‚„±-
+5squid:S1700`"Rename field "commands"(‡û–8„Ù¶®©-
+Ksquid:S1659h"-Declare "argumentPattern" on a separate line.(ÿ¼‰8´ƒÿÌ¢-
+lsquid:CallToDeprecatedMethodù"7Remove this use of "PlayerChatEvent"; it is deprecated.(‚óù™úÿÿÿÿ8í÷‚„±-
+Vsquid:S2629²"7Use the built-in formatting to construct this argument.(Í‚¢¯8Š¤„Û¢-
+Tsquid:S1133‘"5Do not forget to remove this deprecated code someday.(äÒ§ˆ8í÷‚„±-
+Ysquid:S1141”"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+Ysquid:S1141€"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8´ƒÿÌ¢-
+isquid:CallToDeprecatedMethodı"4Remove this use of "onPlayerChat"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
+lsquid:CallToDeprecatedMethodü"7Remove this use of "PlayerChatEvent"; it is deprecated.(Ùû¢üÿÿÿÿ8í÷‚„±-
+lsquid:CallToDeprecatedMethodı"7Remove this use of "PlayerChatEvent"; it is deprecated.(²îß¥üÿÿÿÿ8í÷‚„±-
+ysquid:S00115]"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ßÒš‰8í÷‚„±-
+Nsquid:S5411È"*Use the primitive boolean expression here.(ìñÂ£ûÿÿÿÿ8²ÛÈÇ-
+Isquid:S5411Ú"*Use the primitive boolean expression here.(ÂÑ¿›8²ÛÈÇ-
+Nsquid:S5411é"*Use the primitive boolean expression here.(ìñÂ£ûÿÿÿÿ8²ÛÈÇ-
+Hsquid:S5411ö"*Use the primitive boolean expression here.(¢âõ8²ÛÈÇ-
+Isquid:S5411"*Use the primitive boolean expression here.(ˆÜ³Š8²ÛÈÇ-
+Hsquid:S5411’"*Use the primitive boolean expression here.(¢âõ8²ÛÈÇ-
+Isquid:S5411±"*Use the primitive boolean expression here.(Â£»…8²ÛÈÇ-
+Isquid:S5411Ô"*Use the primitive boolean expression here.(´ûÉ¾8²ÛÈÇ-
+dsquid:CallToDeprecatedMethod³"/Remove this use of "execute"; it is deprecated.(’åˆúÿÿÿÿ8²ÛÈÇ-

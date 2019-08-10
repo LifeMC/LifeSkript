@@ -1,4 +1,5 @@
 
-Œ"squid:SwitchLastCaseIsDefaultCheckh"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-=squid:S1168K"&Return an empty array instead of null.(¥¹ï
 squid:S2637K"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï
+=squid:S1168K"&Return an empty array instead of null.(¥¹ï
+ksquid:CallToDeprecatedMethodP"7Remove this use of "PlayerChatEvent"; it is deprecated.(‹¨Ûúüÿÿÿÿ8ıÖÈÇ-
+lsquid:S1871p"IThis case's code block is the same as the block for the case on line 109.(œø›àüÿÿÿÿ8ıÖÈÇ-

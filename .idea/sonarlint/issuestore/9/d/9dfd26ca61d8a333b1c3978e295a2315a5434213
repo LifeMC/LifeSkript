@@ -1,4 +1,4 @@
 
-¬squid:S4449T"Annotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.(ìşëüÿÿÿÿ
-¦squid:S4449T"‰Annotate the parameter with @javax.annotation.Nullable in method 'get' declaration, or make sure that null can not be passed as argument.(ìşëüÿÿÿÿ
-Dsquid:S1168`"&Return an empty array instead of null.(¥¹ï8Ò‹„„±-
+Dsquid:S1168d"&Return an empty array instead of null.(¥¹ï8Ò‹„„±-
+¬squid:S4449X"Annotate the parameter with @javax.annotation.Nullable in method 'getSingle' declaration, or make sure that null can not be passed as argument.(ìşëüÿÿÿÿ
+¦squid:S4449X"‰Annotate the parameter with @javax.annotation.Nullable in method 'get' declaration, or make sure that null can not be passed as argument.(ìşëüÿÿÿÿ

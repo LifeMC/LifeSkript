@@ -1,9 +1,10 @@
 
-;squid:S1659Ù"#Declare "upper" on a separate line.(€„ê£
-˜squid:S1186F"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é¹ğ÷
-Zsquid:S2184İ"BCast one of the operands of this addition operation to a "double".(¥³Ö®
-`squid:S2184Ş"BCast one of the operands of this addition operation to a "double".(šÙC8½¤µ®©-
-squid:S1845h"hRename method "getClaim" to prevent any misunderstanding/clash with field "getClaim" defined on line 66.(ú¸İ—
-Msquid:S2065¯"0Remove the "transient" modifier from this field.(»’ßùÿÿÿÿ
-csquid:S00112o"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
-fsquid:CallToDeprecatedMethodÔ"8Remove this use of "getOfflinePlayer"; it is deprecated.(õ†í†ùÿÿÿÿ
+˜squid:S1186L"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(é¹ğ÷
+`squid:S2184í"BCast one of the operands of this addition operation to a "double".(šÙC8½¤µ®©-
+Zsquid:S2184ì"BCast one of the operands of this addition operation to a "double".(¥³Ö®
+fsquid:CallToDeprecatedMethodã"8Remove this use of "getOfflinePlayer"; it is deprecated.(õ†í†ùÿÿÿÿ
+squid:S1845p"hRename method "getClaim" to prevent any misunderstanding/clash with field "getClaim" defined on line 72.(ú¸İ—
+;squid:S1659è"#Declare "upper" on a separate line.(€„ê£
+Msquid:S2065¼"0Remove the "transient" modifier from this field.(»’ßùÿÿÿÿ
+csquid:S00112y"FDefine and throw a dedicated exception instead of using a generic one.(ûí˜ûÿÿÿÿ
+~squid:S00115>"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ŠÕé¶ûÿÿÿÿ8†íÈÇ-

@@ -1,12 +1,12 @@
 
-Zsquid:CallToDeprecatedMethodÎ"1Remove this use of "ItemStack"; it is deprecated.(‡ô
-Vsquid:CallToDeprecatedMethod­"-Remove this use of "getId"; it is deprecated.(®ªµ
-Zsquid:CallToDeprecatedMethod°"1Remove this use of "ItemStack"; it is deprecated.(âİ¬Ì
-\squid:S3358¥"DExtract this nested ternary operation into an independent statement.(¯½®¥
-†"squid:ClassVariableVisibilityCheck0"SMake dataMax a static final constant or non-public and provide accessors if needed.(æ»Ïãşÿÿÿÿ
-†"squid:ClassVariableVisibilityCheck/"SMake dataMin a static final constant or non-public and provide accessors if needed.(şßŒØşÿÿÿÿ
 Ysquid:CallToDeprecatedMethodT"1Remove this use of "getTypeId"; it is deprecated.(ìé×š
+\squid:S3358¥"DExtract this nested ternary operation into an independent statement.(¯½®¥
 esquid:S1182é"HUse super.clone() to create and seed the cloned instance to be returned.(²—´úûÿÿÿÿ
+Zsquid:CallToDeprecatedMethod°"1Remove this use of "ItemStack"; it is deprecated.(âİ¬Ì
+Zsquid:CallToDeprecatedMethodÎ"1Remove this use of "ItemStack"; it is deprecated.(‡ô
+†"squid:ClassVariableVisibilityCheck0"SMake dataMax a static final constant or non-public and provide accessors if needed.(æ»Ïãşÿÿÿÿ
 Ysquid:CallToDeprecatedMethodk"1Remove this use of "getTypeId"; it is deprecated.(Óı¥Õ
-psquid:S2975é"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(²—´úûÿÿÿÿ
 _squid:CallToDeprecatedMethod²"1Remove this use of "ItemStack"; it is deprecated.(Ç¤ªßüÿÿÿÿ
+†"squid:ClassVariableVisibilityCheck/"SMake dataMin a static final constant or non-public and provide accessors if needed.(şßŒØşÿÿÿÿ
+Vsquid:CallToDeprecatedMethod­"-Remove this use of "getId"; it is deprecated.(®ªµ
+psquid:S2975é"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(²—´úûÿÿÿÿ

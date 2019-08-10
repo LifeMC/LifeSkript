@@ -1,4 +1,4 @@
 
-£%squid:RedundantThrowsDeclarationCheckZ"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(¡ºÄô
 =squid:S1168R"&Return an empty array instead of null.(•πÔç
+£%squid:RedundantThrowsDeclarationCheckZ"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(¡ºÄô
 =squid:S1168U"&Return an empty array instead of null.(•πÔç

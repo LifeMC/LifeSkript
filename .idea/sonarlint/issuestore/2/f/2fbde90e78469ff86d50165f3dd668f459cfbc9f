@@ -1,7 +1,7 @@
 
-Msquid:S1133‘"5Do not forget to remove this deprecated code someday.(›ËÁı
-Psquid:S35169"9Refactor this method to not always return the same value.(Ğ®è«
-Qsquid:MissingDeprecatedCheck‘"(Add the missing @deprecated Javadoc tag.(›ËÁı
-Xsquid:CallToDeprecatedMethod"-Remove this use of "getId"; it is deprecated.(Œ¬Óşÿÿÿÿ
-Dsquid:S1066"/Merge this if statement with the enclosing one.(›î
+Zsquid:CallToDeprecatedMethod?"-Remove this use of "getId"; it is deprecated.(Œ¬Óşÿÿÿÿ
 \squid:HiddenFieldCheck…"9Rename "types" which hides the field declared at line 52.(÷«Ïø
+Msquid:S1133‘"5Do not forget to remove this deprecated code someday.(›ËÁı
+Qsquid:MissingDeprecatedCheck‘"(Add the missing @deprecated Javadoc tag.(›ËÁı
+Psquid:S35169"9Refactor this method to not always return the same value.(Ğ®è«
+Fsquid:S1066<"/Merge this if statement with the enclosing one.(›î

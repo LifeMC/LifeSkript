@@ -1,5 +1,5 @@
 
-Zsquid:S3358r"DExtract this nested ternary operation into an independent statement.(–ôÙ+
+Zsquid:S3358u"DExtract this nested ternary operation into an independent statement.(–ôÙ+
 Asquid:S1659."#Declare "LOOPS" on a separate line.(ùòû¨8œ·®©-
 ƒ squid:ForLoopCounterChangedCheckp"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK
 Hsquid:S1659."*Declare "CONDITIONALS" on a separate line.(ùòû¨8œ·®©-

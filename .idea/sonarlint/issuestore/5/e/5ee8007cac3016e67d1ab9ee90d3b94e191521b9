@@ -1,4 +1,4 @@
 
-Wsquid:HiddenFieldCheck1"5Rename "e" which hides the field declared at line 39.(ô»µÖ
-¨%squid:RedundantThrowsDeclarationCheck<"kRemove the declaration of thrown exception 'java.util.NoSuchElementException' which is a runtime exception.(äÊ˜„ýÿÿÿÿ8ð©„„±-
-qsquid:S2272<"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(äÊ˜„ýÿÿÿÿ8ð©„„±-
+¨%squid:RedundantThrowsDeclarationCheck:"kRemove the declaration of thrown exception 'java.util.NoSuchElementException' which is a runtime exception.(äÊ˜„ýÿÿÿÿ8ð©„„±-
+Wsquid:HiddenFieldCheck/"5Rename "e" which hides the field declared at line 37.(ô»µÖ
+qsquid:S2272:"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(äÊ˜„ýÿÿÿÿ8ð©„„±-

@@ -1,14 +1,14 @@
 
-Esquid:S2447"-Null is returned but a "Boolean" is expected.(¥¹ï
-xsquid:CallToDeprecatedMethodı"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(¦¢Îßùÿÿÿÿ
-xsquid:CallToDeprecatedMethod¹"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ôÆ‚Úùÿÿÿÿ
-rsquid:CallToDeprecatedMethod¾"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(•ëÊb
-xsquid:CallToDeprecatedMethodş"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(áá¢Øşÿÿÿÿ
 ssquid:CallToDeprecatedMethod"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ØÛÈõ
-xsquid:CallToDeprecatedMethodˆ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÆØŸ’ÿÿÿÿÿ
-ssquid:CallToDeprecatedMethodÃ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(úÃƒŒ
-Fsquid:S00108~")Either remove or fill this block of code.(ƒ½²şøÿÿÿÿ
-xsquid:CallToDeprecatedMethodÁ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÃÊ³şÿÿÿÿ
-rsquid:CallToDeprecatedMethody"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ò¯ƒÈ
 Esquid:S2447Ç"-Null is returned but a "Boolean" is expected.(¥¹ï
-hsquid:S1134Ó"DTake the required action to fix the issue indicated by this comment.(†‰úÇøÿÿÿÿ8şœ„„±-
+xsquid:CallToDeprecatedMethod¹"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ôÆ‚Úùÿÿÿÿ
+xsquid:CallToDeprecatedMethodˆ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÆØŸ’ÿÿÿÿÿ
+rsquid:CallToDeprecatedMethod¾"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(•ëÊb
+rsquid:CallToDeprecatedMethody"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ò¯ƒÈ
+Esquid:S2447"-Null is returned but a "Boolean" is expected.(¥¹ï
+hsquid:S1134Ó"DTake the required action to fix the issue indicated by this comment.(½¶Ëşÿÿÿÿ8şœ„„±-
+ssquid:CallToDeprecatedMethodÃ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(úÃƒŒ
+xsquid:CallToDeprecatedMethodı"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(¦¢Îßùÿÿÿÿ
+xsquid:CallToDeprecatedMethodş"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(áá¢Øşÿÿÿÿ
+xsquid:CallToDeprecatedMethodÁ"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(ÃÊ³şÿÿÿÿ
+Isquid:S5411¢"*Use the primitive boolean expression here.(ø†¬Ú8óêÈÇ-

@@ -1,12 +1,12 @@
 
-Xsquid:CallToDeprecatedMethod®"/Remove this use of "getData"; it is deprecated.(±ê¹á
-Rsquid:S1133–"5Do not forget to remove this deprecated code someday.(¸ßþÜúÿÿÿÿ
->squid:S1659X"'Declare "lengthOrZ" on a separate line.( ¾®Á
-Vsquid:MissingDeprecatedCheck–"(Add the missing @deprecated Javadoc tag.(¸ßþÜúÿÿÿÿ
-;squid:S1659X"$Declare "yawOrY" on a separate line.( ¾®Á
-@squid:S1659B""Declare "BF_Y" on a separate line.(¯æýÍ8›‹¶®©-
-[squid:CallToDeprecatedMethod®"2Remove this use of "getNewData"; it is deprecated.(±ê¹á
-`squid:CallToDeprecatedMethod“"2Remove this use of "getNewData"; it is deprecated.(æÑ§îÿÿÿÿÿ
-]squid:CallToDeprecatedMethod“"/Remove this use of "getData"; it is deprecated.(æÑ§îÿÿÿÿÿ
 \squid:S3358¸"DExtract this nested ternary operation into an independent statement.(çžÇ±
 @squid:S1659B""Declare "BF_Z" on a separate line.(¯æýÍ8›‹¶®©-
+Xsquid:CallToDeprecatedMethod®"/Remove this use of "getData"; it is deprecated.(±ê¹á
+Rsquid:S1133–"5Do not forget to remove this deprecated code someday.(¸ßþÜúÿÿÿÿ
+Vsquid:MissingDeprecatedCheck–"(Add the missing @deprecated Javadoc tag.(¸ßþÜúÿÿÿÿ
+@squid:S1659B""Declare "BF_Y" on a separate line.(¯æýÍ8›‹¶®©-
+[squid:CallToDeprecatedMethod®"2Remove this use of "getNewData"; it is deprecated.(±ê¹á
+]squid:CallToDeprecatedMethod“"/Remove this use of "getData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+`squid:CallToDeprecatedMethod“"2Remove this use of "getNewData"; it is deprecated.(æÑ§îÿÿÿÿÿ
+;squid:S1659X"$Declare "yawOrY" on a separate line.( ¾®Á
+>squid:S1659X"'Declare "lengthOrZ" on a separate line.( ¾®Á

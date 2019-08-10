@@ -1,2 +1,4 @@
 
-zsquid:S4144A"^Update this method so that its implementation is not identical to "getHandlerList" on line 43.(ÆÂ¨úÿÿÿÿ
+zsquid:S4144G"^Update this method so that its implementation is not identical to "getHandlerList" on line 49.(ÆÂ¨úÿÿÿÿ
+Ssquid:S1133("5Do not forget to remove this deprecated code someday.(Ñ¼°÷8ÔÈÇ-
+Wsquid:MissingDeprecatedCheck("(Add the missing @deprecated Javadoc tag.(Ñ¼°÷8ÔÈÇ-

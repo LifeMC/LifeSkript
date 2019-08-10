@@ -1,21 +1,22 @@
 
-g squid:LabelsShouldNotBeUsedCheckæ";Refactor the code to remove this label and the need for it.(àÏÅ)
-Rsquid:S1141¥"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-=squid:S1168p"&Return an empty array instead of null.(¥¹ï
 p
 squid:S135 "YReduce the total number of break and continue statements in this loop to use at most one.(¤—
-jsquid:S00117˜"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óóï÷
-†squid:S4087¾"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(¢¿ˆşÿÿÿÿÿ8¶‹ß§£-
-=squid:S1168y"&Return an empty array instead of null.(¥¹ï
 osquid:S00117™"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÉµËüÿÿÿÿ
-qsquid:S00117›"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Îà8Šşµ®©-
+jsquid:S00117˜"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óóï÷
+=squid:S1168p"&Return an empty array instead of null.(¥¹ï
+=squid:S1168y"&Return an empty array instead of null.(¥¹ï
+†squid:S4087¿"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(¢¿ˆşÿÿÿÿÿ8¶‹ß§£-
+g squid:LabelsShouldNotBeUsedCheckç";Refactor the code to remove this label and the need for it.(àÏÅ)
+hsquid:CallToDeprecatedMethod¾"3Remove this use of "deserialize"; it is deprecated.(áœ¿àùÿÿÿÿ8­«„„±-
+Rsquid:S1141¥"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
 qsquid:S00117š"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ş¾£ñ8Šşµ®©-
-gsquid:S2276Ÿ"CReplace the call to "Thread.sleep(...)" with a call to "wait(...)".(¿çõúÿÿÿÿ8­«„„±-
-Usquid:S3046œ"1Don't use "wait()" here; multiple locks are held.(ØÛ´ùÿÿÿÿ8­«„„±-
+hsquid:S3358Ÿ"DExtract this nested ternary operation into an independent statement.(¿çõúÿÿÿÿ8­«„„±-
+Xsquid:S1133="5Do not forget to remove this deprecated code someday.(‚òº½ùÿÿÿÿ8­«„„±-
 w
 squid:S135"YReduce the total number of break and continue statements in this loop to use at most one.(£Èåƒ8­«„„±-
-Xsquid:S1133="5Do not forget to remove this deprecated code someday.(‚òº½ùÿÿÿÿ8­«„„±-
-hsquid:CallToDeprecatedMethod¾"3Remove this use of "deserialize"; it is deprecated.(áœ¿àùÿÿÿÿ8­«„„±-
-®squid:S4449¢"Annotate the parameter with @javax.annotation.Nullable in method 'writeCSV' declaration, or make sure that null can not be passed as argument.(†¨‘¶8­«„„±-
+Usquid:S3046œ"1Don't use "wait()" here; multiple locks are held.(šÍ¬ˆşÿÿÿÿ8­«„„±-
+qsquid:S00117›"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Îà8Šşµ®©-
 hsquid:S3358Ÿ"DExtract this nested ternary operation into an independent statement.(¿çõúÿÿÿÿ8­«„„±-
-hsquid:S3358Ÿ"DExtract this nested ternary operation into an independent statement.(¿çõúÿÿÿÿ8­«„„±-
+esquid:S2184ö"FCast one of the operands of this multiplication operation to a "long".(ÈçªÕ8›æÈÇ-
+esquid:S2184ö"FCast one of the operands of this multiplication operation to a "long".(ÈçªÕ8›æÈÇ-
+hsquid:S1134œ"DTake the required action to fix the issue indicated by this comment.(šÍ¬ˆşÿÿÿÿ8›æÈÇ-

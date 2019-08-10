@@ -1,12 +1,13 @@
 
-~squid:S00115C"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¤ëæøÿÿÿÿ8îÚ¶®©-
-^squid:CallToDeprecatedMethodô"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
-¤%squid:RedundantThrowsDeclarationCheck€"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Ö†â¶
-[squid:HiddenFieldCheck°"8Rename "name" which hides the field declared at line 71.(óšÜï
-[squid:HiddenFieldCheckÿ"8Rename "name" which hides the field declared at line 71.(óšÜï
-Ssquid:S2589R"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
-Isquid:S1066"/Merge this if statement with the enclosing one.(ËÕ³öûÿÿÿÿ
-[squid:HiddenFieldCheckÛ"8Rename "name" which hides the field declared at line 71.(óšÜï
-Gsquid:S1905ª"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
+[squid:HiddenFieldCheckã"8Rename "name" which hides the field declared at line 73.(óšÜï
+Gsquid:S1905Û"*Remove this unnecessary cast to "Changer".(—æµñúÿÿÿÿ
+Ssquid:S2589T"7Remove this expression which always evaluates to "true"(°©ûÿÿÿÿ
+[squid:HiddenFieldCheck"8Rename "name" which hides the field declared at line 73.(óšÜï
+[squid:HiddenFieldCheck²"8Rename "name" which hides the field declared at line 73.(óšÜï
 |
-squid:S135¹"YReduce the total number of break and continue statements in this loop to use at most one.(¾¸ùÿÿÿÿ8£ÿ‚„±-
+squid:S135ê"YReduce the total number of break and continue statements in this loop to use at most one.(¾¸ùÿÿÿÿ8£ÿ‚„±-
+¤%squid:RedundantThrowsDeclarationCheck±"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Ö†â¶
+~squid:S00115E"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¤ëæøÿÿÿÿ8îÚ¶®©-
+^squid:CallToDeprecatedMethod§"6Remove this use of "getPlayerExact"; it is deprecated.(š’îS
+Nsquid:S5411¤"*Use the primitive boolean expression here.(™€Ó¸ıÿÿÿÿ8çÚÈÇ-
+lsquid:S1871´"MThis branch's code block is the same as the block for the branch on line 177.(ì”òã8çÚÈÇ-

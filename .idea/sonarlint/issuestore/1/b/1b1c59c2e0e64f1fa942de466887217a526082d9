@@ -1,14 +1,13 @@
 
-bsquid:CallToDeprecatedMethode"5Remove this use of "PaintingEvent"; it is deprecated.(Š‹£×ıÿÿÿÿ
-Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ
-Ysquid:CallToDeprecatedMethodW"1Remove this use of "getTypeId"; it is deprecated.(úñ»
-gsquid:CallToDeprecatedMethod9":Remove this use of "PaintingBreakEvent"; it is deprecated.(×ï†Òıÿÿÿÿ
-^squid:CallToDeprecatedMethod]"1Remove this use of "getTypeId"; it is deprecated.(íâïÜøÿÿÿÿ
-bsquid:CallToDeprecatedMethod;":Remove this use of "PaintingPlaceEvent"; it is deprecated.(¬”Ÿö
 \squid:CallToDeprecatedMethod["/Remove this use of "getData"; it is deprecated.(«·ğÿÿÿÿÿ
-_squid:CallToDeprecatedMethodX"2Remove this use of "getRawData"; it is deprecated.(³İ°¼úÿÿÿÿ
-Wsquid:CallToDeprecatedMethod^"/Remove this use of "getData"; it is deprecated.(ôãç
-^squid:CallToDeprecatedMethodZ"1Remove this use of "getTypeId"; it is deprecated.(Íëµ‚ıÿÿÿÿ
+bsquid:CallToDeprecatedMethod;":Remove this use of "PaintingPlaceEvent"; it is deprecated.(¬”Ÿö
+Ysquid:CallToDeprecatedMethodW"1Remove this use of "getTypeId"; it is deprecated.(úñ»
 Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ
-Isquid:S1066"/Merge this if statement with the enclosing one.(—Éïİşÿÿÿÿ
+^squid:CallToDeprecatedMethodZ"1Remove this use of "getTypeId"; it is deprecated.(Íëµ‚ıÿÿÿÿ
+Wsquid:CallToDeprecatedMethod^"/Remove this use of "getData"; it is deprecated.(ôãç
+gsquid:CallToDeprecatedMethod9":Remove this use of "PaintingBreakEvent"; it is deprecated.(×ï†Òıÿÿÿÿ
+_squid:CallToDeprecatedMethodX"2Remove this use of "getRawData"; it is deprecated.(³İ°¼úÿÿÿÿ
+Zsquid:CallToDeprecatedMethod`"-Remove this use of "getId"; it is deprecated.(äöşıÿÿÿÿ
+^squid:CallToDeprecatedMethod]"1Remove this use of "getTypeId"; it is deprecated.(íâïÜøÿÿÿÿ
 Tsquid:CallToDeprecatedMethodf"-Remove this use of "getId"; it is deprecated.(¿Ån
+bsquid:CallToDeprecatedMethode"5Remove this use of "PaintingEvent"; it is deprecated.(Š‹£×ıÿÿÿÿ

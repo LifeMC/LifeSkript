@@ -1,9 +1,9 @@
 
-Dsquid:S1948'"(Make "second" transient or serializable.(ë¤Îíúÿÿÿÿ
-Csquid:S1948%"'Make "first" transient or serializable.(òè©®ûÿÿÿÿ
 jsquid:S2975„"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(¼’/
 `squid:HiddenFieldCheck\"9Rename "first" which hides the field declared at line 36.(ÙÈ“ùøÿÿÿÿ
-_squid:S1182„"HUse super.clone() to create and seed the cloned instance to be returned.(¼’/
 \squid:HiddenFieldCheck]":Rename "second" which hides the field declared at line 38.(ÀÛéÚ
+_squid:S1182„"HUse super.clone() to create and seed the cloned instance to be returned.(¼’/
 \squid:HiddenFieldCheckg":Rename "second" which hides the field declared at line 38.(ÀÛéÚ
+Dsquid:S1948'"(Make "second" transient or serializable.(ë¤Îíúÿÿÿÿ
+Csquid:S1948%"'Make "first" transient or serializable.(òè©®ûÿÿÿÿ
 `squid:HiddenFieldCheckf"9Rename "first" which hides the field declared at line 36.(ÙÈ“ùøÿÿÿÿ

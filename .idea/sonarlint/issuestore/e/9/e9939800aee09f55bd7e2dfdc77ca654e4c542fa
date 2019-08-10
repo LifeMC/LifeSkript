@@ -1,10 +1,10 @@
 
-… squid:ForLoopCounterChangedCheckƒ"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-Ysquid:S1133"5Do not forget to remove this deprecated code someday.(èÈ€úÿÿÿÿ8úƒ¶®©-
-asquid:S3358Ú"DExtract this nested ternary operation into an independent statement.(êèƒ÷úÿÿÿÿ
-„ squid:ForLoopCounterChangedCheck~"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-ssquid:S00100¢"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô÷¶Ñùÿÿÿÿ8úƒ¶®©-
-„ squid:ForLoopCounterChangedCheckx"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
-Rsquid:S1133Ê"5Do not forget to remove this deprecated code someday.(ŒÖÉ¦ıÿÿÿÿ
 „ squid:ForLoopCounterChangedChecko"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
 nsquid:S00100À"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜áÎ8Æ®„„±-
+Rsquid:S1133Ê"5Do not forget to remove this deprecated code someday.(ŒÖÉ¦ıÿÿÿÿ
+… squid:ForLoopCounterChangedCheckƒ"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+„ squid:ForLoopCounterChangedCheckx"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+asquid:S3358Ú"DExtract this nested ternary operation into an independent statement.(êèƒ÷úÿÿÿÿ
+Ysquid:S1133"5Do not forget to remove this deprecated code someday.(èÈ€úÿÿÿÿ8úƒ¶®©-
+„ squid:ForLoopCounterChangedCheck~"XRefactor the code in order to not assign to this loop counter from within the loop body.(ğ·ÁĞ
+ssquid:S00100¢"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ô÷¶Ñùÿÿÿÿ8úƒ¶®©-

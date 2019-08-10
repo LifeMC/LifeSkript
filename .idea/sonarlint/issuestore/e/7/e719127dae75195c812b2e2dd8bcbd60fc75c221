@@ -1,7 +1,7 @@
 
-xsquid:S2629y"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(Òç™½úÿÿÿÿ
 ~squid:S00115%"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ºŞĞùÿÿÿÿ8ş”¶®©-
+xsquid:S2629y"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(Òç™½úÿÿÿÿ
+ssquid:S2629t"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(Ìş
 „ squid:ForLoopCounterChangedCheckX"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
 ‹ squid:ForLoopCounterChangedCheck\"XRefactor the code in order to not assign to this loop counter from within the loop body.(éÒĞ»8ş”¶®©-
 „ squid:ForLoopCounterChangedCheckZ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
-ssquid:S2629t"\Invoke method(s) only conditionally. Use the built-in formatting to construct this argument.(¨É‘

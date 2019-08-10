@@ -1,5 +1,6 @@
 
-Dsquid:S1066"/Merge this if statement with the enclosing one.(Ñç¾À
-fsquid:HiddenFieldCheckQ"?Rename "returnTypes" which hides the field declared at line 50.(è›Œ¯ùÿÿÿÿ
->squid:S1168"&Return an empty array instead of null.(¥¹ï
 Dsquid:S1452¸"&Remove usage of generic wildcard type.(¦³‡+8ÿŸ„„±-
+>squid:S1168›"&Return an empty array instead of null.(¥¹ï
+fsquid:HiddenFieldCheckO"?Rename "returnTypes" which hides the field declared at line 50.(è›Œ¯ùÿÿÿÿ
+‡squid:S2637´"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(š»“£8ÓéÈÇ-
+csquid:S1134´"DTake the required action to fix the issue indicated by this comment.(š»“£8ÓéÈÇ-

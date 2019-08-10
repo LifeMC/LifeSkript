@@ -1,35 +1,37 @@
 
-hsquid:CallToDeprecatedMethodä"3Remove this use of "getMaterial"; it is deprecated.(ØñÒúÿÿÿÿ8´¥„Û¢-
 d$squid:AssignmentInSubExpressionChecká".Extract the assignment out of this expression.(„§ øÿÿÿÿ
+… squid:ForLoopCounterChangedCheck·"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+_$squid:AssignmentInSubExpressionCheck±".Extract the assignment out of this expression.(”–ä
+Ssquid:S1066²"/Merge this if statement with the enclosing one.(ÏÌ•‡üÿÿÿÿ8¼õ‚„±-
+u
+squid:S135»"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
 … squid:ForLoopCounterChangedCheckŠ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ
-‚ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
-_$squid:AssignmentInSubExpressionCheck—".Extract the assignment out of this expression.(Œ™Ş¤
-[squid:CallToDeprecatedMethodÙ"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ
-u
-squid:S135«"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
-u
-squid:S135Å"YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
-u
-squid:S135·"YReduce the total number of break and continue statements in this loop to use at most one.(­Àıÿÿÿÿ
-Dsquid:S1066"/Merge this if statement with the enclosing one.(•Æ©ô
-Vsquid:CallToDeprecatedMethod×"-Remove this use of "getId"; it is deprecated.(¡¤Š
-d$squid:AssignmentInSubExpressionCheckÙ".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
-_$squid:AssignmentInSubExpressionCheck­".Extract the assignment out of this expression.(”–ä
-d$squid:AssignmentInSubExpressionCheckš".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
-d$squid:AssignmentInSubExpressionCheckŸ".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
-… squid:ForLoopCounterChangedCheck¦"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+… squid:ForLoopCounterChangedCheckª"XRefactor the code in order to not assign to this loop counter from within the loop body.(Â¨•ù
+]squid:CallToDeprecatedMethodÙ"-Remove this use of "getId"; it is deprecated.(šõ Œ8åÖ¶®©-
+csquid:CallToDeprecatedMethodò"3Remove this use of "getMaterial"; it is deprecated.(‘“ÔÜ8¼õ‚„±-
 u
 squid:S135¡"YReduce the total number of break and continue statements in this loop to use at most one.(Ğ¸Ëùÿÿÿÿ
-3squid:S3626­"Remove this redundant jump.(ÉŠ©ƒ
-]squid:CallToDeprecatedMethodØ"-Remove this use of "getId"; it is deprecated.(šõ Œ8åÖ¶®©-
-n squid:LabelsShouldNotBeUsedCheck§";Refactor the code to remove this label and the need for it.(àÏÅ)8´¥„Û¢-
-_$squid:AssignmentInSubExpressionCheck“".Extract the assignment out of this expression.(Ÿ¢¹ó
-|
-squid:S135¨"YReduce the total number of break and continue statements in this loop to use at most one.(Ïäìóøÿÿÿÿ8´¥„Û¢-
-]squid:CallToDeprecatedMethodØ"-Remove this use of "getId"; it is deprecated.(šõ Œ8åÖ¶®©-
-Psquid:S1066"/Merge this if statement with the enclosing one.(ÏÌ•‡üÿÿÿÿ8¼õ‚„±-
+d$squid:AssignmentInSubExpressionCheck£".Extract the assignment out of this expression.(¾É£…øÿÿÿÿ
+Vsquid:CallToDeprecatedMethodÙ"-Remove this use of "getId"; it is deprecated.(šõ Œ
 f$squid:AssignmentInSubExpressionCheck’".Extract the assignment out of this expression.(ĞéÎ8¼õ‚„±-
-csquid:CallToDeprecatedMethodğ"3Remove this use of "getMaterial"; it is deprecated.(‘“ÔÜ8¼õ‚„±-
+u
+squid:S135É"YReduce the total number of break and continue statements in this loop to use at most one.(ï‡â¯ÿÿÿÿÿ
+]squid:CallToDeprecatedMethodØ"-Remove this use of "getId"; it is deprecated.(¡¤Š8åÖ¶®©-
+|
+squid:S135©"YReduce the total number of break and continue statements in this loop to use at most one.(Ïäìóøÿÿÿÿ8´¥„Û¢-
+3squid:S3626®"Remove this redundant jump.(ÉŠ©ƒ
+d$squid:AssignmentInSubExpressionCheckÙ".Extract the assignment out of this expression.(Õ‰‹òøÿÿÿÿ
+_$squid:AssignmentInSubExpressionCheck”".Extract the assignment out of this expression.(Ÿ¢¹ó
+_$squid:AssignmentInSubExpressionCheck˜".Extract the assignment out of this expression.(Œ™Ş¤
+u
+squid:S135¯"YReduce the total number of break and continue statements in this loop to use at most one.(¸Á¬Òÿÿÿÿÿ
+csquid:S3358ò"DExtract this nested ternary operation into an independent statement.(‘“ÔÜ8¼õ‚„±-
+d$squid:AssignmentInSubExpressionCheck›".Extract the assignment out of this expression.(ÒŸÈ“ÿÿÿÿÿ
 rsquid:S00100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñ“á¾øÿÿÿÿ8¼õ‚„±-
-Jsquid:S1172À"&Remove these unused method parameters.(ÛÅïÎùÿÿÿÿ8¼õ‚„±-
-csquid:S3358ğ"DExtract this nested ternary operation into an independent statement.(‘“ÔÜ8¼õ‚„±-
+n squid:LabelsShouldNotBeUsedCheck¨";Refactor the code to remove this label and the need for it.(àÏÅ)8´¥„Û¢-
+Isquid:S5411ñ"*Use the primitive boolean expression here.(°›™Ã8éÛÈÇ-
+Ysquid:S1133Á"5Do not forget to remove this deprecated code someday.(ÛÅïÎùÿÿÿÿ8éÛÈÇ-
+bsquid:CallToDeprecatedMethodÚ"-Remove this use of "getId"; it is deprecated.(‚½–§şÿÿÿÿ8éÛÈÇ-
+hsquid:CallToDeprecatedMethodå"3Remove this use of "getMaterial"; it is deprecated.(¯Ò×Äùÿÿÿÿ8éÛÈÇ-
+hsquid:S1134ö"DTake the required action to fix the issue indicated by this comment.(îıîİÿÿÿÿÿ8éÛÈÇ-
+esquid:CallToDeprecatedMethod–"0Remove this use of "validate"; it is deprecated.(’ÍÀĞÿÿÿÿÿ8éÛÈÇ-

@@ -1,52 +1,60 @@
 
-Qsquid:S1199ó	"-Extract this nested code block into a method.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
-w
-squid:S135İ	"YReduce the total number of break and continue statements in this loop to use at most one.(Õãµª8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheck‹"XRefactor the code in order to not assign to this loop counter from within the loop body.(«®²ı8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheckí"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheckù"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8¾åæÏ¢-
-«%squid:RedundantThrowsDeclarationCheckª"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
-j
-squid:S128ß	"LEnd this switch case with an unconditional break, return or throw statement.(Ãáœ8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheck¿"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
-Isquid:S1659¼"+Declare "optionalLevel" on a separate line.(éüîl8¾åæÏ¢-
-Lsquid:S1199ß	"-Extract this nested code block into a method.(Ãáœ8¾åæÏ¢-
+ª%squid:RedundantThrowsDeclarationCheck¥"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
+Ä%squid:RedundantThrowsDeclarationCheck¥"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
+Qsquid:S1199“
+"-Extract this nested code block into a method.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
+Csquid:S1659"Declare "y" on a separate line.(¦½½«ûÿÿÿÿ8ş®õÍ¢-
+Qsquid:S1199â"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ8ş®õÍ¢-
+o
+squid:S128€"LEnd this switch case with an unconditional break, return or throw statement.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
+«%squid:RedundantThrowsDeclarationCheck¯"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck„"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
+Ä%squid:RedundantThrowsDeclarationCheckí"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¶ú‡¸şÿÿÿÿ8ş®õÍ¢-
+Qsquid:S1199Š"-Extract this nested code block into a method.(Åş˜˜úÿÿÿÿ8›Âƒ„±-
+†"squid:ClassVariableVisibilityCheckÖ"PMake mark a static final constant or non-public and provide accessors if needed.(ÛÂ¼›8ş®õÍ¢-
+ysquid:S00115J"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ãÍã¦8›Âƒ„±-
+ª%squid:RedundantThrowsDeclarationCheck¯"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
 |
-squid:S135î"YReduce the total number of break and continue statements in this loop to use at most one.(—–ŠŠúÿÿÿÿ8ş®õÍ¢-
-Ä%squid:RedundantThrowsDeclarationChecké"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¶ú‡¸şÿÿÿÿ8ş®õÍ¢-
-Qsquid:S1199ß"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
-Jsquid:S1452£"&Remove usage of generic wildcard type.(Î¯÷·üÿÿÿÿ8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheck«"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
-ª%squid:RedundantThrowsDeclarationCheck "lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
-rsquid:S00115G"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Á¸¤­
-Œ squid:ForLoopCounterChangedCheck‰"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
-Ä%squid:RedundantThrowsDeclarationCheck "…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
-o
-squid:S128ó	"LEnd this switch case with an unconditional break, return or throw statement.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
-Csquid:S1659Æ"Declare "j" on a separate line.(á”æåşÿÿÿÿ8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheck¡"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
-ssquid:S00100Ú	"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´İıúÿÿÿÿ8¾åæÏ¢-
-ª%squid:RedundantThrowsDeclarationCheckª"lRemove the declaration of thrown exception 'ch.njol.skript.SkriptAPIException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
-Œ squid:ForLoopCounterChangedCheckÿ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
-o
-squid:S128à
-"LEnd this switch case with an unconditional break, return or throw statement.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
-?squid:S1659Ü	" Declare "i2" on a separate line.(ÅåÍ¢8¾åæÏ¢-
-Lsquid:S1199í"-Extract this nested code block into a method.(Úœ©Ÿ8¾åæÏ¢-
-Esquid:S1452ƒ"&Remove usage of generic wildcard type.(³®áÿ8ş®õÍ¢-
-Ä%squid:RedundantThrowsDeclarationCheckª"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
-o squid:LabelsShouldNotBeUsedCheckŠ";Refactor the code to remove this label and the need for it.(’ìğÆ8®§„Û¢-
-n squid:LabelsShouldNotBeUsedCheckì";Refactor the code to remove this label and the need for it.(àÏÅ)8®§„Û¢-
-Csquid:S1659ñ"Declare "y" on a separate line.(¦½½«ûÿÿÿÿ8ş®õÍ¢-
-Esquid:S1452Ï"&Remove usage of generic wildcard type.(›¼è¡8ş®õÍ¢-
-Œ squid:ForLoopCounterChangedCheckè"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8ğÜåÏ¢-
-†"squid:ClassVariableVisibilityCheck¶"PMake mark a static final constant or non-public and provide accessors if needed.(ÛÂ¼›8ş®õÍ¢-
-«%squid:RedundantThrowsDeclarationCheck "mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
-Qsquid:S1199Ä"-Extract this nested code block into a method.(ÒÌâ–øÿÿÿÿ8ş®õÍ¢-
-Qsquid:S1199†"-Extract this nested code block into a method.(Åş˜˜úÿÿÿÿ8›Âƒ„±-
-Qsquid:S1199Š"-Extract this nested code block into a method.(åœùÕüÿÿÿÿ8›Âƒ„±-
-Lsquid:S1199
+squid:S135Œ"YReduce the total number of break and continue statements in this loop to use at most one.(—–ŠŠúÿÿÿÿ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckÃ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
+Œ squid:ForLoopCounterChangedCheck"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8¾åæÏ¢-
+Isquid:S1659À"+Declare "optionalLevel" on a separate line.(éüîl8¾åæÏ¢-
+ssquid:S00100ú	"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´İıúÿÿÿÿ8¾åæÏ¢-
+j
+squid:S128ÿ	"LEnd this switch case with an unconditional break, return or throw statement.(Ãáœ8¾åæÏ¢-
+Qsquid:S1199ã"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck©"XRefactor the code in order to not assign to this loop counter from within the loop body.(«®²ı8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckñ"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckì"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8¾åæÏ¢-
+Qsquid:S1199€"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8›Âƒ„±-
+Œ squid:ForLoopCounterChangedCheck¯"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ğÜåÏ¢-
+Jsquid:S1452¿"&Remove usage of generic wildcard type.(Î¯÷·üÿÿÿÿ8ş®õÍ¢-
+Csquid:S1659ä"Declare "j" on a separate line.(á”æåşÿÿÿÿ8ş®õÍ¢-
+Œ squid:ForLoopCounterChangedCheckş"XRefactor the code in order to not assign to this loop counter from within the loop body.(ÌµĞ·8ğÜåÏ¢-
+Lsquid:S1199½
 "-Extract this nested code block into a method.(Úœ©Ÿ8›Âƒ„±-
-Qsquid:S1199à
-"-Extract this nested code block into a method.(‡ÕìÄøÿÿÿÿ8›Âƒ„±-
-ysquid:S00115H"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ãÍã¦8›Âƒ„±-
+n squid:LabelsShouldNotBeUsedCheckŠ";Refactor the code to remove this label and the need for it.(àÏÅ)8®§„Û¢-
+o squid:LabelsShouldNotBeUsedCheck";Refactor the code to remove this label and the need for it.(’ìğÆ8®§„Û¢-
+«%squid:RedundantThrowsDeclarationCheck¥"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¹äìºÿÿÿÿÿ8¾åæÏ¢-
+w
+squid:S135ı	"YReduce the total number of break and continue statements in this loop to use at most one.(Õãµª8¾åæÏ¢-
+Ä%squid:RedundantThrowsDeclarationCheck¯"…Remove the declaration of thrown exception 'ch.njol.skript.lang.SkriptParser$MalformedPatternException' which is a runtime exception.(¹áöïøÿÿÿÿ8¾åæÏ¢-
+?squid:S1659ü	" Declare "i2" on a separate line.(ÅåÍ¢8¾åæÏ¢-
+o
+squid:S128“
+"LEnd this switch case with an unconditional break, return or throw statement.(¹Ù²óÿÿÿÿÿ8¾åæÏ¢-
+Lsquid:S1199ÿ	"-Extract this nested code block into a method.(Ãáœ8¾åæÏ¢-
+Œ squid:ForLoopCounterChangedCheck¥"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ì‚ˆÌ8ş®õÍ¢-
+Lsquid:S1199ñ"-Extract this nested code block into a method.(Úœ©Ÿ8¾åæÏ¢-
+rsquid:S00115I"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Á¸¤­
+Esquid:S1452Ó"&Remove usage of generic wildcard type.(›¼è¡8ş®õÍ¢-
+Esquid:S1452‡"&Remove usage of generic wildcard type.(³®áÿ8ş®õÍ¢-
+Ssquid:S1066Â"/Merge this if statement with the enclosing one.(šèå‚üÿÿÿÿ8ÕÈÇ-
+Nsquid:S1066Ë"/Merge this if statement with the enclosing one.(ß³‘µ8ÕÈÇ-
+Qsquid:S1199"-Extract this nested code block into a method.(åœùÕüÿÿÿÿ8ÕÈÇ-
+Isquid:S5411Á"*Use the primitive boolean expression here.(ÏšŒæ8ÕÈÇ-
+Isquid:S5411¾	"*Use the primitive boolean expression here.( àèñ8ÕÈÇ-
+xsquid:S00115\"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(üÈš8ÕÈÇ-
+asquid:S1134\"DTake the required action to fix the issue indicated by this comment.(üÈš8ÕÈÇ-
+csquid:CallToDeprecatedMethodÇ"3Remove this use of "newInstance"; it is deprecated.(ç€ñò8ÕÈÇ-
+hsquid:CallToDeprecatedMethodÛ	"3Remove this use of "newInstance"; it is deprecated.(¢ëşÿÿÿÿ8ÕÈÇ-

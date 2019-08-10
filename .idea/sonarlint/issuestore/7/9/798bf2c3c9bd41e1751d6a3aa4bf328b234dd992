@@ -1,5 +1,5 @@
 
 Usquid:S3516L"9Refactor this method to not always return the same value.(±É¢äûÿÿÿÿ
-<squid:S2386£"$Make member "codeNames" "protected".(²’Ÿž
-¤squid:S1186\"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ïÙÐêûÿÿÿÿ8§¦„Û¢-
-ysquid:CallToDeprecatedMethod{"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(›ËÁý8§¦„Û¢-
+<squid:S2386¤"$Make member "codeNames" "protected".(²’Ÿž
+ysquid:CallToDeprecatedMethod|"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(›ËÁý8§¦„Û¢-
+gsquid:S1134]"DTake the required action to fix the issue indicated by this comment.(ãÒ°ïþÿÿÿÿ8åÙÈžÇ-

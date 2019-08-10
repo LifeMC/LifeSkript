@@ -1,11 +1,5 @@
 
-8squid:S16595"!Declare "ANY" on a separate line.(ð´þø
-fsquid:S001165"NRename this field "SKY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-:squid:S16595"#Declare "BLOCK" on a separate line.(ð´þø
-8squid:S11705"!Make this final field static too.(ð´þø
-Zsquid:S3358I"DExtract this nested ternary operation into an independent statement.(½¨€n
-hsquid:S001165"PRename this field "BLOCK" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-8squid:S11705"!Make this final field static too.(ð´þø
-fsquid:S001165"NRename this field "ANY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ð´þø
-[squid:S3358O"DExtract this nested ternary operation into an independent statement.(Ï”„Ç
-8squid:S11705"!Make this final field static too.(ð´þø
+[squid:S3358P"DExtract this nested ternary operation into an independent statement.(Ï”„Ç
+Zsquid:S3358J"DExtract this nested ternary operation into an independent statement.(½¨€n
+Fsquid:S16591"#Declare "BLOCK" on a separate line.(™·¦™ÿÿÿÿÿ8§âÈžÇ-
+Dsquid:S16591"!Declare "ANY" on a separate line.(™·¦™ÿÿÿÿÿ8§âÈžÇ-

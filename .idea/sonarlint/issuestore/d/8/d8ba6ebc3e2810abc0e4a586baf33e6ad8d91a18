@@ -1,4 +1,4 @@
 
-Nsquid:S14443"7Make this "public static lastExecuteErrors" field final(–­ˆ—
-Rsquid:S14441"6Make this "public static lastExecuteState" field final(üè€ÿÿÿÿÿÿ
 "squid:ClassVariableVisibilityCheck1"\Make lastExecuteState a static final constant or non-public and provide accessors if needed.(üè€ÿÿÿÿÿÿ
+Rsquid:S14441"6Make this "public static lastExecuteState" field final(üè€ÿÿÿÿÿÿ
+Nsquid:S14443"7Make this "public static lastExecuteErrors" field final(–­ˆ—

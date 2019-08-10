@@ -1,4 +1,2 @@
 
-squid:S1186›"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(á›ÛÙûÿÿÿÿ
-lsquid:S00100Õ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ÅèŸüÿÿÿÿ
-squid:S1186Ê"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ß‘ñÿÿÿÿÿ
+lsquid:S00100Ö"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ÅèŸüÿÿÿÿ
