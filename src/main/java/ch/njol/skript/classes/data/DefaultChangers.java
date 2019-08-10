@@ -27,6 +27,7 @@ import ch.njol.skript.bukkitutil.PlayerUtils;
 import ch.njol.skript.classes.Changer;
 import ch.njol.skript.util.Experience;
 import ch.njol.util.coll.CollectionUtils;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
@@ -272,7 +273,7 @@ public final class DefaultChangers {
                         ((ItemType) delta[0]).getBlock().setBlock(block, true);
                         break;
                     case DELETE:
-                        block.setTypeId(0, true);
+                        block.setType(Material.AIR, true);
                         break;
                     case ADD:
                     case REMOVE:
