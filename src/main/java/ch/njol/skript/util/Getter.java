@@ -28,7 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 /**
  * Used to get a specific value from instances of some type.
  * <p>
- * FIXME Make interface (with default methods)
+ * FIXME [BREAKING] Make interface (with default methods)
  *
  * @param <R> the returned value type
  * @param <A> the type which holds the value

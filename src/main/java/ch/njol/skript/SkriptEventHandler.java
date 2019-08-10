@@ -79,7 +79,7 @@ public final class SkriptEventHandler {
 
         // Skip the event if it's a frequently called event
         // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
-        if (e instanceof PlayerMoveEvent && (System.currentTimeMillis() - lastCall) < 1000L)
+        if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < 1000L)
             return;
 
         lastCall = System.currentTimeMillis();

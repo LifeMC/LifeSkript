@@ -89,7 +89,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
             return;
         final PlayerMoveEvent e = (PlayerMoveEvent) event;
         final Location from = e.getFrom(), to = e.getTo();
-        if ((System.currentTimeMillis() - lastCall) < 1000L)
+        if (System.currentTimeMillis() - lastCall < 1000L)
             return; // Prevent too many move events firing
         lastCall = System.currentTimeMillis();
 //			if (!blockTriggers.isEmpty()) {

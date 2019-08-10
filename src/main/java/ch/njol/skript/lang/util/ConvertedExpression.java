@@ -173,7 +173,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
         return source.check(e, (Checker<F>) f -> {
             final T t = conv.convert(f);
             if (t == null)
-                return false;
+                return c.check((T) f);
             return c.check(t);
         });
     }

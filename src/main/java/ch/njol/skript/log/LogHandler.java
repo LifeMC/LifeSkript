@@ -31,7 +31,7 @@ public abstract class LogHandler/* implements AutoCloseable */ {
      * @param entry
      * @return Whatever to print the specified entry or not.
      */
-    public abstract LogResult log(LogEntry entry);
+    public abstract LogResult log(final LogEntry entry);
 
     /**
      * Called just after the handler is removed from the active handlers stack.
@@ -49,22 +49,20 @@ public abstract class LogHandler/* implements AutoCloseable */ {
         return SkriptLogger.isStopped(this);
     }
 
-    public enum LogResult {
-        LOG, CACHED, DO_NOT_LOG
-    }
-
     /**
      * Stops the log handler.
-     *
+     * <p>
      * Useful on Java 7 and above.
-     *
-     * FIXME Implement this
      *
      * @see LogHandler#stop()
      */
-//    @Override
-//    public final void close() {
-//        stop();
-//    }
+    //@Override
+    public final void close() {
+        stop();
+    }
+
+    public enum LogResult {
+        LOG, CACHED, DO_NOT_LOG
+    }
 
 }

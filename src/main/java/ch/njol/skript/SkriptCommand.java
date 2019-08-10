@@ -40,6 +40,7 @@ import ch.njol.skript.util.ExceptionUtils;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.util.StringUtils;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -77,7 +78,7 @@ public final class SkriptCommand implements CommandExecutor {
     private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
     private static final List<TrackerAgent> registeredTrackers =
             new ArrayList<>();
-    public static int oldPriority = Thread.NORM_PRIORITY;
+    public static volatile int oldPriority = Thread.NORM_PRIORITY;
 
     public static final void setPriority() {
         oldPriority = Thread.currentThread().getPriority();
@@ -89,7 +90,7 @@ public final class SkriptCommand implements CommandExecutor {
             Thread.currentThread().checkAccess();
             Thread.currentThread().setPriority(priority);
             if (Skript.debug())
-                Skript.debug("Set thread priority to " + priority);
+                Skript.debug("Set thread priority of \"" + Thread.currentThread().getName() + "\" to " + priority + " from " + oldPriority);
         } catch (final SecurityException ignored) {
             /* ignored */
         }
@@ -97,10 +98,15 @@ public final class SkriptCommand implements CommandExecutor {
 
     public static final void resetPriority() {
         // Restore the old priority if we changed the priority.
+        if (Bukkit.isPrimaryThread())
+            return; // Main thread is always at highest priority
+
         if (Thread.currentThread().getPriority() != oldPriority) {
+            final int priority = Thread.currentThread().getPriority();
+            Thread.currentThread().checkAccess();
             Thread.currentThread().setPriority(oldPriority);
             if (Skript.debug())
-                Skript.debug("Reset thread priority to " + oldPriority);
+                Skript.debug("Reset thread priority of \"" + Thread.currentThread().getName() + "\" to " + oldPriority + " from " + priority);
         }
     }
 

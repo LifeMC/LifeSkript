@@ -53,7 +53,7 @@ import java.util.logging.Level;
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
     static final HashMap<String, PrintWriter> writers = new HashMap<>();
-    private static final boolean flushAllLogsOnShutdownOnly = Boolean.parseBoolean(System.getProperty("skript.flushAllLogsOnShutdownOnly")); //FIXME test this
+    private static final boolean flushAllLogsOnShutdownOnly = Boolean.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
 
     static {

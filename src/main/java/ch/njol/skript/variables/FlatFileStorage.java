@@ -435,9 +435,7 @@ public final class FlatFileStorage extends VariablesStorage {
                         savingVariables = false;
 
                         savingLoggerThread.interrupt(); // In case if not interrupted
-
-                        if (Skript.logHigh())
-                            Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
+                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
 
                         savedVariables = 0; // Method may be called multiple times
 

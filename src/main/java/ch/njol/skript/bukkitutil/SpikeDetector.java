@@ -60,8 +60,8 @@ public final class SpikeDetector extends Thread {
         super("Skript Watchdog Thread");
         super.setPriority(Thread.MIN_PRIORITY);
 
-        this.earlyWarningEvery = 5000L;
-        this.earlyWarningDelay = 10000L;
+        earlyWarningEvery = 5000L;
+        earlyWarningDelay = 10000L;
 
         this.serverThread = serverThread;
     }
@@ -123,13 +123,13 @@ public final class SpikeDetector extends Thread {
 
     @Override
     public final void run() {
-        while (!this.stopping) {
+        while (!stopping) {
             final Logger log = Skript.minecraftLogger;
             if (log == null) {
                 Skript.warning("Can't find logger, disabling spike detector");
 
                 // For sanity
-                this.stopping = true;
+                stopping = true;
                 doStop();
 
                 // Actually stops it
@@ -138,14 +138,14 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (this.lastTick != 0L && currentTime > this.lastTick + this.earlyWarningEvery) {
-                if (this.earlyWarningEvery <= 0L || (!hasStarted) || currentTime < this.lastEarlyWarning + this.earlyWarningEvery || currentTime < this.lastTick + this.earlyWarningDelay) {
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery) {
+                if (earlyWarningEvery <= 0L || !hasStarted || currentTime < lastEarlyWarning + earlyWarningEvery || currentTime < lastTick + earlyWarningDelay) {
                     continue;
                 }
-                this.lastEarlyWarning = currentTime;
+                lastEarlyWarning = currentTime;
 
                 // Get true spike time here
-                final long spikeTime = (currentTime - this.lastTick) / 1000L;
+                final long spikeTime = (currentTime - lastTick) / 1000L;
 
                 // Get true stack trace here
                 final ThreadInfo threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(serverThread.getId(), Integer.MAX_VALUE);

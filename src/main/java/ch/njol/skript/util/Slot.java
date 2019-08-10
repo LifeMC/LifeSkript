@@ -23,7 +23,7 @@
 package ch.njol.skript.util;
 
 /**
- * Represents a container for a single item. This can e.g. be an inventory slot or an item frame. // TODO actually make an item frame slot
+ * Represents a container for a single item. This can e.g. be an inventory slot or an item frame.
  *
  * @author Peter Güttinger
  */
