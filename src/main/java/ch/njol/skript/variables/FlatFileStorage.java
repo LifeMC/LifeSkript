@@ -408,7 +408,7 @@ public final class FlatFileStorage extends VariablesStorage {
                             // Unfortunately, this only displays the non-list variable counts.
                             Skript.info("Saving approximately " + count + " variables to '" + fileName + "'");
 
-                        // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's loading many variables
+                        // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's saving many variables
                         final Thread savingLoggerThread = Skript.newThread(() -> {
                             while (savingVariables) {
                                 try {

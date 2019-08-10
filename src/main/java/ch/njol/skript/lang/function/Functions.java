@@ -105,7 +105,7 @@ public final class Functions {
                 if (arg.isEmpty()) // Zero-argument function
                     break;
 
-                // One ore more arguments, indeed
+                // One or more arguments, indeed
                 final Matcher n = paramPattern.matcher(arg);
                 if (!n.matches())
                     return error("The " + StringUtils.fancyOrderNumber(params.size() + 1) + " argument's definition is invalid. It should look like 'name: type' or 'name: type = default value'.");
@@ -116,7 +116,7 @@ public final class Functions {
                 }
                 String argType = n.group(2);
                 boolean nullable = false;
-                if (argType.endsWith("?")) {
+                if (("" + argType).endsWith("?")) {
                     nullable = true;
                     argType = argType.substring(0, argType.length() - 1);
                 }
@@ -126,7 +126,7 @@ public final class Functions {
                 if (c == null)
                     c = Classes.getClassInfoFromUserInput(pl.getFirst());
                 if (c == null)
-                    return error("Cannot recognise the type '" + argType + "'");
+                    return error("Cannot recognize the type '" + argType + "'");
                 final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), n.group(3), nullable);
                 if (p == null)
                     return null;
