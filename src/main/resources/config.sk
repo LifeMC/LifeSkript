@@ -219,6 +219,11 @@ disable use native effect instead of command warnings: false
 # It recommends in warning to replace these with their native Skript version, e.g: "add 1000 to player's balance"
 # It is generally faster and better because it is in native Skript, however you can disable these warnings if you want.
 
+disable deprecation warnings: false
+# Disables the deprecation warnings for some buggy conditions, expressions, patterns etc.
+# Generally you should not make this true, since they are buggy or laggy anyway. But you can do, if you want.
+# This totally what configuration is made for. You can customize everything!
+
 
 warn when using none values in strings: false
 # If this option is true, skript sends a warning message to console

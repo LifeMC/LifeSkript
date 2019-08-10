@@ -89,7 +89,7 @@ public final class SkriptParser {
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
-    private static final boolean disableAndOrHack = Boolean.parseBoolean(System.getProperty("skript.disableAndOrHack")); // FIXME test this
+    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
     public final ParseContext context;
     final String expr;
     private final int flags;
@@ -829,10 +829,11 @@ public final class SkriptParser {
                                         Skript.info("Using expression " + name + " (" + script + ", line " + line + ")"); // Conditions etc. are also expressions
 
                                     // Those are un required and laggy expressions that hangs the parser
-                                    // FIXME Add config option for suppressing this warning
                                     // TODO Refuse to register those conditions in future
-                                    if ("com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name))
-                                        Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ")");
+                                    if (!SkriptConfig.disableDeprecationWarnings.value()) {
+                                        if ("com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name))
+                                            Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ")");
+                                    }
                                 }
                             }
                             final T t = clazz.newInstance();
