@@ -470,7 +470,10 @@ public final class Utils {
                 return Object.class;
             }
         }
-        return r;
+
+        // Cloneable is about as useful as object as super type
+        // However, it lacks special handling used for Object supertype
+        return r.equals(Cloneable.class) ? Object.class : r;
     }
 
     /**

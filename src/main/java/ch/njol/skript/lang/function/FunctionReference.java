@@ -75,8 +75,6 @@ public final class FunctionReference<T> {
                 Skript.error("The function '" + functionName + "' was deleted or renamed, but is still used in other script(s)." + " These will continue to use the old version of the function until Skript restarts.");
             return false;
         }
-        if (newFunc == function)
-            return true;
 
         final Class<? extends T>[] returnTypes = this.returnTypes;
         if (returnTypes != null) {

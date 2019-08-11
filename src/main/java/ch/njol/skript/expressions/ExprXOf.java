@@ -23,6 +23,7 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -77,11 +78,33 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
                 final ItemStack is = ((ItemStack) o).clone();
                 is.setAmount(a.intValue());
                 return is;
+            } else if (o instanceof ItemType) {
+                final ItemType type = ((ItemType) o).clone();
+                type.setAmount(a.intValue());
+                return type;
             }
             final EntityType t = ((EntityType) o).clone();
             t.amount = a.intValue();
             return t;
         });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Nullable
+    public final <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
+        // Make sure we get converted expression from Variables etc. correctly
+        // Then, wrap it so that our 'X' is properly applied
+        final Expression<? extends R> converted = getExpr().getConvertedExpression(to);
+
+        if (converted == null) // Can't create converted expression
+            return null;
+
+        final ExprXOf wrapped = new ExprXOf();
+        wrapped.setExpr(converted);
+        wrapped.amount = amount;
+
+        return (Expression<? extends R>) wrapped;
     }
 
     @Override

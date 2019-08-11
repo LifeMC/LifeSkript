@@ -78,13 +78,18 @@ public final class Delay extends Effect {
     public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         duration = (Expression<Timespan>) exprs[0];
         if (duration instanceof Literal) {
-            final long millis = ((Literal<Timespan>) duration).getSingle().getMilliSeconds();
-            if (millis > 86400000L && !SkriptConfig.disableTooLongDelayWarnings.value())
-                Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
-            if (millis < 0 || ((Literal<Timespan>) duration).getSingle().getTicks_i() < 0) {
+            final Literal<Timespan> timespan = (Literal<Timespan>) duration;
+
+            final long millis = timespan.getSingle().getMilliSeconds();
+            final long ticks = timespan.getSingle().getTicks_i();
+
+            if (ticks < 0L) {
                 Skript.error("Waiting negative amount of time is not possible");
                 return false;
             }
+
+            if (millis > 86400000L && !SkriptConfig.disableTooLongDelayWarnings.value())
+                Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
         }
         if (ScriptLoader.isCurrentEvent(FunctionEvent.class) && !SkriptConfig.disableDelaysInFunctionsWarnings.value())
             Skript.warning("Delays in functions causes function to return instantly, this may cause bugs, so don't use delays in functions.");

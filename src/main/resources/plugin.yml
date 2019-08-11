@@ -37,7 +37,7 @@ commands:
     usage: /skript help
 
 # Load Skript after some plugins just for safety and interactions with these plugins.
-soft-depend: [Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, ChestCommands, NameTagEdit, ProtocolLib, GroupManager, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
+soft-depend: [Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, ChestCommands, NameTagEdit, ProtocolLib, AsyncKeepAlive, TCE, AntiJoinBot, VisualFixer, ConsoleSpamFix, FarmLimiter, FarmProtect, SuperCensor, AnvilBlocker, Announcer, BungeeChatAPI, FasyAsyncWorldEdit, AsyncWorldEdit, ChestCommands, ClearLag, GroupManager, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones]
 
 # Hack to force strict utf-8 encoding when loading Skript
 awareness:

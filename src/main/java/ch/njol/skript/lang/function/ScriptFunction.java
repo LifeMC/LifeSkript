@@ -70,19 +70,15 @@ public final class ScriptFunction<T> extends Function<T> {
         returnValue = value;
     }
 
-    // REMIND track possible types of local variables (including undefined variables) (consider functions, commands, and EffChange) - maybe make a general interface for this purpose
-    // REM: use patterns, e.g. {_a%b%} is like "a.*", and thus subsequent {_axyz} may be set and of that type.
     @Override
     @Nullable
-    public T[] execute(final FunctionEvent<? extends T> e, final Object[][] params) {
+    public final T[] execute(final FunctionEvent<? extends T> e, final Object[][] params) {
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
             final Object[] val = params[i];
             if (val != null && !p.isNone) {
-                if (p.single) {
-                    if (val.length > 0) {
-                        Variables.setVariable(p.name, val[0], e, true);
-                    }
+                if (p.single && val.length > 0) {
+                    Variables.setVariable(p.name, val[0], e, true);
                 } else {
                     for (int j = 0; j < val.length; j++) {
                         Variables.setVariable(p.name + "::" + (j + 1), val[j], e, true);

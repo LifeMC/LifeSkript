@@ -45,13 +45,13 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Spawn")
 @Description("Spawn a creature.")
 @Examples({"spawn 3 creepers at the targeted block", "spawn a ghast 5 meters above the player"})
-@Since("1.0")
+@Since("1.0, 2.2.16 (summon alias)")
 public final class EffSpawn extends Effect {
     @Nullable
     public static Entity lastSpawned;
 
     static {
-        Skript.registerEffect(EffSpawn.class, "spawn %entitytypes% [%directions% %locations%]", "spawn %number% of %entitytypes% [%directions% %locations%]");
+        Skript.registerEffect(EffSpawn.class, "(spawn|summon) %entitytypes% [%directions% %locations%]", "(spawn|summon) %number% of %entitytypes% [%directions% %locations%]");
     }
 
     @SuppressWarnings("null")

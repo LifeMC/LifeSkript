@@ -46,8 +46,8 @@ public final class SpikeDetector extends Thread {
     @Nullable
     private static SpikeDetector instance;
 
-    private final long earlyWarningEvery;
-    private final long earlyWarningDelay;
+    private static final long earlyWarningEvery = 5000L;
+    private static final long earlyWarningDelay = 10000L;
 
     private final Thread serverThread;
 
@@ -60,10 +60,16 @@ public final class SpikeDetector extends Thread {
         super("Skript Watchdog Thread");
         super.setPriority(Thread.MIN_PRIORITY);
 
-        earlyWarningEvery = 5000L;
-        earlyWarningDelay = 10000L;
-
         this.serverThread = serverThread;
+    }
+
+    public static final void testSpike() {
+        try {
+            Thread.sleep(earlyWarningDelay);
+        } catch (final InterruptedException e) {
+            Thread.interrupted();
+            Skript.exception(e);
+        }
     }
 
     private static final long monotonicMillis() {
