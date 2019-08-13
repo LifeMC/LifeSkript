@@ -1,6 +1,0 @@
-
-_squid:HiddenFieldCheckc"8Rename "hand" which hides the field declared at line 49.(ú…ðÇùÿÿÿÿ
-^squid:CallToDeprecatedMethodY"/Remove this use of "getData"; it is deprecated.(´ú›Ô8Ä—ß§£-
-dsquid:CallToDeprecatedMethodY"5Remove this use of "getItemTypeId"; it is deprecated.(´ú›Ô8Ä—ß§£-
-Qsquid:MissingDeprecatedCheck‡"(Add the missing @deprecated Javadoc tag.(›ËÁý
-Msquid:S1133‡"5Do not forget to remove this deprecated code someday.(›ËÁý

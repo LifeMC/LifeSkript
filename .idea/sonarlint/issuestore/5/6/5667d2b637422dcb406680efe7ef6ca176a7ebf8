@@ -1,12 +1,0 @@
-
-Qsquid:MissingDeprecatedCheck©"(Add the missing @deprecated Javadoc tag.(Æö—İ
-_$squid:AssignmentInSubExpressionCheck¿".Extract the assignment out of this expression.(•„øç
-Osquid:S2589Ù"7Remove this expression which always evaluates to "true"(Ù°½İ
-bsquid:HiddenFieldCheckË":Rename "value" which hides the field declared at line 281.(¸ù¸üşÿÿÿÿ
-bsquid:HiddenFieldCheck²":Rename "value" which hides the field declared at line 281.(¸ù¸üşÿÿÿÿ
-fsquid:S3824¶"NReplace this "Map.get()" and condition with a call to "Map.computeIfAbsent()".(®Šµè
-Msquid:S1133©"5Do not forget to remove this deprecated code someday.(Æö—İ
-,squid:S1700+"Rename field "fields"(Ëà‘
-¤%squid:RedundantThrowsDeclarationCheck¢"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(¢»°‚øÿÿÿÿ
-bsquid:HiddenFieldCheckã":Rename "value" which hides the field declared at line 281.(¸ù¸üşÿÿÿÿ
-_$squid:AssignmentInSubExpressionCheck¸".Extract the assignment out of this expression.(•„øç

@@ -1,10 +1,0 @@
-
->squid:S1168 "&Return an empty array instead of null.(¥¹ï
-P"squid:SwitchLastCaseIsDefaultCheckO""Add a default case to this switch.(­ñôî
-=squid:S1168J"&Return an empty array instead of null.(¥¹ï
-"squid:SwitchLastCaseIsDefaultCheckµ"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-=squid:S1168\"&Return an empty array instead of null.(¥¹ï
-P"squid:SwitchLastCaseIsDefaultCheckz""Add a default case to this switch.(­ñôî
-"squid:SwitchLastCaseIsDefaultCheck"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-"squid:SwitchLastCaseIsDefaultCheckà"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-=squid:S1168C"&Return an empty array instead of null.(¥¹ï

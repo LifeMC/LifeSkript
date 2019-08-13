@@ -1,8 +1,0 @@
-
-¬squid:S4449W"ˆAnnotate the parameter with @javax.annotation.Nullable in constructor declaration, or make sure that null can not be passed as argument.(Ÿ—ˆƒøÿÿÿÿ8¨‰ß§£-
-\squid:HiddenFieldCheck§"9Rename "types" which hides the field declared at line 62.(ı‚ĞĞ
-asquid:CallToDeprecatedMethod"1Remove this use of "getTypeId"; it is deprecated.(‚ÅÏÒ8¨‰ß§£-
-\squid:S3358¨"DExtract this nested ternary operation into an independent statement.(®µàÒ
-^$squid:AssignmentInSubExpressionCheckZ".Extract the assignment out of this expression.(¯–»Ò
-gsquid:S1134t"DTake the required action to fix the issue indicated by this comment.(ãÒ°ïşÿÿÿÿ8”âÈÇ-
-hsquid:S1134”"DTake the required action to fix the issue indicated by this comment.(ãÒ°ïşÿÿÿÿ8”âÈÇ-

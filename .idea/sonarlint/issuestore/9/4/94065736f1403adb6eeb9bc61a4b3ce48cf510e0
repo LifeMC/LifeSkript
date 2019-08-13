@@ -1,13 +1,0 @@
-
->squid:S1452­"&Remove usage of generic wildcard type.(©°å™
-Csquid:S1452ı"&Remove usage of generic wildcard type.(¦ğÇáøÿÿÿÿ
-=squid:S1452E"&Remove usage of generic wildcard type.(œôÊ
-Asquid:S16598"*Declare "paramPattern" on a separate line.(¨ı¬‹
-ysquid:S001152"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(›¥Ò8‚âµ®©-
-Qsquid:S1444;"5Make this "public static currentFunction" field final(ØĞÙùıÿÿÿÿ
-;squid:S23863"Make this member "protected".(Ä“ø8‚âµ®©-
-t
-squid:S135c"YReduce the total number of break and continue statements in this loop to use at most one.(’ÀÓ—üÿÿÿÿ
-Bsquid:S1452X"&Remove usage of generic wildcard type.(¿ßÜøÿÿÿÿ
-;squid:S17004"Rename field "functions"(–±ø¡øÿÿÿÿ8‚âµ®©-
-@squid:S23864"Make this member "protected".(–±ø¡øÿÿÿÿ8‚âµ®©-

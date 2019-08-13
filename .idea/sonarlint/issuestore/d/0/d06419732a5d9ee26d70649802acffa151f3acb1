@@ -1,22 +1,0 @@
-
-;squid:S2386G"Make this member "protected".(í¯â—8šž„„±-
-_squid:HiddenFieldCheckÞ"<Rename "cooldown" which hides the field declared at line 86.(ã¼–÷
-lsquid:S2445¼"O"commandMap" is a method parameter, and should not be used for synchronization.(¢Ù‹žøÿÿÿÿ
-Lsquid:S2065^"0Remove the "transient" modifier from this field.(Ä®ñ—ûÿÿÿÿ
->squid:S1452³"&Remove usage of generic wildcard type.(ÙíÏÆ
-^squid:HiddenFieldCheckó";Rename "aliases" which hides the field declared at line 82.(Öÿ¦ç
-Zsquid:S00107t"BConstructor has 15 parameters, which is greater than 7 authorized.(Œ”‚Œ
-@squid:S1659L""Declare "BOTH" on a separate line.(Í¡ãÃ8èÓµ®©-
-lsquid:S2445Ò"O"commandMap" is a method parameter, and should not be used for synchronization.(¢Ù‹žøÿÿÿÿ
-`squid:HiddenFieldCheckº"8Rename "name" which hides the field declared at line 77.(×å—òþÿÿÿÿ
-h squid:LabelsShouldNotBeUsedCheckÙ";Refactor the code to remove this label and the need for it.(êÅž®
-`squid:HiddenFieldCheckÂ"8Rename "name" which hides the field declared at line 77.(×å—òþÿÿÿÿ
-^squid:HiddenFieldCheck‰";Rename "aliases" which hides the field declared at line 82.(¨ý¥É
-Nsquid:S2065a"0Remove the "transient" modifier from this field.(‹îÎµ8èÓµ®©-
-_squid:HiddenFieldCheckÔ"<Rename "cooldown" which hides the field declared at line 86.(ã¼–÷
-Ssquid:S2065`"0Remove the "transient" modifier from this field.(€ÞÀ‰ûÿÿÿÿ8šž„„±-
-Csquid:S1659L"%Declare "CONSOLE" on a separate line.(Í¡ãÃ8èÓµ®©-
-Nsquid:S2065d"0Remove the "transient" modifier from this field.(Îœ¸8¨êÈžÇ-
-ksquid:HiddenFieldCheckŸ"ARename "bukkitCommand" which hides the field declared at line 94.(¿ù÷—8¨êÈžÇ-
-Tsquid:S1133À"5Do not forget to remove this deprecated code someday.(†ã¤œ8¨êÈžÇ-
-Tsquid:S1133…"5Do not forget to remove this deprecated code someday.(ºÚ‹–8¨êÈžÇ-

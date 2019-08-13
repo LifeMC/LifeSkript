@@ -1,9 +1,0 @@
-
-~squid:S001155"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(é½‰—ÿÿÿÿÿ8Š‹·®©-
-`squid:CallToDeprecatedMethodŽ"8Remove this use of "getOfflinePlayer"; it is deprecated.(áŠÅ\
-^squid:CallToDeprecatedMethod}"1Remove this use of "setBanned"; it is deprecated.(±¸¿ªûÿÿÿÿ
-Ysquid:CallToDeprecatedMethodp"1Remove this use of "setBanned"; it is deprecated.(²†áé
-\squid:HiddenFieldCheckT":Rename "reason" which hides the field declared at line 61.(žäºü
-Ysquid:CallToDeprecatedMethodŽ"1Remove this use of "setBanned"; it is deprecated.(áŠÅ\
-`squid:S1134l"DTake the required action to fix the issue indicated by this comment.(’¸”øøÿÿÿÿ
-asquid:S1134U"DTake the required action to fix the issue indicated by this comment.(êÕîE8‰ÓÈžÇ-

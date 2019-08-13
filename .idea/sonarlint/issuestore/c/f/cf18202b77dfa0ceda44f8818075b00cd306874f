@@ -1,7 +1,0 @@
-
-rsquid:S00100k"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒôÇÜıÿÿÿÿ8åµ„„±-
-rsquid:S00100L"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ÿöö²ùÿÿÿÿ8åµ„„±-
-Nsquid:S2093"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ8åµ„„±-
-Psquid:S16590"2Declare "F_INDEFINITE_ARTICLE" on a separate line.(•¤¹8™¶®©-
-Nsquid:S16590"0Declare "F_DEFINITE_ARTICLE" on a separate line.(•¤¹8™¶®©-
-f$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¸Ê¸ğ8ÉãÈÇ-

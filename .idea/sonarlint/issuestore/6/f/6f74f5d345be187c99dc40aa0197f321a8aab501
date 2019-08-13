@@ -1,4 +1,0 @@
-
- %squid:RedundantThrowsDeclarationCheck."jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(úÓ©‘øÿÿÿÿ
- %squid:RedundantThrowsDeclarationCheckC"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÛÂòÛøÿÿÿÿ
-š%squid:RedundantThrowsDeclarationCheckU"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(ÜÃùl

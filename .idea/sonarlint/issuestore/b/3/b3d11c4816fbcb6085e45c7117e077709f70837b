@@ -1,9 +1,0 @@
-
-Zsquid:HiddenFieldCheck~"8Rename "line" which hides the field declared at line 60.(±¤Åÿ
-hsquid:S1301’"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ
-Zsquid:HiddenFieldCheck\"8Rename "line" which hides the field declared at line 60.(±¤Åÿ
-£%squid:RedundantThrowsDeclarationCheckz"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-"squid:SwitchLastCaseIsDefaultCheck…"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-hsquid:S1301…"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ
-"squid:SwitchLastCaseIsDefaultCheck’"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ
-=squid:S1168u"&Return an empty array instead of null.(¥¹ï

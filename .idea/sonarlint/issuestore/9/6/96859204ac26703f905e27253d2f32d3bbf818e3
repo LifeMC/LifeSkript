@@ -1,24 +1,0 @@
-
-‡squid:S2637«"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8òñÍ¢-
-Jsquid:S1452ã"&Remove usage of generic wildcard type.(×ñÜÊÿÿÿÿÿ8è–ƒ„±-
-Jsquid:S1452ò"&Remove usage of generic wildcard type.(Ëïœ„ıÿÿÿÿ8è–ƒ„±-
-Esquid:S1452ş"&Remove usage of generic wildcard type.(¢¹ïå8è–ƒ„±-
-Esquid:S1452ï"&Remove usage of generic wildcard type.(çÛ§Ü8è–ƒ„±-
-Ksquid:S1905Ì",Remove this unnecessary cast to "Converter".(´ƒìı8òñÍ¢-
-hsquid:S3358à"DExtract this nested ternary operation into an independent statement.(íáÇûÿÿÿÿ8‹„Û¢-
-Ssquid:S1133 "5Do not forget to remove this deprecated code someday.(ŒÇİ*8è–ƒ„±-
-Jsquid:S1452„"&Remove usage of generic wildcard type.(ı«€Ôÿÿÿÿÿ8è–ƒ„±-
-Dsquid:S1452¨"&Remove usage of generic wildcard type.(²¥©8è–ƒ„±-
-Wsquid:MissingDeprecatedCheck "(Add the missing @deprecated Javadoc tag.(ŒÇİ*8è–ƒ„±-
-csquid:S2583à"DChange this condition so that it does not always evaluate to "false"(ÊÓ×‘8è–ƒ„±-
-Esquid:S1452Œ"&Remove usage of generic wildcard type.(ïš©8è–ƒ„±-
-hsquid:S1134Ö"DTake the required action to fix the issue indicated by this comment.(¯«ıûÿÿÿÿ8ğä¶®©-
-‹ squid:ForLoopCounterChangedCheck¹"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8òñÍ¢-
-Esquid:S1452Î"&Remove usage of generic wildcard type.(áÖ‡¤8è–ƒ„±-
-csquid:S1134¸"DTake the required action to fix the issue indicated by this comment.(Â“Æİ8è–ƒ„±-
-8squid:S1659æ" Declare "c2" on a separate line.(Ü¾óò
-k$squid:AssignmentInSubExpressionCheck€".Extract the assignment out of this expression.(ÁÜüÁøÿÿÿÿ8£ÙÈÇ-
-Hsquid:S5411"*Use the primitive boolean expression here.(°¼ïŠ8£ÙÈÇ-
-Nsquid:S5411Ä"*Use the primitive boolean expression here.(î£²Àøÿÿÿÿ8£ÙÈÇ-
-Nsquid:S5411Ï"*Use the primitive boolean expression here.(…ÿæÆıÿÿÿÿ8£ÙÈÇ-
-}squid:S3012“"YUse "Arrays.copyOf", "Arrays.asList", "Collections.addAll" or "System.arraycopy" instead.(Õµˆÿÿÿÿÿ8£ÙÈÇ-

@@ -1,9 +1,0 @@
-
-Rsquid:S1141ô"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Ksquid:S1068¦"-Remove this unused "verbosity" private field.(®¬³H8ì×¶®©-
-Ysquid:S1141ı"5Extract this nested try block into a separate method.(ÿ¿äúÿÿÿÿ8Öö‚„±-
-Rsquid:S1141Š"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-†squid:S4087„"bRemove this "close" call; closing the resource is handled automatically by the try-with-resources.(€¶º‡ıÿÿÿÿ8Öö‚„±-
-Msquid:S5411O"*Use the primitive boolean expression here.(Ôä–üÿÿÿÿ8”ÛÈÇ-
-Msquid:S5411y"*Use the primitive boolean expression here.(ß‹„­ıÿÿÿÿ8”ÛÈÇ-
-Isquid:S5411¯"*Use the primitive boolean expression here.(¤—×ş8”ÛÈÇ-

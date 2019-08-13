@@ -1,7 +1,0 @@
-
-Bsquid:S2629í"$Invoke method(s) only conditionally.(Ù“¬D8²³„„±-
-Qsquid:S1118+":Add a private constructor to hide the implicit public one.(ËÏßÆ
-}squid:S18455"aRename field "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 48.(ŠÚ€ˆÿÿÿÿÿ
-Tsquid:S1133œ"5Do not forget to remove this deprecated code someday.(¢È»­8²³„„±-
-†squid:S1845¶"bRename method "debug" to prevent any misunderstanding/clash with field "DEBUG" defined on line 48.(ù¨ç™þÿÿÿÿ8²³„„±-
-Ssquid:S2629s"7Use the built-in formatting to construct this argument.(º£ïèþÿÿÿÿ

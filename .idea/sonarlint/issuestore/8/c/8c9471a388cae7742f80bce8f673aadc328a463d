@@ -1,16 +1,0 @@
-
-=squid:S1168@"&Return an empty array instead of null.(¥¹ï
-U"squid:SwitchLastCaseIsDefaultCheck2""Add a default case to this switch.(©Øûºûÿÿÿÿ
->squid:S1168Œ"&Return an empty array instead of null.(¥¹ï
-V"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(©Øûºûÿÿÿÿ
-_squid:CallToDeprecatedMethod“"1Remove this use of "setTypeId"; it is deprecated.(ó¾ˆ©ùÿÿÿÿ
-]squid:S1118+":Add a private constructor to hide the implicit public one.(ÎÖ ˜şÿÿÿÿ8ÙÆƒ„±-
-t
-squid:S135M"YReduce the total number of break and continue statements in this loop to use at most one.(Ì¶ñÛüÿÿÿÿ
-V"squid:SwitchLastCaseIsDefaultCheckÃ""Add a default case to this switch.(©Øûºûÿÿÿÿ
->squid:S1168¶"&Return an empty array instead of null.(¥¹ï
->squid:S1168‚"&Return an empty array instead of null.(÷é¶Ú
-=squid:S1168{"&Return an empty array instead of null.(¥¹ï
-=squid:S1168="&Return an empty array instead of null.(¥¹ï
-csquid:S1134õ"DTake the required action to fix the issue indicated by this comment.(ïüÇÕ8ŸÔÈÇ-
-gsquid:CallToDeprecatedMethodö"7Remove this use of "updateInventory"; it is deprecated.(¯…¿8ŸÔÈÇ-

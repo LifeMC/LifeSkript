@@ -1,10 +1,0 @@
-
-Gsquid:S2065p"0Remove the "transient" modifier from this field.(¸‹…¢
-Qsquid:MissingDeprecatedCheckß"(Add the missing @deprecated Javadoc tag.(›ËÁı
-Nsquid:S2589}"7Remove this expression which always evaluates to "true"(½æ„–
-Msquid:S1133ß"5Do not forget to remove this deprecated code someday.(›ËÁı
-Esquid:S2387p"."info" is the name of a field in "EntityData".(¸‹…¢
-`squid:HiddenFieldCheck"9Rename "info" which hides the field declared at line 111.(ò¯¬ùÿÿÿÿ
-asquid:HiddenFieldCheck®"9Rename "info" which hides the field declared at line 111.(ò¯¬ùÿÿÿÿ
-asquid:HiddenFieldCheckŒ"9Rename "info" which hides the field declared at line 111.(ò¯¬ùÿÿÿÿ
-hsquid:S1134§"DTake the required action to fix the issue indicated by this comment.(Óš‡Òûÿÿÿÿ8ßàÈÇ-

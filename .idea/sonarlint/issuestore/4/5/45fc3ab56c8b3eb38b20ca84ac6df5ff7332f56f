@@ -1,5 +1,0 @@
-
-¨%squid:RedundantThrowsDeclarationCheck?"kRemove the declaration of thrown exception 'java.util.NoSuchElementException' which is a runtime exception.(äÊ˜„ýÿÿÿÿ8í§„„±-
-_squid:HiddenFieldCheck'"8Rename "iter" which hides the field declared at line 36.(—§ÿ¥úÿÿÿÿ
-_squid:HiddenFieldCheck."8Rename "iter" which hides the field declared at line 36.(€ïœíøÿÿÿÿ
-qsquid:S2272?"NAdd a "NoSuchElementException" for iteration beyond the end of the collection.(äÊ˜„ýÿÿÿÿ8í§„„±-

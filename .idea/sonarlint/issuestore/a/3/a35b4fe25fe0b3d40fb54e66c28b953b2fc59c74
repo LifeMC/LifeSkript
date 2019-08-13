@@ -1,6 +1,0 @@
-
-¤%squid:RedundantThrowsDeclarationCheck½"rRemove the declaration of thrown exception 'java.lang.UnsupportedOperationException' which is a runtime exception.(Á¼€™
-]squid:HiddenFieldCheckÁ"5Rename "c" which hides the field declared at line 54.(Ã¼áÄúÿÿÿÿ
-Nsquid:S2589A"7Remove this expression which always evaluates to "true"( ™„
-Lsquid:S2065:"0Remove the "transient" modifier from this field.(óŒÊ»øÿÿÿÿ
-]squid:HiddenFieldCheck¸"5Rename "c" which hides the field declared at line 54.(Ã¼áÄúÿÿÿÿ

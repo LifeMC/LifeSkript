@@ -1,8 +1,0 @@
-
-jsquid:HiddenFieldCheckb"<Rename "duration" which hides the field declared at line 65.(¬±‚þùÿÿÿÿ8šæ¶®©-
-Ssquid:S1444;"6Make this "public static delayingDisabled" field final(¨â8±žƒ„±-
-@squid:S2386:"Make this member "protected".(ðµ§Ñÿÿÿÿÿ8±žƒ„±-
-"squid:ClassVariableVisibilityCheck;"\Make delayingDisabled a static final constant or non-public and provide accessors if needed.(¨â8±žƒ„±-
-\squid:S3516`"9Refactor this method to not always return the same value.(Ñ±Îžøÿÿÿÿ8±žƒ„±-
-Msquid:S5411R"*Use the primitive boolean expression here.(âËè†þÿÿÿÿ8Û×ÈžÇ-
-Hsquid:S5411Y"*Use the primitive boolean expression here.(å‚¡„8Û×ÈžÇ-

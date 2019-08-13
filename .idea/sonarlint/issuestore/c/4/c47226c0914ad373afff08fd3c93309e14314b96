@@ -1,5 +1,0 @@
-
-gsquid:S1301d"KReplace this "switch" statement by "if" statements to increase readability.(©Øûºûÿÿÿÿ
-=squid:S1168\"&Return an empty array instead of null.(¥¹ï
-=squid:S1168X"&Return an empty array instead of null.(¥¹ï
-Œ"squid:SwitchLastCaseIsDefaultCheckd"YComplete cases by adding the missing enum constants or add a default case to this switch.(©Øûºûÿÿÿÿ

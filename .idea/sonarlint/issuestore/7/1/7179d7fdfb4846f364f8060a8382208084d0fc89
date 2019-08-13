@@ -1,6 +1,0 @@
-
-`squid:S1182"HUse super.clone() to create and seed the cloned instance to be returned.(³äÊœ
-ksquid:S2975"SRemove this "clone" implementation; use a copy constructor or copy factory instead.(³äÊœ
-Vsquid:S2259^"?A "NullPointerException" could be thrown; "m" is nullable here.(ıœ„Ì
-\squid:HiddenFieldCheck¹"9Rename "other" which hides the field declared at line 39.(™­ˆŞ
-Jsquid:S1948'"'Make "other" transient or serializable.(“¸¹Úùÿÿÿÿ8õæÈÇ-

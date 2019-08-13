@@ -1,4 +1,0 @@
-
-zsquid:S41443"^Update this method so that its implementation is not identical to "getHandlerList" on line 46.(ÆÂ¨úÿÿÿÿ
-Xsquid:S1133&"5Do not forget to remove this deprecated code someday.(Œ¶İàùÿÿÿÿ8ÔÈÇ-
-\squid:MissingDeprecatedCheck&"(Add the missing @deprecated Javadoc tag.(Œ¶İàùÿÿÿÿ8ÔÈÇ-

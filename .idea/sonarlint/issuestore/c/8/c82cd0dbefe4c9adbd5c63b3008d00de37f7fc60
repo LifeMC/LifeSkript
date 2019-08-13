@@ -1,7 +1,0 @@
-
-Hsquid:S4524"+Move this default to the end of the switch.(İ–Ò˜ÿÿÿÿÿ
-t
-squid:S135N"YReduce the total number of break and continue statements in this loop to use at most one.(É Ğıúÿÿÿÿ
-Zsquid:CallToDeprecatedMethodQ"-Remove this use of "getId"; it is deprecated.(öŸôÌıÿÿÿÿ
-~squid:S001157"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÿšúşÿÿÿÿ8½·®©-
-Zsquid:CallToDeprecatedMethod‚"1Remove this use of "getTypeId"; it is deprecated.(¸°ú§

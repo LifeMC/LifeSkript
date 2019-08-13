@@ -1,115 +1,0 @@
-
-Rsquid:S1444å"3Make this "public static customVersion" field final(›±ÌÏ8¢šƒ„±-
-Rsquid:S1141ú"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-csquid:S3358±"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
-Ysquid:S1141Œ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8¢šƒ„±-
-zsquid:S00115Á"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¶òè‹8¢šƒ„±-
-Jsquid:S1452‹	"&Remove usage of generic wildcard type.(—Å‰ìüÿÿÿÿ8Ôå¶®©-
-[squid:S2589Œ"7Remove this expression which always evaluates to "true"(ãğƒäùÿÿÿÿ8Ôå¶®©-
-Esquid:S1452‡	"&Remove usage of generic wildcard type.(ÃõÎ8Ôå¶®©-
-”"squid:ClassVariableVisibilityCheckã"YMake updateChecked a static final constant or non-public and provide accessors if needed.(ãÛôñıÿÿÿÿ8¢šƒ„±-
-squid:S00115Ù"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ëõ½™ûÿÿÿÿ8¢šƒ„±-
-Rsquid:S1141Ö"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Hsquid:S1659‘"0Declare "m_finished_loading" on a separate line.(”º©—
-\squid:S1444ä"8Make this "public static developmentVersion" field final(†ÿÅ´üÿÿÿÿ8¢šƒ„±-
-Xsquid:S2184–"@Cast one of the operands of this integer division to a "double".(Ó§³
-zsquid:S00115Ö"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ù˜ëß8Ôå¶®©-
-Rsquid:S1141ö"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-Tsquid:S1133õ"5Do not forget to remove this deprecated code someday.(»ö¢8Ôå¶®©-
-Esquid:S1452¬	"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheckñ".Extract the assignment out of this expression.(Ã†‡İ8Ôå¶®©-
-ysquid:S00115Õ"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(®°öM8Ôå¶®©-
-dsquid:S1193É"@Replace the usage of the "instanceof" operator by a catch block.(ßŒ“¼üÿÿÿÿ8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheckŒ".Extract the assignment out of this expression.(Ì×ÂÏ8Ôå¶®©-
-‡squid:S2637…"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
-Œsquid:S2637Û"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(ŸüÁÎüÿÿÿÿ8¢šƒ„±-
-‡squid:S2637¤"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
-k$squid:AssignmentInSubExpressionCheck’".Extract the assignment out of this expression.(Ş²Ú¤şÿÿÿÿ8Ôå¶®©-
-™"squid:ClassVariableVisibilityCheckä"^Make developmentVersion a static final constant or non-public and provide accessors if needed.(†ÿÅ´üÿÿÿÿ8¢šƒ„±-
-Wsquid:S1444ã"3Make this "public static updateChecked" field final(ãÛôñıÿÿÿÿ8¢šƒ„±-
-‡squid:S2637ß"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
-zsquid:S00115Û"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¹ƒ–®8¢šƒ„±-
-Jsquid:S1452°	"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
-Rsquid:S1444á".Make this "public static instance" field final(›Ğ‘±ıÿÿÿÿ8Ôå¶®©-
-Rsquid:S1141ş"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-¦%squid:RedundantThrowsDeclarationCheckí"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(–®·Õ8Ôå¶®©-
-Ysquid:S1141ö"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8Ôå¶®©-
-|
-squid:S135´"YReduce the total number of break and continue statements in this loop to use at most one.(«çùËÿÿÿÿÿ8Ôå¶®©-
-¦%squid:RedundantThrowsDeclarationCheckœ	"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ı“ß¹8¢šƒ„±-
-Ysquid:S1141õ"5Extract this nested try block into a separate method.(öøâœûÿÿÿÿ8¢šƒ„±-
-k$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(ˆ”Öëøÿÿÿÿ8Ôå¶®©-
-dsquid:S1193Í"@Replace the usage of the "instanceof" operator by a catch block.(êó²†ÿÿÿÿÿ8Ôå¶®©-
-‘"squid:ClassVariableVisibilityCheckâ"[Make updateAvailable a static final constant or non-public and provide accessors if needed.(‹«é‚8¢šƒ„±-
-Jsquid:S1452°	"&Remove usage of generic wildcard type.(ï“ÔÚùÿÿÿÿ8Ôå¶®©-
-Rsquid:S1141­"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
-csquid:S3358±"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
-squid:S00115¶"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ô°æûÿÿÿÿ8Ôå¶®©-
-Dsquid:S1452	"&Remove usage of generic wildcard type.(¿ÈN8Ôå¶®©-
-zsquid:S00115Ú"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Æ£¸8¢šƒ„±-
-dsquid:S1193Ñ"@Replace the usage of the "instanceof" operator by a catch block.(ù§œŠşÿÿÿÿ8Ôå¶®©-
-Ysquid:S1141¶"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8¢šƒ„±-
-‡squid:S2637õ"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8¢šƒ„±-
-Esquid:S1452ã	"&Remove usage of generic wildcard type.(Ü½˜ô8Ôå¶®©-
-csquid:S3358±"DExtract this nested ternary operation into an independent statement.(«§Şä8¢šƒ„±-
-squid:S00115×"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÏâŠºùÿÿÿÿ8Ôå¶®©-
-¡%squid:RedundantThrowsDeclarationCheck›"jRemove the declaration of thrown exception 'java.lang.IllegalStateException' which is a runtime exception.(Ó¸ïĞúÿÿÿÿ
-¦%squid:RedundantThrowsDeclarationCheckş"mRemove the declaration of thrown exception 'java.lang.IllegalArgumentException' which is a runtime exception.(ÈË¹£8Ôå¶®©-
-:squid:S1643«"Use a StringBuilder instead.(ËŸÈ]8Ôå¶®©-
-f$squid:AssignmentInSubExpressionCheck—".Extract the assignment out of this expression.(£ÉŒÄ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheck•".Extract the assignment out of this expression.(‚Ş¥ıÿÿÿÿ8Ôå¶®©-
-k$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¼İ›Õüÿÿÿÿ8Ôå¶®©-
-"squid:ClassVariableVisibilityCheckå"YMake customVersion a static final constant or non-public and provide accessors if needed.(›±ÌÏ8¢šƒ„±-
-Esquid:S1452¬	"&Remove usage of generic wildcard type.(•ŸŞ¸8Ôå¶®©-
-:squid:S1643µ"Use a StringBuilder instead.(ó¬ğ8¢šƒ„±-
-Tsquid:S1444â"5Make this "public static updateAvailable" field final(‹«é‚8¢šƒ„±-
-f$squid:AssignmentInSubExpressionCheckŠ".Extract the assignment out of this expression.(Ğà¯ù8Ôå¶®©-
-[squid:S2629ş"7Use the built-in formatting to construct this argument.(ÍçÖĞúÿÿÿÿ8‹ÙÈÇ-
-[squid:S2629"7Use the built-in formatting to construct this argument.(ôé‹Èùÿÿÿÿ8‹ÙÈÇ-
-Nsquid:S1066«"/Merge this if statement with the enclosing one.(‰´êŸ8‹ÙÈÇ-
-Nsquid:S1066€"/Merge this if statement with the enclosing one.(ï‡§×8‹ÙÈÇ-
-Nsquid:S1066«"/Merge this if statement with the enclosing one.(¹‡…8‹ÙÈÇ-
-Ssquid:S1066À"/Merge this if statement with the enclosing one.(Êæúÿÿÿÿ8‹ÙÈÇ-
-msquid:S3014ş"IRemove this use of "ThreadGroup". Prefer the use of "ThreadPoolExecutor".(Ëö£ğûÿÿÿÿ8‹ÙÈÇ-
-hsquid:S3014"IRemove this use of "ThreadGroup". Prefer the use of "ThreadPoolExecutor".(•ù¬·8‹ÙÈÇ-
-hsquid:S3014Ÿ"IRemove this use of "ThreadGroup". Prefer the use of "ThreadPoolExecutor".(ª¢æî8‹ÙÈÇ-
-Rsquid:S1444ç"3Make this "public static spikeDetector" field final(Ô©Õ¼8‹ÙÈÇ-
-Nsquid:S1444é"/Make this "public static ipAddress" field final(¤®’í8‹ÙÈÇ-
-k$squid:AssignmentInSubExpressionCheckĞ".Extract the assignment out of this expression.(‰‚„Ùùÿÿÿÿ8‹ÙÈÇ-
-‡squid:S2637­"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8‹ÙÈÇ-
-‡squid:S2637‹"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8‹ÙÈÇ-
-‡squid:S2637ï"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8‹ÙÈÇ-
-‡squid:S2637Ï"hThis method's return value is marked "org.eclipse.jdt.annotation.NonNullByDefault" but null is returned.(¥¹ï8‹ÙÈÇ-
-|
-squid:S135ù"YReduce the total number of break and continue statements in this loop to use at most one.(Œ¸¶“úÿÿÿÿ8‹ÙÈÇ-
-|
-squid:S135ä"YReduce the total number of break and continue statements in this loop to use at most one.(çÃ†ñúÿÿÿÿ8‹ÙÈÇ-
-Ysquid:S1141ñ"5Extract this nested try block into a separate method.(¥¯áâùÿÿÿÿ8‹ÙÈÇ-
-Tsquid:S1141ˆ"5Extract this nested try block into a separate method.(ÆŸ¿Ñ8‹ÙÈÇ-
-Nsquid:S5411…"*Use the primitive boolean expression here.(ÄÄúûúÿÿÿÿ8‹ÙÈÇ-
-Nsquid:S5411Ü"*Use the primitive boolean expression here.(÷­€ÿÿÿÿÿ8‹ÙÈÇ-
-Nsquid:S5411¿"*Use the primitive boolean expression here.(™ãÒÉùÿÿÿÿ8‹ÙÈÇ-
-Nsquid:S5411á"*Use the primitive boolean expression here.(™ãÒÉùÿÿÿÿ8‹ÙÈÇ-
-squid:S00115Ü"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ú¶½Ñşÿÿÿÿ8‹ÙÈÇ-
-Tsquid:S1133°"5Do not forget to remove this deprecated code someday.(€Ëİ8‹ÙÈÇ-
-Ysquid:S1133¦"5Do not forget to remove this deprecated code someday.( û³´ùÿÿÿÿ8‹ÙÈÇ-
-csquid:S1134à"DTake the required action to fix the issue indicated by this comment.(äæ–ã8‹ÙÈÇ-
-hsquid:S1134ù	"DTake the required action to fix the issue indicated by this comment.(·¤ùşÿÿÿÿ8‹ÙÈÇ-
-csquid:S1134ì
-"DTake the required action to fix the issue indicated by this comment.(”ú³ß8‹ÙÈÇ-
-gsquid:HiddenFieldCheck“"=Rename "instance" which hides the field declared at line 224.(›ËÉ8‹ÙÈÇ-
-n squid:LabelsShouldNotBeUsedCheckã";Refactor the code to remove this label and the need for it.(àÏÅ)8‹ÙÈÇ-
-csquid:S1134å"DTake the required action to fix the issue indicated by this comment.(—ò•ì8‹ÙÈÇ-
-hsquid:S1134ò"DTake the required action to fix the issue indicated by this comment.(İÒÁºøÿÿÿÿ8‹ÙÈÇ-
-csquid:S3358§"DExtract this nested ternary operation into an independent statement.(ÃÅĞä8‹ÙÈÇ-
-bsquid:S1134µ"DTake the required action to fix the issue indicated by this comment.(Ë‰¢i8‹ÙÈÇ-
-csquid:S3358·"DExtract this nested ternary operation into an independent statement.(ñ°¤Í8‹ÙÈÇ-
-csquid:S1134½"DTake the required action to fix the issue indicated by this comment.(û¶÷Ç8‹ÙÈÇ-
-csquid:S3358Å"DExtract this nested ternary operation into an independent statement.(ñ°¤Í8‹ÙÈÇ-
-hsquid:S3358Ê"DExtract this nested ternary operation into an independent statement.(†Å‘Úıÿÿÿÿ8‹ÙÈÇ-
-csquid:S1134©"DTake the required action to fix the issue indicated by this comment.(š¾â’8‹ÙÈÇ-
-fsquid:HiddenFieldCheck´"<Rename "version" which hides the field declared at line 245.(ÎæÄõ8‹ÙÈÇ-
-dsquid:CallToDeprecatedMethodÄ"4Remove this use of "isAccessible"; it is deprecated.(×™•á8‹ÙÈÇ-
-dsquid:CallToDeprecatedMethodÇ"4Remove this use of "isAccessible"; it is deprecated.(™Çò¯8‹ÙÈÇ-
-Msquid:S1611Õ"/Remove the parentheses around the "e" parameter(íÒK8‹ÙÈÇ-
-isquid:HiddenFieldCheckğ":Rename "addon" which hides the field declared at line 251.(—‘¾îûÿÿÿÿ8‹ÙÈÇ-
