@@ -81,7 +81,8 @@ public final class LogEntry {
     }
 
     static final String findCaller() {
-        final StackTraceElement[] es = Thread.currentThread().getStackTrace();
+        // Thread.currentThread().getStackTrace() is more memory friendly, but slower
+        final StackTraceElement[] es = new Throwable().getStackTrace();
         for (int i = 0; i < es.length; i++) {
             if (!es[i].getClassName().startsWith(skriptLogPackageName))
                 continue;
@@ -113,7 +114,7 @@ public final class LogEntry {
 
     void discarded(final String info) {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + Thread.currentThread().getStackTrace()[3] + "; " + info);
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Throwable().getStackTrace()[1] + "; " + info); // Thread.currentThread().getStackTrace() is more memory friendly, but slower
     }
 
     void logged() {
