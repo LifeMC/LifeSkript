@@ -23,6 +23,7 @@
 package ch.njol.skript.command;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.command.Commands.CommandAliasHelpTopic;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.util.SimpleEvent;
@@ -130,7 +131,7 @@ public final class ScriptCommand implements CommandExecutor {
             for (final Iterator<String> iterator = aliases.iterator(); iterator.hasNext(); ) {
                 final String alias = iterator.next();
                 if (alias.equals(label)) {
-                    Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command and it is redundant, remove it.");
+                    Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command itself and it is redundant, remove it.");
                     iterator.remove();
                 }
             }
@@ -330,7 +331,10 @@ public final class ScriptCommand implements CommandExecutor {
                     aliases.add(lowerAlias);
             }
             bukkitCommand.setAliases(activeAliases);
-            commandMap.register("skript", bukkitCommand);
+            if (SkriptConfig.namespacedCommands.value())
+                commandMap.register("skript", bukkitCommand);
+            else
+                bukkitCommand.register(commandMap);
         }
     }
 

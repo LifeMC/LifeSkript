@@ -131,6 +131,11 @@ command priority: default
 # The default value will always be a lower value than plugin priority, e.g if plugin priority
 # is normal, then the command priority will be 'low' if set to default.
 
+namespaced commands: true
+# If true, script commands can also be executed with /skript:<command name>
+# Change to false for removing the namespaced aliases and the skript prefix.
+# Be aware that non namespaced commands are old behaviour and legacy code, meaning they can cause issues.
+
 log player commands: true
 # Whether Skript should log the usage of custom commands.
 # They will be logged as [INFO] in this format: '<player>: /<command> <arguments>'

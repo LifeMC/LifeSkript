@@ -111,6 +111,7 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableDelaysInFunctionsWarnings = new Option<>("disable delays in functions causes function to return instantly warnings", false);
     public static final Option<Boolean> disableUseNativeEffectInsteadWarnings = new Option<>("disable use native effect instead of command warnings", false);
     public static final Option<Boolean> disableDeprecationWarnings = new Option<>("disable deprecation warnings", false);
+    public static final Option<Boolean> namespacedCommands = new Option<>("namespaced commands", true);
     public static final Option<Boolean> enableScriptCaching = new Option<>("enable script caching", false).optional(true);
     public static final Option<Boolean> keepConfigsLoaded = new Option<>("keep configs loaded", false).optional(true);
     public static final Option<Boolean> addonSafetyChecks = new Option<>("addon safety checks", true)
