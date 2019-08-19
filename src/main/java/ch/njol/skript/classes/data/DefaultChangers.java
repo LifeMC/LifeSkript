@@ -22,6 +22,7 @@
 
 package ch.njol.skript.classes.data;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.bukkitutil.PlayerUtils;
 import ch.njol.skript.classes.Changer;
@@ -42,6 +43,8 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 public final class DefaultChangers {
+
+    public static final Material[] cachedMaterials = Material.values();
 
     public static final Changer<Entity> entityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")
@@ -175,7 +178,6 @@ public final class DefaultChangers {
     };
 
     public static final Changer<Inventory> inventoryChanger = new Changer<Inventory>() {
-        @SuppressWarnings("unchecked")
         @Override
         @Nullable
         public Class<?>[] acceptChange(final ChangeMode mode) {
@@ -188,7 +190,6 @@ public final class DefaultChangers {
             return CollectionUtils.array(ItemType[].class, Inventory[].class);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void change(final Inventory[] invis, final @Nullable Object[] delta, final ChangeMode mode) {
             for (final Inventory invi : invis) {
@@ -212,6 +213,7 @@ public final class DefaultChangers {
                         //$FALL-THROUGH$
                     case ADD:
                         assert delta != null;
+                        /*
                         for (final Object d : delta) {
                             if (d instanceof Inventory) {
                                 for (final ItemStack i : (Inventory) d) {
@@ -222,10 +224,59 @@ public final class DefaultChangers {
                                 ((ItemType) d).addTo(invi);
                             }
                         }
+                        */
+                        if (delta instanceof ItemStack[]) { // Old behavior - legacy code (is it used? no idea)
+                            final ItemStack[] items = (ItemStack[]) delta;
+                            if (items.length > 36) {
+                                return;
+                            }
+                            for (final Object d : delta) {
+                                if (d instanceof Inventory) {
+                                    for (final ItemStack i : (Inventory) d) {
+                                        if (i != null)
+                                            invi.addItem(i);
+                                    }
+                                } else {
+                                    ((ItemType) d).addTo(invi);
+                                }
+                            }
+                        } else {
+                            for (final Object d : delta) {
+                                if (d instanceof ItemStack) {
+                                    new ItemType((ItemStack) d).addTo(invi); // Can't imagine why would be ItemStack, but just in case...
+                                } else if (d instanceof ItemType) {
+                                    ((ItemType) d).addTo(invi);
+                                } else if (d instanceof Block) {
+                                    new ItemType((Block) d).addTo(invi);
+                                } else {
+                                    Skript.error("Can't " + d.toString() + " to an inventory!");
+                                }
+                            }
+                        }
                         break;
                     case REMOVE:
                     case REMOVE_ALL:
                         assert delta != null;
+                        if (delta.length == cachedMaterials.length) {
+                            // Potential fast path: remove all items -> clear inventory
+                            boolean equal = true;
+                            for (int i = 0; i < delta.length; i++) {
+                                if (!(delta[i] instanceof ItemType)) {
+                                    equal = false;
+                                    break; // Not an item, take slow path
+                                }
+                                if (((ItemType) delta[i]).getMaterial() != cachedMaterials[i]) {
+                                    equal = false;
+                                    break;
+                                }
+                            }
+                            if (equal) { // Take fast path, break out before slow one
+                                invi.clear();
+                                break;
+                            }
+                        }
+
+                        // Slow path
                         for (final Object d : delta) {
                             if (d instanceof Inventory) {
                                 assert mode == ChangeMode.REMOVE;
@@ -243,8 +294,7 @@ public final class DefaultChangers {
                 }
                 final InventoryHolder holder = invi.getHolder();
                 if (holder instanceof Player) {
-                    // FIXME Change with PlayerUtils#updateInventory?
-                    ((Player) holder).updateInventory();
+                    PlayerUtils.updateInventory((Player) holder);
                 }
             }
         }
@@ -262,7 +312,6 @@ public final class DefaultChangers {
             return CollectionUtils.array(ItemType[].class, Inventory[].class);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void change(final Block[] blocks, final @Nullable Object[] delta, final ChangeMode mode) {
             for (final Block block : blocks) {

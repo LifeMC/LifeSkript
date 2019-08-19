@@ -29,9 +29,7 @@ import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,14 +47,14 @@ public final class SkriptLogger {
     @SuppressWarnings("null")
     public static final Logger LOGGER = Bukkit.getServer() != null ? Bukkit.getLogger() : Logger.getLogger(Logger.GLOBAL_LOGGER_NAME); // cannot use Bukkit in tests
     private static final HandlerList handlers = new HandlerList();
-    private static final List<LogEntry> suppressed = new ArrayList<>();
+    private static final List<LogEntry> suppressed = Collections.synchronizedList(new ArrayList<>());
     static boolean debug;
     @Nullable
     private static Node node;
     private static Verbosity verbosity = Verbosity.NORMAL;
-    private static boolean suppressing;
-    private static boolean suppressWarnings;
-    private static boolean suppressErrors;
+    private static volatile boolean suppressing;
+    private static volatile boolean suppressWarnings;
+    private static volatile boolean suppressErrors;
 
     /**
      * Shorthand for <tt>{@link #startLogHandler(LogHandler) startLogHandler}(new {@link RetainingLogHandler}());</tt>
@@ -101,23 +99,29 @@ public final class SkriptLogger {
      * @see RedirectingLogHandler
      */
     public static final <T extends LogHandler> T startLogHandler(final T h) {
-        handlers.add(h);
+        synchronized (handlers) {
+            handlers.add(h);
+        }
         return h;
     }
 
     static final void removeHandler(final LogHandler h) {
-        if (!handlers.contains(h))
-            return;
-        if (!h.equals(handlers.remove())) {
-            int i = 1;
-            while (!h.equals(handlers.remove()))
-                i++;
-            LOGGER.severe("[Skript] " + i + " log handler" + (i == 1 ? " was" : "s were") + " not stopped properly! (at " + getCaller() + ") [if you're a server admin and you see this message please create a bug report at " + Skript.ISSUES_LINK + " if there is not already one]");
+        synchronized (handlers) {
+            if (!handlers.contains(h))
+                return;
+            if (!h.equals(handlers.remove())) {
+                int i = 1;
+                while (!h.equals(handlers.remove()))
+                    i++;
+                LOGGER.severe("[Skript] " + i + " log handler" + (i == 1 ? " was" : "s were") + " not stopped properly! (at " + getCaller() + ") [if you're a server admin and you see this message please create a bug report at " + Skript.ISSUES_LINK + " if there is not already one]");
+            }
         }
     }
 
     static final boolean isStopped(final LogHandler h) {
-        return !handlers.contains(h);
+        synchronized (handlers) {
+            return !handlers.contains(h);
+        }
     }
 
     /**
@@ -154,8 +158,9 @@ public final class SkriptLogger {
      */
     @Nullable
     public static final StackTraceElement findCaller(final @Nullable String... exclusions) {
-        for (final StackTraceElement e : Thread.currentThread().getStackTrace()) {
-            if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName()) && !e.toString().contains("java.lang.Thread.getStackTrace") && !e.toString().contains("java.lang.Thread.currentThread")) {
+        // Thread.currentThread().getStackTrace() is more memory friendly, but slower
+        for (final StackTraceElement e : new Throwable().getStackTrace()) {
+            if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName())) {
                 if (exclusions != null && exclusions.length > 0) {
                     for (final String exclusion : exclusions)
                         if (!e.getClassName().startsWith(exclusion))
@@ -211,19 +216,28 @@ public final class SkriptLogger {
         }
         if (Skript.testing() && node != null && node.debug())
             System.out.print("---> " + entry.level + "/" + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
-        for (final LogHandler h : handlers) {
-            final LogResult r = h.log(entry);
-            switch (r) {
-                case CACHED:
-                    return;
-                case DO_NOT_LOG:
-                    entry.discarded("denied by " + h);
-                    return;
-                case LOG:
+        synchronized (handlers) {
+            final Iterator<LogHandler> iterator = handlers.iterator();
+            synchronized (iterator) {
+                while (iterator.hasNext()) {
+                    final LogHandler h = iterator.next();
+                    final LogResult r = h.log(entry);
+
+                    switch (r) {
+                        case CACHED:
+                            return;
+                        case DO_NOT_LOG:
+                            entry.discarded("denied by " + h);
+                            return;
+                        case LOG:
+                    }
+                }
             }
         }
         if (suppressing) {
+            suppressed.remove(entry);
             suppressed.add(entry);
+
             return;
         }
         final Level level = entry.getLevel();
