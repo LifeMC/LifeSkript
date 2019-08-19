@@ -34,6 +34,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.server.ServerCommandEvent;
@@ -79,7 +81,7 @@ public final class SkriptEventHandler {
 
         // Skip the event if it's a frequently called event
         // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
-        if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < 1000L)
+        if ((e instanceof PlayerMoveEvent || e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < 1000L)
             return;
 
         lastCall = System.currentTimeMillis();
