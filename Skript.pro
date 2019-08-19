@@ -6,6 +6,7 @@
 
 # Bukkit, Jansi and Timings - Bukkit is required, Jansi and Timings are optional.
 -libraryjars '<user.home>/.m2/repository/org/bukkit/bukkit/1.8.8-R0.1-SNAPSHOT/bukkit-1.8.8-R0.1-SNAPSHOT.jar'
+-libraryjars '<user.home>/.m2/repository/com/google/guava/guava/17.0/guava-17.0.jar'
 -libraryjars '<user.home>/.m2/repository/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar'
 -libraryjars '<user.home>/.m2/repository/co/aikar/timings/1.8.8/timings-1.8.8.jar'
 
@@ -18,9 +19,9 @@
 -libraryjars '<user.home>/.m2/repository/fr/neatmonster/nocheatplus/3.16.1-SNAPSHOT/nocheatplus-3.16.1-SNAPSHOT.jar'
 
 # Annotations used by Skript - All of them are optional.
--libraryjars '<user.home>/.m2/repository/org/eclipse/jdt.annotation/1.1.0/jdt.annotation-1.1.0.jar'
+-libraryjars '<user.home>/.m2/repository/org/eclipse/jdt/org.eclipse.jdt.annotation/1.1.400/org.eclipse.jdt.annotation-1.1.400.jar'
 -libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.0.0-beta3/spotbugs-annotations-4.0.0-beta3.jar'
--libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
+#-libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
 -libraryjars '<user.home>/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'
 
 -dontskipnonpubliclibraryclassmembers
@@ -31,7 +32,6 @@
 
 # Class merging & marking final: Mostly breaks binary compatibility and causes strange errors
 # Field propagation, marking private etc.: Breaks binary compatibility and it's bugged
-# Enum class unboxing: Gives strange errors on runtime
 # Code allocation: Changes variable stack map and causes runtime strange errors
 -optimizations !class/merging/**,!class/marking/final,!method/marking/final,!method/propagation/**,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
 
@@ -49,6 +49,9 @@
 -adaptclassstrings
 -adaptresourcefilenames **
 -adaptresourcefilecontents **
+
+# Method handles are giving false warnings in ProGuard - we must use this to exclude it from the warnings.
+-dontwarn java.lang.invoke.MethodHandle
 
 # We don't want anything - just optimize whatever possible. But these may be commented out for debugging purposes.
 -dontnote
@@ -87,7 +90,7 @@
 }
 
 # Ignore kotlin null checks at runtime - we have compile time checks.
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+-assumenosideeffects class ch.njol.skript.libraries.kotlin.jvm.internal.Intrinsics {
     static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
 }
 

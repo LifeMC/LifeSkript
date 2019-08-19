@@ -60,7 +60,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parseResult) {
         period = ((Literal<Timespan>) args[0]).getSingle();
         if (args.length > 1 && args[1] != null) {
             worlds = ((Literal<World>) args[1]).getArray();
@@ -91,7 +91,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
 
     @SuppressWarnings("null")
     @Override
-    public void register(final Trigger t) {
+    public final void register(final Trigger t) {
         this.t = t;
         int[] taskIDs;
         if (worlds == null) {
@@ -108,7 +108,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public void unregister(final Trigger t) {
+    public final void unregister(final Trigger t) {
         assert t == this.t;
         this.t = null;
         assert taskIDs != null;
@@ -117,7 +117,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public void unregisterAll() {
+    public final void unregisterAll() {
         t = null;
         assert taskIDs != null;
         for (final int taskID : taskIDs)
@@ -125,7 +125,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return "every " + period;
     }
 

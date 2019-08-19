@@ -60,7 +60,6 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
         return lc.hashCode();
     }
 
-    @SuppressWarnings("null")
     @Override
     public boolean equals(final @Nullable Object o) {
         if (o == null)

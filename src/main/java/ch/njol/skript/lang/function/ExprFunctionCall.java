@@ -42,7 +42,7 @@ public final class ExprFunctionCall<T> extends SimpleExpression<T> {
 
     @Override
     @Nullable
-    protected T[] get(final Event e) {
+    protected final T[] get(final Event e) {
         final T[] returnValue = function.execute(e);
         function.resetReturnValue();
         return returnValue;

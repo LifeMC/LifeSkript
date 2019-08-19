@@ -333,7 +333,7 @@ public final class Commands {
                 ScriptLoader.deleteCurrentEvent();
 
                 if (e != null) {
-                    log.clear(); // ignore warnings and stuff
+                    log.clear(); // Ignore warnings and stuff
                     log.printLog();
 
                     sender.sendMessage(ChatColor.GRAY + "executing '" + ChatColor.stripColor(command) + "'");

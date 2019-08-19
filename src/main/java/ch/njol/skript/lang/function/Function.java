@@ -100,7 +100,6 @@ public abstract class Function<T> {
             return null;
         }
         final Object[][] ps = params.length < parameters.length ? Arrays.copyOf(params, parameters.length) : params;
-        assert ps != null;
         final FunctionEvent<? extends T> e = new FunctionEvent<>(!Bukkit.isPrimaryThread(), this);
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];

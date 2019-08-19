@@ -77,6 +77,24 @@ public final class EffPark extends Effect {
 
     private int line;
 
+    private static final void announcePark(final Event e, final long milliSeconds, final @Nullable String scriptName, final int line, final boolean isFromEffectCommand, final CommandSender... sender) {
+        final String announcementMessage = "Parking the server for " + milliSeconds + " milliseconds as requested by " + scriptName + ", line " + line + " in event " + e + " " + (isFromEffectCommand ? "by using an effect command " : "") + (sender.length == 1 && sender[0] != null ? "from " + sender[0].getName() : "");
+
+        announce(announcementMessage);
+    }
+
+    private static final void announce(final String announcementMessage) {
+        announce(announcementMessage, Skript::info, Skript::info);
+    }
+
+    private static final void announce(final String announcementMessage, final Consumer<String> logger, final BiConsumer<Player, String> handler) {
+        logger.accept(announcementMessage);
+
+        for (final Player player : PlayerUtils.getOnlinePlayers())
+            if (player.isOp() || player.hasPermission("skript.admin") || player.hasPermission("skript.*") || player.hasPermission("skript.seeParkingAnnouncements"))
+                handler.accept(player, announcementMessage);
+    }
+
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
@@ -129,24 +147,6 @@ public final class EffPark extends Effect {
             line = SkriptLogger.getNode().getLine();
 
         return true;
-    }
-
-    private static final void announcePark(final Event e, final long milliSeconds, final String scriptName, final int line, final boolean isFromEffectCommand, final CommandSender... sender) {
-        final String announcementMessage = "Parking the server for " + milliSeconds + " milliseconds as requested by " + scriptName + ", line " + line + " in event " + e + " " + (isFromEffectCommand ? "by using an effect command " : "") + (sender.length == 1 && sender[0] != null ? "from " + sender[0].getName() : "");
-
-        announce(announcementMessage);
-    }
-
-    private static final void announce(final String announcementMessage) {
-        announce(announcementMessage, Skript::info, Skript::info);
-    }
-
-    private static final void announce(final String announcementMessage, final Consumer<String> logger, final BiConsumer<Player, String> handler) {
-        logger.accept(announcementMessage);
-
-        for (final Player player : PlayerUtils.getOnlinePlayers())
-            if (player.isOp() || player.hasPermission("skript.admin") || player.hasPermission("skript.*") || player.hasPermission("skript.seeParkingAnnouncements"))
-                handler.accept(player, announcementMessage);
     }
 
     @Override

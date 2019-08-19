@@ -420,7 +420,7 @@ public final class CollectionUtils {
         int i = 0;
         for (final Integer n : ints)
             r[i++] = n;
-        if (i != r.length) {// shouldn't happen if the collection is valid
+        if (i != r.length) { // shouldn't happen if the collection is valid
             assert false : ints;
             return Arrays.copyOfRange(r, 0, i);
         }

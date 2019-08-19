@@ -64,7 +64,6 @@ import java.util.List;
  *
  * @author Peter Güttinger
  */
-@SuppressWarnings("deprecation")
 @NotThreadSafe
 public final class Yggdrasil {
 
@@ -115,7 +114,6 @@ public final class Yggdrasil {
         return f.getName();
     }
 
-    @SuppressWarnings("null")
     public static final String getID(final Enum<?> e) {
         try {
             return getID(e.getDeclaringClass().getDeclaredField(e.name()));

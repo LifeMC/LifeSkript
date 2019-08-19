@@ -400,7 +400,7 @@ public final class Aliases {
                 } else {
                     if (n == null)
                         materialNames.put(d.getId(), n = new MaterialName(d.getId(), String.valueOf(d.getId()), String.valueOf(d.getId()), g.getSecond()));
-                    @SuppressWarnings("null") final NonNullPair<Short, Short> data = new NonNullPair<>(d.dataMin, d.dataMax);
+                    final NonNullPair<Short, Short> data = new NonNullPair<>(d.dataMin, d.dataMax);
                     n.names.put(data, p);
                 }
             }

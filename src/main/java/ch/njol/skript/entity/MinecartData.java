@@ -40,7 +40,6 @@ import java.util.ArrayList;
 /**
  * @author Peter Güttinger
  */
-@SuppressWarnings("deprecation")
 public final class MinecartData extends EntityData<Minecart> {
 
     @Nullable
