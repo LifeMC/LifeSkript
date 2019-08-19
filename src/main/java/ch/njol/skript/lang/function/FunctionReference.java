@@ -151,7 +151,7 @@ public final class FunctionReference<T> {
         if (function == null)
             function = (Function<? extends T>) Functions.getFunction(functionName);
         if (function == null) {
-            Skript.error("Invalid function call to function that does not exist yet. Be careful when using functions in 'script load' events!");
+            Skript.error("Invalid function call to a function that does not exist yet. Be careful when using functions in 'script load' events!");
             return null;
         }
 
@@ -173,11 +173,9 @@ public final class FunctionReference<T> {
         return single;
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"unchecked", "null"})
     public Class<? extends T> getReturnType() {
-        if (function != null && function.returnType != null)
-            return function.returnType.getC();
-        return null; // FIXME backport function signatures
+        return function != null && function.returnType != null ? function.returnType.getC() : (Class<? extends T>) Object.class; // FIXME backport function signatures
     }
 
     @Nullable
