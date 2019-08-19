@@ -51,8 +51,9 @@ public final class EffFunctionCall extends Effect {
     }
 
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         function.execute(e);
+        function.resetReturnValue();
     }
 
     @Override
