@@ -88,7 +88,7 @@ public final class EffLog extends AsyncEffect {
         for (final String message : messages.getArray(e)) {
             if (files != null) {
                 for (String s : files.getArray(e)) {
-                    s = s.toLowerCase(Locale.ENGLISH);
+                    s = s.toLowerCase(Locale.ENGLISH).replace("\\", "/");
                     if (!s.endsWith(".log"))
                         s += ".log";
                     if ("server.log".equals(s)) {
