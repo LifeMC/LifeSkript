@@ -46,6 +46,7 @@ import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Patterns;
 import ch.njol.skript.util.Utils;
+import ch.njol.skript.variables.TypeHints;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -110,7 +111,6 @@ public final class EffChange extends Effect {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-
         mode = patterns.getInfo(matchedPattern);
 
         switch (mode) {
@@ -253,10 +253,15 @@ public final class EffChange extends Effect {
                 return false;
             }
 
-            if (changed instanceof Variable && !((Variable<?>) changed).isLocal() && (mode == ChangeMode.SET || ((Variable<?>) changed).isList() && mode == ChangeMode.ADD)) {
-                final ClassInfo<?> ci = Classes.getSuperClassInfo(ch.getReturnType());
-                if (ci.getC() != Object.class && ci.getSerializer() == null && ci.getSerializeAs() == null && !SkriptConfig.disableObjectCannotBeSavedWarnings.value())
-                    Skript.warning(ci.getName().withIndefiniteArticle() + " cannot be saved, i.e. the contents of the variable " + changed + " will be lost when the server stops.");
+            if (changed instanceof Variable) {
+                final Variable<?> var = (Variable<?>) changed;
+                if (var.isLocal() && var.name.isSimple() && mode == ChangeMode.SET) { // Emit a type hint if possible
+                    TypeHints.add(var.name.toString(), ch.getReturnType());
+                } else if (mode == ChangeMode.SET || var.isList() && mode == ChangeMode.ADD) {
+                    final ClassInfo<?> ci = Classes.getSuperClassInfo(ch.getReturnType());
+                    if (ci.getC() != Object.class && ci.getSerializer() == null && ci.getSerializeAs() == null && !SkriptConfig.disableObjectCannotBeSavedWarnings.value())
+                        Skript.warning(ci.getName().withIndefiniteArticle() + " cannot be saved, i.e. the contents of the variable " + changed + " will be lost when the server stops.");
+                }
             }
         }
         return true;

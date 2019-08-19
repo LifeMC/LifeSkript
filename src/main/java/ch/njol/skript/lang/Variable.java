@@ -38,6 +38,7 @@ import ch.njol.skript.registrations.Comparators;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Utils;
+import ch.njol.skript.variables.TypeHints;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
@@ -48,6 +49,7 @@ import ch.njol.util.coll.iterator.EmptyIterator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -145,7 +147,56 @@ public final class Variable<T> implements Expression<T> {
         final VariableString vs = VariableString.newInstance(name.startsWith(LOCAL_VARIABLE_TOKEN) ? name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : name, StringMode.VARIABLE_NAME);
         if (vs == null)
             return null;
-        return new Variable<>(vs, types, name.startsWith(LOCAL_VARIABLE_TOKEN), name.endsWith(SEPARATOR + "*"), null);
+
+        final boolean isLocal = name.startsWith(LOCAL_VARIABLE_TOKEN);
+        final boolean isPlural = name.endsWith(SEPARATOR + "*");
+
+        // Check for local variable type hints
+        if (isLocal && vs.isSimple()) { // Only variable names we fully know already
+            final Class<?> hint = TypeHints.get(vs.toString());
+
+            if (hint != null && !hint.equals(Object.class)) { // Type hint available
+                // See if we can get correct type without conversion
+                for (final Class<? extends T> type : types) {
+                    assert type != null;
+                    if (type.isAssignableFrom(hint)) {
+                        // Hint matches, use variable with exactly correct type
+                        return new Variable<>(vs, CollectionUtils.array(type), isLocal, isPlural, null);
+                    }
+                }
+
+                // Or with conversion?
+                for (final Class<? extends T> type : types) {
+                    assert type != null;
+                    if (Converters.converterExists(hint, type)) {
+                        // Hint matches, even though converter is needed
+                        return new Variable<>(vs, CollectionUtils.array(type), isLocal, isPlural, null);
+                    }
+
+                    // Special cases
+                    if (type.isAssignableFrom(World.class) && hint.isAssignableFrom(String.class)) {
+                        // String->World conversion is weird spaghetti code
+                        return new Variable<>(vs, types, isLocal, isPlural, null);
+                    } else if (type.isAssignableFrom(Player.class) && hint.isAssignableFrom(String.class)) {
+                        // String->Player conversion is not available at this point
+                        return new Variable<>(vs, types, isLocal, isPlural, null);
+                    }
+                }
+
+                // Hint exists and does NOT match any types requested
+                final ClassInfo<?>[] infos = new ClassInfo[types.length];
+
+                for (int i = 0; i < types.length; i++) {
+                    infos[i] = Classes.getExactClassInfo(types[i]);
+                }
+
+                Skript.warning("Local variable '" + name + "' is " + Classes.toString(Classes.getExactClassInfo(hint))
+                        + ", not " + Classes.toString(infos, false));
+                // Fall back to not having any type hints
+            }
+        }
+
+        return new Variable<>(vs, types, isLocal, isPlural, null);
     }
 
     public static final boolean isIndexLoop(final String s) {

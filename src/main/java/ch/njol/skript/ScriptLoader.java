@@ -30,6 +30,7 @@ import ch.njol.skript.command.Commands;
 import ch.njol.skript.command.ScriptCommand;
 import ch.njol.skript.config.*;
 import ch.njol.skript.effects.Delay;
+import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.FunctionEvent;
@@ -42,6 +43,7 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.*;
+import ch.njol.skript.variables.TypeHints;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
@@ -135,7 +137,58 @@ public final class ScriptLoader {
     private static Class<? extends Event>[] currentEvents;
     private static String indentation = "";
 
+    private static boolean loadingScripts;
+
+    @Nullable
+    private static Thread loadingLoggerThread;
+
+    @Nullable
+    private static Date loadStart;
+
     private ScriptLoader() {
+        throw new UnsupportedOperationException();
+    }
+
+    public static final void startTracker() {
+        loadingScripts = true;
+        loadStart = new Date();
+
+        // reports once per second how many scripts were loaded. Useful to make clear that Skript is still doing something if it's loading many scripts
+        final Thread loggerThread = Skript.newThread(() -> {
+            while (loadingScripts) {
+                try {
+                    Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 10000L : 15000L); // low verbosity won't disable these messages, but makes them more rare
+                } catch (final InterruptedException e) {
+                    break;
+                }
+                synchronized (loadedFiles) {
+                    // FIXME does not work on first load, but works afterwards with /sk reload all
+                    Skript.info("Loaded " + loadedFiles.size() + " scripts" + " so far...");
+                }
+            }
+            Thread.currentThread().interrupt();
+        }, "Skript load tracker thread");
+
+        loadingLoggerThread = loggerThread;
+
+        loggerThread.setPriority(Thread.MIN_PRIORITY);
+        loggerThread.setDaemon(true);
+
+        // actually starts the tracker
+        loggerThread.start();
+    }
+
+    public static final void endTracker() {
+        final Date start = loadStart;
+        final Thread loggerThread = loadingLoggerThread;
+
+        if (loggerThread == null || !loadingScripts || start == null)
+            return;
+        loadingScripts = false;
+        loggerThread.interrupt(); // In case if not interrupted
+
+        loadingLoggerThread = null;
+        Skript.info("Loaded total of " + loadedFiles.size() + " scripts in " + start.difference(new Date()));
     }
 
     public static final boolean isErrorAllowed(final Version versionAdded) {
@@ -143,15 +196,19 @@ public final class ScriptLoader {
     }
 
     public static final boolean isErrorAllowed(final Version versionAdded, final Version scriptVersion) {
-        return isWarningAllowed(versionAdded, scriptVersion);
+        return isWarningAllowed(versionAdded, scriptVersion, true);
     }
 
     public static final boolean isWarningAllowed(final Version versionAdded) {
-        return isWarningAllowed(versionAdded, ScriptLoader.getCurrentScriptVersion());
+        return isWarningAllowed(versionAdded, ScriptLoader.getCurrentScriptVersion(), false);
     }
 
     public static final boolean isWarningAllowed(final Version versionAdded, final Version scriptVersion) {
-        if (scriptVersion.isSmallerThan(versionAdded) || getSourceVersionFrom(scriptVersion).isSmallerThan(getSourceVersionFrom(versionAdded)))
+        return isWarningAllowed(versionAdded, scriptVersion, false);
+    }
+
+    public static final boolean isWarningAllowed(final Version versionAdded, final Version scriptVersion, final boolean strict) {
+        if (scriptVersion.isSmallerThan(versionAdded) || strict && getSourceVersionFrom(scriptVersion).isSmallerThan(getSourceVersionFrom(versionAdded)))
             return false;
 
         return getSourceVersionFrom(scriptVersion).isLargerThan(getSourceVersionFrom(versionAdded));
@@ -203,6 +260,7 @@ public final class ScriptLoader {
         currentEventName = null;
         currentEvents = null;
         hasDelayBefore = Kleenean.FALSE;
+        TypeHints.clear(); // Local variables are local to event
     }
 
     public static final Map<String, ItemType> getScriptAliases() {
@@ -214,6 +272,8 @@ public final class ScriptLoader {
     }
 
     static final ScriptInfo loadScripts() {
+        startTracker();
+
         final File scriptsFolder = getScriptsFolder();
         if (!scriptsFolder.isDirectory())
             //noinspection ResultOfMethodCallIgnored
@@ -236,6 +296,8 @@ public final class ScriptLoader {
             Language.setUseLocal(true);
             h.stop();
         }
+
+        endTracker();
 
         if (i.files == 0)
             Skript.warning(m_no_scripts.toString());
@@ -321,7 +383,7 @@ public final class ScriptLoader {
         //assert !loadedFiles.contains(f);
         //assert !loadedScriptFiles.contains(f.getName());
 
-        assert currentScript == null;
+        assert currentScript == null : "Current script should be null for script \"" + f.getName() + "\"";
 
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
@@ -389,8 +451,10 @@ public final class ScriptLoader {
 
             final Config config = new Config(f, true, false, ":");
 
-            if (SkriptConfig.keepConfigsLoaded.value())
+            if (SkriptConfig.keepConfigsLoaded.value()) {
+                SkriptConfig.configs.remove(config);
                 SkriptConfig.configs.add(config);
+            }
 
             int numTriggers = 0;
             int numCommands = 0;
@@ -487,13 +551,41 @@ public final class ScriptLoader {
                                         return new ScriptInfo();
                                     }
                                     duplicateCheckList.add("requires minecraft");
-                                } else if (key.equalsIgnoreCase("requires plugin") && !Bukkit.getPluginManager().isPluginEnabled(value)) {
-                                    // This can be duplicateable to require more than one plugin
+                                } else if (key.equalsIgnoreCase("requires plugin")) {
+                                    if (Skript.getAddon(value) != null && ScriptLoader.isWarningAllowed(VersionRegistry.STABLE_2_2_16))
+                                        Skript.warning("Use 'requires addon' instead of 'requires plugin' for add-ons.");
 
-                                    if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
+                                    if (Hook.isHookEnabled(value) && ScriptLoader.isWarningAllowed(VersionRegistry.STABLE_2_2_16))
+                                        Skript.warning("Use 'requires hook' instead of 'requires plugin' for hooks.");
+
+                                    if (!Bukkit.getPluginManager().isPluginEnabled(value)) {
+                                        // This can be duplicateable to require more than one plugin
+
+                                        if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
+                                            Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
+                                        else // it does not exist at all
+                                            Skript.error("This script requires plugin " + value);
+                                        return new ScriptInfo();
+                                    }
+                                } else if (key.equalsIgnoreCase("requires addon") && Skript.getAddon(value) == null) {
+                                    // This can be duplicateable to require more than one addon
+
+                                    if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
+                                        Skript.error("This script requires addon " + value + ", but that addon is not enabled currently.");
+                                    else if (Bukkit.getPluginManager().getPlugin(value) == null) // it does not exist at all
+                                        Skript.error("This script requires addon " + value);
+                                    else // it exists, but it's not registered to Skript
+                                        Skript.error("This script requires addon " + value + ", but that addon is not correctly registered to Skript currently.");
+                                    return new ScriptInfo();
+                                } else if (key.equalsIgnoreCase("requires hook") && !Hook.isHookEnabled(value)) {
+                                    // This can be duplicateable to require more than one hook
+
+                                    if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
                                         Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
-                                    else // it does not exist at all
+                                    else if (Bukkit.getPluginManager().getPlugin(value) == null) // it does not exist at all
                                         Skript.error("This script requires plugin " + value);
+                                    else // it exists, but Skript is not hooked to it
+                                        Skript.error("This script requires hook " + value + ", but Skript is currently not hooked to that plugin.");
                                     return new ScriptInfo();
                                 } else if (key.equalsIgnoreCase("load after")) { // This also can be duplicateable to require more than one script
                                     // This can be used to require a script (not generally), or defer loading of this script after a specific script is loaded.
@@ -502,19 +594,42 @@ public final class ScriptLoader {
 
                                     if (!file.exists()) {
                                         // This generally should not be used to require a script because user may change names of the scripts
+                                        // so we are not using something like "This script requires script ..." as the message
                                         Skript.error("Can't find required script " + value);
                                         return new ScriptInfo();
                                     }
 
+                                    if (file.getPath().equals(f.getPath())) {
+                                        // The script tries to load itself after itself, which it should be permitted
+                                        Skript.error("Loading the current script after current script is not possible");
+                                        return new ScriptInfo();
+                                    }
+
+                                    // FIXME check if it causes issues on reloads, I know I am experienced one, but I forgot what is wrong
+                                    // I finally found the problem, of course from the server logs. The error was some function calls are giving errors like "The function was either renamed or deleted"
                                     if (!loadedScriptFiles.contains(file.getName())) { // If the script is not already loaded
                                         if (Skript.logHigh())
                                             Skript.info("Loading script '" + file.getName() + "' because the script '" + f.getName() + "' requires it");
+
+                                        skipFiles.remove(file.getName()); // Remove to re-add it
                                         skipFiles.add(file.getName()); // Required to skip this script in iteration
 
                                         // Set to null, method call re-sets it
                                         currentScript = null;
+
+                                        // Backup the aliases and the options
+                                        final Map<String, ItemType> aliases = new HashMap<>(currentAliases);
+                                        final Map<String, String> options = new HashMap<>(currentOptions);
+
                                         loadScript(file); // Load the required script before continuing to parse this script
                                         currentScript = config; // Re-set the current script to this script
+
+                                        // Re-set the aliases and the options
+                                        currentAliases.clear();
+                                        currentAliases.putAll(aliases);
+
+                                        currentOptions.clear();
+                                        currentOptions.putAll(options);
                                     }
                                 }
                             } catch (final IllegalArgumentException e) {
@@ -703,11 +818,11 @@ public final class ScriptLoader {
                     final long differenceInSeconds = TimeUnit.MILLISECONDS.toSeconds(difference.getMilliSeconds());
 
                     if (Skript.hasJLineSupport() && Skript.hasJansi() && COLOR_BASED_ON_LOAD_TIMES) {
-                        suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
                         if (differenceInSeconds > 5L) // Script take longer than 5 seconds to load
-                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.RED).bold().toString();
+                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().fg(Ansi.Color.RED).bold().toString();
                         else if (differenceInSeconds > 3L) // Script take longer than 3 seconds to load
-                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString();
+                            prefix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().fg(Ansi.Color.YELLOW).bold().toString();
+                        suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
                     }
 
                     Skript.info(prefix + "Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + difference + suffix);
@@ -744,7 +859,10 @@ public final class ScriptLoader {
 //				}
 //			}
 
+            loadedFiles.remove(f);
             loadedFiles.add(f);
+
+            loadedScriptFiles.remove(f.getName());
             loadedScriptFiles.add(f.getName());
 
             return new ScriptInfo(1, numTriggers, numCommands, numFunctions, scriptVersion);
@@ -857,6 +975,7 @@ public final class ScriptLoader {
                 String name = replaceOptions(n.getKey());
                 if (!SkriptParser.validateLine(name))
                     continue;
+                TypeHints.enterScope(); // Begin conditional type hints
 
                 if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
                     final String l = name.substring("loop ".length());
@@ -935,6 +1054,9 @@ public final class ScriptLoader {
                     items.add(new Conditional(cond, (SectionNode) n));
                     hasDelayBefore = hadDelayBefore.or(hasDelayBefore.and(Kleenean.UNKNOWN));
                 }
+
+                // Destroy these conditional type hints
+                TypeHints.exitScope();
             }
         }
 
