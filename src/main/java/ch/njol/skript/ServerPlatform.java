@@ -56,7 +56,7 @@ public enum ServerPlatform {
     BUKKIT_TACO("Taco", true, true),
 
     /**
-     * Glowstone (or similar) fully open source Minecraft server, which
+     * Glowstone, fully open source Minecraft server, which
      * supports Spigot API.
      */
     GLOWSTONE("Glowstone", true, true),
@@ -90,6 +90,38 @@ public enum ServerPlatform {
         this.platformName = platformName;
         this.isWorking = isWorking;
         this.isSupported = isSupported;
+    }
+
+    /**
+     * Checks if this server platform contains Spigot API.
+     * <p>
+     * This includes server platforms like Glowstone and Paper.
+     * They both include Spigot, but difference between them is...
+     * <p>
+     * Paper is a fork of Spigot (meaning it will also include Spigot internals and such),
+     * but Glowstone is a completely new server implementation, but it also includes Spigot API.
+     *
+     * @return True if this server platform also contains
+     * the Spigot API.
+     */
+    public final boolean isSpigot() {
+        return this == BUKKIT_SPIGOT || this == BUKKIT_PAPER || this == LIFE_SPIGOT || this == BUKKIT_TACO || this == GLOWSTONE;
+    }
+
+    /**
+     * Checks if this server platform contains Paper API.
+     * <p>
+     * This includes server platforms like Glowstone and Taco.
+     * They both include Paper, but difference between them is...
+     * <p>
+     * Taco is a fork of Paper (meaning it will also include Paper internals and such),
+     * but Glowstone is a completely new server implementation, but it also includes Paper API.
+     *
+     * @return True if this server platform also contains
+     * the Paper API.
+     */
+    public final boolean isPaper() {
+        return this == BUKKIT_PAPER || this == LIFE_SPIGOT || this == BUKKIT_TACO || this == GLOWSTONE;
     }
 
 }

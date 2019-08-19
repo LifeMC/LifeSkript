@@ -24,17 +24,13 @@ package ch.njol.skript;
 
 import ch.njol.skript.util.Version;
 
-public enum VersionRegistry {
-    STABLE_2_2_15(new Version(2, 2, 15)),
-    STABLE_2_2_16(new Version(2, 2, 16));
+public final class VersionRegistry {
 
-    private final Version version;
+    public static final Version STABLE_2_2_15 = new Version(2, 2, 15);
+    public static final Version STABLE_2_2_16 = new Version(2, 2, 16);
 
-    VersionRegistry(final Version version) {
-        this.version = version;
+    private VersionRegistry() {
+        throw new UnsupportedOperationException();
     }
 
-    public final Version getVersion() {
-        return version;
-    }
 }

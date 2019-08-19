@@ -53,11 +53,11 @@ class SkriptTest {
             println("[Skript] Can't check for updates") // Don't hard fail when no internet access
         }
 
-        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, VersionRegistry.STABLE_2_2_15.version), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}")
-        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 20)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 20))}")
+        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15, VersionRegistry.STABLE_2_2_15), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15)}, source: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15)}")
+        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15, Version(2, 2, 20)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 20))}")
 
-        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 100)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 100))}")
-        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15.version, Version(2, 2, 0)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15.version)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 0))}")
+        assertTrue(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15, Version(2, 2, 100)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 100))}")
+        assertFalse(ScriptLoader.isErrorAllowed(VersionRegistry.STABLE_2_2_15, Version(2, 2, 0)), "added: ${ScriptLoader.getSourceVersionFrom(VersionRegistry.STABLE_2_2_15)}, source: ${ScriptLoader.getSourceVersionFrom(Version(2, 2, 0))}")
 
         assertThrows(IllegalArgumentException::class.java) { Version("2.x-SNAPSHOT") }
 
