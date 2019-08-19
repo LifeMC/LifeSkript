@@ -714,6 +714,13 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return Collections.unmodifiableList(types);
     }
 
+    public Material getMaterial() {
+        final ItemData data = types.get(0);
+        if (data == null)
+            throw new IllegalStateException("material not found");
+        return data.getType();
+    }
+
     public int numTypes() {
         return types.size();
     }
@@ -924,7 +931,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param invi
      * @return Whatever everything could be added to the inventory
      */
-    public boolean addTo(final Inventory invi) {
+    public final boolean addTo(final Inventory invi) {
         // important: don't use inventory.add() - it ignores max stack sizes
         final ItemStack[] buf = invi.getContents();
         if (buf == null)
