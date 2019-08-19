@@ -217,6 +217,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean debug = Boolean.parseBoolean(System.getProperty("skript.debug"));
     private static final boolean logSpam = Boolean.parseBoolean(System.getProperty("skript.logSpam"));
     private static final boolean showRegisteredNonSkript = Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
+    private static final boolean assertionsEnabled = Skript.class.desiredAssertionStatus();
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -242,7 +243,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static @Nullable
     Boolean hasJLineSupport = null;
     @Nullable
-    private static Version version;
+    public static Version version;
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
@@ -880,7 +881,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             if (parameterTypes == null)
                 return c.getDeclaredConstructor();
             return c.getDeclaredConstructor(parameterTypes);
-        } catch (NoSuchMethodException | SecurityException ignored) {
+        } catch (final NoSuchMethodException | SecurityException ignored) {
             return null;
         }
     }
@@ -896,10 +897,27 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     @SuppressWarnings("null")
     public static final Field fieldForName(final @Nullable Class<?> c, final @Nullable String fieldName) {
+        return fieldForName(c, fieldName, false);
+    }
+
+    /**
+     * Gets a field from the given class.
+     * <p>
+     * Save the result to a static final variable for maximum performance.
+     *
+     * @param c         The class
+     * @param fieldName The name of the field
+     * @return The field.
+     */
+    @SuppressWarnings("null")
+    public static final Field fieldForName(final @Nullable Class<?> c, final @Nullable String fieldName, final boolean setAccessible) {
         if (c == null || fieldName == null)
             return null;
         try {
-            return c.getDeclaredField(fieldName);
+            final Field field = c.getDeclaredField(fieldName);
+            if (setAccessible)
+                field.setAccessible(true);
+            return field;
         } catch (final NoSuchFieldException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The field \"" + fieldName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
@@ -950,20 +968,30 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * Prints errors from reloading the config & scripts
      */
     static final void reload() {
+        // Stop spigot watchdog and spike detector temporarily, reloading scripts
+        // may hang the server for a long time if the scripts are heavy enough
+        SpikeDetector.stopTemporarily();
         disableScripts();
 
         reloadMainConfig();
         reloadAliases();
 
         ScriptLoader.loadScripts();
+        SpikeDetector.startAgain();
     }
 
     /**
      * Prints errors
      */
     static final void reloadScripts() {
+        // Stop spigot watchdog and spike detector temporarily, reloading scripts
+        // may hang the server for a long time if the scripts are heavy enough
+        SpikeDetector.stopTemporarily();
+
         disableScripts();
         ScriptLoader.loadScripts();
+
+        SpikeDetector.startAgain();
     }
 
     /**
@@ -1077,6 +1105,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         if (Skript.testing() && Skript.debug())
             Skript.info("The addon " + p.getDescription().getFullName() + " was registered to Skript successfully.");
         return addon;
+    }
+
+    @Deprecated
+    @Nullable
+    public static final SkriptAddon getAddon(final JavaPlugin p) {
+        return getAddon((Plugin) p); // Backwards compatibility
     }
 
     @Nullable
@@ -1305,7 +1339,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     public static final boolean testing() {
-        return debug() || Skript.class.desiredAssertionStatus();
+        return debug() || assertionsEnabled;
     }
 
     public static final boolean log(final Verbosity minVerb) {
@@ -1453,8 +1487,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + (version != null ? version : "unknown") + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
-            logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() ? " (uses JLine)" : ""));
+            logEx("  Skript: " + (version != null ? version : "unknown") + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (update not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
+            logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
             logEx("  OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
@@ -1621,6 +1655,26 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
+     * Gets the all actively running threads.
+     * <p>
+     * The returning array is always non-null. Individual threads
+     * may be null.
+     *
+     * @return The all actively running threads.
+     */
+    @SuppressWarnings("null")
+    public static final Thread[] getAllThreads() {
+        assert rootThreadGroup != null : "Attempted to call before initialization";
+
+        Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
+        while (rootThreadGroup.enumerate(threads, true) == threads.length) {
+            threads = new Thread[threads.length * 2];
+        }
+
+        return threads;
+    }
+
+    /**
      * Returns the file which contains this plugin
      *
      * @return File containing this plugin
@@ -1630,7 +1684,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return super.getFile();
     }
 
-    @SuppressWarnings("null")
     @Override
     public final void onLoad() {
         try {
@@ -1682,22 +1735,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             rootThreadGroup = rootGroup;
 
             optimizeNetty = () -> {
-                assert rootThreadGroup != null;
-
-                Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
-                while (rootThreadGroup.enumerate(threads, true) == threads.length) {
-                    threads = new Thread[threads.length * 2];
-                }
-
-                for (final Thread thread : threads) {
+                for (final Thread thread : Skript.getAllThreads()) {
                     if (thread != null) {
-                        final String name = thread.getName().toLowerCase(Locale.ENGLISH);
+                        final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").trim();
                         final int priority = thread.getPriority();
 
                         if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive")) && priority != Thread.MAX_PRIORITY)
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("console handler") || name.contains("profiler") || name.contains("wait loop") || name.contains("sleep") || name.contains("watchdog")) && priority != Thread.MIN_PRIORITY)
-                            thread.setPriority(Thread.MIN_PRIORITY);
+                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin")) && priority != Thread.MIN_PRIORITY)
+                            if (priority > Thread.NORM_PRIORITY && Skript.testing() && Skript.debug())
+                                Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" from " + priority + " to " + Thread.MIN_PRIORITY);
+                        thread.setPriority(Thread.MIN_PRIORITY);
                     }
                 }
             };
@@ -1728,11 +1776,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta") || line.contains("2.2.16-pre1"))) {
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta") || line.contains("2.2.16-pre"))) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
 
                             final File features = new File(dataFolder, "features.sk");
+                            final File materials = new File(dataFolder, "materials.json");
 
                             if (english.exists() || german.exists()) {
 
@@ -1748,6 +1797,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     german.delete();
                                 }
 
+                                madeChanges = true;
+
+                            }
+
+                            if (features.exists()) {
+
                                 if (features.exists()) {
                                     Skript.info("Deleting old features file...");
 
@@ -1757,9 +1812,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 madeChanges = true;
 
-                                break;
-
                             }
+
+                            if (materials.exists()) {
+
+                                if (materials.exists()) {
+                                    Skript.info("Deleting old materials file...");
+
+                                    FileUtils.backup(materials);
+                                    materials.delete();
+                                }
+
+                                madeChanges = true;
+                            }
+
+                            break;
                         } else if (line.contains("disable backups completely: true"))
                             System.setProperty("skript.disableBackupsCompletely", "true");
                     }
@@ -2342,6 +2409,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     final List<String> staticCompletions = Arrays.asList("all", "config", "aliases", "scripts");
                                     final List<String> fullCompletions = new ArrayList<>(staticCompletions);
 
+                                    // FIXME infinite tab complete problem when tab completing scripts include space character
                                     fullCompletions.addAll(fileNames);
                                     fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
 
@@ -2349,6 +2417,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 } else if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
                                     final List<String> fileNames = new ArrayList<>();
 
+                                    // FIXME this does not show non-loaded scripts (disabled etc.) since we are using getLoadedFiles
                                     for (final File scriptFile : ScriptLoader.getLoadedFiles())
                                         fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
 
@@ -2492,7 +2561,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 if (EffPush.hasNoCheatPlus && !EffPush.hookNotified) {
                     Skript.info(Hook.m_hooked.toString("NoCheatPlus"));
                     EffPush.hookNotified = true;
-                } else if (Skript.testing() && Skript.debug()) {
+                } else if (Skript.testing() && Skript.debug() && Boolean.getBoolean("skript.debugNoCheatPlusHook")) {
                     if (Bukkit.getPluginManager().getPlugin("NoCheatPlus") == null)
                         Skript.debug("Can't hook to NoCheatPlus: NoCheatPlus not found");
                     else if (!Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager"))
@@ -2500,7 +2569,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     else if (Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")))
                         Skript.debug("Can't hook to NoCheatPlus: Disabled by system property");
                     else
-                        assert false;
+                        assert false : "Can't hook to NoCheatPlus: Unknown reason";
                 }
 
                 Language.setUseLocal(false);
@@ -2626,7 +2695,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 final Thread mainThread = (Thread) serverThread.get(serverInstance);
                                 assert mainThread != null : serverThread.toString();
 
-                                if (!Skript.isRunningMinecraft(1, 12)) {
+                                if (SpikeDetector.shouldStart()) {
                                     if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock")) {
                                         BukkitLoggerFilter.addFilter((e) -> {
                                             if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play"))
@@ -2640,7 +2709,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 PlayerUtils.task.run();
 
                                 if (Boolean.getBoolean("skript.testSpike"))
-                                    Thread.sleep(10000L);
+                                    SpikeDetector.testSpike();
 
                                 final double[] recentTpsArray = (double[]) recentTps.get(serverInstance);
                                 assert recentTpsArray != null : recentTps.toString();
@@ -2649,7 +2718,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 if (Skript.debug())
                                     Skript.info("Reset ticks per second after loading everything to not confuse the server");
-                            } catch (IllegalAccessException | InvocationTargetException | NoSuchFieldException | InterruptedException e) {
+                            } catch (final IllegalAccessException | InvocationTargetException | NoSuchFieldException e) {
                                 Skript.exception(e);
                                 assert false : e;
                             }
@@ -2663,6 +2732,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 }
 
                 SkriptCommand.resetPriority();
+                System.runFinalization();
             });
 
             if (!PlayerUtils.hasCollecionGetOnlinePlayers)
@@ -2938,6 +3008,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             if (Skript.logHigh())
                 info("Freeing up the memory - if server freezes here, open a bug report issue at the github repository.");
+            System.runFinalization();
             for (final Closeable c : closeOnDisable) {
                 try {
                     c.close();
@@ -2945,9 +3016,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     Skript.exception(tw, "An error occurred while shutting down.", "This might or might not cause any issues.");
                 }
             }
+            System.runFinalization();
 
             if (Skript.logHigh())
                 info("Freed up memory - Saving variables, this may take a long time based on your variable count, please wait...");
+
+            // Set priority of the variable save thread to speed up variable save process
+
+            for (final Thread thread : Skript.getAllThreads())
+                if (thread != null && thread.getName().contains("variable save thread") && thread.getPriority() != Thread.MAX_PRIORITY)
+                    thread.setPriority(Thread.MAX_PRIORITY);
 
             // Special variables calls, not on the closeable list to ensure it lastly closes.
 
@@ -2984,7 +3062,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     final Class<?> c = Class.forName(name, false, getTrueClassLoader());
 
                                     for (final Field f : c.getDeclaredFields()) {
-                                        if (Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
+                                        if (!"findLoadedClass".equalsIgnoreCase(f.getName()) && Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
                                             if (Modifier.isFinal(f.getModifiers())) {
                                                 modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
                                             }

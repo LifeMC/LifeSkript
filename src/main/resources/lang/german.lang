@@ -87,6 +87,7 @@ skript command:
 			delays: Deaktiviert die Nachverfolgung für Verzögerungen (wait-Anweisungen)
 			variables: Deaktiviert die Nachverfolgung für Variablenänderungen
 			loops: Deaktiviert die Nachverfolgung für Loops
+		version: Zeigt die Version von Skript an
 
 	invalid script: Das Skript <grey>'<gold>%s<grey>'<red> konnte nicht gefunden werden.
 	invalid folder: Der Ordner <grey>'<gold>%s<grey>'<red> konnte nicht gefunden werden.

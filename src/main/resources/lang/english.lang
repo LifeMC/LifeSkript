@@ -85,6 +85,7 @@ skript command:
 			delays: Disables tracking for Delays (wait statements)
 			variables: Disables tracking for Variable Changes
 			loops: Disables tracking for Loops
+		version: Shows the version of Skript
 
 	invalid script: Can't find the script <grey>'<gold>%s<grey>'<red> in the scripts folder!
 	invalid folder: Can't find the folder <grey>'<gold>%s<grey>'<red> in the scripts folder!

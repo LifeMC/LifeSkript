@@ -64,11 +64,11 @@ public final class SkriptCommand implements CommandExecutor {
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
     private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")).add(new CommandHelp("track", Color.DARK_RED).add("delays").add("variables").add("loops")).add(new CommandHelp("untrack", Color.DARK_RED).add("delays").add("variables").add("loops")
-            //          ).add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
+        //          .add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
 //                  .add("set", "Creates a new variable or changes an existing one")
 //                  .add("delete", "Deletes a variable")
 //                  .add("find", "Find variables")
-    ).add("help");
+    ).add("version").add("help");
     private static final ArgsMessage m_reloading = new ArgsMessage(NODE + ".reload.reloading");
     private static final ArgsMessage m_reloaded = new ArgsMessage(NODE + ".reload.reloaded");
     private static final ArgsMessage m_reload_error = new ArgsMessage(NODE + ".reload.error");
@@ -455,6 +455,8 @@ public final class SkriptCommand implements CommandExecutor {
                             sender.sendMessage(ChatColor.DARK_RED + "You don't have an active loop tracker!");
                     }
                 }
+            } else if ("version".equalsIgnoreCase(args[0])) {
+                Skript.info(sender, "This server is running Skript version " + (Skript.version != null ? Skript.version : "unknown") + (Skript.updateChecked ? Skript.updateAvailable ? Skript.developmentVersion ? Skript.customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (update not checked)") + (Skript.isOptimized ? " (optimized, experimental)" : ""));
             } else if ("help".equalsIgnoreCase(args[0])) {
                 skriptCommandHelp.showHelp(sender);
             }

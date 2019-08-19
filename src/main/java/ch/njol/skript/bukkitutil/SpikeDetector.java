@@ -22,14 +22,20 @@
 
 package ch.njol.skript.bukkitutil;
 
+import ch.njol.skript.ServerPlatform;
 import ch.njol.skript.Skript;
 import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
+import java.lang.reflect.Field;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,19 +47,28 @@ import java.util.logging.Logger;
  */
 public final class SpikeDetector extends Thread {
 
-    private static volatile boolean hasStarted;
+    @Nullable
+    private static final Class<?> watchdogClass =
+            Skript.classForName("org.spigotmc.WatchdogThread");
+
+    private static final boolean spigotWatchdog =
+            watchdogClass != null;
 
     @Nullable
-    private static SpikeDetector instance;
-
+    private static final Field instanceField = Skript.fieldForName(watchdogClass, "instance", true);
+    private static final MethodHandles.Lookup publicLookup = MethodHandles.publicLookup();
+    @Nullable
+    private static final MethodHandle doStop = findDoStop();
+    @Nullable
+    private static final MethodHandle doStart = findDoStart();
     private static final long earlyWarningEvery = 5000L;
     private static final long earlyWarningDelay = 10000L;
-
+    private static volatile boolean hasStarted;
+    @Nullable
+    private static SpikeDetector instance;
     private final Thread serverThread;
-
     private long lastEarlyWarning;
     private volatile long lastTick;
-
     private volatile boolean stopping;
 
     private SpikeDetector(final Thread serverThread) {
@@ -61,6 +76,30 @@ public final class SpikeDetector extends Thread {
         super.setPriority(Thread.MIN_PRIORITY);
 
         this.serverThread = serverThread;
+    }
+
+    @Nullable
+    private static final MethodHandle findDoStop() {
+        if (spigotWatchdog) {
+            try {
+                return publicLookup.findStatic(Objects.requireNonNull(watchdogClass), "doStop", MethodType.methodType(void.class));
+            } catch (final NoSuchMethodException | IllegalAccessException e) {
+                Skript.exception(e);
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private static final MethodHandle findDoStart() {
+        if (spigotWatchdog) {
+            try {
+                return publicLookup.findStatic(Objects.requireNonNull(watchdogClass), "doStart", MethodType.methodType(void.class, int.class, boolean.class));
+            } catch (final NoSuchMethodException | IllegalAccessException e) {
+                Skript.exception(e);
+            }
+        }
+        return null;
     }
 
     public static final void testSpike() {
@@ -86,6 +125,13 @@ public final class SpikeDetector extends Thread {
         }
     }
 
+    /**
+     * Paper 1.12.x has already this, so check for it
+     */
+    public static final boolean shouldStart() {
+        return (!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector");
+    }
+
     public static final void setEnabled(final boolean enabled) {
         SpikeDetector.hasStarted = enabled;
 
@@ -104,6 +150,55 @@ public final class SpikeDetector extends Thread {
     public static final void doStop() {
         if (instance != null) {
             instance.stopping = true;
+        }
+    }
+
+    /**
+     * Stops the spike detector and spigot watchdog temporarily.
+     * Useful for too long operations on runtime, like /sk reload all.
+     * <p>
+     * We know it will complete normally, but it will take long if scripts
+     * are too long. Use with caution.
+     *
+     * @see SpikeDetector#startAgain()
+     */
+    public static final void stopTemporarily() {
+        if (hasStarted)
+            hasStarted = false;
+
+        final MethodHandle stop = doStop;
+
+        if (spigotWatchdog && stop != null) {
+            try {
+                stop.invokeExact();
+            } catch (final Throwable tw) {
+                Skript.exception(tw);
+            }
+        }
+    }
+
+    /**
+     * Starts the spike detector and spigot watchdog.
+     * <p>
+     * This method may run two spigot watchdog threads at same time if
+     * does not used carefully!
+     *
+     * @see SpikeDetector#stopTemporarily()
+     */
+    public static final void startAgain() {
+        if (!hasStarted)
+            hasStarted = true;
+
+        final Field instance = instanceField;
+        final MethodHandle start = doStart;
+
+        if (spigotWatchdog && instance != null && start != null) {
+            try {
+                instance.set(null, null);
+                start.invokeExact((int) Objects.requireNonNull(SpigotConfig.<Integer>get("timeoutTime")), (boolean) Objects.requireNonNull(SpigotConfig.<Boolean>get("restartOnCrash")));
+            } catch (final Throwable tw) {
+                Skript.exception(tw);
+            }
         }
     }
 
