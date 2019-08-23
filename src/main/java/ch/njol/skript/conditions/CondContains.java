@@ -42,6 +42,7 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -95,8 +96,11 @@ public final class CondContains extends Condition {
     public boolean check(final Event e) {
         return containers.check(e, (Checker<Object>) container -> {
             if (containers instanceof Variable && !containers.isSingle()) {
-                return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(container, item)), isNegated());
+                final Object finalContainer = container;
+                return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(finalContainer, item)), isNegated());
             }
+            if (container instanceof InventoryHolder)
+                container = ((InventoryHolder) container).getInventory();
             if (container instanceof Inventory) {
                 final Inventory invi = (Inventory) container;
                 return items.check(e, (Checker<Object>) type -> (type instanceof ItemType && ((ItemType) type).isContainedIn(invi) || type instanceof ItemStack && invi.contains((ItemStack) type)), isNegated());
