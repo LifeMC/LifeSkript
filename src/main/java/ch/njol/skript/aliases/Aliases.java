@@ -664,7 +664,7 @@ public final class Aliases {
     @Nullable
     private static final ItemType getAlias(final String s) {
         ItemType i;
-        String lc = s.toLowerCase(Locale.ENGLISH);
+        String lc = s.toLowerCase(Locale.ENGLISH).replace("_", " ");
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
             lc = m.group(m.groupCount());
@@ -764,7 +764,7 @@ public final class Aliases {
 
                 final Config aliasConfig;
 
-                try (final JarFile jar = new JarFile(Skript.getInstance().getFile())) {
+                try (final JarFile jar = new JarFile(Skript.getInstance().getFile(), false)) {
                     File file = new File(Paths.get(dataFolder, aliasesFileName).toString());
                     if (!file.exists()) { // If it's not exists in the data folder (plugins/Skript)
                         final JarEntry entry = jar.getJarEntry(aliasesFileName);
