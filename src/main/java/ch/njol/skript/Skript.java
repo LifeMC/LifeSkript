@@ -231,9 +231,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static SpikeDetector spikeDetector;
     @Nullable
     public static String ipAddress;
+    @Nullable
+    public static Version version;
     static boolean disabled;
     @Nullable
     static String latestVersion;
+    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     static Version minecraftVersion = invalidVersion;
     private static boolean closedOnEnable = false;
     private static boolean closedOnDisable = false;
@@ -242,10 +245,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     ServerPlatform serverPlatform;
     private static @Nullable
     Boolean hasJLineSupport = null;
-    @Nullable
-    public static Version version;
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
-    public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -1742,10 +1742,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                         if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive")) && priority != Thread.MAX_PRIORITY)
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin")) && priority != Thread.MIN_PRIORITY)
+                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
                             if (priority > Thread.NORM_PRIORITY && Skript.testing() && Skript.debug())
                                 Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" from " + priority + " to " + Thread.MIN_PRIORITY);
-                        thread.setPriority(Thread.MIN_PRIORITY);
+                            thread.setPriority(Thread.MIN_PRIORITY);
+                        }
                     }
                 }
             };
@@ -1776,7 +1777,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16-beta") || line.contains("2.2.16-pre"))) {
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16"))) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
 
@@ -2085,7 +2086,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                         String contents = null;
 
-                        try (final JarFile jarFile = new JarFile(serverJarFile)) {
+                        try (final JarFile jarFile = new JarFile(serverJarFile, false)) {
                             if (jarFile.getEntry("org/bukkit/Bukkit.class") == null) { // If it's not a Bukkit JAR
                                 if (Skript.debug())
                                     Skript.info("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + "\"");
@@ -2525,7 +2526,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 // load hooks
                 try {
-                    try (JarFile jar = new JarFile(getPluginFile())) {
+                    try (JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
                                 final String cl = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
@@ -3050,7 +3051,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 try {
                     final Field modifiers = Field.class.getDeclaredField("modifiers");
                     modifiers.setAccessible(true);
-                    try (JarFile jar = new JarFile(getPluginFile())) {
+                    try (JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
                                 try {

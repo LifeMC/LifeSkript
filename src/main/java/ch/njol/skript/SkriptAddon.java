@@ -122,7 +122,7 @@ public final class SkriptAddon {
         assert subPackages != null;
         //noinspection AssertWithSideEffects
         assert getFile() != null;
-        try (JarFile jar = new JarFile(getFile())) {
+        try (JarFile jar = new JarFile(getFile(), false)) {
             for (int i = 0; i < subPackages.length; i++)
                 subPackages[i] = subPackages[i].replace('.', '/') + "/";
             basePackage = basePackage.replace('.', '/') + "/";
