@@ -110,7 +110,7 @@ collections:
 	# === Collections ===
 
 	# all ores
-	ore¦s = coal ore, iron ore, gold ore, diamond ore, lapis ore, any redstone ore
+	ore¦s = coal ore, iron ore, gold ore, diamond ore, lapis ore, quartz ore, any redstone ore
 	# fuels, i.e. items which can be burned in the furnace
 	fuel¦s = lava bucket, blaze rod, any coal, planks, log, huge mushroom, workbench, fence, wooden stairs, trapdoor, sapling, stick, chest, locked chest, jukebox, note block
 	# note: the above aliases are used in 'furnace automatisation.cfg'

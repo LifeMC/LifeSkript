@@ -64,7 +64,7 @@ public final class SkriptCommand implements CommandExecutor {
     // TODO /skript scripts show/list - lists all enabled and/or disabled scripts in the scripts folder and/or subfolders (maybe add a pattern [using * and **])
     // TODO document this command on the website
     private static final CommandHelp skriptCommandHelp = new CommandHelp("<gray>/<gold>skript", Color.LIGHT_CYAN, NODE + ".help").add(new CommandHelp("reload", Color.DARK_RED).add("all").add("config").add("aliases").add("scripts").add("<script>")).add(new CommandHelp("enable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("disable", Color.DARK_RED).add("all").add("<script>")).add(new CommandHelp("update", Color.DARK_RED).add("check").add("changes").add("download")).add(new CommandHelp("track", Color.DARK_RED).add("delays").add("variables").add("loops")).add(new CommandHelp("untrack", Color.DARK_RED).add("delays").add("variables").add("loops")
-        //          .add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
+            //          .add(new CommandHelp("variable", "Commands for modifying variables", ChatColor.DARK_RED)
 //                  .add("set", "Creates a new variable or changes an existing one")
 //                  .add("delete", "Deletes a variable")
 //                  .add("find", "Find variables")

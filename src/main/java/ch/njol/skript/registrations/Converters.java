@@ -38,7 +38,7 @@ import java.util.*;
  */
 public final class Converters {
 
-    private static final List<ConverterInfo<?, ?>> converters = new ArrayList<>(50);
+    private static final List<ConverterInfo<?, ?>> converters = new ArrayList<>(100);
     private static final Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<>();
 
     private Converters() {

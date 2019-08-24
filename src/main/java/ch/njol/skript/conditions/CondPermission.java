@@ -23,6 +23,7 @@
 package ch.njol.skript.conditions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -66,6 +67,8 @@ public final class CondPermission extends Condition {
     public boolean check(final Event e) {
         return senders.check(e, s -> permissions.check(e, perm -> {
             if (s instanceof ConsoleCommandSender)
+                return true;
+            if (s.isOp() && SkriptConfig.allowOpsToBypassPermissionChecks.value())
                 return true;
             if (s.hasPermission(perm))
                 return true;

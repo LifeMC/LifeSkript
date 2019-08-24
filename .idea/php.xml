@@ -21,9 +21,7 @@
       <extension name="bcmath" enabled="false" />
       <extension name="bz2" enabled="false" />
       <extension name="calendar" enabled="false" />
-      <extension name="com_dotnet" enabled="false" />
       <extension name="couchbase" enabled="false" />
-      <extension name="csprng" enabled="false" />
       <extension name="ctype" enabled="false" />
       <extension name="cubrid" enabled="false" />
       <extension name="curl" enabled="false" />
@@ -82,7 +80,6 @@
       <extension name="oci8" enabled="false" />
       <extension name="odbc" enabled="false" />
       <extension name="openssl" enabled="false" />
-      <extension name="password" enabled="false" />
       <extension name="pcntl" enabled="false" />
       <extension name="pcre" enabled="false" />
       <extension name="pdflib" enabled="false" />

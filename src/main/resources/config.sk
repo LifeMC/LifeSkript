@@ -70,6 +70,10 @@ allow ops to use effect commands: true
 # Whether server operators which do not have the permission "skript.effectcommands" should have access to effect commands.
 # This setting is mainly useful for servers that do not run any permissions plugin.
 
+allow ops to bypass permission checks: true
+# If true, the "has permission" condition will always return true for operators, even they do not have
+# explicitly the requested permission. We only recommend changing this option if you have many operators.
+
 
 player variable fix: true
 #Whether to enable the player variable fix if a player has rejoined and was receding inside a variable.

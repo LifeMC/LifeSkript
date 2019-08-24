@@ -108,7 +108,7 @@ public final class CondContains extends Condition {
                 final String s = (String) container;
                 return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
             }
-            assert false;
+            assert false : "container: " + (container != null ? container.getClass().getCanonicalName() : "null") + ", containers: [r = " + containers.getReturnType().getCanonicalName() + ", c = " + containers.getClass().getCanonicalName() + "]";
             return false;
         });
     }
