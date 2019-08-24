@@ -99,12 +99,20 @@ public final class EffTeleport extends Effect {
             } else {
                 loc = to;
             }
+            if (loc.getBlock().getType().isSolid()) {
+                final Location cl = loc.clone();
+                cl.setY(loc.getY() + 1);
+
+                if (!cl.getBlock().getType().isSolid())
+                    loc.setY(cl.getY());
+            }
             loc.getChunk().load();
             if (e instanceof PlayerRespawnEvent && entity.equals(((PlayerRespawnEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
                 ((PlayerRespawnEvent) e).setRespawnLocation(loc);
             } else if (e instanceof PlayerMoveEvent && entity.equals(((PlayerMoveEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
                 ((PlayerMoveEvent) e).setTo(loc);
             } else {
+                entity.setFallDistance(0.0f);
                 entity.teleport(loc);
             }
         }
