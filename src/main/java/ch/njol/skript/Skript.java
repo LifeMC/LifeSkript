@@ -1537,6 +1537,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             logEx("End of Error.");
             logEx();
+
+            // Flush to guarantee errors are written
+            System.err.flush();
+            System.out.flush();
+
             return new EmptyStacktraceException();
         } catch (final Throwable tw) {
             // Unexpected horrible error when handling exception.
@@ -1551,6 +1556,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     if (str != null)
                         System.out.println(str);
             }
+
+            // Flush to guarantee errors are written
+            System.err.flush();
+            System.out.flush();
+
             // This a real error - don't return an empty error.
             return new RuntimeException();
         }

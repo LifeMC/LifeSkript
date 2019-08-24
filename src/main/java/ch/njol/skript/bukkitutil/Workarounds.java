@@ -54,11 +54,17 @@ public final class Workarounds {
         if (exceptionsDisabled)
             return;
 
+        if (t == null || e == null)
+            return;
+
         if (e instanceof EmptyStacktraceException)
             return;
 
-        if (t == null || e == null)
+        if (e instanceof AssertionError) {
+            e.printStackTrace();
+
             return;
+        }
 
         if (System.err == null || System.err.checkError()) {
             assert false : "Standard error output stream " + (System.err == null ? "is null" : "had an exception");
@@ -70,6 +76,7 @@ public final class Workarounds {
         e.printStackTrace();
 
         System.err.flush();
+        System.out.flush();
     };
     private static boolean init;
 
