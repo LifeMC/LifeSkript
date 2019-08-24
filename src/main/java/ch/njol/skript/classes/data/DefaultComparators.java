@@ -54,8 +54,9 @@ import java.util.Objects;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultComparators {
 
-    // EntityData - ItemType
     static final LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>();
+
+    // EntityData - ItemType
     public static final Comparator<EntityData, ItemType> entityItemComparator = new Comparator<EntityData, ItemType>() {
         @Override
         public Relation compare(final EntityData e, final ItemType i) {
@@ -124,6 +125,9 @@ public final class DefaultComparators {
     }
 
     public static final void init() {
+        // EntityData - ItemType
+        Comparators.registerComparator(EntityData.class, ItemType.class, entityItemComparator);
+
         // Number - Number
         Comparators.registerComparator(Number.class, Number.class, new Comparator<Number, Number>() {
             @Override
@@ -408,6 +412,5 @@ public final class DefaultComparators {
                 return false;
             }
         });
-        Comparators.registerComparator(EntityData.class, ItemType.class, entityItemComparator);
     }
 }
