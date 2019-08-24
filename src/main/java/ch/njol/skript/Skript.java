@@ -92,6 +92,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.jar.JarEntry;
@@ -218,6 +220,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean logSpam = Boolean.parseBoolean(System.getProperty("skript.logSpam"));
     private static final boolean showRegisteredNonSkript = Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
     private static final boolean assertionsEnabled = Skript.class.desiredAssertionStatus();
+    private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> new Thread(r, "Skript netty optimizer thread"));
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -1750,11 +1753,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").trim();
                         final int priority = thread.getPriority();
 
-                        if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive")) && priority != Thread.MAX_PRIORITY)
+                        if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive") || (name.contains("skript") && name.contains("watchdog"))) && priority != Thread.MAX_PRIORITY) {
+                            if (Skript.debug() && Skript.testing())
+                                Skript.info("Maximizing priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MAX_PRIORITY);
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
-                            if (priority > Thread.NORM_PRIORITY && Skript.testing() && Skript.debug())
-                                Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" from " + priority + " to " + Thread.MIN_PRIORITY);
+                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
+                            if (Skript.debug() && Skript.testing())
+                                Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MIN_PRIORITY);
                             thread.setPriority(Thread.MIN_PRIORITY);
                         }
                     }
@@ -1762,7 +1767,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             };
 
             // Run for the first time
-            optimizeNetty.run();
+            nettyOptimizerThread.execute(optimizeNetty);
 
             if (!first && !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
 
@@ -2742,6 +2747,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         Skript.info("Invalid NMS mapping version detected: " + mappingVersion);
                 }
 
+                // Run for second time
+                if (optimizeNetty != null)
+                    nettyOptimizerThread.execute(optimizeNetty);
+                else
+                    assert false : "Netty task is null";
+
                 SkriptCommand.resetPriority();
                 System.runFinalization();
             });
@@ -2811,7 +2822,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final PlayerJoinEvent e = (PlayerJoinEvent) event;
 
                     if (optimizeNetty != null)
-                        optimizeNetty.run();
+                        nettyOptimizerThread.execute(optimizeNetty);
                     else
                         assert false : "Netty task is null";
 

@@ -73,7 +73,7 @@ public final class SpikeDetector extends Thread {
 
     private SpikeDetector(final Thread serverThread) {
         super("Skript Watchdog Thread");
-        super.setPriority(Thread.MIN_PRIORITY);
+        super.setPriority(Thread.MAX_PRIORITY);
 
         this.serverThread = serverThread;
     }
