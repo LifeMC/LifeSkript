@@ -664,7 +664,7 @@ public final class Aliases {
     @Nullable
     private static final ItemType getAlias(final String s) {
         ItemType i;
-        String lc = s.toLowerCase(Locale.ENGLISH).replace("_", " ");
+        String lc = s.toLowerCase(Locale.ENGLISH).replace("minecraft:", "").replace("_", " ");
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
             lc = m.group(m.groupCount());
