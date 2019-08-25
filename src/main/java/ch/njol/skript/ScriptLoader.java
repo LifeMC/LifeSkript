@@ -66,7 +66,7 @@ import java.util.regex.Matcher;
  * @author Peter Güttinger
  */
 public final class ScriptLoader {
-    public static final boolean COLOR_BASED_ON_LOAD_TIMES = Boolean.parseBoolean("skript.colorBasedOnLoadTimes");
+    public static final boolean COLOR_BASED_ON_LOAD_TIMES = Boolean.getBoolean("skript.colorBasedOnLoadTimes");
 
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
