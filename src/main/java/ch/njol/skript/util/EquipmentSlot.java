@@ -22,44 +22,21 @@
 
 package ch.njol.skript.util;
 
-import ch.njol.skript.bukkitutil.PlayerUtils;
-import ch.njol.skript.registrations.Classes;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.Locale;
-
 /**
  * @author Peter Güttinger
  */
-public class EquipmentSlot extends Slot {
-
-    private final EntityEquipment e;
-    private final EquipSlot slot;
+public final class EquipmentSlot extends ch.njol.skript.util.slot.EquipmentSlot {
 
     public EquipmentSlot(final EntityEquipment e, final EquipSlot slot) {
-        this.e = e;
-        this.slot = slot;
+        this(e, ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.valueOf(slot.name())); // Backwards compatibility
     }
 
-    @Override
-    @Nullable
-    public ItemStack getItem() {
-        return slot.get(e);
-    }
-
-    @Override
-    public void setItem(final @Nullable ItemStack item) {
-        slot.set(e, item);
-        if (e.getHolder() instanceof Player)
-            PlayerUtils.updateInventory((Player) e.getHolder());
-    }
-
-    @Override
-    public String toString_i() {
-        return "the " + slot.name().toLowerCase(Locale.ENGLISH) + " of " + Classes.toString(e.getHolder()); // TODO localise?
+    public EquipmentSlot(final EntityEquipment e, final ch.njol.skript.util.slot.EquipmentSlot.EquipSlot slot) {
+        super(e, slot);
     }
 
     public enum EquipSlot {
@@ -67,60 +44,60 @@ public class EquipmentSlot extends Slot {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getItemInHand();
+                return ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.TOOL.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setItemInHand(item);
+                ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.TOOL.set(e, item);
             }
         },
         HELMET {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getHelmet();
+                return ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.HELMET.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setHelmet(item);
+                ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.HELMET.set(e, item);
             }
         },
         CHESTPLATE {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getChestplate();
+                return ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.CHESTPLATE.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setChestplate(item);
+                ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.CHESTPLATE.set(e, item);
             }
         },
         LEGGINGS {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getLeggings();
+                return ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.LEGGINGS.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setLeggings(item);
+                ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.LEGGINGS.set(e, item);
             }
         },
         BOOTS {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getBoots();
+                return ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.BOOTS.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setBoots(item);
+                ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.BOOTS.set(e, item);
             }
         };
 
