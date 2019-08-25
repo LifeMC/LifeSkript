@@ -261,7 +261,7 @@ public final class SkriptConfig {
                     final Config newConfig = new Config(new BufferedInputStream(in), "Skript.jar/config.sk", false, false, ":");
                     in.close();
 
-                    boolean forceUpdate = Boolean.parseBoolean(System.getProperty("skript.forceConfigUpdates"));
+                    boolean forceUpdate = Boolean.getBoolean("skript.forceConfigUpdates");
 
                     if (mc.getMainNode().get("database") != null) { // old database layout
                         forceUpdate = true;

@@ -57,7 +57,7 @@ public final class FileUtils {
      */
     @Nullable
     public static final File backup(final File f) throws IOException {
-        if (Boolean.parseBoolean(System.getProperty("skript.disableBackupsCompletely")))
+        if (Boolean.getBoolean("skript.disableBackupsCompletely"))
             return null;
         String name = f.getName();
         final int c = name.lastIndexOf('.');

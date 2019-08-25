@@ -48,7 +48,7 @@ import java.io.StreamCorruptedException;
 public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
-    public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.parseBoolean(System.getProperty("skript.disableByteShortFloat"));
+    public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.getBoolean("skript.disableByteShortFloat");
 
     private JavaClasses() {
         throw new UnsupportedOperationException();
