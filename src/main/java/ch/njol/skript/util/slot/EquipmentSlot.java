@@ -34,7 +34,7 @@ import java.util.Locale;
 /**
  * @author Peter Güttinger
  */
-public class EquipmentSlot extends Slot {
+public final class EquipmentSlot extends Slot {
 
     private final EntityEquipment e;
     private final EquipSlot slot;

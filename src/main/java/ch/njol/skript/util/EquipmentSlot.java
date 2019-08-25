@@ -22,21 +22,44 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.bukkitutil.PlayerUtils;
+import ch.njol.skript.registrations.Classes;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.Locale;
+
 /**
  * @author Peter Güttinger
  */
-public final class EquipmentSlot extends ch.njol.skript.util.slot.EquipmentSlot {
+public class EquipmentSlot extends Slot {
+
+    private final EntityEquipment e;
+    private final EquipSlot slot;
 
     public EquipmentSlot(final EntityEquipment e, final EquipSlot slot) {
-        this(e, ch.njol.skript.util.slot.EquipmentSlot.EquipSlot.valueOf(slot.name())); // Backwards compatibility
+        this.e = e;
+        this.slot = slot;
     }
 
-    public EquipmentSlot(final EntityEquipment e, final ch.njol.skript.util.slot.EquipmentSlot.EquipSlot slot) {
-        super(e, slot);
+    @Override
+    @Nullable
+    public ItemStack getItem() {
+        return slot.get(e);
+    }
+
+    @Override
+    public void setItem(final @Nullable ItemStack item) {
+        slot.set(e, item);
+        if (e.getHolder() instanceof Player)
+            PlayerUtils.updateInventory((Player) e.getHolder());
+    }
+
+    @Override
+    public String toString_i() {
+        return "the " + slot.name().toLowerCase(Locale.ENGLISH) + " of " + Classes.toString(e.getHolder()); // TODO localise?
     }
 
     public enum EquipSlot {
