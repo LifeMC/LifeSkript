@@ -216,9 +216,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean isCraftBukkit = craftbukkitMain != null || classExists("org.bukkit.craftbukkit.CraftServer");
     static final boolean runningCraftBukkit = isCraftBukkit;
     private static final Method findLoadedClass = methodForName(ClassLoader.class, "findLoadedClass", true, String.class);
-    private static final boolean debug = Boolean.parseBoolean(System.getProperty("skript.debug"));
-    private static final boolean logSpam = Boolean.parseBoolean(System.getProperty("skript.logSpam"));
-    private static final boolean showRegisteredNonSkript = Boolean.parseBoolean(System.getProperty("skript.showRegisteredNonSkript"));
+    private static final boolean debug = Boolean.getBoolean("skript.debug");
+    private static final boolean logSpam = Boolean.getBoolean("skript.logSpam");
+    private static final boolean showRegisteredNonSkript = Boolean.getBoolean("skript.showRegisteredNonSkript");
     private static final boolean assertionsEnabled = Skript.class.desiredAssertionStatus();
     private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> new Thread(r, "Skript netty optimizer thread"));
     /**
@@ -1750,14 +1750,14 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             optimizeNetty = () -> {
                 for (final Thread thread : Skript.getAllThreads()) {
                     if (thread != null) {
-                        final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").trim();
+                        final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").replace("-", "").trim();
                         final int priority = thread.getPriority();
 
-                        if ((name.contains("netty") || name.contains("server") || name.contains("packet") || name.contains("alive") || (name.contains("skript") && name.contains("watchdog"))) && priority != Thread.MAX_PRIORITY) {
+                        if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || (name.contains("alive") && !name.contains("keepalivetimer")) || (name.contains("skript") && name.contains("watchdog"))) && priority != Thread.MAX_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Maximizing priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MAX_PRIORITY);
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || name.contains("profiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
+                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || (name.contains("profiler") && !name.contains("iprofiler")) || name.contains("waitloop") || name.contains("sleep") || (name.contains("watchdog") && !name.contains("skript")) || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MIN_PRIORITY);
                             thread.setPriority(Thread.MIN_PRIORITY);
@@ -1769,7 +1769,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             // Run for the first time
             nettyOptimizerThread.execute(optimizeNetty);
 
-            if (!first && !Boolean.parseBoolean(System.getProperty("-Dskript.disableAutomaticChanges"))) {
+            if (!first && !Boolean.getBoolean("skript.disableAutomaticChanges")) {
 
                 first = true;
 
@@ -2565,8 +2565,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         }
                     }
                 } catch (final Throwable throwable) {
-                    if (System.getProperty("skript.disableHookErrors") == null ||
-                            !Boolean.parseBoolean("skript.disableHookErrors")) {
+                    if (!Boolean.getBoolean("skript.disableHookErrors")) {
                         error("Error while loading plugin hooks" + (throwable.getLocalizedMessage() == null ? "" : ": " + throwable.getLocalizedMessage()));
                     }
                     // Regardless of that option, print it if we are on debug verbosity (or the assertions are enabled).
@@ -2582,7 +2581,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         Skript.debug("Can't hook to NoCheatPlus: NoCheatPlus not found");
                     else if (!Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager"))
                         Skript.debug("Can't hook to NoCheatPlus: Can't find exemption manager");
-                    else if (Boolean.parseBoolean(System.getProperty("skript.disableNcpHook")))
+                    else if (Boolean.getBoolean("skript.disableNcpHook"))
                         Skript.debug("Can't hook to NoCheatPlus: Disabled by system property");
                     else
                         assert false : "Can't hook to NoCheatPlus: Unknown reason";
@@ -2670,7 +2669,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 // No need to add debug code everytime to test the exception handler (:
                 // FIXME It still downgrades automatically, sad story :/
-                if (Boolean.parseBoolean(System.getProperty("skript.throwTestError"))) {
+                if (Boolean.getBoolean("skript.throwTestError")) {
                     Skript.exception(new Throwable(), "Test error");
                 }
 
@@ -2778,7 +2777,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             // Check server platform and version, ensure everything works fine.
 
-            if (!Boolean.parseBoolean("skript.disableRecommendations")) {
+            if (!Boolean.getBoolean("skript.disableRecommendations")) {
                 Bukkit.getScheduler().runTask(this, () -> {
                     if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
                         if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities (if there is another implementation that supports getNearbyEntities, we respect them and not advertise LifeSpigot :C)
@@ -2916,7 +2915,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
 
                                     printed = true;
-                                } else // Probably a custom version, a fork, or user changed the version from plugin.yml
+                                } else if (!latestVer.isLargerThan(version)) // Probably a custom version, a fork, or user changed the version from plugin.yml
                                     customVersion = true;
                             } catch (final IllegalArgumentException ignored) {
                                 // Web server may return errors
@@ -2968,7 +2967,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
 
         } catch (final Throwable tw) {
-            if (!Boolean.parseBoolean("skript.disableStartupErrors")) {
+            if (!Boolean.getBoolean("skript.disableStartupErrors")) {
                 exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
             }
         }
@@ -3097,15 +3096,15 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     if (tw instanceof NoClassDefFoundError)
                                         continue;
                                     // If we can't set fields (e.g if it's final
-                                    // and we are on Java 9 or above )
+                                    // and we are on Java 9 or above)
                                     if (tw instanceof IllegalAccessException)
                                         continue;
                                     // Happens when classes trying to register
-                                    // expressions etc. when disabling.
+                                    // expressions etc. when disabling
                                     if (tw instanceof SkriptAPIException)
                                         continue;
-                                    // Only log in debug otherwise, an interesting
-                                    // error occured because we already skip general errors
+                                    // Only log in debug, an interesting
+                                    // error occurred because we already skip general errors
                                     if (testing() || debug())
                                         tw.printStackTrace();
                                 }
@@ -3125,7 +3124,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             assert closedOnEnable;
 
         } catch (final Throwable tw) {
-            if (!Boolean.parseBoolean("skript.disableShutdownErrors")) {
+            if (!Boolean.getBoolean("skript.disableShutdownErrors")) {
                 exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when disabling Skript");
             }
         }
