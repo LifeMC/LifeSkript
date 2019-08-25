@@ -30,8 +30,9 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class FunctionEvent<T> extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
-    private final @Nullable
-    Function<? extends T> function;
+
+    @Nullable
+    private final Function<? extends T> function;
 
     /**
      * @see FunctionEvent#FunctionEvent(Function)

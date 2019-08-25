@@ -63,7 +63,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
         } else if (e instanceof PlayerFishEvent) {
             es = new ExperienceSpawnEvent(!Bukkit.isPrimaryThread(), ((PlayerFishEvent) e).getExpToDrop(), ((PlayerFishEvent) e).getPlayer().getLocation());
         } else {
-            assert false;
+            assert false : e.getClass();
             return;
         }
 

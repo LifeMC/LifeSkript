@@ -62,7 +62,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 
         @SuppressWarnings({"null", "unlikely-arg-type"})
         @Override
-        public void execute(final @Nullable Listener listener, final Event event) throws EventException {
+        public final void execute(final @Nullable Listener listener, final Event event) throws EventException {
             if (event == last)
                 return;
             last = event;
@@ -162,7 +162,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
         triggers.clear();
     }
 
-    private boolean applies(final Event e) {
+    private final boolean applies(final Event e) {
         assert e instanceof RegionBorderEvent;
         if (enter != ((RegionBorderEvent) e).isEntering())
             return false;

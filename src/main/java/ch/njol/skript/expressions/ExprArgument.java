@@ -86,8 +86,6 @@ public final class ExprArgument extends SimpleExpression<Object> {
         if (currentArguments == null) {
             if ((ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class) || ScriptLoader.isCurrentEvent(ServerCommandEvent.class)) && !ScriptLoader.isCurrentEvent(ScriptCommandEvent.class) && !ScriptLoader.isCurrentEvent(CommandEvent.class)) {
                 if (Skript.debug()) {
-                    Skript.info("Using dynamic argument");
-
                     script = ScriptLoader.currentScript.getFileName();
                     line = SkriptLogger.getNode().getLine();
                 }
