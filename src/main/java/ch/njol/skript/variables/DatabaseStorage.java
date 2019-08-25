@@ -225,15 +225,14 @@ public final class DatabaseStorage extends VariablesStorage {
                             final Database db1 = DatabaseStorage.this.db.get();
                             if (db1 != null)
                                 db1.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
+                            db.wait(1000L * 10L);
                         } catch (final SQLException e) {
                             if (Skript.testing() || Skript.debug())
                                 Skript.exception(e);
+                        } catch (final InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            break;
                         }
-                    }
-                    try {
-                        db.wait(1000L * 10L);
-                    } catch (final InterruptedException ignored) {
-                        break;
                     }
                 }
             }, "Skript database '" + databaseName + "' connection keep-alive thread").start();
@@ -263,6 +262,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try {
                     Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
                 } catch (final InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                     break;
                 }
             }
@@ -292,6 +292,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         try {
                             Thread.sleep(next - System.currentTimeMillis());
                         } catch (final InterruptedException ignored) {
+                            Thread.currentThread().interrupt();
                             break;
                         }
                     }

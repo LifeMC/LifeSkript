@@ -535,11 +535,7 @@ public final class ScriptLoader {
                                         Skript.error("Duplicate loops configuration setting");
                                         continue;
                                     }
-                                    if (value.equalsIgnoreCase("old")) {
-                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), false);
-                                    } else {
-                                        ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), true);
-                                    }
+                                    ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), !value.equalsIgnoreCase("old"));
                                     duplicateCheckList.add("loops");
                                 } else if (key.equalsIgnoreCase("requires minecraft")) {
                                     if (duplicateCheckList.contains("requires minecraft")) {

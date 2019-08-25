@@ -61,8 +61,8 @@ public final class SpikeDetector extends Thread {
     private static final MethodHandle doStop = findDoStop();
     @Nullable
     private static final MethodHandle doStart = findDoStart();
-    private static final long earlyWarningEvery = 5000L;
-    private static final long earlyWarningDelay = 10000L;
+    private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", 5000L);
+    private static final long earlyWarningDelay = Long.getLong("skript.earlyWarningDelay", 10000L);
     private static volatile boolean hasStarted;
     @Nullable
     private static SpikeDetector instance;
@@ -106,8 +106,8 @@ public final class SpikeDetector extends Thread {
         try {
             Thread.sleep(earlyWarningDelay);
         } catch (final InterruptedException e) {
-            Thread.interrupted();
             Skript.exception(e);
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -202,14 +202,13 @@ public final class SpikeDetector extends Thread {
         }
     }
 
-    private static final void dumpThread(final Thread thread, final State state, final boolean suspended, final ThreadInfo threadInfo, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
+    private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean suspended, final ThreadInfo threadInfo, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
         log.log(Level.WARNING, prefix + "------------------------------");
 
         log.log(Level.WARNING, prefix + "Current Thread: " + threadInfo.getThreadName());
         log.log(Level.WARNING, prefix + "\tPID: " + threadInfo.getThreadId() + " | Suspended: " + suspended + " | Native: " + threadInfo
                 .isInNative() + " | Daemon: " + thread
-                .isDaemon() + " | State: " + state + " | Priority: " + thread
-                .getPriority());
+                .isDaemon() + " | State: " + state + " | Priority: " + priority);
         if (monitorInfo.length != 0) {
             log.log(Level.WARNING, prefix + "\tThread is waiting on monitor(s):");
             for (final MonitorInfo monitor : monitorInfo) {
@@ -239,11 +238,12 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery) {
-                if (earlyWarningEvery <= 0L || !hasStarted || currentTime < lastEarlyWarning + earlyWarningEvery || currentTime < lastTick + earlyWarningDelay) {
-                    continue;
-                }
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || currentTime < lastEarlyWarning + (earlyWarningEvery - 1L)/* || currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
+
+                // Minimize server thread to get true stack trace
+                final int oldPriority = serverThread.getPriority();
+                serverThread.setPriority(Thread.MIN_PRIORITY);
 
                 // Get true spike time here
                 final long spikeTime = (currentTime - lastTick) / 1000L;
@@ -259,7 +259,8 @@ public final class SpikeDetector extends Thread {
                 // Get true suspended status here
                 final boolean suspended = threadInfo.isSuspended();
 
-                Bukkit.getScheduler().runTask(Skript.getInstance(), () -> {
+                // Dump task, we can use that later
+                final Runnable dumpTask = () -> {
                     // Print colored to make admins pay attention, if possible
                     final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
                             Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString() : "";
@@ -270,15 +271,29 @@ public final class SpikeDetector extends Thread {
 
                     log.log(Level.WARNING, prefix + "------------------------------");
                     log.log(Level.WARNING, prefix + "Server thread dump:");
-                    dumpThread(serverThread, threadState, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
+                    dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
                     log.log(Level.WARNING, prefix + "------------------------------");
-                });
+                };
+
+                // Normalize priority - if we plan to submit, it helps
+                serverThread.setPriority(Thread.NORM_PRIORITY);
+
+                // Printing from another thread bugs out
+                //Bukkit.getScheduler().runTask(Skript.getInstance(), dumpTask);
+
+                // But server thread maybe frozen in that time
+                // so we print in this thread instead
+                dumpTask.run();
+
+                // Finally restore the priority to not cause issues
+                serverThread.setPriority(oldPriority);
             }
 
             try {
-                sleep(1000L);
+                sleep(100L); // 100L to get truer stack traces
             } catch (final InterruptedException e) {
                 interrupt();
+                return;
             }
         }
     }

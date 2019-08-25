@@ -164,10 +164,9 @@ public final class EffPark extends Effect {
             try {
                 Thread.sleep(milliSeconds);
             } catch (final InterruptedException ie) {
-                Thread.interrupted();
                 announce("Interrupted while parking using park effect, disabling the park effect!", Skript::error, Skript::error);
-
                 parkDisabled = true;
+                Thread.currentThread().interrupt();
             }
         });
     }
