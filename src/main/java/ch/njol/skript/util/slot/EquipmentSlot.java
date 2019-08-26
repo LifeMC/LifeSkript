@@ -67,60 +67,60 @@ public final class EquipmentSlot extends Slot {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getItemInHand();
+                return ch.njol.skript.util.EquipmentSlot.EquipSlot.TOOL.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setItemInHand(item);
+                ch.njol.skript.util.EquipmentSlot.EquipSlot.TOOL.set(e, item);
             }
         },
         HELMET {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getHelmet();
+                return ch.njol.skript.util.EquipmentSlot.EquipSlot.HELMET.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setHelmet(item);
+                ch.njol.skript.util.EquipmentSlot.EquipSlot.HELMET.set(e, item);
             }
         },
         CHESTPLATE {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getChestplate();
+                return ch.njol.skript.util.EquipmentSlot.EquipSlot.CHESTPLATE.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setChestplate(item);
+                ch.njol.skript.util.EquipmentSlot.EquipSlot.CHESTPLATE.set(e, item);
             }
         },
         LEGGINGS {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getLeggings();
+                return ch.njol.skript.util.EquipmentSlot.EquipSlot.LEGGINGS.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setLeggings(item);
+                ch.njol.skript.util.EquipmentSlot.EquipSlot.LEGGINGS.set(e, item);
             }
         },
         BOOTS {
             @Override
             @Nullable
             public ItemStack get(final EntityEquipment e) {
-                return e.getBoots();
+                return ch.njol.skript.util.EquipmentSlot.EquipSlot.BOOTS.get(e);
             }
 
             @Override
             public void set(final EntityEquipment e, final @Nullable ItemStack item) {
-                e.setBoots(item);
+                ch.njol.skript.util.EquipmentSlot.EquipSlot.BOOTS.set(e, item);
             }
         };
 
