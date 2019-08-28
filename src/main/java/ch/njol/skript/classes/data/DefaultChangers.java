@@ -198,10 +198,12 @@ public final class DefaultChangers {
                     case DELETE:
                         invi.clear();
                         if (invi instanceof PlayerInventory) {
-                            ((PlayerInventory) invi).setArmorContents(new ItemStack[4]);
-                            if (((PlayerInventory) invi).getHolder() instanceof Player) {
-                                final Player p = (Player) ((PlayerInventory) invi).getHolder();
-                                if (invi.equals(p.getOpenInventory().getBottomInventory()))
+                            final PlayerInventory pInvi = (PlayerInventory) invi;
+
+                            pInvi.setArmorContents(null);
+                            if (pInvi.getHolder() instanceof Player) {
+                                final Player p = (Player) pInvi.getHolder();
+                                if (pInvi.equals(p.getOpenInventory().getBottomInventory()))
                                     p.getOpenInventory().setCursor(null);
                                 if (p.getOpenInventory().getTopInventory() instanceof CraftingInventory)
                                     p.getOpenInventory().getTopInventory().clear();
