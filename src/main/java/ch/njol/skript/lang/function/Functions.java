@@ -115,11 +115,13 @@ public final class Functions {
                         return error("Each argument's name must be unique, but the name '" + paramName + "' occurs at least twice.");
                 }
                 String argType = n.group(2);
+                final String def = n.group(3);
                 boolean nullable = false;
                 if (("" + argType).endsWith("?")) {
                     nullable = true;
                     argType = argType.substring(0, argType.length() - 1);
-                }
+                } else if (def != null)
+                    nullable = (def.contains("none") || def.contains("null")) && def.contains("value of");
                 ClassInfo<?> c;
                 c = Classes.getClassInfoFromUserInput("" + argType);
                 final NonNullPair<String, Boolean> pl = Utils.getEnglishPlural("" + argType);
@@ -127,7 +129,7 @@ public final class Functions {
                     c = Classes.getClassInfoFromUserInput(pl.getFirst());
                 if (c == null)
                     return error("Cannot recognize the type '" + argType + "'");
-                final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), n.group(3), nullable);
+                final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), def, nullable);
                 if (p == null)
                     return null;
                 params.add(p);

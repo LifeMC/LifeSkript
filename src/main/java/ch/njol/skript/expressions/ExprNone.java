@@ -23,19 +23,19 @@
 package ch.njol.skript.expressions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
-
-import java.util.Locale;
 
 /**
  * @author TheDGOfficial
@@ -43,42 +43,41 @@ import java.util.Locale;
 @Name("None")
 @Description({"Represents the none (null) value."})
 @Examples({"function send(msg: text, p: player = none value of player):", "if {_p} is set:", "send {_msg} to {_p}", "else:", "broadcast {_msg}"})
-@Since("2.2-Fixes-V10c")
+@Since("2.2-Fixes-V10c, 2.2.17 (finalization)")
 public final class ExprNone extends SimpleExpression<Object> {
     static {
-        Skript.registerExpression(ExprNone.class, Object.class, ExpressionType.SIMPLE, "[the] (none|null) value of [the] [type] %*classinfo%");
+        Skript.registerExpression(ExprNone.class, Object.class, ExpressionType.SIMPLE,
+                "[the] (none|null) value of [the] [type] %*classinfo%");
     }
 
-    @Nullable
-    private Expression<?> noneType;
-
-    @Override
     @SuppressWarnings("null")
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        noneType = exprs[0];
+    private Literal<ClassInfo<?>> noneType;
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        noneType = (Literal<ClassInfo<?>>) exprs[0];
         return true;
     }
 
     @Override
     @Nullable
-    protected Object[] get(final Event e) {
+    protected final Object[] get(final Event e) {
         return null;
     }
 
     @Override
-    public boolean isSingle() {
+    public final boolean isSingle() {
         return true;
     }
 
     @Override
-    @SuppressWarnings("null")
-    public Class<?> getReturnType() {
-        return noneType.getReturnType();
+    public final Class<?> getReturnType() {
+        return noneType.getSingle().getC();
     }
 
     @Override
-    @SuppressWarnings("null")
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "none value of " + getReturnType().getSimpleName().toLowerCase(Locale.ENGLISH);
+    public final String toString(final @Nullable Event e, final boolean debug) {
+        return "none value of the type " + noneType.toString(e, debug);
     }
 }
