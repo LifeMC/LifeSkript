@@ -22,6 +22,7 @@
 
 package ch.njol.skript.lang.function;
 
+import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.agents.SkriptAgentKt;
 import ch.njol.skript.agents.events.end.FunctionEndEvent;
 import ch.njol.skript.agents.events.start.FunctionStartEvent;
@@ -36,6 +37,12 @@ import java.util.Arrays;
  * @author Peter Güttinger
  */
 public abstract class Function<T> {
+
+    /**
+     * Execute functions even when some parameters are not present.
+     * Field is updated by SkriptConfig in case of reloads.
+     */
+    public static boolean executeWithNulls = SkriptConfig.executeFunctionsWithMissingParams.value();
 
     final String name;
 
@@ -104,7 +111,7 @@ public abstract class Function<T> {
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
             final Object[] val = i < params.length ? params[i] : p.def != null ? p.def.getArray(e) : null;
-            if (!p.isNone && (val == null || val.length == 0))
+            if (!executeWithNulls && !p.isNone && (val == null || val.length == 0))
                 return null;
             ps[i] = val;
         }

@@ -24,6 +24,7 @@ package ch.njol.skript;
 
 import ch.njol.skript.bukkitutil.SpikeDetector;
 import ch.njol.skript.config.*;
+import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
@@ -165,6 +166,9 @@ public final class SkriptConfig {
         }
         return null;
     });
+    public static final Option<Boolean> executeFunctionsWithMissingParams = new Option<>("execute functions with missing parameters", true)
+            .optional(true)
+            .setter(t -> Function.executeWithNulls = t);
     private static final Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable
     static Config mainConfig;

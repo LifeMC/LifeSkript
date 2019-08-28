@@ -20,6 +20,7 @@
  *
  */
 
+// FIXME fix or remove agents completely
 package ch.njol.skript.agents
 
 import ch.njol.skript.SkriptAddon
