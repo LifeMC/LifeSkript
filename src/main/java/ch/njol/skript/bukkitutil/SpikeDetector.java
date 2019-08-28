@@ -273,6 +273,10 @@ public final class SpikeDetector extends Thread {
                     log.log(Level.WARNING, prefix + "Server thread dump:");
                     dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
                     log.log(Level.WARNING, prefix + "------------------------------");
+
+                    // Flush to guarantee everything is written
+                    System.err.flush();
+                    System.out.flush();
                 };
 
                 // Normalize priority - if we plan to submit, it helps

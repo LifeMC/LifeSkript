@@ -121,6 +121,10 @@ public final class Parameter<T> {
         return type;
     }
 
+    public boolean isSingle() {
+        return single;
+    }
+
     @Override
     public String toString() {
         return name + ": " + Utils.toEnglishPlural(type.getCodeName(), !single) + (def != null ? " = " + def.toString(null, true) : "");

@@ -27,6 +27,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.eclipse.jdt.annotation.Nullable;
 
+// TODO allow getting FunctionReference<? extends T> from FunctionEvent
 public final class FunctionEvent<T> extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();

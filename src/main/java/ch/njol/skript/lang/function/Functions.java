@@ -50,11 +50,11 @@ public final class Functions {
     public static final String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
     public static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>(100);
     public static final Map<String, FunctionData> functions = new HashMap<>(100);
-    private static final List<FunctionReference<?>> postCheckNeeded = new ArrayList<>();
+    private static final List<FunctionReference<?>> postCheckNeeded = new ArrayList<>(100);
     @SuppressWarnings("null")
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
-    private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>();
+    private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>(100);
     @Nullable
     public static ScriptFunction<?> currentFunction;
 

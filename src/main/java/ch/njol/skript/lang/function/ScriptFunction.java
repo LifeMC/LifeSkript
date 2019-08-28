@@ -73,6 +73,7 @@ public final class ScriptFunction<T> extends Function<T> {
     @Override
     @Nullable
     public final T[] execute(final FunctionEvent<? extends T> e, final Object[][] params) {
+        this.resetReturnValue();
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
             final Object[] val = params[i];
