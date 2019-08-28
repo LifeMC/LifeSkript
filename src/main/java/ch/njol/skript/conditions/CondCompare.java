@@ -225,7 +225,7 @@ public final class CondCompare extends Condition {
             if (third == null)
                 return relation.is(comp != null ? comp.compare(o1, o2) : Comparators.compare(o1, o2));
             return third.check(e, (Checker<Object>) o3 -> relation == Relation.NOT_EQUAL ^ (Relation.GREATER_OR_EQUAL.is(comp != null ? comp.compare(o1, o2) : Comparators.compare(o1, o2)) && Relation.SMALLER_OR_EQUAL.is(comp != null ? comp.compare(o1, o3) : Comparators.compare(o1, o3))));
-        }, isNegated()));
+        }), isNegated());
     }
 
     @Override
