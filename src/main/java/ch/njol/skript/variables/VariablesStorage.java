@@ -28,6 +28,7 @@ import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.FileUtils;
 import ch.njol.skript.util.Task;
 import ch.njol.skript.util.Timespan;
@@ -73,7 +74,7 @@ public abstract class VariablesStorage implements Closeable {
     /**
      * Must be locked after {@link Variables#getReadLock()} (if that lock is used at all)
      */
-    protected final Object connectionLock = new Object();
+    protected final Object[] connectionLock = EmptyArrays.EMPTY_OBJECT_ARRAY;
     final LinkedBlockingQueue<SerializedVariable> changesQueue = new LinkedBlockingQueue<>(QUEUE_SIZE);
     // created in the constructor, started in load()
     private final Thread writeThread;

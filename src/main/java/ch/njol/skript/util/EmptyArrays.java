@@ -58,6 +58,8 @@ public final class EmptyArrays {
 
     // Others
 
+    public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
     public static final Integer[] EMPTY_INTEGER_ARRAY = new Integer[0];
 

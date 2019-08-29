@@ -53,13 +53,13 @@ import java.util.regex.Pattern;
 public final class FlatFileStorage extends VariablesStorage {
 
     /**
-     * @see StandardCharsets
-     * @deprecated Use {@link StandardCharsets}
+     * @see StandardCharsets#UTF_8
+     * @deprecated Use {@link StandardCharsets#UTF_8}
      */
     @Deprecated
     @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
-    public static final int REQUIRED_CHANGES_FOR_RESAVE = System.getProperty("skript.requiredVariableChangesForSave") != null ? Integer.parseInt(System.getProperty("skript.requiredVariableChangesForSave")) : 1000;
+    public static final int REQUIRED_CHANGES_FOR_RESAVE = Integer.getInteger("skript.requiredVariableChangesForSave", 1000);
     @SuppressWarnings("null")
     private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
     /**
