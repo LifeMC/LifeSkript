@@ -120,6 +120,7 @@ public abstract class Function<T> {
             SkriptAgentKt.throwEvent(new FunctionStartEvent(this, params));
         final long startTime = System.nanoTime();
         final T[] r = execute(e, ps);
+        resetReturnValue();
         final long endTime = System.nanoTime();
         if (trackingEnabled)
             SkriptAgentKt.throwEvent(new FunctionEndEvent(this, params, startTime, endTime));
