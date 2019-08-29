@@ -63,7 +63,9 @@ public final class SpikeDetector extends Thread {
     private static final MethodHandle doStart = findDoStart();
     private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", 5000L);
     private static final long earlyWarningDelay = Long.getLong("skript.earlyWarningDelay", 10000L);
-    private static volatile boolean hasStarted;
+    public static final boolean alwaysEnabled = Boolean.getBoolean("skript.spikeDetector.alwaysEnabled");
+    private static volatile boolean hasStarted = alwaysEnabled;
+    private static volatile boolean enabled = alwaysEnabled;
     @Nullable
     private static SpikeDetector instance;
     private final Thread serverThread;
@@ -129,11 +131,12 @@ public final class SpikeDetector extends Thread {
      * Paper 1.12.x has already this, so check for it
      */
     public static final boolean shouldStart() {
-        return (!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector");
+        return alwaysEnabled || ((!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector"));
     }
 
     public static final void setEnabled(final boolean enabled) {
         SpikeDetector.hasStarted = enabled;
+        SpikeDetector.enabled = enabled;
 
         if (enabled)
             Skript.info("Enabled spike detector");
@@ -163,7 +166,7 @@ public final class SpikeDetector extends Thread {
      * @see SpikeDetector#startAgain()
      */
     public static final void stopTemporarily() {
-        if (hasStarted)
+        if (hasStarted && !alwaysEnabled)
             hasStarted = false;
 
         final MethodHandle stop = doStop;
@@ -186,8 +189,10 @@ public final class SpikeDetector extends Thread {
      * @see SpikeDetector#stopTemporarily()
      */
     public static final void startAgain() {
-        if (!hasStarted)
+        if (!hasStarted && shouldStart() && enabled) {
+            tick(); // Clear spikes
             hasStarted = true;
+        }
 
         final Field instance = instanceField;
         final MethodHandle start = doStart;
@@ -238,7 +243,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || currentTime < lastEarlyWarning + (earlyWarningEvery - 1L)/* || currentTime < lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || (!hasStarted || !enabled || !alwaysEnabled) || currentTime < lastEarlyWarning + (earlyWarningEvery - 1L)/* || currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
