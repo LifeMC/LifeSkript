@@ -273,6 +273,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try { // variables were just downloaded, not need to check for modifications straight away
                     Thread.sleep(monitorInterval);
                 } catch (final InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                     return;
                 }
 

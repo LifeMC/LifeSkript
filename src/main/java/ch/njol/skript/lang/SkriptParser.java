@@ -95,7 +95,7 @@ public final class SkriptParser {
     public final ParseContext context;
     final String expr;
     private final int flags;
-    private boolean suppressMissingAndOrWarnings;
+    private boolean suppressMissingAndOrWarnings = SkriptConfig.disableMissingAndOrWarnings.value();
 
     public SkriptParser(final String expr) {
         this(expr, ALL_FLAGS);
@@ -1181,7 +1181,10 @@ public final class SkriptParser {
                 if (isObject && (flags & PARSE_LITERALS) != 0) {
                     // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
                     final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
-                    p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings; // If we suppress warnings here, we suppress them in parser what we created too
+                    if (!p.suppressMissingAndOrWarnings) {
+                        p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings;
+                        // If we suppress warnings here, we suppress them in the parser we created too
+                    }
                     for (final Class<?> c : new Class[]{Number.class, Time.class, ItemType.class, ItemStack.class}) {
                         final Expression<?> e = p.parseExpression(c);
                         if (e != null) {
@@ -1718,8 +1721,8 @@ public final class SkriptParser {
                                             try {
                                                 mark = Integer.parseInt(str);
                                                 j = j2;
-                                            } catch (final NumberFormatException e) {
-                                                Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                                            } catch (final NumberFormatException ignored) {
+                                                /* ignored */
                                             }
                                         }
                                     }

@@ -105,6 +105,7 @@ public abstract class VariablesStorage implements Closeable {
                     else
                         save(var.name, null, null);
                 } catch (final InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
                     break; // Server probably shutting down.
                 }
             }
@@ -269,7 +270,7 @@ public abstract class VariablesStorage implements Closeable {
             try {
                 changesQueue.put(var);
             } catch (final InterruptedException ignored) {
-                /* ignored */
+                Thread.currentThread().interrupt();
             }
         }
     }

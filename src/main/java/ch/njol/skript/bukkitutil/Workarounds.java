@@ -157,7 +157,7 @@ public final class Workarounds {
 
         // Language Fix
         oldValues.put("user.language", System.getProperty("user.language"));
-        System.setProperty("user.language", "EN");
+        System.setProperty("user.language", "en");
 
         // Country Fix
         oldValues.put("user.country", System.getProperty("user.country"));
@@ -165,7 +165,7 @@ public final class Workarounds {
 
         // Keep Alive Fix
         oldValues.put("paper.playerconnection.keepalive", System.getProperty("paper.playerconnection.keepalive"));
-        System.setProperty("paper.playerconnection.keepalive", "120");
+        System.setProperty("paper.playerconnection.keepalive", "60");
 
         // LifeSkript
         oldValues.put("using.lifeskript", System.getProperty("using.lifeskript"));

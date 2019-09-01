@@ -66,7 +66,7 @@ public final class UnparsedLiteral implements Literal<Object> {
      */
     public UnparsedLiteral(final String data, final @Nullable LogEntry error) {
         assert data != null && data.length() > 0;
-        assert error == null || error.getLevel() == Level.SEVERE;
+        assert error == null || error.getLevel().intValue() >= Level.SEVERE.intValue();
         this.data = data;
         this.error = error;
     }

@@ -283,7 +283,9 @@ public final class FlatFileStorage extends VariablesStorage {
                     try {
                         changesWriter.wait(); //FIXME sonarlint
                     } catch (final InterruptedException e) {
+                        Skript.exception(e);
                         Thread.currentThread().interrupt();
+
                         return false;
                     }
                 }
@@ -414,7 +416,8 @@ public final class FlatFileStorage extends VariablesStorage {
                                 try {
                                     Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 10000L : 15000L); // low verbosity won't disable these messages, but makes them more rare
                                 } catch (final InterruptedException e) {
-                                    break;
+                                    Thread.currentThread().interrupt();
+                                    return;
                                 }
                                 if (savedVariables == 0 && !Skript.debug() && !Skript.testing())
                                     continue;

@@ -241,10 +241,10 @@ public final class SkriptLogger {
             return;
         }
         final Level level = entry.getLevel();
-        if (suppressWarnings && level == Level.WARNING) {
+        if (suppressWarnings && level.intValue() >= Level.WARNING.intValue() && level.intValue() < Level.SEVERE.intValue()) {
             return;
         }
-        if (suppressErrors && level == Level.SEVERE) {
+        if (suppressErrors && level.intValue() >= Level.SEVERE.intValue()) {
             return;
         }
         entry.logged();

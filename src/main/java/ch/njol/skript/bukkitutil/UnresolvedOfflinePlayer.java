@@ -98,8 +98,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
                 if (toResolve.isEmpty())
                     Thread.sleep(1000L);
             } catch (final InterruptedException e) {
-                //Skript.exception(e, "An error occured when resolving offline player UUID's in a background thread. Skipping, but maybe this error printed several times if your server is problematic. Anyway, please report this error to ensure the problem.");
-                break;
+                Thread.currentThread().interrupt();
+                return;
             }
         }
     }, "Skript offline player resolver thread");
@@ -149,7 +149,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 
         if (getPlayer() != null) {
             bukkitOfflinePlayer = getPlayer();
-            return true; // Anyways, setted with this call.
+            return true; // Anyways, set with this call.
         }
 
         if (Skript.testing() && Skript.debug())
@@ -159,6 +159,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
         // Javadoc says: "This method may involve a blocking web request to get the UUID for the given name."
         // This the reason we should use this class for offline players :D
 
+        assert bukkitOfflinePlayer != null;
         return true;
 
     }
@@ -271,7 +272,8 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
      * @see org.bukkit.OfflinePlayer#getPlayer()
      */
     @Override
-    @SuppressWarnings({"null", "deprecation"})
+    @Nullable
+    @SuppressWarnings("deprecation")
     public final Player getPlayer() {
         return bukkitOfflinePlayer != null ? bukkitOfflinePlayer.getPlayer() : Bukkit.getPlayerExact(name);
     }

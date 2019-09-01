@@ -28,6 +28,7 @@ public final class VersionRegistry {
 
     public static final Version STABLE_2_2_15 = new Version(2, 2, 15);
     public static final Version STABLE_2_2_16 = new Version(2, 2, 16);
+    public static final Version STABLE_2_2_17 = new Version(2, 2, 17);
 
     private VersionRegistry() {
         throw new UnsupportedOperationException();

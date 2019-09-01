@@ -36,7 +36,7 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Custom Warn / Error")
+@Name("Custom Warning / Error")
 @Description("Throws a custom warning / error.")
 @Examples({"on load:", "\tset {id} to random uuid", "\tif {id} is not set:", "\t\tthrow new error \"Failed to set ID, please reload!\"", "\t\tstop # Throw does not stops execution, you must add stop!"})
 @Since("2.2-Fixes-V10c, 2.2.14 (throwing java errors), 2.2.16 (finalized java errors)")

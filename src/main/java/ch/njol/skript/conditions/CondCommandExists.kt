@@ -58,9 +58,7 @@ class CondCommandExists : Condition() {
 
             if (pluginManager is SimplePluginManager) {
                 val commandMap = pluginManager.javaClass.getDeclaredField("commandMap")
-
-                if (!commandMap.isAccessible)
-                    commandMap.isAccessible = true
+                commandMap.isAccessible = true
 
                 return commandMap.get(pluginManager) as? CommandMap?
             }

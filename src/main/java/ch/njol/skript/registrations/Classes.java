@@ -30,9 +30,9 @@ import ch.njol.skript.classes.Converter;
 import ch.njol.skript.classes.Converter.ConverterInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.Serializer;
-import ch.njol.skript.config.Node;
 import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
@@ -563,7 +563,12 @@ public final class Classes {
      * @see Parser
      */
     public static final String toString(final @Nullable Object o) {
-        return toString(o, StringMode.MESSAGE, 0);
+        return toString(o, null, false);
+    }
+
+    public static final String toString(final @Nullable Object o,
+                                        final @Nullable VariableString variableName, final boolean debug) {
+        return toString(o, StringMode.MESSAGE, 0, variableName, debug);
     }
 
     public static final String getDebugMessage(final @Nullable Object o) {
@@ -575,21 +580,27 @@ public final class Classes {
     }
 
     private static final <T> String toString(final @Nullable T o, final StringMode mode, final int flags) {
+        return toString(o, mode, flags, null, false);
+    }
+
+    private static final <T> String toString(final @Nullable T o, final StringMode mode, final int flags,
+                                             final @Nullable VariableString variableName, final boolean debug) {
         assert flags == 0 || mode == StringMode.MESSAGE;
         if (o == null) {
-            if (SkriptConfig.warnWhenUsingNoneValues.value()) {
-                final Node node = SkriptLogger.getNode();
-                if (node != null)
-                    Skript.warning("Usage of none is detected - probably some variable or expression returned null");
+            if (SkriptConfig.warnWhenUsingNoneValues.value() && mode != StringMode.DEBUG)
+                if (variableName != null)
+                    Skript.warning("Usage of none is detected - the variable " + variableName + " is null (mode: " + mode + ", flags: " + flags + ", debug: " + debug + ")");
                 else
-                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (no information available)");
-            }
+                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (mode: " + mode + ", flags: " + flags + ")");
             return Language.get("none");
         }
         if (o.getClass().isArray()) {
             if (((Object[]) o).length == 0) {
-                if (SkriptConfig.warnWhenUsingNoneValues.value())
-                    Skript.warning("Usage of none is detected - probably some list variable or expression is empty (type: " + o.getClass().getCanonicalName() + ")");
+                if (SkriptConfig.warnWhenUsingNoneValues.value() && mode != StringMode.DEBUG)
+                    if (variableName != null)
+                        Skript.warning("Usage of none is detected - the variable " + variableName + " is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ", debug: " + debug + ")");
+                    else
+                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ")");
                 return Language.get("none");
             }
             final StringBuilder b = new StringBuilder(4096);

@@ -112,7 +112,8 @@ public abstract class Task implements Runnable, Closeable {
         } catch (final ExecutionException e) {
             Skript.exception(e);
         } catch (final InterruptedException | CancellationException | ThreadDeath ignored) {
-            // server shutting down
+            Thread.currentThread().interrupt();
+            throw new ThreadDeath();
         }
         return null;
     }

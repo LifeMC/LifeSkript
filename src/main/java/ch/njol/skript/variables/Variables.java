@@ -101,6 +101,7 @@ public final class Variables {
                     }
                 }
             } catch (final InterruptedException ignored) {
+                Thread.currentThread().interrupt();
                 break;
             }
         }
@@ -163,6 +164,7 @@ public final class Variables {
                 try {
                     Thread.sleep(Skript.logHigh() ? 1000L : Skript.logNormal() ? 3000L : 5000L); // low verbosity won't disable these messages, but makes them more rare
                 } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     break;
                 }
                 synchronized (tempVars) {

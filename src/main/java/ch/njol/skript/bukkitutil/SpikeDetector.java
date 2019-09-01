@@ -47,13 +47,12 @@ import java.util.logging.Logger;
  */
 public final class SpikeDetector extends Thread {
 
+    public static final boolean alwaysEnabled = Boolean.getBoolean("skript.spikeDetector.alwaysEnabled");
     @Nullable
     private static final Class<?> watchdogClass =
             Skript.classForName("org.spigotmc.WatchdogThread");
-
     private static final boolean spigotWatchdog =
             watchdogClass != null;
-
     @Nullable
     private static final Field instanceField = Skript.fieldForName(watchdogClass, "instance", true);
     private static final MethodHandles.Lookup publicLookup = MethodHandles.publicLookup();
@@ -63,7 +62,6 @@ public final class SpikeDetector extends Thread {
     private static final MethodHandle doStart = findDoStart();
     private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", 5000L);
     private static final long earlyWarningDelay = Long.getLong("skript.earlyWarningDelay", 10000L);
-    public static final boolean alwaysEnabled = Boolean.getBoolean("skript.spikeDetector.alwaysEnabled");
     private static volatile boolean hasStarted = alwaysEnabled;
     private static volatile boolean enabled = alwaysEnabled;
     @Nullable
@@ -131,7 +129,7 @@ public final class SpikeDetector extends Thread {
      * Paper 1.12.x has already this, so check for it
      */
     public static final boolean shouldStart() {
-        return alwaysEnabled || ((!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector"));
+        return alwaysEnabled || (!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector");
     }
 
     public static final void setEnabled(final boolean enabled) {
@@ -243,7 +241,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || (!hasStarted || !enabled || !alwaysEnabled) || currentTime < lastEarlyWarning + (earlyWarningEvery - 1L)/* || currentTime < lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || !alwaysEnabled || currentTime < lastEarlyWarning + earlyWarningEvery - 1L/* || currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace

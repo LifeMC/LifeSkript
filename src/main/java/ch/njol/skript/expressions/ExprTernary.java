@@ -97,7 +97,7 @@ public final class ExprTernary<T> extends SimpleExpression<T> {
         final Object[] values = condition.check(e) ? ifTrue.getArray(e) : ifFalse.getArray(e);
         try {
             return Converters.convertStrictly(values, superType);
-        } catch (final ClassCastException e1) {
+        } catch (final ClassCastException ignored) {
             return (T[]) Array.newInstance(superType, 0);
         }
     }

@@ -59,12 +59,12 @@ public final class SkriptEventHandler {
      * Stores which events are currently registered with Bukkit
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
+    private static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
     @Nullable
     public static Event last;
     static long startTrigger;
     private static long startEvent;
     private static long lastCall;
-    private static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
     public static final EventExecutor ee = (final @Nullable Listener l, final @Nullable Event e) -> {
         if (e == null)
             return;

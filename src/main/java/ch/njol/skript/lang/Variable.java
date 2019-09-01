@@ -229,7 +229,7 @@ public final class Variable<T> implements Expression<T> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         if (e != null)
-            return Classes.toString(get(e));
+            return Classes.toString(get(e), name, debug); // Special handling for variables
         return "{" + (local ? "_" : "") + StringUtils.substring(name.toString(e, debug), 1, -1) + "}" + (debug ? "(as " + superType.getName() + ")" : "");
     }
 

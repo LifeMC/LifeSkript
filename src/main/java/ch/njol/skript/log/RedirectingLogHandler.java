@@ -53,7 +53,7 @@ public final class RedirectingLogHandler extends LogHandler {
             recipient.sendMessage(prefix + entry.toString());
         else
             SkriptLogger.LOGGER.log(entry.getLevel(), prefix + entry.toString());
-        if (entry.level == Level.SEVERE)
+        if (entry.level.intValue() >= Level.SEVERE.intValue())
             numErrors++;
         return LogResult.DO_NOT_LOG;
     }

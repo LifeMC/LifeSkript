@@ -71,6 +71,10 @@ public final class ScriptLoader {
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
     public static final List<Loop> currentLoops = new ArrayList<>();
+    /**
+     * Filter for enabled scripts & folders.
+     */
+    public static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     static final HashMap<String, String> currentOptions = new HashMap<>();
     /**
      * All loaded script files.
@@ -88,11 +92,6 @@ public final class ScriptLoader {
      * must be synchronized
      */
     private static final ScriptInfo loadedScripts = new ScriptInfo();
-    /**
-     * Filter for enabled scripts & folders.
-     */
-    @SuppressWarnings("null")
-    private static final FileFilter scriptFilter = f -> f != null && (f.isDirectory() && SkriptConfig.allowScriptsFromSubFolders.value() || StringUtils.endsWithIgnoreCase(f.getName().trim(), ".sk".trim()) && !StringUtils.startsWithIgnoreCase(f.getName().trim(), "-".trim()));
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -159,7 +158,11 @@ public final class ScriptLoader {
                 try {
                     Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 10000L : 15000L); // low verbosity won't disable these messages, but makes them more rare
                 } catch (final InterruptedException e) {
-                    break;
+                    if (loadingScripts)
+                        Skript.exception(e);
+                    Thread.currentThread().interrupt();
+
+                    return;
                 }
                 synchronized (loadedFiles) {
                     // FIXME does not work on first load, but works afterwards with /sk reload all
@@ -215,7 +218,7 @@ public final class ScriptLoader {
     }
 
     public static final Version getSourceVersionFrom(final Version normalVersion) {
-        final int sourceRevision = Double.valueOf(Math.ceil(normalVersion.getRevision() / 10)).intValue();
+        final int sourceRevision = (int) Math.ceil(normalVersion.getRevision() / 10D);
 
         final int major = normalVersion.getMajor();
         final int minor = normalVersion.getMinor();
