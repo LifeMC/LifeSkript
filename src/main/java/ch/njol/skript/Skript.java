@@ -2841,12 +2841,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             if (!Boolean.getBoolean("skript.disableRecommendations")) {
                 Bukkit.getScheduler().runTask(this, () -> {
+                    boolean isOnePointSevenOrEight = false;
+
                     if (minecraftVersion.compareTo(1, 7, 10) == 0) { // If running on Minecraft 1.7.10
                         if (getServerPlatform() != ServerPlatform.LIFE_SPIGOT && !ExprEntities.getNearbyEntities) { // If not using LifeSpigot and not supports getNearbyEntities (if there is another implementation that supports getNearbyEntities, we respect them and not advertise LifeSpigot :C)
                             warning("You are running on 1.7.10 and not using LifeSpigot, Some features will not be available. Switch to LifeSpigot or upgrade to newer versions. Report this if it is a bug.");
                             warning("You can get LifeSpigot 1.7.10 from: https://www.lifemcserver.com/LifeSpigot-SNAPSHOT.jar");
                             emptyPrinter.run();
                         }
+
+                        isOnePointSevenOrEight = true;
                     } else if (minecraftVersion.compareTo(1, 8, 8) == 0 && getServerPlatform() != ServerPlatform.BUKKIT_TACO) { // If running on Minecraft 1.8.8 and not using TacoSpigot
                         if (getServerPlatform() == ServerPlatform.BUKKIT_UNKNOWN || getServerPlatform() == ServerPlatform.BUKKIT_CRAFTBUKKIT) { // If running Bukkit or CraftBukkit on 1.8.8
                             // Make user first switch to Spigot, and give warnings (not infos as on taco) because there is no "official" Bukkit or CraftBukkit in 1.8 already.
@@ -2872,6 +2876,22 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 emptyPrinter.run();
                             }
                         }
+
+                        isOnePointSevenOrEight = true;
+                    }
+
+                    if (isOnePointSevenOrEight && Skript.logHigh()) { // TODO make visible in normal verbosity
+                        final String youAreRunning = "You are running " + getServerPlatform().platformName + " " + minecraftVersion;
+
+                        // Make sure to add these plugins as soft depend since we are using
+                        // is plugin enabled instead of get plugin.
+
+                        if (!Bukkit.getPluginManager().isPluginEnabled("AsyncKeepAlive"))
+                            warning(youAreRunning + " and not using AsyncKeepAlive plugin, we recommend installing it to prevent time out issues.");
+                        if (!Bukkit.getPluginManager().isPluginEnabled("PingFix"))
+                            warning(youAreRunning + " and not using PingFix plugin, we recommend installing it to prevent time out issues.");
+
+                        // Others? Maybe exploit fixer plugins?
                     }
                 });
             }
