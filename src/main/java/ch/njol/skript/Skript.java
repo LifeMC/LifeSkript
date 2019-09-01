@@ -195,6 +195,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
     public static final Version invalidVersion = new Version(999);
     public static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
+    public static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
     /**
      * Null when ran from tests or outside of Bukkit
      */
@@ -423,6 +424,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         if (v == null)
             throw new IllegalStateException("Can't get Skript version because it was null!");
         return v;
+    }
+
+    /**
+     * Returns the String representation of the Skript version,
+     * with additional version suffix, e.g: 2.2.17 (latest) (optimized, experimental)
+     *
+     * @return The String representation of the Skript version.
+     */
+    public static final String getVersionWithSuffix() {
+        final String updaterData =
+                Skript.updateChecked ? Skript.updateAvailable || Skript.developmentVersion ? Skript.developmentVersion ? Skript.customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (update not checked)";
+
+        return (Skript.version != null ? Skript.version : "unknown") + updaterData + (Skript.isOptimized ? " (optimized, experimental)" : "");
     }
 
     public static final String getDownloadLink() {
@@ -658,12 +672,15 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     public static final boolean isClassLoaded(final String qualifiedName) {
         final ClassLoader classLoader = Skript.getTrueClassLoader();
+
         try {
             assert findLoadedClass != null;
             return findLoadedClass.invoke(classLoader, qualifiedName) != null;
         } catch (final IllegalAccessException | InvocationTargetException e) {
-            assert false : e;
+            assert false : e instanceof InvocationTargetException ? e.getCause() : e;
         }
+        assert false : "Can't determine if \"" + qualifiedName + "\" is loaded";
+
         return false;
     }
 
@@ -1490,7 +1507,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
             logEx();
             logEx("Version Information:");
-            logEx("  Skript: " + (version != null ? version : "unknown") + (updateChecked ? updateAvailable ? developmentVersion ? customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (update not checked)") + (isOptimized ? " (optimized, experimental)" : ""));
+            logEx("  Skript: " + Skript.getVersionWithSuffix());
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
@@ -1506,9 +1523,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             if (node != null)
                 logEx("Current node: " + node + " (" + (node.getKey() != null ? node.getKey() : "") + ")");
             logEx("Current item: " + (item == null ? "not available" : item.toString(null, true)));
-            if (item != null && item.getTrigger() != null) {
+            if (item != null) {
                 final Trigger trigger = item.getTrigger();
-                //noinspection ConstantConditions
                 if (trigger != null) {
                     final File script = trigger.getScript();
                     logEx("Current trigger: " + trigger.toString(null, true) + " (" + (script == null ? "null" : script.getName()) + ", line " + trigger.getLineNumber() + ")");
@@ -1565,7 +1581,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             System.out.flush();
 
             // This a real error - don't return an empty error.
-            return new RuntimeException();
+            return new RuntimeException(tw);
         }
     }
 
