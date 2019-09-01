@@ -1688,6 +1688,51 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
+     * Finalizes any pending objects after GCs
+     * Useful for making sure {@link java.lang.Object#finalize} is called.
+     * <p>
+     * Can free up memory if used after heavy operations. Uses another thread to not
+     * cause pauses.
+     */
+    public static final void finalizeObjects() {
+        nettyOptimizerThread.execute(System::runFinalization);
+    }
+
+    /**
+     * Throws any throwable 'sneakily' - you don't need to catch it, nor declare that you throw it onwards.
+     * The exception is still thrown - compiler will just stop whining about it.
+     * <p>
+     * Example usage:
+     * <pre>
+     * public void run() {
+     *     throw sneakyThrow(new IOException("You don't need to catch me!"));
+     * }
+     * </pre>
+     * <p>
+     * NB: The exception is not wrapped, ignored, swallowed, or redefined. The JVM actually does not know or care
+     * about the concept of a 'checked exception'. All this method does is hide the act of throwing a checked exception
+     * from the java compiler.
+     * <p>
+     * Note that this method has a return type of {@code RuntimeException}; it is advised you always call this
+     * method as argument to the {@code throw} statement to avoid compiler errors regarding no return
+     * statement and similar problems. This method won't of course return an actual {@code RuntimeException} -
+     * it never returns, it always throws the provided exception.
+     *
+     * @param tw The throwable to throw without requiring you to catch its type.
+     * @return A dummy RuntimeException; this method never returns normally, it <em>always</em> throws an exception!
+     */
+    public static final RuntimeException sneakyThrow(final @Nullable Throwable tw) {
+        if (tw == null)
+            throw new IllegalArgumentException("Null exception given in the sneaky throw method");
+        return sneakyThrow0(tw);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <T extends Throwable> T sneakyThrow0(final Throwable tw) throws T {
+        throw (T) tw;
+    }
+
+    /**
      * Returns the file which contains this plugin
      *
      * @return File containing this plugin
