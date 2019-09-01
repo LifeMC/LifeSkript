@@ -1814,11 +1814,15 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").replace("-", "").trim();
                         final int priority = thread.getPriority();
 
-                        if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || (name.contains("alive") && !name.contains("keepalivetimer")) || (name.contains("skript") && name.contains("watchdog"))) && priority != Thread.MAX_PRIORITY) {
+                        if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || name.contains("alive") && !name.contains("keepalivetimer") || name.contains("skript") && name.contains("watchdog")) && priority != Thread.MAX_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Maximizing priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MAX_PRIORITY);
                             thread.setPriority(Thread.MAX_PRIORITY);
-                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") || name.contains("consolehandler") || (name.contains("profiler") && !name.contains("iprofiler")) || name.contains("waitloop") || name.contains("sleep") || (name.contains("watchdog") && !name.contains("skript")) || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
+                        } else if (name.contains("consolehandler") && priority != Thread.NORM_PRIORITY) {
+                            if (Skript.debug() && Skript.testing())
+                                Skript.info("Setting thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.NORM_PRIORITY);
+                            thread.setPriority(Thread.NORM_PRIORITY);
+                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") /*|| name.contains("consolehandler")*/ || name.contains("profiler") && !name.contains("iprofiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") && !name.contains("skript") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MIN_PRIORITY);
                             thread.setPriority(Thread.MIN_PRIORITY);
