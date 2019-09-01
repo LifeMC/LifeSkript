@@ -2756,11 +2756,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 final Field recentTps = minecraftServer.getDeclaredField("recentTps");
                                 final Field serverThread = Skript.isRunningMinecraft(1, 8) ? minecraftServer.getDeclaredField("serverThread") : minecraftServer.getDeclaredField("primaryThread");
 
-                                if (!recentTps.isAccessible())
-                                    recentTps.setAccessible(true);
-
-                                if (!serverThread.isAccessible())
-                                    serverThread.setAccessible(true);
+                                recentTps.setAccessible(true);
+                                serverThread.setAccessible(true);
 
                                 final Method getServer = Skript.methodForName(minecraftServer, "getServer", true);
 
@@ -2772,7 +2769,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 assert mainThread != null : serverThread.toString();
 
                                 if (SpikeDetector.shouldStart()) {
-                                    if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock")) {
+                                    if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock") && !SpikeDetector.alwaysEnabled) {
                                         BukkitLoggerFilter.addFilter((e) -> {
                                             if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play"))
                                                 SpikeDetector.doStart(mainThread);
@@ -2814,7 +2811,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     assert false : "Netty task is null";
 
                 SkriptCommand.resetPriority();
-                System.runFinalization();
+                Skript.finalizeObjects();
             });
 
             if (!PlayerUtils.hasCollecionGetOnlinePlayers)
@@ -3119,7 +3116,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             if (Skript.logHigh())
                 info("Saved variables - Starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
 
-            SkriptCommand.resetPriority();
+            System.runFinalization();
+            //SkriptCommand.resetPriority();
 
             // unset static fields to prevent memory leaks as Bukkit reloads the classes with a different classloader on reload
             // async to not slow down server reload, delayed to not slow down server shutdown
@@ -3127,6 +3125,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 try {
                     Thread.sleep(10000L);
                 } catch (final InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     return;
                 }
                 try {
@@ -3183,6 +3182,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             t.start();
 
             assert closedOnEnable;
+
+            // Server will shutdown shortly
+            System.runFinalization();
 
         } catch (final Throwable tw) {
             if (!Boolean.getBoolean("skript.disableShutdownErrors")) {

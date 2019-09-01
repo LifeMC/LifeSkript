@@ -63,8 +63,8 @@ public final class Aliases {
     /**
      * Note to self: never use this, use {@link #getAlias_i(String)} instead.
      */
-    private static final HashMap<String, ItemType> aliases_english = new HashMap<>(12584);
-    private static final HashMap<String, ItemType> aliases_localised = new HashMap<>(1000);
+    private static final HashMap<String, ItemType> aliases_english = new HashMap<>(12585);
+    private static final HashMap<String, ItemType> aliases_localised = new HashMap<>(localizedAliases() ? 1000 : 0);
     private static final HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
     private static final HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);
     // this is not an alias!
@@ -608,7 +608,7 @@ public final class Aliases {
         if (type.isEmpty()) {
             t.add(data == null ? new ItemData() : data);
             return t;
-        } else if (type.matches("\\d+")) {
+        } else if (Skript.NUMBER_PATTERN.matcher(type).matches()) {
             ItemData d = new ItemData(Utils.parseInt(type));
             final Material m = Material.getMaterial(d.getId());
             if (m == null) {
@@ -858,11 +858,12 @@ public final class Aliases {
                     num += i;
                 }
                 SkriptLogger.setNode(null);
+                addMissingMaterialNames();
 
                 if (Skript.logNormal())
                     Skript.info(m_loaded_x_aliases.toString(num));
-
-                addMissingMaterialNames();
+                if (Skript.logHigh())
+                    Skript.info("Loaded " + aliases_localised.size() + " localized aliases");
 
 //			if (!SkriptConfig.keepConfigsLoaded.value())
 //				aliasConfig = null;
@@ -874,6 +875,15 @@ public final class Aliases {
 
 //        if (flag)
 //            Skript.info("Loaded aliases in " + start.difference(new Date()));
+    }
+
+    public static final boolean localizedAliases() {
+        final boolean isLocalized = !Language.getName().equals("english");
+
+        if (isLocalized)
+            Skript.debug("Using localized aliases");
+
+        return isLocalized;
     }
 
     static final class Variations extends HashMap<String, HashMap<String, ItemType>> {
