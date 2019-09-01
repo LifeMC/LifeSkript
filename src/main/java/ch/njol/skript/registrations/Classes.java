@@ -411,11 +411,13 @@ public final class Classes {
     public static final <T> T parseSimple(final String s, final Class<T> c, final ParseContext context) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            for (final ClassInfo<?> info : getClassInfos()) {
+            assert classInfos != null : "Can't find class infos";
+            for (final ClassInfo<?> info : classInfos) {
                 final Parser<?> parser = info.getParser();
                 if (parser == null || !parser.canParse(context) || !c.isAssignableFrom(info.getC()))
                     continue;
                 log.clear();
+                // FIXME slow parse time on EnumClassInfo (skquery, skellet etc.)
                 @SuppressWarnings("unchecked") final T t = (T) parser.parse(s, context);
                 if (t != null) {
                     log.printLog();
