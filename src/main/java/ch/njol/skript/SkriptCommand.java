@@ -158,6 +158,10 @@ public final class SkriptCommand implements CommandExecutor {
         if (isFolder) {
             script = script.replace('/', File.separatorChar).replace('\\', File.separatorChar);
         } else if (!StringUtils.endsWithIgnoreCase(script, ".sk")) {
+            final int dot = script.lastIndexOf('.');
+            if (dot > 0 && !script.substring(dot + 1).equals("")) {
+                return null;
+            }
             script = script + ".sk";
         }
         if (script.startsWith("-"))
@@ -191,19 +195,19 @@ public final class SkriptCommand implements CommandExecutor {
         final RedirectingLogHandler r = SkriptLogger.startLogHandler(new RedirectingLogHandler(sender, ""));
         try {
             if ("reload".equalsIgnoreCase(args[0])) {
-                if ("all".equalsIgnoreCase(args[1])) {
+                if ("all".equalsIgnoreCase(args[1]) && args.length == 2) {
                     reloading(sender, "config and scripts");
                     Skript.reload();
                     reloaded(sender, r, "config and scripts");
-                } else if ("scripts".equalsIgnoreCase(args[1])) {
+                } else if ("scripts".equalsIgnoreCase(args[1]) && args.length == 2) {
                     reloading(sender, "scripts");
                     Skript.reloadScripts();
                     reloaded(sender, r, "scripts");
-                } else if ("config".equalsIgnoreCase(args[1])) {
+                } else if ("config".equalsIgnoreCase(args[1]) && args.length == 2) {
                     reloading(sender, "main config");
                     Skript.reloadMainConfig();
                     reloaded(sender, r, "main config");
-                } else if ("aliases".equalsIgnoreCase(args[1])) {
+                } else if ("aliases".equalsIgnoreCase(args[1]) && args.length == 2) {
                     reloading(sender, "aliases");
                     Skript.reloadAliases();
                     reloaded(sender, r, "aliases");
@@ -213,7 +217,7 @@ public final class SkriptCommand implements CommandExecutor {
                         return true;
                     if (!f.isDirectory()) {
                         if (f.getName().startsWith("-")) {
-                            info(sender, "reload.script disabled", f.getName().substring(1));
+                            info(sender, "reload.script disabled", f.getName().substring(1), StringUtils.join(args, " ", 1, args.length));
                             return true;
                         }
                         reloading(sender, "script", f.getName());
@@ -231,7 +235,7 @@ public final class SkriptCommand implements CommandExecutor {
                     }
                 }
             } else if ("enable".equalsIgnoreCase(args[0])) {
-                if ("all".equalsIgnoreCase(args[1])) {
+                if ("all".equalsIgnoreCase(args[1]) && args.length == 2) {
                     try {
                         info(sender, "enable.all.enabling");
                         final File[] files = toggleScripts(new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER), true).toArray(EmptyArrays.EMPTY_FILE_ARRAY);
@@ -302,7 +306,7 @@ public final class SkriptCommand implements CommandExecutor {
                     return true;
                 }
             } else if ("disable".equalsIgnoreCase(args[0])) {
-                if ("all".equalsIgnoreCase(args[1])) {
+                if ("all".equalsIgnoreCase(args[1]) && args.length == 2) {
                     setPriority();
                     Skript.disableScripts();
                     try {
@@ -456,7 +460,7 @@ public final class SkriptCommand implements CommandExecutor {
                     }
                 }
             } else if ("version".equalsIgnoreCase(args[0])) {
-                Skript.info(sender, "This server is running Skript version " + (Skript.version != null ? Skript.version : "unknown") + (Skript.updateChecked ? Skript.updateAvailable ? Skript.developmentVersion ? Skript.customVersion ? " (custom version)" : " (development build)" : " (update available)" : " (latest)" : " (update not checked)") + (Skript.isOptimized ? " (optimized, experimental)" : ""));
+                Skript.info(sender, "This server is running Skript version " + Skript.getVersionWithSuffix());
             } else if ("help".equalsIgnoreCase(args[0])) {
                 skriptCommandHelp.showHelp(sender);
             }
