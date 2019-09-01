@@ -139,7 +139,7 @@ public final class CommandHelp {
         Skript.message(sender, pre + " " + command + " " + argsColor + "...");
         for (final Entry<String, Object> e : arguments.entrySet()) {
             // TODO Make this a feature: Hiding commands / arguments in the help message
-            if (e.getKey().contains("track") || e.getKey().contains("untrack"))
+            if (e.getKey().contains("track") || e.getKey().contains("untrack") || e.getKey().contains("update")) // update is replaced with version for now
                 continue;
             Skript.message(sender, "  " + argsColor + e.getKey() + " " + GRAY + "-" + RESET + " " + e.getValue());
         }
