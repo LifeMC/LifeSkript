@@ -63,6 +63,7 @@ effect command token: !
 #	!set time to 6:00 - sets the time in the current world
 # The command can also be abused, so only give the permission to trusted players, like owners & co-owners:
 #	!spawn 20 ender dragons - will destroy a large part of the world in a short time if no protection is present
+#	!set player's balance to 999999999 - when a compatible economy plugin is installed, this will give the command sender as much money as desired
 #	!create explosion of force 10000 - likely crashes the server or at least hangs it up for a long time
 #	!ban all players - as the effect implies
 
@@ -185,6 +186,10 @@ disable expression is already a text warnings: false
 # Disables the "... is already a text, so you should not put it in one" warnings.
 # You should remove redundant %% used to make string conversions to fix these warnings.
 
+disable variable missing and/or warnings: false
+# Disables the "List is missing 'and' or 'or', defaulting to 'and'" warnings.
+# You should add 'and' (or 'or') for clarifying and not use this option in general.
+
 disable empty configuration section warnings: false
 # Disables the "Empty configuration section! You might want to ..." warnings.
 # You should make this true only if you need it, or you hate the warnings.
@@ -249,6 +254,7 @@ enable timings: true
 # When true, triggers in scripts will be present in timings reports.
 # Note that this requires PaperSpigot, TacoSpigot or LifeSpigot to work; on Bukkit/Spigot this option does nothing.
 # When false, timings are not enabled for scripts even if you're running PaperSpigot, TacoSpigot or LifeSpigot.
+# This does not have any impact on performance unless timings is enabled, we don't recommend changing this option.
 
 enable spike detector: default
 # When true, Skript will dedect server spikes/freezes and print useful warnings
@@ -381,3 +387,4 @@ version: ${project.version}
 # DO NOT CHANGE THIS VALUE MANUALLY!
 # This saves for which version of Skript this configuration was written for.
 # If it does not match the version of the .jar file then the config will be updated automatically.
+# You don't need to reset your config when upgrading Skript version.

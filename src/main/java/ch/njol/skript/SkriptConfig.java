@@ -130,7 +130,7 @@ public final class SkriptConfig {
 //                    SkriptTimings.setEnabled(false); // Just to be sure, deactivate timings support completely
                 }
             });
-    public static final Option<String> enableSpikeDedector = new Option<>("enable spike detector", "default")
+    public static final Option<String> enableSpikeDetector = new Option<>("enable spike detector", "default")
             .setter(t -> {
                 if ("default".equalsIgnoreCase(t))
                     SpikeDetector.setEnabled(enableTimings.value());
@@ -144,9 +144,12 @@ public final class SkriptConfig {
      */
     public static final Option<Boolean> warnWhenUsingNoneValues = new Option<>("warn when using none values in strings", false);
     public static final Option<Boolean> allowScriptsFromSubFolders = new Option<>("allow scripts from subfolders", true);
+    public static final Option<Boolean> executeFunctionsWithMissingParams = new Option<>("execute functions with missing parameters", true)
+            .optional(true)
+            .setter(t -> Function.executeWithNulls = t);
+    public static final Option<Boolean> disableMissingAndOrWarnings = new Option<>("disable variable missing and/or warnings", false);
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
-
     static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", true);
     //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(15, TimeUnit.MINUTES));//.setter(t -> {
     //final Task ct = Updater.checkerTask;
@@ -166,9 +169,6 @@ public final class SkriptConfig {
         }
         return null;
     });
-    public static final Option<Boolean> executeFunctionsWithMissingParams = new Option<>("execute functions with missing parameters", true)
-            .optional(true)
-            .setter(t -> Function.executeWithNulls = t);
     private static final Option<Verbosity> verbosity = new Option<>("verbosity", Verbosity.NORMAL, new EnumParser<>(Verbosity.class, "verbosity")).setter(SkriptLogger::setVerbosity);
     @Nullable
     static Config mainConfig;
@@ -299,7 +299,7 @@ public final class SkriptConfig {
                         }
                     }
 
-                    if (newConfig.setValues(mc, version.key, databases.key) || forceUpdate) { // new config is different or updates are forced
+                    if (newConfig.setValues(mc, version.key, databases.key, enableTimings.key) || forceUpdate) { // new config is different or updates are forced
                         final File bu = FileUtils.backup(configFile);
                         newConfig.getMainNode().set(version.key, Skript.getVersion().toString());
                         if (mc.getMainNode().get(databases.key) != null)

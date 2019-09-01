@@ -60,6 +60,7 @@ public final class SkriptEventHandler {
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
     private static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
+    private static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
     @Nullable
     public static Event last;
     static long startTrigger;
@@ -82,7 +83,10 @@ public final class SkriptEventHandler {
 
         // Skip the event if it's a frequently called event
         // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
-        if ((e instanceof PlayerMoveEvent || e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
+        if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < moveEventCooldown)
+            return;
+
+        if ((e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
             return;
 
         lastCall = System.currentTimeMillis();
