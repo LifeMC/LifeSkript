@@ -22,6 +22,7 @@
 
 package ch.njol.yggdrasil;
 
+import ch.njol.skript.Skript;
 import ch.njol.yggdrasil.Fields.FieldContext;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilRobustEnum;
 import org.eclipse.jdt.annotation.Nullable;
@@ -317,7 +318,7 @@ public final class Yggdrasil {
             assert false;
             return null;
         } catch (final InvocationTargetException e) {
-            throw new RuntimeException(e);
+            throw Skript.sneakyThrow(e.getCause());
         }
     }
 

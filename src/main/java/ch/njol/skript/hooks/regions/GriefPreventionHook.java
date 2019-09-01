@@ -118,7 +118,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
             } catch (final IllegalAccessException | IllegalArgumentException e) {
                 assert false : e;
             } catch (final InvocationTargetException e) {
-                throw new RuntimeException(e.getCause());
+                throw Skript.sneakyThrow(e.getCause());
             }
         } else {
             assert claimsField != null;

@@ -218,7 +218,7 @@ public final class ScriptLoader {
     }
 
     public static final Version getSourceVersionFrom(final Version normalVersion) {
-        final int sourceRevision = (int) Math.ceil(normalVersion.getRevision() / 10D);
+        final int sourceRevision = (int) Math.floor(normalVersion.getRevision() / 10D);
 
         final int major = normalVersion.getMajor();
         final int minor = normalVersion.getMinor();

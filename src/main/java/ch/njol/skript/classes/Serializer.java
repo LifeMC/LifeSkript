@@ -80,7 +80,7 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
             assert false;
             return null;
         } catch (final InvocationTargetException e) {
-            throw new RuntimeException(e);
+            throw Skript.sneakyThrow(e.getCause());
         }
     }
 

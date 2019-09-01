@@ -219,9 +219,9 @@ public final class SkriptAddon {
             Skript.outdatedError(e);
             return null;
         } catch (final IllegalAccessException | SecurityException e) {
-            throw new RuntimeException(e);
+            throw Skript.sneakyThrow(e);
         } catch (final InvocationTargetException e) {
-            throw new RuntimeException(e.getCause());
+            throw Skript.sneakyThrow(e.getCause());
         }
     }
 

@@ -25,6 +25,9 @@ package ch.njol.skript.bukkitutil;
 import ch.njol.skript.Skript;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.lang.reflect.Field;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * A reflective wrapper for accessing Spigot
  * config data, without manually parsing the spigot.yml.
@@ -34,9 +37,15 @@ public final class SpigotConfig {
     @Nullable
     public static final Class<?> configClass =
             Skript.classForName("org.spigotmc.SpigotConfig");
-
     public static final boolean spigotConfig =
             configClass != null;
+    private static final ConcurrentHashMap<String, Field> fieldCache =
+            new ConcurrentHashMap<>(100);
+
+    @Deprecated
+    private SpigotConfig() {
+        throw new UnsupportedOperationException("Static utility class");
+    }
 
     /**
      * Returns value of an option from spigot.yml, returns null
@@ -55,9 +64,25 @@ public final class SpigotConfig {
         if (config == null)
             return null;
         try {
-            return (T) config.getField(key).get(null);
+            Field field;
+
+            final Field cached = fieldCache.get(key);
+
+            if (cached != null)
+                field = cached;
+            else
+                field = config.getField(key);
+
+            if (cached == null && field != null) {
+                fieldCache.put(key, field);
+            }
+
+            if (field == null)
+                return null;
+
+            return (T) field.get(null);
         } catch (final NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw Skript.sneakyThrow(e);
         }
     }
 
