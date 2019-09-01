@@ -3138,39 +3138,47 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     try (JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
+                                final String name = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
+                                String lastField = null;
                                 try {
-                                    final String name = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
-
-                                    if (!isClassLoaded(name))
+                                    if (!isClassLoaded(e.getName()))
                                         continue;
 
                                     final Class<?> c = Class.forName(name, false, getTrueClassLoader());
 
                                     for (final Field f : c.getDeclaredFields()) {
-                                        if (!"findLoadedClass".equalsIgnoreCase(f.getName()) && Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive()) {
-                                            if (Modifier.isFinal(f.getModifiers())) {
-                                                modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-                                            }
+                                        final boolean isFinal = Modifier.isFinal(f.getModifiers());
+                                        if (!"findLoadedClass".equalsIgnoreCase(f.getName()) && Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive() && (!isFinal || f.getType() != String.class)) {
+                                            lastField = f.getName();
                                             f.setAccessible(true);
+                                            if (isFinal) {
+                                                modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL); // Remove final
+                                            }
                                             f.set(null, null);
+                                            if (isFinal) {
+                                                modifiers.setInt(f, f.getModifiers() & Modifier.FINAL); // Put it back again
+                                            }
                                         }
                                     }
                                 } catch (final Throwable tw) {
-                                    // If Vault or WorldGuard is not available
-                                    if (tw instanceof NoClassDefFoundError)
-                                        continue;
-                                    // If we can't set fields (e.g if it's final
-                                    // and we are on Java 9 or above)
-                                    if (tw instanceof IllegalAccessException)
-                                        continue;
-                                    // Happens when classes trying to register
-                                    // expressions etc. when disabling
-                                    if (tw instanceof SkriptAPIException)
-                                        continue;
+                                    if (!Boolean.getBoolean("skript.cleanupDebug")) {
+                                        // If Vault or WorldGuard is not available
+                                        if (tw instanceof NoClassDefFoundError)
+                                            continue;
+                                        // If we can't set fields (e.g if it's final
+                                        // and we are on Java 9 or above)
+                                        if (tw instanceof IllegalAccessException)
+                                            continue;
+                                        // Happens when classes trying to register
+                                        // expressions etc. when disabling
+                                        if (tw instanceof SkriptAPIException)
+                                            continue;
+                                    }
                                     // Only log in debug, an interesting
                                     // error occurred because we already skip general errors
-                                    if (testing() || debug())
-                                        tw.printStackTrace();
+                                    if (testing() || debug()) {
+                                        Skript.exception(tw, "Error when cleaning up field \"" + lastField + "\" in class \"" + name + "\"");
+                                    }
                                 }
                             }
                         }
