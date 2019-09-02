@@ -532,6 +532,9 @@
                     <!-- Target and arguments same as with javac. -->
                     <jvmTarget>1.8</jvmTarget>
                     <javacOptions>
+                        <javacOption>-encoding</javacOption>
+                        <javacOption>UTF-8</javacOption>
+
                         <javacOption>-O</javacOption>
                     </javacOptions>
                     <!-- Strictly define language and api version. -->
