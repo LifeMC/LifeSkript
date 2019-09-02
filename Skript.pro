@@ -1,8 +1,21 @@
 -injars 'target/Skript.jar'
 -outjars 'target/Skript-optimized (EXPERIMENTAL).jar'
 
-# If building with Java 9 or higher, change this to JMods directory.
+# Java 8 or older - All in one jar file
 -libraryjars '<java.home>/lib/rt.jar'
+
+# Java 9 or higher - Add required modules one by one
+#-libraryjars <java.home>/jmods/java.base.jmod(!**.jar;!module-info.class)
+#-libraryjars <java.home>/jmods/java.logging.jmod(!**.jar;!module-info.class)
+
+# We use sql module for the database stuff, variables etc.
+#-libraryjars <java.home>/jmods/java.sql.jmod(!**.jar;!module-info.class)
+
+# We use method handles, and it's not part of the java base module.
+#-libraryjars <java.home>/jmods/jdk.dynalink.jmod(!**.jar;!module-info.class)
+
+# We use management to get detailed information about threads etc.
+#-libraryjars <java.home>/jmods/java.management.jmod(!**.jar;!module-info.class)
 
 # Bukkit, Jansi and Timings - Bukkit is required, Jansi and Timings are optional.
 -libraryjars '<user.home>/.m2/repository/org/bukkit/bukkit/1.8.8-R0.1-SNAPSHOT/bukkit-1.8.8-R0.1-SNAPSHOT.jar'
@@ -27,7 +40,7 @@
 -dontskipnonpubliclibraryclassmembers
 -allowaccessmodification
 
--target 1.8
+-target 8
 -forceprocessing
 
 # Class merging & marking final: Mostly breaks binary compatibility and causes strange errors
