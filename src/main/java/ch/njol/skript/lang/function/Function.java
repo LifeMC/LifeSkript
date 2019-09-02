@@ -110,7 +110,7 @@ public abstract class Function<T> {
         final FunctionEvent<? extends T> e = new FunctionEvent<>(!Bukkit.isPrimaryThread(), this);
         for (int i = 0; i < parameters.length; i++) {
             final Parameter<?> p = parameters[i];
-            final Object[] val = i < params.length ? params[i] : p.def != null ? p.def.getArray(e) : null;
+            final Object[] val = i < params.length ? ps[i] : p.def != null ? p.def.getArray(e) : null;
             if (!executeWithNulls && !p.isNone && (val == null || val.length == 0))
                 return null;
             ps[i] = val;

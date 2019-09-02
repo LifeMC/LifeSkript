@@ -2493,10 +2493,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         if (args.length == 1) {
                             final List<String> completions = Arrays.asList("reload", "enable", "disable", /*"update",*/ "version", "help");
                             if (alias != null) {
-                                completions.sort((a, b) -> a.startsWith(args[0]) ? -1 : b.startsWith(args[0]) ? 1 : 0);
+                                if (completions.size() > 1 && !args[0].isEmpty())
+                                    completions.sort((a, b) -> a.startsWith(args[0]) ? -1 : b.startsWith(args[0]) ? 1 : 0);
                                 return completions;
                             }
-                        } else if (args.length == 2) {
+                        } else {
                             if (alias != null) {
                                 if ("reload".equalsIgnoreCase(args[0])) {
                                     final Collection<String> fileNames = new ArrayList<>();
@@ -2509,7 +2510,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                     // FIXME infinite tab complete problem when tab completing scripts include space character
                                     fullCompletions.addAll(fileNames);
-                                    fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
+                                    if (fullCompletions.size() > 1 && !args[1].isEmpty())
+                                        fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
 
                                     return fullCompletions;
                                 } else if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
@@ -2523,12 +2526,17 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     final List<String> fullCompletions = new ArrayList<>(staticCompletions);
 
                                     fullCompletions.addAll(fileNames);
-                                    fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
+                                    if (fullCompletions.size() > 1 && !args[1].isEmpty())
+                                        fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
 
                                     return fullCompletions;
-                                } else if ("update".equalsIgnoreCase(args[0])) {
+                                } else if (args.length == 2 && "update".equalsIgnoreCase(args[0])) {
                                     final List<String> completions = Arrays.asList("check", "changes", "download");
-                                    completions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
+                                    if (completions.size() > 1 && !args[1].isEmpty())
+                                        completions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
+
                                     return completions;
                                 }
                             }
