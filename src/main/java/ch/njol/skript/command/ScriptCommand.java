@@ -130,13 +130,15 @@ public final class ScriptCommand implements CommandExecutor {
         if (Skript.logHigh()) {
             for (final Iterator<String> iterator = aliases.iterator(); iterator.hasNext(); ) {
                 final String alias = iterator.next();
-                if (alias.equals(label)) {
+                if (alias.equalsIgnoreCase(label)) {
                     Skript.warning("The alias \"" + alias + "\" of the command \"" + name + "\" is same as the command itself and it is redundant, remove it.");
                     iterator.remove();
                 }
             }
         } else
-            aliases.removeIf(s -> s.equals(label));
+            aliases.removeIf(s -> s.equalsIgnoreCase(label));
+        aliases.replaceAll(String::toLowerCase);
+
         this.aliases = aliases;
         activeAliases = new ArrayList<>(aliases);
 

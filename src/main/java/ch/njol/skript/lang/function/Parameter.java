@@ -96,10 +96,22 @@ public final class Parameter<T> {
 //			} else {
             final RetainingLogHandler log = SkriptLogger.startRetainingLog();
             try {
-                if (type.getC() == String.class) {
-                    if (def.startsWith("\"") && def.endsWith("\""))
-                        d = (Expression<? extends T>) VariableString.newInstance("" + def.substring(1, def.length() - 1));
-                    else {
+                final String unquoted = "" + def.substring(1, def.length() - 1);
+                if (def.startsWith("\"") && def.endsWith("\"")) { // Quoted string; always parse as string
+                    // Don't ever parse strings as objects, it creates UnparsedLiterals
+                    d = (Expression<? extends T>) VariableString.newInstance(unquoted);
+                } else if (type.getC() == String.class) { // String return type requested
+                    /*
+                     * For historical reasons, default values of string
+                     * parameters needs not to be quoted.
+                     *
+                     * This is true even for strings with spaces, which is very confusing. We issue a
+                     * warning for it now, and the behavior may be removed in a future release.
+                     */
+                    if (def.startsWith("\"") && def.endsWith("\"")) {
+                        d = (Expression<? extends T>) VariableString.newInstance(unquoted);
+                    } else {
+                        // Usage of SimpleLiteral is also deprecated; not worth the risk to change it
                         if (def.contains(" ")) // Warn about whitespace in unquoted string
                             Skript.warning("'" + def + "' contains spaces and is unquoted, which is discouraged");
                         d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
