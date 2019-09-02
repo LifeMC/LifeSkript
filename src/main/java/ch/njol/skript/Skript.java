@@ -1921,6 +1921,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
                     final String replacedContents = contents.replace("Hanging: true", "Hanging: false").trim();
                     if (!contents.equalsIgnoreCase(replacedContents)) {
+                        FileUtils.backup(skelletConfig);
                         Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
                         madeChanges = true;
                     }
@@ -1934,6 +1935,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     // See: https://github.com/LifeMC/LifeSkript/issues/25
                     final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
                     if (!contents.equalsIgnoreCase(replacedContents)) {
+                        FileUtils.backup(paperFile);
                         Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
                         madeChanges = true;
                     }
@@ -1981,6 +1983,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
                                 replacedContents = replacedContents.replace(beforeJar, fileEncoding);
                                 if (!contents.equalsIgnoreCase(replacedContents)) {
+                                    FileUtils.backup(startupScript);
                                     Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
                                     madeChanges = true;
                                 }
@@ -2026,6 +2029,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         }
                     }
                     if (notUsingFixedSharpSk) { // Not using the latest fixed version
+                        FileUtils.backup(sharpSkJar);
+
                         try (final InputStream stream = Skript.invoke(new URL("https://github.com/TheDGOfficial/SharpSK/releases/download/" + sharpSkversion + "/SharpSK-" + sharpSkversion + ".jar").openConnection(), connection -> {
                             try {
                                 connection.setRequestProperty("User-Agent", WebUtils.USER_AGENT);

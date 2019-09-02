@@ -559,7 +559,7 @@
                     <fork>true</fork>
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
                     <compilerId>eclipse</compilerId>
-                    <compilerVersion>1.8</compilerVersion>
+                    <compilerVersion>8</compilerVersion>
                     <compilerArgs>
                         <arg>-properties</arg>
                         <arg>.settings/org.eclipse.jdt.core.prefs</arg>
