@@ -65,7 +65,7 @@ public final class ExprPrefixSuffix extends SimplePropertyExpression<Player, Str
     }
 
     @Override
-    public Class<? extends String> getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 

@@ -45,6 +45,7 @@ public final class Time implements YggdrasilSerializable {
     private static final Message m_error_24_hours = new Message("time.errors.24 hours");
     private static final Message m_error_12_hours = new Message("time.errors.12 hours");
     private static final Message m_error_60_minutes = new Message("time.errors.60 minutes");
+    private static final Pattern TIME_PATTERN = Pattern.compile("\\d?\\d:\\d\\d");
     private final int time;
 
     public Time() {
@@ -77,7 +78,7 @@ public final class Time implements YggdrasilSerializable {
 //		if (s.matches("\\d+")) {
 //			return new Time(Integer.parseInt(s));
 //		} else
-        if (s.matches("\\d?\\d:\\d\\d")) {
+        if (TIME_PATTERN.matcher(s).matches()) {
             int hours = Utils.parseInt(s.split(":")[0]);
             if (hours == 24) { // allows to write 24:00 - 24:59 instead of 0:00-0:59
                 hours = 0;

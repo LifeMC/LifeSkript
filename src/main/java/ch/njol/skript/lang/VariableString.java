@@ -527,7 +527,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @Override
-    public Class<? extends String> getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 
@@ -563,7 +563,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @Override
-    public Iterator<? extends String> iterator(final Event e) {
+    public Iterator<String> iterator(final Event e) {
         return new SingleItemIterator<>(toString(e));
     }
 

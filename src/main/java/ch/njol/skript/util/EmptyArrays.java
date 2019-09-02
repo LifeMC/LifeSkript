@@ -24,7 +24,11 @@ package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.hooks.regions.classes.Region;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Literal;
+import ch.njol.skript.lang.function.Parameter;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -85,6 +89,12 @@ public final class EmptyArrays {
 
     public static final Experience[] EMPTY_EXPERIENCE_ARRAY = new Experience[0];
     public static final Region[] EMPTY_REGION_ARRAY = new Region[0];
+
+    public static final Expression<?>[] EMPTY_EXPRESSION_ARRAY = new Expression<?>[0];
+    public static final Literal<?>[] EMPTY_LITERAL_ARRAY = new Literal<?>[0];
+
+    public static final OfflinePlayer[] EMPTY_OFFLINEPLAYER_ARRAY = new OfflinePlayer[0];
+    public static final Parameter<?>[] EMPTY_PARAMETER_ARRAY = new Parameter<?>[0];
 
     private EmptyArrays() {
         throw new UnsupportedOperationException("Static class");

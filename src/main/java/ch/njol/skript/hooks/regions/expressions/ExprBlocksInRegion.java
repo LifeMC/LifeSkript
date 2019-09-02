@@ -29,6 +29,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.iterator.ArrayIterator;
 import ch.njol.util.coll.iterator.EmptyIterator;
@@ -71,7 +72,7 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
         final ArrayList<Block> r = new ArrayList<>();
         while (iter.hasNext())
             r.add(iter.next());
-        return r.toArray(new Block[0]);
+        return r.toArray(EmptyArrays.EMPTY_BLOCK_ARRAY);
     }
 
     @Override

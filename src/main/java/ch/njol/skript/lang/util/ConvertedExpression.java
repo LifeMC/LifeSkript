@@ -124,7 +124,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
     public Class<?>[] acceptChange(final ChangeMode mode) {
         final Class<?>[] r = source.acceptChange(mode);
         if (r == null) {
-            ClassInfo<? super T> rti;
+            final ClassInfo<? super T> rti;
             returnTypeInfo = rti = Classes.getSuperClassInfo(getReturnType());
             final Changer<?> c = rti.getChanger();
             return c == null ? null : c.acceptChange(mode);

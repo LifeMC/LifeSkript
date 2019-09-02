@@ -32,6 +32,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -55,6 +56,7 @@ public final class Functions {
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
     private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>(100);
+    private static final Pattern functionNamePatternCompiled = Pattern.compile(functionNamePattern);
     @Nullable
     public static ScriptFunction<?> currentFunction;
 
@@ -68,7 +70,7 @@ public final class Functions {
      */
     public static final JavaFunction<?> registerFunction(final JavaFunction<?> function) {
         Skript.checkAcceptRegistrations();
-        if (!function.name.matches(functionNamePattern))
+        if (!functionNamePatternCompiled.matcher(function.name).matches())
             throw new SkriptAPIException("Invalid function name '" + function.name + "'");
         if (functions.containsKey(function.name))
             throw new SkriptAPIException("Duplicate function " + function.name);
@@ -160,7 +162,7 @@ public final class Functions {
         if (Skript.debug() || node.debug())
             Skript.debug("function " + name + "(" + StringUtils.join(params, ", ") + ")" + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ":");
 
-        @SuppressWarnings("null") final Function<?> f = new ScriptFunction<>(name, params.toArray(new Parameter[0]), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
+        @SuppressWarnings("null") final Function<?> f = new ScriptFunction<>(name, params.toArray(EmptyArrays.EMPTY_PARAMETER_ARRAY), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
 //		functions.put(name, new FunctionData(f)); // in constructor
         return f;
     }

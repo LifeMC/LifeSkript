@@ -43,6 +43,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Time;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
@@ -724,7 +725,7 @@ public final class SkriptParser {
      * <p>
      * Use this method instead of catching exceptions, it is faster.
      */
-    public static final boolean isInteger(final @Nullable String str) {
+    public static final boolean isInteger(final @Nullable CharSequence str) {
         if (str == null) {
             return false;
         }
@@ -753,7 +754,7 @@ public final class SkriptParser {
      * <p>
      * Use this method instead of catching exceptions, it is faster.
      */
-    public static final boolean isIntegerOrDouble(final @Nullable String str) {
+    public static final boolean isIntegerOrDouble(final @Nullable CharSequence str) {
         if (str == null) {
             return false;
         }
@@ -1541,10 +1542,10 @@ public final class SkriptParser {
                 exprRetTypes[i] = ts.get(i).getReturnType();
 
             if (isLiteralList) {
-                final Literal<?>[] ls = ts.toArray(new Literal[0]);
+                final Literal<?>[] ls = ts.toArray(EmptyArrays.EMPTY_LITERAL_ARRAY);
                 return new LiteralList(ls, Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
-            final Expression<?>[] es = ts.toArray(new Expression[0]);
+            final Expression<?>[] es = ts.toArray(EmptyArrays.EMPTY_EXPRESSION_ARRAY);
             return new ExpressionList(es, Utils.getSuperType(exprRetTypes), !and.isFalse());
         } finally {
             log.stop();
@@ -1592,7 +1593,7 @@ public final class SkriptParser {
                     params = new Expression[]{ps};
                 }
             } else {
-                params = new Expression[0];
+                params = EmptyArrays.EMPTY_EXPRESSION_ARRAY;
             }
 
             final Function<?> function = Functions.getFunction(functionName);
@@ -1816,7 +1817,7 @@ public final class SkriptParser {
                     end = pattern.indexOf('>', j + 1);// not next()
                     if (end == -1)
                         throw new MalformedPatternException(pattern, "Missing closing regex bracket '>'");
-                    Pattern p;
+                    final Pattern p;
                     try {
                         p = Pattern.compile(pattern.substring(j + 1, end));
                     } catch (final PatternSyntaxException e) {

@@ -31,6 +31,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public final class LoggerFilter implements Filter, Closeable {
+    @SuppressWarnings("NonConstantLogger")
     private final Logger l;
     private final Collection<Filter> filters = new ArrayList<>(5);
     @Nullable

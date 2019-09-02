@@ -58,7 +58,7 @@ public enum StructureType {
     }
 
     private final TreeType[] types;
-    private Noun name;
+    private final Noun name;
 
     StructureType(final TreeType... types) {
         this.types = types;

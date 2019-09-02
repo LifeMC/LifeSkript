@@ -74,7 +74,7 @@ public final class ExprRegionsAt extends SimpleExpression<Region> {
         final ArrayList<Region> r = new ArrayList<>();
         for (final Location l : ls)
             r.addAll(RegionsPlugin.getRegionsAt(l));
-        return r.toArray(new Region[0]);
+        return r.toArray(EmptyArrays.EMPTY_REGION_ARRAY);
     }
 
     @Override

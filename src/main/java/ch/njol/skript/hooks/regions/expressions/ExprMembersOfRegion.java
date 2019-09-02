@@ -30,6 +30,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
@@ -69,7 +70,7 @@ public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
         for (final Region region : regions.getArray(e)) {
             r.addAll(owners ? region.getOwners() : region.getMembers());
         }
-        return r.toArray(new OfflinePlayer[0]);
+        return r.toArray(EmptyArrays.EMPTY_OFFLINEPLAYER_ARRAY);
     }
 
     @Override

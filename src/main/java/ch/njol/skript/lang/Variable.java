@@ -260,7 +260,7 @@ public final class Variable<T> implements Expression<T> {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    private Object get(final Event e) {
+    private final Object get(final Event e) {
         final Object val = getRaw(e);
         if (!list)
             return val;
@@ -270,12 +270,7 @@ public final class Variable<T> implements Expression<T> {
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
         for (final Entry<String, ?> v : ((Map<String, ?>) val).entrySet()) {
             if (v.getKey() != null && v.getValue() != null) {
-                Object o;
-                if (v.getValue() instanceof Map)
-                    o = ((Map<String, ?>) v.getValue()).get(null);
-                else
-                    o = v.getValue();
-                l.add(convertIfOldPlayer(name + v.getKey(), e, o));
+                l.add(convertIfOldPlayer(name + v.getKey(), e, v.getValue() instanceof Map ? ((Map<String, ?>) v.getValue()).get(null) : v.getValue()));
             }
         }
         return l.toArray();

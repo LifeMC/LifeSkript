@@ -25,6 +25,7 @@ package ch.njol.skript.lang;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleLiteral;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
@@ -237,7 +238,7 @@ public class ExpressionList<T> implements Expression<T> {
             if (r.isEmpty())
                 return null;
         }
-        return r.toArray(new Class[0]);
+        return r.toArray(EmptyArrays.EMPTY_CLASS_ARRAY);
     }
 
     @Override

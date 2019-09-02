@@ -147,7 +147,7 @@ public final class FunctionReference<T> {
 
     @Nullable
     @SuppressWarnings({"unused", "null", "unchecked"})
-    protected T[] execute(final Event e) {
+    T[] execute(final Event e) {
         if (function == null)
             function = (Function<? extends T>) Functions.getFunction(functionName);
         if (function == null) {

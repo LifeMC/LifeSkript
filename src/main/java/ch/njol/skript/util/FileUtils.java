@@ -123,7 +123,7 @@ public final class FileUtils {
      */
     public static final void save(final InputStream in, final File file) throws IOException {
         file.getParentFile().mkdirs();
-        try (FileOutputStream out = new FileOutputStream(file)) {
+        try (final FileOutputStream out = new FileOutputStream(file)) {
             final byte[] buffer = new byte[16 * 1024];
             int read;
             while ((read = in.read(buffer)) > 0) {

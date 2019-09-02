@@ -30,6 +30,7 @@ import ch.njol.skript.hooks.VaultHook;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.OfflinePlayer;
@@ -79,7 +80,7 @@ public class ExprGroup extends SimpleExpression<String> {
             else
                 Collections.addAll(groups, VaultHook.permission.getPlayerGroups(null, player));
         }
-        return groups.toArray(new String[0]);
+        return groups.toArray(EmptyArrays.EMPTY_STRING_ARRAY);
     }
 
     @Override
@@ -133,7 +134,7 @@ public class ExprGroup extends SimpleExpression<String> {
 
     @SuppressWarnings("null")
     @Override
-    public Class<? extends String> getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 

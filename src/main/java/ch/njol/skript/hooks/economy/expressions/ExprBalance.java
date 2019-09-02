@@ -56,7 +56,7 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
     }
 
     @Override
-    public Class<? extends Money> getReturnType() {
+    public Class<Money> getReturnType() {
         return Money.class;
     }
 
