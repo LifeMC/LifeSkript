@@ -3126,9 +3126,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             // Set priority of the variable save thread to speed up variable save process
 
-            for (final Thread thread : Skript.getAllThreads())
-                if (thread != null && thread.getName().contains("variable save thread") && thread.getPriority() != Thread.MAX_PRIORITY)
-                    thread.setPriority(Thread.MAX_PRIORITY);
+            final Map<Thread, Integer> saveThreads = new HashMap<>();
+
+            for (final Thread thread : Skript.getAllThreads()) {
+                if (thread != null) {
+                    if (thread.getName().toLowerCase(Locale.ENGLISH).contains("variable save thread".toLowerCase(Locale.ENGLISH))) {
+                        final int oldPriority = thread.getPriority();
+                        thread.setPriority(Thread.MAX_PRIORITY);
+
+                        saveThreads.put(thread, oldPriority);
+                    }
+                }
+            }
 
             // Special variables calls, not on the closeable list to ensure it lastly closes.
 
@@ -3136,6 +3145,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 VariablesStorage.instance.close();
 
             Variables.close();
+
+            for (final Map.Entry<Thread, Integer> entry : saveThreads.entrySet()) {
+                final Thread thread = entry.getKey();
+                final Integer oldPriority = entry.getValue();
+
+                thread.setPriority(oldPriority);
+            }
 
             if (Skript.logHigh())
                 info("Saved variables - Starting cleaning up of fields. If server freezes here, open a bug report issue at the github repository.");
