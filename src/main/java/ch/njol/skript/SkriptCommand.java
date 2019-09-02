@@ -292,7 +292,7 @@ public final class SkriptCommand implements CommandExecutor {
                         return true;
                     }
                     info(sender, "enable.folder.enabling", f.getName(), scripts.size());
-                    final File[] ss = scripts.toArray(new File[0]);
+                    final File[] ss = scripts.toArray(EmptyArrays.EMPTY_FILE_ARRAY);
                     assert ss != null;
                     setPriority();
                     final ScriptInfo i = ScriptLoader.loadScripts(ss);

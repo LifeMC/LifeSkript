@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
@@ -75,7 +76,7 @@ public final class ExprMessage extends SimpleExpression<String> {
             if (c.isInstance(e))
                 return new String[]{type.get(e)};
         }
-        return new String[0];
+        return EmptyArrays.EMPTY_STRING_ARRAY;
     }
 
     @SuppressWarnings("unchecked")

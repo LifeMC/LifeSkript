@@ -93,7 +93,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     @Override
     public final void register(final Trigger t) {
         this.t = t;
-        int[] taskIDs;
+        final int[] taskIDs;
         if (worlds == null) {
             taskIDs = new int[]{Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), () -> execute(null), period.getTicks_i(), period.getTicks_i())};
         } else {

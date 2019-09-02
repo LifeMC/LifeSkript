@@ -65,7 +65,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
      * @see ch.njol.skript.lang.Expression#getReturnType()
      */
     @Override
-    public Class<? extends String> getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 

@@ -30,6 +30,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import ch.njol.util.Predicate;
@@ -83,7 +84,7 @@ public final class CondIsBanned extends Condition {
                 return ((OfflinePlayer) o).isBanned();
             } else if (o instanceof String) {
                 //noinspection RedundantCast
-                return Bukkit.getIPBans().contains((String) o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(new OfflinePlayer[0]), (Predicate<OfflinePlayer>) t -> t != null && o.equals(t.getName()));
+                return Bukkit.getIPBans().contains((String) o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(EmptyArrays.EMPTY_OFFLINEPLAYER_ARRAY), (Predicate<OfflinePlayer>) t -> t != null && o.equals(t.getName()));
             }
             assert false;
             return false;

@@ -54,7 +54,7 @@ public final class ExprColoured extends PropertyExpression<String, String> {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        setExpr((Expression<? extends String>) exprs[0]);
+        setExpr((Expression<String>) exprs[0]);
         color = matchedPattern == 0;
         return true;
     }

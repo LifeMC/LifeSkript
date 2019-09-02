@@ -80,7 +80,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
             Skript.error("The Java Virtual Machine running on this server does not support the MD5 algorithm, thus you cannot use the 'hash' expression.");
             return false;
         }
-        setExpr((Expression<? extends String>) exprs[0]);
+        setExpr((Expression<String>) exprs[0]);
         return true;
     }
 

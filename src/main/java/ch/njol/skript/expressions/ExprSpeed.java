@@ -81,7 +81,7 @@ public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
 
         for (final Player p : getExpr().getArray(e)) {
             final float oldSpeed = walk ? p.getWalkSpeed() : p.getFlySpeed();
-            float newSpeed;
+            final float newSpeed;
 
             switch (mode) {
                 case SET:

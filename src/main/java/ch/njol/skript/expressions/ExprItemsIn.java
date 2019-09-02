@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Variable;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.InventorySlot;
 import ch.njol.skript.util.Slot;
 import ch.njol.util.Kleenean;
@@ -77,7 +78,7 @@ public final class ExprItemsIn extends SimpleExpression<Slot> {
                     r.add(new InventorySlot(invi, i));
             }
         }
-        return r.toArray(new Slot[0]);
+        return r.toArray(EmptyArrays.EMPTY_SLOT_ARRAY);
     }
 
     @Override

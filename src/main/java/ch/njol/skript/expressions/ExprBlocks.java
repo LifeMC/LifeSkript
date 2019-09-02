@@ -112,7 +112,7 @@ public final class ExprBlocks extends SimpleExpression<Block> {
         final ArrayList<Block> r = new ArrayList<>();
         for (final Block b : new IteratorIterable<>(iter))
             r.add(b);
-        return r.toArray(new Block[0]);
+        return r.toArray(EmptyArrays.EMPTY_BLOCK_ARRAY);
     }
 
     @Override

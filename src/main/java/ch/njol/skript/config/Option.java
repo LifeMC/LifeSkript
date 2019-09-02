@@ -108,7 +108,7 @@ public final class Option<T> {
         this.parsedValue = value;
     }
 
-    protected void onValueChange() {
+    void onValueChange() {
         if (setter != null)
             setter.set(parsedValue);
     }

@@ -93,6 +93,8 @@ public final class SkriptParser {
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
     private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
+    public static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
+    public static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
     public final ParseContext context;
     final String expr;
     private final int flags;
@@ -1346,10 +1348,10 @@ public final class SkriptParser {
 
             if (isLiteralList) { // If it's a literal list
                 //noinspection SuspiciousToArrayCall
-                final Literal<T>[] ls = ts.toArray(new Literal[0]);
+                final Literal<T>[] ls = ts.toArray(EMPTY_RAW_LITERAL_ARRAY);
                 return new LiteralList<>(ls, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
-            final Expression<T>[] es = ts.toArray(new Expression[0]);
+            final Expression<T>[] es = ts.toArray(EMPTY_RAW_EXPRESSION_ARRAY);
             return new ExpressionList<>(es, (Class<T>) Utils.getSuperType(exprRetTypes), !and.isFalse());
         } finally {
             log.stop();

@@ -179,7 +179,7 @@ public final class Language {
 
         if (addon.getLanguageFileDirectory() == null)
             return;
-        Map<String, String> en;
+        final Map<String, String> en;
         try (final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang")) {
             if (din == null)
                 throw new IllegalStateException(addon + " is missing the required english.lang file!");

@@ -22,6 +22,7 @@
 
 package ch.njol.skript.command;
 
+import ch.njol.skript.util.EmptyArrays;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
@@ -40,7 +41,7 @@ public final class EffectCommandEvent extends CommandEvent {
     }
 
     public EffectCommandEvent(final boolean async, final CommandSender sender, final String command) {
-        super(async, sender, command, new String[0]);
+        super(async, sender, command, EmptyArrays.EMPTY_STRING_ARRAY);
     }
 
     public static final HandlerList getHandlerList() {

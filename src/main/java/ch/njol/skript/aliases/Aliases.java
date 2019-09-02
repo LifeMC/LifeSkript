@@ -596,7 +596,7 @@ public final class Aliases {
         if (c == -1)
             c = s.length();
         ItemData data = null;
-        ItemType i;
+        final ItemType i;
         if (c != s.length()) {
             data = parseData(s.substring(c + 1));
             if (data == null) {

@@ -192,7 +192,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     }
                     db.query("DELETE FROM " + OLD_TABLE_NAME + " WHERE value IS NULL");
                     db.query("DELETE FROM old USING " + OLD_TABLE_NAME + " AS old, " + TABLE_NAME + " AS new WHERE old.name = new.name");
-                    try (ResultSet r = db.query("SELECT * FROM " + OLD_TABLE_NAME + " LIMIT 1")) {
+                    try (final ResultSet r = db.query("SELECT * FROM " + OLD_TABLE_NAME + " LIMIT 1")) {
                         if (r.next()) {// i.e. the old table is not empty
                             Skript.error("Could not successfully convert & transfer all variables to the new table in the database '" + databaseName + "'. " + "Variables that could not be transferred are left in the old table and Skript will reattempt to transfer them whenever it starts until the old table is empty or is manually deleted. " + "Please note that variables recreated by scripts will count as converted and will be removed from the old table on the next restart.");
                         } else {
@@ -456,7 +456,7 @@ public final class DatabaseStorage extends VariablesStorage {
     }
 
     @SuppressWarnings({"null", "unused"})
-    protected void checkDatabase() {
+    void checkDatabase() {
         try {
             final long lastRowID; // local variable as this is used to clean the database below
 
@@ -653,7 +653,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         Variables.variableLoaded(name, null, hadNewTable ? temp : DatabaseStorage.this);
                     } else {
                         final ClassInfo<?> c = Classes.getClassInfoNoError(type);
-                        Serializer<?> s;
+                        final Serializer<?> s;
                         if (c == null || (s = c.getSerializer()) == null) {
                             Skript.error("Cannot load the variable {" + name + "} from the database, because the type '" + type + "' cannot be recognised or not stored in variables");
                             continue;

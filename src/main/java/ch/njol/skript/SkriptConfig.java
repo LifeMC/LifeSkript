@@ -188,7 +188,7 @@ public final class SkriptConfig {
     }
 
     public static final EventPriority getPreviousPriority(final EventPriority priority) {
-        EventPriority previousPriority;
+        final EventPriority previousPriority;
 
         switch (priority) {
             case MONITOR:

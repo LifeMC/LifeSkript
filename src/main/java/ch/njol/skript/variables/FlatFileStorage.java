@@ -81,7 +81,7 @@ public final class FlatFileStorage extends VariablesStorage {
     private Task saveTask;
     private boolean loadError;
 
-    protected FlatFileStorage(final String name) {
+    FlatFileStorage(final String name) {
         super(name);
     }
 
@@ -385,7 +385,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
                     final File tempFile = new File(Skript.getInstance().getDataFolder(), "variables.csv.temp");
 
-                    try (PrintWriter pw = new PrintWriter(tempFile, "UTF-8")) {
+                    try (final PrintWriter pw = new PrintWriter(tempFile, "UTF-8")) {
                         pw.println("# === Skript's variable storage ===");
                         pw.println("# Please do not modify this file manually!");
                         pw.println("#");

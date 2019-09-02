@@ -33,6 +33,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.iterator.ArrayIterator;
 import ch.njol.util.coll.iterator.CheckedIterator;
@@ -87,15 +88,15 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
         for (final ItemStack is : new IteratorIterable<>(iterator(e)))
             r.add(is);
         if (types instanceof Literal)
-            return buffer = r.toArray(new ItemStack[0]);
-        return r.toArray(new ItemStack[0]);
+            return buffer = r.toArray(EmptyArrays.EMPTY_ITEMSTACK_ARRAY);
+        return r.toArray(EmptyArrays.EMPTY_ITEMSTACK_ARRAY);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     @Nullable
     public Iterator<ItemStack> iterator(final Event e) {
-        Iterator<ItemStack> iter;
+        final Iterator<ItemStack> iter;
         if (types == null) {
             iter = new Iterator<ItemStack>() {
 

@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -55,7 +56,7 @@ public final class ExprParseError extends SimpleExpression<String> {
     @Override
     @SuppressWarnings("null")
     protected String[] get(final Event e) {
-        return ExprParse.lastError == null ? new String[0] : new String[]{ExprParse.lastError};
+        return ExprParse.lastError == null ? EmptyArrays.EMPTY_STRING_ARRAY : new String[]{ExprParse.lastError};
     }
 
     @Override

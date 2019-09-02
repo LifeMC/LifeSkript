@@ -64,7 +64,7 @@ public final class SpigotConfig {
         if (config == null)
             return null;
         try {
-            Field field;
+            final Field field;
 
             final Field cached = fieldCache.get(key);
 

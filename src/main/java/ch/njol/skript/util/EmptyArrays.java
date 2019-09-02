@@ -23,6 +23,7 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.hooks.regions.classes.Region;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.Literal;
@@ -95,6 +96,9 @@ public final class EmptyArrays {
 
     public static final OfflinePlayer[] EMPTY_OFFLINEPLAYER_ARRAY = new OfflinePlayer[0];
     public static final Parameter<?>[] EMPTY_PARAMETER_ARRAY = new Parameter<?>[0];
+
+    public static final ClassInfo<?>[] EMPTY_CLASSINFO_ARRAY = new ClassInfo<?>[0];
+    public static final Slot[] EMPTY_SLOT_ARRAY = new Slot[0];
 
     private EmptyArrays() {
         throw new UnsupportedOperationException("Static class");

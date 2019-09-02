@@ -31,6 +31,7 @@ import ch.njol.skript.lang.function.Parameter;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Date;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
 import org.bukkit.Bukkit;
@@ -249,7 +250,7 @@ public final class DefaultFunctions {
             @Nullable
             public World[] execute(final FunctionEvent<? extends World> e, final Object[][] params) {
                 final World w = Bukkit.getWorld((String) params[0][0]);
-                return w == null ? new World[0] : new World[]{w};
+                return w == null ? EmptyArrays.EMPTY_WORLD_ARRAY : new World[]{w};
             }
         }).description("Gets a world from its name.").examples("set {_nether} to world(\"%{_world}%_nether\")").since("2.2");
 

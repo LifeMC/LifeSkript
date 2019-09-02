@@ -78,7 +78,7 @@ public final class EffPoison extends Effect {
     protected void execute(final Event e) {
         for (final LivingEntity le : entites.getArray(e)) {
             if (!cure) {
-                Timespan dur;
+                final Timespan dur;
                 int d = (int) (duration != null && (dur = duration.getSingle(e)) != null ? dur.getTicks_i() >= Integer.MAX_VALUE ? Integer.MAX_VALUE : dur.getTicks_i() : DEFAULT_DURATION);
                 if (le.hasPotionEffect(PotionEffectType.POISON)) {
                     for (final PotionEffect pe : le.getActivePotionEffects()) {

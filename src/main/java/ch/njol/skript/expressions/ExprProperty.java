@@ -66,7 +66,7 @@ public final class ExprProperty extends SimpleExpression<String> {
      * @see ch.njol.skript.lang.Expression#getReturnType()
      */
     @Override
-    public Class<? extends String> getReturnType() {
+    public Class<String> getReturnType() {
         return String.class;
     }
 

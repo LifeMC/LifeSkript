@@ -156,7 +156,7 @@ public final class BukkitClasses {
             protected Block deserialize(final Fields fields) throws StreamCorruptedException {
                 final World w = fields.getObject("world", World.class);
                 final int x = fields.getPrimitive("x", int.class), y = fields.getPrimitive("y", int.class), z = fields.getPrimitive("z", int.class);
-                Block b;
+                final Block b;
                 if (w == null || (b = w.getBlockAt(x, y, z)) == null)
                     throw new StreamCorruptedException();
                 return b;
@@ -511,13 +511,13 @@ public final class BukkitClasses {
             protected OfflinePlayer deserialize(final Fields fields) throws StreamCorruptedException {
                 if (fields.contains("uuid") && uuidSupported) {
                     final UUID uuid = fields.getObject("uuid", UUID.class);
-                    OfflinePlayer p;
+                    final OfflinePlayer p;
                     if (uuid == null || (p = Bukkit.getOfflinePlayer(uuid)) == null)
                         throw new StreamCorruptedException();
                     return p;
                 }
                 final String name = fields.getObject("name", String.class);
-                OfflinePlayer p;
+                final OfflinePlayer p;
                 if (name == null || (p = Bukkit.getOfflinePlayer(name)) == null)
                     throw new StreamCorruptedException();
                 return p;
@@ -815,7 +815,7 @@ public final class BukkitClasses {
             protected Chunk deserialize(final Fields fields) throws StreamCorruptedException {
                 final World w = fields.getObject("world", World.class);
                 final int x = fields.getPrimitive("x", int.class), z = fields.getPrimitive("z", int.class);
-                Chunk c;
+                final Chunk c;
                 if (w == null || (c = w.getChunkAt(x, z)) == null)
                     throw new StreamCorruptedException();
                 return c;

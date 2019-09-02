@@ -97,7 +97,7 @@ public final class ExprStringCase extends SimpleExpression<String> {
     @Override
     @Nullable
     protected String[] get(final Event e) {
-        String str;
+        final String str;
         if (literal != null)
             str = changeCase(literal, mode);
         else if (origin != null)

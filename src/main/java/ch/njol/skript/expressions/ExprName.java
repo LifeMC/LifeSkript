@@ -34,6 +34,7 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Variable;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Slot;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
@@ -101,7 +102,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.DELETE && (type.acceptChange & ~PLAYER) != 0 || mode == ChangeMode.RESET)
-            return new Class[0];
+            return EmptyArrays.EMPTY_CLASS_ARRAY;
         if (mode != ChangeMode.SET)
             return null;
         if ((type.acceptChange & PLAYER) != 0 && Player.class.isAssignableFrom(getExpr().getReturnType())) {

@@ -36,6 +36,7 @@ import ch.njol.skript.lang.VariableString;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.variables.DatabaseStorage;
 import ch.njol.skript.variables.SerializedVariable;
@@ -190,7 +191,7 @@ public final class Classes {
             }
         }
 
-        Classes.classInfos = classInfos.toArray(new ClassInfo[0]);
+        Classes.classInfos = classInfos.toArray(EmptyArrays.EMPTY_CLASSINFO_ARRAY);
 
         // check for circular dependencies
         if (!tempClassInfos.isEmpty()) {
@@ -774,7 +775,7 @@ public final class Classes {
     @Nullable
     public static final Object deserialize(final ClassInfo<?> type, final InputStream value) {
         if (Skript.testing()) {
-            Serializer<?> s;
+            final Serializer<?> s;
             assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
         }
         BufferedInputStream buf = null;

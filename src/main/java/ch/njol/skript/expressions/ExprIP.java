@@ -91,7 +91,7 @@ public final class ExprIP extends SimpleExpression<String> {
     @Nullable
     protected String[] get(final Event e) {
         if (!isProperty) {
-            InetAddress address;
+            final InetAddress address;
             if (isConnectEvent)
                 // Return IP address of the connected player in connect event
                 address = ((PlayerLoginEvent) e).getAddress();
@@ -110,7 +110,7 @@ public final class ExprIP extends SimpleExpression<String> {
     }
 
     private String getIP(final Player player, final Event e) {
-        InetAddress address;
+        final InetAddress address;
         // The player has no IP yet in a connect event, but the event has it
         // It is a "feature" of Spigot, apparently
         if (isConnectEvent && ((PlayerLoginEvent) e).getPlayer().equals(player))
