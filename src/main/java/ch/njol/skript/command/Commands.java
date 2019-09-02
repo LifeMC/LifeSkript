@@ -532,7 +532,7 @@ public final class Commands {
 
         final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
         if (permissionMessage != null && permission.isEmpty()) {
-            Skript.warning("command /" + command + " has a permission message set, but not a permission");
+            Skript.warning("command /" + command + " has a permission message set, but not permission");
         }
 
         if (Skript.debug() || node.debug())

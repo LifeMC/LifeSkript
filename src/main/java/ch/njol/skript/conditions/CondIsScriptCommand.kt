@@ -33,6 +33,7 @@ import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
 import ch.njol.util.Kleenean
 import org.bukkit.event.Event
+import java.util.*
 
 /**
  * @author TheDGOfficial
@@ -64,7 +65,7 @@ class CondIsScriptCommand : Condition() {
         if (name?.startsWith("/") == true)
             name = name.substring(1)
 
-        return ScriptCommand.commandMap[name] != null
+        return ScriptCommand.commandMap[name?.toLowerCase(Locale.ENGLISH)] != null
     }
 
     override fun toString(e: Event?, debug: Boolean): String {

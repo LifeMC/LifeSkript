@@ -152,7 +152,7 @@ public final class ScriptCommand implements CommandExecutor {
 
         bukkitCommand = setupBukkitCommand();
 
-        commandMap.put(name.startsWith("/") ? name.substring(1) : name, this);
+        commandMap.put((name.startsWith("/") ? name.substring(1) : name).toLowerCase(Locale.ENGLISH), this);
     }
 
     private final PluginCommand setupBukkitCommand() {

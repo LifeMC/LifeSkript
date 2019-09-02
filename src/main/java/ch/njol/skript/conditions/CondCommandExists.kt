@@ -36,6 +36,7 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandMap
 import org.bukkit.event.Event
 import org.bukkit.plugin.SimplePluginManager
+import java.util.*
 
 /**
  * @author TheDGOfficial
@@ -82,7 +83,7 @@ class CondCommandExists : Condition() {
         if (name?.startsWith("/") == true)
             name = name.substring(1)
 
-        return ScriptCommand.commandMap[name] != null || Bukkit.getPluginCommand(name) != null || Bukkit.getServer().helpMap.getHelpTopic(name) != null
+        return ScriptCommand.commandMap[name?.toLowerCase(Locale.ENGLISH)] != null || Bukkit.getPluginCommand(name) != null || Bukkit.getServer().helpMap.getHelpTopic(name) != null
                 || commandMap?.getCommand(name) != null
     }
 
