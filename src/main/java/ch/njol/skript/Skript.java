@@ -2491,7 +2491,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 command.setTabCompleter((sender, cmd, alias, args) -> {
                     if (sender instanceof ConsoleCommandSender || sender.hasPermission("skript.tabComplete") || sender.hasPermission("skript.admin") || sender.hasPermission("skript.*") || sender.isOp()) {
                         if (args.length == 1) {
-                            final List<String> completions = Arrays.asList("reload", "enable", "disable", "update", "help");
+                            final List<String> completions = Arrays.asList("reload", "enable", "disable", /*"update",*/ "version", "help");
                             if (alias != null) {
                                 completions.sort((a, b) -> a.startsWith(args[0]) ? -1 : b.startsWith(args[0]) ? 1 : 0);
                                 return completions;
@@ -2499,7 +2499,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         } else if (args.length == 2) {
                             if (alias != null) {
                                 if ("reload".equalsIgnoreCase(args[0])) {
-                                    final List<String> fileNames = new ArrayList<>();
+                                    final Collection<String> fileNames = new ArrayList<>();
 
                                     for (final File scriptFile : ScriptLoader.getLoadedFiles())
                                         fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
