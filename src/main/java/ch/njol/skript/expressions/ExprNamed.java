@@ -32,7 +32,6 @@ import ch.njol.skript.expressions.base.PropertyExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -71,7 +70,7 @@ public final class ExprNamed extends PropertyExpression<ItemType, ItemType> {
     protected ItemType[] get(final Event e, final ItemType[] source) {
         final String n = name.getSingle(e);
         if (n == null)
-            return EmptyArrays.EMPTY_ITEMTYPE_ARRAY;
+            return source;
         final ItemType[] r = source.clone();
         for (int i = 0; i < r.length; i++) {
             r[i] = source[i].clone();

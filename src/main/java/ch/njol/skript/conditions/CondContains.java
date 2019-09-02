@@ -34,6 +34,7 @@ import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Variable;
+import ch.njol.skript.lang.function.ExprFunctionCall;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Comparators;
@@ -95,7 +96,7 @@ public final class CondContains extends Condition {
     @Override
     public boolean check(final Event e) {
         return containers.check(e, (Checker<Object>) container -> {
-            if (containers instanceof Variable && !containers.isSingle()) {
+            if (containers instanceof Variable || containers instanceof ExprFunctionCall && !containers.isSingle()) {
                 final Object finalContainer = container;
                 return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(finalContainer, item)), isNegated());
             }

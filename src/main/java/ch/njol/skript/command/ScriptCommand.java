@@ -210,7 +210,7 @@ public final class ScriptCommand implements CommandExecutor {
 
         final ScriptCommandEvent event = new ScriptCommandEvent(!Bukkit.isPrimaryThread(), ScriptCommand.this, sender);
 
-        if (!permission.isEmpty() && !(sender instanceof ConsoleCommandSender) && !sender.hasPermission(permission) && (!sender.isOp() && SkriptConfig.allowOpsToBypassPermissionChecks.value())) {
+        if (!permission.isEmpty() && !(sender instanceof ConsoleCommandSender) && !sender.hasPermission(permission) && !sender.isOp() && SkriptConfig.allowOpsToBypassPermissionChecks.value()) {
             sender.sendMessage(permissionMessage.getSingle(event));
             return false;
         }
@@ -271,7 +271,7 @@ public final class ScriptCommand implements CommandExecutor {
                 final LogEntry e = log.getError();
                 if (e != null)
                     sender.sendMessage(ChatColor.DARK_RED + e.getMessage());
-                sender.sendMessage(Commands.m_correct_usage + " " + usage);
+                sender.sendMessage(usage);
                 log.clear();
                 log.printLog();
                 return false;

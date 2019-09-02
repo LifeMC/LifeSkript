@@ -318,7 +318,7 @@ public final class SkriptParser {
 //        assert ts.size() >= 1 : expr;
 //        if (ts.size() == 1)
 //            return ts.get(0);
-//        if (and.isUnknown())
+//        if (and.isUnknown() && !suppressMissingAndOrWarnings && !SkriptConfig.disableMissingAndOrWarnings.value())
 //            Skript.warning(MISSING_AND_OR);
 //
 //        final Class<?>[] exprRetTypes = new Class[ts.size()];
@@ -1336,7 +1336,7 @@ public final class SkriptParser {
             if (ts.size() == 1)
                 return ts.get(0);
 
-            if (and.isUnknown() && !suppressMissingAndOrWarnings)
+            if (and.isUnknown() && !suppressMissingAndOrWarnings && !SkriptConfig.disableMissingAndOrWarnings.value())
                 Skript.warning(MISSING_AND_OR + ": " + expr);
 
             final Class<? extends T>[] exprRetTypes = new Class[ts.size()];
@@ -1532,7 +1532,7 @@ public final class SkriptParser {
                 return ts.get(0);
             }
 
-            if (and.isUnknown() && !suppressMissingAndOrWarnings) {
+            if (and.isUnknown() && !suppressMissingAndOrWarnings && !SkriptConfig.disableMissingAndOrWarnings.value()) {
                 Skript.warning(MISSING_AND_OR + ": " + expr);
             }
 
