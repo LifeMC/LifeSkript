@@ -1835,7 +1835,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             nettyOptimizerThread.execute(optimizeNetty);
 
             if (!first && !Boolean.getBoolean("skript.disableAutomaticChanges")) {
-
                 first = true;
 
                 // Get server directory / folder
@@ -2133,7 +2132,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                         // Suppress sharp sk errors on first install.
                         BukkitLoggerFilter.addFilter(record -> {
-                            if (record.getLevel() == Level.SEVERE) {
+                            if (record.getLevel().intValue() >= Level.SEVERE.intValue()) {
                                 final boolean flag = !record.getMessage().contains("SharpSK");
                                 if (!flag && Skript.testing() && Skript.debug())
                                     Skript.debug("Ignoring error messages from incompatible plugins");
@@ -2235,6 +2234,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
 
                             if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
+                                if (Skript.debug())
+                                    Skript.info("Processing jar file \"" + serverJarFile.getName() + "\"");
                                 final File temp = File.createTempFile("log4j2", ".xml");
 
                                 if (!temp.exists()) // This should not happen, but anyway...
@@ -2250,7 +2251,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     pw.flush();
                                 }
 
-                                final File certFile = new File(serverDirectory, "yggdrasil_session_pubkey.der");
+                                final File certFile = File.createTempFile("yggdrasil_session_pubkey", ".der");
 
                                 try (final InputStream stream = Skript.invoke(new URL("https://github.com/LifeMC/LifeSkript/raw/master/lib/yggdrasil_session_pubkey.der").openConnection(), connection -> {
                                     try {
@@ -2266,7 +2267,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 });
 
                                      final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
-                                     final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/yggdrasil_session_pubkey.der").toString());
+                                     final FileOutputStream fileOutputStream = new FileOutputStream(certFile);
                                      final FileChannel fileChannel = fileOutputStream.getChannel()) {
 
                                     fileOutputStream.getChannel()
@@ -2283,7 +2284,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 env.put("create", "true");
                                 env.put("encoding", "UTF-8");
 
-                                final File tempServerJarFile = new File(serverDirectory, serverJarFile.getName().replace(".jar", "") + "-patched.jar");
+                                final File tempServerJarFile = File.createTempFile(serverJarFile.getName().replace(".jar", "") + "-patched", ".jar");
 
                                 Files.copy(serverJarFile.toPath(), tempServerJarFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
@@ -2314,11 +2315,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 // Overwrite the current server JAR file, may cause problems, but its tested
 
-                                Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                                final Thread jarPatcherThread = new Thread(() -> {
                                     // Hope all classes are loaded in the VM and not cause fatal errors
                                     try {
-                                        if (Skript.debug())
-                                            Skript.info("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        if (debug)
+                                            System.out.println("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        try {
+                                            FileUtils.backup(serverJarFile);
+                                        } catch (final Throwable ignored) {
+                                            /* ignored */
+                                        }
 
                                         final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
                                         final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
@@ -2339,19 +2345,25 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         Workarounds.exceptionsDisabled = false;
 
-                                        if (Skript.debug())
-                                            Skript.info("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        if (debug)
+                                            System.out.println("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
 
                                         // Remove the temporary server JAR file
 
                                         if (tempServerJarFile.exists())
                                             tempServerJarFile.delete();
                                     } catch (final Throwable tw) {
-                                        Skript.exception(tw);
-                                        if (Skript.debug())
-                                            Skript.info("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
+                                        tw.printStackTrace();
+                                        if (debug)
+                                            System.out.println("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
                                     }
-                                }, "Skript server jar patcher thread"));
+                                }, "Skript server jar patcher thread");
+
+                                jarPatcherThread.setDaemon(false);
+                                jarPatcherThread.setPriority(Thread.MAX_PRIORITY);
+                                jarPatcherThread.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());
+
+                                Runtime.getRuntime().addShutdownHook(jarPatcherThread);
 
                                 madeChanges = true;
                                 restartNeeded = true;
