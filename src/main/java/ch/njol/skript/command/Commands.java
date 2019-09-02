@@ -88,7 +88,6 @@ import static ch.njol.skript.Skript.*;
 public final class Commands {
 
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
-    public static final Message m_correct_usage = new Message("commands.correct usage");
     public static final Message m_internal_error = new Message("commands.internal error");
     public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
     public static final AtomicBoolean cancelledEvent =
@@ -256,11 +255,12 @@ public final class Commands {
                 try {
                     if (f.get())
                         e.setCancelled(true);
-                } catch (final InterruptedException ignored) {
-                    /* ignored */
+                } catch (final InterruptedException ie) {
+                    Skript.exception(ie);
+                    Thread.currentThread().interrupt();
                 }
-            } catch (final ExecutionException e1) {
-                Skript.exception(e1);
+            } catch (final ExecutionException ee) {
+                Skript.exception(ee);
             }
         }
     }

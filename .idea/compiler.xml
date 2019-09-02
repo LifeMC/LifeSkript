@@ -15,7 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Skript" target="1.8" />
+      <module name="Skript" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="EclipseCompilerSettings">
