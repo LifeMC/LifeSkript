@@ -241,7 +241,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || !alwaysEnabled || currentTime < lastEarlyWarning + earlyWarningEvery - 1L/* || currentTime < lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && (!(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + earlyWarningEvery/* || currentTime < lastTick + earlyWarningDelay*/)) || alwaysEnabled) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
