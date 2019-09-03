@@ -44,6 +44,7 @@ public final class YggdrasilTest {
     public static final PETest1 PET1_3 = new PETest1("PET1_3");
     static final Yggdrasil y = new Yggdrasil();
     static final String modifiedClassID = "something random";
+    @SuppressWarnings("rawtypes")
     public static final ArrayList[] EMPTY_RAW_ARRAY_LIST_ARRAY = new ArrayList[0];
     static Class<?> currentModifiedClass = UnmodifiedClass.class;
 
