@@ -66,7 +66,7 @@ public final class Aliases {
     private static final HashMap<String, ItemType> aliases_english = new HashMap<>(12585);
     private static final HashMap<String, ItemType> aliases_localised = new HashMap<>(localizedAliases() ? 1000 : 0);
     private static final HashMap<Integer, MaterialName> materialNames_english = new HashMap<>(Material.values().length);
-    private static final HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(Material.values().length);
+    private static final HashMap<Integer, MaterialName> materialNames_localised = new HashMap<>(localizedAliases() ? Material.values().length : 0);
     // this is not an alias!
     private static final ItemType everything = new ItemType();
     private static final Message m_brackets_error = new Message("aliases.brackets error");
@@ -254,7 +254,7 @@ public final class Aliases {
                     }
                     final ItemType t = v.getValue().intersection(value);
                     if (t != null)
-                        r.putAll(getAliases(n, t, variations));
+                        r.putAll(getAliases(n.intern(), t, variations));
                     else
                         Skript.warning(m_empty_alias.toString(n));
                 }

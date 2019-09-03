@@ -98,9 +98,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
     public T[] getAll(final Event e) {
         final T[] all = get(e);
         if (all == null) {
-            final T[] r = (T[]) Array.newInstance(getReturnType(), 0);
-            assert r != null;
-            return r;
+            return (T[]) Array.newInstance(getReturnType(), 0);
         }
         if (all.length == 0)
             return all;
@@ -111,7 +109,6 @@ public abstract class SimpleExpression<T> implements Expression<T> {
         if (numNonNull == all.length)
             return all;
         final T[] r = (T[]) Array.newInstance(getReturnType(), numNonNull);
-        assert r != null;
         int i = 0;
         for (final T t : all)
             if (t != null)
@@ -124,9 +121,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
     public final T[] getArray(final Event e) {
         final T[] all = get(e);
         if (all == null) {
-            final T[] r = (T[]) Array.newInstance(getReturnType(), 0);
-            assert r != null;
-            return r;
+            return (T[]) Array.newInstance(getReturnType(), 0);
         }
         if (all.length == 0)
             return all;
@@ -156,7 +151,6 @@ public abstract class SimpleExpression<T> implements Expression<T> {
         if (numNonNull == all.length)
             return all;
         final T[] r = (T[]) Array.newInstance(getReturnType(), numNonNull);
-        assert r != null;
         int i = 0;
         for (final T t : all)
             if (t != null)

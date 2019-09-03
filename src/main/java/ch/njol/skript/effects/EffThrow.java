@@ -48,19 +48,20 @@ public final class EffThrow extends Effect {
     private boolean error;
     private boolean java;
 
-    private @Nullable
-    String script;
+    @Nullable
+    private String script;
+
     private int line;
 
     @SuppressWarnings("null")
-    private Expression<?> detail;
+    private Expression<String> detail;
 
     @Override
     @SuppressWarnings("null")
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         error = parseResult.mark > 0;
         java = parseResult.mark > 1;
-        detail = exprs[0];
+        detail = (Expression<String>) exprs[0];
         if (ScriptLoader.currentScript != null)
             script = ScriptLoader.currentScript.getFileName();
         if (SkriptLogger.getNode() != null)
@@ -78,17 +79,17 @@ public final class EffThrow extends Effect {
         if (error) {
             if (java) {
                 // Bad things happening - throw it to caller!
-                throw new ScriptError(script, line, String.valueOf(detail.getSingle(e)));
+                throw new ScriptError(script, line, detail.getSingle(e));
             }
-            Skript.error(String.valueOf(detail.getSingle(e)));
+            Skript.error(detail.getSingle(e));
         } else {
-            Skript.warning(String.valueOf(detail.getSingle(e)));
+            Skript.warning(detail.getSingle(e));
         }
     }
 
     @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        return "throw new " + getTypeName();
+    public String toString(final @Nullable Event e, final boolean debug) {
+        return "throw new " + getTypeName() + " because " + detail.toString(e, debug);
     }
 
     public static final class ScriptError extends RuntimeException {
@@ -98,15 +99,20 @@ public final class EffThrow extends Effect {
          */
         private static final long serialVersionUID = 1255223120346309260L;
 
-        private @Nullable
-        String script;
+        @Nullable
+        private String script;
+
+        @Nullable
+        private String detail;
 
         private int line;
 
-        public ScriptError(final String script, final int line, final String detail) {
+        public ScriptError(final @Nullable String script, final int line, final @Nullable String detail) {
             this(detail);
 
             this.script = script;
+            this.detail = detail;
+
             this.line = line;
         }
 
@@ -138,7 +144,7 @@ public final class EffThrow extends Effect {
         /**
          * @param message
          */
-        public ScriptError(final String message) {
+        public ScriptError(final @Nullable String message) {
             super(message);
         }
 
@@ -149,9 +155,20 @@ public final class EffThrow extends Effect {
             super(cause);
         }
 
-        public @Nullable
-        String getScript() {
+        @Nullable
+        public String getScript() {
             return script;
+        }
+
+        /**
+         * Same as {@link ScriptError#getLocalizedMessage()}
+         * and {@link ScriptError#getMessage()}
+         *
+         * @return The details, or the cause of the error.
+         */
+        @Nullable
+        public String getDetail() {
+            return detail;
         }
 
         public int getLine() {

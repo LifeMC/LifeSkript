@@ -80,6 +80,7 @@ public final class ScriptCommand implements CommandExecutor {
     final Trigger trigger;
     final int executableBy;
     private final String label;
+    private final List<String> actualAliases;
     private final List<String> aliases;
     private final String permission;
     private final Expression<String> permissionMessage;
@@ -127,6 +128,9 @@ public final class ScriptCommand implements CommandExecutor {
         this.cooldownStorage = cooldownStorage;
 
         // remove aliases that are the same as the command
+        actualAliases = new ArrayList<>(aliases);
+        aliases.replaceAll(s -> s.toLowerCase(Locale.ENGLISH));
+
         if (Skript.logHigh()) {
             for (final Iterator<String> iterator = aliases.iterator(); iterator.hasNext(); ) {
                 final String alias = iterator.next();
@@ -137,7 +141,6 @@ public final class ScriptCommand implements CommandExecutor {
             }
         } else
             aliases.removeIf(s -> s.equalsIgnoreCase(label));
-        aliases.replaceAll(String::toLowerCase);
 
         this.aliases = aliases;
         activeAliases = new ArrayList<>(aliases);
@@ -511,6 +514,10 @@ public final class ScriptCommand implements CommandExecutor {
 
     public List<String> getActiveAliases() {
         return activeAliases;
+    }
+
+    public final List<String> getActualAliases() {
+        return actualAliases;
     }
 
     public PluginCommand getBukkitCommand() {

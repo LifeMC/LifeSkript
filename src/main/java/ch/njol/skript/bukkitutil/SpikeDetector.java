@@ -72,7 +72,7 @@ public final class SpikeDetector extends Thread {
     private volatile boolean stopping;
 
     private SpikeDetector(final Thread serverThread) {
-        super("Skript Watchdog Thread");
+        super("Skript watchdog thread");
         super.setPriority(Thread.MAX_PRIORITY);
 
         this.serverThread = serverThread;
@@ -241,7 +241,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && (!(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + earlyWarningEvery/* || currentTime < lastTick + earlyWarningDelay*/)) || alwaysEnabled) {
+            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + earlyWarningEvery/* || currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
