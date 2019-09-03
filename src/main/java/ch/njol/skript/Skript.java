@@ -2516,10 +2516,15 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                     return fullCompletions;
                                 } else if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
-                                    final List<String> fileNames = new ArrayList<>();
+                                    final Collection<String> fileNames = new ArrayList<>();
+                                    final File scriptsFolder = ScriptLoader.getScriptsFolder();
 
-                                    // FIXME this does not show non-loaded scripts (disabled etc.) since we are using getLoadedFiles
-                                    for (final File scriptFile : ScriptLoader.getLoadedFiles())
+                                    if (!scriptsFolder.isDirectory())
+                                        scriptsFolder.mkdirs();
+
+                                    final Iterable<File> files = "enable".equalsIgnoreCase(args[0]) ? Arrays.asList(Objects.requireNonNull(scriptsFolder.listFiles(ScriptLoader.scriptFilter))) : ScriptLoader.getLoadedFiles();
+
+                                    for (final File scriptFile : files)
                                         fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
 
                                     final List<String> staticCompletions = Collections.singletonList("all");

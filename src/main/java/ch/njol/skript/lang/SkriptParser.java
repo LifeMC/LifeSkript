@@ -93,7 +93,9 @@ public final class SkriptParser {
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
     private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
+    @SuppressWarnings("rawtypes")
     public static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
+    @SuppressWarnings("rawtypes")
     public static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
     public final ParseContext context;
     final String expr;
