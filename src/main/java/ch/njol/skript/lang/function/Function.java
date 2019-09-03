@@ -125,7 +125,7 @@ public abstract class Function<T> {
         if (trackingEnabled)
             SkriptAgentKt.throwEvent(new FunctionEndEvent(this, params, startTime, endTime));
         assert returnType == null ? r == null : r == null || (r.length <= 1 || !single) && !CollectionUtils.contains(r, null) && returnType.getC().isAssignableFrom(r.getClass().getComponentType()) : this + "; " + Arrays.toString(r);
-        return r == null || r.length > 0 ? r : null;
+        return r == null || (r.length > 0 || (this instanceof ScriptFunction && ((ScriptFunction<T>) this).ignoreEmptyReturn)) ? r : null;
     }
 
     /**

@@ -28,6 +28,7 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
+import ch.njol.skript.expressions.ExprEmpty;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -103,7 +104,7 @@ public final class EffReturn extends Effect {
     protected TriggerItem walk(final Event e) {
         debug(e, false);
         if (e instanceof FunctionEvent)
-            ((ScriptFunction) function).setReturnValue((FunctionEvent) e, value.getArray(e));
+            ((ScriptFunction) function).setReturnValue((FunctionEvent) e, value.getArray(e), value instanceof ExprEmpty);
         else
             assert false : e;
         return null;
