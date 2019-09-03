@@ -59,7 +59,7 @@ public final class EffTree extends Effect {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         type = (Expression<StructureType>) exprs[0];
-        blocks = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        blocks = Direction.combine((Expression<Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
         return true;
     }
 

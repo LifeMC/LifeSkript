@@ -33,6 +33,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
@@ -50,6 +52,7 @@ public final class WebUtils {
      */
     public static final String USER_AGENT =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36";
+    private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
 
     /**
      * Static magic.
@@ -60,14 +63,14 @@ public final class WebUtils {
 
     /**
      * Connects to the given address and returns the web response as
-     * {@link java.lang.String String}.
+     * {@link String String}.
      * This the overloaded version of the original
      * {@link WebUtils#getResponse(String, String)} method. This overloaded version
      * of the original method is just uses the default content type (json).
      *
      * @param address - The url (address) of the web server / web site to connect
      *                and get response from it.
-     * @return The web response from the given url as {@link java.lang.String
+     * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
      * @throws IOException If any connection errors occured when making the http
      *                     request to the address.
@@ -79,14 +82,14 @@ public final class WebUtils {
 
     /**
      * Connects to the given address and returns the web response as
-     * {@link java.lang.String String}.
+     * {@link String String}.
      * This the overloaded version of the original
      * {@link WebUtils#getResponse(String, String)} method. This overloaded version
      * of the original method is just uses the default content type (json).
      *
      * @param address - The url (address) of the web server / web site to connect
      *                and get response from it.
-     * @return The web response from the given url as {@link java.lang.String
+     * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
      * @throws IOException If any connection errors occured when making the http
      *                     request to the address.
@@ -98,13 +101,13 @@ public final class WebUtils {
 
     /**
      * Connects to the given address and returns the web response as
-     * {@link java.lang.String String}.
+     * {@link String String}.
      *
      * @param address     - The url (address) of the web server / web site to
      *                    connect and get response from it.
      * @param contentType - The content type header of the http web request to the
      *                    selected address / url.
-     * @return The web response from the given url as {@link java.lang.String
+     * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
      * @throws IOException If any connection errors occured when making the http
      *                     request to the address.
@@ -116,14 +119,14 @@ public final class WebUtils {
 
     /**
      * Connects to the given address and returns the web response as
-     * {@link java.lang.String String}.
+     * {@link String String}.
      *
      * @param address        - The url (address) of the web server / web site to
      *                       connect and get response from it.
      * @param contentType    - The content type header of the http web request to the
      *                       selected address / url.
      * @param useWorkarounds - Pass false to not use workarounds.
-     * @return The web response from the given url as {@link java.lang.String
+     * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
      * @throws IOException If any connection errors occured when making the http
      *                     request to the address.
@@ -156,7 +159,7 @@ public final class WebUtils {
             con.setRequestProperty("Accept", "*/*");
 
             con.setRequestProperty("User-Agent", USER_AGENT.trim());
-            con.setRequestProperty("Referer", Skript.LATEST_VERSION_DOWNLOAD_LINK.replace("/releases", "").trim());
+            con.setRequestProperty("Referer", RELEASES.matcher(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
 
             in = new BufferedInputStream(con.getInputStream());
 

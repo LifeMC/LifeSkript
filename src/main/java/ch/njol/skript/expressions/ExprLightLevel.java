@@ -57,7 +57,7 @@ public final class ExprLightLevel extends PropertyExpression<Location, Byte> {
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        setExpr(Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]));
+        setExpr(Direction.combine((Expression<Direction>) exprs[0], (Expression<? extends Location>) exprs[1]));
         whatLight = parseResult.mark == 0 ? ANY : parseResult.mark;
         return true;
     }

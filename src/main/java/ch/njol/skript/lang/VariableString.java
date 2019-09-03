@@ -28,6 +28,7 @@ import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
+import ch.njol.skript.classes.data.JavaClasses;
 import ch.njol.skript.config.Config;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -50,6 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -60,6 +62,7 @@ import java.util.regex.Pattern;
 public final class VariableString implements Expression<String> {
 
     public static final Map<String, Pattern> variableNames = new HashMap<>();
+    private static final Pattern SINGLE_QUOTE_PATTERN = Pattern.compile("\"", Pattern.LITERAL);
     private final String orig;
 
     @Nullable
@@ -127,8 +130,8 @@ public final class VariableString implements Expression<String> {
     public static final String unquote(final String s, final boolean surroundingQuotes) {
         assert isQuotedCorrectly(s, surroundingQuotes);
         if (surroundingQuotes)
-            return s.substring(1, s.length() - 1).replace("\"\"", "\"");
-        return s.replace("\"\"", "\"");
+            return JavaClasses.QUOTE_PATTERN.matcher(s.substring(1, s.length() - 1)).replaceAll(Matcher.quoteReplacement("\""));
+        return JavaClasses.QUOTE_PATTERN.matcher(s).replaceAll(Matcher.quoteReplacement("\""));
     }
 
     /**
@@ -147,7 +150,7 @@ public final class VariableString implements Expression<String> {
             Skript.error("The percent sign is used for expressions (e.g. %player%). To insert a '%' type it twice: %%.");
             return null;
         }
-        final String s = Utils.replaceChatStyles(orig.replace("\"\"", "\""));
+        final String s = Utils.replaceChatStyles(JavaClasses.QUOTE_PATTERN.matcher(orig).replaceAll(Matcher.quoteReplacement("\"")));
         final ArrayList<Object> string = new ArrayList<>(n / 2 + 2);
         int c = s.indexOf('%');
         if (c != -1) {
@@ -240,7 +243,7 @@ public final class VariableString implements Expression<String> {
         if (string.size() == 1 && string.get(0) instanceof ExpressionInfo && ((ExpressionInfo) string.get(0)).expr.getReturnType() == String.class && ((ExpressionInfo) string.get(0)).expr.isSingle()) {
             final String expr = ((ExpressionInfo) string.get(0)).expr.toString(null, false);
             if (!SkriptConfig.disableExpressionAlreadyTextWarnings.value())
-                Skript.warning(expr + " is already a text, so you should not put it in percent signs (e.g. " + expr + " instead of " + "\"%" + expr.replace("\"", "\"\"") + "%\")");
+                Skript.warning(expr + " is already a text, so you should not put it in percent signs (e.g. " + expr + " instead of " + "\"%" + SINGLE_QUOTE_PATTERN.matcher(expr).replaceAll(Matcher.quoteReplacement("\"\"")) + "%\")");
         }
         return new VariableString(orig, sa, mode);
     }

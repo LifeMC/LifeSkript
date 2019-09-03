@@ -41,6 +41,8 @@ import ch.njol.yggdrasil.Fields;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.StreamCorruptedException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -49,6 +51,7 @@ public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
     public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.getBoolean("skript.disableByteShortFloat");
+    public static final Pattern QUOTE_PATTERN = Pattern.compile("\"\"", Pattern.LITERAL);
 
     private JavaClasses() {
         throw new UnsupportedOperationException();
@@ -594,7 +597,7 @@ public final class JavaClasses {
                     case SCRIPT:
                     case EVENT:
                         if (VariableString.isQuotedCorrectly(s, true))
-                            return Utils.replaceChatStyles("" + s.substring(1, s.length() - 1).replace("\"\"", "\""));
+                            return Utils.replaceChatStyles("" + QUOTE_PATTERN.matcher(s.substring(1, s.length() - 1)).replaceAll(Matcher.quoteReplacement("\"")));
                         return null;
                     case COMMAND:
                         return s;

@@ -57,7 +57,7 @@ public final class CondRegionContains extends Condition {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         if (exprs.length == 3) {
             regions = (Expression<Region>) exprs[0];
-            locs = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+            locs = Direction.combine((Expression<Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
         } else {
             regions = (Expression<Region>) exprs[1];
             locs = (Expression<Location>) exprs[0];

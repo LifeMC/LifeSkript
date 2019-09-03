@@ -73,7 +73,7 @@ public final class EffTeleport extends Effect {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         entities = (Expression<Entity>) exprs[0];
-        location = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        location = Direction.combine((Expression<Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
         return true;
     }
 

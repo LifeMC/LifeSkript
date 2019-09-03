@@ -300,7 +300,7 @@ public final class Direction implements YggdrasilRobustSerializable {
         }
     }
 
-    public static final Expression<Location> combine(final Expression<? extends Direction> dirs, final Expression<? extends Location> locs) {
+    public static final Expression<Location> combine(final Expression<Direction> dirs, final Expression<? extends Location> locs) {
         return new SimpleExpression<Location>() {
             @SuppressWarnings("null")
             @Override

@@ -66,7 +66,7 @@ public final class EffSpawn extends Effect {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         amount = matchedPattern == 0 ? null : (Expression<Number>) exprs[0];
         types = (Expression<EntityType>) exprs[matchedPattern];
-        locations = Direction.combine((Expression<? extends Direction>) exprs[1 + matchedPattern], (Expression<? extends Location>) exprs[2 + matchedPattern]);
+        locations = Direction.combine((Expression<Direction>) exprs[1 + matchedPattern], (Expression<? extends Location>) exprs[2 + matchedPattern]);
         return true;
     }
 

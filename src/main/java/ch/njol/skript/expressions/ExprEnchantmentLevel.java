@@ -58,7 +58,7 @@ public final class ExprEnchantmentLevel extends PropertyExpression<ItemType, Int
     @SuppressWarnings({"unchecked", "null"})
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        setExpr((Expression<? extends ItemType>) exprs[2 - 2 * matchedPattern]);
+        setExpr((Expression<ItemType>) exprs[2 - 2 * matchedPattern]);
         enchantment = (Expression<Enchantment>) (exprs[matchedPattern] == null ? exprs[matchedPattern + 1] : exprs[matchedPattern]);
         return true;
     }

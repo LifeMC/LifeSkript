@@ -57,7 +57,7 @@ public final class CondCanBuild extends Condition {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         players = (Expression<Player>) exprs[0];
-        locations = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        locations = Direction.combine((Expression<Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
         setNegated(matchedPattern == 1);
         return true;
     }

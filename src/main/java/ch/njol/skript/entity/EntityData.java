@@ -51,6 +51,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -115,7 +117,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             final EntityDataInfo<?> i = getInfo(split[0]);
             if (i == null)
                 return null;
-            EntityData<?> d;
+            final EntityData<?> d;
             try {
                 d = i.c.newInstance();
             } catch (final Exception e) {
@@ -486,6 +488,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     private static final class EntityDataInfo<T extends EntityData<?>> extends SyntaxElementInfo<T> implements LanguageChangeListener {
+        private static final Pattern AGE_PATTERN = Pattern.compile("<age>", Pattern.LITERAL);
         final String codeName;
         final String[] codeNames;
         final int defaultName;
@@ -511,7 +514,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         @Override
         public void onLanguageChange() {
             for (int i = 0; i < codeNames.length; i++)
-                patterns[i] = Language.get(LANGUAGE_NODE + "." + codeNames[i] + ".pattern").replace("<age>", m_age_pattern.toString());
+                patterns[i] = AGE_PATTERN.matcher(Language.get(LANGUAGE_NODE + "." + codeNames[i] + ".pattern")).replaceAll(Matcher.quoteReplacement(m_age_pattern.toString()));
         }
 
         @Override

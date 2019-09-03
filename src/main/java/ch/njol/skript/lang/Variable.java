@@ -57,6 +57,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -67,6 +69,7 @@ public final class Variable<T> implements Expression<T> {
     private static final String SINGLE_SEPARATOR_CHAR = ":";
     public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
     private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
+    private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR, Pattern.LITERAL);
     /**
      * The name of this variable, excluding the local variable token, but including the list variable token '::*'.
      */
@@ -126,7 +129,7 @@ public final class Variable<T> implements Expression<T> {
             if (printErrors)
                 Skript.error("A variable's name must not contain the separator '" + SEPARATOR + "' multiple times in a row (error in variable {" + name + "})");
             return false;
-        } else if (name.replace(SEPARATOR, "").contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
+        } else if (SEPARATOR_PATTERN.matcher(name).replaceAll(Matcher.quoteReplacement("")).contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
             Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '" + SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");
         }
         return true;

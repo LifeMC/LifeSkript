@@ -61,7 +61,7 @@ public final class ExprNamed extends PropertyExpression<ItemType, ItemType> {
             Skript.error("Item names are only available in Minecraft 1.4.5+");
             return false;
         }
-        setExpr((Expression<? extends ItemType>) exprs[0]);
+        setExpr((Expression<ItemType>) exprs[0]);
         name = (Expression<String>) exprs[1];
         return true;
     }

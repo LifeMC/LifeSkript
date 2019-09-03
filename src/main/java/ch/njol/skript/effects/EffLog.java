@@ -43,6 +43,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -55,6 +57,7 @@ public final class EffLog extends AsyncEffect {
     static final HashMap<String, PrintWriter> writers = new HashMap<>();
     private static final boolean flushAllLogsOnShutdownOnly = Boolean.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
+    private static final Pattern WINDOWS_PATH_SEPARATOR = Pattern.compile("\\\\", Pattern.LITERAL);
 
     static {
         Skript.closeOnDisable(() -> {
@@ -88,7 +91,7 @@ public final class EffLog extends AsyncEffect {
         for (final String message : messages.getArray(e)) {
             if (files != null) {
                 for (String s : files.getArray(e)) {
-                    s = s.toLowerCase(Locale.ENGLISH).replace("\\", "/");
+                    s = WINDOWS_PATH_SEPARATOR.matcher(s.toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement("/"));
                     if (!s.endsWith(".log"))
                         s += ".log";
                     if ("server.log".equals(s)) {

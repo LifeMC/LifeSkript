@@ -63,7 +63,7 @@ public final class EffDrop extends Effect {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         drops = exprs[0];
-        locations = Direction.combine((Expression<? extends Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
+        locations = Direction.combine((Expression<Direction>) exprs[1], (Expression<? extends Location>) exprs[2]);
         return true;
     }
 

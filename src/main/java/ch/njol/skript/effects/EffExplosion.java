@@ -65,7 +65,7 @@ public final class EffExplosion extends Effect {
             Skript.error("Explosions which do not destroy blocks are only available in Bukkit 1.4.5+");
             return false;
         }
-        locations = Direction.combine((Expression<? extends Direction>) exprs[exprs.length - 2], (Expression<? extends Location>) exprs[exprs.length - 1]);
+        locations = Direction.combine((Expression<Direction>) exprs[exprs.length - 2], (Expression<? extends Location>) exprs[exprs.length - 1]);
         return true;
     }
 

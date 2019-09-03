@@ -30,6 +30,7 @@ import java.net.UnknownHostException;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 /**
  * @author Peter Güttinger
@@ -58,7 +59,7 @@ public final class UtilsTest {
         };
 
         for (final Class<?>[] cs : classes) {
-            assertEquals(cs[cs.length - 1], Utils.getSuperType(Arrays.copyOf(cs, cs.length - 1)));
+            assertSame(cs[cs.length - 1], Utils.getSuperType(Arrays.copyOf(cs, cs.length - 1)));
         }
 
     }

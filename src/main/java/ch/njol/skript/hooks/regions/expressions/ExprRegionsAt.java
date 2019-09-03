@@ -60,7 +60,7 @@ public final class ExprRegionsAt extends SimpleExpression<Region> {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         if (matchedPattern == 1)
             Skript.warning("Most regions plugins can have multiple intersecting regions at a the same location, thus it is recommended to use \"regions at ...\" instead of \"region at...\" for clarity.");
-        locs = Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]);
+        locs = Direction.combine((Expression<Direction>) exprs[0], (Expression<? extends Location>) exprs[1]);
         return true;
     }
 

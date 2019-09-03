@@ -2297,7 +2297,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 tempServerJarFile.setExecutable(true, false);
 
-                                try (java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
+                                try (final java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
                                     final Path tempFile = temp.toPath();
                                     final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
 
@@ -2467,7 +2467,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 //                              saveTo = af;
 //                      }
                         if (saveTo != null) {
-                            try (InputStream in = f.getInputStream(e)) {
+                            try (final InputStream in = f.getInputStream(e)) {
                                 assert in != null;
                                 FileUtils.save(in, saveTo);
                             }
@@ -2631,7 +2631,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 // load hooks
                 try {
-                    try (JarFile jar = new JarFile(getPluginFile(), false)) {
+                    try (final JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
                                 final String cl = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
@@ -2739,7 +2739,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 final long vld = System.currentTimeMillis() - vls;
                 if (logNormal())
-                    info("Loaded " + Variables.numVariables() + " variables in " + vld / 100 / 10. + " seconds");
+                    info("Loaded " + Variables.numVariables() + " variables in " + vld / 100D / 10. + " seconds");
 
                 ScriptLoader.loadScripts();
 
@@ -3196,7 +3196,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 try {
                     final Field modifiers = Field.class.getDeclaredField("modifiers");
                     modifiers.setAccessible(true);
-                    try (JarFile jar = new JarFile(getPluginFile(), false)) {
+                    try (final JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
                                 final String name = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());

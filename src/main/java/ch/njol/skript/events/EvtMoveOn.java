@@ -176,7 +176,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //			y = b.getY();
 //			z = b.getZ();
 //		} else {
-        @SuppressWarnings("unchecked") final Literal<? extends ItemType> l = (Literal<? extends ItemType>) args[0];//SkriptParser.parseLiteral(parser.regexes.get(0).group(), ItemType.class, ParseContext.EVENT);
+        @SuppressWarnings("unchecked") final Literal<ItemType> l = (Literal<ItemType>) args[0];//SkriptParser.parseLiteral(parser.regexes.get(0).group(), ItemType.class, ParseContext.EVENT);
         if (l == null)
             return false;
         types = l.getAll();

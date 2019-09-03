@@ -62,7 +62,7 @@ public final class ExprChunk extends PropertyExpression<Location, Chunk> {
         if (matchedPattern == 0) {
             locations = (Expression<Location>) exprs[1];
             if (exprs[0] != null)
-                locations = Direction.combine((Expression<? extends Direction>) exprs[0], locations);
+                locations = Direction.combine((Expression<Direction>) exprs[0], locations);
         } else {
             locations = (Expression<Location>) exprs[0];
         }

@@ -30,6 +30,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Uses strings for serialisation because the whole ConfigurationSerializable interface is badly documented, and especially DelegateDeserialization doesn't work well with
@@ -38,6 +40,8 @@ import java.io.StreamCorruptedException;
  * @author Peter Güttinger
  */
 public class ConfigurationSerializer<T extends ConfigurationSerializable> extends Serializer<T> {
+
+    private static final Pattern BYTE_ORDER_MARK = Pattern.compile("\uFEFF", Pattern.LITERAL);
 
     public static final String serializeCS(final ConfigurationSerializable o) {
         final YamlConfiguration y = new YamlConfiguration();
@@ -66,7 +70,7 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
     public static final <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
-            y.loadFromString(s.replace("\uFEFF", "\n"));
+            y.loadFromString(BYTE_ORDER_MARK.matcher(s).replaceAll(Matcher.quoteReplacement("\n")));
         } catch (final InvalidConfigurationException e) {
             return null;
         }

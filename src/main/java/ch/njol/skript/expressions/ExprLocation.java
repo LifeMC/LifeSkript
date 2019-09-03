@@ -55,7 +55,7 @@ public final class ExprLocation extends WrapperExpression<Location> {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         if (exprs.length > 0) {
-            super.setExpr(Direction.combine((Expression<? extends Direction>) exprs[0], (Expression<? extends Location>) exprs[1]));
+            super.setExpr(Direction.combine((Expression<Direction>) exprs[0], (Expression<? extends Location>) exprs[1]));
             return true;
         }
         setExpr(new EventValueExpression<>(Location.class));

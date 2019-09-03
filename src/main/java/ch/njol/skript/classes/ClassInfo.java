@@ -22,8 +22,10 @@
 
 package ch.njol.skript.classes;
 
+import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.Debuggable;
 import ch.njol.skript.lang.DefaultExpression;
+import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Noun;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.bukkit.event.Event;
@@ -47,6 +49,7 @@ public class ClassInfo<T> implements Debuggable {
      * Use this as {@link #name(String)} to suppress warnings about missing documentation.
      */
     public static final String NO_DOC = "";
+    private static final Pattern VALID_CODENAME = Pattern.compile("[a-z0-9]+");
     private final Class<T> c;
     private final String codeName;
     private final Noun name;
@@ -95,7 +98,7 @@ public class ClassInfo<T> implements Debuggable {
     }
 
     public static final boolean isVaildCodeName(final String name) {
-        return name.matches("[a-z0-9]+");
+        return VALID_CODENAME.matcher(name).matches();
     }
 
     /**
@@ -125,8 +128,8 @@ public class ClassInfo<T> implements Debuggable {
 
     /**
      * @param defaultExpression The default (event) value of this class or null if not applicable
-     * @see ch.njol.skript.expressions.base.EventValueExpression
-     * @see ch.njol.skript.lang.util.SimpleLiteral
+     * @see EventValueExpression
+     * @see SimpleLiteral
      */
     public ClassInfo<T> defaultExpression(final DefaultExpression<T> defaultExpression) {
         assert this.defaultExpression == null;
