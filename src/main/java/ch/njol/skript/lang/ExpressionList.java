@@ -51,7 +51,7 @@ public class ExpressionList<T> implements Expression<T> {
     private final Class<T> returnType;
     protected boolean and;
     @Nullable
-    private ExpressionList<?> source;
+    private final ExpressionList<?> source;
     private int time;
 
     public ExpressionList(final Expression<? extends T>[] expressions, final Class<T> returnType, final boolean and) {

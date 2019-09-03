@@ -504,12 +504,13 @@ public final class Variables {
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException ignored) {
-                break;
+                closed = true;
+                saveThread.interrupt();
+
+                Thread.currentThread().interrupt();
+                return; // Assume all variables are saved
             }
         }
-
-        closed = true;
-        saveThread.interrupt();
     }
 
     public static final int numVariables() {

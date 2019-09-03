@@ -74,7 +74,7 @@ public abstract class VariablesStorage implements Closeable {
     /**
      * Must be locked after {@link Variables#getReadLock()} (if that lock is used at all)
      */
-    protected final Object[] connectionLock = EmptyArrays.EMPTY_OBJECT_ARRAY;
+    protected final byte[] connectionLock = EmptyArrays.EMPTY_BYTE_ARRAY;
     final LinkedBlockingQueue<SerializedVariable> changesQueue = new LinkedBlockingQueue<>(QUEUE_SIZE);
     // created in the constructor, started in load()
     private final Thread writeThread;
@@ -285,11 +285,13 @@ public abstract class VariablesStorage implements Closeable {
             try {
                 Thread.sleep(10);
             } catch (final InterruptedException ignored) {
-                break; // Assume all variables are saved
+                closed = true;
+                writeThread.interrupt();
+
+                Thread.currentThread().interrupt();
+                return; // Assume all variables are saved
             }
         }
-        closed = true;
-        writeThread.interrupt();
     }
 
     /**

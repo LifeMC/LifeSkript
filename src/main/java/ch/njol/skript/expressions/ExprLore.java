@@ -35,6 +35,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.util.Kleenean;
 import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
@@ -101,16 +102,16 @@ public final class ExprLore extends SimpleExpression<String> {
             return null;
         final Object i = item.getSingle(e);
         if (i == null || i instanceof ItemStack && ((ItemStack) i).getType() == Material.AIR)
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         final ItemMeta meta = i instanceof ItemStack ? ((ItemStack) i).getItemMeta() : (ItemMeta) ((ItemType) i).getItemMeta();
         if (meta == null || !meta.hasLore())
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         if (n == null)
-            return new String[]{};
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         final int l = n.intValue() - 1;
         final List<String> lore = meta.getLore();
         if (l < 0 || l >= lore.size())
-            return new String[0];
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         return new String[]{lore.get(l)};
     }
 

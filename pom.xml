@@ -514,8 +514,8 @@
                 </executions>
                 <configuration>
                     <args>
-                        <arg>-Xjsr305=ignore</arg>
-                        <arg>-Xjvm-default=compatibility</arg>
+                        <arg>-Xjsr305=warn</arg>
+                        <arg>-Xjvm-default=enable</arg>
                         <!-- It creates a runtime overhead,
                             we already have compile time null-safety. -->
                         <arg>-Xno-param-assertions</arg>
@@ -536,6 +536,9 @@
                         <javacOption>UTF-8</javacOption>
 
                         <javacOption>-O</javacOption>
+
+                        <javacOption>--release</javacOption>
+                        <javacOption>8</javacOption>
                     </javacOptions>
                     <!-- Strictly define language and api version. -->
                     <languageVersion>1.3</languageVersion>
@@ -553,8 +556,7 @@
                 <configuration>
                     <skipMain>false</skipMain>
                     <skip>false</skip>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>8</release>
                     <optimize>true</optimize>
                     <fork>true</fork>
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
@@ -569,6 +571,8 @@
 
                         <arg>-O</arg>
                     </compilerArgs>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
                 <dependencies>
                     <dependency>
