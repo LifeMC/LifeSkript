@@ -53,7 +53,7 @@ import java.util.NoSuchElementException;
  */
 @Name("Id")
 @Description("The id of a specific item. You usually don't need this expression as you can likely do everything with aliases.")
-@Examples({"message \"the ID of %type of the clicked block% is %id of the clicked block%.\""})
+@Examples("message \"the ID of %type of the clicked block% is %id of the clicked block%.\"")
 @Since("1.0")
 public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
     static {

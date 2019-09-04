@@ -42,7 +42,7 @@ import java.io.Serializable;
  * @author TheDGOfficial
  */
 @Name("Last Execute State/Last Execute Errors")
-@Description({"Represents the last execute state or errors."})
+@Description("Represents the last execute state or errors.")
 @Examples({"command /eval <text>:", "\tdescription: Evaluates the given effect.", "\tusage: /eval <effect>", "\texecutable by: players", "\ttrigger:", "\t\texecute arg-1 if the player has permission \"skript.eval\"", "\t\tsend last execute errors to player if last execute state is false"})
 @Since("2.2-Fixes-V10c")
 public final class ExprLastExecuteInfo extends SimpleExpression<Object> {

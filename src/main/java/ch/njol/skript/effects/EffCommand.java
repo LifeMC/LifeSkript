@@ -78,7 +78,7 @@ public final class EffCommand extends Effect {
         }
         if (commands instanceof Literal) {
             for (final String command : ((Literal<String>) commands).getAll()) {
-                if (command.trim().equalsIgnoreCase("") || command.trim().equalsIgnoreCase("/")) {
+                if ("".equalsIgnoreCase(command.trim()) || "/".equalsIgnoreCase(command.trim())) {
                     Skript.error("Executing empty commands is not possible");
                     return false;
                 }

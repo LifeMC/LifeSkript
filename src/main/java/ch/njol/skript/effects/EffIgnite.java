@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Ignite/Extinguish")
-@Description({"Lights entities on fire or extinguishes them."})
+@Description("Lights entities on fire or extinguishes them.")
 @Examples({"ignite the player", "extinguish the player"})
 @Since("1.4")
 public final class EffIgnite extends Effect {

@@ -58,7 +58,7 @@ public class ExprGroup extends SimpleExpression<String> {
     @Nullable
     private Expression<OfflinePlayer> players;
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         if (!VaultHook.permission.hasGroupSupport()) {

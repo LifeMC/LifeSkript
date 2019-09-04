@@ -1273,7 +1273,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param patterns Skript patterns to match this event
      * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())

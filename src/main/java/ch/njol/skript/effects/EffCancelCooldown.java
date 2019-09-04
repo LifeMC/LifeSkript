@@ -38,7 +38,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Cancel Command Cooldown")
-@Description({"Only usable in command events. Makes it so the current command usage isn't counted towards the cooldown."})
+@Description("Only usable in command events. Makes it so the current command usage isn't counted towards the cooldown.")
 @Examples({"command /nick <text>:", "\texecutable by: players", "\tcooldown: 10 seconds", "\ttrigger:", "\t\tif length of arg-1 is more than 16:", "\t\t\t# Makes it so that invalid arguments don't make you wait for the cooldown again", "\t\t\tcancel the cooldown", "\t\t\tsend \"Your nickname may be at most 16 characters.\"", "\t\t\tstop", "\t\tset the player's display name to arg-1"
 })
 @Since("2.2-Fixes-V10b")

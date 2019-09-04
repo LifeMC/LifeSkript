@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Shooter")
 @Description("The shooter of a projectile.")
-@Examples({"shooter is a skeleton"})
+@Examples("shooter is a skeleton")
 @Since("1.3.7")
 public final class ExprShooter extends PropertyExpression<Projectile, LivingEntity> {
     static {

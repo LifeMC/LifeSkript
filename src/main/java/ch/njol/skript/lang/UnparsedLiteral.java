@@ -55,7 +55,7 @@ public final class UnparsedLiteral implements Literal<Object> {
      * @param data non-null, non-empty & trimmed string
      */
     public UnparsedLiteral(final String data) {
-        assert data != null && data.length() > 0;
+        assert data != null && !data.isEmpty();
         this.data = data;
         error = null;
     }
@@ -65,7 +65,7 @@ public final class UnparsedLiteral implements Literal<Object> {
      * @param error Error to log if this literal cannot be parsed
      */
     public UnparsedLiteral(final String data, final @Nullable LogEntry error) {
-        assert data != null && data.length() > 0;
+        assert data != null && !data.isEmpty();
         assert error == null || error.getLevel().intValue() >= Level.SEVERE.intValue();
         this.data = data;
         this.error = error;

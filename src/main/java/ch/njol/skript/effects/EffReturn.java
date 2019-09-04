@@ -91,7 +91,7 @@ public final class EffReturn extends Effect {
             log.stop();
         }
         if (f.isSingle() && !v.isSingle()) {
-            Skript.error("This function is defined to only return a single " + rt.toString() + ", but this return statement can return multiple values.");
+            Skript.error("This function is defined to only return a single " + rt + ", but this return statement can return multiple values.");
             return false;
         }
         value = v;

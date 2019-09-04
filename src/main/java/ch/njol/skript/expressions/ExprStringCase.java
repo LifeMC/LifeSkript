@@ -79,7 +79,7 @@ public final class ExprStringCase extends SimpleExpression<String> {
             return str;
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         if (exprs[0] instanceof Literal)

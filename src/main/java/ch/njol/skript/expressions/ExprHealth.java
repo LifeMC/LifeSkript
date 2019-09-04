@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Health")
 @Description("The health of a creature, e.g. a player, mob, villager, etc. from 0 to the creature's max health, e.g. 10 for players.")
-@Examples({"message \"You have %health% HP left.\""})
+@Examples("message \"You have %health% HP left.\"")
 @Since("1.0")
 @Events("damage")
 public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {

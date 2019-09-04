@@ -511,7 +511,7 @@ public final class ScriptLoader {
                             final String value = ((EntryNode) n).getValue();
 
                             try {
-                                if (key.equalsIgnoreCase("source")) {
+                                if ("source".equalsIgnoreCase(key)) {
                                     if (duplicateCheckList.contains("source")) {
                                         Skript.error("Duplicate source configuration setting");
                                         continue;
@@ -519,7 +519,7 @@ public final class ScriptLoader {
                                     scriptVersion = new Version(value, true);
                                     currentScriptVersion = scriptVersion;
                                     duplicateCheckList.add("source");
-                                } else if (key.equalsIgnoreCase("target")) {
+                                } else if ("target".equalsIgnoreCase(key)) {
                                     final Version target = new Version(value, true);
                                     if (duplicateCheckList.contains("target")) {
                                         Skript.error("Duplicate target configuration setting");
@@ -533,14 +533,14 @@ public final class ScriptLoader {
                                     } else if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
                                         Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
                                     duplicateCheckList.add("target");
-                                } else if (key.equalsIgnoreCase("loops")) {
+                                } else if ("loops".equalsIgnoreCase(key)) {
                                     if (duplicateCheckList.contains("loops")) {
                                         Skript.error("Duplicate loops configuration setting");
                                         continue;
                                     }
-                                    ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), !value.equalsIgnoreCase("old"));
+                                    ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), !"old".equalsIgnoreCase(value));
                                     duplicateCheckList.add("loops");
-                                } else if (key.equalsIgnoreCase("requires minecraft")) {
+                                } else if ("requires minecraft".equalsIgnoreCase(key)) {
                                     if (duplicateCheckList.contains("requires minecraft")) {
                                         Skript.error("Duplicate requires minecraft configuration setting");
                                         continue;
@@ -550,7 +550,7 @@ public final class ScriptLoader {
                                         return new ScriptInfo();
                                     }
                                     duplicateCheckList.add("requires minecraft");
-                                } else if (key.equalsIgnoreCase("requires plugin")) {
+                                } else if ("requires plugin".equalsIgnoreCase(key)) {
                                     if (Skript.getAddon(value) != null && ScriptLoader.isWarningAllowed(VersionRegistry.STABLE_2_2_16))
                                         Skript.warning("Use 'requires addon' instead of 'requires plugin' for add-ons.");
 
@@ -566,7 +566,7 @@ public final class ScriptLoader {
                                             Skript.error("This script requires plugin " + value);
                                         return new ScriptInfo();
                                     }
-                                } else if (key.equalsIgnoreCase("requires addon") && Skript.getAddon(value) == null) {
+                                } else if ("requires addon".equalsIgnoreCase(key) && Skript.getAddon(value) == null) {
                                     // This can be duplicateable to require more than one addon
 
                                     if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
@@ -576,7 +576,7 @@ public final class ScriptLoader {
                                     else // it exists, but it's not registered to Skript
                                         Skript.error("This script requires addon " + value + ", but that addon is not correctly registered to Skript currently.");
                                     return new ScriptInfo();
-                                } else if (key.equalsIgnoreCase("requires hook") && !Hook.isHookEnabled(value)) {
+                                } else if ("requires hook".equalsIgnoreCase(key) && !Hook.isHookEnabled(value)) {
                                     // This can be duplicateable to require more than one hook
 
                                     if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
@@ -586,7 +586,7 @@ public final class ScriptLoader {
                                     else // it exists, but Skript is not hooked to it
                                         Skript.error("This script requires hook " + value + ", but Skript is currently not hooked to that plugin.");
                                     return new ScriptInfo();
-                                } else if (key.equalsIgnoreCase("load after")) { // This also can be duplicateable to require more than one script
+                                } else if ("load after".equalsIgnoreCase(key)) { // This also can be duplicateable to require more than one script
                                     // This can be used to require a script (not generally), or defer loading of this script after a specific script is loaded.
                                     // it also can be used for functions, etc., when not using 'allow function calls before definitions'
                                     final File file = new File(getScriptsFolder(), value.endsWith(".sk") ? value : value + ".sk"); // .sk suffix can be omitted

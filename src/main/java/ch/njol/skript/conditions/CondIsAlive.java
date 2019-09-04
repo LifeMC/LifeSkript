@@ -37,7 +37,7 @@ import org.bukkit.entity.Entity;
  */
 @Name("Is Alive / Dead")
 @Description("Checks whatever an entity is alive. This is mostly useful to check whatever an entity stored in a variable does still exist")
-@Examples({"{villagerbuddy.%player%} is dead"})
+@Examples("{villagerbuddy.%player%} is dead")
 @Since("2.0, 2.2.16 (non-living entity support)")
 public final class CondIsAlive extends PropertyCondition<Entity> {
     static {

@@ -43,7 +43,7 @@ import java.lang.reflect.Array;
 
 @Name("Ternary")
 @Description("A shorthand expression for returning something based on a condition.")
-@Examples({"set {points} to 500 if {admin::%player's uuid%} is set else 100"})
+@Examples("set {points} to 500 if {admin::%player's uuid%} is set else 100")
 @Since("2.2-Fixes-V10c")
 @SuppressWarnings({"null", "unchecked"})
 public final class ExprTernary<T> extends SimpleExpression<T> {
@@ -94,7 +94,7 @@ public final class ExprTernary<T> extends SimpleExpression<T> {
     @Override
     @SuppressWarnings("unchecked")
     protected T[] get(final Event e) {
-        final Object[] values = condition.check(e) ? ifTrue.getArray(e) : ifFalse.getArray(e);
+        final Object[] values = (condition.check(e) ? ifTrue : ifFalse).getArray(e);
         try {
             return Converters.convertStrictly(values, superType);
         } catch (final ClassCastException ignored) {

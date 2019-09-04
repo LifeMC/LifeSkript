@@ -149,7 +149,7 @@ public abstract class TriggerItem implements Debuggable {
     public final Trigger getTrigger() {
         TriggerItem i = this;
         while (i != null && !(i instanceof Trigger))
-            i = i.getParent();
+            i = i.parent;
 //		if (i == null)
 //			throw new IllegalStateException("TriggerItem without a Trigger detected!");
         return (Trigger) i;

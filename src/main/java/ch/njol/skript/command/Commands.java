@@ -172,12 +172,12 @@ public final class Commands {
     }
 
     public static final void checkTimings(final String command) {
-        if (command.equalsIgnoreCase("timings on") && !SkriptTimings.timingsEnabled) {
+        if ("timings on".equalsIgnoreCase(command) && !SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = true;
             if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDetector.value()))
                 SpikeDetector.setEnabled(true);
             Skript.info("Timings mode enabled");
-        } else if (command.equalsIgnoreCase("timings off") && SkriptTimings.timingsEnabled) {
+        } else if ("timings off".equalsIgnoreCase(command) && SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = false;
             if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDetector.value()))
                 SpikeDetector.setEnabled(false);

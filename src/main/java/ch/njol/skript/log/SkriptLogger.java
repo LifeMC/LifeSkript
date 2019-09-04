@@ -40,6 +40,10 @@ import static ch.njol.skript.Skript.SKRIPT_PREFIX_CONSOLE;
  */
 public final class SkriptLogger {
 
+    private SkriptLogger() {
+        throw new UnsupportedOperationException("Static class");
+    }
+
     @SuppressWarnings("null")
     public static final Level SEVERE = Level.SEVERE;
     @SuppressWarnings("null")

@@ -200,7 +200,7 @@ public final class VariableString implements Expression<String> {
                                     string.set(string.size() - 1, last.substring(0, last.length() - 1));
                                     c2++; // remove the '>'
                                 } else {
-                                    final int l = last.lastIndexOf(' ', last.endsWith(" ") ? last.length() - 2 : last.length() - 1);
+                                    final int l = last.lastIndexOf(' ', last.length() - (last.endsWith(" ") ? 2 : 1));
                                     final String lastWord = last.substring(l + 1).trim();
                                     if (Noun.isLocalIndefiniteArticle(lastWord))
                                         i.flags |= Language.F_INDEFINITE_ARTICLE;

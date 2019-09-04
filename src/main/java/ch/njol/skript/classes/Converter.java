@@ -131,6 +131,10 @@ public interface Converter<F, T> {
 
     final class ConverterUtils {
 
+        private ConverterUtils() {
+            throw new UnsupportedOperationException("Static class");
+        }
+
         public static final <F, T> Converter<?, T> createInstanceofConverter(final ConverterInfo<F, T> conv) {
             return createInstanceofConverter(conv.from, conv.converter);
         }

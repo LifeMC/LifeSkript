@@ -42,6 +42,7 @@ import java.io.File;
  *
  * @since 2.2.16
  */
+@FunctionalInterface
 public interface NonReflectiveAddon {
     /**
      * This method is originally protected in Bukkit's {@link org.bukkit.plugin.java.JavaPlugin} class,

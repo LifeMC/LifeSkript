@@ -128,7 +128,7 @@ public final class CondCompare extends Condition {
         return true;
     }
 
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     private boolean init(/*final String expr*/) {
         final RetainingLogHandler log = SkriptLogger.startRetainingLog();
         Expression<?> third = this.third;

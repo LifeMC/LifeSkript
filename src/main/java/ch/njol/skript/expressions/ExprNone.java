@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author TheDGOfficial
  */
 @Name("None")
-@Description({"Represents the none (null) value."})
+@Description("Represents the none (null) value.")
 @Examples({"function send(msg: text, p: player = none value of player):", "if {_p} is set:", "send {_msg} to {_p}", "else:", "broadcast {_msg}"})
 @Since("2.2-Fixes-V10c, 2.2.17 (finalization)")
 public final class ExprNone extends SimpleExpression<Object> {

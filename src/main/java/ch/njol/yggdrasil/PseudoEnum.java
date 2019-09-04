@@ -207,7 +207,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @return This constant's pseudo-enum class.
      * @see Enum#getDeclaringClass()
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     public Class<T> getDeclaringClass() {
         return getDeclaringClass(getClass());
     }

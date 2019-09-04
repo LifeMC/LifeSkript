@@ -37,7 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Spectator Target")
 @Description("Spectator target of a Player")
-@Examples({"spawn a sheep\nset spectator target of event-player to last spawned entity"})
+@Examples("spawn a sheep\nset spectator target of event-player to last spawned entity")
 @Since("2.2.16")
 public final class ExprSpectatorTarget extends SimplePropertyExpression<Player, Entity> {
 

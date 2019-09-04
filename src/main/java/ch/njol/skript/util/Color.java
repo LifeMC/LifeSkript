@@ -166,7 +166,7 @@ public enum Color implements YggdrasilSerializable {
     }
 
     public String getChat() {
-        return "" + chat.toString();
+        return chat.toString();
     }
 
     public ChatColor asChatColor() {

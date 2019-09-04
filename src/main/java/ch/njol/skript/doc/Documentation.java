@@ -251,7 +251,7 @@ public final class Documentation {
         for (final Parameter<?> p : func.getParameters()) {
             if (params.length() != 0)
                 params.append(", ");
-            params.append(p.toString());
+            params.append(p);
         }
         final String desc = validateHTML(StringUtils.join(func.getDescription(), "<br/>"), "functions");
         final String since = validateHTML(func.getSince(), "functions");

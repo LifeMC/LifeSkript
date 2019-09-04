@@ -418,7 +418,7 @@ public final class JavaClasses {
 
             @Override
             public String toString(final Boolean b, final int flags) {
-                return b ? trueName.toString() : falseName.toString();
+                return (b ? trueName : falseName).toString();
             }
 
             @Override

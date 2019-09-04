@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Vehicle")
 @Description({"The vehicle an entity is in, if any. This can actually be any entity, e.g. spider jockeys are skeletons that ride on a spider, so the spider is the 'vehicle' of the skeleton.", "See also: <a href='#ExprPassenger'>passenger</a>"})
-@Examples({"vehicle of the player is a minecart"})
+@Examples("vehicle of the player is a minecart")
 @Since("2.0")
 public final class ExprVehicle extends SimplePropertyExpression<Entity, Entity> {
     static {

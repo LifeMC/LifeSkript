@@ -1172,7 +1172,7 @@ public final class SkriptParser {
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public final <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
-        if (expr.length() == 0)
+        if (expr.isEmpty())
             return null;
 
         assert types != null && types.length > 0;
@@ -1363,7 +1363,7 @@ public final class SkriptParser {
     @SuppressWarnings("rawtypes")
     @Nullable
     public final Expression<?> parseExpression(final ExprInfo vi) {
-        if (expr.length() == 0)
+        if (expr.isEmpty())
             return null;
 
         final boolean isObject = vi.classes.length == 1 && vi.classes[0].getC() == Object.class;
@@ -1455,11 +1455,11 @@ public final class SkriptParser {
                         ts.add(t);
                         if (b != 0) {
                             final String d = expr.substring(pieces.get(b - 1)[1], x).trim();
-                            if (!d.equals(",")) {
+                            if (!",".equals(d)) {
                                 if (and.isUnknown()) {
-                                    and = Kleenean.get(!d.equalsIgnoreCase("or")); // nor is and
+                                    and = Kleenean.get(!"or".equalsIgnoreCase(d)); // nor is and
                                 } else {
-                                    if (and != Kleenean.get(!d.equalsIgnoreCase("or"))) {
+                                    if (and != Kleenean.get(!"or".equalsIgnoreCase(d))) {
                                         Skript.warning(MULTIPLE_AND_OR + " List: " + expr);
                                         and = Kleenean.TRUE;
                                     }
@@ -1580,7 +1580,7 @@ public final class SkriptParser {
             final String functionName = m.group(1);
             final String args = m.group(2);
             final Expression<?>[] params;
-            if (args.length() != 0) {
+            if (!args.isEmpty()) {
                 final Expression<?> ps = new SkriptParser(args, flags | PARSE_LITERALS, context).suppressMissingAndOrWarnings().parseExpression(Object.class);
                 if (ps == null) {
                     log.printError();

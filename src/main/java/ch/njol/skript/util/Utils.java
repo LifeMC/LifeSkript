@@ -249,7 +249,7 @@ public final class Utils {
      * @return The english plural of the given word
      */
     public static final String toEnglishPlural(final String s) {
-        assert s != null && s.length() != 0;
+        assert s != null && !s.isEmpty();
         for (final String[] p : plurals) {
             if (s.endsWith(p[0]))
                 return s.substring(0, s.length() - p[0].length()) + p[1];
@@ -304,7 +304,7 @@ public final class Utils {
      * @see #a(String)
      */
     public static final String a(final String s, final boolean capA) {
-        assert s != null && s.length() != 0;
+        assert s != null && !s.isEmpty();
         if ("aeiouAEIOU".indexOf(s.charAt(0)) != -1) {
             if (capA)
                 return "An " + s;
@@ -473,7 +473,7 @@ public final class Utils {
 
         // Cloneable is about as useful as object as super type
         // However, it lacks special handling used for Object supertype
-        return r.equals(Cloneable.class) ? Object.class : r;
+        return r == Cloneable.class ? Object.class : r;
     }
 
     /**

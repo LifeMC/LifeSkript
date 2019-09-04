@@ -42,7 +42,7 @@ import java.util.Arrays;
  */
 @Name("Alphabetical Sort")
 @Description("Sorts given strings in alphabetical order.")
-@Examples({"set {list::*} to alphabetically sorted {list::*}"})
+@Examples("set {list::*} to alphabetically sorted {list::*}")
 @Since("2.2-Fixes-V9c")
 public final class ExprAlphabetList extends SimpleExpression<String> {
 

@@ -108,7 +108,7 @@ public final class Variable<T> implements Expression<T> {
      * @return true if the name is valid, false otherwise.
      */
     public static final boolean isValidVariableName(String name, final boolean allowListVariable, final boolean printErrors) {
-        name = name.startsWith(LOCAL_VARIABLE_TOKEN) ? name.substring(LOCAL_VARIABLE_TOKEN.length()).trim() : name.trim();
+        name = (name.startsWith(LOCAL_VARIABLE_TOKEN) ? name.substring(LOCAL_VARIABLE_TOKEN.length()) : name).trim();
         if (!allowListVariable && name.contains(SEPARATOR)) {
             if (printErrors)
                 Skript.error("List variables are not allowed here (error in variable {" + name + "})");
@@ -158,7 +158,7 @@ public final class Variable<T> implements Expression<T> {
         if (isLocal && vs.isSimple()) { // Only variable names we fully know already
             final Class<?> hint = TypeHints.get(vs.toString());
 
-            if (hint != null && !hint.equals(Object.class)) { // Type hint available
+            if (hint != null && hint != Object.class) { // Type hint available
                 // See if we can get correct type without conversion
                 for (final Class<? extends T> type : types) {
                     assert type != null;
@@ -284,7 +284,7 @@ public final class Variable<T> implements Expression<T> {
      * because the player object inside the variable will be a (kinda) dead variable
      * as a new player object has been created by the server.
      */
-    @SuppressWarnings({"deprecation"})
+    @SuppressWarnings("deprecation")
     @Nullable
     final Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t) {
         if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
@@ -361,7 +361,7 @@ public final class Variable<T> implements Expression<T> {
             @Nullable
             private T next;
 
-            @SuppressWarnings({"unchecked"})
+            @SuppressWarnings("unchecked")
             @Override
             public boolean hasNext() {
                 if (next != null)

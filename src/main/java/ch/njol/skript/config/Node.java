@@ -113,7 +113,7 @@ public abstract class Node {
 
             if (config != null && node != null) {
                 final String script = config.getFileName();
-                final int lineNumber = node.getLine();
+                final int lineNumber = node.lineNum;
 
                 additionalInfo += " (" + script + ", line " + lineNumber + ")";
             }

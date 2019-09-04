@@ -55,7 +55,7 @@ public final class Adjective extends Message {
             }
             b.append(adjectives[i].toString(gender, flags));
         }
-        return "" + b.toString();
+        return b.toString();
     }
 
     @Override

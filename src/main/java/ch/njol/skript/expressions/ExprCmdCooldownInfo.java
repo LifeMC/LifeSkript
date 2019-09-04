@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.UUID;
 
 @Name("Cooldown Time/Remaining Time/Elapsed Time/Last Usage Date/Cooldown Bypass Permission")
-@Description({"Only usable in command events. Represents the cooldown time, the remaining time, or the elapsed time, or the last usage date, or the cooldown bypass permission."})
+@Description("Only usable in command events. Represents the cooldown time, the remaining time, or the elapsed time, or the last usage date, or the cooldown bypass permission.")
 @Examples({"command /home:", "\tcooldown: 10 seconds", "\tcooldown message: You last teleported home %elapsed time% ago, you may teleport home again in %remaining time%", "\ttrigger:", "\t\tteleport player to {home::%player%}"
 })
 @Since("2.2-Fixes-V10b")

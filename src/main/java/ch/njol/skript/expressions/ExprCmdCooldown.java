@@ -40,8 +40,8 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Cooldown")
-@Description({"Only usable in command events. The cooldown of the command"})
-@Examples({"send \"The cooldown of this command is: %cooldown%\""})
+@Description("Only usable in command events. The cooldown of the command")
+@Examples("send \"The cooldown of this command is: %cooldown%\"")
 @Since("2.2-Fixes-V10b")
 public final class ExprCmdCooldown extends SimpleExpression<Timespan> {
     static {

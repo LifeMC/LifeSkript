@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Now")
 @Description("The current <a href='../classes/#date'>system time</a> of the server. Use <a href='#ExprTime'>time</a> to get the <a href='../classes/#time'>Minecraft time</a> of a world.")
-@Examples({"broadcast \"Current server time: %now%\""})
+@Examples("broadcast \"Current server time: %now%\"")
 @Since("1.4")
 public final class ExprNow extends SimpleExpression<Date> {
 

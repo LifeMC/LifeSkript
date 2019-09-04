@@ -136,8 +136,6 @@ public final class WebUtils {
         if (useWorkarounds)
             Workarounds.initIfNotAlready();
 
-        String response;
-
         BufferedInputStream in = null;
         BufferedReader br = null;
 
@@ -188,14 +186,7 @@ public final class WebUtils {
             in = null;
             br = null;
 
-            response = responseBody.toString();
-
-            //noinspection ConstantConditions
-            if (response != null) {
-                response = response.trim();
-            }
-
-            return response;
+            return responseBody.toString().trim();
         } finally {
             if (in != null) {
                 in.close();

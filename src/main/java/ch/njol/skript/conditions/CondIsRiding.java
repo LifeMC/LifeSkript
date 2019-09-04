@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Is Riding")
 @Description("Tests whatever an entity is riding another or is in a vehicle.")
-@Examples({"player is riding a saddled pig"})
+@Examples("player is riding a saddled pig")
 @Since("2.0")
 public final class CondIsRiding extends Condition {
     static {

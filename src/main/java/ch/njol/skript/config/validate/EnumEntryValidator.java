@@ -52,7 +52,7 @@ public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator 
                     b.append(", ");
                 b.append(e.name());
             }
-            allowedValues = "" + b.toString();
+            allowedValues = b.toString();
         }
     }
 

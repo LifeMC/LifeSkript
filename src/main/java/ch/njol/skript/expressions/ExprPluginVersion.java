@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Plugin Version")
 @Description("Gets version of a specific plugin.")
-@Examples({"on load:\n\tmessage \"The version of Skript is %version of plugin \"Skript\"%"})
+@Examples("on load:\n\tmessage \"The version of Skript is %version of plugin \"Skript\"%")
 @Since("2.2-Fixes-V12")
 public final class ExprPluginVersion extends SimpleExpression<String> {
 

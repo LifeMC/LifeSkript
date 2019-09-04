@@ -282,7 +282,7 @@ public final class Noun extends Message {
 
     public String toString(final boolean plural) {
         validate();
-        return plural ? "" + this.plural : "" + singular;
+        return "" + (plural ? this.plural : singular);
     }
 
     public String withIndefiniteArticle() {

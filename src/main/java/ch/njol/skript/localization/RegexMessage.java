@@ -72,7 +72,7 @@ public final class RegexMessage extends Message {
     @SuppressWarnings("null")
     public Matcher matcher(final String s) {
         final Pattern p = getPattern();
-        return p == null ? nop.matcher(s) : p.matcher(s);
+        return (p == null ? nop : p).matcher(s);
     }
 
     public boolean matches(final String s) {

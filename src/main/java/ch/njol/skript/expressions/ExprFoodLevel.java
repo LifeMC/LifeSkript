@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Food Level")
 @Description("The food level of a player from 0 to 10. Has several aliases: food/hunger level/meter/bar. ")
-@Examples({"set the player's food level to 10"})
+@Examples("set the player's food level to 10")
 @Since("1.0")
 public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
     static {

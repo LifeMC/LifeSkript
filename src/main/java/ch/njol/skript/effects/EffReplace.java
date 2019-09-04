@@ -69,7 +69,7 @@ public final class EffReplace extends Effect {
     private Expression<?> haystack, needles, replacement;
     private boolean replaceString = true;
 
-    @SuppressWarnings({"null"})
+    @SuppressWarnings("null")
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         haystack = exprs[1 + matchedPattern % 2];

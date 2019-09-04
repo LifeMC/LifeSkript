@@ -354,7 +354,7 @@ public final class Fields implements Iterable<FieldContext> {
             assert expectedType.isPrimitive() || Tag.isWrapper(expectedType);
             final Object value = this.value;
             assert value != null;
-            if (!(expectedType.isPrimitive() ? Tag.getWrapperClass(expectedType).isInstance(value) : expectedType.isInstance(value)))
+            if (!((expectedType.isPrimitive() ? Tag.getWrapperClass(expectedType) : expectedType).isInstance(value)))
                 throw new StreamCorruptedException("Field " + id + " of " + value.getClass() + ", but expected " + expectedType);
             return (T) value;
         }

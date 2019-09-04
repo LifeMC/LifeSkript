@@ -50,9 +50,9 @@ public final class RedirectingLogHandler extends LogHandler {
     @Override
     public LogResult log(final LogEntry entry) {
         if (recipient != null)
-            recipient.sendMessage(prefix + entry.toString());
+            recipient.sendMessage(prefix + entry);
         else
-            SkriptLogger.LOGGER.log(entry.getLevel(), prefix + entry.toString());
+            SkriptLogger.LOGGER.log(entry.getLevel(), prefix + entry);
         if (entry.level.intValue() >= Level.SEVERE.intValue())
             numErrors++;
         return LogResult.DO_NOT_LOG;

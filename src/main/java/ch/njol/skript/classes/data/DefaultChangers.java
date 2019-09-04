@@ -44,6 +44,10 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class DefaultChangers {
 
+    private DefaultChangers() {
+        throw new UnsupportedOperationException("Static class");
+    }
+
     public static final Material[] cachedMaterials = Material.values();
 
     public static final Changer<Entity> entityChanger = new Changer<Entity>() {

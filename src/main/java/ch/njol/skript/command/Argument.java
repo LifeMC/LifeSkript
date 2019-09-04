@@ -114,7 +114,7 @@ public final class Argument<T> {
     @Override
     public String toString() {
         final Expression<? extends T> def = this.def;
-        return "<" + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def.toString()) + ">";
+        return "<" + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def) + ">";
     }
 
     public boolean isOptional() {

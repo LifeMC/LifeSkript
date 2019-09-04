@@ -124,7 +124,7 @@ public final class ExprEntity extends SimpleExpression<Entity> {
     @Nullable
     public final <R> Expression<? extends R> getConvertedExpression(final Class<R>... to) {
         for (final Class<R> t : to) {
-            if (t.equals(EntityData.class)) {
+            if (t == EntityData.class) {
                 return new SimpleLiteral<>((R) type, false);
             }
         }

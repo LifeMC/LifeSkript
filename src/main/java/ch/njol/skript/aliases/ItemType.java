@@ -343,7 +343,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
                 return false;
             for (final Entry<Enchantment, Integer> o : oenchs.entrySet()) {
                 final Integer t = enchs.get(o.getKey());
-                if (t == null || !t.equals(o.getValue()))
+                if (!Objects.equals(t, o.getValue()))
                     return false;
             }
         }
@@ -1060,7 +1060,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         if (meta != null) {
             final ItemMeta m = (ItemMeta) meta;
             if (m.hasDisplayName()) {
-                b.append(" ").append(m_named.toString()).append(" ");
+                b.append(" ").append(m_named).append(" ");
                 b.append("\"").append(m.getDisplayName()).append("\"");
             }
             if (debug)

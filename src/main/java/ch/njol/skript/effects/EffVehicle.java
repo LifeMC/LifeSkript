@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Vehicle")
-@Description({"Makes an entity ride another entity, e.g. a minecart, a saddled pig, an arrow, etc."})
+@Description("Makes an entity ride another entity, e.g. a minecart, a saddled pig, an arrow, etc.")
 @Examples({"make the player ride a saddled pig", "make the attacker ride the victim"})
 @Since("2.0")
 public final class EffVehicle extends Effect {

@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Damage")
 @Description("How much damage is done in a damage event, possibly ignoring armour, criticals and/or enchantments. Can be changed (remember that in Skript '1' is one full heart, not half a heart).")
-@Examples({"increase the damage by 2"})
+@Examples("increase the damage by 2")
 @Since("1.3.5")
 @Events("damage")
 public final class ExprDamage extends SimpleExpression<Double> {

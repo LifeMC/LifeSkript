@@ -129,7 +129,7 @@ public final class Config {
     }
 
     void setIndentation(final String indent) {
-        assert indent != null && indent.length() > 0 : indent;
+        assert indent != null && !indent.isEmpty() : indent;
         indentation = indent;
         indentationName = indent.charAt(0) == ' ' ? "space" : "tab";
     }

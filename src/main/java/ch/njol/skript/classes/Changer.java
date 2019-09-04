@@ -88,7 +88,7 @@ public interface Changer<T> {
                 return false;
             for (final Class<?> type : types) {
                 for (final Class<?> c : cs) {
-                    if (c.isArray() ? c.getComponentType().isAssignableFrom(type) : c.isAssignableFrom(type))
+                    if ((c.isArray() ? c.getComponentType() : c).isAssignableFrom(type))
                         return true;
                 }
             }

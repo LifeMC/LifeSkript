@@ -43,7 +43,7 @@ import java.lang.reflect.Array;
  * @author TheDGOfficial
  */
 @Name("Empty")
-@Description({"Represents an empty value of a specific type."})
+@Description("Represents an empty value of a specific type.")
 @Examples("empty value of the type strings")
 @Since("2.2.17")
 public final class ExprEmpty extends SimpleExpression<Object> {

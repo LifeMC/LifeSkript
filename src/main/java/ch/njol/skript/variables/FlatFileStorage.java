@@ -217,7 +217,7 @@ public final class FlatFileStorage extends VariablesStorage {
         if (ioEx != null || unsuccessful > 0 || update2_1) {
             if (unsuccessful > 0) {
                 Skript.error(unsuccessful + " variable" + (unsuccessful == 1 ? "" : "s") + " could not be loaded!");
-                Skript.error("Affected variables: " + invalid.toString());
+                Skript.error("Affected variables: " + invalid);
             }
             if (ioEx != null) {
                 Skript.error("An I/O error occurred while loading the variables: " + ExceptionUtils.toString(ioEx));

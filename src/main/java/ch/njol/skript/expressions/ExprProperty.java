@@ -43,7 +43,7 @@ import java.util.Arrays;
  */
 @Name("System Property")
 @Description("Gets a system property.")
-@Examples({"on load:\n\tmessage \"The file encoding is %property \"file.encoding\"%"})
+@Examples("on load:\n\tmessage \"The file encoding is %property \"file.encoding\"%")
 @Since("2.2-Fixes-V12")
 public final class ExprProperty extends SimpleExpression<String> {
 

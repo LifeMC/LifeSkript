@@ -121,7 +121,7 @@ public final class Variables {
                 info = (ClassInfo<? extends ConfigurationSerializable>) (ClassInfo<?>) Classes.getExactClassInfo(Object.class);
             }
 
-            @SuppressWarnings({"unchecked"})
+            @SuppressWarnings("unchecked")
             @Override
             @Nullable
             public String getID(final @NonNull Class<?> c) {

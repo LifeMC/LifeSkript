@@ -311,7 +311,7 @@ public final class DatabaseStorage extends VariablesStorage {
     @Override
     protected File getFile(String file) {
         if (!file.endsWith(".db"))
-            file = file + ".db"; // required by SQLibrary
+            file += ".db"; // required by SQLibrary
         return new File(file);
     }
 

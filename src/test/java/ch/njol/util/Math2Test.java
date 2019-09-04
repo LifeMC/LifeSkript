@@ -107,7 +107,7 @@ public final class Math2Test {
         for (int i = -31; i <= 31; i++) {
             final int n = i < 0 ? -1 << -i : 1 << i;
             for (int a = 0; a < RANDOM_NUMBERS; a++) {
-                final int b = n < 0 ? rand.nextInt(Math.max(-n / 2, 1)) : rand.nextInt(Math.max(n / 2, 1));
+                final int b = rand.nextInt(Math.max((n < 0 ? -n : n) / 2, 1));
                 assertEquals("" + (n - b), n, Math2.nextPowerOfTwo(n - b));
             }
         }

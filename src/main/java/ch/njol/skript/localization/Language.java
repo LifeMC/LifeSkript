@@ -42,6 +42,10 @@ import java.util.regex.Pattern;
  */
 public final class Language {
 
+    private Language() {
+        throw new UnsupportedOperationException("Static class");
+    }
+
     /**
      * Some flags
      */

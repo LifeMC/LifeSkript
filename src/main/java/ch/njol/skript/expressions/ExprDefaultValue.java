@@ -45,7 +45,7 @@ import java.lang.reflect.Array;
  */
 @Name("Default Value")
 @Description("A shorthand expression for giving things a default value. If the first thing isn't set, the second thing will be returned.")
-@Examples({"broadcast {score::%player's uuid%} otherwise \"%player% has no score!\""})
+@Examples("broadcast {score::%player's uuid%} otherwise \"%player% has no score!\"")
 @Since("2.2-Fixes-V10c")
 @SuppressWarnings("unchecked")
 public final class ExprDefaultValue<T> extends SimpleExpression<T> {

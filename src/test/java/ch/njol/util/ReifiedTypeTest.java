@@ -20,28 +20,18 @@
  *
  */
 
-package ch.njol.skript.lang;
+package ch.njol.util;
 
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.junit.Test;
 
-/**
- * @author Peter Güttinger
- */
-@FunctionalInterface
-public interface Debuggable {
+import static org.junit.Assert.assertSame;
 
-    /**
-     * @param e     The event to get information to. This is always null if debug == false.
-     * @param debug If true this should print more information, if false this should print what is shown to the end user
-     * @return String representation of this object
-     */
-    String toString(final @Nullable Event e, final boolean debug);
+public final class ReifiedTypeTest {
 
-    /**
-     * Should return <tt>{@link #toString(Event, boolean) toString}(null, false)</tt>
-     */
-    @Override
-    String toString();
+    @Test
+    @SuppressWarnings("static-method")
+    public void testReifiedTypes() {
+        assertSame(String.class, ReifiedTypeParameter.<String>getReifiedType());
+    }
 
 }

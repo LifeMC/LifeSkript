@@ -87,7 +87,7 @@ public final class StringUtils {
     @Nullable
     public static final String replaceAll(final CharSequence string, final Pattern regex, final Callback<String, Matcher> callback) {
         final Matcher m = regex.matcher(string);
-        final StringBuffer sb = new StringBuffer();
+        final StringBuffer sb = new StringBuffer(4096);
         while (m.find()) {
             final String r = callback.run(m);
             if (r == null)
@@ -163,9 +163,9 @@ public final class StringUtils {
      */
     public static final String substring(final String s, int start, int end) {
         if (start < 0)
-            start = start + s.length();
+            start += s.length();
         if (end < 0)
-            end = end + s.length();
+            end += s.length();
         if (end < start)
             throw new IllegalArgumentException("invalid indices");
         return s.substring(start, end);

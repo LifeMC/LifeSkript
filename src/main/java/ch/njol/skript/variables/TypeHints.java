@@ -52,7 +52,7 @@ public final class TypeHints {
     }
 
     public static final void add(final String variable, final Class<?> hint) {
-        if (hint.equals(Object.class)) // Ignore useless type hint
+        if (hint == Object.class) // Ignore useless type hint
             return;
 
         // Take top of stack, without removing it

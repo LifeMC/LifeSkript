@@ -94,7 +94,7 @@ public final class ExprParse extends SimpleExpression<Object> {
                     b.append(c);
                 }
             }
-            pattern = "" + b.toString();
+            pattern = b.toString();
             final NonNullPair<String, boolean[]> p = SkriptParser.validatePattern(pattern);
             if (p == null)
                 return false;

@@ -32,13 +32,14 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * @author Peter Güttinger
  */
 public final class FileUtils {
 
-    private static final SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+    private static final SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ENGLISH);
 
     private FileUtils() {
     }
@@ -124,7 +125,7 @@ public final class FileUtils {
     public static final void save(final InputStream in, final File file) throws IOException {
         file.getParentFile().mkdirs();
         try (final FileOutputStream out = new FileOutputStream(file)) {
-            final byte[] buffer = new byte[16 * 1024];
+            final byte[] buffer = new byte[(16 << 10)];
             int read;
             while ((read = in.read(buffer)) > 0) {
                 out.write(buffer, 0, read);

@@ -623,7 +623,7 @@ public final class Classes {
                 return s;
             }
         }
-        return mode == StringMode.VARIABLE_NAME ? "object:" + o : "" + o;
+        return (mode == StringMode.VARIABLE_NAME ? "object:" : "") + o;
     }
 
     public static final String toString(final Object[] os, final int flags, final boolean and) {
