@@ -44,37 +44,37 @@ public abstract class Task implements Runnable, Closeable {
 
     private int taskID = -1;
 
-    public Task(final Plugin plugin, final long delay, final long period) {
+    protected Task(final Plugin plugin, final long delay, final long period) {
         this(plugin, delay, period, false);
     }
 
     /**
      * does not automatically schedule
      */
-    public Task(final Plugin plugin) {
+    protected Task(final Plugin plugin) {
         this(plugin, false);
     }
 
     /**
      * does not automatically schedule
      */
-    public Task(final Plugin plugin, final boolean async) {
+    protected Task(final Plugin plugin, final boolean async) {
         this.plugin = plugin;
         this.async = async;
     }
 
-    public Task(final Plugin plugin, final long delay, final long period, final boolean async) {
+    protected Task(final Plugin plugin, final long delay, final long period, final boolean async) {
         this.plugin = plugin;
         this.period = period;
         this.async = async;
         schedule(delay);
     }
 
-    public Task(final Plugin plugin, final long delay) {
+    protected Task(final Plugin plugin, final long delay) {
         this(plugin, delay, false);
     }
 
-    public Task(final Plugin plugin, final long delay, final boolean async) {
+    protected Task(final Plugin plugin, final long delay, final boolean async) {
         this.plugin = plugin;
         this.async = async;
         schedule(delay);
@@ -111,9 +111,10 @@ public abstract class Task implements Runnable, Closeable {
             return f.get();
         } catch (final ExecutionException e) {
             Skript.exception(e);
-        } catch (final InterruptedException | CancellationException | ThreadDeath ignored) {
+        } catch (final InterruptedException | CancellationException | ThreadDeath e) {
             Thread.currentThread().interrupt();
-            throw new ThreadDeath();
+            if (e instanceof ThreadDeath)
+                throw (ThreadDeath) e;
         }
         return null;
     }

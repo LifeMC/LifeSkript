@@ -65,7 +65,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     public ItemData(final int typeid, final short dMin, final short dMax) {
         if (dMin < -1 || dMax < -1)
             throw new IllegalArgumentException("datas (" + dMin + "," + dMax + ") must be >= -1");
-        if (dMin == -1 && dMax != -1 || dMin != -1 && dMax == -1)
+        if ((dMin == -1) == (dMax != -1))
             throw new IllegalArgumentException("dataMin (" + dMin + ") and dataMax (" + dMax + ") must either both be -1 or positive");
         if (dMin > dMax)
             throw new IllegalArgumentException("dataMin (" + dMin + ") must not be grater than dataMax (" + dMax + ")");

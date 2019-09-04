@@ -165,7 +165,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     private Kleenean plural = Kleenean.UNKNOWN;
     private Kleenean baby = Kleenean.UNKNOWN;
 
-    public EntityData() {
+    protected EntityData() {
         for (final EntityDataInfo<?> i : infos) {
             if (getClass() == i.c) {
                 info = i;

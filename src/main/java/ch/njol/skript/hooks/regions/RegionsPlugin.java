@@ -67,7 +67,7 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
         });
     }
 
-    public RegionsPlugin() throws IOException {
+    protected RegionsPlugin() throws IOException {
     }
 
     public static final boolean canBuild(final Player p, final Location l) {

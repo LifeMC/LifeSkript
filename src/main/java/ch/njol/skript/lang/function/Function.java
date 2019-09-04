@@ -52,7 +52,7 @@ public abstract class Function<T> {
     final ClassInfo<T> returnType;
     final boolean single;
 
-    public Function(final String name, final Parameter<?>[] parameters, final @Nullable ClassInfo<T> returnType, final boolean single) {
+    protected Function(final String name, final Parameter<?>[] parameters, final @Nullable ClassInfo<T> returnType, final boolean single) {
         this.name = name;
         this.parameters = parameters;
         this.returnType = returnType;

@@ -47,6 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -68,7 +69,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
             last = event;
             final PlayerMoveEvent e = (PlayerMoveEvent) event;
             final Location to = e.getTo(), from = e.getFrom();
-            if (to != null && to.equals(from))
+            if (Objects.equals(to, from))
                 return;
             if (to != null && from != null && to.getWorld().equals(from.getWorld()) && to.distanceSquared(from) < 2)
                 return;

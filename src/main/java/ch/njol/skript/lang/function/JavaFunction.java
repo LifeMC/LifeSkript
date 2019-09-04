@@ -37,7 +37,7 @@ public abstract class JavaFunction<T> extends Function<T> {
     @Nullable
     private String since;
 
-    public JavaFunction(final String name, final Parameter<?>[] parameters, final ClassInfo<T> returnType, final boolean single) {
+    protected JavaFunction(final String name, final Parameter<?>[] parameters, final ClassInfo<T> returnType, final boolean single) {
         super(name, parameters, returnType, single);
     }
 

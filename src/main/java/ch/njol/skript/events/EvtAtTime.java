@@ -74,7 +74,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
                 final int tick = (int) e.getKey().getTime();
                 if (i.lastTick == tick) // stupid Bukkit scheduler
                     continue;
-                if (i.lastTick + CHECKPERIOD * 2 < tick || i.lastTick > tick && i.lastTick - 24000 + CHECKPERIOD * 2 < tick) { // time changed, e.g. by a command or plugin
+                if (i.lastTick + (CHECKPERIOD << 1) < tick || i.lastTick > tick && i.lastTick - 24000 + (CHECKPERIOD << 1) < tick) { // time changed, e.g. by a command or plugin
                     i.lastTick = Math2.mod(tick - CHECKPERIOD, 24000);
                 }
                 final boolean midnight = i.lastTick > tick; // actually 6:00
