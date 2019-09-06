@@ -22,7 +22,6 @@
 
 package ch.njol.util;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -80,7 +79,6 @@ public final class ReifiedTypeParameter {
      *
      * @since 2.2.17
      */
-    @NonNull
     @SafeVarargs
     public static final <T> Class<T> getReifiedType(final @Nullable T... dummy) {
         if (dummy == null || dummy.length > 0)
