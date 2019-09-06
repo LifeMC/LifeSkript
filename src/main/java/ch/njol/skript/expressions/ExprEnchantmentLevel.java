@@ -59,7 +59,7 @@ public final class ExprEnchantmentLevel extends PropertyExpression<ItemType, Int
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         setExpr((Expression<ItemType>) exprs[2 - 2 * matchedPattern]);
-        enchantment = (Expression<Enchantment>) (exprs[exprs[matchedPattern] == null ? matchedPattern + 1 : matchedPattern]);
+        enchantment = (Expression<Enchantment>) exprs[exprs[matchedPattern] == null ? matchedPattern + 1 : matchedPattern];
         return true;
     }
 

@@ -56,24 +56,24 @@ public final class Math2Test {
 
     private static final float[] a(final float... fs) {
         final Random rand = new Random();
-        final float[] r = new float[fs.length * 2 + RANDOM_NUMBERS];
+        final float[] r = new float[(fs.length << 1) + RANDOM_NUMBERS];
         for (int i = 0; i < fs.length; i++) {
             r[2 * i] = fs[i];
             r[2 * i + 1] = -fs[i];
         }
-        for (int i = fs.length * 2; i < r.length; i++)
+        for (int i = fs.length << 1; i < r.length; i++)
             r[i] = i % 2 == 0 ? Float.intBitsToFloat(rand.nextInt()) : rand.nextLong();
         return r;
     }
 
     private static final double[] a(final double... ds) {
         final Random rand = new Random();
-        final double[] r = new double[ds.length * 2 + RANDOM_NUMBERS];
+        final double[] r = new double[(ds.length << 1) + RANDOM_NUMBERS];
         for (int i = 0; i < ds.length; i++) {
             r[2 * i] = ds[i];
             r[2 * i + 1] = -ds[i];
         }
-        for (int i = ds.length * 2; i < r.length; i++)
+        for (int i = ds.length << 1; i < r.length; i++)
             r[i] = i % 2 == 0 ? Double.longBitsToDouble(rand.nextLong()) : rand.nextLong();
         return r;
     }

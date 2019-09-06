@@ -77,7 +77,7 @@ public final class Config {
 
             if (source.available() == 0 && !SkriptConfig.disableEmptyScriptWarnings.value()) {
                 main = new SectionNode(this);
-                Skript.warning("'" + getFileName() + "' is empty");
+                Skript.warning("'" + this.fileName + "' is empty");
                 return;
             }
 
@@ -169,11 +169,11 @@ public final class Config {
      * @return Whatever the configs' keys differ, i.e. false == configs only differ in values, not keys.
      */
     public boolean setValues(final Config other) {
-        return getMainNode().setValues(other.getMainNode());
+        return main.setValues(other.main);
     }
 
     public boolean setValues(final Config other, final String... excluded) {
-        return getMainNode().setValues(other.getMainNode(), excluded);
+        return main.setValues(other.main, excluded);
     }
 
     @Nullable
@@ -256,7 +256,7 @@ public final class Config {
     }
 
     public boolean validate(final NodeValidator validator) {
-        return validator.validate(getMainNode());
+        return validator.validate(main);
     }
 
     private void load(final Class<?> c, final @Nullable Object o, final String path) {

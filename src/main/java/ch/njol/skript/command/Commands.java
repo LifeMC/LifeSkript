@@ -420,8 +420,7 @@ public final class Commands {
 
             lastEnd = m.end();
 
-            ClassInfo<?> c;
-            c = Classes.getClassInfoFromUserInput(m.group(2));
+            ClassInfo<?> c = Classes.getClassInfoFromUserInput(m.group(2));
             final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(m.group(2));
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());

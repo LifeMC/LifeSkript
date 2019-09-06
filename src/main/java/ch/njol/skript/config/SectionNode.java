@@ -463,8 +463,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         if (!r) {
             for (final Node o : other) {
                 if (this.get(o.key) == null) {
-                    r = true;
-                    break;
+                    return true;
                 }
             }
         }

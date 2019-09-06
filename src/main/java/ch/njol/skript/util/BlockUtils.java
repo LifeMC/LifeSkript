@@ -41,25 +41,25 @@ import java.util.Arrays;
 @SuppressWarnings("deprecation")
 public final class BlockUtils {
 
-    private static final BlockFace[] torch = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN
+    private static final BlockFace[] torch = {null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN
     };
-    private static final BlockFace[] button = new BlockFace[]{null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, null, null, null, null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH
+    private static final BlockFace[] button = {null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, null, null, null, null, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH
     };
-    private static final BlockFace[] ladder = new BlockFace[]{null, null, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
+    private static final BlockFace[] ladder = {null, null, BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
     }, wallSign = ladder;
-    private static final BlockFace[] trapdoor = new BlockFace[]{BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
+    private static final BlockFace[] trapdoor = {BlockFace.SOUTH, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST
     };
-    private static final BlockFace[] lever = new BlockFace[]{BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP, BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP
+    private static final BlockFace[] lever = {BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP, BlockFace.UP, BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.DOWN, BlockFace.DOWN, BlockFace.UP
     };
-    private static final BlockFace[] cocoa = new BlockFace[]{BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
+    private static final BlockFace[] cocoa = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
     };
-    private static final BlockFace[] tripwireHook = new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
+    private static final BlockFace[] tripwireHook = {BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST
     };
     private static final BlockFace[][] attached = new BlockFace[Skript.MAXBLOCKID + 1][];
-    private static final BlockFace[] bed = new BlockFace[]{BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
+    private static final BlockFace[] bed = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST
     };
     // not the actual facing, but a direction where fence posts should exist
-    private static final BlockFace[] gate = new BlockFace[]{BlockFace.WEST, BlockFace.NORTH
+    private static final BlockFace[] gate = {BlockFace.WEST, BlockFace.NORTH
     };
     // Material.isSolid() treats e.g. steps as solid...
     // TODO !Update with every version [blocks]

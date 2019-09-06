@@ -124,8 +124,7 @@ public final class Functions {
                     argType = argType.substring(0, argType.length() - 1);
                 } else if (def != null)
                     nullable = (def.contains("none") || def.contains("null")) && def.contains("value of");
-                ClassInfo<?> c;
-                c = Classes.getClassInfoFromUserInput("" + argType);
+                ClassInfo<?> c = Classes.getClassInfoFromUserInput("" + argType);
                 final NonNullPair<String, Boolean> pl = Utils.getEnglishPlural("" + argType);
                 if (c == null)
                     c = Classes.getClassInfoFromUserInput(pl.getFirst());

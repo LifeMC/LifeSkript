@@ -76,7 +76,7 @@ public final class ConfigReader extends BufferedReader {
     private String stripUTF8BOM(final @Nullable String line) {
         if (!hasNonEmptyLine && line != null && !line.isEmpty()) {
             hasNonEmptyLine = true;
-            if (line.startsWith("\uFEFF")) {
+            if (!line.isEmpty() && line.charAt(0) == '\uFEFF') {
                 return line.substring(1);
             }
         }

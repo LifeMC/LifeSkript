@@ -673,7 +673,7 @@ public final class Aliases {
             return i.clone();
         boolean b;
         if ((b = lc.endsWith(" " + blockSingular)) || lc.endsWith(" " + blockPlural)) {
-            if ((i = getAlias_i(s.substring(0, s.length() - ((b ? blockSingular : blockPlural).length()) - 1))) != null) {
+            if ((i = getAlias_i(s.substring(0, s.length() - (b ? blockSingular : blockPlural).length() - 1))) != null) {
                 i = i.clone();
                 for (int j = 0; j < i.numTypes(); j++) {
                     final ItemData d = i.getTypes().get(j);
@@ -687,7 +687,7 @@ public final class Aliases {
                 return i;
             }
         } else if ((b = lc.endsWith(" " + itemSingular)) || lc.endsWith(" " + itemPlural)) {
-            if ((i = getAlias_i(s.substring(0, s.length() - ((b ? itemSingular : itemPlural).length()) - 1))) != null) {
+            if ((i = getAlias_i(s.substring(0, s.length() - (b ? itemSingular : itemPlural).length() - 1))) != null) {
                 for (int j = 0; j < i.numTypes(); j++) {
                     final ItemData d = i.getTypes().get(j);
                     if (d.getId() != -1 && d.getId() <= Skript.MAXBLOCKID) {

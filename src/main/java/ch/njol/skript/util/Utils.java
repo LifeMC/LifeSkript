@@ -490,7 +490,7 @@ public final class Utils {
         try {
             return Integer.parseInt(s);
         } catch (final NumberFormatException e) {
-            return s.startsWith("-") ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            return !s.isEmpty() && s.charAt(0) == '-' ? Integer.MIN_VALUE : Integer.MAX_VALUE;
         }
     }
 
@@ -507,7 +507,7 @@ public final class Utils {
         try {
             return Long.parseLong(s);
         } catch (final NumberFormatException e) {
-            return s.startsWith("-") ? Long.MIN_VALUE : Long.MAX_VALUE;
+            return !s.isEmpty() && s.charAt(0) == '-' ? Long.MIN_VALUE : Long.MAX_VALUE;
         }
     }
 

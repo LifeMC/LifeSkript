@@ -110,9 +110,8 @@ public final class ExprClicked extends SimpleExpression<Object> {
         } else if (e instanceof PlayerInteractEntityEvent) {
             if (entityType == null)
                 return null;
-            final Entity en;
-//			if (e instanceof PlayerInteractEntityEvent) {
-            en = ((PlayerInteractEntityEvent) e).getRightClicked();
+            //			if (e instanceof PlayerInteractEntityEvent) {
+            final Entity en = ((PlayerInteractEntityEvent) e).getRightClicked();
 //			} else {
 //				if (!(((EntityDamageByEntityEvent) e).getDamager() instanceof Player))
 //					return null;

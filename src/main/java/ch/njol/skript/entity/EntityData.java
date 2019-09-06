@@ -150,7 +150,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 
             @Override
             public String toVariableNameString(final EntityData o) {
-                return "entitydata:" + o.toString();
+                return "entitydata:" + o;
             }
 
             @Override

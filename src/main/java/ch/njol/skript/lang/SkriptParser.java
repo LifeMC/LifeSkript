@@ -693,18 +693,18 @@ public final class SkriptParser {
     @SuppressWarnings("null")
     private static final ExprInfo createExprInfo(String s) throws MalformedPatternException, IllegalArgumentException, SkriptAPIException {
         final ExprInfo r = new ExprInfo(StringUtils.count(s, '/') + 1);
-        r.isOptional = s.startsWith("-");
+        r.isOptional = !s.isEmpty() && s.charAt(0) == '-';
         if (r.isOptional)
             s = s.substring(1);
-        if (s.startsWith("*")) {
+        if (!s.isEmpty() && s.charAt(0) == '*') {
             s = s.substring(1);
             r.flagMask &= ~PARSE_EXPRESSIONS;
-        } else if (s.startsWith("~")) {
+        } else if (!s.isEmpty() && s.charAt(0) == '~') {
             s = s.substring(1);
             r.flagMask &= ~PARSE_LITERALS;
         }
         if (!r.isOptional) {
-            r.isOptional = s.startsWith("-");
+            r.isOptional = !s.isEmpty() && s.charAt(0) == '-';
             if (r.isOptional)
                 s = s.substring(1);
         }
@@ -801,7 +801,7 @@ public final class SkriptParser {
                                 final int x2 = nextUnescaped(pattern, '%', x + 1);
                                 if (res.exprs[j] == null) {
                                     final String name = pattern.substring(x + 1, x2);
-                                    if (!name.startsWith("-")) {
+                                    if (!(!name.isEmpty() && name.charAt(0) == '-')) {
                                         final ExprInfo vi = getExprInfo(name);
                                         final DefaultExpression<?> expression = vi.classes[0].getDefaultExpression();
                                         if (expression == null)
@@ -868,7 +868,7 @@ public final class SkriptParser {
         assert types.length == 1 || !CollectionUtils.contains(types, Object.class);
         if (expr.isEmpty())
             return null;
-        if (context != ParseContext.COMMAND && expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length())
+        if (context != ParseContext.COMMAND && !expr.isEmpty() && expr.charAt(0) == '(' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == ')' && next(expr, 0, context) == expr.length())
             return new SkriptParser(this, expr.substring(1, expr.length() - 1)).parseSingleExpr(allowUnparsedLiteral, error, types);
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
@@ -898,7 +898,7 @@ public final class SkriptParser {
             log.clear();
             if ((flags & PARSE_EXPRESSIONS) != 0) {
                 final Expression<?> e;
-                if (expr.startsWith("\"") && expr.endsWith("\"") && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
+                if (!expr.isEmpty() && expr.charAt(0) == '\"' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == '\"' && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                     e = VariableString.newInstance(expr.substring(1, expr.length() - 1));
                 } else {
                     e = SkriptParser.<Expression<?>>parse(expr, (Iterator) Skript.getExpressions(types), null);
@@ -963,7 +963,7 @@ public final class SkriptParser {
             return null;
 
         // Command special parsing
-        if (context != ParseContext.COMMAND && expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length())
+        if (context != ParseContext.COMMAND && !expr.isEmpty() && expr.charAt(0) == '(' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == ')' && next(expr, 0, context) == expr.length())
             return new SkriptParser(this, "" + expr.substring(1, expr.length() - 1)).parseSingleExpr(allowUnparsedLiteral, error, vi);
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
@@ -1078,7 +1078,7 @@ public final class SkriptParser {
             log.clear();
             if ((flags & PARSE_EXPRESSIONS) != 0) {
                 final Expression<?> e;
-                if (expr.startsWith("\"") && expr.endsWith("\"") && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
+                if (!expr.isEmpty() && expr.charAt(0) == '\"' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == '\"' && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                     e = VariableString.newInstance("" + expr.substring(1, expr.length() - 1));
                 } else {
                     e = (Expression<?>) parse(expr, (Iterator) Skript.getExpressions(types), null);
@@ -1228,7 +1228,7 @@ public final class SkriptParser {
             }
 
             if (pieces.size() == 1) { // not a list of expressions, and a single one has failed to parse above
-                if (expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length()) {
+                if (!expr.isEmpty() && expr.charAt(0) == '(' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == ')' && next(expr, 0, context) == expr.length()) {
                     log.clear();
                     log.printLog();
                     return new SkriptParser(this, expr.substring(1, expr.length() - 1)).parseExpression(types);
@@ -1260,7 +1260,7 @@ public final class SkriptParser {
 
                     final Expression<? extends T> t;
 
-                    if (subExpr.startsWith("(") && subExpr.endsWith(")") && next(subExpr, 0, context) == subExpr.length())
+                    if (!subExpr.isEmpty() && subExpr.charAt(0) == '(' && !subExpr.isEmpty() && subExpr.charAt(subExpr.length() - 1) == ')' && next(subExpr, 0, context) == subExpr.length())
                         t = new SkriptParser(this, subExpr).parseExpression(types); // only parse as possible expression list if its surrounded by brackets
                     else
                         t = new SkriptParser(this, subExpr).parseSingleExpr(a == 1, log.getError(), types); // otherwise parse as a single expression only
@@ -1419,7 +1419,7 @@ public final class SkriptParser {
             }
 
             if (pieces.size() == 1) { // not a list of expressions, and a single one has failed to parse above
-                if (expr.startsWith("(") && expr.endsWith(")") && next(expr, 0, context) == expr.length()) {
+                if (!expr.isEmpty() && expr.charAt(0) == '(' && !expr.isEmpty() && expr.charAt(expr.length() - 1) == ')' && next(expr, 0, context) == expr.length()) {
                     log.clear();
                     log.printLog();
                     return new SkriptParser(this, "" + expr.substring(1, expr.length() - 1)).parseExpression(vi);
@@ -1446,7 +1446,7 @@ public final class SkriptParser {
 
                     final Expression<?> t;
 
-                    if (subExpr.startsWith("(") && subExpr.endsWith(")") && next(subExpr, 0, context) == subExpr.length())
+                    if (!subExpr.isEmpty() && subExpr.charAt(0) == '(' && !subExpr.isEmpty() && subExpr.charAt(subExpr.length() - 1) == ')' && next(subExpr, 0, context) == subExpr.length())
                         t = new SkriptParser(this, subExpr).parseExpression(vi); // only parse as possible expression list if its surrounded by brackets
                     else
                         t = new SkriptParser(this, subExpr).parseSingleExpr(a == 1, log.getError(), vi); // otherwise parse as a single expression only

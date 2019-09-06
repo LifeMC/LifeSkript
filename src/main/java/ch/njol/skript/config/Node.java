@@ -80,7 +80,7 @@ public abstract class Node {
 
     protected Node(final String key, final String comment, final SectionNode parent, final int lineNum) {
         this.key = key;
-        assert comment.isEmpty() || comment.startsWith("#") : comment;
+        assert comment.isEmpty() || !comment.isEmpty() && comment.charAt(0) == '#' : comment;
         this.comment = comment;
         debug = "#DEBUG#".equals(comment);
         this.lineNum = lineNum;
@@ -113,9 +113,7 @@ public abstract class Node {
 
             if (config != null && node != null) {
                 final String script = config.getFileName();
-                final int lineNumber = node.lineNum;
-
-                additionalInfo += " (" + script + ", line " + lineNumber + ")";
+                additionalInfo += " (" + script + ", line " + node.lineNum + ")";
             }
 
             Skript.error("There was an error when parsing line! You should avoid very long and/or lists, very long lines and such!" + additionalInfo);

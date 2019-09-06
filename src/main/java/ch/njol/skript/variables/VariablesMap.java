@@ -82,7 +82,7 @@ final class VariablesMap {
     @SuppressWarnings("unchecked")
     @Nullable
     Object getVariable(final String name) {
-        if (!name.endsWith("*")) {
+        if (!(!name.isEmpty() && name.charAt(name.length() - 1) == '*')) {
             return hashMap.get(name);
         }
         final String[] split = Variables.splitVariableName(name);
@@ -114,7 +114,7 @@ final class VariablesMap {
      */
     @SuppressWarnings("unchecked")
     void setVariable(final String name, final @Nullable Object value) {
-        if (!name.endsWith("*")) {
+        if (!(!name.isEmpty() && name.charAt(name.length() - 1) == '*')) {
             if (value == null)
                 hashMap.remove(name);
             else

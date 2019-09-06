@@ -111,10 +111,10 @@ public abstract class Task implements Runnable, Closeable {
             return f.get();
         } catch (final ExecutionException e) {
             Skript.exception(e);
-        } catch (final InterruptedException | CancellationException | ThreadDeath e) {
+        } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            if (e instanceof ThreadDeath)
-                throw (ThreadDeath) e;
+        } catch (final CancellationException ignored) {
+            /* ignored */
         }
         return null;
     }

@@ -593,7 +593,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @return An Iterable whose iterator will always return the same item(s)
      */
     public Iterable<ItemStack> getAll() {
-        if (!isAll()) {
+        if (!all) {
             final ItemStack i = getRandom();
             if (i == null)
                 return EmptyIterable.get();
@@ -699,7 +699,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @return Whatever this item type can be added to the given inventory
      */
     public boolean hasSpace(final Inventory inventory) {
-        if (!isAll() && (getItem().types.size() != 1 || getItem().types.get(0).hasDataRange() || getItem().types.get(0).typeid == -1)) {
+        if (!all && (getItem().types.size() != 1 || getItem().types.get(0).hasDataRange() || getItem().types.get(0).typeid == -1)) {
             return false;
         }
         return addTo(getCopiedContents(inventory));
@@ -917,7 +917,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param list
      */
     public void addTo(final List<ItemStack> list) {
-        if (!isAll()) {
+        if (!all) {
             list.add(getItem().getRandom());
             return;
         }
@@ -942,7 +942,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     public boolean addTo(final ItemStack[] buf) {
-        if (!isAll()) {
+        if (!all) {
             return addTo(getItem().getRandom(), buf);
         }
         boolean ok = true;
@@ -1031,7 +1031,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         for (int i = 0; i < types.size(); i++) {
             if (i != 0) {// this belongs here as size-1 can be 0
                 if (i == types.size() - 1)
-                    b.append(" ").append(isAll() ? GeneralWords.and : GeneralWords.or).append(" ");
+                    b.append(" ").append(all ? GeneralWords.and : GeneralWords.or).append(" ");
                 else
                     b.append(", ");
             }

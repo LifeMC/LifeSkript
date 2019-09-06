@@ -298,7 +298,7 @@ public final class YggdrasilTest {
         @Nullable
         private final String blah;
 
-        private TestClass1() {
+        TestClass1() {
             blah = "blah";
         }
 

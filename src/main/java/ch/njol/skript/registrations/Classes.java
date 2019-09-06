@@ -201,7 +201,7 @@ public final class Classes {
                     b.append(", ");
                 b.append(c.getCodeName()).append(" (after: ").append(StringUtils.join(c.after(), ", ")).append(")");
             }
-            throw new IllegalStateException("ClassInfos with circular dependencies detected: " + b.toString());
+            throw new IllegalStateException("ClassInfos with circular dependencies detected: " + b);
         }
 
         // debug message
@@ -212,7 +212,7 @@ public final class Classes {
                     b.append(", ");
                 b.append(ci.getCodeName());
             }
-            Skript.info("All registered classes in order: " + b.toString());
+            Skript.info("All registered classes in order: " + b);
         }
 
     }
@@ -614,7 +614,7 @@ public final class Classes {
                 b.append(toString(i, mode, flags));
                 first = false;
             }
-            return "[" + b.toString() + "]";
+            return "[" + b + "]";
         }
         for (final ClassInfo<?> ci : getClassInfos()) {
             final Parser<?> parser = ci.getParser();
@@ -651,7 +651,7 @@ public final class Classes {
         for (int i = 0; i < os.length; i++) {
             if (i != 0) {
                 if (c != null)
-                    b.append(c.toString());
+                    b.append(c);
                 if (i == os.length - 1)
                     b.append(and ? " and " : " or ");
                 else
@@ -659,7 +659,7 @@ public final class Classes {
             }
             b.append(toString(os[i], mode, flags));
         }
-        return "" + b.toString();
+        return "" + b;
     }
 
     private static final byte[] getYggdrasilStart(final ClassInfo<?> c) throws NotSerializableException {

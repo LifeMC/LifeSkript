@@ -255,7 +255,7 @@ public final class DefaultChangers {
                                 } else if (d instanceof Block) {
                                     new ItemType((Block) d).addTo(invi);
                                 } else {
-                                    Skript.error("Can't " + d.toString() + " to an inventory!");
+                                    Skript.error("Can't " + d + " to an inventory!");
                                 }
                             }
                         }

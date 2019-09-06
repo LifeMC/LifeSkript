@@ -233,8 +233,7 @@ public final class EffChange extends Effect {
             }
 
             Class<?> x = Utils.getSuperType(rs2);
-            boolean single;
-            single = allSingle;
+            boolean single = allSingle;
             for (int i = 0; i < rs.length; i++) {
                 if (rs2[i].isAssignableFrom(v.getReturnType())) {
                     single = !rs[i].isArray();

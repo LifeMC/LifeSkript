@@ -86,7 +86,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     static final String encode(final byte[] data) {
-        final char[] r = new char[data.length * 2];
+        final char[] r = new char[(data.length << 1)];
         for (int i = 0; i < data.length; i++) {
             r[2 * i] = Character.toUpperCase(Character.forDigit((data[i] & 0xF0) >>> 4, 16));
             r[2 * i + 1] = Character.toUpperCase(Character.forDigit(data[i] & 0xF, 16));
@@ -111,7 +111,7 @@ public final class FlatFileStorage extends VariablesStorage {
             if (lastEnd != m.start())
                 return null;
             final String v = m.group(1);
-            if (v.startsWith("\""))
+            if (!v.isEmpty() && v.charAt(0) == '\"')
                 r.add(v.substring(1, v.length() - 1).replace("\"\"", "\""));
             else
                 r.add(v.trim());
@@ -160,7 +160,7 @@ public final class FlatFileStorage extends VariablesStorage {
             while ((line = r.readLine()) != null) {
                 lineNum++;
                 line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) {
+                if (line.isEmpty() || !line.isEmpty() && line.charAt(0) == '#') {
                     if (line.startsWith("# version:")) {
                         try {
                             varVersion = new Version(line.substring("# version:".length()).trim());

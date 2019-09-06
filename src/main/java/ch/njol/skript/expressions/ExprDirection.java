@@ -52,7 +52,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0 (basic), 2.0 (extended)")
 public final class ExprDirection extends SimpleExpression<Direction> {
 
-    private static final BlockFace[] byMark = new BlockFace[]{BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST};
+    private static final BlockFace[] byMark = {BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST};
     private static final int UP = 0, DOWN = 1,
             NORTH = 2, SOUTH = 3, EAST = 4, WEST = 5,
             NORTH_EAST = 6, NORTH_WEST = 7, SOUTH_EAST = 8, SOUTH_WEST = 9;

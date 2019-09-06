@@ -60,33 +60,24 @@ public final class RabbitData extends EntityData<Rabbit> {
     }
 
     private static final int intFromType(final Rabbit.Type type) {
-        int i = 0;
         switch (type) {
             case BLACK:
-                i = 1;
-                break;
+                return 1;
             case BLACK_AND_WHITE:
-                i = 2;
-                break;
+                return 2;
             case BROWN:
-                i = 3;
-                break;
+                return 3;
             case GOLD:
-                i = 4;
-                break;
+                return 4;
             case SALT_AND_PEPPER:
-                i = 5;
-                break;
+                return 5;
             case THE_KILLER_BUNNY:
-                i = 6;
-                break;
+                return 6;
             case WHITE:
-                i = 7;
-                break;
+                return 7;
             default:
-                break;
+                return 0;
         }
-        return i;
     }
 
     @Override

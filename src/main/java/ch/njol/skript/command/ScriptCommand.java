@@ -385,7 +385,7 @@ public final class ScriptCommand implements CommandExecutor {
                 topics.setAccessible(true);
                 @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 for (final String alias : activeAliases) {
-                    final HelpTopic at = new CommandAliasHelpTopic("/" + alias, "/" + getLabel(), help);
+                    final HelpTopic at = new CommandAliasHelpTopic("/" + alias, "/" + label, help);
                     as.add(at);
                     helps.add(at);
                 }
@@ -438,7 +438,7 @@ public final class ScriptCommand implements CommandExecutor {
             variableString = variableString.substring(1);
         }
         if (variableString.endsWith("}")) {
-            variableString = variableString.substring(0, variableString.length() - 1);
+            return variableString.substring(0, variableString.length() - 1);
         }
         return variableString;
     }
@@ -476,9 +476,9 @@ public final class ScriptCommand implements CommandExecutor {
         }
         final Timespan cooldown = this.cooldown;
         assert cooldown != null;
-        long remaining = cooldown.getMilliSeconds() - getElapsedMilliseconds(uuid, event);
+        final long remaining = cooldown.getMilliSeconds() - getElapsedMilliseconds(uuid, event);
         if (remaining < 0) {
-            remaining = 0;
+            return 0;
         }
         return remaining;
     }

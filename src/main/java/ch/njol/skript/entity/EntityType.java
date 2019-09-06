@@ -54,7 +54,7 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
 
             @Override
             public String toVariableNameString(final EntityType t) {
-                return "entitytype:" + t.toString();
+                return "entitytype:" + t;
             }
 
             @Override

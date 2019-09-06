@@ -249,7 +249,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     ServerPlatform serverPlatform;
     private static @Nullable
     Boolean hasJLineSupport = null;
-    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff().toString() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff().toString() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET).toString() + " " : "[Skript] ";
+    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET) + " " : "[Skript] ";
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -655,9 +655,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The Bukkit class loader or the system class loader.
      */
     public static final ClassLoader getTrueClassLoader() {
-        ClassLoader classLoader = Skript.class.getClassLoader();
+        final ClassLoader classLoader = Skript.class.getClassLoader();
         if (classLoader == null)
-            classLoader = ClassLoader.getSystemClassLoader();
+            return ClassLoader.getSystemClassLoader();
         return classLoader;
     }
 
@@ -1499,9 +1499,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
             boolean first = true;
             while (cause != null) {
-                logEx((first ? "" : "Caused by: ") + cause.toString());
+                logEx((first ? "" : "Caused by: ") + cause);
                 for (final StackTraceElement e : cause.getStackTrace())
-                    logEx("    at " + e.toString());
+                    logEx("    at " + e);
                 cause = cause.getCause();
                 first = false;
             }
@@ -1697,7 +1697,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
         Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
         while (rootThreadGroup.enumerate(threads, true) == threads.length) {
-            threads = new Thread[threads.length * 2];
+            threads = new Thread[(threads.length << 1)];
         }
 
         return threads;
@@ -1921,6 +1921,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final String replacedContents = contents.replace("Hanging: true", "Hanging: false").trim();
                     if (!contents.equalsIgnoreCase(replacedContents)) {
                         FileUtils.backup(skelletConfig);
+
                         Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
                         madeChanges = true;
                     }
@@ -1935,6 +1936,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final String replacedContents = contents.replace("warnWhenSettingExcessiveVelocity: true", "warnWhenSettingExcessiveVelocity: false").trim();
                     if (!contents.equalsIgnoreCase(replacedContents)) {
                         FileUtils.backup(paperFile);
+
                         Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
                         madeChanges = true;
                     }
@@ -2196,7 +2198,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 try (final BufferedInputStream in = new BufferedInputStream(jarFile.getInputStream(entry));
                                      final BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 
-                                    final StringBuilder builder = new StringBuilder();
+                                    final StringBuilder builder = new StringBuilder(4096);
 
                                     String line;
 
@@ -2804,7 +2806,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 if (SpikeDetector.shouldStart()) {
                                     if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock") && !SpikeDetector.alwaysEnabled) {
-                                        BukkitLoggerFilter.addFilter((e) -> {
+                                        BukkitLoggerFilter.addFilter(e -> {
                                             if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play"))
                                                 SpikeDetector.doStart(mainThread);
                                             return true;

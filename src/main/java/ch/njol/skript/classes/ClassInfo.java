@@ -364,11 +364,11 @@ public class ClassInfo<T> implements Debuggable {
     @Override
     @NonNull
     public String toString() {
-        return getName().getSingular();
+        return name.getSingular();
     }
 
     public String toString(final int flags) {
-        return getName().toString(flags);
+        return name.toString(flags);
     }
 
     @Override
@@ -376,7 +376,7 @@ public class ClassInfo<T> implements Debuggable {
     public String toString(final @Nullable Event e, final boolean debug) {
         if (debug)
             return codeName + " (" + c.getCanonicalName() + ")";
-        return getName().getSingular();
+        return name.getSingular();
     }
 
 }

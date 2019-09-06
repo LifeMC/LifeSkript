@@ -146,8 +146,8 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         if (debug)
-            return "[" + Classes.toString(data, getAnd(), StringMode.DEBUG) + "]";
-        return Classes.toString(data, getAnd());
+            return "[" + Classes.toString(data, and, StringMode.DEBUG) + "]";
+        return Classes.toString(data, and);
     }
 
     @Override
@@ -157,7 +157,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 
     @Override
     public boolean isSingle() {
-        return !getAnd() || data.length == 1;
+        return !and || data.length == 1;
     }
 
     @Override
@@ -167,12 +167,12 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 
     @Override
     public boolean check(final Event e, final Checker<? super T> c, final boolean negated) {
-        return SimpleExpression.check(data, c, negated, getAnd());
+        return SimpleExpression.check(data, c, negated, and);
     }
 
     @Override
     public boolean check(final Event e, final Checker<? super T> c) {
-        return SimpleExpression.check(data, c, false, getAnd());
+        return SimpleExpression.check(data, c, false, and);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     public Class<?>[] acceptChange(final ChangeMode mode) {
         ClassInfo<? super T> rti = returnTypeInfo;
         if (rti == null)
-            returnTypeInfo = rti = Classes.getSuperClassInfo(getReturnType());
+            returnTypeInfo = rti = Classes.getSuperClassInfo(c);
         final Changer<? super T> c = rti.getChanger();
         return c == null ? null : c.acceptChange(mode);
     }

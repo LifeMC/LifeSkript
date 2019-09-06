@@ -188,24 +188,18 @@ public final class SkriptConfig {
     }
 
     public static final EventPriority getPreviousPriority(final EventPriority priority) {
-        final EventPriority previousPriority;
 
         switch (priority) {
             case MONITOR:
-                previousPriority = EventPriority.HIGHEST;
-                break;
+                return EventPriority.HIGHEST;
             case HIGHEST:
-                previousPriority = EventPriority.HIGH;
-                break;
+                return EventPriority.HIGH;
             case HIGH:
-                previousPriority = EventPriority.NORMAL;
-                break;
+                return EventPriority.NORMAL;
             case NORMAL:
-                previousPriority = EventPriority.LOW;
-                break;
+                return EventPriority.LOW;
             default:
-                previousPriority = EventPriority.LOWEST;
-                break;
+                return EventPriority.LOWEST;
         }
 
         return previousPriority;
