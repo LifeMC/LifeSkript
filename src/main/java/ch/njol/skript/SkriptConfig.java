@@ -163,7 +163,7 @@ public final class SkriptConfig {
         try {
             if ("default".equalsIgnoreCase(s))
                 return null;
-            return new SimpleDateFormat(s);
+            return new SimpleDateFormat(s, Locale.ENGLISH);
         } catch (final IllegalArgumentException e) {
             Skript.error("'" + s + "' is not a valid date format. Please refer to https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html for instructions on the format.");
         }
@@ -202,7 +202,6 @@ public final class SkriptConfig {
                 return EventPriority.LOWEST;
         }
 
-        return previousPriority;
     }
 
     /**

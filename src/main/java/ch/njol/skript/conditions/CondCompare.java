@@ -85,7 +85,7 @@ public final class CondCompare extends Condition {
 
     @SuppressWarnings("null")
     @Override
-    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
 
         first = vars[0];
         second = vars[1];
@@ -129,7 +129,7 @@ public final class CondCompare extends Condition {
     }
 
     @SuppressWarnings("unchecked")
-    private boolean init(/*final String expr*/) {
+    private final boolean init(/*final String expr*/) {
         final RetainingLogHandler log = SkriptLogger.startRetainingLog();
         Expression<?> third = this.third;
         try {
@@ -219,7 +219,7 @@ public final class CondCompare extends Condition {
      * neither a nor b # x or y === a !# x or y && b !# x or y            // nor = and
      */
     @Override
-    public boolean check(final Event e) {
+    public final boolean check(final Event e) {
         final Expression<?> third = this.third;
         return first.check(e, (Checker<Object>) o1 -> second.check(e, (Checker<Object>) o2 -> {
             if (third == null)
@@ -229,7 +229,7 @@ public final class CondCompare extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         String s;
         final Expression<?> third = this.third;
         if (third == null)

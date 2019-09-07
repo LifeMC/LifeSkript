@@ -66,7 +66,7 @@ public final class CondContains extends Condition {
 
     @SuppressWarnings({"unchecked", "null", "unused"})
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         containers = exprs[0].getConvertedExpression(Object.class);
         if (containers == null)
             return false;
@@ -94,7 +94,7 @@ public final class CondContains extends Condition {
     }
 
     @Override
-    public boolean check(final Event e) {
+    public final boolean check(final Event e) {
         return containers.check(e, (Checker<Object>) container -> {
             if (containers instanceof Variable || containers instanceof ExprFunctionCall && !containers.isSingle()) {
                 final Object finalContainer = container;
@@ -115,7 +115,7 @@ public final class CondContains extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(final @Nullable Event e, final boolean debug) {
         return containers.toString(e, debug) + (isNegated() ? " doesn't contain " : " contains ") + items.toString(e, debug);
     }
 

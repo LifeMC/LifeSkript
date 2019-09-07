@@ -174,7 +174,7 @@ public final class Documentation {
                         first = false;
                         final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(c);
                         final ClassInfo<?> ci = Classes.getClassInfoNoError(p.getFirst());
-                        if (ci != null && ci.getDocName() != null && !ci.getDocName().equals(ClassInfo.NO_DOC)) {
+                        if (ci != null && ci.getDocName() != null && !ClassInfo.NO_DOC.equals(ci.getDocName())) {
                             b.append("<a href='../classes/#").append(p.getFirst()).append("'>").append(ci.getName().toString(p.getSecond())).append("</a>");
                         } else {
                             b.append(c);
