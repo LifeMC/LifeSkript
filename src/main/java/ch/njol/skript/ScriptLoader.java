@@ -136,7 +136,7 @@ public final class ScriptLoader {
     private static Class<? extends Event>[] currentEvents;
     private static String indentation = "";
 
-    private static boolean loadingScripts;
+    private static volatile boolean loadingScripts;
 
     @Nullable
     private static Thread loadingLoggerThread;
