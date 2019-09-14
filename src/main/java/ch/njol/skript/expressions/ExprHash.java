@@ -43,22 +43,29 @@ import java.security.NoSuchAlgorithmException;
  * @author Peter Güttinger
  */
 @Name("Hash")
-@Description({"Hashes the given text using the MD5 algorithm. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an MD5 hash is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though which can easily crack short or insecure passwords."})
-@Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} to hashed text-argument", "command /login <text>:", "	trigger:", "		{password.%player%} is hashed text-argument:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
-@Since("2.0")
-/* FIXME Actually support new algorithms, SHA256 & SHA512 for now will be great,
-   MD5 is not fine in 2019 because it crackable easily. */
+@Description({"Hashes the given text using the MD5 or SHA-256 algorithms. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an hashed text is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though, which can easily crack short, common or insecure passwords."})
+@Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} text-argument hashed with SHA-256", "command /login <text>:", "	trigger:", "		{password.%player%} is text-argument hashed with SHA-256:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
+@Since("2.0, 2.2.17 (SHA-256 algorithm)")
 public final class ExprHash extends PropertyExpression<String, String> {
+
     @Nullable
-    static final MessageDigest algorithm;
+    static final MessageDigest md5;
+
+    @Nullable
+    static final MessageDigest sha256;
+
+    private MessageDigest algorithm;
 
     static {
-        Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY, "[md5]( |-)hash(ed|[( |-|)code] of) %strings%");
+        Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY,
+                "[md5]( |-)hash(ed|[( |-|)code] of) %strings%",
+                "%strings% hash[ed] with (0¦MD5|1¦SHA-256)");
     }
 
     static {
         try {
-            algorithm = MessageDigest.getInstance("MD5");
+            md5 = MessageDigest.getInstance("MD5");
+            sha256 = MessageDigest.getInstance("SHA-256");
         } catch (final NoSuchAlgorithmException e) {
             throw new InternalError("JVM does not adhere to Java specifications");
         }
@@ -75,9 +82,20 @@ public final class ExprHash extends PropertyExpression<String, String> {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        if (matchedPattern == 0)
+            algorithm = md5;
+        else if (matchedPattern == 1) {
+            if (parseResult.mark == 0)
+                algorithm = md5;
+            else if (parseResult.mark == 1)
+                algorithm = sha256;
+            else
+                assert false : parseResult.mark;
+        } else
+            assert false : matchedPattern;
         if (algorithm == null) {
-            Skript.error("The Java Virtual Machine running on this server does not support the MD5 algorithm, thus you cannot use the 'hash' expression.");
+            Skript.error("The Java Virtual Machine running on this server does not support the requested algorithm, thus you cannot use the 'hash' expression.");
             return false;
         }
         setExpr((Expression<String>) exprs[0]);
@@ -86,7 +104,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
 
     @SuppressWarnings("null")
     @Override
-    protected String[] get(final Event e, final String[] source) {
+    protected final String[] get(final Event e, final String[] source) {
         assert algorithm != null;
         final String[] r = new String[source.length];
         for (int i = 0; i < r.length; i++)
@@ -95,12 +113,12 @@ public final class ExprHash extends PropertyExpression<String, String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "hash of " + getExpr();
     }
 
     @Override
-    public Class<String> getReturnType() {
+    public final Class<String> getReturnType() {
         return String.class;
     }
 
