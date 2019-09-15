@@ -345,7 +345,7 @@ public final class Variable<T> implements Expression<T> {
 
         private final boolean local;
 
-        public PlayerVariableFixerIterator(final Iterator<String> keys, final String name,
+        PlayerVariableFixerIterator(final Iterator<String> keys, final String name,
                                            final Event event, final boolean local) {
             this.keys = keys;
 
@@ -412,7 +412,7 @@ public final class Variable<T> implements Expression<T> {
 
         private final boolean local;
 
-        public VariableIterator(final Iterator<String> keys, final Class<? extends T>[] types,
+        VariableIterator(final Iterator<String> keys, final Class<? extends T>[] types,
                                 final String name, final Event event, final boolean local) {
             this.keys = keys;
             this.types = types;

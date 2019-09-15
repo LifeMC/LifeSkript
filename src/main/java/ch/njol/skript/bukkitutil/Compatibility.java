@@ -104,6 +104,22 @@ public final class Compatibility {
      *
      * @param oldClass The old, deprecated or moved class.
      * @param newClass The new class.
+     * @param dummy Do not pass this parameter.
+     * @return The most compatible class as super class.
+     * If you must do operations specific to old or new one,
+     * check via {@link Class#isAssignableFrom(Class)} and cast it.
+     */
+    @SafeVarargs
+    @SuppressWarnings("null")
+    public static final <S> Class<? extends S> getClassInfer(@NonNull final String oldClass, @NonNull final String newClass, @NonNull final S... dummy) {
+        return Compatibility.getClass(oldClass, newClass, (Class<S>) dummy.getClass().getComponentType());
+    }
+
+    /**
+     * Gets the most compatible class.
+     *
+     * @param oldClass The old, deprecated or moved class.
+     * @param newClass The new class.
      * @return The most compatible class as generic class.
      * If you must do operations specific to old or new one,
      * check via {@link Class#isAssignableFrom(Class)} and cast it.

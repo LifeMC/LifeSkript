@@ -59,16 +59,11 @@ class EffAgent : Effect() {
         }
     }
 
-    @JvmField
-    var enable: Boolean = false
+    private var enable: Boolean = false
+    private var agent: Expression<String>? = null
 
-    @JvmField
-    var agent: Expression<String>? = null
-    @JvmField
-    var type: Array<TrackerType?>? = null
-
-    @JvmField
-    var sender: Expression<CommandSender>? = null
+    private var type: Array<TrackerType?>? = null
+    private var sender: Expression<CommandSender>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         enable = matchedPattern == 1
@@ -128,7 +123,7 @@ class EffAgent : Effect() {
         return if (enable) "enable agent ${agent?.getAll(e)!!.joinToString()}" else "disable agent ${agent?.getAll(e)!!.joinToString()}"
     }
 
-    data class TypedTracker(
+    class TypedTracker(
             @JvmField val type: TrackerType,
             @JvmField val tracker: TrackerAgent
     )
