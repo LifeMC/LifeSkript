@@ -42,10 +42,10 @@ import static org.junit.Assert.assertTrue;
 public final class YggdrasilTest {
 
     public static final PETest1 PET1_3 = new PETest1("PET1_3");
-    static final Yggdrasil y = new Yggdrasil();
-    static final String modifiedClassID = "something random";
     @SuppressWarnings("rawtypes")
     public static final ArrayList[] EMPTY_RAW_ARRAY_LIST_ARRAY = new ArrayList[0];
+    static final Yggdrasil y = new Yggdrasil();
+    static final String modifiedClassID = "something random";
     static Class<?> currentModifiedClass = UnmodifiedClass.class;
 
     static {
@@ -135,7 +135,8 @@ public final class YggdrasilTest {
                     return false;
             }
             return true;
-        } else if (o1 instanceof Collection) {
+        }
+        if (o1 instanceof Collection) {
             final Iterator<?> i1 = ((Collection<?>) o1).iterator(), i2 = ((Collection<?>) o2).iterator();
             while (i1.hasNext()) {
                 if (!i2.hasNext())
@@ -144,9 +145,8 @@ public final class YggdrasilTest {
                     return false;
             }
             return !i1.hasNext();
-        } else {
-            return o1.equals(o2);
         }
+        return o1.equals(o2);
     }
 
 //    private static final class CollectionTests {

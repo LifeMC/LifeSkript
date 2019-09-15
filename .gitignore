@@ -11,3 +11,4 @@ workspace.xml
 
 # Sonar lint issue store
 .idea/sonarlint
+.idea/sonarlint-state.xml

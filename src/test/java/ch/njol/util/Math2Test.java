@@ -97,10 +97,10 @@ public final class Math2Test {
 
         final int[][] p2vsI = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, Integer.MIN_VALUE}, {Integer.MIN_VALUE, Integer.MIN_VALUE}
         };
-        final long[][] p2vsL = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1}, {Integer.MIN_VALUE, Integer.MIN_VALUE}, {Long.MAX_VALUE, Long.MIN_VALUE}, {Long.MIN_VALUE, Long.MIN_VALUE}
-        };
         for (final int[] v : p2vsI)
             assertEquals("" + v[0], v[1], Math2.nextPowerOfTwo(v[0]));
+        final long[][] p2vsL = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1}, {Integer.MIN_VALUE, Integer.MIN_VALUE}, {Long.MAX_VALUE, Long.MIN_VALUE}, {Long.MIN_VALUE, Long.MIN_VALUE}
+        };
         for (final long[] v : p2vsL)
             assertEquals("" + v[0], v[1], Math2.nextPowerOfTwo(v[0]));
 

@@ -117,6 +117,64 @@
         </repository>
     </repositories>
 
+	<pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>central-snapshots</id>
+            <name>Apache Snapshots</name>
+            <url>https://repository.apache.org/content/groups/snapshots/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter Repository</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>caseif-repo</id>
+            <name>Backup Bukkit Repository</name>
+            <url>https://repo.caseif.net/content/groups/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jitpack.io</id>
+            <name>JitPack Repository</name>
+            <url>https://jitpack.io/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>eclipse-repo</id>
+            <name>Eclipse Repository</name>
+            <url>https://repo.eclipse.org/content/repositories/eclipse-releases/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>sk89q-repo</id>
+            <name>sk89q's Repository</name>
+            <url>https://maven.sk89q.com/repo/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>techcable-repo</id>
+            <name>Backup Bukkit Repository</name>
+            <url>https://repo.techcable.net/content/repositories/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>md_5-snapshots</id>
+            <name>md_5's Snapshot Repository</name>
+            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>md_5-releases</id>
+            <name>md_5's Release Repository</name>
+            <url>https://repo.md-5.net/content/repositories/releases/</url>
+        </pluginRepository>
+	    <pluginRepository>
+		    <id>tudelft-repository</id>
+			<name>tudelft's Repository</name>
+		    <url>https://simulation.tudelft.nl/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -557,8 +615,8 @@
                     <skipMain>false</skipMain>
                     <skip>false</skip>
                     <release>8</release>
-                    <optimize>true</optimize>
                     <fork>true</fork>
+                    <optimize>true</optimize>
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
                     <compilerId>eclipse</compilerId>
                     <compilerVersion>8</compilerVersion>

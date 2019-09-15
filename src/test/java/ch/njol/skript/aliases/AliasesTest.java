@@ -48,11 +48,11 @@ public final class AliasesTest {
         final ItemType t = new ItemType();
         t.add(new ItemData(0));
 
-        final Aliases.Variations v = new Aliases.Variations();
         final LinkedHashMap<String, ItemType> var1 = new LinkedHashMap<>();
         var1.put("{default}", t);
         var1.put("v1.1", t);
         var1.put("v1.2", t);
+        final Aliases.Variations v = new Aliases.Variations();
         v.put("var1", var1);
         final LinkedHashMap<String, ItemType> var2 = new LinkedHashMap<>();
         var2.put("v2.1 @a", t);
