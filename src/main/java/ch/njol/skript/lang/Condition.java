@@ -45,7 +45,7 @@ public abstract class Condition extends Statement {
     @Nullable
     public static final Condition parse(String s, final String defaultError) {
         s = s.trim();
-        while (s.startsWith("(") && SkriptParser.next(s, 0, ParseContext.DEFAULT) == s.length())
+        while (!s.isEmpty() && s.charAt(0) == '(' && SkriptParser.next(s, 0, ParseContext.DEFAULT) == s.length())
             s = s.substring(1, s.length() - 1);
         return (Condition) SkriptParser.parse(s, (Iterator) Skript.getConditions().iterator(), defaultError);
     }
@@ -57,7 +57,7 @@ public abstract class Condition extends Statement {
      * You might want to use {@link ch.njol.skript.lang.util.SimpleExpression#check(Event, ch.njol.util.Checker)}
      *
      * @param e the event to check
-     * @return <code>true</code> if the condition is satisfied, <code>false</code> otherwise or if the condition doesn't apply to this event.
+     * @return {@code true} if the condition is satisfied, {@code false} otherwise or if the condition doesn't apply to this event.
      */
     public abstract boolean check(final Event e);
 

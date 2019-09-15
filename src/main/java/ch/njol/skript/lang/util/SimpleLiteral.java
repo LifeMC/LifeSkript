@@ -96,7 +96,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     }
 
     @Override
-    public T[] getArray() {
+    public final T[] getArray() {
         return data;
     }
 
@@ -117,7 +117,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 
     @SuppressWarnings("null")
     @Override
-    public T getSingle() {
+    public final T getSingle() {
         return CollectionUtils.getRandom(data);
     }
 
@@ -151,7 +151,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return toString(null, false);
     }
 
@@ -213,17 +213,24 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
 
     @Override
     public NonNullIterator<T> iterator(final Event e) {
-        return new NonNullIterator<T>() {
-            private int i;
+        return new LiteralIterator<>(data);
+    }
 
-            @Override
-            @Nullable
-            protected T getNext() {
-                if (i == data.length)
-                    return null;
-                return data[i++];
-            }
-        };
+    private static final class LiteralIterator<T> extends NonNullIterator<T> {
+        private final transient T[] data;
+        private int i;
+
+        LiteralIterator(final T[] data) {
+            this.data = data;
+        }
+
+        @Override
+        @Nullable
+        protected final T getNext() {
+            if (i == data.length)
+                return null;
+            return data[i++];
+        }
     }
 
     @Override

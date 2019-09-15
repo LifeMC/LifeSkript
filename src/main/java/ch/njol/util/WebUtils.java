@@ -72,7 +72,7 @@ public final class WebUtils {
      *                and get response from it.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
-     * @throws IOException If any connection errors occured when making the http
+     * @throws IOException If any connection errors occurred when making the http
      *                     request to the address.
      */
     @Nullable
@@ -91,7 +91,7 @@ public final class WebUtils {
      *                and get response from it.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
-     * @throws IOException If any connection errors occured when making the http
+     * @throws IOException If any connection errors occurred when making the http
      *                     request to the address.
      */
     @Nullable
@@ -109,7 +109,7 @@ public final class WebUtils {
      *                    selected address / url.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
-     * @throws IOException If any connection errors occured when making the http
+     * @throws IOException If any connection errors occurred when making the http
      *                     request to the address.
      */
     @Nullable
@@ -128,7 +128,7 @@ public final class WebUtils {
      * @param useWorkarounds - Pass false to not use workarounds.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
-     * @throws IOException If any connection errors occured when making the http
+     * @throws IOException If any connection errors occurred when making the http
      *                     request to the address.
      */
     @Nullable

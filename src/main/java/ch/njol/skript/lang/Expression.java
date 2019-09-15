@@ -221,7 +221,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     Expression<? extends T> simplify();
 
     /**
-     * Tests whatever this expression supports the given mode, and if yes what type it expects the <code>delta</code> to be.
+     * Tests whatever this expression supports the given mode, and if yes what type it expects the {@code delta} to be.
      * <p>
      * <b>Use {@link ch.njol.skript.classes.Changer.ChangerUtils#acceptsChange(Expression, ChangeMode, Class...)} to test whatever an expression supports changing</b>, don't directly use this method!
      * <p>
@@ -232,7 +232,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * Unlike {@link ch.njol.skript.classes.Changer#acceptChange(ChangeMode)} this method may print errors.
      *
      * @param mode
-     * @return An array of types that {@link #change(Event, Object[], ChangeMode)} accepts as its <code>delta</code> parameter (which can be arrays to denote that multiple of
+     * @return An array of types that {@link #change(Event, Object[], ChangeMode)} accepts as its {@code delta} parameter (which can be arrays to denote that multiple of
      * that type are accepted), or null if the given mode is not supported. For {@link ChangeMode#DELETE} and {@link ChangeMode#RESET} this can return any non-null array to
      * mark them as supported.
      */
@@ -240,7 +240,7 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
     Class<?>[] acceptChange(final ChangeMode mode);
 
     /**
-     * Changes the expression's value by the given amount. This will only be called on supported modes and with the desired <code>delta</code> type as returned by
+     * Changes the expression's value by the given amount. This will only be called on supported modes and with the desired {@code delta} type as returned by
      * {@link #acceptChange(ChangeMode)}
      *
      * @param e

@@ -402,7 +402,7 @@ public final class VariableString implements Expression<String> {
                 if (info.toChatStyle) {
                     final String s = Classes.toString(info.expr.getArray(e), flags, getLastColor(b));
                     final String style = Utils.getChatStyle(s);
-                    b.append(style == null ? "<" + s + ">" : style);
+                    b.append(style == null ? '<' + s + '>' : style);
                 } else {
                     b.append(Classes.toString(info.expr.getArray(e), flags, getLastColor(b)));
                 }
@@ -432,9 +432,9 @@ public final class VariableString implements Expression<String> {
         final StringBuilder b = new StringBuilder("\"");
         for (final Object o : string) {
             if (o instanceof Expression) {
-                b.append("%").append(((Expression<?>) o).toString(e, debug)).append("%");
+                b.append('%').append(((Expression<?>) o).toString(e, debug)).append('%');
             } else if (o instanceof ExpressionInfo) {
-                b.append("%").append(((ExpressionInfo) o).expr.toString(e, debug)).append("%");
+                b.append('%').append(((ExpressionInfo) o).expr.toString(e, debug)).append('%');
             } else {
                 b.append(o);
             }
@@ -453,7 +453,7 @@ public final class VariableString implements Expression<String> {
         final StringBuilder b = new StringBuilder(4096);
         for (final Object o : string) {
             if (o instanceof Expression) {
-                b.append("<").append(Classes.getSuperClassInfo(((Expression<?>) o).getReturnType()).getCodeName()).append(">");
+                b.append('<').append(Classes.getSuperClassInfo(((Expression<?>) o).getReturnType()).getCodeName()).append('>');
             } else {
                 b.append(o);
             }

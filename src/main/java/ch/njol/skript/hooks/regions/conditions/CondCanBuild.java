@@ -49,7 +49,7 @@ public final class CondCanBuild extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<Location> locations;
+    private Expression<Location> locations;
     @SuppressWarnings("null")
     private Expression<Player> players;
 

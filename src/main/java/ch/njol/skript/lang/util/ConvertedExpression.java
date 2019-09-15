@@ -89,14 +89,14 @@ public class ConvertedExpression<F, T> implements Expression<T> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (debug && e == null)
-            return "(" + source.toString(e, debug) + " >> " + conv + ": " + source.getReturnType().getName() + "->" + to.getName() + ")";
+            return '(' + source.toString(e, debug) + " >> " + conv + ": " + source.getReturnType().getName() + "->" + to.getName() + ')';
         return source.toString(e, debug);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return toString(null, false);
     }
 
@@ -133,7 +133,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final ClassInfo<? super T> rti = returnTypeInfo;
         if (rti != null) {
             final Changer<? super T> c = rti.getChanger();
@@ -179,7 +179,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
     }
 
     @Override
-    public boolean getAnd() {
+    public final boolean getAnd() {
         return source.getAnd();
     }
 
@@ -209,36 +209,46 @@ public class ConvertedExpression<F, T> implements Expression<T> {
         final Iterator<? extends F> iter = source.iterator(e);
         if (iter == null)
             return null;
-        return new Iterator<T>() {
-            @Nullable
-            T next;
+        return new ConvertedIterator<T, F>(iter, conv);
+    }
 
-            @Override
-            public boolean hasNext() {
-                if (next != null)
-                    return true;
-                while (next == null && iter.hasNext()) {
-                    final F f = iter.next();
-                    next = f == null ? null : conv.convert(f);
-                }
-                return next != null;
-            }
+    private static final class ConvertedIterator<T, F> implements Iterator<T> {
+        @Nullable
+        private T next;
 
-            @Override
-            public T next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                final T n = next;
-                next = null;
-                assert n != null;
-                return n;
-            }
+        private final Iterator<? extends F> iter;
+        private final Converter<? super F, ? extends T> conv;
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+        ConvertedIterator(final Iterator<? extends F> iter, final Converter<? super F, ? extends T> conv) {
+            this.iter = iter;
+            this.conv = conv;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            if (next != null)
+                return true;
+            while (next == null && iter.hasNext()) {
+                final F f = iter.next();
+                next = f == null ? null : conv.convert(f);
             }
-        };
+            return next != null;
+        }
+
+        @Override
+        public final T next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final T n = next;
+            next = null;
+            assert n != null;
+            return n;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override

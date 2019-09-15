@@ -49,9 +49,9 @@ public class ExpressionList<T> implements Expression<T> {
     protected final Expression<? extends T>[] expressions;
     private final boolean single;
     private final Class<T> returnType;
-    protected boolean and;
     @Nullable
     private final ExpressionList<?> source;
+    protected boolean and;
     private int time;
 
     public ExpressionList(final Expression<? extends T>[] expressions, final Class<T> returnType, final boolean and) {
@@ -298,11 +298,11 @@ public class ExpressionList<T> implements Expression<T> {
         b.append(")");
         if (debug)
             b.append("[").append(returnType).append("]");
-        return "" + b;
+        return b.toString();
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return toString(null, false);
     }
 

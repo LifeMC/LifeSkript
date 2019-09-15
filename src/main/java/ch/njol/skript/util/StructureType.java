@@ -73,7 +73,7 @@ public enum StructureType {
                 parseMap.put(Pattern.compile(pattern, Pattern.CASE_INSENSITIVE), t);
             }
         }
-        s = "" + s.toLowerCase(Locale.ENGLISH);
+        s = s.toLowerCase(Locale.ENGLISH);
         for (final Entry<Pattern, StructureType> e : parseMap.entrySet()) {
             if (e.getKey().matcher(s).matches())
                 return e.getValue();

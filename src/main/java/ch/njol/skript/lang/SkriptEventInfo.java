@@ -74,13 +74,13 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
         this.events = events;
 
         if (name.startsWith("*")) {
-            this.name = name = "" + name.substring(1);
+            this.name = name = name.substring(1);
         } else {
             this.name = "On " + name;
         }
 
         // uses the name without 'on ' or '*'
-        this.id = "" + name.toLowerCase(Locale.ENGLISH).replaceAll("[#'\"<>/&]", "").replaceAll("\\s+", "_");
+        this.id = name.toLowerCase(Locale.ENGLISH).replaceAll("[#'\"<>/&]", "").replaceAll("\\s+", "_");
     }
 
     /**

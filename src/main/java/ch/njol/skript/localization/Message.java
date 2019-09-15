@@ -102,11 +102,13 @@ public class Message {
     /**
      * Checks whatever this message's value has changed and calls {@link #onValueChange()} if neccessary.
      */
-    protected synchronized void validate() {
-        if (revalidate) {
-            revalidate = false;
-            value = Language.get_(key);
-            onValueChange();
+    protected final void validate() {
+        synchronized (this) {
+            if (revalidate) {
+                revalidate = false;
+                value = Language.get_(key);
+                onValueChange();
+            }
         }
     }
 

@@ -530,7 +530,8 @@ public final class ScriptLoader {
                                     if (Skript.getVersion().isSmallerThan(target)) {
                                         Skript.error("This script requires Skript version " + value);
                                         return new ScriptInfo(); // we return empty script info to abort parsing
-                                    } else if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
+                                    }
+                                    if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
                                         Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
                                     duplicateCheckList.add("target");
                                 } else if ("loops".equalsIgnoreCase(key)) {
@@ -639,7 +640,8 @@ public final class ScriptLoader {
                         }
                         duplicateCheckList.clear();
                         continue;
-                    } else if ("aliases".equalsIgnoreCase(event)) {
+                    }
+                    if ("aliases".equalsIgnoreCase(event)) {
                         node.convertToEntries(0, "=");
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
@@ -652,7 +654,8 @@ public final class ScriptLoader {
                             currentAliases.put(n.getKey().toLowerCase(Locale.ENGLISH), t);
                         }
                         continue;
-                    } else if ("options".equalsIgnoreCase(event)) {
+                    }
+                    if ("options".equalsIgnoreCase(event)) {
                         node.convertToEntries(0);
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
@@ -662,7 +665,8 @@ public final class ScriptLoader {
                             currentOptions.put(n.getKey(), ((EntryNode) n).getValue());
                         }
                         continue;
-                    } else if ("variables".equalsIgnoreCase(event)) {
+                    }
+                    if ("variables".equalsIgnoreCase(event)) {
                         node.convertToEntries(0, "=");
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
@@ -688,7 +692,8 @@ public final class ScriptLoader {
                             });
                             if (name == null) {
                                 continue;
-                            } else if (name.contains("%")) {
+                            }
+                            if (name.contains("%")) {
                                 Skript.error("Invalid use of percent signs in variable name");
                                 continue;
                             }
@@ -713,7 +718,8 @@ public final class ScriptLoader {
                             if (ci == null || ci.getSerializer() == null) {
                                 Skript.error("Can't save '" + ((EntryNode) n).getValue() + "' in a variable");
                                 continue;
-                            } else if (ci.getSerializeAs() != null) {
+                            }
+                            if (ci.getSerializeAs() != null) {
                                 final ClassInfo<?> as = Classes.getExactClassInfo(ci.getSerializeAs());
                                 if (as == null) {
                                     assert false : ci;
@@ -728,8 +734,8 @@ public final class ScriptLoader {
                             Variables.setVariable(name, o, null, false);
                         }
                         continue;
-                    } else
-                        currentScriptVersion = scriptVersion;
+                    }
+                    currentScriptVersion = scriptVersion;
 
                     if (!SkriptParser.validateLine(event))
                         continue;
@@ -747,7 +753,8 @@ public final class ScriptLoader {
                         deleteCurrentEvent();
 
                         continue;
-                    } else if (event.toLowerCase(Locale.ENGLISH).startsWith("function ") || event.startsWith("func ") || event.startsWith("fun ")) { // Allow kotlin and javascript style function prefixes
+                    }
+                    if (event.toLowerCase(Locale.ENGLISH).startsWith("function ") || event.startsWith("func ") || event.startsWith("fun ")) { // Allow kotlin and javascript style function prefixes
 
                         setCurrentEvent("function", FunctionEvent.class);
 

@@ -133,7 +133,7 @@ public final class Money {
                         return new Money(d);
                     }
                 } catch (final NumberFormatException e) {
-                    Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                    Skript.exception(e, "Error occurred when parsing \"" + str + '"');
                 }
             } else if (StringUtils.startsWithIgnoreCase(s, plural)) {
                 final String str = s.substring(plural.length()).trim();
@@ -143,7 +143,7 @@ public final class Money {
                         return new Money(d);
                     }
                 } catch (final NumberFormatException e) {
-                    Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                    Skript.exception(e, "Error occurred when parsing \"" + str + '"');
                 }
             }
         }
@@ -156,7 +156,7 @@ public final class Money {
                         return new Money(d);
                     }
                 } catch (final NumberFormatException e) {
-                    Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                    Skript.exception(e, "Error occurred when parsing \"" + str + '"');
                 }
             } else if (StringUtils.startsWithIgnoreCase(s, singular)) {
                 final String str = s.substring(singular.length()).trim();
@@ -166,7 +166,7 @@ public final class Money {
                         return new Money(d);
                     }
                 } catch (final NumberFormatException e) {
-                    Skript.exception(e, "Error occurred when parsing \"" + str + "\"");
+                    Skript.exception(e, "Error occurred when parsing \"" + str + '"');
                 }
             }
         }

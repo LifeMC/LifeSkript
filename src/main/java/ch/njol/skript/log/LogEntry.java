@@ -34,7 +34,7 @@ import java.util.logging.Level;
  */
 public final class LogEntry {
 
-    private static final String skriptLogPackageName = "" + SkriptLogger.class.getPackage().getName();
+    private static final String skriptLogPackageName = SkriptLogger.class.getPackage().getName();
     public final Level level;
     public final int quality;
     public final String message;

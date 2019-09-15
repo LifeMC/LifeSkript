@@ -46,7 +46,7 @@ public class ParseLogHandler extends LogHandler {
             if (e == null || entry.getQuality() > e.getQuality()) {
                 error = entry;
                 if (e != null)
-                    e.discarded("overridden by '" + entry.getMessage() + "' (" + ErrorQuality.get(entry.getQuality()) + " > " + ErrorQuality.get(e.getQuality()) + ")");
+                    e.discarded("overridden by '" + entry.getMessage() + "' (" + ErrorQuality.get(entry.getQuality()) + " > " + ErrorQuality.get(e.getQuality()) + ')');
             }
         } else {
             log.add(entry);

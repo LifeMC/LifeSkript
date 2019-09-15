@@ -61,7 +61,7 @@ public abstract class SkriptEvent implements SyntaxElement, Debuggable {
     public abstract boolean check(Event e);
 
     @Override
-    public String toString() {
+    public final String toString() {
         return toString(null, false);
     }
 

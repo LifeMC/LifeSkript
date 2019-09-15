@@ -53,12 +53,12 @@ public abstract class Effect extends Statement {
             if (f != null) {
                 log.printLog();
                 return f;
-            } else if (log.hasError()) {
+            }
+            if (log.hasError()) {
                 log.printError();
                 return null;
-            } else {
-                log.printError();
             }
+            log.printError();
         } finally {
             log.stop();
         }

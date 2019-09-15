@@ -38,10 +38,8 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class ScriptFunction<T> extends Function<T> {
 
     final Trigger trigger;
-
-    private boolean returnValueSet;
     public boolean ignoreEmptyReturn;
-
+    private boolean returnValueSet;
     @Nullable
     private T[] returnValue;
 

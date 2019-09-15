@@ -152,7 +152,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
         return Collections.unmodifiableSet(other.keySet());
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @SuppressWarnings({"MethodDoesntCallSuperMethod", "unused"})
     @Override
     public BidiHashMap<T1, T2> clone() {
         return new BidiHashMap<T1, T2>(this);

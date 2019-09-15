@@ -249,7 +249,7 @@ public final class UnparsedLiteral implements Literal<Object> {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "'" + data + "'";
+        return '\'' + data + '\'';
     }
 
     @Override

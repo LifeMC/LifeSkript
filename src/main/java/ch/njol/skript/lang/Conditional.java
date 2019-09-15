@@ -74,18 +74,7 @@ public final class Conditional extends TriggerSection {
             }
             return;
         }
-        elseClause = new TriggerSection(node) {
-            @Override
-            @Nullable
-            public TriggerItem walk(final Event e) {
-                return walk(e, true);
-            }
-
-            @Override
-            public String toString(final @Nullable Event e, final boolean debug) {
-                return "else";
-            }
-        }.setParent(getParent()).setNext(getNext());
+        elseClause = new ElseTriggerSection(node).setParent(getParent()).setNext(getNext());
     }
 
     public final void loadElseIf(final Condition cond, final SectionNode n) {
@@ -115,6 +104,23 @@ public final class Conditional extends TriggerSection {
         if (elseClause != null)
             elseClause.setParent(parent);
         return this;
+    }
+
+    private static final class ElseTriggerSection extends TriggerSection {
+        ElseTriggerSection(final SectionNode node) {
+            super(node);
+        }
+
+        @Override
+        @Nullable
+        public final TriggerItem walk(final Event e) {
+            return walk(e, true);
+        }
+
+        @Override
+        public final String toString(@Nullable final Event e, final boolean debug) {
+            return "else";
+        }
     }
 
 }

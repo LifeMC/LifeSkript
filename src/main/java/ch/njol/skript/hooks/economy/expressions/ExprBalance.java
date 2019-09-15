@@ -70,7 +70,7 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.REMOVE_ALL)
             return null;
-        return new Class[]{Money.class, Number.class};
+        return new Class<?>[]{Money.class, Number.class};
     }
 
     @SuppressWarnings("deprecation")

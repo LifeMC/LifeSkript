@@ -384,6 +384,7 @@ public final class SkriptCommand implements CommandExecutor {
 
                         final long limit = 0L;
                         final TimeUnit unit = TimeUnit.NANOSECONDS;
+
                         registeredTrackers.add(
                                 new TaskTrackerAgent(sender, limit, unit).registerTracker()
                         );

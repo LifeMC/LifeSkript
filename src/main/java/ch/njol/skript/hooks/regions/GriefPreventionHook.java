@@ -102,7 +102,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
                 Skript.exception(e);
         }
         if (getClaim == null && claimsField == null) {
-            Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + "." + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");
+            Skript.error("Skript " + Skript.getVersion() + " is not compatible with GriefPrevention " + plugin.getDescription().getVersion() + '.' + " Please report this at " + Skript.ISSUES_LINK + " if this error occurred after you updated GriefPrevention.");
             return false;
         }
         return super.init();
@@ -222,7 +222,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         public Collection<OfflinePlayer> getOwners() {
             if (claim.isAdminClaim()) // Admin claims do not have owners! (fixes NPE)
                 return Collections.emptyList();
-            else if (supportsUUIDs)
+            if (supportsUUIDs)
                 return Collections.singletonList(Bukkit.getOfflinePlayer(claim.ownerID));
             return Collections.singletonList(Bukkit.getOfflinePlayer(claim.getOwnerName()));
         }

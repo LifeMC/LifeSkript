@@ -281,20 +281,18 @@ public final class FlatFileStorage extends VariablesStorage {
                 PrintWriter cw;
                 while ((cw = changesWriter.get()) == null) {
                     try {
-                        changesWriter.wait(); //FIXME sonarlint
-                    } catch (final InterruptedException e) {
-                        Skript.exception(e);
+                        changesWriter.wait(); //FIXME sonarlint blocker issue
+                    } catch (final InterruptedException ignored) {
                         Thread.currentThread().interrupt();
-
                         return false;
                     }
                 }
                 writeCSV(cw, name, type, value == null ? "" : encode(value));
                 cw.flush();
                 changes.incrementAndGet();
+				return true;
             }
         }
-        return true;
     }
 
     @SuppressWarnings("null")

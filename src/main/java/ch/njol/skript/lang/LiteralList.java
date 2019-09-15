@@ -66,7 +66,7 @@ public final class LiteralList<T> extends ExpressionList<T> implements Literal<T
     @Nullable
     public <R> Literal<? extends R> getConvertedExpression(final Class<R>... to) {
         final Literal<? extends R>[] exprs = new Literal[expressions.length];
-        final Class<?>[] classes = new Class[expressions.length];
+        final Class<?>[] classes = new Class<?>[expressions.length];
         for (int i = 0; i < exprs.length; i++) {
             if ((exprs[i] = (Literal<? extends R>) expressions[i].getConvertedExpression(to)) == null)
                 return null;

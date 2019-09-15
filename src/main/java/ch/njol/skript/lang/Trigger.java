@@ -41,7 +41,7 @@ public final class Trigger extends TriggerSection {
     private int line = -1; // -1 is default: it means there is no line number available
     private String debugLabel;
 
-    public Trigger(final @Nullable File script, final String name, final SkriptEvent event, final List<TriggerItem> items) {
+    public Trigger(@Nullable final File script, final String name, final SkriptEvent event, final List<TriggerItem> items) {
         super(items);
         this.script = script;
         this.name = name;
@@ -66,8 +66,8 @@ public final class Trigger extends TriggerSection {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return name + " (" + event.toString(e, debug) + ")";
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return name + " (" + event.toString(e, debug) + ')';
     }
 
     /**

@@ -43,6 +43,9 @@ public final class RegionBorderEvent extends Event implements Cancellable {
     private final boolean enter;
     private boolean cancelled;
 
+    /**
+     * @deprecated Use the one with async parameter instead.
+     */
     @Deprecated
     public RegionBorderEvent(final Region region, final Player player, final boolean enter) {
         this(!Bukkit.isPrimaryThread(), region, player, enter);

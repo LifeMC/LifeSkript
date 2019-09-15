@@ -81,33 +81,7 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
         final Region[] rs = regions.getArray(e);
         if (rs.length == 0)
             return EmptyIterator.get();
-        return new Iterator<Block>() {
-            private final Iterator<Region> iter = new ArrayIterator<>(rs, 1);
-            private Iterator<Block> current = rs[0].getBlocks();
-
-            @Override
-            public boolean hasNext() {
-                while (!current.hasNext() && iter.hasNext()) {
-                    final Region r = iter.next();
-                    if (r != null)
-                        current = r.getBlocks();
-                }
-                return current.hasNext();
-            }
-
-            @SuppressWarnings("null")
-            @Override
-            public Block next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return current.next();
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new BlockIterator(rs);
     }
 
     @Override
@@ -123,6 +97,39 @@ public final class ExprBlocksInRegion extends SimpleExpression<Block> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         return "all blocks in " + regions.toString(e, debug);
+    }
+
+    private static final class BlockIterator implements Iterator<Block> {
+        private final Iterator<Region> iter;
+        private Iterator<Block> current;
+
+        BlockIterator(final Region[] rs) {
+            iter = new ArrayIterator<>(rs, 1);
+            current = rs[0].getBlocks();
+        }
+
+        @Override
+        public final boolean hasNext() {
+            while (!current.hasNext() && iter.hasNext()) {
+                final Region r = iter.next();
+                if (r != null)
+                    current = r.getBlocks();
+            }
+            return current.hasNext();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final Block next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return current.next();
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

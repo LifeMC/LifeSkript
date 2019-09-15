@@ -595,7 +595,7 @@
 
                         <javacOption>-O</javacOption>
 
-                        <javacOption>--release</javacOption>
+                        <javacOption>-release</javacOption>
                         <javacOption>8</javacOption>
                     </javacOptions>
                     <!-- Strictly define language and api version. -->

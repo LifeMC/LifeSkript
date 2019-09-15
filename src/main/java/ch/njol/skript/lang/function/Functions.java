@@ -71,7 +71,7 @@ public final class Functions {
     public static final JavaFunction<?> registerFunction(final JavaFunction<?> function) {
         Skript.checkAcceptRegistrations();
         if (!functionNamePatternCompiled.matcher(function.name).matches())
-            throw new SkriptAPIException("Invalid function name '" + function.name + "'");
+            throw new SkriptAPIException("Invalid function name '" + function.name + '\'');
         if (functions.containsKey(function.name))
             throw new SkriptAPIException("Duplicate function " + function.name);
         functions.put(function.name, new FunctionData(function));
@@ -111,7 +111,7 @@ public final class Functions {
                 final Matcher n = paramPattern.matcher(arg);
                 if (!n.matches())
                     return error("The " + StringUtils.fancyOrderNumber(params.size() + 1) + " argument's definition is invalid. It should look like 'name: type' or 'name: type = default value'.");
-                final String paramName = "" + n.group(1);
+                final String paramName = n.group(1);
                 for (final Parameter<?> p : params) {
                     if (p.name.toLowerCase(Locale.ENGLISH).equals(paramName.toLowerCase(Locale.ENGLISH)))
                         return error("Each argument's name must be unique, but the name '" + paramName + "' occurs at least twice.");
@@ -129,7 +129,7 @@ public final class Functions {
                 if (c == null)
                     c = Classes.getClassInfoFromUserInput(pl.getFirst());
                 if (c == null)
-                    return error("Cannot recognize the type '" + argType + "'");
+                    return error("Cannot recognize the type '" + argType + '\'');
                 final Parameter<?> p = Parameter.newInstance(paramName, c, !pl.getSecond(), def, nullable);
                 if (p == null)
                     return null;

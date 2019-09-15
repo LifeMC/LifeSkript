@@ -156,7 +156,7 @@ public abstract class TriggerItem implements Debuggable {
     }
 
     @Nullable
-    public TriggerItem getNext() {
+    public final TriggerItem getNext() {
         return next;
     }
 

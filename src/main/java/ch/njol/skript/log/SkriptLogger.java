@@ -219,7 +219,7 @@ public final class SkriptLogger {
             return;
         }
         if (Skript.testing() && node != null && node.debug())
-            System.out.print("---> " + entry.level + "/" + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
+            System.out.print("---> " + entry.level + '/' + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
         synchronized (handlers) {
             final Iterator<LogHandler> iterator = handlers.iterator();
             synchronized (iterator) {

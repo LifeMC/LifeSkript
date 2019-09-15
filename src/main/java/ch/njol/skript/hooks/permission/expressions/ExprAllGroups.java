@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
         "\t\t\tsend \"%all groups%\""})
 @Since("2.2.14")
 @RequiredPlugins({"Vault", "A permission plugin that supports Vault"})
-public class ExprAllGroups extends SimpleExpression<String> {
+public final class ExprAllGroups extends SimpleExpression<String> {
 
     static {
         Skript.registerExpression(ExprAllGroups.class, String.class, ExpressionType.SIMPLE, "all groups");

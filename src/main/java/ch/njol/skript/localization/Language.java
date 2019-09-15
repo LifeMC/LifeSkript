@@ -42,15 +42,10 @@ import java.util.regex.Pattern;
  */
 public final class Language {
 
-    private Language() {
-        throw new UnsupportedOperationException("Static class");
-    }
-
     /**
      * Some flags
      */
     public static final int F_PLURAL = 1, F_DEFINITE_ARTICLE = 2, F_INDEFINITE_ARTICLE = 4;
-
     /**
      * masks out article flags - useful if the article has been added already (e.g. by an adjective)
      */
@@ -71,6 +66,10 @@ public final class Language {
      * Name of the localised language
      */
     private static String name = "english";
+
+    private Language() {
+        throw new UnsupportedOperationException("Static class");
+    }
 
     public static final String getName() {
         return useLocal ? name : "english";

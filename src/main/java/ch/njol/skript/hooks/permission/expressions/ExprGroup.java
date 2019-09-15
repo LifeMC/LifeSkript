@@ -48,7 +48,7 @@ import java.util.List;
         "\tbroadcast \"%groups of player%\" # this is all of the player's groups"})
 @Since("2.2.14")
 @RequiredPlugins({"Vault", "A permission plugin that supports Vault"})
-public class ExprGroup extends SimpleExpression<String> {
+public final class ExprGroup extends SimpleExpression<String> {
 
     static {
         PropertyExpression.register(ExprGroup.class, String.class, "group[(1¦s)]", "offlineplayers");

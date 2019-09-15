@@ -205,7 +205,7 @@ public final class Variables {
                         s = new DatabaseStorage(name, Type.SQLITE);
                     } else {
                         if (!"disabled".equalsIgnoreCase(type) && !"none".equalsIgnoreCase(type)) {
-                            Skript.error("Invalid database type '" + type + "'");
+                            Skript.error("Invalid database type '" + type + '\'');
                             successful = false;
                         }
                         continue;

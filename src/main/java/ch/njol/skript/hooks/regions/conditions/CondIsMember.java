@@ -69,6 +69,6 @@ public final class CondIsMember extends Condition {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return players.toString(e, debug) + " " + (players.isSingle() ? "is" : "are") + (isNegated() ? " not" : "") + " " + (owner ? "owner" : "member") + (players.isSingle() ? "" : "s") + " of " + regions.toString(e, debug);
+        return players.toString(e, debug) + ' ' + (players.isSingle() ? "is" : "are") + (isNegated() ? " not" : "") + ' ' + (owner ? "owner" : "member") + (players.isSingle() ? "" : "s") + " of " + regions.toString(e, debug);
     }
 }

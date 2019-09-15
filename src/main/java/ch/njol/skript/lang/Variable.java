@@ -113,11 +113,13 @@ public final class Variable<T> implements Expression<T> {
             if (printErrors)
                 Skript.error("List variables are not allowed here (error in variable {" + name + "})");
             return false;
-        } else if (name.startsWith(SEPARATOR) || name.endsWith(SEPARATOR)) {
+        }
+        if (name.startsWith(SEPARATOR) || name.endsWith(SEPARATOR)) {
             if (printErrors)
                 Skript.error("A variable's name must neither start nor end with the separator '" + SEPARATOR + "' (error in variable {" + name + "})");
             return false;
-        } else if (name.contains("*") && (!allowListVariable || name.indexOf('*') != name.length() - 1 || !name.endsWith(SEPARATOR + "*"))) {
+        }
+        if (name.contains("*") && (!allowListVariable || name.indexOf('*') != name.length() - 1 || !name.endsWith(SEPARATOR + '*'))) {
             if (printErrors) {
                 if (name.indexOf('*') == 0)
                     Skript.error("[2.0] Local variables now start with an underscore, e.g. {_local variable}. The asterisk is reserved for list variables. (error in variable {" + name + "})");
@@ -125,11 +127,13 @@ public final class Variable<T> implements Expression<T> {
                     Skript.error("A variable's name must not contain any asterisks except at the end after '" + SEPARATOR + "' to denote a list variable, e.g. {variable" + SEPARATOR + "*} (error in variable {" + name + "})");
             }
             return false;
-        } else if (name.contains(SEPARATOR + SEPARATOR)) {
+        }
+        if (name.contains(SEPARATOR + SEPARATOR)) {
             if (printErrors)
                 Skript.error("A variable's name must not contain the separator '" + SEPARATOR + "' multiple times in a row (error in variable {" + name + "})");
             return false;
-        } else if (SEPARATOR_PATTERN.matcher(name).replaceAll(Matcher.quoteReplacement("")).contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
+        }
+        if (SEPARATOR_PATTERN.matcher(name).replaceAll(Matcher.quoteReplacement("")).contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
             Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '" + SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");
         }
         return true;
@@ -152,7 +156,7 @@ public final class Variable<T> implements Expression<T> {
             return null;
 
         final boolean isLocal = name.startsWith(LOCAL_VARIABLE_TOKEN);
-        final boolean isPlural = name.endsWith(SEPARATOR + "*");
+        final boolean isPlural = name.endsWith(SEPARATOR + '*');
 
         // Check for local variable type hints
         if (isLocal && vs.isSimple()) { // Only variable names we fully know already
@@ -180,14 +184,15 @@ public final class Variable<T> implements Expression<T> {
                     if (type.isAssignableFrom(World.class) && hint.isAssignableFrom(String.class)) {
                         // String->World conversion is weird spaghetti code
                         return new Variable<>(vs, types, isLocal, isPlural, null);
-                    } else if (type.isAssignableFrom(Player.class) && hint.isAssignableFrom(String.class)) {
+                    }
+                    if (type.isAssignableFrom(Player.class) && hint.isAssignableFrom(String.class)) {
                         // String->Player conversion is not available at this point
                         return new Variable<>(vs, types, isLocal, isPlural, null);
                     }
                 }
 
                 // Hint exists and does NOT match any types requested
-                final ClassInfo<?>[] infos = new ClassInfo[types.length];
+                final ClassInfo<?>[] infos = new ClassInfo<?>[types.length];
 
                 for (int i = 0; i < types.length; i++) {
                     infos[i] = Classes.getExactClassInfo(types[i]);
@@ -233,7 +238,7 @@ public final class Variable<T> implements Expression<T> {
     public String toString(final @Nullable Event e, final boolean debug) {
         if (e != null)
             return Classes.toString(get(e), name, debug); // Special handling for variables
-        return "{" + (local ? "_" : "") + StringUtils.substring(name.toString(e, debug), 1, -1) + "}" + (debug ? "(as " + superType.getName() + ")" : "");
+        return '{' + (local ? "_" : "") + StringUtils.substring(name.toString(e, debug), 1, -1) + '}' + (debug ? "(as " + superType.getName() + ')' : "");
     }
 
     @Override
@@ -253,7 +258,7 @@ public final class Variable<T> implements Expression<T> {
     @Nullable
     public Object getRaw(final Event e) {
         final String n = name.toString(e).toLowerCase(Locale.ENGLISH);
-        if (n.endsWith(Variable.SEPARATOR + "*") != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
+        if (n.endsWith(Variable.SEPARATOR + '*') != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
             return null;
         final Object val = !list ? convertIfOldPlayer(n, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local);
         if (val == null)
@@ -302,7 +307,7 @@ public final class Variable<T> implements Expression<T> {
         if (!list)
             throw new SkriptAPIException("Looping a non-list variable");
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
-        final Object val = Variables.getVariable(name + "*", e, local);
+        final Object val = Variables.getVariable(name + '*', e, local);
         if (val == null)
             return new EmptyIterator<>();
         assert val instanceof TreeMap;
@@ -351,7 +356,7 @@ public final class Variable<T> implements Expression<T> {
         if (!list)
             throw new SkriptAPIException("Looping a non-list variable");
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
-        final Object val = Variables.getVariable(name + "*", e, local);
+        final Object val = Variables.getVariable(name + '*', e, local);
         if (val == null)
             return new EmptyIterator<>();
         assert val instanceof TreeMap;
@@ -610,7 +615,6 @@ public final class Variable<T> implements Expression<T> {
         final T o = getConverted(e);
         if (o == null) {
             final T[] r = (T[]) Array.newInstance(superType, 0);
-            assert r != null;
             return r;
         }
         final T[] one = (T[]) Array.newInstance(superType, 1);

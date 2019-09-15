@@ -94,7 +94,6 @@ public final class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> impl
     }
 
     @Override
-    @Nullable
     public Iterator<T> iterator(final Event e) {
         return new ArrayIterator<>(data);
     }

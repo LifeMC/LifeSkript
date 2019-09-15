@@ -51,7 +51,7 @@ public abstract class JavaFunction<T> extends Function<T> {
      * @param description
      * @return This JavaFunction object
      */
-    public JavaFunction<T> description(final String... description) {
+    public final JavaFunction<T> description(final String... description) {
         assert this.description == null;
         this.description = description;
         return this;
@@ -63,7 +63,7 @@ public abstract class JavaFunction<T> extends Function<T> {
      * @param examples
      * @return This JavaFunction object
      */
-    public JavaFunction<T> examples(final String... examples) {
+    public final JavaFunction<T> examples(final String... examples) {
         assert this.examples == null;
         this.examples = examples;
         return this;
@@ -75,24 +75,24 @@ public abstract class JavaFunction<T> extends Function<T> {
      * @param since
      * @return This JavaFunction object
      */
-    public JavaFunction<T> since(final String since) {
+    public final JavaFunction<T> since(final String since) {
         assert this.since == null;
         this.since = since;
         return this;
     }
 
     @Nullable
-    public String[] getDescription() {
+    public final String[] getDescription() {
         return description;
     }
 
     @Nullable
-    public String[] getExamples() {
+    public final String[] getExamples() {
         return examples;
     }
 
     @Nullable
-    public String getSince() {
+    public final String getSince() {
         return since;
     }
 

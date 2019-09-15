@@ -45,7 +45,7 @@ final class VariablesMap {
             final char c1 = s1.charAt(i), c2 = s2.charAt(j);
             if ('0' <= c1 && c1 <= '9' && '0' <= c2 && c2 <= '9') { // TODO negative numbers? what about {blah-%number%}? // '-' < '0'
                 final int i2 = StringUtils.findLastDigit(s1, i), j2 = StringUtils.findLastDigit(s2, j);
-                final long n1 = Utils.parseLong("" + s1.substring(i, i2)), n2 = Utils.parseLong("" + s2.substring(j, j2));
+                final long n1 = Utils.parseLong(s1.substring(i, i2)), n2 = Utils.parseLong(s2.substring(j, j2));
                 if (n1 > n2)
                     return 1;
                 if (n1 < n2)
@@ -130,7 +130,8 @@ final class VariablesMap {
                     if (value != null)
                         parent.put(n, value);
                     break;
-                } else if (value != null) {
+                }
+                if (value != null) {
                     parent.put(n, current = new TreeMap<>(variableNameComparator));
                     parent = (TreeMap<String, Object>) current;
                 } else {
@@ -143,7 +144,8 @@ final class VariablesMap {
                     else
                         ((TreeMap<String, Object>) current).put(null, value);
                     break;
-                } else if (i == split.length - 2 && "*".equals(split[i + 1])) {
+                }
+                if (i == split.length - 2 && "*".equals(split[i + 1])) {
                     assert value == null;
                     deleteFromHashMap(StringUtils.join(split, Variable.SEPARATOR, 0, i + 1), (TreeMap<String, Object>) current);
                     final Object v = ((TreeMap<String, Object>) current).get(null);
@@ -152,9 +154,8 @@ final class VariablesMap {
                     else
                         parent.put(n, v);
                     break;
-                } else {
-                    parent = (TreeMap<String, Object>) current;
                 }
+                parent = (TreeMap<String, Object>) current;
             } else {
                 if (i == split.length - 1) {
                     if (value == null)
@@ -162,7 +163,8 @@ final class VariablesMap {
                     else
                         parent.put(n, value);
                     break;
-                } else if (value != null) {
+                }
+                if (value != null) {
                     final TreeMap<String, Object> c = new TreeMap<>(variableNameComparator);
                     c.put(null, current);
                     parent.put(n, c);

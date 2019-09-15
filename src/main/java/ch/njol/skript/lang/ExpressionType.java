@@ -34,7 +34,7 @@ public enum ExpressionType {
     SIMPLE,
 
     /**
-     * I don't know what this was used for. It will be removed or renamed in the future.
+     * @deprecated I don't know what this was used for. It will be removed or renamed in the future.
      */
     @Deprecated
     NORMAL,
