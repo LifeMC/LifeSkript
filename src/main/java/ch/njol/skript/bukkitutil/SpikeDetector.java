@@ -72,7 +72,7 @@ public final class SpikeDetector extends Thread {
     private volatile boolean stopping;
 
     private SpikeDetector(final Thread serverThread) {
-        super("Skript watchdog thread");
+        super("Skript spike detector");
         super.setPriority(Thread.MAX_PRIORITY);
 
         this.serverThread = serverThread;
@@ -262,35 +262,24 @@ public final class SpikeDetector extends Thread {
                 // Get true suspended status here
                 final boolean suspended = threadInfo.isSuspended();
 
-                // Dump task, we can use that later
-                final Runnable dumpTask = () -> {
-                    // Print colored to make admins pay attention, if possible
-                    final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
-                            Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString() : "";
+                // Print colored to make admins pay attention, if possible
+                final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
+                        Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString() : "";
 
-                    // Print scheduled because async printing mixes messages
-                    log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
-                    log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")" + " | OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
+                final String suffix = Skript.hasJLineSupport() && Skript.hasJansi() ?
+                        Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString() : "";
 
-                    log.log(Level.WARNING, prefix + "------------------------------");
-                    log.log(Level.WARNING, prefix + "Server thread dump:");
-                    dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
-                    log.log(Level.WARNING, prefix + "------------------------------");
+                log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
+                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")" + " | OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
 
-                    // Flush to guarantee everything is written
-                    System.err.flush();
-                    System.out.flush();
-                };
+                log.log(Level.WARNING, prefix + "------------------------------");
+                log.log(Level.WARNING, prefix + "Server thread dump:");
+                dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
+                log.log(Level.WARNING, prefix + "------------------------------" + suffix);
 
-                // Normalize priority - if we plan to submit, it helps
-                serverThread.setPriority(Thread.NORM_PRIORITY);
-
-                // Printing from another thread bugs out
-                //Bukkit.getScheduler().runTask(Skript.getInstance(), dumpTask);
-
-                // But server thread maybe frozen in that time
-                // so we print in this thread instead
-                dumpTask.run();
+                // Flush to guarantee everything is written
+                System.err.flush();
+                System.out.flush();
 
                 // Finally restore the priority to not cause issues
                 serverThread.setPriority(oldPriority);

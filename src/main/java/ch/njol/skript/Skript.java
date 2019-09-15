@@ -1703,7 +1703,14 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     @SuppressWarnings("null")
     public static final Thread[] getAllThreads() {
-        assert rootThreadGroup != null : "Attempted to call before initialization";
+        if (rootThreadGroup == null) {
+            ThreadGroup rootGroup = Thread.currentThread().getThreadGroup();
+            ThreadGroup parentGroup;
+            while ((parentGroup = rootGroup.getParent()) != null) {
+                rootGroup = parentGroup;
+            }
+            rootThreadGroup = rootGroup;
+        }
 
         Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
         while (rootThreadGroup.enumerate(threads, true) == threads.length) {
@@ -1811,20 +1818,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
             }, "Skript last minute cleanup thread"));
 
-            ThreadGroup rootGroup = Thread.currentThread().getThreadGroup();
-            ThreadGroup parentGroup;
-            while ((parentGroup = rootGroup.getParent()) != null) {
-                rootGroup = parentGroup;
-            }
-            rootThreadGroup = rootGroup;
-
             optimizeNetty = () -> {
                 for (final Thread thread : Skript.getAllThreads()) {
                     if (thread != null) {
                         final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").replace("-", "").trim();
                         final int priority = thread.getPriority();
 
-                        if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || name.contains("alive") && !name.contains("keepalivetimer") || name.contains("skript") && name.contains("watchdog")) && priority != Thread.MAX_PRIORITY) {
+                        if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || name.contains("alive") && !name.contains("keepalivetimer") || name.contains("skript") && name.contains("spike")) && priority != Thread.MAX_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Maximizing priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MAX_PRIORITY);
                             thread.setPriority(Thread.MAX_PRIORITY);
@@ -1832,7 +1832,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Setting thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.NORM_PRIORITY);
                             thread.setPriority(Thread.NORM_PRIORITY);
-                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") /*|| name.contains("consolehandler")*/ || name.contains("profiler") && !name.contains("iprofiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") && !name.contains("skript") || name.contains("rmi") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
+                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") /*|| name.contains("consolehandler")*/ || name.contains("profiler") && !name.contains("iprofiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") && !name.contains("skript") || name.contains("rmi") || name.contains("jmx") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MIN_PRIORITY);
                             thread.setPriority(Thread.MIN_PRIORITY);
@@ -1978,21 +1978,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             String afterJar = contents.substring(contents.lastIndexOf("-jar ") + 1).trim();
                             if (afterJar.contains(System.lineSeparator()))
                                 afterJar = afterJar.split(System.lineSeparator())[0];
-                            String stripColor = afterJar;
+                            final StringBuilder stripColor = new StringBuilder(afterJar);
                             // Strip color is required for not showing strange characters on log when using jansi colors
                             if (!afterJar.contains("--log-strip-color")) {
-                                stripColor += " --log-strip-color";
+                                stripColor.append(" --log-strip-color");
                             }
-                            String replacedContents = contents.replace(afterJar, stripColor);
+                            String replacedContents = contents.replace(afterJar, stripColor.toString());
                             if (!contents.equalsIgnoreCase(replacedContents)) {
                                 String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
                                 if (beforeJar.contains(System.lineSeparator()))
                                     beforeJar = beforeJar.split(System.lineSeparator())[0];
-                                String fileEncoding = beforeJar;
+                                final StringBuilder fileEncoding = new StringBuilder(beforeJar);
                                 // This is required on some locales to fix some issues with localization and other plugins
                                 if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
-                                    fileEncoding += " -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US";
-                                replacedContents = replacedContents.replace(beforeJar, fileEncoding);
+                                    fileEncoding.append(" -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=US");
+                                replacedContents = replacedContents.replace(beforeJar, fileEncoding.toString());
                                 if (!contents.equalsIgnoreCase(replacedContents)) {
                                     FileUtils.backup(startupScript);
                                     Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
@@ -2099,7 +2099,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                     // This loop probably runs until Bukkit is shutdowned and SharpSKUpdater JAR file lock is released.
                                     final Thread thread = Skript.newThread(() -> {
-                                        boolean flag = false;
                                         Path sharpSkUpdater = null;
 
                                         try {
@@ -2110,6 +2109,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                         assert sharpSkUpdater != null;
 
+                                        boolean flag = false;
                                         while (!flag || sharpSkUpdater.toFile().exists()) {
                                             try {
                                                 Files.delete(sharpSkUpdater);
@@ -2171,11 +2171,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     outer:
                     for (final File serverJarFile : serverJarFiles) {
                         if (Skript.debug())
-                            Skript.info("Preparing to process file \"" + serverJarFile.getName() + "\"");
+                            Skript.info("Preparing to process file \"" + serverJarFile.getName() + '"');
 
                         if (!serverJarFile.isFile()) {
                             if (Skript.debug())
-                                Skript.info("Skipping directory \"" + serverJarFile.getName() + "\"");
+                                Skript.info("Skipping directory \"" + serverJarFile.getName() + '"');
 
                             continue /* outer*/;
                         }
@@ -2185,7 +2185,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         try (final JarFile jarFile = new JarFile(serverJarFile, false)) {
                             if (jarFile.getEntry("org/bukkit/Bukkit.class") == null) { // If it's not a Bukkit JAR
                                 if (Skript.debug())
-                                    Skript.info("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + "\"");
+                                    Skript.info("Skipping non-Bukkit JAR file: \"" + serverJarFile.getName() + '"');
 
                                 continue /* outer*/; // Re-try on next server JAR, if it exists
                             }
@@ -2213,7 +2213,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     String line;
 
                                     while ((line = br.readLine()) != null) {
-                                        builder.append(line).append("\n");
+                                        builder.append(line).append('\n');
                                     }
 
                                     contents = builder.toString().replace("\n\n", "\n");
@@ -2232,13 +2232,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             final String original = prefix + "%msg%n";
                             final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
 
-                            String replacedContents = null;
-
                             // Some versions has bugged log4j2.xml file that does not close the console tag, it does not cause any issues but anyway, fix it.
                             if (!contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>") && contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">")) {
                                 contents = contents.replace("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">", "<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>");
                             }
 
+                            String replacedContents = null;
                             if (contents.contains(original) && !contents.contains(replaced)) {
                                 if (Skript.isRunningMinecraft(1, 7) && !Skript.isRunningMinecraft(1, 9)) {
                                     replacedContents = contents.replace(original, replaced);
@@ -2247,7 +2246,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                             if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
                                 if (Skript.debug())
-                                    Skript.info("Processing jar file \"" + serverJarFile.getName() + "\"");
+                                    Skript.info("Processing jar file \"" + serverJarFile.getName() + '"');
                                 final File temp = File.createTempFile("log4j2", ".xml");
 
                                 if (!temp.exists()) // This should not happen, but anyway...
@@ -2418,6 +2417,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
 
             Workarounds.init();
+
+            if (Bukkit.isPrimaryThread() && SpikeDetector.alwaysEnabled)
+                SpikeDetector.doStart(Thread.currentThread());
 
             final Runnable emptyPrinter = () -> Bukkit.getLogger().info("");
 
@@ -2761,6 +2763,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     info("Loaded " + Variables.numVariables() + " variables in " + vld / 100D / 10. + " seconds");
 
                 ScriptLoader.loadScripts();
+                PatternCache.clear(); // Free memory
 
                 Skript.info(m_finished_loading.toString());
 
@@ -2816,7 +2819,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 final Thread mainThread = (Thread) serverThread.get(serverInstance);
                                 assert mainThread != null : serverThread.toString();
 
-                                if (SpikeDetector.shouldStart()) {
+                                if (SpikeDetector.shouldStart() || SpikeDetector.alwaysEnabled) {
                                     if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock") && !SpikeDetector.alwaysEnabled) {
                                         BukkitLoggerFilter.addFilter(e -> {
                                             if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play".toLowerCase(Locale.ENGLISH)))
