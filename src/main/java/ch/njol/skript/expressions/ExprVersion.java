@@ -106,7 +106,7 @@ public final class ExprVersion extends SimpleExpression<String> {
         }
 
         @Override
-        public String toString() {
+        public final String toString() {
             return name;
         }
 

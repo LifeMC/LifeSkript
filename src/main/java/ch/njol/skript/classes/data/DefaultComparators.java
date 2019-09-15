@@ -27,6 +27,7 @@ import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Comparator;
+import ch.njol.skript.classes.Comparator.Relation;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.registrations.Comparators;
 import ch.njol.skript.util.*;
@@ -57,28 +58,20 @@ public final class DefaultComparators {
     static final LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>();
 
     // EntityData - ItemType
-    public static final Comparator<EntityData, ItemType> entityItemComparator = new Comparator<EntityData, ItemType>() {
-        @Override
-        public Relation compare(final EntityData e, final ItemType i) {
-            if (e instanceof Item)
-                return Relation.get(i.isOfType(((Item) e).getItemStack()));
-            if (e instanceof ThrownPotion)
-                return Relation.get(i.isOfType(Material.POTION.getId(), PotionEffectUtils.guessData((ThrownPotion) e)));
-            if (Skript.classExists("org.bukkit.entity.WitherSkull") && e instanceof WitherSkull)
-                return Relation.get(i.isOfType(Material.SKULL_ITEM.getId(), (short) 1));
-            if (entityMaterials.containsKey(e.getType()))
-                return Relation.get(i.isOfType(entityMaterials.get(e.getType()).getId(), (short) 0));
-            for (final Entry<Class<? extends Entity>, Material> m : entityMaterials.entrySet()) {
-                if (m.getKey().isAssignableFrom(e.getType()))
-                    return Relation.get(i.isOfType(m.getValue().getId(), (short) 0));
-            }
-            return Relation.NOT_EQUAL;
+    public static final Comparator<EntityData, ItemType> entityItemComparator = (e, i) -> {
+        if (e instanceof Item)
+            return Relation.get(i.isOfType(((Item) e).getItemStack()));
+        if (e instanceof ThrownPotion)
+            return Relation.get(i.isOfType(Material.POTION.getId(), PotionEffectUtils.guessData((ThrownPotion) e)));
+        if (Skript.classExists("org.bukkit.entity.WitherSkull") && e instanceof WitherSkull)
+            return Relation.get(i.isOfType(Material.SKULL_ITEM.getId(), (short) 1));
+        if (entityMaterials.containsKey(e.getType()))
+            return Relation.get(i.isOfType(entityMaterials.get(e.getType()).getId(), (short) 0));
+        for (final Entry<Class<? extends Entity>, Material> m : entityMaterials.entrySet()) {
+            if (m.getKey().isAssignableFrom(e.getType()))
+                return Relation.get(i.isOfType(m.getValue().getId(), (short) 0));
         }
-
-        @Override
-        public boolean supportsOrdering() {
-            return false;
-        }
+        return Relation.NOT_EQUAL;
     };
 
     static {
@@ -147,146 +140,38 @@ public final class DefaultComparators {
         });
 
         // ItemStack - ItemType
-        Comparators.registerComparator(ItemStack.class, ItemType.class, new Comparator<ItemStack, ItemType>() {
-            @Override
-            public Relation compare(final ItemStack is, final ItemType it) {
-                return Relation.get(it.isOfType(is));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(ItemStack.class, ItemType.class, (is, it) -> Relation.get(it.isOfType(is)));
 
         // Block - ItemType
-        Comparators.registerComparator(Block.class, ItemType.class, new Comparator<Block, ItemType>() {
-            @Override
-            public Relation compare(final Block b, final ItemType it) {
-                return Relation.get(it.isOfType(b));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(Block.class, ItemType.class, (b, it) -> Relation.get(it.isOfType(b)));
 
         // ItemType - ItemType
-        Comparators.registerComparator(ItemType.class, ItemType.class, new Comparator<ItemType, ItemType>() {
-            @Override
-            public Relation compare(final ItemType i1, final ItemType i2) {
-                return Relation.get(i2.isSupertypeOf(i1));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(ItemType.class, ItemType.class, (i1, i2) -> Relation.get(i2.isSupertypeOf(i1)));
 
         // Block - Block
-        Comparators.registerComparator(Block.class, Block.class, new Comparator<Block, Block>() {
-            @Override
-            public Relation compare(final Block b1, final Block b2) {
-                return Relation.get(b1.equals(b2));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(Block.class, Block.class, (b1, b2) -> Relation.get(b1.equals(b2)));
 
         // Entity - EntityData
-        Comparators.registerComparator(Entity.class, EntityData.class, new Comparator<Entity, EntityData>() {
-            @Override
-            public Relation compare(final Entity e, final EntityData t) {
-                return Relation.get(t.isInstance(e));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(Entity.class, EntityData.class, (e, t) -> Relation.get(t.isInstance(e)));
         // EntityData - EntityData
-        Comparators.registerComparator(EntityData.class, EntityData.class, new Comparator<EntityData, EntityData>() {
-            @Override
-            public Relation compare(final EntityData t1, final EntityData t2) {
-                return Relation.get(t2.isSupertypeOf(t1));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(EntityData.class, EntityData.class, (t1, t2) -> Relation.get(t2.isSupertypeOf(t1)));
         // CommandSender - CommandSender
-        Comparators.registerComparator(CommandSender.class, CommandSender.class, new Comparator<CommandSender, CommandSender>() {
-            @Override
-            public Relation compare(final CommandSender s1, final CommandSender s2) {
-                return Relation.get(s1.equals(s2));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(CommandSender.class, CommandSender.class, (s1, s2) -> Relation.get(s1.equals(s2)));
 
         // OfflinePlayer - OfflinePlayer
-        Comparators.registerComparator(OfflinePlayer.class, OfflinePlayer.class, new Comparator<OfflinePlayer, OfflinePlayer>() {
-            @Override
-            public Relation compare(final OfflinePlayer p1, final OfflinePlayer p2) {
-                return Relation.get(Objects.equals(p1.getName(), p2.getName()));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(OfflinePlayer.class, OfflinePlayer.class, (p1, p2) -> Relation.get(Objects.equals(p1.getName(), p2.getName())));
 
         // OfflinePlayer - String
-        Comparators.registerComparator(OfflinePlayer.class, String.class, new Comparator<OfflinePlayer, String>() {
-            @Override
-            public Relation compare(final OfflinePlayer p, final String name) {
-                final String offlineName = p.getName();
-                return offlineName == null ? Relation.NOT_EQUAL : Relation.get(offlineName.equalsIgnoreCase(name));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
+        Comparators.registerComparator(OfflinePlayer.class, String.class, (p, name) -> {
+            final String offlineName = p.getName();
+            return offlineName == null ? Relation.NOT_EQUAL : Relation.get(offlineName.equalsIgnoreCase(name));
         });
 
         // World - String
-        Comparators.registerComparator(World.class, String.class, new Comparator<World, String>() {
-            @Override
-            public Relation compare(final World w, final String name) {
-                return Relation.get(w.getName().equalsIgnoreCase(name));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(World.class, String.class, (w, name) -> Relation.get(w.getName().equalsIgnoreCase(name)));
 
         // String - String
-        Comparators.registerComparator(String.class, String.class, new Comparator<String, String>() {
-            @Override
-            public Relation compare(final String s1, final String s2) {
-                return Relation.get(StringUtils.equals(s1, s2, SkriptConfig.caseSensitive.value()));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(String.class, String.class, (s1, s2) -> Relation.get(StringUtils.equals(s1, s2, SkriptConfig.caseSensitive.value())));
 
         // Date - Date
         Comparators.registerComparator(Date.class, Date.class, new Comparator<Date, Date>() {
@@ -328,88 +213,42 @@ public final class DefaultComparators {
         });
 
         // Time - Timeperiod
-        Comparators.registerComparator(Time.class, Timeperiod.class, new Comparator<Time, Timeperiod>() {
-            @Override
-            public Relation compare(final Time t, final Timeperiod p) {
-                return Relation.get(p.contains(t));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(Time.class, Timeperiod.class, (t, p) -> Relation.get(p.contains(t)));
 
         // StructureType - StructureType
-        Comparators.registerComparator(StructureType.class, StructureType.class, new Comparator<StructureType, StructureType>() {
-            @Override
-            public Relation compare(final StructureType s1, final StructureType s2) {
-                return Relation.get(CollectionUtils.containsAll(s2.getTypes(), s2.getTypes()));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(StructureType.class, StructureType.class, (s1, s2) -> Relation.get(CollectionUtils.containsAll(s2.getTypes(), s2.getTypes())));
 
         // Object - ClassInfo
-        Comparators.registerComparator(Object.class, ClassInfo.class, new Comparator<Object, ClassInfo>() {
-            @Override
-            public Relation compare(final Object o, final ClassInfo c) {
-                return Relation.get(c.getC().isInstance(o) || o instanceof ClassInfo && c.getC().isAssignableFrom(((ClassInfo<?>) o).getC()));
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
-            }
-        });
+        Comparators.registerComparator(Object.class, ClassInfo.class, (o, c) -> Relation.get(c.getC().isInstance(o) || o instanceof ClassInfo && c.getC().isAssignableFrom(((ClassInfo<?>) o).getC())));
 
         // DamageCause - ItemType
-        Comparators.registerComparator(DamageCause.class, ItemType.class, new Comparator<DamageCause, ItemType>() {
-            @Override
-            public Relation compare(final DamageCause dc, final ItemType t) {
-                switch (dc) {
-                    case FIRE:
-                        return Relation.get(t.isOfType(Material.FIRE.getId(), (short) -1));
-                    case LAVA:
-                        return Relation.get(t.isOfType(Material.LAVA.getId(), (short) -1) && t.isOfType(Material.STATIONARY_LAVA.getId(), (short) -1));
-                    case MAGIC:
-                        return Relation.get(t.isOfType(Material.POTION.getId(), (short) -1));
-                    //$CASES-OMITTED$
-                    default:
-                        return Relation.NOT_EQUAL;
-                }
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
+        Comparators.registerComparator(DamageCause.class, ItemType.class, (dc, t) -> {
+            switch (dc) {
+                case FIRE:
+                    return Relation.get(t.isOfType(Material.FIRE.getId(), (short) -1));
+                case LAVA:
+                    return Relation.get(t.isOfType(Material.LAVA.getId(), (short) -1) && t.isOfType(Material.STATIONARY_LAVA.getId(), (short) -1));
+                case MAGIC:
+                    return Relation.get(t.isOfType(Material.POTION.getId(), (short) -1));
+                //$CASES-OMITTED$
+                default:
+                    return Relation.NOT_EQUAL;
             }
         });
         // DamageCause - EntityData
-        Comparators.registerComparator(DamageCause.class, EntityData.class, new Comparator<DamageCause, EntityData>() {
-            @Override
-            public Relation compare(final DamageCause dc, final EntityData e) {
-                switch (dc) {
-                    case ENTITY_ATTACK:
-                        return Relation.get(e.isSupertypeOf(EntityData.fromClass(Entity.class)));
-                    case PROJECTILE:
-                        return Relation.get(e.isSupertypeOf(EntityData.fromClass(Projectile.class)));
-                    case WITHER:
-                        return Relation.get(e.isSupertypeOf(EntityData.fromClass(Wither.class)));
-                    case FALLING_BLOCK:
-                        return Relation.get(e.isSupertypeOf(EntityData.fromClass(FallingBlock.class)));
-                    //$CASES-OMITTED$
-                    default:
-                        return Relation.NOT_EQUAL;
-                }
-            }
-
-            @Override
-            public boolean supportsOrdering() {
-                return false;
+        Comparators.registerComparator(DamageCause.class, EntityData.class, (dc, e) -> {
+            switch (dc) {
+                case ENTITY_ATTACK:
+                    return Relation.get(e.isSupertypeOf(EntityData.fromClass(Entity.class)));
+                case PROJECTILE:
+                    return Relation.get(e.isSupertypeOf(EntityData.fromClass(Projectile.class)));
+                case WITHER:
+                    return Relation.get(e.isSupertypeOf(EntityData.fromClass(Wither.class)));
+                case FALLING_BLOCK:
+                    return Relation.get(e.isSupertypeOf(EntityData.fromClass(FallingBlock.class)));
+                //$CASES-OMITTED$
+                default:
+                    return Relation.NOT_EQUAL;
             }
         });
     }

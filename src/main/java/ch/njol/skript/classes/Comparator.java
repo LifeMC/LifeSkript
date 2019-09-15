@@ -34,17 +34,7 @@ package ch.njol.skript.classes;
 @FunctionalInterface
 public interface Comparator<T1, T2> {
 
-    Comparator<?, ?> equalsComparator = new Comparator<Object, Object>() {
-        @Override
-        public Relation compare(final Object o1, final Object o2) {
-            return Relation.get(o1.equals(o2));
-        }
-
-        @Override
-        public boolean supportsOrdering() {
-            return false;
-        }
-    };
+    Comparator<?, ?> equalsComparator = (Comparator<Object, Object>) (o1, o2) -> Relation.get(o1.equals(o2));
 
     /**
      * Compares the given objects which may not be null. Returning GREATER/SMALLER means that the first parameter is greater/smaller.
@@ -99,11 +89,11 @@ public interface Comparator<T1, T2> {
         }
 
         /**
-         * Test whatever this relation is fulfilled if another is, i.e. if the parameter relation fulfils <code>X rel Y</code>, then this relation fulfils <code>X rel Y</code> as
+         * Test whatever this relation is fulfilled if another is, i.e. if the parameter relation fulfils {@code X rel Y}, then this relation fulfils {@code X rel Y} as
          * well.
          *
          * @param other
-         * @return Whatever this relation is part of the given relation, e.g. <code>GREATER_OR_EQUAL.is(EQUAL)</code> returns true.
+         * @return Whatever this relation is part of the given relation, e.g. {@code GREATER_OR_EQUAL.is(EQUAL)} returns true.
          */
         public boolean is(final Relation other) {
             if (other == this)
@@ -150,7 +140,7 @@ public interface Comparator<T1, T2> {
         }
 
         /**
-         * Gets the inverse of this relation, i.e if this relation fulfils <code>X rel Y</code>, then the returned relation fulfils <code>!(X rel Y)</code>.
+         * Gets the inverse of this relation, i.e if this relation fulfils {@code X rel Y}, then the returned relation fulfils {@code !(X rel Y)}.
          *
          * @return !this
          */
@@ -174,7 +164,7 @@ public interface Comparator<T1, T2> {
         }
 
         /**
-         * Gets the relation which has switched arguments, i.e. if this relation fulfils <code>X rel Y</code>, then the returned relation fulfils <code>Y rel X</code>.
+         * Gets the relation which has switched arguments, i.e. if this relation fulfils {@code X rel Y}, then the returned relation fulfils {@code Y rel X}.
          *
          * @return siht
          */
@@ -224,7 +214,7 @@ public interface Comparator<T1, T2> {
      * @param <T1> see {@link Comparator}
      * @param <T2> dito
      */
-    class ComparatorInfo<T1, T2> {
+    final class ComparatorInfo<T1, T2> {
 
         public final Class<T1> c1;
         public final Class<T2> c2;
@@ -236,7 +226,7 @@ public interface Comparator<T1, T2> {
             this.c = c;
         }
 
-        public Class<?> getType(final boolean first) {
+        public final Class<?> getType(final boolean first) {
             return first ? c1 : c2;
         }
 

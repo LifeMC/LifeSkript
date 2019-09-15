@@ -49,7 +49,7 @@ import java.util.Map.Entry;
 /**
  * A useful class for creating default expressions. It simply returns the event value of the given type.
  * <p>
- * This class can be used as default expression with <code>new EventValueExpression&lt;T&gt;(T.class)</code> or extended to make it manually placeable in expressions with:
+ * This class can be used as default expression with {@code new EventValueExpression<T>(T.class)} or extended to make it manually placeable in expressions with:
  *
  * <pre>
  * class MyExpression extends EventValueExpression&lt;SomeClass&gt; {

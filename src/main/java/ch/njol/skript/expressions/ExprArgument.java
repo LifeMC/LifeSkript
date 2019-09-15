@@ -127,7 +127,8 @@ public final class ExprArgument extends SimpleExpression<Object> {
                     if (i > currentArguments.size()) {
                         Skript.error("The command doesn't have a " + StringUtils.fancyOrderNumber(i) + " argument", ErrorQuality.SEMANTIC_ERROR);
                         return false;
-                    } else if (i < 1) {
+                    }
+                    if (i < 1) {
                         Skript.error("Command arguments start from one; argument number " + i + " is invalid", ErrorQuality.SEMANTIC_ERROR);
                         return false;
                     }
@@ -195,7 +196,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
     protected Object[] get(final Event e) {
         if (e instanceof ScriptCommandEvent)
             return arg.getCurrent(e);
-        else if (dynamic) {
+        if (dynamic) {
             CommandEvent event = null;
 
             if (e instanceof PlayerCommandPreprocessEvent) {

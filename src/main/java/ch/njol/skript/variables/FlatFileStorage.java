@@ -290,7 +290,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 writeCSV(cw, name, type, value == null ? "" : encode(value));
                 cw.flush();
                 changes.incrementAndGet();
-				return true;
+                return true;
             }
         }
     }

@@ -177,17 +177,18 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
                     return null;
                 if (o instanceof Player) {
                     return ((Player) o).getName();
-                } else if (o instanceof LivingEntity) {
+                }
+                if (o instanceof LivingEntity) {
                     return ((LivingEntity) o).getCustomName();
-                } else if (o instanceof ItemStack) {
+                }
+                if (o instanceof ItemStack) {
                     if (!((ItemStack) o).hasItemMeta())
                         return null;
                     final ItemMeta m = ((ItemStack) o).getItemMeta();
                     return m == null || !m.hasDisplayName() ? null : m.getDisplayName();
-                } else {
-                    assert false;
-                    return null;
                 }
+                assert false : o;
+                return null;
             }
         },
         DISPLAY_NAME("display name", "(display|nick|chat)[ ]name[s]", PLAYER | ITEMSTACK | ENTITY, PLAYER | ITEMSTACK | ENTITY) {
@@ -219,17 +220,18 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
                     return null;
                 if (o instanceof Player) {
                     return ((Player) o).getDisplayName();
-                } else if (o instanceof LivingEntity) {
+                }
+                if (o instanceof LivingEntity) {
                     return ((LivingEntity) o).getCustomName();
-                } else if (o instanceof ItemStack) {
+                }
+                if (o instanceof ItemStack) {
                     if (!((ItemStack) o).hasItemMeta())
                         return null;
                     final ItemMeta m = ((ItemStack) o).getItemMeta();
                     return m == null || !m.hasDisplayName() ? null : m.getDisplayName();
-                } else {
-                    assert false;
-                    return null;
                 }
+                assert false : o;
+                return null;
             }
         },
         TABLIST_NAME("player list name", "(player|tab)[ ]list name[s]", PLAYER, PLAYER) {
@@ -279,7 +281,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
         @Nullable
         abstract String get(@Nullable Object o);
 
-        String getFrom() {
+        final String getFrom() {
             final StringBuilder b = new StringBuilder(4096);
             for (int i = 0; i < types.length; i++) {
                 if ((from & 1 << i) == 0)

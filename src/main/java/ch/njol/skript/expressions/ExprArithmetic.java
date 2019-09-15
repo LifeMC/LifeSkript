@@ -192,8 +192,8 @@ public final class ExprArithmetic extends SimpleExpression<Number> {
         public abstract Number calculate(Number n1, Number n2, boolean integer);
 
         @Override
-        public String toString() {
-            return "" + sign;
+        public final String toString() {
+            return String.valueOf(sign);
         }
     }
 

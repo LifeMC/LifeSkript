@@ -108,9 +108,9 @@ public final class ExprDrops extends SimpleExpression<ItemStack> {
             drops.clear();
             return;
         }
-        boolean cleared = false;
 
         assert deltas != null;
+        boolean cleared = false;
         for (final Object delta : deltas) {
             if (delta instanceof Experience) {
                 if (mode == ChangeMode.REMOVE_ALL || mode == ChangeMode.REMOVE && ((Experience) delta).getInternalXP() == -1) {

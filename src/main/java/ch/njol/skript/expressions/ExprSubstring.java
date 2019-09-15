@@ -98,12 +98,12 @@ public final class ExprSubstring extends SimpleExpression<String> {
         if (start == null) {
             assert end != null;
             return "the first " + end.toString(e, debug) + " characters of " + string.toString(e, debug);
-        } else if (end == null) {
+        }
+        if (end == null) {
             assert start != null;
             return "the last " + start.toString(e, debug) + " characters of " + string.toString(e, debug);
-        } else {
-            return "the substring of " + string.toString(e, debug) + " from index " + start.toString(e, debug) + " to " + end.toString(e, debug);
         }
+        return "the substring of " + string.toString(e, debug) + " from index " + start.toString(e, debug) + " to " + end.toString(e, debug);
     }
 
 }

@@ -86,7 +86,8 @@ public final class ExprFacing extends SimplePropertyExpression<Object, Direction
             if (d instanceof Directional)
                 return new Direction(((Directional) d).getFacing(), 1);
             return null;
-        } else if (o instanceof LivingEntity) {
+        }
+        if (o instanceof LivingEntity) {
             return new Direction(Direction.getFacing(((LivingEntity) o).getLocation(), horizontal), 1);
         }
         assert false;

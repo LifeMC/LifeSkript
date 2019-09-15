@@ -128,11 +128,6 @@ public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     }
 
     @Override
-    public boolean isDefault() {
-        return false;
-    }
-
-    @Override
     public boolean setTime(final int time) {
         super.setTime(time);
         return true;

@@ -54,6 +54,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
     @Nullable
     static final MessageDigest sha256;
 
+    @Nullable
     private MessageDigest algorithm;
 
     static {

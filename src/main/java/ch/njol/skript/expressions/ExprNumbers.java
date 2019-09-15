@@ -63,7 +63,7 @@ public final class ExprNumbers extends SimpleExpression<Number> {
     @SuppressWarnings("null")
     private Expression<Number> start, end;
 
-    private static final boolean isInLoop() {
+    public static final boolean isInLoop() {
         final Node node = SkriptLogger.getNode();
         if (node == null) {
             return false;
@@ -86,7 +86,8 @@ public final class ExprNumbers extends SimpleExpression<Number> {
             if (amount == 0 && isInLoop) {
                 Skript.warning("Looping zero times makes the code inside of the loop useless");
                 return false;
-            } else if (amount == 1 && isInLoop) {
+            }
+            if (amount == 1 && isInLoop) {
                 Skript.warning("Since you're looping exactly one time, you could simply remove the loop instead");
             } else if (amount < 0 && isInLoop) {
                 Skript.error("Looping a negative amount of times is impossible");

@@ -81,7 +81,8 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
                         final PlayerInventory i = ((PlayerItemHeldEvent) e).getPlayer().getInventory();
                         assert i != null;
                         return new InventorySlot(i, getTime() >= 0 ? ((PlayerItemHeldEvent) e).getNewSlot() : ((PlayerItemHeldEvent) e).getPreviousSlot());
-                    } else if (e instanceof PlayerBucketEvent && ((PlayerBucketEvent) e).getPlayer() == p) {
+                    }
+                    if (e instanceof PlayerBucketEvent && ((PlayerBucketEvent) e).getPlayer() == p) {
                         final PlayerInventory i = ((PlayerBucketEvent) e).getPlayer().getInventory();
                         assert i != null;
                         return new InventorySlot(i, ((PlayerBucketEvent) e).getPlayer().getInventory().getHeldItemSlot()) {

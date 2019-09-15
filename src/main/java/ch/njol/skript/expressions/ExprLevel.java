@@ -84,7 +84,7 @@ public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
         }
         if (getTime() == -1 && !ScriptLoader.isCurrentEvent(PlayerDeathEvent.class))
             return null;
-        return new Class[]{Number.class};
+        return new Class<?>[]{Number.class};
     }
 
     @Override

@@ -66,7 +66,7 @@ public final class ExprCompassTarget extends SimplePropertyExpression<Player, Lo
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.RESET)
-            return new Class[]{Location.class};
+            return new Class<?>[]{Location.class};
         return null;
     }
 

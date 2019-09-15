@@ -55,7 +55,7 @@ public final class ExprBed extends SimplePropertyExpression<Player, Location> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE)
-            return new Class[]{Location.class};
+            return new Class<?>[]{Location.class};
         return null;
     }
 

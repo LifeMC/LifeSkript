@@ -305,10 +305,6 @@ public final class SkriptClasses {
                 }
             }
 
-            @Override
-            public boolean mustSyncDeserialization() {
-                return false;
-            }
         }));
 
         Classes.registerClass(new ClassInfo<>(Timespan.class, "timespan").user("time ?spans?").name("Timespan").description("A timespan is a difference of two different dates or times, e.g '10 minutes'. Timespans are always displayed as real life time, but can be defined as minecraft time, e.g. '5 minecraft days and 12 hours'.", "See <a href='#date'>date</a> and <a href='#time'>time</a> for the other time types of Skript.").usage("<code>&lt;number&gt; [minecraft/mc/real/rl/irl] ticks/seconds/minutes/hours/days [[,/and] &lt;more...&gt;</code>]", "<code>[###:]##:##[.####]</code> ([hours:]minutes:seconds[.milliseconds])").examples("every 5 minecraft days:", "	wait a minecraft second and 5 ticks", "every 10 mc days and 12 hours:", "	halt for 12.7 irl minutes, 12 hours and 120.5 seconds").since("1.0").parser(new Parser<Timespan>() {
@@ -349,10 +345,6 @@ public final class SkriptClasses {
                 }
             }
 
-            @Override
-            public boolean mustSyncDeserialization() {
-                return false;
-            }
         }).math(Timespan.class, new Arithmetic<Timespan, Timespan>() {
             @Override
             public Timespan difference(final Timespan t1, final Timespan t2) {

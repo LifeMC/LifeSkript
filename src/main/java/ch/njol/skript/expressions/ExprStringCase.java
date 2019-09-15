@@ -71,12 +71,11 @@ public final class ExprStringCase extends SimpleExpression<String> {
     private static final String changeCase(@Nullable final String str, final int mode) {
         if (str == null)
             return "";
-        else if (mode == UPPER)
+        if (mode == UPPER)
             return str.toUpperCase(Locale.ENGLISH);
-        else if (mode == LOWER)
+        if (mode == LOWER)
             return str.toLowerCase(Locale.ENGLISH);
-        else
-            return str;
+        return str;
     }
 
     @SuppressWarnings("unchecked")
@@ -122,7 +121,7 @@ public final class ExprStringCase extends SimpleExpression<String> {
     public String toString(@Nullable final Event e, final boolean debug) {
         if (literal != null)
             return changeCase(literal, mode);
-        else if (origin != null && e != null)
+        if (origin != null && e != null)
             return changeCase(origin.getSingle(e), mode);
 
         return "";

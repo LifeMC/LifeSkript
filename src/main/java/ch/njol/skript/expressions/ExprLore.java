@@ -130,7 +130,7 @@ public final class ExprLore extends SimpleExpression<String> {
             case REMOVE:
             case REMOVE_ALL:
                 if (ChangerUtils.acceptsChange(item, ChangeMode.SET, ItemStack.class, ItemType.class))
-                    return new Class[]{String.class};
+                    return new Class<?>[]{String.class};
                 return null;
             case RESET:
             default:

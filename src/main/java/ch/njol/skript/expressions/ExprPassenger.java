@@ -78,7 +78,7 @@ public final class ExprPassenger extends SimplePropertyExpression<Entity, Entity
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET) {
-            return new Class[]{Entity.class, EntityData.class};
+            return new Class<?>[]{Entity.class, EntityData.class};
         }
         return super.acceptChange(mode);
     }

@@ -65,11 +65,11 @@ public final class ExprItem extends EventValueExpression<ItemStack> {
             return null;
         item = new EventValueExpression<>(Item.class);
         if (item.init())
-            return new Class[]{ItemType.class};
+            return new Class<?>[]{ItemType.class};
         item = null;
         slot = new EventValueExpression<>(Slot.class);
         if (slot.init())
-            return new Class[]{ItemType.class};
+            return new Class<?>[]{ItemType.class};
         slot = null;
         return null;
     }

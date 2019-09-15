@@ -53,7 +53,7 @@ public final class ExprLevelProgress extends SimplePropertyExpression<Player, Fl
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.REMOVE_ALL)
             return null;
-        return new Class[]{Number.class};
+        return new Class<?>[]{Number.class};
     }
 
     @Override

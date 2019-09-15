@@ -107,7 +107,8 @@ public final class ExprClicked extends SimpleExpression<Object> {
             if (itemType == null || itemType.isOfType(b))
                 return new Block[]{b};
             return null;
-        } else if (e instanceof PlayerInteractEntityEvent) {
+        }
+        if (e instanceof PlayerInteractEntityEvent) {
             if (entityType == null)
                 return null;
             //			if (e instanceof PlayerInteractEntityEvent) {

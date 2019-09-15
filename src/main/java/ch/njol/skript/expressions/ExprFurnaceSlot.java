@@ -122,7 +122,8 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                     if (getTime() >= 0)
                         return ((FurnaceSmeltEvent) e).getResult().clone();
                     return super.getItem();
-                } else if (slot == ORE) {
+                }
+                if (slot == ORE) {
                     if (getTime() <= 0) {
                         return super.getItem();
                     }
@@ -131,9 +132,8 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                         return null;
                     i.setAmount(i.getAmount() - 1);
                     return i.getAmount() == 0 ? new ItemStack(Material.AIR, 1) : i;
-                } else {
-                    return super.getItem();
                 }
+                return super.getItem();
             }
             if (slot == FUEL) {
                 if (getTime() <= 0) {

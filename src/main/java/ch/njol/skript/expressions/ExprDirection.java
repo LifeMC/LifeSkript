@@ -123,7 +123,8 @@ public final class ExprDirection extends SimpleExpression<Direction> {
             }
             assert v != null;
             return new Direction[]{new Direction(v)};
-        } else if (relativeTo != null) {
+        }
+        if (relativeTo != null) {
             final Object o = relativeTo.getSingle(e);
             if (o == null)
                 return EmptyArrays.EMPTY_DIRECTION_ARRAY;
@@ -160,9 +161,8 @@ public final class ExprDirection extends SimpleExpression<Direction> {
                 return new Direction[]{new Direction(new double[]{0, 0, -ln})};
             assert yaw >= 0 && yaw < Math.PI / 4 || yaw >= 7 * Math.PI / 4 && yaw < 2 * Math.PI;
             return new Direction[]{new Direction(new double[]{ln, 0, 0})};
-        } else {
-            return new Direction[]{new Direction(horizontal ? Direction.IGNORE_PITCH : 0, yaw, ln)};
         }
+        return new Direction[]{new Direction(horizontal ? Direction.IGNORE_PITCH : 0, yaw, ln)};
     }
 
     @Override

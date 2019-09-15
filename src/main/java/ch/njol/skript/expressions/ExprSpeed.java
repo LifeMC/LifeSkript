@@ -71,7 +71,7 @@ public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.RESET || mode == ChangeMode.ADD || mode == ChangeMode.REMOVE)
-            return new Class[]{Number.class};
+            return new Class<?>[]{Number.class};
         return null;
     }
 

@@ -257,9 +257,9 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             }
             return (E[]) list.toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
         }
-        final List<E> list = new ArrayList<>();
         if (worlds == null)
             worlds = Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY);
+        final List<E> list = new ArrayList<>();
         for (final World w : worlds) {
             for (final E e : w.getEntitiesByClass(type)) {
                 for (final EntityData<?> t : types) {
@@ -359,12 +359,12 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     @SuppressWarnings("null")
-    protected Noun getName() {
+    protected final Noun getName() {
         return info.names[matchedPattern];
     }
 
     @Nullable
-    protected Adjective getAgeAdjective() {
+    protected final Adjective getAgeAdjective() {
         return baby.isTrue() ? m_baby : baby.isFalse() ? m_adult : null;
     }
 
@@ -374,7 +374,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return baby.isTrue() ? m_baby.toString(name, flags) : baby.isFalse() ? m_adult.toString(name, flags) : name.toString(flags);
     }
 
-    public Kleenean isPlural() {
+    public final Kleenean isPlural() {
         return plural;
     }
 

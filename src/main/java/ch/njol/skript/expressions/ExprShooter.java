@@ -72,7 +72,7 @@ public final class ExprShooter extends PropertyExpression<Projectile, LivingEnti
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET)
-            return new Class[]{LivingEntity.class};
+            return new Class<?>[]{LivingEntity.class};
         return super.acceptChange(mode);
     }
 

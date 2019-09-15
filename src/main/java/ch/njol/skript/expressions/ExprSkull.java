@@ -56,7 +56,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 public final class ExprSkull extends SimplePropertyExpression<Object, ItemType> {
     static {
-        register(ExprSkull.class, ItemType.class, "skull", "offlineplayers/entities/entitydatas");
+        register(ExprSkull.class, ItemType.class, "(head|skull)", "offlineplayers/entities/entitydatas");
     }
 
     @Override

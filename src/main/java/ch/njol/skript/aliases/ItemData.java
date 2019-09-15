@@ -22,6 +22,7 @@
 
 package ch.njol.skript.aliases;
 
+import ch.njol.skript.classes.data.DefaultChangers;
 import ch.njol.skript.util.Utils;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.coll.CollectionUtils;
@@ -230,7 +231,11 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     private static final class ItemStackIterator implements Iterator<ItemStack> {
 
         @SuppressWarnings("null")
-        private final Iterator<Material> iter = Arrays.asList(Material.values()).listIterator(1); // ignore air
+        private final Iterator<Material> iter = Arrays.asList(DefaultChangers.cachedMaterials).listIterator(1); // ignore air
+
+        ItemStackIterator() {
+            super();
+        }
 
         @Override
         public final boolean hasNext() {

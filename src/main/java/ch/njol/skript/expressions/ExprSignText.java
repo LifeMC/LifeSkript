@@ -113,7 +113,7 @@ public final class ExprSignText extends SimpleExpression<String> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.DELETE || mode == ChangeMode.SET)
-            return new Class[]{String.class};
+            return new Class<?>[]{String.class};
         return null;
     }
 

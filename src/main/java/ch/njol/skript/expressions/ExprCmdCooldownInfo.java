@@ -152,7 +152,8 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                 if (mark <= 1) {
                     // remaining or elapsed time
                     return new Class<?>[]{Timespan.class};
-                } else if (mark == 3) {
+                }
+                if (mark == 3) {
                     // last usage dtae
                     return new Class<?>[]{Date.class};
                 }

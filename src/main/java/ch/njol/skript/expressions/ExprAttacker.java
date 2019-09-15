@@ -69,11 +69,14 @@ public final class ExprAttacker extends SimpleExpression<Entity> {
             return ((EntityDamageByEntityEvent) e).getDamager();
 //		} else if (e instanceof EntityDamageByBlockEvent) {
 //			return ((EntityDamageByBlockEvent) e).getDamager();
-        } else if (e instanceof EntityDeathEvent) {
+        }
+        if (e instanceof EntityDeathEvent) {
             return getAttacker(((EntityDeathEvent) e).getEntity().getLastDamageCause());
-        } else if (e instanceof VehicleDamageEvent) {
+        }
+        if (e instanceof VehicleDamageEvent) {
             return ((VehicleDamageEvent) e).getAttacker();
-        } else if (e instanceof VehicleDestroyEvent) {
+        }
+        if (e instanceof VehicleDestroyEvent) {
             return ((VehicleDestroyEvent) e).getAttacker();
         }
         return null;

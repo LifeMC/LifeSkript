@@ -75,9 +75,9 @@ public final class ExprExperience extends SimpleExpression<Experience> {
             case DELETE:
             case REMOVE:
             case REMOVE_ALL:
-                return new Class[]{Experience[].class, Number[].class};
+                return new Class<?>[]{Experience[].class, Number[].class};
             case SET:
-                return new Class[]{Experience.class, Number.class};
+                return new Class<?>[]{Experience.class, Number.class};
             case RESET:
                 return null;
         }

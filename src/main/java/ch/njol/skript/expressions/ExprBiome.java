@@ -67,7 +67,7 @@ public final class ExprBiome extends PropertyExpression<Location, Biome> {
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET)
-            return new Class[]{Biome.class};
+            return new Class<?>[]{Biome.class};
         return super.acceptChange(mode);
     }
 

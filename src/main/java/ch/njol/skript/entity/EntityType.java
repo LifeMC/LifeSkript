@@ -80,10 +80,6 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
                 }
             }
 
-            @Override
-            public boolean mustSyncDeserialization() {
-                return false;
-            }
         }));
     }
 

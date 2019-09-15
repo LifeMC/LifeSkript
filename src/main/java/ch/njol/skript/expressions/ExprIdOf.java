@@ -112,7 +112,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
             case ADD:
             case REMOVE:
             case SET:
-                return new Class[]{Number.class};
+                return new Class<?>[]{Number.class};
             case RESET:
             case DELETE:
             case REMOVE_ALL:
