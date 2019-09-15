@@ -183,7 +183,7 @@ public final class EventValues {
     }
 
     private static final boolean checkExcludes(final EventValueInfo<?, ?> ev, final Class<? extends Event> e) {
-        @SuppressWarnings("cast") final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.exculdes;
+        @SuppressWarnings("cast") final Class<? extends Event>[] excl = (Class<? extends Event>[]) ev.excludes;
         if (excl == null)
             return true;
         for (final Class<? extends Event> ex : excl) {
@@ -223,19 +223,28 @@ public final class EventValues {
         public final Class<E> event;
         public final Class<T> c;
         public final Getter<T, E> getter;
+		/**
+		 * @deprecated use {@link EventValueInfo#excludes} instead
+		 * This was a typo by Njol, not removed for compatibility
+		 */
+		@Deprecated
         @Nullable
+		@SuppressWarnings("unused")
         public final Class<? extends E>[] exculdes;
+		@Nullable
+		public final Class<? extends E>[] excludes;
         @Nullable
         public final String excludeErrorMessage;
 
-        public EventValueInfo(final Class<E> event, final Class<T> c, final Getter<T, E> getter, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>[] exculdes) {
+        public EventValueInfo(final Class<E> event, final Class<T> c, final Getter<T, E> getter, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>[] excludes) {
             assert event != null;
             assert c != null;
             assert getter != null;
             this.event = event;
             this.c = c;
             this.getter = getter;
-            this.exculdes = exculdes;
+            this.excludes = excludes;
+			this.exculdes = this.excludes;
             this.excludeErrorMessage = excludeErrorMessage;
         }
     }

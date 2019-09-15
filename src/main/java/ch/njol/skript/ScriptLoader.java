@@ -95,9 +95,11 @@ public final class ScriptLoader {
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
-    private static @Nullable
+    @Nullable
+    private static
     Version currentScriptVersion;
-    private static @Nullable
+    @Nullable
+    private static
     Version cachedDefaultScriptVersion;
     // We don't use static initializer because Skript may not be initialized in that time,
     // when this occurs, Skript#getVersion can throw errors, so we lazy init the variable.
@@ -247,7 +249,7 @@ public final class ScriptLoader {
      * @param events The current events.
      */
     @SafeVarargs
-    public static final void setCurrentEvent(final String name, final @Nullable Class<? extends Event>... events) {
+    public static final void setCurrentEvent(final String name, @Nullable final Class<? extends Event>... events) {
         currentEventName = name;
         currentEvents = events;
         hasDelayBefore = Kleenean.FALSE;
@@ -335,8 +337,8 @@ public final class ScriptLoader {
                 if (skipFiles.containsKey(f.getName())) {
                     i.add(skipFiles.get(f.getName()));
 
-					continue;
-				}
+                    continue;
+                }
                 if (f.isDirectory()) {
                     i.add(loadScripts(f));
                 } else {
@@ -624,7 +626,7 @@ public final class ScriptLoader {
 
                                         final ScriptInfo scriptInfo = loadScript(file); // Load the required script before continuing to parse this script
 
-										skipFiles.remove(file.getName()); // Remove to re-add it
+                                        skipFiles.remove(file.getName()); // Remove to re-add it
                                         skipFiles.put(file.getName(), scriptInfo); // Required to skip this script in iteration
 
                                         currentScript = config; // Re-set the current script to this script
@@ -1137,7 +1139,7 @@ public final class ScriptLoader {
         }
     }
 
-    public static final boolean isCurrentEvent(final @Nullable Class<? extends Event> event) {
+    public static final boolean isCurrentEvent(@Nullable final Class<? extends Event> event) {
         return CollectionUtils.containsSuperclass(currentEvents, event);
     }
 
@@ -1166,7 +1168,8 @@ public final class ScriptLoader {
          * The Skript version that this script is written.
          * This not used currently; but maybe used in future.
          */
-        private final @Nullable
+        @Nullable
+        private final
         Version scriptVersion;
         public int files, triggers, commands, functions;
 
@@ -1178,7 +1181,7 @@ public final class ScriptLoader {
             this(numFiles, numTriggers, numCommands, numFunctions, null);
         }
 
-        public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions, final @Nullable Version scriptVersion) {
+        public ScriptInfo(final int numFiles, final int numTriggers, final int numCommands, final int numFunctions, @Nullable final Version scriptVersion) {
             files = numFiles;
             triggers = numTriggers;
             commands = numCommands;
@@ -1206,7 +1209,7 @@ public final class ScriptLoader {
          * @return The source version of this script.
          */
         public Version getScriptVersion() {
-            final @Nullable Version localScriptVersion = scriptVersion;
+            @Nullable final Version localScriptVersion = scriptVersion;
             if (localScriptVersion == null)
                 return defaultScriptVersion.get();
             return localScriptVersion;
