@@ -22,6 +22,7 @@
 
 package ch.njol.skript.classes;
 
+import ch.njol.skript.config.EnumParser;
 import ch.njol.yggdrasil.Fields;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -32,21 +33,17 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EnumSerializer<T extends Enum<T>> extends Serializer<T> {
 
-    private final Class<T> c;
+    private final EnumParser<T> parser;
 
     public EnumSerializer(final Class<T> c) {
-        this.c = c;
+        this.parser = new EnumParser<>(c);
     }
 
     @Override
     @Deprecated
     @Nullable
     public T deserialize(final String s) {
-        try {
-            return Enum.valueOf(c, s);
-        } catch (final IllegalArgumentException e) {
-            return null;
-        }
+        return parser.convert(s);
     }
 
     @Override

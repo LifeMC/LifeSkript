@@ -78,7 +78,7 @@ public final class EffSuppress extends Effect {
     }
 
     @NoDoc
-    public static class EffStopSuppress extends Effect {
+    public static final class EffStopSuppress extends Effect {
 
         private int mark;
 

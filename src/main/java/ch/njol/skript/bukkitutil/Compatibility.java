@@ -65,7 +65,8 @@ public final class Compatibility {
                 return superClass;
 
             return (Class<? extends S>) clazz;
-        } else if (Skript.classExists(oldClass)) {
+        }
+        if (Skript.classExists(oldClass)) {
             final Class<?> clazz = Skript.classForName(oldClass);
 
             // Should be never happen.
@@ -75,12 +76,11 @@ public final class Compatibility {
                 return superClass;
 
             return (Class<? extends S>) clazz;
-        } else {
-            // Should be never happen
-            if (Skript.testing() || Skript.logHigh())
-                Skript.warning("The class " + newClass + " (also known as " + oldClass + ") is not available on this server version.");
-            return superClass;
         }
+        // Should be never happen
+        if (Skript.testing() || Skript.logHigh())
+            Skript.warning("The class " + newClass + " (also known as " + oldClass + ") is not available on this server version.");
+        return superClass;
 
     }
 

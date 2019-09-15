@@ -55,6 +55,7 @@ public final class Functions {
     @SuppressWarnings("null")
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
+    private static final Matcher paramPatternMatcher = paramPattern.matcher("");
     private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>(100);
     private static final Pattern functionNamePatternCompiled = Pattern.compile(functionNamePattern);
     @Nullable
@@ -108,7 +109,7 @@ public final class Functions {
                     break;
 
                 // One or more arguments, indeed
-                final Matcher n = paramPattern.matcher(arg);
+                final Matcher n = paramPatternMatcher.reset(arg);
                 if (!n.matches())
                     return error("The " + StringUtils.fancyOrderNumber(params.size() + 1) + " argument's definition is invalid. It should look like 'name: type' or 'name: type = default value'.");
                 final String paramName = n.group(1);

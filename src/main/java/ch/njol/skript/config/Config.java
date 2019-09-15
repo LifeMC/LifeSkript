@@ -51,7 +51,11 @@ public final class Config {
     boolean simple;
     String separator;
 
-    String line = "";
+    /**
+     * @deprecated unused
+     */
+    @Deprecated
+    static final String line = "";
 
     int level;
     int errors;
@@ -293,6 +297,24 @@ public final class Config {
      */
     public void load(final Class<?> c) {
         load(c, null, "");
+    }
+
+    @Override
+    public final String toString() {
+        return "Config{" +
+                "defaultSeparator='" + defaultSeparator + '\'' +
+                ", allowEmptySections=" + allowEmptySections +
+                ", main=" + main +
+                ", simple=" + simple +
+                ", separator='" + separator + '\'' +
+                ", line='" + line + '\'' +
+                ", level=" + level +
+                ", errors=" + errors +
+                ", fileName='" + fileName + '\'' +
+                ", file=" + file +
+                ", indentation='" + indentation + '\'' +
+                ", indentationName='" + indentationName + '\'' +
+                '}';
     }
 
 }

@@ -614,8 +614,7 @@ public final class Variable<T> implements Expression<T> {
             return getConvertedArray(e);
         final T o = getConverted(e);
         if (o == null) {
-            final T[] r = (T[]) Array.newInstance(superType, 0);
-            return r;
+            return (T[]) Array.newInstance(superType, 0);
         }
         final T[] one = (T[]) Array.newInstance(superType, 1);
         one[0] = o;

@@ -91,6 +91,7 @@ public final class Aliases {
     private static final ArgsMessage m_loaded_x_aliases = new ArgsMessage("aliases.loaded x aliases");
     @SuppressWarnings("null")
     private static final Pattern numberWordPattern = Pattern.compile("\\d+\\s+.+");
+    private static final Matcher numberWordPatternMatcher = numberWordPattern.matcher("");
     private static final RegexMessage p_any = new RegexMessage("aliases.any", "", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final Message m_any = new Message("aliases.any-skp");
     private static final RegexMessage p_every = new RegexMessage("aliases.every", "", " (.+)", Pattern.CASE_INSENSITIVE);
@@ -326,7 +327,7 @@ public final class Aliases {
             final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
             final String lcs = p.getFirst().toLowerCase(Locale.ENGLISH);
             final String lcp = p.getSecond().toLowerCase(Locale.ENGLISH);
-            if (numberWordPattern.matcher(lcs).matches() || numberWordPattern.matcher(lcp).matches()) {
+            if (numberWordPatternMatcher.reset(lcs).matches() || numberWordPatternMatcher.reset(lcp).matches()) {
                 if (!printedStartingWithNumberError) {
                     Skript.error(m_starting_with_number.toString());
                     printedStartingWithNumberError = true;

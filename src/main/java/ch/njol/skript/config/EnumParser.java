@@ -26,7 +26,9 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Converter;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Peter Güttinger
@@ -34,9 +36,15 @@ import java.util.Locale;
 public final class EnumParser<E extends Enum<E>> implements Converter<String, E> {
 
     private final Class<E> enumType;
+    private final Map<String, E> cache;
+
     @Nullable
     private final String allowedValues;
     private final String type;
+
+    public EnumParser(final Class<E> enumType) {
+        this(enumType, enumType.getSimpleName().toLowerCase(Locale.ENGLISH));
+    }
 
     public EnumParser(final Class<E> enumType, final String type) {
         assert enumType != null;
@@ -53,22 +61,34 @@ public final class EnumParser<E extends Enum<E>> implements Converter<String, E>
         } else {
             allowedValues = null;
         }
+        this.cache = new HashMap<>(enumType.getEnumConstants().length);
+        for (final E enumValue : enumType.getEnumConstants())
+            this.cache.put(enumValue.name(), enumValue);
     }
 
     @Override
     @Nullable
     public E convert(final String s) {
+        final String name = s.toUpperCase(Locale.ENGLISH).replace(' ', '_');
+        /*
         try {
-            return Enum.valueOf(enumType, s.toUpperCase(Locale.ENGLISH).replace(' ', '_'));
+            return Enum.valueOf(enumType, name);
         } catch (final IllegalArgumentException e) {
-            Skript.error("'" + s + "' is not a valid value for " + type + (allowedValues == null ? "" : ". Allowed values are: " + allowedValues));
+            Skript.error('\'' + s + "' is not a valid value for " + type + (allowedValues == null ? "" : ". Allowed values are: " + allowedValues));
             return null;
         }
+        */
+        final E value = this.cache.get(name);
+
+        if (value == null)
+            Skript.error('\'' + s + "' is not a valid value for " + type + (allowedValues == null ? "" : ". Allowed values are: " + allowedValues));
+
+        return value;
     }
 
     @Override
     public String toString() {
-        return "EnumParser[enum=" + enumType + ",allowedValues=" + allowedValues + ",type=" + type + "]";
+        return "EnumParser[enum=" + enumType + ",allowedValues=" + allowedValues + ",type=" + type + ']';
     }
 
 }

@@ -114,7 +114,7 @@ public final class Conditional extends TriggerSection {
         @Override
         @Nullable
         public final TriggerItem walk(final Event e) {
-            return walk(e, true);
+            return super.walk(e, true);
         }
 
         @Override

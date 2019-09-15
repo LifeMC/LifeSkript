@@ -65,11 +65,11 @@ public final class Variables {
     public static final Yggdrasil yggdrasil = new Yggdrasil(YGGDRASIL_VERSION);
     static final List<VariablesStorage> storages = new ArrayList<>();
     /**
-     * Stores loaded variables while variable storages are loaded.
+     * Stores loaded variables while variable storage's are loaded.
      * <p>
-     * Access must be synchronised.
+     * Access must be synchronized.
      */
-    static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>());
+    static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>(100));
     static final BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
     static final BlockingQueue<SerializedVariable> saveQueue = queue;
     static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);
@@ -83,7 +83,7 @@ public final class Variables {
     /**
      * Not accessed concurrently
      */
-    private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>();
+    private static final WeakHashMap<Event, VariablesMap> localVariables = new WeakHashMap<>(100);
     /**
      * Changes to variables that have not yet been written.
      */
@@ -124,7 +124,7 @@ public final class Variables {
             @SuppressWarnings("unchecked")
             @Override
             @Nullable
-            public String getID(final @NonNull Class<?> c) {
+            public String getID(@NonNull final Class<?> c) {
                 if (ConfigurationSerializable.class.isAssignableFrom(c) && Classes.getSuperClassInfo(c) == Classes.getExactClassInfo(Object.class))
                     return configurationSerializablePrefix + ConfigurationSerialization.getAlias((Class<? extends ConfigurationSerializable>) c);
                 return null;
@@ -132,7 +132,7 @@ public final class Variables {
 
             @Override
             @Nullable
-            public Class<? extends ConfigurationSerializable> getClass(final @NonNull String id) {
+            public Class<? extends ConfigurationSerializable> getClass(@NonNull final String id) {
                 if (id.startsWith(configurationSerializablePrefix))
                     return ConfigurationSerialization.getClassByAlias(id.substring(configurationSerializablePrefix.length()));
                 return null;
@@ -294,7 +294,7 @@ public final class Variables {
      * @return an Object for a normal Variable or a Map<String, Object> for a list variable, or null if the variable is not set.
      */
     @Nullable
-    public static final Object getVariable(final String name, final @Nullable Event e, final boolean local) {
+    public static final Object getVariable(final String name, @Nullable final Event e, final boolean local) {
         if (local) {
             final VariablesMap map = localVariables.get(e);
             if (map == null)
@@ -308,8 +308,8 @@ public final class Variables {
                     return change.value;
             }
         }
+        variablesLock.readLock().lock();
         try {
-            variablesLock.readLock().lock();
             return variables.getVariable(name);
         } finally {
             variablesLock.readLock().unlock();
@@ -323,7 +323,7 @@ public final class Variables {
      * @param name  The variable name.
      * @param value New value.
      */
-    private static final void queueVariableChange(final String name, final @Nullable Object value) {
+    private static final void queueVariableChange(final String name, @Nullable final Object value) {
         changeQueue.add(new VariableChange(name, value));
     }
 
@@ -349,7 +349,7 @@ public final class Variables {
      * @param name  The variable's name. Can be a "list variable::*" (<tt>value</tt> must be <tt>null</tt> in this case)
      * @param value The variable's value. Use <tt>null</tt> to delete the variable.
      */
-    public static final void setVariable(final String name, @Nullable Object value, final @Nullable Event e, final boolean local) {
+    public static final void setVariable(final String name, @Nullable Object value, @Nullable final Event e, final boolean local) {
         if (value != null) {
             assert !name.endsWith("::*");
             final ClassInfo<?> ci = Classes.getSuperClassInfo(value.getClass());
@@ -399,7 +399,7 @@ public final class Variables {
      * @return Whatever the variable was stored somewhere. Not valid while storages are loading.
      */
     @SuppressWarnings({"unused", "null"})
-    static final boolean variableLoaded(final String name, final @Nullable Object value, final VariablesStorage source) {
+    static final boolean variableLoaded(final String name, @Nullable final Object value, final VariablesStorage source) {
         assert Bukkit.isPrimaryThread(); // required by serialisation
 
         synchronized (tempVars) {
@@ -478,23 +478,23 @@ public final class Variables {
         }
     }
 
-    public static final SerializedVariable serialize(final String name, final @Nullable Object value) {
+    public static final SerializedVariable serialize(final String name, @Nullable final Object value) {
         final SerializedVariable.Value var = serialize(value);
         return new SerializedVariable(name, var);
     }
 
     @Nullable
-    public static final SerializedVariable.Value serialize(final @Nullable Object value) {
+    public static final SerializedVariable.Value serialize(@Nullable final Object value) {
         return Classes.serialize(value);
     }
 
-    private static final void saveVariableChange(final String name, final @Nullable Object value) {
+    private static final void saveVariableChange(final String name, @Nullable final Object value) {
         queue.add(serialize(name, value));
     }
 
     public static final void close() {
+        variablesLock.writeLock().lock();
         try { // Ensure that all changes are to save soon
-            variablesLock.writeLock().lock();
             processChangeQueue();
         } finally {
             variablesLock.writeLock().unlock();
@@ -514,8 +514,8 @@ public final class Variables {
     }
 
     public static final int numVariables() {
+        variablesLock.readLock().lock();
         try {
-            variablesLock.readLock().lock();
             return variables.hashMap.size();
         } finally {
             variablesLock.readLock().unlock();
@@ -531,7 +531,7 @@ public final class Variables {
         @Nullable
         public final Object value;
 
-        public VariableChange(final String name, final @Nullable Object value) {
+        public VariableChange(final String name, @Nullable final Object value) {
             this.name = name;
             this.value = value;
         }

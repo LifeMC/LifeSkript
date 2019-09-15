@@ -23,6 +23,9 @@
 package ch.njol.skript.util;
 
 /**
+ * An exception just for stopping the code execution.
+ * Has no stack trace and does not cause performance lose.
+ *
  * @author Peter Güttinger
  */
 public final class EmptyStacktraceException extends RuntimeException {
@@ -30,5 +33,11 @@ public final class EmptyStacktraceException extends RuntimeException {
 
     public EmptyStacktraceException() {
         super(null, null, true, false);
+    }
+
+    @SuppressWarnings("sync-override")
+    @Override
+    public final Throwable fillInStackTrace() {
+        return this; // Do nothing for increasing performance
     }
 }

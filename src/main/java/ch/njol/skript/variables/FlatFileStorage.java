@@ -67,6 +67,7 @@ public final class FlatFileStorage extends VariablesStorage {
      */
     @SuppressWarnings("null")
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
+    private static final Matcher containsWhitespaceMatcher = containsWhitespace.matcher("");
     static boolean savingVariables = false;
     private static long savedVariables;
     @Nullable
@@ -128,7 +129,7 @@ public final class FlatFileStorage extends VariablesStorage {
             if (i != 0)
                 pw.print(", ");
             String v = values[i];
-            if (v != null && (v.contains(",") || v.contains("\"") || v.contains("#") || containsWhitespace.matcher(v).find()))
+            if (v != null && (v.contains(",") || v.contains("\"") || v.contains("#") || containsWhitespaceMatcher.reset(v).find()))
                 v = '"' + v.replace("\"", "\"\"") + '"';
             pw.print(v);
         }
@@ -147,23 +148,22 @@ public final class FlatFileStorage extends VariablesStorage {
         int unsuccessful = 0;
         final StringBuilder invalid = new StringBuilder(4096);
 
-        Version varVersion; // will be set later
-
         final Version v2_0_beta3 = new Version(2, 0, "beta 3");
-        boolean update2_0_beta3 = false;
         final Version v2_1 = new Version(2, 1);
         boolean update2_1 = false;
 
         try (final BufferedReader r = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), StandardCharsets.UTF_8))) {
             String line;
             int lineNum = 0;
+            boolean update2_0_beta3 = false;
             while ((line = r.readLine()) != null) {
                 lineNum++;
                 line = line.trim();
                 if (line.isEmpty() || !line.isEmpty() && line.charAt(0) == '#') {
                     if (line.startsWith("# version:")) {
                         try {
-                            varVersion = new Version(line.substring("# version:".length()).trim());
+                            // will be set later
+                            final Version varVersion = new Version(line.substring("# version:".length()).trim());
                             update2_0_beta3 = varVersion.isSmallerThan(v2_0_beta3);
                             update2_1 = varVersion.isSmallerThan(v2_1);
                         } catch (final IllegalArgumentException e) {
