@@ -346,7 +346,7 @@ public final class CollectionUtils {
      * @return The passed array
      */
     @SafeVarargs
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "ConstantConditions"})
     @NonNull
     @Contract("null->null")
     public static final <T> T[] array(final @Nullable T... array) {

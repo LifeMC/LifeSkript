@@ -40,7 +40,7 @@ public final class StringUtils {
 
     public static final void checkIndices(final String s, final int start, final int end) {
         if (start < 0 || end > s.length())
-            throw new StringIndexOutOfBoundsException("invalid start/end indices " + start + "," + end + " for string \"" + s + "\" (length " + s.length() + ")");
+            throw new StringIndexOutOfBoundsException("invalid start/end indices " + start + ',' + end + " for string \"" + s + "\" (length " + s.length() + ')');
     }
 
     /**
@@ -136,7 +136,7 @@ public final class StringUtils {
         assert accuracy >= 0;
         if (accuracy <= 0)
             return String.valueOf(Math.round(d));
-        final String s = String.format(Locale.ENGLISH, "%." + accuracy + "f", d);
+        final String s = String.format(Locale.ENGLISH, "%." + accuracy + 'f', d);
         int c = s.length() - 1;
         while (s.charAt(c) == '0')
             c--;

@@ -314,9 +314,7 @@ public final class Yggdrasil {
         } catch (final InstantiationException e) {
             throw new StreamCorruptedException("Cannot create an instance of " + c + " because it is abstract");
         } catch (final IllegalAccessException | IllegalArgumentException e) {
-            e.printStackTrace();
-            assert false;
-            return null;
+            throw Skript.sneakyThrow(e);
         } catch (final InvocationTargetException e) {
             throw Skript.sneakyThrow(e.getCause());
         }

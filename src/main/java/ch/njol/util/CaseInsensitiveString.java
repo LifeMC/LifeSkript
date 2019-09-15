@@ -46,13 +46,13 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
     public CaseInsensitiveString(final String s) {
         this.s = s;
         locale = Locale.getDefault();
-        lc = "" + s.toLowerCase(locale);
+        lc = s.toLowerCase(locale);
     }
 
     public CaseInsensitiveString(final String s, final Locale locale) {
         this.s = s;
         this.locale = locale;
-        lc = "" + s.toLowerCase(locale);
+        lc = s.toLowerCase(locale);
     }
 
     @Override
@@ -89,7 +89,7 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
 
     @Override
     public CaseInsensitiveString subSequence(final int start, final int end) {
-        return new CaseInsensitiveString("" + s.substring(start, end), locale);
+        return new CaseInsensitiveString(s.substring(start, end), locale);
     }
 
     @SuppressWarnings("null")

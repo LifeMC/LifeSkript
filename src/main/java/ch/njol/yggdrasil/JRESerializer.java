@@ -101,7 +101,8 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
                 final Collection<?> c = (Collection<?>) o;
                 c.addAll((Collection) Arrays.asList(values));
                 return;
-            } else if (o instanceof Map) {
+            }
+            if (o instanceof Map) {
                 final Object[] keys = fields.getObject("keys", Object[].class), values = fields.getObject("values", Object[].class);
                 if (keys == null || values == null || keys.length != values.length)
                     throw new StreamCorruptedException();

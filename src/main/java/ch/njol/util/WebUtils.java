@@ -177,7 +177,7 @@ public final class WebUtils {
             String line;
 
             while ((line = br.readLine()) != null) {
-                responseBody.append(line.trim()).append("\n");
+                responseBody.append(line.trim()).append('\n');
             }
 
             in.close();

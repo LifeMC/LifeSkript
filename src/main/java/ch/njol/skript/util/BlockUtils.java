@@ -175,7 +175,8 @@ public final class BlockUtils {
                     b.getRelative(BlockFace.UP).setTypeIdAndData(type, (byte) 0x8, false);
                 b.setTypeIdAndData(type, data, applyPhysics);
                 return true;
-            } else if (down == 0 || down == type && b.getRelative(BlockFace.DOWN).getData() < 0x8) {
+            }
+            if (down == 0 || down == type && b.getRelative(BlockFace.DOWN).getData() < 0x8) {
                 if (dataMax < 0x8) // bottom half
                     return false;
                 if (!isSolid(b.getRelative(BlockFace.DOWN, 2).getTypeId()))

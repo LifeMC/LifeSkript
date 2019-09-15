@@ -66,7 +66,7 @@ public final class EnumUtils<E extends Enum<E>> {
         if (update) {
             parseMap.clear();
             for (final E e : c.getEnumConstants()) {
-                final String[] ls = Language.getList(languageNode + "." + e.name());
+                final String[] ls = Language.getList(languageNode + '.' + e.name());
                 names[e.ordinal()] = ls[0];
                 for (final String l : ls)
                     parseMap.put(l.toLowerCase(Locale.ENGLISH), e);

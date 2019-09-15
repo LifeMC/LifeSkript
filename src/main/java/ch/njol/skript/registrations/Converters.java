@@ -292,7 +292,8 @@ public final class Converters {
         for (final ConverterInfo<?, ?> conv : converters) {
             if (conv.from.isAssignableFrom(from) && conv.to.isAssignableFrom(to)) {
                 return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(conv.converter, to);
-            } else if (from.isAssignableFrom(conv.from) && to.isAssignableFrom(conv.to)) {
+            }
+            if (from.isAssignableFrom(conv.from) && to.isAssignableFrom(conv.to)) {
                 return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(conv);
             }
         }

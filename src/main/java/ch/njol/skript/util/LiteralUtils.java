@@ -69,7 +69,8 @@ public final class LiteralUtils {
     public static final boolean hasUnparsedLiteral(final Expression<?> expr) {
         if (expr instanceof UnparsedLiteral) {
             return true;
-        } else if (expr instanceof ExpressionList) {
+        }
+        if (expr instanceof ExpressionList) {
             for (final Expression<?> ex : ((ExpressionList<?>) expr).getExpressions()) {
                 if (ex instanceof UnparsedLiteral) {
                     return true;

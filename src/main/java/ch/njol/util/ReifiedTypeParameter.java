@@ -35,11 +35,11 @@ import org.eclipse.jdt.annotation.Nullable;
  *     System.out.println(ReifiedTypeParameter.&#60;String&#62getReifiedType());
  * </pre>
  * </p>
- *
+ * <p>
  * The algorithm behind this is simple, no deep reflection hacks etc,
  * it just creates a dummy var-args array argument, and then invokes
  * {@link Class#getComponentType()} on it.
- *
+ * <p>
  * This returns the type of the inferred var-arg array, hence the
  * actual type parameters class.<p />
  *
@@ -54,7 +54,7 @@ public final class ReifiedTypeParameter {
     /**
      * Returns the class of passed type parameter. Uses a simple algorithm.
      * The type must be fully known at compile time.<p />
-     *
+     * <p>
      * <p />
      * Otherwise, a {@link IllegalStateException} will be thrown at runtime.
      * Do not use this frequently; uses empty dummy arrays, may create memory overhead.<p />
@@ -66,17 +66,16 @@ public final class ReifiedTypeParameter {
      *     System.out.println(ReifiedTypeParameter&#60;String&#62.getReifiedType());
      * </pre>
      * </p>
-     *
+     * <p>
      * The algorithm behind this is simple, no deep reflection hacks etc,
      * it just creates a dummy var-args array argument, and then invokes
      * {@link Class#getComponentType()} on it.
-     *
+     * <p>
      * This returns the type of the inferred var-arg array, hence the
      * actual type parameters class.<p />
      *
      * @param <T> The type parameter, can't be inferred by the compiler
      * @return The class of the passed type parameter, non-null
-     *
      * @since 2.2.17
      */
     @SafeVarargs

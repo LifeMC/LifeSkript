@@ -55,7 +55,7 @@ public final class Comparators {
      * @param t1
      * @param t2
      * @param c
-     * @throws IllegalArgumentException if any given class is equal to <code>Object.class</code>
+     * @throws IllegalArgumentException if any given class is equal to {@code Object.class}
      */
     public static final <T1, T2> void registerComparator(final Class<T1> t1, final Class<T2> t2, final Comparator<T1, T2> c) {
         Skript.checkAcceptRegistrations();
@@ -97,7 +97,8 @@ public final class Comparators {
         for (final ComparatorInfo<?, ?> info : comparators) {
             if (info.c1.isAssignableFrom(f) && info.c2.isAssignableFrom(s)) {
                 return info.c;
-            } else if (info.c1.isAssignableFrom(s) && info.c2.isAssignableFrom(f)) {
+            }
+            if (info.c1.isAssignableFrom(s) && info.c2.isAssignableFrom(f)) {
                 return new InverseComparator<F, S>((Comparator<? super S, ? super F>) info.c);
             }
         }

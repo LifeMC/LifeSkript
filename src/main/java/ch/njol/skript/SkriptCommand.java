@@ -373,9 +373,6 @@ public final class SkriptCommand implements CommandExecutor {
             } else if ("track".equalsIgnoreCase(args[0]) || "untrack".equalsIgnoreCase(args[0])) {
                 if ("delays".equalsIgnoreCase(args[1])) {
                     if ("track".equalsIgnoreCase(args[0])) {
-                        final long limit = 0L;
-                        final TimeUnit unit = TimeUnit.NANOSECONDS;
-
                         for (final TrackerAgent agent : registeredTrackers)
                             if (agent instanceof TaskTrackerAgent && ((TaskTrackerAgent) agent).out == sender) {
                                 /* TODO This just an experimental agent & tracker & debugger system
@@ -385,6 +382,8 @@ public final class SkriptCommand implements CommandExecutor {
                                 return true;
                             }
 
+                        final long limit = 0L;
+                        final TimeUnit unit = TimeUnit.NANOSECONDS;
                         registeredTrackers.add(
                                 new TaskTrackerAgent(sender, limit, unit).registerTracker()
                         );

@@ -66,7 +66,7 @@ public final class AABB implements Iterable<Block> {
 
     @SuppressWarnings("null")
     public AABB(final Location center, final double rX, final double rY, final double rZ) {
-        assert rX >= 0 && rY >= 0 && rZ >= 0 : rX + "," + rY + "," + rY;
+        assert rX >= 0 && rY >= 0 && rZ >= 0 : rX + "," + rY + ',' + rY;
         world = center.getWorld();
         lowerBound = new Vector(center.getX() - rX, Math.max(center.getY() - rY, 0), center.getZ() - rZ);
         upperBound = new Vector(center.getX() + rX, Math.min(center.getY() + rY, world.getMaxHeight()), center.getZ() + rZ);
@@ -110,47 +110,66 @@ public final class AABB implements Iterable<Block> {
      */
     @Override
     public Iterator<Block> iterator() {
-        return new Iterator<Block>() {
-            private final int minX = Math2.ceilI(lowerBound.getX() - Skript.EPSILON),
-                    minY = Math2.ceilI(lowerBound.getY() - Skript.EPSILON),
-                    minZ = Math2.ceilI(lowerBound.getZ() - Skript.EPSILON);
-            private final int maxX = Math2.floorI(upperBound.getX() + Skript.EPSILON) - 1,
-                    maxY = Math2.floorI(upperBound.getY() + Skript.EPSILON) - 1,
-                    maxZ = Math2.floorI(upperBound.getZ() + Skript.EPSILON) - 1;
+        return new BlockIterator(world, upperBound, lowerBound);
+    }
 
-            private int x = minX - 1,// next() increases x by one immediately
-                    y = minY,
+    private static final class BlockIterator implements Iterator<Block> {
+        private final World world;
+
+        private final int minX;
+        private final int minZ;
+
+        private final int maxX, maxY, maxZ;
+
+        private int x;
+        private int y;
+        private int z;
+
+        BlockIterator(final World world, final Vector upperBound, final Vector lowerBound) {
+            this.world = world;
+
+            this.minX = Math2.ceilI(lowerBound.getX() - Skript.EPSILON);
+            final int minY = Math2.ceilI(lowerBound.getY() - Skript.EPSILON);
+            this.minZ = Math2.ceilI(lowerBound.getZ() - Skript.EPSILON);
+
+            this.maxX = Math2.floorI(upperBound.getX() + Skript.EPSILON) - 1;
+            this.maxY = Math2.floorI(upperBound.getY() + Skript.EPSILON) - 1;
+            this.maxZ = Math2.floorI(upperBound.getZ() + Skript.EPSILON) - 1;
+
+            this.x = minX - 1; // next() increases x by one immediately
+
+            this.y = minY;
+            this.z = minZ;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return y <= maxY && (x != maxX || y != maxY || z != maxZ);
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final Block next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            x++;
+            if (x > maxX) {
+                x = minX;
+                z++;
+                if (z > maxZ) {
                     z = minZ;
-
-            @Override
-            public boolean hasNext() {
-                return y <= maxY && (x != maxX || y != maxY || z != maxZ);
-            }
-
-            @SuppressWarnings("null")
-            @Override
-            public Block next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                x++;
-                if (x > maxX) {
-                    x = minX;
-                    z++;
-                    if (z > maxZ) {
-                        z = minZ;
-                        y++;
-                    }
+                    y++;
                 }
-                if (y > maxY)
-                    throw new NoSuchElementException();
-                return world.getBlockAt(x, y, z);
             }
+            if (y > maxY)
+                throw new NoSuchElementException();
+            return world.getBlockAt(x, y, z);
+        }
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
@@ -164,7 +183,7 @@ public final class AABB implements Iterable<Block> {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

@@ -91,7 +91,8 @@ public abstract class YggdrasilInputStream implements Closeable {
         final String id = readEnumID();
         if (Enum.class.isAssignableFrom(c)) {
             return Yggdrasil.getEnumConstant((Class) c, id);
-        } else if (PseudoEnum.class.isAssignableFrom(c)) {
+        }
+        if (PseudoEnum.class.isAssignableFrom(c)) {
             final Object o = PseudoEnum.valueOf((Class) c, id);
             if (o != null)
                 return o;
@@ -99,9 +100,8 @@ public abstract class YggdrasilInputStream implements Closeable {
 //				// TODO create this and a handler (for Enums as well)
 //			}
             throw new StreamCorruptedException("Enum constant " + id + " does not exist in " + c);
-        } else {
-            throw new StreamCorruptedException(c + " is not an enum type");
         }
+        throw new StreamCorruptedException(c + " is not an enum type");
     }
 
     // Reference

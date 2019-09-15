@@ -159,7 +159,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
         final int r = read();
         if (r == 0)
             return false;
-        else if (r == 1)
+        if (r == 1)
             return true;
         throw new StreamCorruptedException("Invalid boolean value " + r);
     }

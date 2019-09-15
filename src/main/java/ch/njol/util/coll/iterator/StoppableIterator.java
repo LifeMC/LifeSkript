@@ -59,7 +59,7 @@ public class StoppableIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean hasNext() {
+    public final boolean hasNext() {
         if (stopped || !iter.hasNext())
             return false;
         final boolean cn = calledNext;
@@ -76,7 +76,7 @@ public class StoppableIterator<T> implements Iterator<T> {
 
     @Override
     @Nullable
-    public T next() {
+    public final T next() {
         if (!hasNext())
             throw new NoSuchElementException();
         calledNext = true;
@@ -89,11 +89,11 @@ public class StoppableIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public void remove() {
+    public final void remove() {
         iter.remove();
     }
 
-    public void stop() {
+    public final void stop() {
         stopped = true;
     }
 

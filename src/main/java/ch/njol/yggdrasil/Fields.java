@@ -265,6 +265,11 @@ public final class Fields implements Iterable<FieldContext> {
         return fields.values().iterator();
     }
 
+    @Override
+    public final String toString() {
+        return "Fields{fields=" + fields + '}';
+    }
+
     /**
      * Holds a field's name and value, and throws {@link StreamCorruptedException}s if primitives or objects are used incorrectly.
      *

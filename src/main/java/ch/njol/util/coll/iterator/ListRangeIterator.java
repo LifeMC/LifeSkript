@@ -35,10 +35,7 @@ public final class ListRangeIterator<T> implements Iterator<T> {
     private int end;
 
     public ListRangeIterator(final List<T> list, final int start, final int end) {
-        final ListIterator<T> iter = list.listIterator(start);
-        if (iter == null)
-            throw new IllegalArgumentException("" + list);
-        this.iter = iter;
+        this.iter = list.listIterator(start);
         this.end = end;
     }
 

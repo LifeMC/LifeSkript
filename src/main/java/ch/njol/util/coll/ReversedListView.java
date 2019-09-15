@@ -189,10 +189,7 @@ public final class ReversedListView<T> implements List<T> {
 
     @Override
     public ReversedListView<T> subList(final int fromIndex, final int toIndex) {
-        final List<T> l = list.subList(size() - toIndex, size() - fromIndex);
-        if (l == null)
-            throw new UnsupportedOperationException("" + list);
-        return new ReversedListView<>(l);
+        return new ReversedListView<>(list.subList(size() - toIndex, size() - fromIndex));
     }
 
     @Override

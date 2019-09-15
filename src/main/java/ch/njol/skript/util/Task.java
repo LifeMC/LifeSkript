@@ -125,7 +125,7 @@ public abstract class Task implements Runnable, Closeable {
      * @param delay
      */
     @SuppressWarnings("deprecation")
-    public void schedule(final long delay) {
+    public final void schedule(final long delay) {
         final Skript instance = Skript.instance;
         if (instance == null || !instance.isEnabled())
             return;

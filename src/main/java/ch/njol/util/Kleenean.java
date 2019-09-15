@@ -69,7 +69,7 @@ public enum Kleenean {
 
     @Override
     public final String toString() {
-        return "" + name().toLowerCase(Locale.ENGLISH);
+        return name().toLowerCase(Locale.ENGLISH);
     }
 
     public final Kleenean is(final Kleenean other) {

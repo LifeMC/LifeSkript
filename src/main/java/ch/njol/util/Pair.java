@@ -75,8 +75,8 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
      * @return "first,second"
      */
     @Override
-    public String toString() {
-        return "" + first + "," + second;
+    public final String toString() {
+        return first + "," + second;
     }
 
     /**

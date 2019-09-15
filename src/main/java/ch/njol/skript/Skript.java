@@ -178,7 +178,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * The maximum data value of Minecraft, i.e. Short.MAX_VALUE - Short.MIN_VALUE.
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
-    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + "]" + ChatColor.RESET + " ";
+    public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + ']' + ChatColor.RESET + ' ';
     public static final @Nullable
     Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
@@ -245,11 +245,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static boolean closedOnEnable = false;
     private static boolean closedOnDisable = false;
     private static boolean first;
-    private static @Nullable
-    ServerPlatform serverPlatform;
-    private static @Nullable
-    Boolean hasJLineSupport = null;
-    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "]" + Ansi.ansi().a(Ansi.Attribute.RESET) + " " : "[Skript] ";
+    @Nullable
+    private static ServerPlatform serverPlatform;
+    @Nullable
+    private static Boolean hasJLineSupport = null;
+    public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + ']' + Ansi.ansi().a(Ansi.Attribute.RESET) + ' ' : "[Skript] ";
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
     @Nullable
@@ -396,20 +396,24 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             return serverPlatform;
         if (classExists("com.lifespigot.Main")) {
             return serverPlatform = ServerPlatform.LIFE_SPIGOT; // LifeSpigot is a fork of Paper, so check it first.
-        } else if (classExists("net.techcable.tacospigot.TacoSpigotConfig")) {
+        }
+        if (classExists("net.techcable.tacospigot.TacoSpigotConfig")) {
             return serverPlatform = ServerPlatform.BUKKIT_TACO; // TacoSpigot also is a fork of Paper, so check before Paper.
-        } else if (classExists("net.glowstone.GlowServer")) {
+        }
+        if (classExists("net.glowstone.GlowServer")) {
             return serverPlatform = ServerPlatform.GLOWSTONE; // Glowstone has timings too, so must check for it first
-        } else if (classExists("co.aikar.timings.Timings") || classExists("org.github.paperspigot.PaperSpigotConfig") || classExists("com.github.paperspigot.PaperSpigotConfig")) {
+        }
+        if (classExists("co.aikar.timings.Timings") || classExists("org.github.paperspigot.PaperSpigotConfig") || classExists("com.github.paperspigot.PaperSpigotConfig")) {
             return serverPlatform = ServerPlatform.BUKKIT_PAPER; // Could be Sponge, but it doesn't work at all at the moment
-        } else if (classExists("org.spigotmc.SpigotConfig")) {
+        }
+        if (classExists("org.spigotmc.SpigotConfig")) {
             return serverPlatform = ServerPlatform.BUKKIT_SPIGOT;
-        } else if (isCraftBukkit) {
+        }
+        if (isCraftBukkit) {
             // At some point, CraftServer got removed or moved
             return serverPlatform = ServerPlatform.BUKKIT_CRAFTBUKKIT;
-        } else { // Probably some ancient Bukkit implementation
-            return serverPlatform = ServerPlatform.BUKKIT_UNKNOWN;
         }
+        return serverPlatform = ServerPlatform.BUKKIT_UNKNOWN; // Probably some ancient Bukkit implementation
     }
 
     public static final Skript getInstance() {
@@ -571,7 +575,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * Returns whatever this server is running CraftBukkit.
      *
      * @return Whatever this server is running CraftBukkit.
-     * @deprecated {@link Skript#getServerPlatform()}
+     * @deprecated use {@link Skript#getServerPlatform()}
      */
     @Deprecated
     public static final boolean isRunningCraftBukkit() {
@@ -1079,7 +1083,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         final Thread t = new Thread(r, name);
         t.setUncaughtExceptionHandler(UEH);
         if (Skript.debug())
-            Skript.debug("Created thread: \"" + name + "\"");
+            Skript.debug("Created thread: \"" + name + '"');
         return t;
     }
 
@@ -1127,6 +1131,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return addon;
     }
 
+    /**
+     * Backwards compatibility
+     *
+     * @deprecated see {@link Skript#getAddon(Plugin)}
+     */
     @Deprecated
     @Nullable
     public static final SkriptAddon getAddon(final JavaPlugin p) {
@@ -1171,9 +1180,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         for (final String pattern : patterns)
             if (duplicatePatternCheckList.contains(pattern))
                 //FIXME Show which pattern is duplicated (e.g duplicated by ch.njol.skript.effects.EffUpdateInventory.kt)
-                Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ")");
+                Skript.warning("Duplicate pattern: " + pattern + " (for " + name + ": " + element.getCanonicalName() + ')');
         if ((Skript.logSpam() || showRegisteredNonSkript) && (!showRegisteredNonSkript || !element.getCanonicalName().startsWith("ch.njol.skript.")))
-            Skript.info("Registering " + name + " " + element.getCanonicalName() + " with patterns \"" + String.join("," + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ")", patterns));
+            Skript.info("Registering " + name + ' ' + element.getCanonicalName() + " with patterns \"" + String.join(',' + "(from " + SkriptLogger.findCaller("ch.njol.", "java.") + ')', patterns));
         Collections.addAll(duplicatePatternCheckList, patterns);
     }
 
@@ -1317,7 +1326,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final boolean dispatchCommand(final CommandSender sender, final String command) {
         try {
             if (sender instanceof Player) {
-                final PlayerCommandPreprocessEvent e = new PlayerCommandPreprocessEvent((Player) sender, "/" + command);
+                final PlayerCommandPreprocessEvent e = new PlayerCommandPreprocessEvent((Player) sender, '/' + command);
                 Bukkit.getPluginManager().callEvent(e);
                 if (e.isCancelled() || e.getMessage() == null || !e.getMessage().startsWith("/"))
                     return false;
@@ -1508,10 +1517,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             logEx("Version Information:");
             logEx("  Skript: " + Skript.getVersionWithSuffix());
-            logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ")" + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
+            logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ')' + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
             logEx("  Minecraft: " + getMinecraftVersion());
-            logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")");
-            logEx("  OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
+            logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')');
+            logEx("  OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
             logEx();
             logEx("Server platform: " + getServerPlatform().platformName + (getServerPlatform().isSupported ? "" : " (unsupported)"));
             if (!getServerPlatform().isWorking) {
@@ -1521,13 +1530,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             final Node node = SkriptLogger.getNode();
             if (node != null)
-                logEx("Current node: " + node + " (" + (node.getKey() != null ? node.getKey() : "") + ")");
+                logEx("Current node: " + node + " (" + (node.getKey() != null ? node.getKey() : "") + ')');
             logEx("Current item: " + (item == null ? "not available" : item.toString(null, true)));
             if (item != null) {
                 final Trigger trigger = item.getTrigger();
                 if (trigger != null) {
                     final File script = trigger.getScript();
-                    logEx("Current trigger: " + trigger.toString(null, true) + " (" + (script == null ? "null" : script.getName()) + ", line " + trigger.getLineNumber() + ")");
+                    logEx("Current trigger: " + trigger.toString(null, true) + " (" + (script == null ? "null" : script.getName()) + ", line " + trigger.getLineNumber() + ')');
                 } else {
                     logEx("Current trigger: not available");
                 }
@@ -1537,7 +1546,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
             logEx();
-            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language").toLowerCase(Locale.ENGLISH) + "-" + Workarounds.getOriginalProperty("user.country") + ")");
+            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language").toLowerCase(Locale.ENGLISH) + '-' + Workarounds.getOriginalProperty("user.country") + ')');
             logEx("Encoding: " + "file = " + Workarounds.getOriginalProperty("file.encoding") + " , jnu = " + Workarounds.getOriginalProperty("sun.jnu.encoding") + " , stderr = " + Workarounds.getOriginalProperty("sun.stderr.encoding") + " , stdout = " + Workarounds.getOriginalProperty("sun.stdout.encoding"));
             logEx();
             final StringBuilder stringBuilder = new StringBuilder(4096);

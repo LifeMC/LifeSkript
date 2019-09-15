@@ -49,8 +49,8 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     private static final Noun m_day = new Noun("time.day");
     static final Noun[] names = {m_tick, m_second, m_minute, m_hour, m_day};
     @SuppressWarnings("unchecked")
-    static final NonNullPair<Noun, Long>[] simpleValues = new NonNullPair[]{new NonNullPair<>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<>(m_hour, 1000L * 60 * 60), new NonNullPair<>(m_minute, 1000L * 60), new NonNullPair<>(m_second, 1000L)
-    };
+    static final NonNullPair<Noun, Long>[] simpleValues = CollectionUtils.array(new NonNullPair<>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<>(m_hour, 1000L * 60 * 60), new NonNullPair<>(m_minute, 1000L * 60), new NonNullPair<>(m_second, 1000L)
+    );
 
     static {
         Language.addListener(() -> {
@@ -82,8 +82,6 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
         if (s.isEmpty())
             return null;
         long t = 0;
-        boolean minecraftTime = false;
-        boolean isMinecraftTimeSet = false;
         if (s.matches("^\\d+:\\d\\d(:\\d\\d)?(\\.\\d{1,4})?$")) { // MM:SS[.ms] or HH:MM:SS[.ms]
             final String[] ss = s.split("[:.]");
             final long[] times = {1000L * 60L * 60L, 1000L * 60L, 1000L, 1L}; // h, m, s, ms
@@ -94,6 +92,8 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
             }
         } else {
             final String[] subs = s.toLowerCase(Locale.ENGLISH).split("\\s+");
+            boolean minecraftTime = false;
+            boolean isMinecraftTimeSet = false;
             for (int i = 0; i < subs.length; i++) {
                 String sub = subs[i];
 

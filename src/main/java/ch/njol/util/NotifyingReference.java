@@ -49,16 +49,20 @@ public final class NotifyingReference<V> {
     }
 
     @Nullable
-    public synchronized V get() {
-        return this.value;
+    public final V get() {
+        synchronized (this) {
+            return this.value;
+        }
     }
 
-    public synchronized void set(@Nullable final V newValue) {
-        this.value = newValue;
-        if (this.notifyAll) {
-            notifyAll();
-        } else {
-            notify();
+    public final void set(@Nullable final V newValue) {
+        synchronized (this) {
+            this.value = newValue;
+            if (this.notifyAll) {
+                notifyAll();
+            } else {
+                notify();
+            }
         }
     }
 }

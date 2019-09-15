@@ -776,6 +776,7 @@ public final class Classes {
     public static final Object deserialize(final ClassInfo<?> type, final InputStream value) {
         if (Skript.testing()) {
             final Serializer<?> s;
+            //noinspection AssertWithSideEffects
             assert (s = type.getSerializer()) != null && (!s.mustSyncDeserialization() || Bukkit.isPrimaryThread()) : type + "; " + s + "; " + Bukkit.isPrimaryThread();
         }
         BufferedInputStream buf = null;

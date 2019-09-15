@@ -47,23 +47,31 @@ public final class EnumerationIterable<T> implements Iterable<T> {
         final Enumeration<? extends T> e = this.e;
         if (e == null)
             return EmptyIterator.get();
-        return new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return e.hasMoreElements();
-            }
+        return new EnumerationIterator<>(e);
+    }
 
-            @Override
-            @Nullable
-            public T next() throws NoSuchElementException {
-                return e.nextElement();
-            }
+    private static final class EnumerationIterator<T> implements Iterator<T> {
+        private final Enumeration<? extends T> enumeration;
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        EnumerationIterator(final Enumeration<? extends T> enumeration) {
+            this.enumeration = enumeration;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return enumeration.hasMoreElements();
+        }
+
+        @Override
+        @Nullable
+        public final T next() throws NoSuchElementException {
+            return enumeration.nextElement();
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

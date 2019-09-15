@@ -36,17 +36,11 @@ public final class ReversedListIterator<T> implements ListIterator<T> {
     private final ListIterator<T> iter;
 
     public ReversedListIterator(final List<T> list) {
-        final ListIterator<T> iter = list.listIterator(list.size());
-        if (iter == null)
-            throw new IllegalArgumentException("" + list);
-        this.iter = iter;
+        this.iter = list.listIterator(list.size());
     }
 
     public ReversedListIterator(final List<T> list, final int index) {
-        final ListIterator<T> iter = list.listIterator(list.size() - index);
-        if (iter == null)
-            throw new IllegalArgumentException("" + list);
-        this.iter = iter;
+        this.iter = list.listIterator(list.size() - index);
     }
 
     public ReversedListIterator(final ListIterator<T> iter) {

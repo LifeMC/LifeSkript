@@ -71,13 +71,13 @@ public enum Color implements YggdrasilSerializable {
             final boolean english = byEnglishName.isEmpty();
             byName.clear();
             for (final Color c : values()) {
-                final String[] names = Language.getList(LANGUAGE_NODE + "." + c.name() + ".names");
+                final String[] names = Language.getList(LANGUAGE_NODE + '.' + c.name() + ".names");
                 for (final String name : names) {
                     byName.put(name.toLowerCase(Locale.ENGLISH), c);
                     if (english)
                         byEnglishName.put(name.toLowerCase(Locale.ENGLISH), c);
                 }
-                c.adjective = new Adjective(LANGUAGE_NODE + "." + c.name() + ".adjective");
+                c.adjective = new Adjective(LANGUAGE_NODE + '.' + c.name() + ".adjective");
             }
         });
     }
@@ -181,7 +181,7 @@ public enum Color implements YggdrasilSerializable {
     @Override
     public String toString() {
         final Adjective a = adjective;
-        return a == null ? "" + name() : a.toString(-1, 0);
+        return a == null ? name() : a.toString(-1, 0);
     }
 
     public final org.bukkit.Color getBukkitColor() {

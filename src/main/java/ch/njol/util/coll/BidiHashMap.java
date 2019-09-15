@@ -155,7 +155,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public BidiHashMap<T1, T2> clone() {
-        return new BidiHashMap<>(this);
+        return new BidiHashMap<T1, T2>(this);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
      */
     @SuppressWarnings({"null", "unused"})
     @Override
-    public boolean equals(@Nullable final Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (!super.equals(obj))

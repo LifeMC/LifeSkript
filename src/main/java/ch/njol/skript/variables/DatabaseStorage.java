@@ -247,8 +247,8 @@ public final class DatabaseStorage extends VariablesStorage {
 
         // start committing thread. Its first execution will also commit the first batch of changed variables.
         Skript.newThread(() -> {
-            long lastCommit;
             while (!closed) {
+                long lastCommit;
                 synchronized (db) {
                     final Database db = DatabaseStorage.this.db.get();
                     try {
@@ -420,9 +420,9 @@ public final class DatabaseStorage extends VariablesStorage {
                     deleteQuery.setString(1, name);
                     deleteQuery.executeUpdate();
                 } else {
-                    int i = 1;
                     final PreparedStatement writeQuery = this.writeQuery;
                     assert writeQuery != null;
+                    int i = 1;
                     writeQuery.setString(i++, name);
                     writeQuery.setString(i++, type);
                     writeQuery.setBytes(i++, value); // SQLite doesn't support setBlob
@@ -589,53 +589,7 @@ public final class DatabaseStorage extends VariablesStorage {
     private void oldLoadVariables(final ResultSet r, final boolean hadNewTable) throws SQLException {
 //		synchronized (oldSyncDeserializing) {
 
-        final VariablesStorage temp = new VariablesStorage(databaseName + " old variables table") {
-            @Override
-            protected boolean save(final String name, @Nullable final String type, @Nullable final byte[] value) {
-                assert type == null : name + "; " + type;
-                return true;
-            }
-
-            @Override
-            boolean accept(@Nullable final String var) {
-                assert false;
-                return false;
-            }
-
-            @Override
-            protected boolean requiresFile() {
-                assert false;
-                return false;
-            }
-
-            @Override
-            protected boolean load_i(final SectionNode n) {
-                assert false;
-                return false;
-            }
-
-            @Override
-            protected File getFile(final String file) {
-                assert false;
-                return new File(file);
-            }
-
-            @Override
-            protected void disconnect() {
-                assert false;
-            }
-
-            @Override
-            protected boolean connect() {
-                assert false;
-                return false;
-            }
-
-            @Override
-            protected void allLoaded() {
-                assert false;
-            }
-        };
+        final VariablesStorage temp = new OldVariablesStorage(databaseName);
 
         @SuppressWarnings("null") final SQLException e = Task.callSync(() -> {
             try {
@@ -768,4 +722,55 @@ public final class DatabaseStorage extends VariablesStorage {
         protected abstract Object initialise(DatabaseStorage s, SectionNode config);
     }
 
+    private static final class OldVariablesStorage extends VariablesStorage {
+        OldVariablesStorage(final String databaseName) {
+            super(databaseName + " old variables table");
+        }
+
+        @Override
+        protected final boolean save(final String name, @Nullable final String type, @Nullable final byte[] value) {
+            assert type == null : name + "; " + type;
+            return true;
+        }
+
+        @Override
+        final boolean accept(@Nullable final String var) {
+            assert false;
+            return false;
+        }
+
+        @Override
+        protected final boolean requiresFile() {
+            assert false;
+            return false;
+        }
+
+        @Override
+        protected final boolean load_i(final SectionNode n) {
+            assert false;
+            return false;
+        }
+
+        @Override
+        protected final File getFile(final String file) {
+            assert false;
+            return new File(file);
+        }
+
+        @Override
+        protected final void disconnect() {
+            assert false;
+        }
+
+        @Override
+        protected final boolean connect() {
+            assert false;
+            return false;
+        }
+
+        @Override
+        protected final void allLoaded() {
+            assert false;
+        }
+    }
 }

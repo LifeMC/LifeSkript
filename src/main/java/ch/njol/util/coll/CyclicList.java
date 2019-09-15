@@ -51,10 +51,7 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     public CyclicList(final Collection<E> c) {
-        final Object[] items = c.toArray();
-        if (items == null)
-            throw new IllegalArgumentException("" + c);
-        this.items = items;
+        this.items = c.toArray();
     }
 
     private int toInternalIndex(final int index) {
@@ -179,7 +176,7 @@ public final class CyclicList<E> extends AbstractList<E> {
     @NotNull
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T[] toArray(final @Nullable T[] array) {
+    public final <T> T[] toArray(@Nullable final T[] array) {
         if (array == null)
             return (T[]) toArray();
         if (array.length < items.length)

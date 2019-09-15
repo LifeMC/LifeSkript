@@ -71,7 +71,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
             types.clear();
             final List<String> patterns = new ArrayList<>(ts.length);
             for (int i = 0; i < ts.length; i++) {
-                final String node = LANGUAGE_NODE + "." + ts[i].name();
+                final String node = LANGUAGE_NODE + '.' + ts[i].name();
                 final String pattern = Language.get_(node + ".pattern");
                 if (pattern == null) {
                     if (Skript.testing())

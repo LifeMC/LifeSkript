@@ -58,7 +58,7 @@ public final class Timeperiod implements YggdrasilSerializable {
      */
     @Override
     public String toString() {
-        return "" + Time.toString(start) + (start == end ? "" : "-" + Time.toString(end));
+        return Time.toString(start) + (start == end ? "" : '-' + Time.toString(end));
     }
 
     @Override

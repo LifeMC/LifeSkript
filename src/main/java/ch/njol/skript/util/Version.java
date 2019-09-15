@@ -88,7 +88,7 @@ public final class Version implements Serializable, Comparable<Version> {
 
         if (!m.matches()) {
             if (!failSafe)
-                throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+                throw new IllegalArgumentException('\'' + version + "' is not a valid version string");
             // Remove any non-digit character to get a "meaningful" version string.
             final StringBuilder stringBuilder = new StringBuilder(4096);
             final StringBuilder postfixBuilder = new StringBuilder(4096);
@@ -111,7 +111,7 @@ public final class Version implements Serializable, Comparable<Version> {
 
             version = stringBuilder.toString().trim();
 
-            if (version.endsWith("."))
+            if (!version.isEmpty() && version.charAt(version.length() - 1) == '.')
                 version = version.substring(0, version.length() - 1);
 
             if (version.length() == 1)
@@ -121,7 +121,7 @@ public final class Version implements Serializable, Comparable<Version> {
 
             // If it still fails.. Then probably it's a bad argument.
             if (!m.matches())
-                throw new IllegalArgumentException("'" + version + "' is not a valid version string");
+                throw new IllegalArgumentException('\'' + version + "' is not a valid version string");
 
             postfixStr = postfixBuilder.toString().trim();
         }
@@ -213,6 +213,6 @@ public final class Version implements Serializable, Comparable<Version> {
     @Override
     public String toString() {
         final String pf = postfix;
-        return version[0] + "." + version[1] + (version[2] == 0 ? "" : "." + version[2]) + (pf == null ? "" : pf.startsWith("-") ? pf : " " + pf);
+        return version[0] + "." + version[1] + (version[2] == 0 ? "" : "." + version[2]) + (pf == null ? "" : !pf.isEmpty() && pf.charAt(0) == '-' ? pf : ' ' + pf);
     }
 }

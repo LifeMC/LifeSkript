@@ -264,10 +264,10 @@ public final class Direction implements YggdrasilRobustSerializable {
         if (d == 0)
             return;
         if (prependAnd)
-            b.append(" ").append(GeneralWords.and).append(" ");
+            b.append(' ').append(GeneralWords.and).append(' ');
         if (d != 1 && d != -1) {
             b.append(m_meter.withAmount(Math.abs(d)));
-            b.append(" ");
+            b.append(' ');
         }
         b.append(d > 0 ? direction : oppositeDirection);
     }
@@ -354,7 +354,7 @@ public final class Direction implements YggdrasilRobustSerializable {
 
             @Override
             public String toString(final @Nullable Event e, final boolean debug) {
-                return dirs.toString(e, debug) + " " + locs.toString(e, debug);
+                return dirs.toString(e, debug) + ' ' + locs.toString(e, debug);
             }
 
             @Override
@@ -469,18 +469,20 @@ public final class Direction implements YggdrasilRobustSerializable {
             set("yawOrY", mod[1]);
             set("lengthOrZ", mod[1]);
             return true;
-        } else if ("pitch".equals(field.getID())) {
+        }
+        if ("pitch".equals(field.getID())) {
             set("pitchOrX", field.getPrimitive(double.class));
             return true;
-        } else if ("yaw".equals(field.getID())) {
+        }
+        if ("yaw".equals(field.getID())) {
             set("yawOrY", field.getPrimitive(double.class));
             return true;
-        } else if ("length".equals(field.getID())) {
+        }
+        if ("length".equals(field.getID())) {
             set("lengthOrZ", field.getPrimitive(double.class));
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override

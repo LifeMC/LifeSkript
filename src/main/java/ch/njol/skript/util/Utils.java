@@ -216,9 +216,11 @@ public final class Utils {
     public static final Pair<String, Integer> getAmount(final String s) {
         if (s.matches("\\d+ of .+")) {
             return new Pair<>(s.split(" ", 3)[2], Utils.parseInt(s.split(" ", 2)[0]));
-        } else if (s.matches("\\d+ .+")) {
+        }
+        if (s.matches("\\d+ .+")) {
             return new Pair<>(s.split(" ", 2)[1], Utils.parseInt(s.split(" ", 2)[0]));
-        } else if (s.matches("an? .+")) {
+        }
+        if (s.matches("an? .+")) {
             return new Pair<>(s.split(" ", 2)[1], 1);
         }
         return new Pair<>(s, -1);
@@ -255,7 +257,7 @@ public final class Utils {
                 return s.substring(0, s.length() - p[0].length()) + p[1];
         }
         assert false;
-        return s + "s";
+        return s + 's';
     }
 
     /**
@@ -436,7 +438,7 @@ public final class Utils {
      */
     public static final int random(final int start, final int end) {
         if (end <= start)
-            throw new IllegalArgumentException("end (" + end + ") must be > start (" + start + ")");
+            throw new IllegalArgumentException("end (" + end + ") must be > start (" + start + ')');
         return start + random.nextInt(end - start);
     }
 

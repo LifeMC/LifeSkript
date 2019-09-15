@@ -45,17 +45,7 @@ public final class BlockLineIterator extends StoppableIterator<Block> {
     @SuppressWarnings("null")
     public BlockLineIterator(final Block start, final Block end) throws IllegalStateException {
         super(new BlockIterator(start.getWorld(), fitInWorld(start.getLocation().add(0.5, 0.5, 0.5), end.getLocation().subtract(start.getLocation()).toVector()), end.equals(start) ? new Vector(1, 0, 0) : end.getLocation().subtract(start.getLocation()).toVector(), 0, 0), // should prevent an error if start = end
-                new NullableChecker<Block>() {
-                    private final double overshotSq = Math.pow(start.getLocation().distance(end.getLocation()) + 2, 2);
-
-                    @Override
-                    public boolean check(final @Nullable Block b) {
-                        assert b != null;
-                        if (b.getLocation().distanceSquared(start.getLocation()) > overshotSq)
-                            throw new IllegalStateException("BlockLineIterator missed the end block!");
-                        return b.equals(end);
-                    }
-                }, true);
+                new MissingEndBlockChecker(start, end), true);
     }
 
     /**
@@ -65,14 +55,7 @@ public final class BlockLineIterator extends StoppableIterator<Block> {
      * @throws IllegalStateException randomly (Bukkit bug)
      */
     public BlockLineIterator(final Location start, final Vector dir, final double dist) throws IllegalStateException {
-        super(new BlockIterator(start.getWorld(), fitInWorld(start, dir), dir, 0, 0), new NullableChecker<Block>() {
-            private final double distSq = dist * dist;
-
-            @Override
-            public boolean check(final @Nullable Block b) {
-                return b != null && b.getLocation().add(0.5, 0.5, 0.5).distanceSquared(start) >= distSq;
-            }
-        }, false);
+        super(new BlockIterator(start.getWorld(), fitInWorld(start, dir), dir, 0, 0), new BlockNullableChecker(dist, start), false);
     }
 
     /**
@@ -96,5 +79,41 @@ public final class BlockLineIterator extends StoppableIterator<Block> {
         final double dy = y - l.getY();
         final double n = dy / dir.getY();
         return l.toVector().add(dir.clone().multiply(n));
+    }
+
+    private static final class MissingEndBlockChecker implements NullableChecker<Block> {
+        private final double overshotSq;
+
+        private final Block start;
+        private final Block end;
+
+        MissingEndBlockChecker(final Block start, final Block end) {
+            this.start = start;
+            this.end = end;
+            overshotSq = Math.pow(start.getLocation().distance(end.getLocation()) + 2, 2);
+        }
+
+        @Override
+        public final boolean check(@Nullable final Block b) {
+            assert b != null;
+            if (b.getLocation().distanceSquared(start.getLocation()) > overshotSq)
+                throw new IllegalStateException("BlockLineIterator missed the end block!");
+            return b.equals(end);
+        }
+    }
+
+    private static final class BlockNullableChecker implements NullableChecker<Block> {
+        private final Location start;
+        private final double distSq;
+
+        public BlockNullableChecker(final double dist, final Location start) {
+            this.start = start;
+            distSq = dist * dist;
+        }
+
+        @Override
+        public final boolean check(@Nullable final Block b) {
+            return b != null && b.getLocation().add(0.5, 0.5, 0.5).distanceSquared(start) >= distSq;
+        }
     }
 }
