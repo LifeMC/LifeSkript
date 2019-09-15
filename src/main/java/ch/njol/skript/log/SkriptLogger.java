@@ -29,7 +29,10 @@ import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,10 +42,6 @@ import static ch.njol.skript.Skript.SKRIPT_PREFIX_CONSOLE;
  * @author Peter Güttinger
  */
 public final class SkriptLogger {
-
-    private SkriptLogger() {
-        throw new UnsupportedOperationException("Static class");
-    }
 
     @SuppressWarnings("null")
     public static final Level SEVERE = Level.SEVERE;
@@ -59,6 +58,10 @@ public final class SkriptLogger {
     private static volatile boolean suppressing;
     private static volatile boolean suppressWarnings;
     private static volatile boolean suppressErrors;
+
+    private SkriptLogger() {
+        throw new UnsupportedOperationException("Static class");
+    }
 
     /**
      * Shorthand for <tt>{@link #startLogHandler(LogHandler) startLogHandler}(new {@link RetainingLogHandler}());</tt>
@@ -221,20 +224,16 @@ public final class SkriptLogger {
         if (Skript.testing() && node != null && node.debug())
             System.out.print("---> " + entry.level + '/' + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
         synchronized (handlers) {
-            final Iterator<LogHandler> iterator = handlers.iterator();
-            synchronized (iterator) {
-                while (iterator.hasNext()) {
-                    final LogHandler h = iterator.next();
-                    final LogResult r = h.log(entry);
+            for (final LogHandler h : handlers) {
+                final LogResult r = h.log(entry);
 
-                    switch (r) {
-                        case CACHED:
-                            return;
-                        case DO_NOT_LOG:
-                            entry.discarded("denied by " + h);
-                            return;
-                        case LOG:
-                    }
+                switch (r) {
+                    case CACHED:
+                        return;
+                    case DO_NOT_LOG:
+                        entry.discarded("denied by " + h);
+                        return;
+                    case LOG:
                 }
             }
         }
