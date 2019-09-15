@@ -24,6 +24,7 @@ package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.util.EmptyStacktraceException;
+import ch.njol.util.Math2;
 import ch.njol.util.WebUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -170,6 +171,14 @@ public final class Workarounds {
         // LifeSkript
         oldValues.put("using.lifeskript", System.getProperty("using.lifeskript"));
         System.setProperty("using.lifeskript", "true");
+
+        // Kotlin
+        oldValues.put("kotlinx.coroutines.debug", System.getProperty("kotlinx.coroutines.debug"));
+        System.setProperty("kotlinx.coroutines.debug", "off");
+
+        // Netty
+        oldValues.put("io.netty.eventLoopThreads", System.getProperty("io.netty.eventLoopThreads"));
+        System.setProperty("io.netty.eventLoopThreads", String.valueOf(Math2.min(4, Runtime.getRuntime().availableProcessors())));
 
         // Change Some Default Settings
         URLConnection.setDefaultAllowUserInteraction(false);
