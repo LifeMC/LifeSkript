@@ -61,7 +61,7 @@ import java.util.regex.Pattern;
  */
 public final class VariableString implements Expression<String> {
 
-    public static final Map<String, Pattern> variableNames = new HashMap<>();
+    public static final Map<String, Pattern> variableNames = new HashMap<>(100);
     private static final Pattern SINGLE_QUOTE_PATTERN = Pattern.compile("\"", Pattern.LITERAL);
     private final String orig;
 
@@ -106,7 +106,7 @@ public final class VariableString implements Expression<String> {
      * @return Whatever the string is quoted correctly
      */
     public static final boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
-        if (withQuotes && (!s.startsWith("\"") || !s.endsWith("\"")))
+        if (withQuotes && (!(!s.isEmpty() && s.charAt(0) == '\"') || !(!s.isEmpty() && s.charAt(s.length() - 1) == '\"')))
             return false;
         boolean quote = false;
         for (int i = withQuotes ? 1 : 0; i < (withQuotes ? s.length() - 1 : s.length()); i++) {
@@ -195,12 +195,12 @@ public final class VariableString implements Expression<String> {
                             }
                             if (!string.isEmpty() && string.get(string.size() - 1) instanceof String) {
                                 final String last = (String) string.get(string.size() - 1);
-                                if (c2 <= s.length() - 2 && s.charAt(c2 + 1) == '>' && last.endsWith("<")) {
+                                if (c2 <= s.length() - 2 && s.charAt(c2 + 1) == '>' && !last.isEmpty() && last.charAt(last.length() - 1) == '<') {
                                     i.toChatStyle = true;
                                     string.set(string.size() - 1, last.substring(0, last.length() - 1));
                                     c2++; // remove the '>'
                                 } else {
-                                    final int l = last.lastIndexOf(' ', last.length() - (last.endsWith(" ") ? 2 : 1));
+                                    final int l = last.lastIndexOf(' ', last.length() - (!last.isEmpty() && last.charAt(last.length() - 1) == ' ' ? 2 : 1));
                                     final String lastWord = last.substring(l + 1).trim();
                                     if (Noun.isLocalIndefiniteArticle(lastWord))
                                         i.flags |= Language.F_INDEFINITE_ARTICLE;
@@ -249,13 +249,13 @@ public final class VariableString implements Expression<String> {
     }
 
     @SuppressWarnings("null")
-    private static final void checkVariableConflicts(final String name, final StringMode mode, final @Nullable Iterable<Object> string) {
+    private static final void checkVariableConflicts(final String name, final StringMode mode, @Nullable final Iterable<Object> string) {
         if (mode != StringMode.VARIABLE_NAME || variableNames.containsKey(name))
             return;
-        if (name.startsWith("%")) {// inside the if to only print this message once per variable
+        if (!name.isEmpty() && name.charAt(0) == '%') {// inside the if to only print this message once per variable
             final Config script = ScriptLoader.currentScript;
             if (script != null && !SkriptConfig.disableStartingWithExpressionWarnings.value()) {
-                Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "::" + name + "}");
+                Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "::" + name + '}');
             }
         }
 
@@ -282,9 +282,10 @@ public final class VariableString implements Expression<String> {
             pattern = Pattern.compile(Pattern.quote(name));
         }
         if (!SkriptConfig.disableVariableConflictWarnings.value()) {
+            final Matcher m = pattern.matcher("");
             for (final Entry<String, Pattern> e : variableNames.entrySet()) {
                 final String other = e.getKey();
-                if (e.getValue().matcher(name).matches() || pattern.matcher(other).matches()) {
+                if (e.getValue().matcher(name).matches() || m.reset(other).matches()) {
                     if (name.contains("::*") || other.contains("::*"))
                         continue;
                     Skript.warning("Possible name conflict of variables {" + name + "} and {" + other + "} (there might be more conflicts).");
@@ -339,7 +340,7 @@ public final class VariableString implements Expression<String> {
     public static final VariableString[] makeStringsFromQuoted(final List<String> args) {
         final VariableString[] strings = new VariableString[args.size()];
         for (int i = 0; i < args.size(); i++) {
-            assert args.get(i).startsWith("\"") && args.get(i).endsWith("\"");
+            assert !args.get(i).isEmpty() && args.get(i).charAt(0) == '\"' && !args.get(i).isEmpty() && args.get(i).charAt(args.get(i).length() - 1) == '\"';
             final VariableString vs = newInstance(args.get(i).substring(1, args.get(i).length() - 1));
             if (vs == null)
                 return null;
@@ -422,7 +423,7 @@ public final class VariableString implements Expression<String> {
      * Use {@link #toString(Event)} to get the actual string
      */
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (isSimple) {
             assert simple != null;
             return '"' + simple + '"';
@@ -541,7 +542,7 @@ public final class VariableString implements Expression<String> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         throw new UnsupportedOperationException();
     }
 

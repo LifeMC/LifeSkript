@@ -55,7 +55,7 @@ import java.util.WeakHashMap;
 @Since("1.4")
 public final class Delay extends Effect {
     @SuppressWarnings("null")
-    public static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>());
+    public static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>(100));
     public static boolean delayingDisabled;
 
     static {

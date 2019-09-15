@@ -44,6 +44,7 @@ import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.EmptyArrays;
+import ch.njol.skript.util.PatternCache;
 import ch.njol.skript.util.Time;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
@@ -83,20 +84,21 @@ public final class SkriptParser {
     @SuppressWarnings("null")
     public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(?:and|n?or)\\s+|\\s*,\\s*");
     public static final Matcher listSplitMatcher = listSplitPattern.matcher("");
-    @SuppressWarnings("null")
-    private static final Pattern varPattern = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}");
-    private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
-    private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
-    @SuppressWarnings("null")
-    private static final Pattern functionCallPattern = Pattern.compile("(" + Functions.functionNamePattern + ")\\((.*?)\\)");
-    private static final Message m_quotes_error = new Message("skript.quotes error");
-    private static final Message m_brackets_error = new Message("skript.brackets error");
-    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>();
-    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
     @SuppressWarnings("rawtypes")
     public static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
     @SuppressWarnings("rawtypes")
     public static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
+    @SuppressWarnings("null")
+    private static final Pattern varPattern = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}");
+    private static final Matcher varPatternMatcher = varPattern.matcher("");
+    private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
+    private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
+    @SuppressWarnings("null")
+    private static final Pattern functionCallPattern = Pattern.compile('(' + Functions.functionNamePattern + ")\\((.*?)\\)");
+    private static final Message m_quotes_error = new Message("skript.quotes error");
+    private static final Message m_brackets_error = new Message("skript.brackets error");
+    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(100);
+    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
     public final ParseContext context;
     final String expr;
     private final int flags;
@@ -153,7 +155,7 @@ public final class SkriptParser {
      */
     @SuppressWarnings("null")
     @Nullable
-    public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, final @Nullable String defaultError) {
+    public static final <T extends SyntaxElement> T parse(String expr, final Iterator<? extends SyntaxElementInfo<T>> source, @Nullable final String defaultError) {
         expr = expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
@@ -175,7 +177,7 @@ public final class SkriptParser {
 
     @SuppressWarnings("null")
     @Nullable
-    public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, final @Nullable String defaultError) {
+    public static final <T extends SyntaxElement> T parseStatic(String expr, final Iterator<? extends SyntaxElementInfo<? extends T>> source, @Nullable final String defaultError) {
         expr = expr.trim();
         if (expr.isEmpty()) {
             Skript.error(defaultError);
@@ -201,7 +203,7 @@ public final class SkriptParser {
     @SuppressWarnings("null")
     @Nullable
     private static final <T> Variable<T> parseVariable(final String expr, final Class<? extends T>[] returnTypes) {
-        if (varPattern.matcher(expr).matches())
+        if (varPatternMatcher.reset(expr).matches())
             return Variable.newInstance(expr.substring(expr.indexOf('{') + 1, expr.lastIndexOf('}')), returnTypes);
         return null;
     }
@@ -619,7 +621,7 @@ public final class SkriptParser {
                     if (j == -1)
                         return error("Missing closing regex bracket '>'. Escape the '<' if you want to match a literal bracket: '\\<'");
                     try {
-                        Pattern.compile(pattern.substring(i + 1, j));
+                        PatternCache.get(pattern.substring(i + 1, j));
                     } catch (final PatternSyntaxException e) {
                         return error("Invalid regular expression '" + pattern.substring(i + 1, j) + "': " + e.getLocalizedMessage());
                     }
@@ -728,7 +730,7 @@ public final class SkriptParser {
      * <p>
      * Use this method instead of catching exceptions, it is faster.
      */
-    public static final boolean isInteger(final @Nullable CharSequence str) {
+    public static final boolean isInteger(@Nullable final CharSequence str) {
         if (str == null) {
             return false;
         }
@@ -757,7 +759,7 @@ public final class SkriptParser {
      * <p>
      * Use this method instead of catching exceptions, it is faster.
      */
-    public static final boolean isIntegerOrDouble(final @Nullable CharSequence str) {
+    public static final boolean isIntegerOrDouble(@Nullable final CharSequence str) {
         if (str == null) {
             return false;
         }
@@ -1566,7 +1568,7 @@ public final class SkriptParser {
      */
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
-    public final <T> FunctionReference<T> parseFunction(final @Nullable Class<? extends T>... types) {
+    public final <T> FunctionReference<T> parseFunction(@Nullable final Class<? extends T>... types) {
         if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
             return null;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
@@ -1827,7 +1829,7 @@ public final class SkriptParser {
                         throw new MalformedPatternException(pattern, "Missing closing regex bracket '>'");
                     final Pattern p;
                     try {
-                        p = Pattern.compile(pattern.substring(j + 1, end));
+                        p = PatternCache.get(pattern.substring(j + 1, end));
                     } catch (final PatternSyntaxException e) {
                         throw new MalformedPatternException(pattern, "Invalid regex <" + pattern.substring(j + 1, end) + '>', e);
                     }

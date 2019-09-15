@@ -70,7 +70,7 @@ public enum StructureType {
         if (parseMap.isEmpty()) {
             for (final StructureType t : values()) {
                 final String pattern = Language.get("tree types." + t.name() + ".pattern");
-                parseMap.put(Pattern.compile(pattern, Pattern.CASE_INSENSITIVE), t);
+                parseMap.put(PatternCache.get(pattern, Pattern.CASE_INSENSITIVE), t);
             }
         }
         s = s.toLowerCase(Locale.ENGLISH);
