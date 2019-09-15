@@ -113,7 +113,7 @@ final class VariablesMap {
      * @param value The variable's value. Use <tt>null</tt> to delete the variable.
      */
     @SuppressWarnings("unchecked")
-    void setVariable(final String name, final @Nullable Object value) {
+    void setVariable(final String name, @Nullable final Object value) {
         if (!(!name.isEmpty() && name.charAt(name.length() - 1) == '*')) {
             if (value == null)
                 hashMap.remove(name);

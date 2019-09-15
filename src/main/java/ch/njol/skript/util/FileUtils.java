@@ -23,13 +23,15 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.classes.Converter;
+import org.apache.commons.lang.time.FastDateFormat;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
@@ -39,18 +41,17 @@ import java.util.Locale;
  */
 public final class FileUtils {
 
-    private static final SimpleDateFormat backupFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ENGLISH);
+    private static final FastDateFormat backupFormat = FastDateFormat.getInstance("yyyy-MM-dd_HH-mm-ss", Locale.ENGLISH);
 
     private FileUtils() {
+		throw new UnsupportedOperationException("Static class");
     }
 
     /**
      * @return The current date and time
      */
     public static final String getBackupSuffix() {
-        synchronized (backupFormat) {
-            return "" + backupFormat.format(System.currentTimeMillis());
-        }
+        return backupFormat.format(System.currentTimeMillis());
     }
 
     /**
@@ -79,14 +80,14 @@ public final class FileUtils {
         if (!replace && to.exists())
             throw new IOException("Can't rename " + from.getName() + " to " + to.getName() + ": The target file already exists");
         if (replace)
-            java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+            Files.move(from.toPath(), to.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
         else
-            java.nio.file.Files.move(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+            Files.move(from.toPath(), to.toPath(), StandardCopyOption.ATOMIC_MOVE);
         return to;
     }
 
     public static final void copy(final File from, final File to) throws IOException {
-        java.nio.file.Files.copy(from.toPath(), to.toPath(), java.nio.file.StandardCopyOption.COPY_ATTRIBUTES);
+        Files.copy(from.toPath(), to.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
     }
 
     /**

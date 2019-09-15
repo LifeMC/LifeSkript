@@ -20,6 +20,7 @@
 # Bukkit, Jansi and Timings - Bukkit is required, Jansi and Timings are optional.
 -libraryjars '<user.home>/.m2/repository/org/bukkit/bukkit/1.8.8-R0.1-SNAPSHOT/bukkit-1.8.8-R0.1-SNAPSHOT.jar'
 -libraryjars '<user.home>/.m2/repository/com/google/guava/guava/17.0/guava-17.0.jar'
+-libraryjars '<user.home>/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar'
 -libraryjars '<user.home>/.m2/repository/org/fusesource/jansi/jansi/1.18/jansi-1.18.jar'
 -libraryjars '<user.home>/.m2/repository/co/aikar/timings/1.8.8/timings-1.8.8.jar'
 

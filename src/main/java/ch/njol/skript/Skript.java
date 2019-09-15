@@ -88,6 +88,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
 import java.time.Instant;
@@ -2308,7 +2309,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 tempServerJarFile.setExecutable(true, false);
 
-                                try (final java.nio.file.FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
+                                try (final FileSystem jarFileSystem = FileSystems.newFileSystem(new URI("jar", tempServerJarFile.toURI().toString(), null), env)) {
                                     final Path tempFile = temp.toPath();
                                     final Path fileInJar = jarFileSystem.getPath("/log4j2.xml");
 
@@ -2330,7 +2331,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     // Hope all classes are loaded in the VM and not cause fatal errors
                                     try {
                                         if (debug)
-                                            System.out.println("Patching the server JAR file \"" + serverJarFile.getName() + "\"");
+                                            System.out.println("Patching the server JAR file \"" + serverJarFile.getName() + '"');
                                         try {
                                             FileUtils.backup(serverJarFile);
                                         } catch (final Throwable ignored) {
@@ -2357,7 +2358,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         Workarounds.exceptionsDisabled = false;
 
                                         if (debug)
-                                            System.out.println("Patched the server JAR file \"" + serverJarFile.getName() + "\"");
+                                            System.out.println("Patched the server JAR file \"" + serverJarFile.getName() + '"');
 
                                         // Remove the temporary server JAR file
 
@@ -2366,7 +2367,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     } catch (final Throwable tw) {
                                         tw.printStackTrace();
                                         if (debug)
-                                            System.out.println("Failed to patch the server JAR file \"" + serverJarFile.getName() + "\"");
+                                            System.out.println("Failed to patch the server JAR file \"" + serverJarFile.getName() + '"');
                                     }
                                 }, "Skript server jar patcher thread");
 
@@ -2459,7 +2460,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         if (e.isDirectory())
                             continue;
                         File saveTo = null;
-                        if (generateExamples && (e.getName().startsWith(SCRIPTSFOLDER + "/") || e.getName().startsWith(SCRIPTSFOLDER + "\\"))) {
+                        if (generateExamples && (e.getName().startsWith(SCRIPTSFOLDER + '/') || e.getName().startsWith(SCRIPTSFOLDER + '\\'))) {
                             final String fileName = e.getName().substring(e.getName().lastIndexOf('/') + 1);
                             final File file = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
                             if (!file.exists())
@@ -2502,8 +2503,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 command.setTabCompleter((sender, cmd, alias, args) -> {
                     if (sender instanceof ConsoleCommandSender || sender.hasPermission("skript.tabComplete") || sender.hasPermission("skript.admin") || sender.hasPermission("skript.*") || sender.isOp()) {
                         if (args.length == 1) {
-                            final List<String> completions = Arrays.asList("reload", "enable", "disable", /*"update",*/ "version", "help");
                             if (alias != null) {
+                                final List<String> completions = Arrays.asList("reload", "enable", "disable", /*"update",*/ "version", "help");
                                 if (completions.size() > 1 && !args[0].isEmpty())
                                     completions.sort((a, b) -> a.startsWith(args[0]) ? -1 : b.startsWith(args[0]) ? 1 : 0);
                                 return completions;
@@ -2526,8 +2527,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
 
                                     return fullCompletions;
-                                } else if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
-                                    final Collection<String> fileNames = new ArrayList<>();
+                                }
+                                if ("enable".equalsIgnoreCase(args[0]) || "disable".equalsIgnoreCase(args[0])) {
                                     final File scriptsFolder = ScriptLoader.getScriptsFolder();
 
                                     if (!scriptsFolder.isDirectory())
@@ -2535,6 +2536,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                     final Iterable<File> files = "enable".equalsIgnoreCase(args[0]) ? Arrays.asList(Objects.requireNonNull(scriptsFolder.listFiles(ScriptLoader.scriptFilter))) : ScriptLoader.getLoadedFiles();
 
+                                    final Collection<String> fileNames = new ArrayList<>();
                                     for (final File scriptFile : files)
                                         fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
 
@@ -2547,7 +2549,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         fullCompletions.sort((a, b) -> a.startsWith(args[1]) ? -1 : b.startsWith(args[1]) ? 1 : 0);
 
                                     return fullCompletions;
-                                } else if (args.length == 2 && "update".equalsIgnoreCase(args[0])) {
+                                }
+                                if (args.length == 2 && "update".equalsIgnoreCase(args[0])) {
                                     final List<String> completions = Arrays.asList("check", "changes", "download");
 
                                     if (completions.size() > 1 && !args[1].isEmpty())
@@ -2806,7 +2809,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                                 final Method getServer = Skript.methodForName(minecraftServer, "getServer", true);
 
-                                assert getServer != null : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
+                                assert getServer != null : nmsPackage + " (nms version: " + mappingVersion + ')' + " (server software: " + Bukkit.getVersion() + ')';
 
                                 final Object serverInstance = getServer.invoke(null);
 
@@ -2816,7 +2819,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (SpikeDetector.shouldStart()) {
                                     if (Bukkit.getPluginManager().isPluginEnabled("ASkyBlock") && !SpikeDetector.alwaysEnabled) {
                                         BukkitLoggerFilter.addFilter(e -> {
-                                            if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play"))
+                                            if (e.getMessage().toLowerCase(Locale.ENGLISH).contains("ready to play".toLowerCase(Locale.ENGLISH)))
                                                 SpikeDetector.doStart(mainThread);
                                             return true;
                                         });
@@ -2841,9 +2844,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 assert false : e;
                             }
                         } else
-                            assert false : nmsPackage + " (nms version: " + mappingVersion + ")" + " (server software: " + Bukkit.getVersion() + ")";
+                            assert false : nmsPackage + " (nms version: " + mappingVersion + ')' + " (server software: " + Bukkit.getVersion() + ')';
                     } else
-                        assert false : nmsPackage + " (nms version: " + mappingVersion + ")";
+                        assert false : nmsPackage + " (nms version: " + mappingVersion + ')';
                 } else {
                     if (Skript.logVeryHigh())
                         Skript.info("Invalid NMS mapping version detected: " + mappingVersion);
@@ -2922,7 +2925,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
 
                     if (isOnePointSevenOrEight && Skript.logHigh()) { // TODO make visible in normal verbosity
-                        final String youAreRunning = "You are running " + getServerPlatform().platformName + " " + minecraftVersion;
+                        final String youAreRunning = "You are running " + getServerPlatform().platformName + ' ' + minecraftVersion;
 
                         // Make sure to add these plugins as soft depend since we are using
                         // is plugin enabled instead of get plugin.
@@ -3054,7 +3057,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
 
                             if (!printed) {
-                                Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript v" + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ")"));
+                                Bukkit.getScheduler().runTask(this, () -> warning("A new version of Skript has been found. Skript v" + latest + " has been released. It is highly recommended to upgrade latest version. (you are using Skript v" + current + ')'));
                                 Bukkit.getScheduler().runTask(this, Skript::printDownloadLink);
 
                                 updateAvailable = true;
@@ -3069,7 +3072,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     } catch (final Throwable tw) {
                         if (!isEnabled())
                             return;
-                        Bukkit.getScheduler().runTask(this, () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ")"));
+                        Bukkit.getScheduler().runTask(this, () -> error("Unable to check updates, make sure you are using the latest version of Skript! (" + tw.getClass().getName() + ": " + tw.getLocalizedMessage() + ')'));
                         if (Skript.logHigh()) {
                             if (!isEnabled())
                                 return;
@@ -3091,7 +3094,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
         } catch (final Throwable tw) {
             if (!Boolean.getBoolean("skript.disableStartupErrors")) {
-                exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when enabling Skript");
+                exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occurred when enabling Skript");
             }
         }
 
@@ -3254,7 +3257,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     // Only log in debug, an interesting
                                     // error occurred because we already skip general errors
                                     if (testing() || debug()) {
-                                        Skript.exception(tw, "Error when cleaning up field \"" + lastField + "\" in class \"" + name + "\"");
+                                        Skript.exception(tw, "Error when cleaning up field \"" + lastField + "\" in class \"" + name + '"');
                                     }
                                 }
                             }
@@ -3277,7 +3280,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
         } catch (final Throwable tw) {
             if (!Boolean.getBoolean("skript.disableShutdownErrors")) {
-                exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occured when disabling Skript");
+                exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occurred when disabling Skript");
             }
         }
     }
