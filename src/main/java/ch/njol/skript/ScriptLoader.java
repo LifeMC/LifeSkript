@@ -87,7 +87,7 @@ public final class ScriptLoader {
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
     private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
-    private static final Collection<String> skipFiles = new ArrayList<>();
+    private static final Map<String, ScriptInfo> skipFiles = new HashMap<>();
     /**
      * must be synchronized
      */
@@ -166,7 +166,8 @@ public final class ScriptLoader {
                 }
                 synchronized (loadedFiles) {
                     // FIXME does not work on first load, but works afterwards with /sk reload all
-                    Skript.info("Loaded " + loadedFiles.size() + " scripts" + " so far...");
+                    if (loadingScripts)
+                        Skript.info("Loaded " + loadedFiles.size() + " scripts" + " so far...");
                 }
             }
             Thread.currentThread().interrupt();
@@ -331,8 +332,11 @@ public final class ScriptLoader {
             assert files != null;
             Arrays.sort(files);
             for (final File f : files) {
-                if (skipFiles.contains(f.getName()))
-                    continue;
+                if (skipFiles.containsKey(f.getName())) {
+                    i.add(skipFiles.get(f.getName()));
+
+					continue;
+				}
                 if (f.isDirectory()) {
                     i.add(loadScripts(f));
                 } else {
@@ -611,9 +615,6 @@ public final class ScriptLoader {
                                         if (Skript.logHigh())
                                             Skript.info("Loading script '" + file.getName() + "' because the script '" + f.getName() + "' requires it");
 
-                                        skipFiles.remove(file.getName()); // Remove to re-add it
-                                        skipFiles.add(file.getName()); // Required to skip this script in iteration
-
                                         // Set to null, method call re-sets it
                                         currentScript = null;
 
@@ -621,7 +622,11 @@ public final class ScriptLoader {
                                         final Map<String, ItemType> aliases = new HashMap<>(currentAliases);
                                         final Map<String, String> options = new HashMap<>(currentOptions);
 
-                                        loadScript(file); // Load the required script before continuing to parse this script
+                                        final ScriptInfo scriptInfo = loadScript(file); // Load the required script before continuing to parse this script
+
+										skipFiles.remove(file.getName()); // Remove to re-add it
+                                        skipFiles.put(file.getName(), scriptInfo); // Required to skip this script in iteration
+
                                         currentScript = config; // Re-set the current script to this script
 
                                         // Re-set the aliases and the options
