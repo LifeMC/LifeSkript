@@ -77,7 +77,7 @@ public final class EventValues {
      * @param excludes Subclasses of the event for which this event value should not be registered for
      */
     @SafeVarargs
-    public static final <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>... excludes) {
+    public static final <T, E extends Event> void registerEventValue(final Class<E> e, final Class<T> c, final Getter<T, E> g, final int time, @Nullable final String excludeErrorMessage, @Nullable final Class<? extends E>... excludes) {
         Skript.checkAcceptRegistrations();
         final List<EventValueInfo<?, ?>> eventValues = getEventValuesList(time);
         for (int i = 0; i < eventValues.size(); i++) {
@@ -223,20 +223,20 @@ public final class EventValues {
         public final Class<E> event;
         public final Class<T> c;
         public final Getter<T, E> getter;
-		/**
-		 * @deprecated use {@link EventValueInfo#excludes} instead
-		 * This was a typo by Njol, not removed for compatibility
-		 */
-		@Deprecated
+        /**
+         * @deprecated use {@link EventValueInfo#excludes} instead
+         * This was a typo by Njol, not removed for compatibility
+         */
+        @Deprecated
         @Nullable
-		@SuppressWarnings("unused")
+        @SuppressWarnings("unused")
         public final Class<? extends E>[] exculdes;
-		@Nullable
-		public final Class<? extends E>[] excludes;
+        @Nullable
+        public final Class<? extends E>[] excludes;
         @Nullable
         public final String excludeErrorMessage;
 
-        public EventValueInfo(final Class<E> event, final Class<T> c, final Getter<T, E> getter, final @Nullable String excludeErrorMessage, final @Nullable Class<? extends E>[] excludes) {
+        public EventValueInfo(final Class<E> event, final Class<T> c, final Getter<T, E> getter, @Nullable final String excludeErrorMessage, @Nullable final Class<? extends E>[] excludes) {
             assert event != null;
             assert c != null;
             assert getter != null;
@@ -244,7 +244,7 @@ public final class EventValues {
             this.c = c;
             this.getter = getter;
             this.excludes = excludes;
-			this.exculdes = this.excludes;
+            this.exculdes = this.excludes;
             this.excludeErrorMessage = excludeErrorMessage;
         }
     }

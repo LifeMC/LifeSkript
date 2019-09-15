@@ -29,6 +29,7 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
+import ch.njol.skript.expressions.ExprNumbers;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -81,7 +82,7 @@ public final class EffMessage extends Effect {
         for (final String message : messages.getArray(e)) {
 //			message = StringUtils.fixCapitalization(message);
             final CommandSender[] recipientsArray = recipients.getArray(e);
-            if (SkriptConfig.enableExplicitPlayerUseWarnings.value() && recipientsArray.length == 1 && !(recipientsArray[0] instanceof ConsoleCommandSender) && e instanceof ServerCommandEvent) {
+            if (SkriptConfig.enableExplicitPlayerUseWarnings.value() && recipientsArray.length == 1 && !(recipientsArray[0] instanceof ConsoleCommandSender) && e instanceof ServerCommandEvent && !ExprNumbers.isInLoop()) {
                 Skript.warning("Command used from console, but send message uses the form of explicit \"to player\". For clarification, limit the command to the players, or remove the \"to player\" part." + (script != null ? " (" + script + ", line " + line + ")" : ""));
             }
             for (final CommandSender receiver : recipientsArray) {
