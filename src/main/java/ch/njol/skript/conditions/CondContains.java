@@ -38,6 +38,7 @@ import ch.njol.skript.lang.function.ExprFunctionCall;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Comparators;
+import ch.njol.skript.registrations.Converters;
 import ch.njol.util.Checker;
 import ch.njol.util.Kleenean;
 import ch.njol.util.StringUtils;
@@ -56,7 +57,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class CondContains extends Condition {
     static {
-        Skript.registerCondition(CondContains.class, "%inventories% ha(s|ve) %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% contain[s] %itemtypes/strings/objects%", "%inventories% do[es](n't| not) have %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% do[es](n't| not) contain %itemtypes/strings/objects%");
+        Skript.registerCondition(CondContains.class, "%inventories% ha(s|ve) %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% contain[s] %itemtypes/strings/objects%", "%inventories% do[es](n't| not) have %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% (do[es](n't| not)| not) contain[s] %itemtypes/strings/objects%");
     }
 
     @SuppressWarnings("null")
@@ -70,7 +71,7 @@ public final class CondContains extends Condition {
         containers = exprs[0].getConvertedExpression(Object.class);
         if (containers == null)
             return false;
-        if (!(containers instanceof Variable) && !String.class.isAssignableFrom(containers.getReturnType()) && !Inventory.class.isAssignableFrom(containers.getReturnType())) {
+        if (!(containers instanceof Variable) && !String.class.isAssignableFrom(containers.getReturnType()) && !Inventory.class.isAssignableFrom(containers.getReturnType()) && containers.getReturnType() != Object.class) {
             final ParseLogHandler h = SkriptLogger.startParseLogHandler();
             try {
                 Expression<?> c = containers.getConvertedExpression(String.class);
@@ -93,29 +94,85 @@ public final class CondContains extends Condition {
         return true;
     }
 
+    @SuppressWarnings("null")
     @Override
     public final boolean check(final Event e) {
-        return containers.check(e, (Checker<Object>) container -> {
-            if (containers instanceof Variable || containers instanceof ExprFunctionCall && !containers.isSingle()) {
-                final Object finalContainer = container;
-                return items.check(e, (Checker<Object>) item -> Relation.EQUAL.is(Comparators.compare(finalContainer, item)), isNegated());
+        final boolean caseSensitive = SkriptConfig.caseSensitive.value();
+
+        // Special case for list variables and functions that return them
+        if ((containers instanceof Variable || containers instanceof ExprFunctionCall)
+                && !containers.isSingle()) {
+            for (final Object value : containers.getAll(e)) {
+                for (final Object searched : items.getAll(e)) {
+                    if (Relation.EQUAL.is(Comparators.compare(searched, value))) {
+                        return !isNegated();
+                    }
+                }
             }
-            if (container instanceof InventoryHolder)
-                container = ((InventoryHolder) container).getInventory();
-            if (container instanceof Inventory) {
-                final Inventory invi = (Inventory) container;
-                return items.check(e, (Checker<Object>) type -> type instanceof ItemType && ((ItemType) type).isContainedIn(invi) || type instanceof ItemStack && invi.contains((ItemStack) type), isNegated());
-            } else if (container instanceof String) {
-                final String s = (String) container;
-                return items.check(e, (Checker<Object>) type -> type instanceof String && StringUtils.contains(s, (String) type, SkriptConfig.caseSensitive.value()), isNegated());
-            }
-            assert false : "container: " + (container != null ? container.getClass().getCanonicalName() : "null") + ", containers: [r = " + containers.getReturnType().getCanonicalName() + ", c = " + containers.getClass().getCanonicalName() + "]";
-            return false;
-        });
+            return isNegated();
+        }
+
+        return containers.check(e,
+                (Checker<Object>) container -> {
+                    if (container instanceof Inventory || container instanceof InventoryHolder) {
+                        final Inventory inventory = container instanceof InventoryHolder ? ((InventoryHolder) container).getInventory() : (Inventory) container;
+                        return items.check(e, (Checker<Object>) type -> {
+                            if (type instanceof ItemType)
+                                return ((ItemType) type).isContainedIn(inventory);
+                            if (type instanceof ItemStack)
+                                return inventory.contains((ItemStack) type);
+                            return false;
+                        });
+                    }
+
+                    if (container instanceof String) {
+                        final String s = (String) container;
+                        return items.check(e,
+                                (Checker<Object>) type -> {
+                                    if (type instanceof Variable) {
+                                        @SuppressWarnings("unchecked") final String toFind = ((Variable<String>) type).getSingle(e);
+                                        if (toFind != null)
+                                            return StringUtils.contains(s, toFind, caseSensitive);
+                                    }
+                                    return type instanceof String && StringUtils.contains(s, (String) type, caseSensitive);
+                                });
+                    }
+
+                    // OK, so we have a variable...
+                    final Object val = container instanceof Variable
+                            ? ((Variable<?>) container).getSingle(e) : container;
+
+                    final Inventory inventory = Converters.convert(val, Inventory.class);
+                    if (inventory != null) {
+                        return items.check(e, (Checker<Object>) type -> {
+                            if (type instanceof ItemType)
+                                return ((ItemType) type).isContainedIn(inventory);
+                            if (type instanceof ItemStack)
+                                return inventory.contains((ItemStack) type);
+                            return false;
+                        });
+                    }
+
+                    final String s = Converters.convert(val, String.class);
+                    if (s != null) {
+                        return items.check(e,
+                                (Checker<Object>) type -> {
+                                    if (type instanceof Variable) {
+                                        @SuppressWarnings("unchecked") final String toFind = ((Variable<String>) type).getSingle(e);
+                                        if (toFind != null)
+                                            return StringUtils.contains(s, toFind, caseSensitive);
+                                    }
+                                    return type instanceof String && StringUtils.contains(s, (String) type, caseSensitive);
+                                });
+                    }
+
+                    assert false : "container: " + (container != null ? container.getClass().getCanonicalName() : "null") + ", containers: [r = " + containers.getReturnType().getCanonicalName() + ", c = " + containers.getClass().getCanonicalName() + ']';
+                    return false;
+                }, isNegated());
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return containers.toString(e, debug) + (isNegated() ? " doesn't contain " : " contains ") + items.toString(e, debug);
     }
 
