@@ -57,6 +57,9 @@ public final class ExperienceSpawnEvent extends Event implements Cancellable {
     private int xp;
     private boolean cancelled;
 
+    /**
+     * @deprecated Use the one with async status parameter
+     */
     @Deprecated
     public ExperienceSpawnEvent(final int xp, final Location l) {
         this(!Bukkit.isPrimaryThread(), xp, l);

@@ -44,12 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class DefaultChangers {
 
-    private DefaultChangers() {
-        throw new UnsupportedOperationException("Static class");
-    }
-
     public static final Material[] cachedMaterials = Material.values();
-
     public static final Changer<Entity> entityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")
         @Override
@@ -122,7 +117,6 @@ public final class DefaultChangers {
             }
         }
     };
-
     public static final Changer<Player> playerChanger = new Changer<Player>() {
         @Override
         @Nullable
@@ -137,7 +131,6 @@ public final class DefaultChangers {
             entityChanger.change(players, delta, mode);
         }
     };
-
     public static final Changer<Entity> nonLivingEntityChanger = new Changer<Entity>() {
         @SuppressWarnings("unchecked")
         @Override
@@ -158,7 +151,6 @@ public final class DefaultChangers {
             }
         }
     };
-
     public static final Changer<Item> itemChanger = new Changer<Item>() {
         @SuppressWarnings("unchecked")
         @Override
@@ -180,7 +172,6 @@ public final class DefaultChangers {
             }
         }
     };
-
     public static final Changer<Inventory> inventoryChanger = new Changer<Inventory>() {
         @Override
         @Nullable
@@ -305,7 +296,6 @@ public final class DefaultChangers {
             }
         }
     };
-
     public static final Changer<Block> blockChanger = new Changer<Block>() {
         @SuppressWarnings("unchecked")
         @Override
@@ -371,5 +361,9 @@ public final class DefaultChangers {
             }
         }
     };
+
+    private DefaultChangers() {
+        throw new UnsupportedOperationException("Static class");
+    }
 
 }

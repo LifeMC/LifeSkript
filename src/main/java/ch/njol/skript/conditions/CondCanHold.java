@@ -47,20 +47,21 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"block can hold 200 cobblestone", "player has enough space for 64 feathers"})
 @Since("1.0")
 public final class CondCanHold extends Condition {
+
     static {
         Skript.registerCondition(CondCanHold.class, "%inventories% (can hold|ha(s|ve) [enough] space (for|to hold)) %itemtypes%", "%inventories% (can(no|')t hold|(ha(s|ve) not|ha(s|ve)n't|do[es]n't have) [enough] space (for|to hold)) %itemtypes%");
     }
 
     @SuppressWarnings("null")
-    Expression<ItemType> items;
+    private Expression<ItemType> items;
     @SuppressWarnings("null")
     private Expression<Inventory> invis;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
-        invis = (Expression<Inventory>) vars[0];
-        items = (Expression<ItemType>) vars[1];
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        invis = (Expression<Inventory>) exprs[0];
+        items = (Expression<ItemType>) exprs[1];
         if (items instanceof Literal) {
             for (ItemType t : ((Literal<ItemType>) items).getAll()) {
                 t = t.getItem();
@@ -86,7 +87,7 @@ public final class CondCanHold extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return invis.toString(e, debug) + " can" + (isNegated() ? "'t" : "") + " hold " + items.toString(e, debug);
     }
 

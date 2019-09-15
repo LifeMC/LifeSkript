@@ -263,7 +263,7 @@ public final class Commands {
     }
 
     /**
-     * @deprecated {@link Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)}
+     * @deprecated use {@link Commands#onAsyncPlayerChat(AsyncPlayerChatEvent)} instead
      */
     @Deprecated
     @SuppressWarnings("null")

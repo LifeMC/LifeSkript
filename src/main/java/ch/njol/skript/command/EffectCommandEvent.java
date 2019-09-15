@@ -35,6 +35,9 @@ public final class EffectCommandEvent extends CommandEvent {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
 
+    /**
+     * @deprecated Use the one with async status parameter
+     */
     @Deprecated
     public EffectCommandEvent(final CommandSender sender, final String command) {
         this(!Bukkit.isPrimaryThread(), sender, command);

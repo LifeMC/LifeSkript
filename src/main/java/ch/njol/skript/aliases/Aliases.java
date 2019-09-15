@@ -131,8 +131,8 @@ public final class Aliases {
     }
 
     private static final int nextBracket(final String s, final char closingBracket, final char openingBracket, final int start) {
-        int n = 0;
         assert s.charAt(start) == openingBracket;
+        int n = 0;
         for (int i = start + 1; i < s.length(); i++) {
             if (s.charAt(i) == '\\') {
                 i++;
@@ -275,7 +275,7 @@ public final class Aliases {
                     String s = name.substring(0, i) + m_any + name.substring(end + 1);
                     final int g = s.lastIndexOf('@');
                     if (g != -1)
-                        s = s.substring(0, g + 1) + "-";
+                        s = s.substring(0, g + 1) + '-';
                     r.putAll(getAliases(s, value, variations));
                     return r;
                 }
@@ -284,10 +284,10 @@ public final class Aliases {
                 for (final String[] o : os) {
                     if (x.equalsIgnoreCase(o[0])) {
                         for (int j = 1; j < o.length; j += 3) {
-                            String s = name.substring(0, i) + "¦" + o[j] + "¦" + o[j + 1] + "¦" + name.substring(end + 1);
+                            String s = name.substring(0, i) + '¦' + o[j] + '¦' + o[j + 1] + '¦' + name.substring(end + 1);
                             if (o[j + 2] != null) {
                                 final NonNullPair<String, Integer> p = Noun.stripGender(s, s);
-                                s = p.getFirst() + "@" + o[j + 2];
+                                s = p.getFirst() + '@' + o[j + 2];
                             }
                             r.put(s, value);
                         }
@@ -442,7 +442,7 @@ public final class Aliases {
 
     /**
      * @return The gender of item or -1 if no name is found
-     * @deprecated {@link Aliases#getGender(int)}
+     * @deprecated use {@link Aliases#getGender(int)} instead
      */
     @SuppressWarnings("unused")
     @Deprecated
@@ -596,7 +596,6 @@ public final class Aliases {
         if (c == -1)
             c = s.length();
         ItemData data = null;
-        final ItemType i;
         if (c != s.length()) {
             data = parseData(s.substring(c + 1));
             if (data == null) {
@@ -608,7 +607,8 @@ public final class Aliases {
         if (type.isEmpty()) {
             t.add(data == null ? new ItemData() : data);
             return t;
-        } else if (Skript.NUMBER_PATTERN.matcher(type).matches()) {
+        }
+        if (Skript.NUMBER_PATTERN.matcher(type).matches()) {
             ItemData d = new ItemData(Utils.parseInt(type));
             final Material m = Material.getMaterial(d.getId());
             if (m == null) {
@@ -623,13 +623,15 @@ public final class Aliases {
                 d = d.intersection(data);
             }
             if (!isAlias && d != null && !SkriptConfig.disableUsingIdInsteadOfAliasWarnings.value()) {
-                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + "'") + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + "'"));
+                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + '\'') + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + '\''));
             }
             t.add(d);
             //if (Skript.fieldForName(Material.class, m.name()).isAnnotationPresent(Deprecated.class))
             //Skript.warning("Material \"" + m.name() + "\" is deprecated"); // FIXME implement this
             return t;
-        } else if ((i = getAlias(type)) != null) {
+        }
+        final ItemType i;
+        if ((i = getAlias(type)) != null) {
             for (ItemData d : i) {
                 if (data != null) {
                     if (d.getId() <= Skript.MAXBLOCKID && (data.dataMax > 15 || data.dataMin > 15)) {
@@ -663,16 +665,16 @@ public final class Aliases {
      */
     @Nullable
     private static final ItemType getAlias(final String s) {
-        ItemType i;
         String lc = s.toLowerCase(Locale.ENGLISH).replace("minecraft:", "").replace("_", " ");
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
             lc = m.group(m.groupCount());
         }
+        ItemType i;
         if ((i = getAlias_i(lc)) != null)
             return i.clone();
         boolean b;
-        if ((b = lc.endsWith(" " + blockSingular)) || lc.endsWith(" " + blockPlural)) {
+        if ((b = lc.endsWith(' ' + blockSingular)) || lc.endsWith(' ' + blockPlural)) {
             if ((i = getAlias_i(s.substring(0, s.length() - (b ? blockSingular : blockPlural).length() - 1))) != null) {
                 i = i.clone();
                 for (int j = 0; j < i.numTypes(); j++) {
@@ -686,7 +688,7 @@ public final class Aliases {
                     return null;
                 return i;
             }
-        } else if ((b = lc.endsWith(" " + itemSingular)) || lc.endsWith(" " + itemPlural)) {
+        } else if ((b = lc.endsWith(' ' + itemSingular)) || lc.endsWith(' ' + itemPlural)) {
             if ((i = getAlias_i(s.substring(0, s.length() - (b ? itemSingular : itemPlural).length() - 1))) != null) {
                 for (int j = 0; j < i.numTypes(); j++) {
                     final ItemData d = i.getTypes().get(j);
@@ -759,13 +761,11 @@ public final class Aliases {
                 final String dataFolder = Skript.getInstance().getDataFolder().getPath();
                 final String aliasesFileName = "aliases-" + Language.getName() + ".sk";
 
-                @Nullable
-                InputStream stream = null;
-
                 final Config aliasConfig;
 
                 try (final JarFile jar = new JarFile(Skript.getInstance().getFile(), false)) {
                     File file = new File(Paths.get(dataFolder, aliasesFileName).toString());
+                    @Nullable InputStream stream = null;
                     if (!file.exists()) { // If it's not exists in the data folder (plugins/Skript)
                         final JarEntry entry = jar.getJarEntry(aliasesFileName);
                         if (entry != null) {
@@ -779,7 +779,7 @@ public final class Aliases {
                     if (file != null)
                         aliasConfig = new Config(file, false, true, "=");
                     else
-                        aliasConfig = new Config(new BufferedInputStream(stream), Skript.getInstance().getFile().getName() + "/" + aliasesFileName, false, true, "=");
+                        aliasConfig = new Config(new BufferedInputStream(stream), Skript.getInstance().getFile().getName() + '/' + aliasesFileName, false, true, "=");
                 } catch (final IOException e) {
                     Skript.error("Could not load the " + Language.getName() + " aliases config: " + e.getLocalizedMessage());
                     return;
@@ -842,7 +842,8 @@ public final class Aliases {
                                 if (a instanceof SectionNode) {
                                     Skript.error(m_unexpected_section.toString());
                                     continue;
-                                } else if (!(a instanceof EntryNode)) {
+                                }
+                                if (!(a instanceof EntryNode)) {
                                     continue;
                                 }
                                 final boolean noDefault = ((EntryNode) a).getValue().isEmpty() && "{default}".equalsIgnoreCase(a.getKey());

@@ -77,8 +77,8 @@ public final class CommandHelp {
             }
         } else {
             if (argument.startsWith("<") && argument.endsWith(">")) {
-                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + ">";
                 wildcardArg = new Message(langNode + "." + argument);
+                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + ">";
                 arguments.put(carg, wildcardArg);
             } else {
                 arguments.put(argument, new Message(langNode + "." + argument));
@@ -111,11 +111,11 @@ public final class CommandHelp {
         }
     }
 
-    public boolean test(final CommandSender sender, final String[] args) {
+    public final boolean test(final CommandSender sender, final String[] args) {
         return test(sender, args, 0);
     }
 
-    private boolean test(final CommandSender sender, final String[] args, final int index) {
+    private final boolean test(final CommandSender sender, final String[] args, final int index) {
         if (index >= args.length) {
             showHelp(sender);
             return false;

@@ -36,6 +36,9 @@ public final class ScriptCommandEvent extends CommandEvent {
     private final ScriptCommand skriptCommand;
     private boolean cooldownCancelled;
 
+    /**
+     * @deprecated Use the one with async status parameter
+     */
     @Deprecated
     public ScriptCommandEvent(final ScriptCommand command, final CommandSender sender) {
         this(!Bukkit.isPrimaryThread(), command, sender);

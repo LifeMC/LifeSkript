@@ -51,7 +51,7 @@ public final class CondWeather extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<WeatherType> weathers;
+    private Expression<WeatherType> weathers;
     @SuppressWarnings("null")
     private Expression<World> worlds;
 

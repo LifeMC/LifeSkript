@@ -50,7 +50,7 @@ public final class CondPermission extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<String> permissions;
+    private Expression<String> permissions;
     @SuppressWarnings("null")
     private Expression<CommandSender> senders;
 

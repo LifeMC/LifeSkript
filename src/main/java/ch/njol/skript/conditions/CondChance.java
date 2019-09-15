@@ -46,7 +46,7 @@ public final class CondChance extends Condition {
         Skript.registerCondition(CondChance.class, "chance of %number%(1¦\\%|)");
     }
 
-    boolean percent;
+    private boolean percent;
     @SuppressWarnings("null")
     private Expression<Double> chance;
 

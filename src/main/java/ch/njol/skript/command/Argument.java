@@ -80,7 +80,7 @@ public final class Argument<T> {
                 try {
                     d = new SkriptParser(def.substring(1, def.length() - 1), SkriptParser.PARSE_EXPRESSIONS, ParseContext.COMMAND).parseExpression(type.getC());
                     if (d == null) {
-                        log.printErrors("Can't understand this expression: " + def + "");
+                        log.printErrors("Can't understand this expression: " + def);
                         return null;
                     }
                     log.printLog();

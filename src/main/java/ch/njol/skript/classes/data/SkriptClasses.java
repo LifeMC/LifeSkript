@@ -378,11 +378,14 @@ public final class SkriptClasses {
                     public Timeperiod parse(final String s, final ParseContext context) {
                         if ("day".equalsIgnoreCase(s)) {
                             return new Timeperiod(0, 11999);
-                        } else if ("dusk".equalsIgnoreCase(s)) {
+                        }
+                        if ("dusk".equalsIgnoreCase(s)) {
                             return new Timeperiod(12000, 13799);
-                        } else if ("night".equalsIgnoreCase(s)) {
+                        }
+                        if ("night".equalsIgnoreCase(s)) {
                             return new Timeperiod(13800, 22199);
-                        } else if ("dawn".equalsIgnoreCase(s)) {
+                        }
+                        if ("dawn".equalsIgnoreCase(s)) {
                             return new Timeperiod(22200, 23999);
                         }
                         final int c = s.indexOf('-');

@@ -47,8 +47,7 @@ class CondIsInfinity : Condition() {
         }
     }
 
-    @JvmField
-    var number: Expression<Number>? = null
+    private var number: Expression<Number>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         @Suppress("UNCHECKED_CAST")

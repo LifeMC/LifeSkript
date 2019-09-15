@@ -56,7 +56,7 @@ public final class CondIsBanned extends Condition {
         Skript.registerCondition(CondIsBanned.class, "%offlineplayers/strings% (is|are) banned", "%players/strings% (is|are) IP(-| |)banned", "%offlineplayers/strings% (isn't|is not|aren't|are not) banned", "%players/strings% (isn't|is not|aren't|are not) IP(-| |)banned");
     }
 
-    boolean ipBanned;
+    private boolean ipBanned;
     @SuppressWarnings("null")
     private Expression<?> players;
 
@@ -80,9 +80,11 @@ public final class CondIsBanned extends Condition {
                     return Bukkit.getIPBans().contains(address.getAddress().getHostAddress());
                 }
                 return ((Player) o).isBanned();
-            } else if (o instanceof OfflinePlayer) {
+            }
+            if (o instanceof OfflinePlayer) {
                 return ((OfflinePlayer) o).isBanned();
-            } else if (o instanceof String) {
+            }
+            if (o instanceof String) {
                 //noinspection RedundantCast
                 return Bukkit.getIPBans().contains((String) o) || !ipBanned && CollectionUtils.contains(Bukkit.getBannedPlayers().toArray(EmptyArrays.EMPTY_OFFLINEPLAYER_ARRAY), (Predicate<OfflinePlayer>) t -> t != null && o.equals(t.getName()));
             }

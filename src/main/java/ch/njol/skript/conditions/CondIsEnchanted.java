@@ -53,7 +53,7 @@ public final class CondIsEnchanted extends Condition {
     }
 
     @Nullable
-    Expression<EnchantmentType> enchs;
+    private Expression<EnchantmentType> enchs;
     @SuppressWarnings("null")
     private Expression<ItemType> items;
 

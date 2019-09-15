@@ -99,7 +99,7 @@ public interface Converter<F, T> {
             this.converter = converter;
             this.options = options;
 
-            this.chain = new Class[]{from, to};
+            this.chain = new Class<?>[]{from, to};
         }
 
         @SuppressWarnings("unchecked")
@@ -110,7 +110,7 @@ public interface Converter<F, T> {
             this.converter = converter;
             this.options = options;
 
-            this.chain = new Class[first.chain.length + second.chain.length];
+            this.chain = new Class<?>[first.chain.length + second.chain.length];
 
             System.arraycopy(first.chain, 0, chain, 0, first.chain.length);
             System.arraycopy(second.chain, 0, chain, first.chain.length, second.chain.length);

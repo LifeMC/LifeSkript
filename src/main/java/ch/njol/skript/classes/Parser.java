@@ -59,7 +59,7 @@ public abstract class Parser<T> {
     /**
      * Returns a string representation of the given object to be used in messages.
      *
-     * @param o The object. This will never be <code>null</code>.
+     * @param o The object. This will never be {@code null}.
      * @return The String representation of the object.
      * @see #getDebugMessage(Object)
      */
@@ -89,7 +89,7 @@ public abstract class Parser<T> {
     }
 
     // not used anymore
-    public String toCommandString(final T o) {
+    public final String toCommandString(final T o) {
         return toString(o, 0);
     }
 

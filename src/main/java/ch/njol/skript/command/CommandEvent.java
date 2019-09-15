@@ -40,6 +40,9 @@ public class CommandEvent extends Event {
     @Nullable
     private final String[] args;
 
+    /**
+     * @deprecated use the one with async status instead
+     */
     @Deprecated
     public CommandEvent(final CommandSender sender, final String command, final @Nullable String[] args) {
         this(!Bukkit.isPrimaryThread(), sender, command, args);
@@ -56,7 +59,7 @@ public class CommandEvent extends Event {
         return handlers;
     }
 
-    public CommandSender getSender() {
+    public final CommandSender getSender() {
         return sender;
     }
 

@@ -185,27 +185,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
 
     public Iterator<ItemStack> getAll() {
         if (typeid == -1) {
-            return new Iterator<ItemStack>() {
-
-                @SuppressWarnings("null")
-                private final Iterator<Material> iter = Arrays.asList(Material.values()).listIterator(1); // ignore air
-
-                @Override
-                public boolean hasNext() {
-                    return iter.hasNext();
-                }
-
-                @Override
-                public ItemStack next() {
-                    return new ItemStack(iter.next(), 1);
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException();
-                }
-
-            };
+            return new ItemStackIterator();
         }
         if (dataMin == dataMax)
             return new SingleItemIterator<>(new ItemStack(typeid, 1, dataMin == -1 ? 0 : dataMin));
@@ -247,4 +227,25 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         return dataMax - dataMin + 1;
     }
 
+    private static final class ItemStackIterator implements Iterator<ItemStack> {
+
+        @SuppressWarnings("null")
+        private final Iterator<Material> iter = Arrays.asList(Material.values()).listIterator(1); // ignore air
+
+        @Override
+        public final boolean hasNext() {
+            return iter.hasNext();
+        }
+
+        @Override
+        public final ItemStack next() {
+            return new ItemStack(iter.next(), 1);
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+    }
 }

@@ -61,9 +61,9 @@ public final class CondContains extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<?> containers;
+    private Expression<?> containers;
     @SuppressWarnings("null")
-    Expression<?> items;
+    private Expression<?> items;
 
     @SuppressWarnings({"unchecked", "null", "unused"})
     @Override

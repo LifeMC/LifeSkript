@@ -30,6 +30,7 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SelfRegisteringSkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.Trigger;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -97,7 +98,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
     private static final void registerExecutor() {
         if (registeredExecutor)
             return;
-        for (final Class<? extends Event> c : new Class[]{BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class})
+        for (final Class<? extends Event> c : CollectionUtils.array(BlockExpEvent.class, EntityDeathEvent.class, ExpBottleEvent.class, PlayerFishEvent.class))
             Bukkit.getPluginManager().registerEvent(c, new Listener() {
                 /* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);

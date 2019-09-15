@@ -35,7 +35,7 @@ public class VoidNode extends Node {
 //	private final String initialIndentation;
 
     VoidNode(final String line, final String comment, final SectionNode parent, final int lineNum) {
-        super("" + line.trim(), comment, parent, lineNum);
+        super(line.trim(), comment, parent, lineNum);
 //		initialLevel = getLevel();
 //		initialIndentation = "" + line.replaceFirst("\\S.*$", "");
     }

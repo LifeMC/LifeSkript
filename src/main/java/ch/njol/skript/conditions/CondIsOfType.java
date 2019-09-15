@@ -53,7 +53,7 @@ public final class CondIsOfType extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<?> types;
+    private Expression<?> types;
     @SuppressWarnings("null")
     private Expression<?> what;
 
@@ -71,13 +71,14 @@ public final class CondIsOfType extends Condition {
         return what.check(e, (Checker<Object>) o1 -> types.check(e, (Checker<Object>) o2 -> {
             if (o2 instanceof ItemType && o1 instanceof ItemType) {
                 return ((ItemType) o2).isSupertypeOf((ItemType) o1);
-            } else if (o2 instanceof EntityData && o1 instanceof Entity) {
-                return ((EntityData<?>) o2).isInstance((Entity) o1);
-            } else if (o2 instanceof ItemType && o1 instanceof Entity) {
-                return Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity((Entity) o1), (ItemType) o2));
-            } else {
-                return false;
             }
+            if (o2 instanceof EntityData && o1 instanceof Entity) {
+                return ((EntityData<?>) o2).isInstance((Entity) o1);
+            }
+            if (o2 instanceof ItemType && o1 instanceof Entity) {
+                return Relation.EQUAL.is(DefaultComparators.entityItemComparator.compare(EntityData.fromEntity((Entity) o1), (ItemType) o2));
+            }
+            return false;
         }, isNegated()));
     }
 

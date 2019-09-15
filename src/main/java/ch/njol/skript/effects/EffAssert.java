@@ -53,7 +53,8 @@ public final class EffAssert extends Effect {
     @Nullable
     private Expression<String> errorMsg;
 
-    private @Nullable String script;
+    private @Nullable
+    String script;
     private int line;
 
     @SuppressWarnings({"null", "unchecked"})

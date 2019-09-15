@@ -24,6 +24,7 @@ package ch.njol.skript.events;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.util.SimpleEvent;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
@@ -88,7 +89,7 @@ public final class SimpleEvents {
         // TODO level up/down
         Skript.registerEvent("Level Change", SimpleEvent.class, PlayerLevelChangeEvent.class, "[player] level [change]").description("Called when a player's <a href='../expressions/#ExprLevel'>level</a> changes, e.g. by gathering experience or by enchanting something.").examples("").since("");
         Skript.registerEvent("Portal", SimpleEvent.class, PlayerPortalEvent.class, "[player] portal").description("Called when a player uses a nether or end portal. <a href='../effects/#EffCancelEvent'>Cancel the event</a> to prevent the player from teleporting.").examples("").since("1.0");
-        Skript.registerEvent("Quit", SimpleEvent.class, new Class[]{PlayerQuitEvent.class, PlayerKickEvent.class}, "(quit[ting]|disconnect[ing]|log[ ]out|logging out)").description("Called when a player leaves the server. Starting with Skript 2.0 this also includes kicked players.").examples("").since("1.0");
+        Skript.registerEvent("Quit", SimpleEvent.class, CollectionUtils.array(PlayerQuitEvent.class, PlayerKickEvent.class), "(quit[ting]|disconnect[ing]|log[ ]out|logging out)").description("Called when a player leaves the server. Starting with Skript 2.0 this also includes kicked players.").examples("").since("1.0");
         Skript.registerEvent("Respawn", SimpleEvent.class, PlayerRespawnEvent.class, "[player] respawn[ing]").description("Called when a player respawns. You should prefer this event over the <a href='#death'>death event</a> as the player is technically alive when this event is called.").examples("").since("1.0");
         Skript.registerEvent("Teleport", SimpleEvent.class, PlayerTeleportEvent.class, "[player] teleport[ing]").description("Called whenever a player is teleported, either by a nether/end portal or other means (e.g. by plugins).").examples("").since("1.0");
         Skript.registerEvent("Sneak Toggle", SimpleEvent.class, PlayerToggleSneakEvent.class, "[player] toggl(e|ing) sneak", "[player] sneak toggl(e|ing)").description("Called when a player starts or stops sneaking. Use <a href='../conditions/#CondIsSneaking'>is sneaking</a> to get whatever the player was sneaking before the event was called.").examples("# make players that stop sneaking jump", "on sneak toggle:", "	player was sneaking", "	push the player upwards at speed 0.5").since("1.0");

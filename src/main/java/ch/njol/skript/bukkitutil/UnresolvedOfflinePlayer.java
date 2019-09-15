@@ -235,6 +235,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
 
     /**
      * @see org.bukkit.OfflinePlayer#setBanned(boolean)
+     * @deprecated Use {@link org.bukkit.BanList#addBan(String, String, java.util.Date, String)} or {@link org.bukkit.BanList#pardon(String)} to enhance functionality
      */
     @Override
     @SuppressWarnings({"null", "deprecation"})
@@ -251,12 +252,10 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     public final boolean isWhitelisted() {
         if (bukkitOfflinePlayer != null)
             return bukkitOfflinePlayer.isWhitelisted();
-        else if (getPlayer() != null)
+        if (getPlayer() != null)
             return getPlayer().isWhitelisted();
-        else {
-            resolveNow();
-            return bukkitOfflinePlayer.isWhitelisted();
-        }
+        resolveNow();
+        return bukkitOfflinePlayer.isWhitelisted();
     }
 
     /**

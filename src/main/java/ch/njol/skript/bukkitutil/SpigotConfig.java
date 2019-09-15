@@ -42,7 +42,6 @@ public final class SpigotConfig {
     private static final ConcurrentHashMap<String, Field> fieldCache =
             new ConcurrentHashMap<>(100);
 
-    @Deprecated
     private SpigotConfig() {
         throw new UnsupportedOperationException("Static utility class");
     }

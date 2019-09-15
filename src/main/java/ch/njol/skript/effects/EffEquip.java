@@ -84,7 +84,8 @@ public final class EffEquip extends Effect implements Testable {
                     }
                 }
                 continue;
-            } else if (supportsHorses && en instanceof Horse) {
+            }
+            if (supportsHorses && en instanceof Horse) {
                 final HorseInventory invi = ((Horse) en).getInventory();
                 for (final ItemType t : ts) {
                     for (final ItemStack item : t.getAll()) {

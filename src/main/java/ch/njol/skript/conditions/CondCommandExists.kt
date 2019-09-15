@@ -68,8 +68,7 @@ class CondCommandExists : Condition() {
         }
     }
 
-    @JvmField
-    var command: Expression<String>? = null
+    private var command: Expression<String>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         @Suppress("UNCHECKED_CAST")

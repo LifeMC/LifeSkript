@@ -134,7 +134,7 @@ public abstract class Node {
      *
      * @param key The new key of this node.
      */
-    public void setKey(final String key) {
+    public final void setKey(final String key) {
         this.key = key;
     }
 
@@ -274,7 +274,7 @@ public abstract class Node {
 
     /**
      * returns information about this node which looks like the following:<br/>
-     * <code>node value #including comments (config.sk, line xyz)</code>
+     * {@code node value #including comments (config.sk, line xyz)}
      */
     @Override
     public String toString() {

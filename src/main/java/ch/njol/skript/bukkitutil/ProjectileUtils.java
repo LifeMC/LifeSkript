@@ -35,7 +35,7 @@ import java.lang.reflect.Modifier;
 /**
  * @author Peter Güttinger
  */
-@SuppressWarnings({"null", "CanBeFinal"})
+@SuppressWarnings({"null", "CanBeFinal", "JavaReflectionMemberAccess"})
 public final class ProjectileUtils {
 
     private static final boolean getShooterSupport = Skript.methodExists(Projectile.class, "getShooter")

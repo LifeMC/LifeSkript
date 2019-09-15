@@ -51,7 +51,7 @@ public final class CondIsWearing extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<ItemType> types;
+    private Expression<ItemType> types;
     @SuppressWarnings("null")
     private Expression<LivingEntity> entities;
 

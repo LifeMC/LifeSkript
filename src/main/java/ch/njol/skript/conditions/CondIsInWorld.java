@@ -49,7 +49,7 @@ public final class CondIsInWorld extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<World> worlds;
+    private Expression<World> worlds;
     @SuppressWarnings("null")
     private Expression<Entity> entities;
 

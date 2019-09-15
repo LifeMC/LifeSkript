@@ -49,7 +49,7 @@ public final class CondIsRiding extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<EntityData<?>> types;
+    private Expression<EntityData<?>> types;
     @SuppressWarnings("null")
     private Expression<Entity> entities;
 

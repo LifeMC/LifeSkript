@@ -38,12 +38,12 @@ import org.eclipse.jdt.annotation.Nullable;
 public interface Changer<T> {
 
     /**
-     * Tests whatever this changer supports the given mode, and if yes what type(s) it expects the elements of <code>delta</code> to be.
+     * Tests whatever this changer supports the given mode, and if yes what type(s) it expects the elements of {@code delta} to be.
      * <p>
      * Unlike {@link Expression#acceptChange(ChangeMode)} this method must not print errors.
      *
      * @param mode
-     * @return An array of types that {@link #change(Object[], Object[], ChangeMode)} accepts as its <code>delta</code> parameter (which can be arrays to denote that multiple of
+     * @return An array of types that {@link #change(Object[], Object[], ChangeMode)} accepts as its {@code delta} parameter (which can be arrays to denote that multiple of
      * that type are accepted), or null if the given mode is not supported. For {@link ChangeMode#DELETE} and {@link ChangeMode#RESET} this can return any non-null array to
      * mark them as supported.
      */

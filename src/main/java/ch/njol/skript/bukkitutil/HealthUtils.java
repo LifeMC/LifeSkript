@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
  * @author Peter Güttinger
  */
 
-@SuppressWarnings({"null", "CanBeFinal"})
+@SuppressWarnings({"null", "CanBeFinal", "JavaReflectionMemberAccess"})
 public final class HealthUtils {
 
     private static final boolean supportsDoubles = Skript.methodExists(Damageable.class, "setHealth", double.class);

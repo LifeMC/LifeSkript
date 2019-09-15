@@ -66,14 +66,14 @@ public final class CondCompare extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<?> second;
+    private Expression<?> second;
     @Nullable
-    Expression<?> third;
+    private Expression<?> third;
     @SuppressWarnings("null")
-    Relation relation;
+    private Relation relation;
     @SuppressWarnings("rawtypes")
     @Nullable
-    Comparator comp;
+    private Comparator comp;
     @SuppressWarnings("null")
     private Expression<?> first;
 
@@ -96,7 +96,7 @@ public final class CondCompare extends Condition {
             setNegated(true);
         if ((parser.mark & 0x1) != 0) // "neither" on the left side
             setNegated(!isNegated());
-        if ((parser.mark & 0x4) != 0) {// "neither" on the right side
+        if ((parser.mark & 0x4) != 0) { // "neither" on the right side
             if (second instanceof ExpressionList)
                 ((ExpressionList<?>) second).invertAnd();
             if (third instanceof ExpressionList)

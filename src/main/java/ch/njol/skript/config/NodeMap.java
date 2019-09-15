@@ -47,11 +47,11 @@ public final class NodeMap {
             assert false : n;
             return "";
         }
-        return "" + key.toLowerCase(Locale.ENGLISH);
+        return key.toLowerCase(Locale.ENGLISH);
     }
 
     private static final String getKey(final String key) {
-        return "" + key.toLowerCase(Locale.ENGLISH);
+        return key.toLowerCase(Locale.ENGLISH);
     }
 
     public void put(final Node n) {

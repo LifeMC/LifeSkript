@@ -291,7 +291,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
             if (!value.matches("\\s*") && !value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\S.*")) {
                 if (value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\s.*") || !value.matches("^(" + config.getIndentation() + ")*\\S.*")) {
                     nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
-                    final String s = "" + value.replaceFirst("\\S.*$", "");
+                    final String s = value.replaceFirst("\\S.*$", "");
                     Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + " " + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
                     continue;
                 }
@@ -334,7 +334,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
 //			}
 
             if (value.endsWith(":") && (config.simple || !value.contains(config.separator) || config.separator.endsWith(":") && value.indexOf(config.separator) == value.length() - config.separator.length()) && !fullLine.matches("([^#]|##)*#-#(\\s.*)?")) {
-                nodes.add(SectionNode.load("" + value.substring(0, value.length() - 1), comment, this, r));
+                nodes.add(SectionNode.load(value.substring(0, value.length() - 1), comment, this, r));
                 continue;
             }
 
@@ -359,8 +359,8 @@ public final class SectionNode extends Node implements Iterable<Node> {
             SkriptLogger.setNode(this);
             return in;
         }
-        final String key = "" + keyAndValue.substring(0, x).trim();
-        final String value = "" + keyAndValue.substring(x + separator.length()).trim();
+        final String key = keyAndValue.substring(0, x).trim();
+        final String value = keyAndValue.substring(x + separator.length()).trim();
         return new EntryNode(key, value, comment, this, lineNum);
     }
 

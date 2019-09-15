@@ -72,7 +72,8 @@ public final class EvtClick extends SkriptEvent {
             if (click == LEFT) {
                 Skript.error("A leftclick on an entity is an attack and thus not covered by the 'click' event, but the 'damage' event.", ErrorQuality.SEMANTIC_ERROR);
                 return false;
-            } else if (click == ANY) {
+            }
+            if (click == ANY) {
                 Skript.warning("A leftclick on an entity is an attack and thus not covered by the 'click' event, but the 'damage' event. Change this event to a rightclick to disable this warning message.");
             }
         }

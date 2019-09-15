@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.*;
@@ -54,9 +55,9 @@ public final class EvtBlock extends SkriptEvent {
     static {
         // TODO 'block destroy' event for any kind of block destruction (player, water, trampling, fall (sand, toches, ...), etc) -> BlockPhysicsEvent?
         // REMIND attacking an item frame first removes its item; include this in on block damage?
-        Skript.registerEvent("Break / Mine", EvtBlock.class, new Class[]{BlockBreakEvent.class, PlayerBucketFillEvent.class, Skript.isRunningMinecraft(1, 4, 3) ? HangingBreakEvent.class : PaintingBreakEvent.class}, "[block] (break[ing]|1¦min(e|ing)) [[of] %itemtypes%]").description("Called when a block is broken by a player. If you use 'on mine', only events where the broken block dropped something will call the trigger.").examples("on mine", "on break of stone", "on mine of any ore").since("1.0 (break), <i>unknown</i> (mine)");
+        Skript.registerEvent("Break / Mine", EvtBlock.class, CollectionUtils.array(BlockBreakEvent.class, PlayerBucketFillEvent.class, Skript.isRunningMinecraft(1, 4, 3) ? HangingBreakEvent.class : PaintingBreakEvent.class), "[block] (break[ing]|1¦min(e|ing)) [[of] %itemtypes%]").description("Called when a block is broken by a player. If you use 'on mine', only events where the broken block dropped something will call the trigger.").examples("on mine", "on break of stone", "on mine of any ore").since("1.0 (break), <i>unknown</i> (mine)");
         Skript.registerEvent("Burn", EvtBlock.class, BlockBurnEvent.class, "[block] burn[ing] [[of] %itemtypes%]").description("Called when a block is destroyed by fire.").examples("on burn", "on burn of wood, fences, or chests").since("1.0");
-        Skript.registerEvent("Place", EvtBlock.class, new Class[]{BlockPlaceEvent.class, PlayerBucketEmptyEvent.class, Skript.isRunningMinecraft(1, 4, 3) ? HangingPlaceEvent.class : PaintingPlaceEvent.class}, "[block] (plac(e|ing)|build[ing]) [[of] %itemtypes%]").description("Called when a player places a block.").examples("on place", "on place of a furnace, workbench or chest").since("1.0");
+        Skript.registerEvent("Place", EvtBlock.class, CollectionUtils.array(BlockPlaceEvent.class, PlayerBucketEmptyEvent.class, Skript.isRunningMinecraft(1, 4, 3) ? HangingPlaceEvent.class : PaintingPlaceEvent.class), "[block] (plac(e|ing)|build[ing]) [[of] %itemtypes%]").description("Called when a player places a block.").examples("on place", "on place of a furnace, workbench or chest").since("1.0");
         Skript.registerEvent("Fade", EvtBlock.class, BlockFadeEvent.class, "[block] fad(e|ing) [[of] %itemtypes%]").description("Called when a block 'fades away', e.g. ice or snow melts.").examples("on fade of snow or ice").since("1.0");
         Skript.registerEvent("Form", EvtBlock.class, BlockFormEvent.class, "[block] form[ing] [[of] %itemtypes%]").description("Called when a block is created, but not by a player, e.g. snow forms due to snowfall, water freezes in cold biomes, or a block spreads (see <a href='#spread'>spread event</a>).").examples("on form of snow", "on form of a mushroom").since("1.0");
     }

@@ -249,6 +249,8 @@ public final class Config {
      * Backwards compatibility.
      *
      * @see Config#validate(NodeValidator)
+     *
+     * @deprecated Use more generic {@link Config#validate(NodeValidator)}
      */
     @Deprecated
     public boolean validate(final SectionValidator validator) {

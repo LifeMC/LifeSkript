@@ -49,7 +49,7 @@ public final class CondDate extends Condition {
     }
 
     @SuppressWarnings("null")
-    Expression<Timespan> delta;
+    private Expression<Timespan> delta;
     @SuppressWarnings("null")
     private Expression<Date> date;
 

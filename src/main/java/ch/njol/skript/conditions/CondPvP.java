@@ -48,7 +48,7 @@ public final class CondPvP extends Condition {
         Skript.registerCondition(CondPvP.class, "(is PvP|PvP is) enabled [in %worlds%]", "(is PvP|PvP is) disabled [in %worlds%]");
     }
 
-    boolean enabled;
+    private boolean enabled;
     @SuppressWarnings("null")
     private Expression<World> worlds;
 
