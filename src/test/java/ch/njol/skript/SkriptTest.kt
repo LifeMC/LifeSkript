@@ -22,21 +22,36 @@
 
 package ch.njol.skript
 
+import ch.njol.skript.Skript.*
+import ch.njol.skript.bukkitutil.Compatibility.getClass
+import ch.njol.skript.bukkitutil.Compatibility.getClassNoSuper
 import ch.njol.skript.config.Config
 import ch.njol.skript.config.SectionNode
+import ch.njol.skript.lang.Condition
+import ch.njol.skript.lang.Statement
+import ch.njol.skript.util.EmptyStacktraceException
+import ch.njol.skript.util.PatternCache
 import ch.njol.skript.util.Version
 import org.bukkit.Bukkit
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import org.easymock.EasyMock.createMock
+import org.easymock.EasyMock.mock
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
 import java.io.IOException
+import java.net.URISyntaxException
 import java.net.UnknownHostException
+import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 import kotlin.test.assertFalse
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /**
@@ -46,7 +61,7 @@ class SkriptTest {
 
     @Test
     fun testVersion() {
-        if (Skript.getLatestVersion({ error: Throwable? ->
+        if (getLatestVersion({ error: Throwable? ->
                     if (error !is UnknownHostException) // Probably no internet access
                         error?.printStackTrace()
                 }, false) == null) {
@@ -66,8 +81,102 @@ class SkriptTest {
         assertFalse(Version(2).isSmallerThan(Version(2, 0)))
     }
 
+    @Test
+    fun testVersionRegistry() {
+        var result = "Unknown-Version"
+        var stream = Thread.currentThread().contextClassLoader.getResourceAsStream("version")
+
+        if (stream == null) {
+            try {
+                val path = Paths.get(Thread.currentThread().contextClassLoader.getResource(".")!!.toURI()!!)
+                val file = File(path.parent.parent.toString(), "version")
+
+                if (file.exists()) {
+                    stream = FileInputStream(file)
+                }
+            } catch (e: FileNotFoundException) {
+                sneakyThrow(e)
+            } catch (e: URISyntaxException) {
+                sneakyThrow(e)
+            }
+        }
+
+        try {
+            result = String(stream!!.readBytes(), StandardCharsets.UTF_8)
+        } catch (e: IOException) {
+            sneakyThrow(e)
+        } finally {
+            try {
+                stream?.close()
+            } catch (ignored: IOException) {
+                /* ignored */
+            }
+        }
+
+        assertNotNull(result)
+
+        val version = Version(result)
+        val registry = "STABLE_" + version.major + "_" + version.minor + "_" + version.revision
+
+        assertTrue(fieldExists(VersionRegistry::class.java, registry))
+        assertNotNull(fieldForName(VersionRegistry::class.java, registry)!!.get(null))
+    }
+
+    @Test
+    fun testPatterns() {
+        assertTrue(PATTERN_ON_SPACE.matcher(" ").matches())
+        assertTrue(NUMBER_PATTERN.matcher(/*Random.nextInt().toString()*/"12").matches())
+
+        assertSame(PatternCache.get("\\d+"), PatternCache.get("\\d+"))
+    }
+
+    @Test
+    fun testClassLoader() {
+        assertNotNull(getTrueClassLoader())
+    }
+
+    @Test
+    fun testFindLoadedClass() {
+        assertTrue(isClassLoaded("ch.njol.skript.Skript"))
+        assertTrue(isClassLoaded("ch.njol.skript.SkriptTest"))
+
+        assertFalse(isClassLoaded("ch.njol.skript.SkriptTest$Companion"))
+    }
+
+    @Test
+    fun testReflection() {
+        assertTrue(methodExists(Skript::class.java, "classExists", String::class.java))
+
+        assertTrue(classExists("ch.njol.skript.Skript"))
+        assertNotNull(classForName("ch.njol.skript.Skript"))
+
+        assertNotNull(methodForName(SkriptTest::class.java, "testReflection"))
+        assertNotNull(getConstructor(Skript::class.java))
+    }
+
+    @Test
+    fun testGetAllThreads() {
+        assertTrue(getAllThreads().isNotEmpty())
+    }
+
+    @Test
+    fun testSneakyThrow() {
+        assertThrows(IOException::class.java) {
+            sneakyThrow(IOException())
+        }
+        assertThrows(EmptyStacktraceException::class.java) {
+            sneakyThrow(EmptyStacktraceException())
+        }
+    }
+
+    @Test
+    fun testCompatibility() {
+        assertSame(Skript::class.java, getClassNoSuper("ch.njol.skript.SkriptTest", "ch.njol.skript.Skript"))
+        assertSame(Condition::class.java, getClass<Statement>("ch.njol.skript.lang.Effect", "ch.njol.skript.lang.Condition"))
+    }
+
     companion object {
-        private val njol = createMock<Player>(Player::class.java)
+        private val njol = mock<Player>(Player::class.java)
 
         //	@Test
         fun main() {
@@ -76,20 +185,20 @@ class SkriptTest {
             }.start()
             while (Bukkit.getServer() == null) {
                 try {
-                    Thread.sleep(10)
+                    Thread.sleep(100L)
                 } catch (ignored: InterruptedException) {
+                    /* ignored */
                 }
-
             }
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), {
-                assertNotNull(Skript.getInstance())
+            Bukkit.getScheduler().scheduleSyncDelayedTask(getInstance(), {
+                assertNotNull(getInstance())
                 test()
-            }, 2)
+            }, 3L)
         }
 
         internal fun test() {
             val t = ScriptLoader.loadTrigger(nodeFromString("on rightclick on air:\n kill player")!!)!!
-            t.execute(PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, BlockFace.SELF))
+            t.execute(PlayerInteractEvent(njol, Action.LEFT_CLICK_AIR, null, null, BlockFace.SELF) as Event?)
         }
 
         private fun nodeFromString(s: String): SectionNode? {
