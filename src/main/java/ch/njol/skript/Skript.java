@@ -2760,7 +2760,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 final long vld = System.currentTimeMillis() - vls;
                 if (logNormal())
-                    info("Loaded " + Variables.numVariables() + " variables in " + vld / 100D / 10. + " seconds");
+                    info("Loaded " + Variables.numVariables() + " variables in " + vld / 100 / 10. + " seconds");
 
                 ScriptLoader.loadScripts();
                 PatternCache.clear(); // Free memory
