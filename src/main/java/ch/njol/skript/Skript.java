@@ -121,7 +121,7 @@ import java.util.zip.ZipFile;
  * <p>
  * If you use 'softdepend' you can test whatever Skript is loaded with <tt>'Bukkit.getPluginManager().isPluginEnabled(&quot;Skript&quot;)'</tt>
  * <p>
- * Once you made sure that Skript is loaded you can use <code>Skript.getInstance()</code> whenever you need a reference to the plugin, but you likely won't need it since all API
+ * Once you made sure that Skript is loaded you can use {@code Skript.getInstance()} whenever you need a reference to the plugin, but you likely won't need it since all API
  * methods are static.
  *
  * @author Peter Güttinger
@@ -180,7 +180,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     public static final int MAXDATAVALUE = Short.MAX_VALUE - Short.MIN_VALUE;
     public static final String SKRIPT_PREFIX = ChatColor.GRAY + "[" + ChatColor.GOLD + "Skript" + ChatColor.GRAY + ']' + ChatColor.RESET + ' ';
-    public static final @Nullable
+    @Nullable
+    public static final
     Class<?> craftbukkitMain = classForName("org.bukkit.craftbukkit.Main");
     public static final boolean usingBukkit = classExists("org.bukkit.Bukkit");
     /**
@@ -223,6 +224,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean showRegisteredNonSkript = Boolean.getBoolean("skript.showRegisteredNonSkript");
     private static final boolean assertionsEnabled = Skript.class.desiredAssertionStatus();
     private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> new Thread(r, "Skript netty optimizer thread"));
+    private static final Pattern SPACE = Pattern.compile(" ", Pattern.LITERAL);
+    private static final Pattern DASH = Pattern.compile("-", Pattern.LITERAL);
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -508,7 +511,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The latest version of the Skript for <b>this implementation of Skript.</b>
      */
     @Nullable
-    public static final String getLatestVersion(final @Nullable Consumer<Throwable> handler) {
+    public static final String getLatestVersion(@Nullable final Consumer<Throwable> handler) {
         return getLatestVersion(handler, true);
     }
 
@@ -535,7 +538,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The latest version of the Skript for <b>this implementation of Skript.</b>
      */
     @Nullable
-    public static final String getLatestVersion(final @Nullable Consumer<Throwable> handler,
+    public static final String getLatestVersion(@Nullable final Consumer<Throwable> handler,
                                                 final boolean checkThread) {
         if (checkThread && classExists("org.bukkit.Bukkit") && Bukkit.isPrimaryThread())
             throw new SkriptAPIException("This method must be called asynchronously!");
@@ -702,7 +705,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return Whatever the given class exists.
      */
     @SuppressWarnings({"null", "unused"})
-    public static final boolean classExists(final @Nullable String className) {
+    public static final boolean classExists(@Nullable final String className) {
         if (className == null)
             return false;
         try {
@@ -726,7 +729,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     @Nullable
     @SuppressWarnings({"null", "unused"})
-    public static final Class<?> classForName(final @Nullable String className) {
+    public static final Class<?> classForName(@Nullable final String className) {
         if (className == null)
             return null;
         try {
@@ -749,7 +752,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return Whatever the given method exists.
      */
     @SuppressWarnings("null")
-    public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>... parameterTypes) {
+    public static final boolean methodExists(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>... parameterTypes) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -776,7 +779,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return Whatever the given method exists.
      */
     @SuppressWarnings("null")
-    public static final boolean methodExists(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+    public static final boolean methodExists(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
         if (c == null || methodName == null)
             return false;
         try {
@@ -808,7 +811,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The method, store the results in a static final variable for maximum
      * runtime performance.
      */
-    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>... parameterTypes) {
+    public static final Method methodForName(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>... parameterTypes) {
         return methodForName(c, methodName, false, parameterTypes);
     }
 
@@ -824,7 +827,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * runtime performance.
      */
     @SuppressWarnings("null")
-    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final boolean setAccessible, final Class<?>... parameterTypes) {
+    public static final Method methodForName(@Nullable final Class<?> c, @Nullable final String methodName, final boolean setAccessible, final Class<?>... parameterTypes) {
         if (c == null || methodName == null)
             return null;
         try {
@@ -850,7 +853,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The method, store the results in a static final variable for maximum
      * runtime performance.
      */
-    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
+    public static final Method methodForName(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
         return methodForName(c, methodName, parameterTypes, returnType, false);
     }
 
@@ -867,7 +870,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * runtime performance.
      */
     @SuppressWarnings("null")
-    public static final Method methodForName(final @Nullable Class<?> c, final @Nullable String methodName, final Class<?>[] parameterTypes, final Class<?> returnType, final boolean setAccessible) {
+    public static final Method methodForName(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType, final boolean setAccessible) {
         if (c == null || methodName == null)
             return null;
         try {
@@ -899,7 +902,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * runtime performance.
      */
     @SuppressWarnings("null")
-    public static final <T> Constructor<T> getConstructor(final @Nullable Class<T> c, final @Nullable Class<?>... parameterTypes) {
+    public static final <T> Constructor<T> getConstructor(@Nullable final Class<T> c, @Nullable final Class<?>... parameterTypes) {
         if (c == null)
             return null;
         try {
@@ -921,7 +924,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The field.
      */
     @SuppressWarnings("null")
-    public static final Field fieldForName(final @Nullable Class<?> c, final @Nullable String fieldName) {
+    public static final Field fieldForName(@Nullable final Class<?> c, @Nullable final String fieldName) {
         return fieldForName(c, fieldName, false);
     }
 
@@ -935,7 +938,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return The field.
      */
     @SuppressWarnings("null")
-    public static final Field fieldForName(final @Nullable Class<?> c, final @Nullable String fieldName, final boolean setAccessible) {
+    public static final Field fieldForName(@Nullable final Class<?> c, @Nullable final String fieldName, final boolean setAccessible) {
         if (c == null || fieldName == null)
             return null;
         try {
@@ -960,7 +963,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return Whatever the given field exists.
      */
     @SuppressWarnings("null")
-    public static final boolean fieldExists(final @Nullable Class<?> c, final @Nullable String fieldName) {
+    public static final boolean fieldExists(@Nullable final Class<?> c, @Nullable final String fieldName) {
         if (c == null || fieldName == null)
             return false;
         try {
@@ -1402,7 +1405,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @see SkriptLogger#log(Level, String)
      */
     @SuppressWarnings("null")
-    public static final void error(final @Nullable String error) {
+    public static final void error(@Nullable final String error) {
         if (error != null)
             SkriptLogger.log(Level.SEVERE, error);
     }
@@ -1425,19 +1428,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param info Description of the error and additional information
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
-    public static final RuntimeException exception(final @Nullable String... info) {
+    public static final RuntimeException exception(@Nullable final String... info) {
         return exception(null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable String... info) {
+    public static final RuntimeException exception(@Nullable final Throwable cause, @Nullable final String... info) {
         return exception(cause, null, null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable Thread thread, final @Nullable String... info) {
+    public static final RuntimeException exception(@Nullable final Throwable cause, @Nullable final Thread thread, @Nullable final String... info) {
         return exception(cause, thread, null, info);
     }
 
-    public static final RuntimeException exception(final @Nullable Throwable cause, final @Nullable TriggerItem item, final @Nullable String... info) {
+    public static final RuntimeException exception(@Nullable final Throwable cause, @Nullable final TriggerItem item, @Nullable final String... info) {
         return exception(cause, null, item, info);
     }
 
@@ -1449,7 +1452,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @return an EmptyStacktraceException to throw if code execution should terminate.
      */
     //FIXME Report errors automatically, also catch errors in events (SkriptEventHandler#check)
-    public static final RuntimeException exception(@Nullable Throwable cause, final @Nullable Thread thread, final @Nullable TriggerItem item, final @Nullable String... info) {
+    public static final RuntimeException exception(@Nullable Throwable cause, @Nullable final Thread thread, @Nullable final TriggerItem item, @Nullable final String... info) {
         // We change that variable later to handle inner exceptions
         final Throwable originalCause = cause;
 
@@ -1599,7 +1602,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         SkriptLogger.LOGGER.severe(EXCEPTION_PREFIX);
     }
 
-    static final void logEx(final @Nullable String... lines) {
+    static final void logEx(@Nullable final String... lines) {
         if (lines == null || lines.length < 1)
             return;
         if (lines.length == 1)
@@ -1754,7 +1757,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param tw The throwable to throw without requiring you to catch its type.
      * @return A dummy RuntimeException; this method never returns normally, it <em>always</em> throws an exception!
      */
-    public static final RuntimeException sneakyThrow(final @Nullable Throwable tw) {
+    public static final RuntimeException sneakyThrow(@Nullable final Throwable tw) {
         if (tw == null)
             throw new IllegalArgumentException("Null exception given in the sneaky throw method");
         return sneakyThrow0(tw);
@@ -1821,7 +1824,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             optimizeNetty = () -> {
                 for (final Thread thread : Skript.getAllThreads()) {
                     if (thread != null) {
-                        final String name = thread.getName().toLowerCase(Locale.ENGLISH).replace(" ", "").replace("-", "").trim();
+                        final String name = DASH.matcher(SPACE.matcher(thread.getName().toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement(""))).replaceAll(Matcher.quoteReplacement("")).trim();
                         final int priority = thread.getPriority();
 
                         if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || name.contains("alive") && !name.contains("keepalivetimer") || name.contains("skript") && name.contains("spike")) && priority != Thread.MAX_PRIORITY) {
@@ -1854,10 +1857,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 // Flag to track changes and warn the user
                 boolean madeChanges = false;
 
-                // The above flag just recommends restarting the server,
-                // but this clarifies that things we do not work without a restart.
-                boolean restartNeeded = false;
-
                 // Delete aliases to re-create when upgrading
                 // or downgrading from an incompatible version.
                 final File config = new File(dataFolder, "config.sk");
@@ -1869,9 +1868,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16"))) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
-
-                            final File features = new File(dataFolder, "features.sk");
-                            final File materials = new File(dataFolder, "materials.json");
 
                             if (english.exists() || german.exists()) {
 
@@ -1891,6 +1887,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                             }
 
+                            final File features = new File(dataFolder, "features.sk");
+
                             if (features.exists()) {
 
                                 if (features.exists()) {
@@ -1903,6 +1901,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 madeChanges = true;
 
                             }
+
+                            final File materials = new File(dataFolder, "materials.json");
 
                             if (materials.exists()) {
 
@@ -1917,7 +1917,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
 
                             break;
-                        } else if (line.contains("disable backups completely: true"))
+                        }
+                        if (line.contains("disable backups completely: true"))
                             System.setProperty("skript.disableBackupsCompletely", "true");
                     }
                 }
@@ -2006,10 +2007,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 // Fix incompatibility with SharpSK
                 final File sharpSkJar = new File(serverDirectory, "plugins/SharpSK.jar");
 
-                String sharpSkversion = null;
-                boolean notUsingFixedSharpSk = false;
+                // The above flag just recommends restarting the server,
+                // but this clarifies that things we do not work without a restart.
+                boolean restartNeeded = false;
 
                 if (sharpSkJar.isFile() && sharpSkJar.exists()) {
+                    boolean notUsingFixedSharpSk = false;
+                    String sharpSkversion = null;
                     try (final JarFile sharpSk = new JarFile(serverDirectory.getCanonicalPath() + "/plugins/SharpSK.jar")) {
                         final JarEntry entry = sharpSk.getJarEntry("plugin.yml");
 
@@ -2074,10 +2078,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             });
                             // Required to non-downgrade automatically.
                             Skript.closeOnEnable(() -> {
-                                if (Bukkit.getPluginManager().isPluginEnabled("SharpSKUpdater"))
-                                    Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater"));
+                                final Plugin sharpSkUpdater = Bukkit.getPluginManager().getPlugin("SharpSKUpdater");
+                                if (sharpSkUpdater != null && Bukkit.getPluginManager().isPluginEnabled(sharpSkUpdater))
+                                    Bukkit.getPluginManager().disablePlugin(sharpSkUpdater);
                                 else {
-                                    Bukkit.getScheduler().runTask(this, () -> Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("SharpSKUpdater")));
+                                    Bukkit.getScheduler().runTask(this, () -> {
+                                        final Plugin freshInstance = Bukkit.getPluginManager().getPlugin("SharpSKUpdater");
+
+                                        if (freshInstance == null && sharpSkUpdater == null)
+                                            return;
+
+                                        Bukkit.getPluginManager().disablePlugin(freshInstance != null ? freshInstance : sharpSkUpdater);
+                                    });
                                 }
                             });
                             Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
@@ -2514,7 +2526,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         } else {
                             if (alias != null) {
                                 if ("reload".equalsIgnoreCase(args[0])) {
-                                    final Collection<String> fileNames = new ArrayList<>();
+                                    final Collection<String> fileNames = new ArrayList<>(ScriptLoader.getLoadedFiles().size());
 
                                     for (final File scriptFile : ScriptLoader.getLoadedFiles())
                                         fileNames.add(scriptFile.getName().startsWith("-") ? scriptFile.getName().substring(1) : scriptFile.getName());
