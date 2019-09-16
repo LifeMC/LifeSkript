@@ -1253,7 +1253,7 @@ public final class SkriptParser {
             Kleenean and = Kleenean.UNKNOWN;
             boolean isLiteralList = true;
 
-            final List<Expression<? extends T>> ts = new ArrayList<>(pieces.size());
+            final List<Expression<? extends T>> ts = new ArrayList<>();
 
             outer:
             for (int b = 0; b < pieces.size(); ) {
