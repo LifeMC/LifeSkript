@@ -3216,8 +3216,14 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     return;
                 }
                 try {
-                    final Field modifiers = Field.class.getDeclaredField("modifiers");
-                    modifiers.setAccessible(true);
+                    Field modifiers = null;
+                    try {
+                        modifiers = Field.class.getDeclaredField("modifiers");
+                    } catch (final NoSuchFieldException ignored) {
+                        // Java >= 12, ignore
+                    }
+                    if (modifiers != null)
+                        modifiers.setAccessible(true);
                     try (final JarFile jar = new JarFile(getPluginFile(), false)) {
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().endsWith(".class")) {
@@ -3234,11 +3240,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         if (!"findLoadedClass".equalsIgnoreCase(f.getName()) && Modifier.isStatic(f.getModifiers()) && !f.getType().isPrimitive() && (!isFinal || f.getType() != String.class)) {
                                             lastField = f.getName();
                                             f.setAccessible(true);
-                                            if (isFinal) {
+                                            if (isFinal && modifiers != null) {
                                                 modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL); // Remove final
                                             }
                                             f.set(null, null);
-                                            if (isFinal) {
+                                            if (isFinal && modifiers != null) {
                                                 modifiers.setInt(f, f.getModifiers() & Modifier.FINAL); // Put it back again
                                             }
                                         }
