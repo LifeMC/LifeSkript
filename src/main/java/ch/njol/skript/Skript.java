@@ -53,6 +53,7 @@ import ch.njol.skript.variables.FlatFileStorage;
 import ch.njol.skript.variables.Variables;
 import ch.njol.skript.variables.VariablesStorage;
 import ch.njol.util.Closeable;
+import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
 import ch.njol.util.WebUtils;
 import ch.njol.util.coll.CollectionUtils;
@@ -1852,7 +1853,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 // Get server directory / folder
                 final File dataFolder = getDataFolder();
-                final File serverDirectory = dataFolder.getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
 
                 // Flag to track changes and warn the user
                 boolean madeChanges = false;
@@ -1920,6 +1920,33 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         }
                         if (line.contains("disable backups completely: true"))
                             System.setProperty("skript.disableBackupsCompletely", "true");
+                    }
+                }
+
+                // Read view distance from server.properties to fix view distance
+                int viewDistance = 10;
+
+                final File serverDirectory = dataFolder.getParentFile().getCanonicalFile().getParentFile().getCanonicalFile();
+                final PropertiesFile serverProperties = new PropertiesFile(serverDirectory, "server.properties");
+                if (serverProperties.isFile() && serverProperties.exists()) {
+                    serverProperties.loadFile();
+
+                    viewDistance = serverProperties.getInt("view-distance", viewDistance);
+                }
+
+                // Modify the spigot config to fix netty thread count
+                final File spigotFile = new File(serverDirectory, "spigot.yml");
+                if (spigotFile.isFile() && spigotFile.exists()) {
+                    final Path filePath = spigotFile.toPath();
+                    final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
+                    final String replacedContents = contents
+                            .replace("netty-threads: 4", "netty-threads: " + Math2.min(4, Runtime.getRuntime().availableProcessors()))
+                            .replace("view-distance: 10", "view-distance: " + (viewDistance < 10 ? String.valueOf(viewDistance) : "10")).trim();
+                    if (!contents.equalsIgnoreCase(replacedContents)) {
+                        FileUtils.backup(spigotFile);
+
+                        Files.write(filePath, replacedContents.getBytes(StandardCharsets.UTF_8));
+                        madeChanges = true;
                     }
                 }
 
