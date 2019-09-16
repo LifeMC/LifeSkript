@@ -877,4 +877,13 @@
             </build>
         </profile>
     </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub LifeMC Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/LifeMC/LifeSkript</url>
+        </repository>
+    </distributionManagement>
+
 </project>
