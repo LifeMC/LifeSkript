@@ -70,7 +70,7 @@ public final class ScriptCommand implements CommandExecutor {
             Skript.invoke(Skript.getConstructor(PluginCommand.class, String.class, Plugin.class), (Consumer<Constructor<PluginCommand>>) constructor -> constructor.setAccessible(true));
 
     public static final ConcurrentMap<String, ScriptCommand> commandMap =
-            new ConcurrentHashMap<>();
+            new ConcurrentHashMap<>(300);
 
     public static final Message m_executable_by_players = new Message("commands.executable by players");
     public static final Message m_executable_by_console = new Message("commands.executable by console");

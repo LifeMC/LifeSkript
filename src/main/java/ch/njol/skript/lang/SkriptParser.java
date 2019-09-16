@@ -1253,7 +1253,7 @@ public final class SkriptParser {
             Kleenean and = Kleenean.UNKNOWN;
             boolean isLiteralList = true;
 
-            final List<Expression<? extends T>> ts = new ArrayList<>();
+            final List<Expression<? extends T>> ts = new ArrayList<>(pieces.size());
 
             outer:
             for (int b = 0; b < pieces.size(); ) {
@@ -1401,10 +1401,6 @@ public final class SkriptParser {
             }
             log.clear();
 
-            final List<Expression<?>> ts = new ArrayList<>();
-            Kleenean and = Kleenean.UNKNOWN;
-            boolean isLiteralList = true;
-
             final List<int[]> pieces = new ArrayList<>();
             {
                 final Matcher m = listSplitPattern.matcher(expr);
@@ -1440,6 +1436,10 @@ public final class SkriptParser {
                 log.printError();
                 return null;
             }
+
+            final List<Expression<?>> ts = new ArrayList<>();
+            Kleenean and = Kleenean.UNKNOWN;
+            boolean isLiteralList = true;
 
             outer:
             for (int b = 0; b < pieces.size(); ) {
@@ -1692,9 +1692,10 @@ public final class SkriptParser {
     @SuppressWarnings("null")
     @Nullable
     private final ParseResult parse_i(final String pattern, int i, int j) {
-        ParseResult res;
-        int end, i2;
         while (j < pattern.length()) {
+            ParseResult res;
+            final int end;
+            int i2;
             switch (pattern.charAt(j)) {
                 case '[': {
                     final ParseLogHandler log = SkriptLogger.startParseLogHandler();
