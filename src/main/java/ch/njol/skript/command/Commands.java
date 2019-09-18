@@ -32,6 +32,8 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.SectionNode;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.lang.*;
+import ch.njol.skript.lang.function.Function;
+import ch.njol.skript.lang.function.Functions;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
@@ -89,8 +91,8 @@ public final class Commands {
     public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
     public static final AtomicBoolean cancelledEvent =
             new AtomicBoolean();
-    private static final Map<String, ScriptCommand> commands = new HashMap<>();
-    private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
+    private static final Map<String, ScriptCommand> commands = new HashMap<>(300);
+    private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("tab completer", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
     private static final Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
     @SuppressWarnings("null")
@@ -398,7 +400,8 @@ public final class Commands {
         final boolean a = m.matches();
         assert a;
 
-        final String command = m.group(1).toLowerCase(Locale.ENGLISH);
+        final String actualCommand = m.group(1);
+        final String command = actualCommand.toLowerCase(Locale.ENGLISH);
         final ScriptCommand existingCommand = commands.get(command);
         if (existingCommand != null && existingCommand.getLabel().equals(command)) {
             final File f = existingCommand.getScript();
@@ -526,6 +529,25 @@ public final class Commands {
             cooldownStorage = VariableString.newInstance(cooldownStorageString, StringMode.VARIABLE_NAME);
         }
 
+        final String tabCompleterFunctionName = ScriptLoader.replaceOptions(node.get("tab completer", ""));
+        VariableString tabCompleterFunction = null;
+        if (!tabCompleterFunctionName.isEmpty()) {
+            tabCompleterFunction = VariableString.newInstance(tabCompleterFunctionName, StringMode.VARIABLE_NAME);
+        }
+
+        if (tabCompleterFunction != null) {
+            if (!tabCompleterFunction.isSimple()) { // TODO maybe add expression support
+                Skript.error("Tab completer function name should be a literal (i.e must not contain any expressions, but can contain options)");
+                return null;
+            }
+
+            final String functionName = tabCompleterFunction.getSingle(null);
+
+            if (!validateTabCompleter(functionName)) {
+                return null; // Errors are already printed
+            }
+        }
+
         final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
         if (permissionMessage != null && permission.isEmpty()) {
             Skript.warning("command /" + command + " has a permission message set, but not permission");
@@ -548,7 +570,7 @@ public final class Commands {
         final ScriptCommand c;
 
         try {
-            c = new ScriptCommand(config, command, pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, executableBy, ScriptLoader.loadItems(trigger));
+            c = new ScriptCommand(config, command, actualCommand, pattern.toString(), currentArguments, description, usage, aliases, permission, permissionMessage, cooldown, cooldownMessage, cooldownBypass, cooldownStorage, tabCompleterFunctionName, executableBy, ScriptLoader.loadItems(trigger));
         } finally {
             Commands.currentArguments = null;
         }
@@ -557,6 +579,107 @@ public final class Commands {
         if (Skript.logVeryHigh() && !Skript.debug())
             info("registered command " + desc);
         return c;
+    }
+
+    /**
+     * Gets the actual tab completer object, from a tab completer function, by wrapping it.
+     *
+     * @param completerFunction The tab completer function.
+     * @return The actual tab completer object.
+     */
+    public static final TabCompleter getTabCompleter(final Function<String> completerFunction) {
+        Validate.notNull(completerFunction);
+
+        return (sender, command, alias, args) -> {
+            Validate.notNull(completerFunction);
+
+            final String commandName = command.getName();
+            final ScriptCommand scriptCommand = ScriptCommand.commandMap.get(commandName.toLowerCase(Locale.ENGLISH));
+
+            final String actualName = scriptCommand.getActualName();
+
+            if (commandName.equalsIgnoreCase(alias))
+                alias = actualName;
+            else {
+                final String finalAlias = alias;
+                alias = scriptCommand.getActualAliases().stream().filter(a -> a.equalsIgnoreCase(finalAlias)).findFirst().orElse(finalAlias);
+            }
+
+            final String[] returnValue = completerFunction.execute(new Object[][]{new CommandSender[]{sender}, new String[]{actualName}, new String[]{alias}, args});
+            completerFunction.resetReturnValue();
+
+            if (returnValue == null)
+                return null;
+
+            if (returnValue.length < 1)
+                return Collections.emptyList();
+
+            return Arrays.asList(returnValue);
+        };
+    }
+
+    /**
+     * Gets the tab completer function from a function name, does not print any errors,
+     * just returns null on failure.
+     *
+     * @param functionName The name of function.
+     * @return The tab completer function, null on failure.
+     */
+    @Nullable
+    public static final Function<String> getTabCompleterFunction(final String functionName) {
+        return getTabCompleterFunction(functionName, false);
+    }
+
+    /**
+     * Internal method.
+     *
+     * @see Commands#getTabCompleterFunction(String)
+     * @see Commands#validateTabCompleter(String)
+     */
+    @Nullable
+    private static final Function<String> getTabCompleterFunction(final String functionName,
+                                                                  final boolean printErrors) {
+        Validate.notNull(functionName);
+
+        final Function<?> function = Functions.getFunction(functionName);
+
+        if (function == null) { // TODO add functions before definitions support
+            if (printErrors)
+                Skript.error("The tab completer function '" + functionName + "' does not exist, please put it before the command");
+            return null;
+        }
+
+        final ClassInfo<?> returnType = function.getReturnType();
+
+        if (returnType == null) { // May happen with add-ons (e.g skript-mirror)
+            if (printErrors)
+                Skript.error("Return type of the tab completer function '" + functionName + "' should be known at parse time, please make sure you put the function before the command");
+            return null;
+        }
+
+        if (returnType.getC() != String.class || function.isSingle()) {
+            if (printErrors)
+                Skript.error("Return type of the tab completer function '" + functionName + "' must be list of strings/texts, not " + returnType.getCodeName());
+            return null;
+        }
+
+        if (function.getParameters().length != 4 || function.getParameter(0).getType().getC() != CommandSender.class || function.getParameter(1).getType().getC() != String.class || function.getParameter(2).getType().getC() != String.class || function.getParameter(3).getType().getC() != String.class || function.getParameter(3).isSingle()) {
+            if (printErrors)
+                Skript.error("The definition of the tab completer function '" + functionName + "' should look like: function onTabComplete(sender: command sender, command: string, alias: string, args: strings) :: strings:");
+            return null;
+        }
+
+        return (Function<String>) function;
+    }
+
+    /**
+     * Validates a tab completer function from a function name. May print errors.
+     *
+     * @param functionName The name of function.
+     * @return True if the tab completer function is valid.
+     */
+    public static final boolean validateTabCompleter(final String functionName) {
+        return getTabCompleterFunction(functionName, true) != null;
     }
 
     public static final void registerCommand(final ScriptCommand command) {

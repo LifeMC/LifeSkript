@@ -26,6 +26,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.command.Commands.CommandAliasHelpTopic;
 import ch.njol.skript.lang.*;
+import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Language;
@@ -43,6 +44,7 @@ import ch.njol.util.StringUtils;
 import ch.njol.util.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -64,7 +66,7 @@ import java.util.function.Consumer;
  *
  * @author Peter Güttinger
  */
-public final class ScriptCommand implements CommandExecutor {
+public final class ScriptCommand implements TabExecutor {
 
     public static final Constructor<PluginCommand> pluginCommandConstructor =
             Skript.invoke(Skript.getConstructor(PluginCommand.class, String.class, Plugin.class), (Consumer<Constructor<PluginCommand>>) constructor -> constructor.setAccessible(true));
@@ -76,6 +78,7 @@ public final class ScriptCommand implements CommandExecutor {
     public static final Message m_executable_by_console = new Message("commands.executable by console");
     public static final int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
     final String name;
+    final String actualName;
     final String usage;
     final Trigger trigger;
     final int executableBy;
@@ -91,6 +94,8 @@ public final class ScriptCommand implements CommandExecutor {
     private final String cooldownBypass;
     @Nullable
     private final Expression<String> cooldownStorage;
+    @Nullable
+    private final String tabCompleterFunctionName;
     private final String pattern;
     private final List<Argument<?>> arguments;
     private final transient PluginCommand bukkitCommand;
@@ -115,9 +120,10 @@ public final class ScriptCommand implements CommandExecutor {
      * @param items             trigger to execute
      */
     @SuppressWarnings("null")
-    public ScriptCommand(final File script, final String name, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final int executableBy, final List<TriggerItem> items) {
+    public ScriptCommand(final File script, final String name, final String actualName, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final String tabCompleterFunctionName, final int executableBy, final List<TriggerItem> items) {
         Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
         this.name = name;
+        this.actualName = actualName;
         label = name.toLowerCase(Locale.ENGLISH);
         this.permission = permission;
         this.permissionMessage = permissionMessage == null ? new SimpleLiteral<>(Language.get("commands.no permission message"), false) : permissionMessage;
@@ -126,6 +132,7 @@ public final class ScriptCommand implements CommandExecutor {
         this.cooldownMessage = cooldownMessage == null ? new SimpleLiteral<>(Language.get("commands.cooldown message"), false) : cooldownMessage;
         this.cooldownBypass = cooldownBypass;
         this.cooldownStorage = cooldownStorage;
+        this.tabCompleterFunctionName = tabCompleterFunctionName;
 
         // remove aliases that are the same as the command
         actualAliases = new ArrayList<>(aliases);
@@ -418,6 +425,10 @@ public final class ScriptCommand implements CommandExecutor {
         return name;
     }
 
+    public final String getActualName() {
+        return actualName;
+    }
+
     public String getLabel() {
         return label;
     }
@@ -527,6 +538,43 @@ public final class ScriptCommand implements CommandExecutor {
     @Nullable
     public File getScript() {
         return trigger.getScript();
+    }
+
+    @Nullable
+    @Override
+    public final List<String> onTabComplete(@Nullable final CommandSender sender, @Nullable final Command command, @Nullable final String alias, @Nullable final String[] args) {
+        assert args != null;
+
+        final int argIndex = args.length - 1;
+        if (argIndex >= arguments.size())
+            return Collections.emptyList(); // Too many arguments, nothing to complete
+
+        final String tabCompleterFunctionName = this.tabCompleterFunctionName;
+
+        if (tabCompleterFunctionName != null && !tabCompleterFunctionName.isEmpty() && Commands.validateTabCompleter(tabCompleterFunctionName)) {
+            // Special overridden tab completer
+            final Function<String> tabCompleter = Commands.getTabCompleterFunction(tabCompleterFunctionName);
+
+            if (tabCompleter == null) // Sanity check
+                Skript.error("The tab completer '" + tabCompleterFunctionName + "' of the command '" + name + "' is removed, but it's still used");
+            else {
+                final List<String> completions = Commands.getTabCompleter(tabCompleter).onTabComplete(sender, command, alias, args);
+
+                // Sort the completions automatically
+                if (completions != null && completions.size() > 1 && !args[args.length - 1].isEmpty())
+                    completions.sort((a, b) -> a != null && a.startsWith(args[args.length - 1]) ? -1 : b != null && b.startsWith(args[args.length - 1]) ? 1 : 0);
+
+                return completions;
+            }
+        }
+
+        final Argument<?> arg = arguments.get(argIndex);
+        final Class<?> argType = arg.getType();
+
+        if (argType == Player.class || argType == OfflinePlayer.class)
+            return null; // Default completion
+
+        return Collections.emptyList(); // No tab completion here!
     }
 
 }
