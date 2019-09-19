@@ -63,8 +63,8 @@ class ResolverTrackerAgent(
         assert(agent == null)
         agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
             when (event) {
-                is UnresolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Unresolved player added to queue: " + event.player.name)
-                is ResolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Unresolved player \"" + event.player.name + "\" is now resolved.")
+                is UnresolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "An unresolved player is added to queue: " + event.player.name)
+                is ResolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The unresolved player \"" + event.player.name + "\" is now resolved.")
                 else -> assert(false) { event.javaClass.name }
             }
         }, UnresolvedPlayerEvent::class.java, ResolvedPlayerEvent::class.java)

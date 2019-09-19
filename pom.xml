@@ -670,7 +670,7 @@
                         <version>3.2.1</version>
                     </dependency>
                     <!-- This not a downgrade, eclipse version system is shitty,
-                            this actually the 4.12 version. -->
+                            this actually the 4.13 version. -->
                     <dependency>
                         <groupId>org.eclipse.jdt</groupId>
                         <artifactId>ecj</artifactId>
@@ -809,8 +809,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-SNAPSHOT</version>
                 <configuration>
-                    <useFile>false</useFile>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+
+                    <useFile>false</useFile>
                     <trimStackTrace>false</trimStackTrace>
                 </configuration>
             </plugin>

@@ -2756,7 +2756,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 //                        private final List<LogEntry> log = new ArrayList<LogEntry>();
 
                     @Override
-                    public LogResult log(final LogEntry entry) {
+                    public final LogResult log(final LogEntry entry) {
                         super.log(entry);
                         if (entry.level.intValue() >= Level.SEVERE.intValue()) {
                             logEx(entry.message); // no [Skript] prefix
@@ -2768,21 +2768,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     }
 
                     @Override
-                    protected void beforeErrors() {
+                    protected final void beforeErrors() {
                         logEx();
                         logEx("===!!!=== Skript variable load error ===!!!===");
                         logEx("Unable to load variables:");
                     }
 
                     @Override
-                    protected void afterErrors() {
+                    protected final void afterErrors() {
                         logEx();
                         logEx("Skript will work properly, but old variables might not be available at all and new ones may or may not be saved until Skript is able to create a backup of the old file and/or is able to connect to the database (which requires a restart of Skript)!");
                         logEx();
                     }
 
 //                    @Override
-//                    protected void onStop() {
+//                    protected final void onStop() {
 //                        super.onStop();
 //                            SkriptLogger.logAll(log);
 //                    }

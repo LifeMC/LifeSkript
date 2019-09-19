@@ -16,11 +16,11 @@
       <extension name="ZendUtils" enabled="false" />
       <extension name="amqp" enabled="false" />
       <extension name="apache" enabled="false" />
-      <extension name="apc" enabled="false" />
       <extension name="apcu" enabled="false" />
       <extension name="bcmath" enabled="false" />
       <extension name="bz2" enabled="false" />
       <extension name="calendar" enabled="false" />
+      <extension name="cassandra" enabled="false" />
       <extension name="couchbase" enabled="false" />
       <extension name="ctype" enabled="false" />
       <extension name="cubrid" enabled="false" />
@@ -39,6 +39,7 @@
       <extension name="gd" enabled="false" />
       <extension name="gearman" enabled="false" />
       <extension name="geoip" enabled="false" />
+      <extension name="geos" enabled="false" />
       <extension name="gettext" enabled="false" />
       <extension name="gmagick" enabled="false" />
       <extension name="gmp" enabled="false" />

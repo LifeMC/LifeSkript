@@ -38,6 +38,7 @@ import ch.njol.skript.log.BlockingLogHandler;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.PatternCache;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Checker;
@@ -252,7 +253,7 @@ public final class VariableString implements Expression<String> {
     private static final void checkVariableConflicts(final String name, final StringMode mode, @Nullable final Iterable<Object> string) {
         if (mode != StringMode.VARIABLE_NAME || variableNames.containsKey(name))
             return;
-        if (!name.isEmpty() && name.charAt(0) == '%') {// inside the if to only print this message once per variable
+        if (!name.isEmpty() && name.charAt(0) == '%') { // inside the if to only print this message once per variable
             final Config script = ScriptLoader.currentScript;
             if (script != null && !SkriptConfig.disableStartingWithExpressionWarnings.value()) {
                 Skript.warning("Starting a variable's name with an expression is discouraged ({" + name + "}). You could prefix it with the script's name: {" + StringUtils.substring(script.getFileName(), 0, -3) + "::" + name + '}');
@@ -277,9 +278,9 @@ public final class VariableString implements Expression<String> {
                     p.append(Pattern.quote(o.toString()));
                 }
             }
-            pattern = Pattern.compile(p.toString());
+            pattern = PatternCache.get(p.toString());
         } else {
-            pattern = Pattern.compile(Pattern.quote(name));
+            pattern = PatternCache.get(Pattern.quote(name));
         }
         if (!SkriptConfig.disableVariableConflictWarnings.value()) {
             final Matcher m = pattern.matcher("");

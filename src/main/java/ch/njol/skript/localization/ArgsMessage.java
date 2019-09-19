@@ -25,6 +25,7 @@ package ch.njol.skript.localization;
 import ch.njol.skript.Skript;
 
 import java.util.IllegalFormatException;
+import java.util.Locale;
 
 public final class ArgsMessage extends Message {
 
@@ -40,7 +41,7 @@ public final class ArgsMessage extends Message {
     public String toString(final Object... args) {
         try {
             final String val = getValue();
-            return val == null ? key : "" + String.format(val, args);
+            return val == null ? key : String.format(Locale.ENGLISH, val, args);
         } catch (final IllegalFormatException e) {
             final String m = "The formatted message '" + key + "' uses an illegal format: " + e.getLocalizedMessage();
             Skript.adminBroadcast("<red>" + m);

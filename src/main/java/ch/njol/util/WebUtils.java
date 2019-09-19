@@ -51,7 +51,7 @@ public final class WebUtils {
      * The current chrome user agent.
      */
     public static final String USER_AGENT =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36";
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36";
     private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
 
     /**
@@ -68,7 +68,7 @@ public final class WebUtils {
      * {@link WebUtils#getResponse(String, String)} method. This overloaded version
      * of the original method is just uses the default content type (json).
      *
-     * @param address - The url (address) of the web server / web site to connect
+     * @param address - The url (address) of the web server / website to connect
      *                and get response from it.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
@@ -87,7 +87,7 @@ public final class WebUtils {
      * {@link WebUtils#getResponse(String, String)} method. This overloaded version
      * of the original method is just uses the default content type (json).
      *
-     * @param address - The url (address) of the web server / web site to connect
+     * @param address - The url (address) of the web server / website to connect
      *                and get response from it.
      * @return The web response from the given url as {@link String
      * String}, maybe null in some cases.
@@ -103,7 +103,7 @@ public final class WebUtils {
      * Connects to the given address and returns the web response as
      * {@link String String}.
      *
-     * @param address     - The url (address) of the web server / web site to
+     * @param address     - The url (address) of the web server / website to
      *                    connect and get response from it.
      * @param contentType - The content type header of the http web request to the
      *                    selected address / url.
@@ -121,7 +121,7 @@ public final class WebUtils {
      * Connects to the given address and returns the web response as
      * {@link String String}.
      *
-     * @param address        - The url (address) of the web server / web site to
+     * @param address        - The url (address) of the web server / website to
      *                       connect and get response from it.
      * @param contentType    - The content type header of the http web request to the
      *                       selected address / url.

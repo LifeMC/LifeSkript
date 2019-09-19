@@ -10,6 +10,6 @@ call ./mvnw.cmd install:install-file -Dfile=lib/griefprevention-13.9.1.jar -Dgro
 call ./mvnw.cmd install:install-file -Dfile=lib/worldguard-6.1.2.jar -DgroupId=com.sk89q -DartifactId=worldguard -Dversion=6.1.2 -Dpackaging=jar -DgeneratePom=true
 call ./mvnw.cmd install:install-file -Dfile=lib/worldedit-6.1.9.jar -DgroupId=com.sk89q -DartifactId=worldedit -Dversion=6.1.9 -Dpackaging=jar -DgeneratePom=true
 
-call ./mvnw.cmd -e -DcompilerArgument=-Xlint:all clean install package
+call ./mvnw.cmd -e -nsu -DcompilerArgument=-Xlint:all clean install package
 pause
 cmd /k

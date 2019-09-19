@@ -49,7 +49,7 @@ public final class Adjective extends Message {
         for (int i = 0; i < adjectives.length; i++) {
             if (i != 0) {
                 if (i == adjectives.length - 1)
-                    b.append(" ").append(and ? GeneralWords.and : GeneralWords.or).append(" ");
+                    b.append(' ').append(and ? GeneralWords.and : GeneralWords.or).append(' ');
                 else
                     b.append(", ");
             }

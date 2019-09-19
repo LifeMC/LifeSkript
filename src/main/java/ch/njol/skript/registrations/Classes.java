@@ -334,7 +334,7 @@ public final class Classes {
     @Nullable
     public static final ClassInfo<?> getClassInfoFromUserInput(String name) {
         checkAllowClassInfoInteraction();
-        name = "" + name.toLowerCase(Locale.ENGLISH);
+        name = name.toLowerCase(Locale.ENGLISH);
         for (final ClassInfo<?> ci : getClassInfos()) {
             final Pattern[] uip = ci.getUserInputPatterns();
             if (uip == null)
@@ -659,7 +659,7 @@ public final class Classes {
             }
             b.append(toString(os[i], mode, flags));
         }
-        return "" + b;
+        return b.toString();
     }
 
     private static final byte[] getYggdrasilStart(final ClassInfo<?> c) throws NotSerializableException {

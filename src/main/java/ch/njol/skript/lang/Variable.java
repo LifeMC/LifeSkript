@@ -284,7 +284,7 @@ public final class Variable<T> implements Expression<T> {
         return l.toArray();
     }
 
-    /*
+    /**
      * Workaround for player variables when a player has left and rejoined
      * because the player object inside the variable will be a (kinda) dead variable
      * as a new player object has been created by the server.
@@ -292,14 +292,13 @@ public final class Variable<T> implements Expression<T> {
      * @see Variable#convertIfOldPlayer(String, Event, boolean, Object)
      * @deprecated use {@link Variable#convertIfOldPlayer(String, Event, boolean, Object)} instead
      */
-    @SuppressWarnings("deprecation")
     @Nullable
     @Deprecated
     final Object convertIfOldPlayer(final String key, final Event event, @Nullable final Object t) {
         return convertIfOldPlayer(key, event, local, t);
     }
 
-    /*
+    /**
      * Workaround for player variables when a player has left and rejoined
      * because the player object inside the variable will be a (kinda) dead variable
      * as a new player object has been created by the server.

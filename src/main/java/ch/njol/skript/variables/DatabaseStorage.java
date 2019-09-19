@@ -585,6 +585,9 @@ public final class DatabaseStorage extends VariablesStorage {
 
 //	static final LinkedList<VariableInfo> syncDeserializing = new LinkedList<VariableInfo>();
 
+    /**
+     * @deprecated Only used for upgrading old variables/tables
+     */
     @Deprecated
     private void oldLoadVariables(final ResultSet r, final boolean hadNewTable) throws SQLException {
 //		synchronized (oldSyncDeserializing) {

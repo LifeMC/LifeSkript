@@ -174,6 +174,7 @@ public enum Color implements YggdrasilSerializable {
     }
 
     // currently only used by SheepData
+    @Nullable
     public Adjective getAdjective() {
         return adjective;
     }
