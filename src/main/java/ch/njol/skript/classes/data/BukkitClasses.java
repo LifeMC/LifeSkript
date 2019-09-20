@@ -65,6 +65,9 @@ import java.util.regex.Pattern;
 // TODO vectors
 public final class BukkitClasses {
 
+    static final Pattern parsePattern = Pattern.compile("(?:(?:the )?world )?\"(.+)\"", Pattern.CASE_INSENSITIVE);
+    static final Matcher parsePatternMatcher = parsePattern.matcher("");
+
     private BukkitClasses() {
         throw new UnsupportedOperationException();
     }
@@ -122,7 +125,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final Block b) {
-                return b.getWorld().getName() + ":" + b.getX() + "," + b.getY() + "," + b.getZ();
+                return b.getWorld().getName() + ':' + b.getX() + ',' + b.getY() + ',' + b.getZ();
             }
 
             @Override
@@ -132,7 +135,7 @@ public final class BukkitClasses {
 
             @Override
             public String getDebugMessage(final Block b) {
-                return toString(b, 0) + " block (" + b.getWorld().getName() + ":" + b.getX() + "," + b.getY() + "," + b.getZ() + ")";
+                return toString(b, 0) + " block (" + b.getWorld().getName() + ':' + b.getX() + ',' + b.getY() + ',' + b.getZ() + ')';
             }
         }).changer(DefaultChangers.blockChanger).serializer(new Serializer<Block>() {
             @SuppressWarnings("null")
@@ -213,7 +216,7 @@ public final class BukkitClasses {
 
             @Override
             public String toVariableNameString(final Location l) {
-                return l.getWorld().getName() + ":" + l.getX() + "," + l.getY() + "," + l.getZ();
+                return l.getWorld().getName() + ':' + l.getX() + ',' + l.getY() + ',' + l.getZ();
             }
 
             @Override
@@ -223,7 +226,7 @@ public final class BukkitClasses {
 
             @Override
             public String getDebugMessage(final Location l) {
-                return "(" + l.getWorld().getName() + ":" + l.getX() + "," + l.getY() + "," + l.getZ() + "|yaw=" + l.getYaw() + "/pitch=" + l.getPitch() + ")";
+                return '(' + l.getWorld().getName() + ':' + l.getX() + ',' + l.getY() + ',' + l.getZ() + "|yaw=" + l.getYaw() + "/pitch=" + l.getPitch() + ')';
             }
         }).serializer(new Serializer<Location>() {
             @Override
@@ -281,16 +284,13 @@ public final class BukkitClasses {
 
         // FIXME update doc
         Classes.registerClass(new ClassInfo<>(World.class, "world").user("worlds?").name("World").description("One of the server's worlds. Worlds can be put into scripts by surrounding their name with double quotes, e.g. \"world_nether\", " + "but this might not work reliably as <a href='#string'>text</a> uses the same syntax.").usage("<code>\"world_name\"</code>, e.g. \"world\"").examples("broadcast \"Hello!\" to the world \"world_nether\"").since("1.0, 2.2 (alternate syntax)").after("string").defaultExpression(new EventValueExpression<>(World.class)).parser(new Parser<World>() {
-            @SuppressWarnings("null")
-            private final Pattern parsePattern = Pattern.compile("(?:(?:the )?world )?\"(.+)\"", Pattern.CASE_INSENSITIVE);
-
             @Override
             @Nullable
             public World parse(final String s, final ParseContext context) {
                 // REMIND allow shortcuts '[over]world', 'nether' and '[the_]end' (server.properties: 'level-name=world') // inconsistent with 'world is "..."'
                 if (context == ParseContext.COMMAND || context == ParseContext.CONFIG)
                     return Bukkit.getWorld(s);
-                final Matcher m = parsePattern.matcher(s);
+                final Matcher m = parsePatternMatcher.reset(s);
                 if (m.matches())
                     return Bukkit.getWorld(m.group(1));
                 return null;
@@ -392,9 +392,9 @@ public final class BukkitClasses {
                     if (ps.size() == 1)
                         return ps.get(0);
                     if (ps.isEmpty())
-                        Skript.error("There is no player online whose name starts with '" + s + "'");
+                        Skript.error("There is no player online whose name starts with '" + s + '\'');
                     else
-                        Skript.error("There are several players online whose names start with '" + s + "'");
+                        Skript.error("There are several players online whose names start with '" + s + '\'');
                     return null;
                 }
 //						if (s.matches("\"\\S+\""))
@@ -429,7 +429,7 @@ public final class BukkitClasses {
 
             @Override
             public String getDebugMessage(final Player p) {
-                return p.getName() + " " + Classes.getDebugMessage(p.getLocation());
+                return p.getName() + ' ' + Classes.getDebugMessage(p.getLocation());
             }
         }).changer(DefaultChangers.playerChanger).serializeAs(OfflinePlayer.class));
 
@@ -612,13 +612,13 @@ public final class BukkitClasses {
                     return null;
                 t = t.getItem();
                 if (t.numTypes() != 1) {
-                    Skript.error("'" + s + "' represents multiple materials");
+                    Skript.error('\'' + s + "' represents multiple materials");
                     return null;
                 }
                 if (!t.getTypes().get(0).hasDataRange())
                     return t.getRandom();
                 if (t.getTypes().get(0).dataMin > 0) {
-                    Skript.error("'" + s + "' represents multiple materials");
+                    Skript.error('\'' + s + "' represents multiple materials");
                     return null;
                 }
                 final ItemStack i = t.getRandom();
@@ -637,11 +637,11 @@ public final class BukkitClasses {
             public String toVariableNameString(final ItemStack i) {
                 final StringBuilder b = new StringBuilder("item:");
                 b.append(i.getType().name());
-                b.append(":").append(i.getDurability());
-                b.append("*").append(i.getAmount());
+                b.append(':').append(i.getDurability());
+                b.append('*').append(i.getAmount());
                 for (final Entry<Enchantment, Integer> e : i.getEnchantments().entrySet()) {
-                    b.append("#").append(e.getKey().getId());
-                    b.append(":").append(e.getValue());
+                    b.append('#').append(e.getKey().getId());
+                    b.append(':').append(e.getValue());
                 }
                 return b.toString();
             }
@@ -777,12 +777,12 @@ public final class BukkitClasses {
 
             @Override
             public String toString(final Chunk c, final int flags) {
-                return "chunk (" + c.getX() + "," + c.getZ() + ") of " + c.getWorld().getName();
+                return "chunk (" + c.getX() + ',' + c.getZ() + ") of " + c.getWorld().getName();
             }
 
             @Override
             public String toVariableNameString(final Chunk c) {
-                return c.getWorld().getName() + ":" + c.getX() + "," + c.getZ();
+                return c.getWorld().getName() + ':' + c.getX() + ',' + c.getZ();
             }
 
             @Override

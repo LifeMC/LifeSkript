@@ -27,6 +27,7 @@ import ch.njol.skript.lang.Debuggable;
 import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Noun;
+import ch.njol.skript.util.PatternCache;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.NonNull;
@@ -35,6 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -50,6 +52,7 @@ public class ClassInfo<T> implements Debuggable {
      */
     public static final String NO_DOC = "";
     private static final Pattern VALID_CODENAME = Pattern.compile("[a-z0-9]+");
+    private static final Matcher VALID_CODENAME_MATCHER = VALID_CODENAME.matcher("");
     private final Class<T> c;
     private final String codeName;
     private final Noun name;
@@ -98,7 +101,7 @@ public class ClassInfo<T> implements Debuggable {
     }
 
     public static final boolean isVaildCodeName(final String name) {
-        return VALID_CODENAME.matcher(name).matches();
+        return VALID_CODENAME_MATCHER.reset(name).matches();
     }
 
     /**
@@ -121,7 +124,7 @@ public class ClassInfo<T> implements Debuggable {
         assert this.userInputPatterns == null;
         this.userInputPatterns = new Pattern[userInputPatterns.length];
         for (int i = 0; i < userInputPatterns.length; i++) {
-            this.userInputPatterns[i] = Pattern.compile(userInputPatterns[i]);
+            this.userInputPatterns[i] = PatternCache.get(userInputPatterns[i]);
         }
         return this;
     }
@@ -176,7 +179,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param name
      * @return This ClassInfo object
      */
-    public ClassInfo<T> name(final String name) {
+    public final ClassInfo<T> name(final String name) {
         assert this.docName == null;
         this.docName = name;
         return this;
@@ -188,7 +191,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param description
      * @return This ClassInfo object
      */
-    public ClassInfo<T> description(final String... description) {
+    public final ClassInfo<T> description(final String... description) {
         assert this.description == null;
         this.description = description;
         return this;
@@ -200,7 +203,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param usage
      * @return This ClassInfo object
      */
-    public ClassInfo<T> usage(final String... usage) {
+    public final ClassInfo<T> usage(final String... usage) {
         assert this.usage == null;
         this.usage = usage;
         return this;
@@ -214,7 +217,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param examples
      * @return This ClassInfo object
      */
-    public ClassInfo<T> examples(final String... examples) {
+    public final ClassInfo<T> examples(final String... examples) {
         assert this.examples == null;
         this.examples = examples;
         return this;
@@ -226,88 +229,88 @@ public class ClassInfo<T> implements Debuggable {
      * @param since
      * @return This ClassInfo object
      */
-    public ClassInfo<T> since(final String since) {
+    public final ClassInfo<T> since(final String since) {
         assert this.since == null;
         this.since = since;
         return this;
     }
 
-    public Class<T> getC() {
+    public final Class<T> getC() {
         return c;
     }
 
-    public Noun getName() {
+    public final Noun getName() {
         return name;
     }
 
-    public String getCodeName() {
+    public final String getCodeName() {
         return codeName;
     }
 
     @Nullable
-    public DefaultExpression<T> getDefaultExpression() {
+    public final DefaultExpression<T> getDefaultExpression() {
         return defaultExpression;
     }
 
     @Nullable
-    public Parser<? extends T> getParser() {
+    public final Parser<? extends T> getParser() {
         return parser;
     }
 
     @Nullable
-    public Pattern[] getUserInputPatterns() {
+    public final Pattern[] getUserInputPatterns() {
         return userInputPatterns;
     }
 
     @Nullable
-    public Changer<? super T> getChanger() {
+    public final Changer<? super T> getChanger() {
         return changer;
     }
 
     @Nullable
-    public Serializer<? super T> getSerializer() {
+    public final Serializer<? super T> getSerializer() {
         return serializer;
     }
 
     @Nullable
-    public Class<?> getSerializeAs() {
+    public final Class<?> getSerializeAs() {
         return serializeAs;
     }
 
     @Nullable
-    public Arithmetic<? super T, ?> getMath() {
+    public final Arithmetic<? super T, ?> getMath() {
         return math;
     }
 
     @Nullable
-    public Class<?> getMathRelativeType() {
+    public final Class<?> getMathRelativeType() {
         return mathRelativeType;
     }
 
     @Nullable
-    public String[] getDescription() {
+    public final String[] getDescription() {
         return description;
     }
 
     @Nullable
-    public String[] getUsage() {
+    public final String[] getUsage() {
         return usage;
     }
 
     @Nullable
-    public String[] getExamples() {
+    public final String[] getExamples() {
         return examples;
     }
 
     // === ORDERING ===
 
     @Nullable
-    public String getSince() {
+    public final String getSince() {
         return since;
     }
 
     @Nullable
-    public String getDocName() {
+    public final String getDocName() {
         return docName;
     }
 
@@ -348,14 +351,14 @@ public class ClassInfo<T> implements Debuggable {
      * @return Set of classes that should be after this one. May return null.
      */
     @Nullable
-    public Set<String> before() {
+    public final Set<String> before() {
         return before;
     }
 
     /**
      * @return Set of classes that should be before this one. Never returns null.
      */
-    public Set<String> after() {
+    public final Set<String> after() {
         return after;
     }
 
@@ -363,19 +366,19 @@ public class ClassInfo<T> implements Debuggable {
 
     @Override
     @NonNull
-    public String toString() {
+    public final String toString() {
         return name.getSingular();
     }
 
-    public String toString(final int flags) {
+    public final String toString(final int flags) {
         return name.toString(flags);
     }
 
     @Override
     @NonNull
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (debug)
-            return codeName + " (" + c.getCanonicalName() + ")";
+            return codeName + " (" + c.getCanonicalName() + ')';
         return name.getSingular();
     }
 

@@ -52,6 +52,7 @@ public final class JavaClasses {
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
     public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.getBoolean("skript.disableByteShortFloat");
     public static final Pattern QUOTE_PATTERN = Pattern.compile("\"\"", Pattern.LITERAL);
+    public static final Matcher QUOTE_PATTERN_MATCHER = QUOTE_PATTERN.matcher("");
 
     private JavaClasses() {
         throw new UnsupportedOperationException();
@@ -469,6 +470,8 @@ public final class JavaClasses {
                 @Override
                 @Nullable
                 public Short parse(final String s, final ParseContext context) {
+                    if (!SkriptParser.isInteger(s))
+                        return null; // Shorts are just limited integers
                     try {
                         return Short.valueOf(s);
                     } catch (final NumberFormatException e) {
@@ -597,7 +600,7 @@ public final class JavaClasses {
                     case SCRIPT:
                     case EVENT:
                         if (VariableString.isQuotedCorrectly(s, true))
-                            return Utils.replaceChatStyles("" + QUOTE_PATTERN.matcher(s.substring(1, s.length() - 1)).replaceAll(Matcher.quoteReplacement("\"")));
+                            return Utils.replaceChatStyles(QUOTE_PATTERN_MATCHER.reset(s.substring(1, s.length() - 1)).replaceAll(Matcher.quoteReplacement("\"")));
                         return null;
                     case COMMAND:
                         return s;

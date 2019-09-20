@@ -199,7 +199,7 @@ public final class Classes {
             for (final ClassInfo<?> c : tempClassInfos) {
                 if (b.length() != 0)
                     b.append(", ");
-                b.append(c.getCodeName()).append(" (after: ").append(StringUtils.join(c.after(), ", ")).append(")");
+                b.append(c.getCodeName()).append(" (after: ").append(StringUtils.join(c.after(), ", ")).append(')');
             }
             throw new IllegalStateException("ClassInfos with circular dependencies detected: " + b);
         }
@@ -266,7 +266,7 @@ public final class Classes {
      * @return The class info registered with the given code name or null if the code name is invalid or not yet registered
      */
     @Nullable
-    public static final ClassInfo<?> getClassInfoNoError(final @Nullable String codeName) {
+    public static final ClassInfo<?> getClassInfoNoError(@Nullable final String codeName) {
         return classInfosByCodeName.get(codeName);
     }
 
@@ -280,7 +280,7 @@ public final class Classes {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static final <T> ClassInfo<T> getExactClassInfo(final @Nullable Class<T> c) {
+    public static final <T> ClassInfo<T> getExactClassInfo(@Nullable final Class<T> c) {
         if (c == ch.njol.skript.util.slot.Slot.class)
             return (ClassInfo<T>) exactClassInfos.get(ch.njol.skript.util.Slot.class);
         return (ClassInfo<T>) exactClassInfos.get(c);
@@ -294,7 +294,7 @@ public final class Classes {
      */
     @SuppressWarnings({"unchecked", "null"})
     @Contract("null->null")
-    public static final <T> ClassInfo<? super T> getSuperClassInfo(final @Nullable Class<T> c) {
+    public static final <T> ClassInfo<? super T> getSuperClassInfo(@Nullable final Class<T> c) {
         // Check null status
         if (c == null)
             return null;
@@ -565,45 +565,45 @@ public final class Classes {
      * @see #toString(Object[], boolean, StringMode)
      * @see Parser
      */
-    public static final String toString(final @Nullable Object o) {
+    public static final String toString(@Nullable final Object o) {
         return toString(o, null, false);
     }
 
-    public static final String toString(final @Nullable Object o,
-                                        final @Nullable VariableString variableName, final boolean debug) {
+    public static final String toString(@Nullable final Object o,
+                                        @Nullable final VariableString variableName, final boolean debug) {
         return toString(o, StringMode.MESSAGE, 0, variableName, debug);
     }
 
-    public static final String getDebugMessage(final @Nullable Object o) {
+    public static final String getDebugMessage(@Nullable final Object o) {
         return toString(o, StringMode.DEBUG, 0);
     }
 
-    public static final <T> String toString(final @Nullable T o, final StringMode mode) {
+    public static final <T> String toString(@Nullable final T o, final StringMode mode) {
         return toString(o, mode, 0);
     }
 
-    private static final <T> String toString(final @Nullable T o, final StringMode mode, final int flags) {
+    private static final <T> String toString(@Nullable final T o, final StringMode mode, final int flags) {
         return toString(o, mode, flags, null, false);
     }
 
-    private static final <T> String toString(final @Nullable T o, final StringMode mode, final int flags,
-                                             final @Nullable VariableString variableName, final boolean debug) {
+    private static final <T> String toString(@Nullable final T o, final StringMode mode, final int flags,
+                                             @Nullable final VariableString variableName, final boolean debug) {
         assert flags == 0 || mode == StringMode.MESSAGE;
         if (o == null) {
             if (SkriptConfig.warnWhenUsingNoneValues.value() && mode != StringMode.DEBUG)
                 if (variableName != null)
-                    Skript.warning("Usage of none is detected - the variable " + variableName + " is null (mode: " + mode + ", flags: " + flags + ", debug: " + debug + ")");
+                    Skript.warning("Usage of none is detected - the variable " + variableName + " is null (mode: " + mode + ", flags: " + flags + ", debug: " + debug + ')');
                 else
-                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (mode: " + mode + ", flags: " + flags + ")");
+                    Skript.warning("Usage of none is detected - probably some variable or expression returned null (mode: " + mode + ", flags: " + flags + ')');
             return Language.get("none");
         }
         if (o.getClass().isArray()) {
             if (((Object[]) o).length == 0) {
                 if (SkriptConfig.warnWhenUsingNoneValues.value() && mode != StringMode.DEBUG)
                     if (variableName != null)
-                        Skript.warning("Usage of none is detected - the variable " + variableName + " is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ", debug: " + debug + ")");
+                        Skript.warning("Usage of none is detected - the variable " + variableName + " is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ", debug: " + debug + ')');
                     else
-                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ")");
+                        Skript.warning("Usage of none is detected - probably some list variable or expression is empty (mode: " + mode + ", flags: " + flags + ", type: " + o.getClass().getCanonicalName() + ')');
                 return Language.get("none");
             }
             final StringBuilder b = new StringBuilder(4096);
@@ -614,12 +614,12 @@ public final class Classes {
                 b.append(toString(i, mode, flags));
                 first = false;
             }
-            return "[" + b + "]";
+            return "[" + b + ']';
         }
         for (final ClassInfo<?> ci : getClassInfos()) {
             final Parser<?> parser = ci.getParser();
             if (parser != null && ci.getC().isInstance(o)) {
-                @SuppressWarnings("unchecked") final String s = mode == StringMode.MESSAGE ? ((Parser<T>) parser).toString(o, flags) : mode == StringMode.DEBUG ? "[" + ci.getCodeName() + ":" + ((Parser<T>) parser).toString(o, mode) + "]" : ((Parser<T>) parser).toString(o, mode);
+                @SuppressWarnings("unchecked") final String s = mode == StringMode.MESSAGE ? ((Parser<T>) parser).toString(o, flags) : mode == StringMode.DEBUG ? '[' + ci.getCodeName() + ':' + ((Parser<T>) parser).toString(o, mode) + ']' : ((Parser<T>) parser).toString(o, mode);
                 return s;
             }
         }
@@ -630,7 +630,7 @@ public final class Classes {
         return toString(os, and, null, StringMode.MESSAGE, flags);
     }
 
-    public static final String toString(final Object[] os, final int flags, final @Nullable ChatColor c) {
+    public static final String toString(final Object[] os, final int flags, @Nullable final ChatColor c) {
         return toString(os, true, c, StringMode.MESSAGE, flags);
     }
 
@@ -642,7 +642,7 @@ public final class Classes {
         return toString(os, and, null, mode, 0);
     }
 
-    private static final String toString(final Object[] os, final boolean and, final @Nullable ChatColor c, final StringMode mode, final int flags) {
+    private static final String toString(final Object[] os, final boolean and, @Nullable final ChatColor c, final StringMode mode, final int flags) {
         if (os.length == 0)
             return toString(null);
         if (os.length == 1)
@@ -749,7 +749,7 @@ public final class Classes {
     }
 
     @SuppressWarnings("unused")
-    private static final boolean equals(final @Nullable Object o, final @Nullable Object d) {
+    private static final boolean equals(@Nullable final Object o, @Nullable final Object d) {
         if (o instanceof Chunk) { // CraftChunk does neither override equals nor is it a "coordinate-specific singleton" like Block
             if (!(d instanceof Chunk))
                 return false;

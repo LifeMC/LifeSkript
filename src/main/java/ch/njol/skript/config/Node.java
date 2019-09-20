@@ -39,7 +39,8 @@ import java.util.regex.Pattern;
 public abstract class Node {
 
     @SuppressWarnings("null")
-    private static final Pattern linePattern = Pattern.compile("^((?:[^#]|##)*)(\\s*#(?!#).*)$");
+    private static final Pattern linePattern = Pattern.compile("^((?:[^#]|##)*)(\\s*#(?!#).*?)$");
+    private static final Matcher linePatternMatcher = linePattern.matcher("");
     protected final int lineNum;
     private final boolean debug;
     @Nullable
@@ -80,7 +81,7 @@ public abstract class Node {
 
     protected Node(final String key, final String comment, final SectionNode parent, final int lineNum) {
         this.key = key;
-        assert comment.isEmpty() || !comment.isEmpty() && comment.charAt(0) == '#' : comment;
+        assert comment.isEmpty() || comment.charAt(0) == '#' : comment;
         this.comment = comment;
         debug = "#DEBUG#".equals(comment);
         this.lineNum = lineNum;
@@ -101,7 +102,7 @@ public abstract class Node {
     public static final NonNullPair<String, String> splitLine(final String line) {
         if (!line.contains("#"))
             return new NonNullPair<>(line, "");
-        final Matcher m = linePattern.matcher(line);
+        final Matcher m = linePatternMatcher.reset(line);
         try {
             if (m.matches())
                 return new NonNullPair<>(m.group(1).replace("##", "#"), m.group(2));
@@ -113,7 +114,7 @@ public abstract class Node {
 
             if (config != null && node != null) {
                 final String script = config.getFileName();
-                additionalInfo += " (" + script + ", line " + node.lineNum + ")";
+                additionalInfo += " (" + script + ", line " + node.lineNum + ')';
             }
 
             Skript.error("There was an error when parsing line! You should avoid very long and/or lists, very long lines and such!" + additionalInfo);
@@ -164,7 +165,7 @@ public abstract class Node {
         return comment;
     }
 
-    int getLevel() {
+    final int getLevel() {
         int l = 0;
         Node n = this;
         while ((n = n.parent) != null) {
@@ -173,7 +174,7 @@ public abstract class Node {
         return Math.max(0, l - 1);
     }
 
-    protected String getIndentation() {
+    protected final String getIndentation() {
         return StringUtils.multiply(config.getIndentation(), getLevel());
     }
 
@@ -191,14 +192,14 @@ public abstract class Node {
     }
 
     @Nullable
-    public SectionNode getParent() {
+    public final SectionNode getParent() {
         return parent;
     }
 
     /**
      * Removes this node from its parent. Does nothing if this node does not have a parent node.
      */
-    public void remove() {
+    public final void remove() {
         final SectionNode p = parent;
         if (p == null)
             return;
@@ -208,14 +209,14 @@ public abstract class Node {
     /**
      * @return Original line of this node at the time it was loaded. <tt>-1</tt> if this node was created dynamically.
      */
-    public int getLine() {
+    public final int getLine() {
         return lineNum;
     }
 
     /**
      * @return Whatever this node does not hold information (i.e. is empty or invalid)
      */
-    public boolean isVoid() {
+    public final boolean isVoid() {
         return this instanceof VoidNode;// || this instanceof ParseOptionNode;
     }
 
@@ -277,13 +278,13 @@ public abstract class Node {
      * {@code node value #including comments (config.sk, line xyz)}
      */
     @Override
-    public String toString() {
+    public final String toString() {
         if (parent == null)
             return config.getFileName();
-        return save_i() + comment + " (" + config.getFileName() + ", " + (lineNum == -1 ? "unknown line" : "line " + lineNum) + ")";
+        return save_i() + comment + " (" + config.getFileName() + ", " + (lineNum == -1 ? "unknown line" : "line " + lineNum) + ')';
     }
 
-    public boolean debug() {
+    public final boolean debug() {
         return debug;
     }
 

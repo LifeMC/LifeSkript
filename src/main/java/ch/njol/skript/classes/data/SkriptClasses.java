@@ -45,6 +45,7 @@ import java.io.StreamCorruptedException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -53,6 +54,8 @@ import java.util.regex.Pattern;
 @SuppressWarnings("rawtypes")
 public final class SkriptClasses {
 
+    static final Pattern EXPERIENCE_PATTERN = Pattern.compile("\\d+ .+");
+    static final Matcher EXPERIENCE_PATTERN_MATCHER = EXPERIENCE_PATTERN.matcher("");
 
     private SkriptClasses() {
         throw new UnsupportedOperationException();
@@ -488,7 +491,7 @@ public final class SkriptClasses {
             }
         }));
 
-        Classes.registerClass(new ClassInfo<>(ch.njol.skript.util.Slot.class, "slot").user("(inventory )?slots?").name("Inventory Slot").description("Represents a single slot of an <a href='#inventory'>inventory</a>. " + "Notable slots are the <a href='../expressions/#ExprArmorSlot'>armour slots</a> and <a href='../expressions/#ExprFurnaceSlot'>furnace slots</a>. ", "The most important property that distinguishes a slot from an <a href='#itemstack'>item</a> is its ability to be changed, e.g. it can be set, deleted, enchanted, etc. " + "(Some item expressions can be changed as well, e.g. items stored in variables. " + "For that matter: slots are never saved to variables, only the items they represent at the time when the variable is set).", "Please note that <a href='../expressions/#ExprTool'>tool</a> can be regarded a slot, but it can actually change it's position, i.e. doesn't represent always the same slot.").usage("").examples("set tool of player to dirt", "delete helmet of the victim", "set the colour of the player's tool to green", "enchant the player's chestplate with projectile protection 5").since("").defaultExpression(new EventValueExpression<>(Slot.class)).changer(new Changer<Slot>() {
+        Classes.registerClass(new ClassInfo<>(Slot.class, "slot").user("(inventory )?slots?").name("Inventory Slot").description("Represents a single slot of an <a href='#inventory'>inventory</a>. " + "Notable slots are the <a href='../expressions/#ExprArmorSlot'>armour slots</a> and <a href='../expressions/#ExprFurnaceSlot'>furnace slots</a>. ", "The most important property that distinguishes a slot from an <a href='#itemstack'>item</a> is its ability to be changed, e.g. it can be set, deleted, enchanted, etc. " + "(Some item expressions can be changed as well, e.g. items stored in variables. " + "For that matter: slots are never saved to variables, only the items they represent at the time when the variable is set).", "Please note that <a href='../expressions/#ExprTool'>tool</a> can be regarded a slot, but it can actually change it's position, i.e. doesn't represent always the same slot.").usage("").examples("set tool of player to dirt", "delete helmet of the victim", "set the colour of the player's tool to green", "enchant the player's chestplate with projectile protection 5").since("").defaultExpression(new EventValueExpression<>(Slot.class)).changer(new Changer<Slot>() {
             @SuppressWarnings("unchecked")
             @Override
             @Nullable
@@ -649,7 +652,7 @@ public final class SkriptClasses {
             @Nullable
             public Experience parse(String s, final ParseContext context) {
                 int xp = -1;
-                if (s.matches("\\d+ .+")) {
+                if (EXPERIENCE_PATTERN_MATCHER.reset(s).matches()) {
                     xp = Utils.parseInt(s.substring(0, s.indexOf(' ')));
                     s = s.substring(s.indexOf(' ') + 1);
                 }
