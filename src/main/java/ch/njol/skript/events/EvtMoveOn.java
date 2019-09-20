@@ -84,12 +84,12 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 //		}
 //	}
     private static long lastCall;
-    private static final EventExecutor executor = (l, event) -> {
+    private static final EventExecutor executor = (@Nullable final Listener l, @Nullable final Event event) -> {
         if (event == null)
             return;
         final PlayerMoveEvent e = (PlayerMoveEvent) event;
         final Location from = e.getFrom(), to = e.getTo();
-        if (System.currentTimeMillis() - lastCall < 1000L)
+        if (System.currentTimeMillis() - lastCall < SkriptEventHandler.moveEventCooldown)
             return; // Prevent too many move events firing
         lastCall = System.currentTimeMillis();
 //			if (!blockTriggers.isEmpty()) {
@@ -224,10 +224,14 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
         }
 //		}
         if (!registeredExecutor) {
-            Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new Listener() {
-                /* empty */
-            }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
+            Bukkit.getPluginManager().registerEvent(PlayerMoveEvent.class, new EmptyListener(), SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
             registeredExecutor = true;
+        }
+    }
+
+    private static final class EmptyListener implements Listener {
+        EmptyListener() {
+            super();
         }
     }
 
