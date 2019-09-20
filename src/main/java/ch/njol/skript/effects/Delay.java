@@ -114,7 +114,7 @@ public final class Delay extends Effect {
                 SkriptAgentKt.throwEvent(new DelayStartEvent(duration));
             Bukkit.getScheduler().runTaskLater(Skript.instance, () -> {
                 if (Skript.debug())
-                    Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + "s");
+                    Skript.info(getIndentation() + " ... continuing after " + (System.nanoTime() - start) / 1000000000. + 's');
                 final long startTime = trackingEnabled ? System.nanoTime() : 0L;
                 Object timing = null;
                 if (SkriptTimings.enabled()) { // getTrigger call is not free, do it only if we must

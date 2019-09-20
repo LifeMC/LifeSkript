@@ -685,7 +685,7 @@ public final class DatabaseStorage extends VariablesStorage {
     }
 
     public enum Type {
-        MYSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "rowid        BIGINT  NOT NULL  AUTO_INCREMENT  PRIMARY KEY," + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  UNIQUE," + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ") CHARACTER SET ucs2 COLLATE ucs2_bin") {// MySQL treats UTF16 as 4 byte charset, resulting in a short max name length. UCS2 uses 2 bytes.
+        MYSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "rowid        BIGINT  NOT NULL  AUTO_INCREMENT  PRIMARY KEY, " + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  UNIQUE, " + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ") CHARACTER SET ucs2 COLLATE ucs2_bin") {// MySQL treats UTF16 as 4 byte charset, resulting in a short max name length. UCS2 uses 2 bytes.
 
             @Override
             @Nullable
@@ -700,7 +700,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 return new MySQL(SkriptLogger.LOGGER, "[Skript]", host, port, database, user, password);
             }
         },
-        SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY," + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ")") {// SQLite uses Unicode exclusively
+        SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY, " + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ")") {// SQLite uses Unicode exclusively
 
             @SuppressWarnings({"null", "unused"})
             @Override

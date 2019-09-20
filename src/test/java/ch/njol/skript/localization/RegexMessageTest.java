@@ -22,7 +22,7 @@
 
 package ch.njol.skript.localization;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static kotlin.test.AssertionsKt.assertTrue;
 
@@ -38,7 +38,7 @@ public final class RegexMessageTest {
         final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};
 
         for (final String test : tests)
-            assertTrue(!RegexMessage.nop.matcher(test).find() && !RegexMessage.nop.matcher(test).matches(), test);
+            assertTrue(!RegexMessage.nop_matcher.reset(test).find() && !RegexMessage.nop_matcher.reset(test).matches(), test);
 
     }
 

@@ -23,7 +23,7 @@
 package ch.njol.skript.config;
 
 import ch.njol.util.NonNullPair;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -35,7 +35,7 @@ public final class NodeTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void splitLineTest() {
+    public void testSplitLine() {
 
         final String[][] data = {{"", "", ""}, {"ab", "ab", ""}, {"ab#", "ab", "#"}, {"ab##", "ab#", ""}, {"ab###", "ab#", "#"}, {"#ab", "", "#ab"}, {"ab#cd", "ab", "#cd"}, {"ab##cd", "ab#cd", ""}, {"ab###cd", "ab#", "#cd"}, {"######", "###", ""}, {"#######", "###", "#"}, {"#### # ####", "## ", "# ####"}, {"##### ####", "##", "# ####"}, {"#### #####", "## ##", "#"}, {"#########", "####", "#"}, {"a##b#c##d#e", "a#b", "#c##d#e"}, {" a ## b # c ## d # e ", " a # b ", "# c ## d # e "},
         };

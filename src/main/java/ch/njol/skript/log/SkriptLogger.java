@@ -164,7 +164,7 @@ public final class SkriptLogger {
      * @return The caller of the method which calls this method.
      */
     @Nullable
-    public static final StackTraceElement findCaller(final @Nullable String... exclusions) {
+    public static final StackTraceElement findCaller(@Nullable final String... exclusions) {
         // Thread.currentThread().getStackTrace() is more memory friendly, but slower
         for (final StackTraceElement e : new Throwable().getStackTrace()) {
             if (!e.getClassName().startsWith(SkriptLogger.class.getPackage().getName())) {
@@ -190,7 +190,7 @@ public final class SkriptLogger {
         return node;
     }
 
-    public static final void setNode(final @Nullable Node node) {
+    public static final void setNode(@Nullable final Node node) {
         SkriptLogger.node = node == null || node.getParent() == null ? null : node;
     }
 
@@ -216,7 +216,7 @@ public final class SkriptLogger {
         log(new LogEntry(level, message, node));
     }
 
-    public static final void log(final @Nullable LogEntry entry) {
+    public static final void log(@Nullable final LogEntry entry) {
         if (entry == null) {
             assert false;
             return;

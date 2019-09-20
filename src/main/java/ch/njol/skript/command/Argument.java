@@ -99,7 +99,7 @@ public final class Argument<T> {
                         d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
                     }
                     if (d == null) {
-                        log.printErrors("Can't understand this expression: '" + def + "'");
+                        log.printErrors("Can't understand this expression: '" + def + '\'');
                         return null;
                     }
                     log.printLog();
@@ -114,7 +114,7 @@ public final class Argument<T> {
     @Override
     public String toString() {
         final Expression<? extends T> def = this.def;
-        return "<" + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def) + ">";
+        return '<' + (name != null ? name + ": " : "") + Utils.toEnglishPlural(type.getCodeName(), !single) + (def == null ? "" : " = " + def) + '>';
     }
 
     public boolean isOptional() {

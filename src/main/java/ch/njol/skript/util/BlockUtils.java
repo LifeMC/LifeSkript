@@ -268,7 +268,7 @@ public final class BlockUtils {
      * @return Location of the block, including its direction
      */
     @Nullable
-    public static final Location getLocation(final @Nullable Block b) {
+    public static final Location getLocation(@Nullable final Block b) {
         if (b == null)
             return null;
         final Location l = b.getLocation().add(0.5, 0.5, 0.5);

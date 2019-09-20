@@ -43,7 +43,7 @@ public final class OptionSection {
     public <T> T get(String key) {
         if (this.getClass() == OptionSection.class)
             return null;
-        key = "" + key.toLowerCase(Locale.ENGLISH);
+        key = key.toLowerCase(Locale.ENGLISH);
         for (final Field f : this.getClass().getDeclaredFields()) {
             f.setAccessible(true);
             if (Option.class.isAssignableFrom(f.getType())) {

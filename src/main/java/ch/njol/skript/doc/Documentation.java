@@ -65,8 +65,8 @@ public final class Documentation {
     private static final String[] urls = {"expressions", "effects", "conditions"};
 
     static {
-        validation.add(Pattern.compile("<" + "(?!a href='|/a>|br ?/|/?(i|b|u|code|pre|ul|li|em)>)"));
-        validation.add(Pattern.compile("(?<!</a|'|br ?/|/?(i|b|u|code|pre|ul|li|em))" + ">"));
+        validation.add(Pattern.compile('<' + "(?!a href='|/a>|br ?/|/?(i|b|u|code|pre|ul|li|em)>)"));
+        validation.add(Pattern.compile("(?<!</a|'|br ?/|/?(i|b|u|code|pre|ul|li|em))" + '>'));
     }
 
     private Documentation() {
@@ -170,7 +170,7 @@ public final class Documentation {
                     for (final String c : s1.split("/")) {
                         assert c != null;
                         if (!first)
-                            b.append("/");
+                            b.append('/');
                         first = false;
                         final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(c);
                         final ClassInfo<?> ci = Classes.getClassInfoNoError(p.getFirst());
@@ -182,7 +182,7 @@ public final class Documentation {
                                 Skript.warning("Used class " + p.getFirst() + " has no docName/name defined");
                         }
                     }
-                    return b.append("%").toString();
+                    return b.append('%').toString();
                 });
         assert s != null : patterns;
         return s;
@@ -195,8 +195,8 @@ public final class Documentation {
             Skript.warning(info.c.getSimpleName() + " is missing information");
             return;
         }
-        final String desc = validateHTML(StringUtils.join(info.c.getAnnotation(Description.class).value(), "<br/>"), type + "s");
-        final String since = validateHTML(info.c.getAnnotation(Since.class).value(), type + "s");
+        final String desc = validateHTML(StringUtils.join(info.c.getAnnotation(Description.class).value(), "<br/>"), type + 's');
+        final String since = validateHTML(info.c.getAnnotation(Since.class).value(), type + 's');
         if (desc == null || since == null) {
             Skript.warning(info.c.getSimpleName() + "'s description or 'since' is invalid");
             return;
@@ -214,7 +214,7 @@ public final class Documentation {
         }
         for (final SkriptEventInfo<?> i : Skript.getEvents()) {
             if (info.getId().equals(i.getId()) && info != i && i.getDescription() != null && i.getDescription() != SkriptEventInfo.NO_DOC) {
-                Skript.warning("Duplicate event id '" + info.getId() + "'");
+                Skript.warning("Duplicate event id '" + info.getId() + '\'');
                 return;
             }
         }
@@ -225,7 +225,7 @@ public final class Documentation {
             return;
         }
         final String patterns = cleanPatterns(info.getName().startsWith("On ") ? "[on] " + StringUtils.join(info.patterns, "\n[on] ") : StringUtils.join(info.patterns, "\n"));
-        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = '" + escapeSQL(patterns) + "'", escapeHTML(info.getId()), escapeHTML(info.getName()), "event", patterns, desc, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
+        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = '" + escapeSQL(patterns) + '\'', escapeHTML(info.getId()), escapeHTML(info.getName()), "event", patterns, desc, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
     }
 
     private static final void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
@@ -265,7 +265,7 @@ public final class Documentation {
     private static final void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
         for (int i = 0; i < values.length; i++)
             values[i] = escapeSQL(values[i]);
-        pw.println("INSERT INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "') ON DUPLICATE KEY UPDATE " + update + ";");
+        pw.println("INSERT INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "') ON DUPLICATE KEY UPDATE " + update + ';');
     }
 
     private static final void replaceInto(final PrintWriter pw, final String table, final String fields, final String... values) {
@@ -293,7 +293,7 @@ public final class Documentation {
             if (s.length == 1)
                 continue;
             if (s[0].isEmpty())
-                s[0] = "../" + baseURL + "/";
+                s[0] = "../" + baseURL + '/';
             if (s[0].startsWith("../") && s[0].endsWith("/")) {
                 switch (s[0]) {
                     case "../classes/":
@@ -314,7 +314,7 @@ public final class Documentation {
                         final int i = CollectionUtils.indexOf(urls, s[0].substring("../".length(), s[0].length() - 1));
                         if (i != -1) {
                             try {
-                                Class.forName("ch.njol.skript." + urls[i] + "." + s[1]);
+                                Class.forName("ch.njol.skript." + urls[i] + '.' + s[1]);
                                 continue;
                             } catch (final ClassNotFoundException e) {
                                 if (Skript.testing() || Skript.debug())
@@ -324,7 +324,7 @@ public final class Documentation {
                         break;
                 }
             }
-            Skript.warning("invalid link '" + url + "' found in '" + html + "'");
+            Skript.warning("invalid link '" + url + "' found in '" + html + '\'');
         }
         return html;
     }

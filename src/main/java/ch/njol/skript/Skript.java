@@ -198,7 +198,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
     public static final Version invalidVersion = new Version(999);
     public static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
+    public static final Matcher PATTERN_ON_SPACE_MATCHER = PATTERN_ON_SPACE.matcher("");
     public static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+    public static final Matcher NUMBER_PATTERN_MATCHER = NUMBER_PATTERN.matcher("");
     /**
      * Null when ran from tests or outside of Bukkit
      */
@@ -227,6 +229,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> new Thread(r, "Skript netty optimizer thread"));
     private static final Pattern SPACE = Pattern.compile(" ", Pattern.LITERAL);
     private static final Pattern DASH = Pattern.compile("-", Pattern.LITERAL);
+    private static final Matcher DASH_MATCHER = DASH.matcher("");
+    private static final Matcher SPACE_MATCHER = SPACE.matcher("");
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -1457,13 +1461,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         // We change that variable later to handle inner exceptions
         final Throwable originalCause = cause;
 
-        boolean headerPrinted = false;
-
         if (originalCause instanceof EmptyStacktraceException) {
             assert false : originalCause;
             return new RuntimeException(originalCause);
         }
 
+        boolean headerPrinted = false;
         if (originalCause instanceof ScriptError) {
             final ScriptError scriptError = (ScriptError) originalCause;
 
@@ -1825,7 +1828,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             optimizeNetty = () -> {
                 for (final Thread thread : Skript.getAllThreads()) {
                     if (thread != null) {
-                        final String name = DASH.matcher(SPACE.matcher(thread.getName().toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement(""))).replaceAll(Matcher.quoteReplacement("")).trim();
+                        final String name = DASH_MATCHER.reset(SPACE_MATCHER.reset(thread.getName().toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement(""))).replaceAll(Matcher.quoteReplacement("")).trim();
                         final int priority = thread.getPriority();
 
                         if ((name.contains("netty") || name.contains("serverthread") || name.contains("packet") || name.contains("alive") && !name.contains("keepalivetimer") || name.contains("skript") && name.contains("spike")) && priority != Thread.MAX_PRIORITY) {
@@ -2266,10 +2269,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         }
 
                         if (contents != null) {
-                            final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
-
-                            final String original = prefix + "%msg%n";
-                            final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
 
                             // Some versions has bugged log4j2.xml file that does not close the console tag, it does not cause any issues but anyway, fix it.
                             if (!contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\"></Console>") && contents.contains("<Console name=\"WINDOWS_COMPAT\" target=\"SYSTEM_OUT\">")) {
@@ -2277,6 +2276,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             }
 
                             String replacedContents = null;
+                            final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
+                            final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
+                            final String original = prefix + "%msg%n";
                             if (contents.contains(original) && !contents.contains(replaced)) {
                                 if (Skript.isRunningMinecraft(1, 7) && !Skript.isRunningMinecraft(1, 9)) {
                                     replacedContents = contents.replace(original, replaced);
@@ -2695,6 +2697,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                         for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                             if (e.getName().startsWith("ch/njol/skript/hooks/") && e.getName().endsWith("Hook.class") && StringUtils.count(e.getName(), '/') <= 5) {
                                 final String cl = e.getName().replace('/', '.').substring(0, e.getName().length() - ".class".length());
+                                if (cl.contains("VaultHook") && Bukkit.getPluginManager().getPlugin("Vault") == null)
+                                    continue;
                                 try {
                                     final Class<?> hook = Class.forName(cl, true, getBukkitClassLoader());
                                     if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
@@ -2914,7 +2918,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     info("Using " + (ExprTargetedBlock.set ? "new" : "old") + " method for target block expression.");
                     emptyPrinter.run();
                     info("Byte, short and float types are " + (JavaClasses.DISABLE_BYTE_SHORT_FLOAT ? "disabled" : "enabled"));
-                    info("Required variable changes for saving " + FlatFileStorage.REQUIRED_CHANGES_FOR_RESAVE);
+                    info("Required variable changes for saving is " + FlatFileStorage.REQUIRED_CHANGES_FOR_RESAVE);
                     info("Global buffer length in bytes is " + (Config.GLOBAL_BUFFER_LENGTH != -1 ? Config.GLOBAL_BUFFER_LENGTH : "the java default"));
                     emptyPrinter.run();
                 });
@@ -3011,13 +3015,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 }
             }, this, true);
 
-            Bukkit.getPluginManager().registerEvent(ServerListPingEvent.class, new Listener() {
-                /* empty */
-            }, EventPriority.MONITOR, (listener, event) -> {
+            Bukkit.getPluginManager().registerEvent(ServerListPingEvent.class, new EmptyListener(), EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof ServerListPingEvent) {
                     final ServerListPingEvent e = (ServerListPingEvent) event;
+                    final String motd = e.getMotd();
 
-                    if (e.getMotd().contains("Your country is banned from this server"))
+                    if (motd != null && motd.contains("Your country is banned from this server"))
                         e.setMotd(ChatColor.translateAlternateColorCodes('&', Bukkit.getMotd()));
                 }
             }, this, true);
@@ -3333,4 +3336,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         }
     }
 
+    private static final class EmptyListener implements Listener {
+        EmptyListener() {
+            super();
+        }
+    }
 }

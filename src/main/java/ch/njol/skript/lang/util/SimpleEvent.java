@@ -53,7 +53,7 @@ public class SimpleEvent extends SkriptEvent {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "simple event";
     }
 

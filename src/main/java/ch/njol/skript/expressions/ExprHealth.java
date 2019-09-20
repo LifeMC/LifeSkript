@@ -65,17 +65,11 @@ public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {
 //				}
 //			});
 //		}
-        return get(source, new Getter<Double, LivingEntity>() {
-            @SuppressWarnings("null")
-            @Override
-            public Double get(final LivingEntity entity) {
-                return HealthUtils.getHealth(entity);
-            }
-        });
+        return get(source, new DoubleLivingEntityGetter());
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the health of " + getExpr().toString(e, debug);
     }
 
@@ -105,7 +99,7 @@ public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         double d = delta == null ? 0 : ((Number) delta[0]).doubleValue();
         switch (mode) {
             case DELETE:
@@ -138,6 +132,18 @@ public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {
     @Override
     public Class<Double> getReturnType() {
         return Double.class;
+    }
+
+    private static final class DoubleLivingEntityGetter extends Getter<Double, LivingEntity> {
+        DoubleLivingEntityGetter() {
+            super();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final Double get(final LivingEntity entity) {
+            return HealthUtils.getHealth(entity);
+        }
     }
 
 //	@Override

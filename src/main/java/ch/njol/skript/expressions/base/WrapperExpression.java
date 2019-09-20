@@ -52,11 +52,11 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
         this.expr = expr;
     }
 
-    public Expression<?> getExpr() {
+    public final Expression<?> getExpr() {
         return expr;
     }
 
-    protected void setExpr(final Expression<? extends T> expr) {
+    protected final void setExpr(final Expression<? extends T> expr) {
         this.expr = expr;
     }
 
@@ -73,7 +73,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
                 @Override
                 public String toString(final @Nullable Event e, final boolean debug) {
                     if (debug && e == null)
-                        return "(" + WrapperExpression.this.toString(e, debug) + ")->" + to.getName();
+                        return '(' + WrapperExpression.this.toString(e, debug) + ")->" + to.getName();
                     return WrapperExpression.this.toString(e, debug);
                 }
             };
@@ -103,7 +103,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
     }
 
     @Override
-    public Class<? extends T> getReturnType() {
+    public final Class<? extends T> getReturnType() {
         return expr.getReturnType();
     }
 
@@ -124,7 +124,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
     }
 
     @Override
-    public int getTime() {
+    public final int getTime() {
         return expr.getTime();
     }
 

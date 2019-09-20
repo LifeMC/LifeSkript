@@ -42,7 +42,10 @@ import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.NotSerializableException;
@@ -273,7 +276,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return list.toArray((E[]) Array.newInstance(type, list.size()));
     }
 
-    private static final <E extends Entity> EntityData<? super E> getData(final @Nullable Class<E> c, final @Nullable E e) {
+    private static final <E extends Entity> EntityData<? super E> getData(@Nullable final Class<E> c, @Nullable final E e) {
         assert c == null ^ e == null;
         assert c == null || c.isInterface();
         for (final EntityDataInfo<?> info : infos) {
@@ -399,7 +402,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     protected abstract boolean equals_i(EntityData<?> obj);
 
     @Override
-    public final boolean equals(final @Nullable Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -430,15 +433,11 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
                     ((Ageable) e).setBaby();
                 else if (e instanceof Zombie)
                     ((Zombie) e).setBaby(true);
-                else if (e instanceof PigZombie)
-                    ((PigZombie) e).setBaby(true);
             } else if (baby.isFalse()) {
                 if (e instanceof Ageable)
                     ((Ageable) e).setAdult();
                 else if (e instanceof Zombie)
                     ((Zombie) e).setBaby(false);
-                else if (e instanceof PigZombie)
-                    ((PigZombie) e).setBaby(false);
             }
             set(e);
             return e;
@@ -462,7 +461,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     }
 
     @SuppressWarnings("unchecked")
-    public final boolean isInstance(final @Nullable Entity e) {
+    public final boolean isInstance(@Nullable final Entity e) {
         if (e == null)
             return false;
         if (!baby.isUnknown() && e instanceof Ageable && ((Ageable) e).isAdult() != baby.isFalse())
@@ -489,6 +488,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
 
     private static final class EntityDataInfo<T extends EntityData<?>> extends SyntaxElementInfo<T> implements LanguageChangeListener {
         private static final Pattern AGE_PATTERN = Pattern.compile("<age>", Pattern.LITERAL);
+        private static final Matcher AGE_PATTERN_MATCHER = AGE_PATTERN.matcher("");
         final String codeName;
         final String[] codeNames;
         final int defaultName;
@@ -505,7 +505,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             this.names = new Noun[codeNames.length];
             for (int i = 0; i < codeNames.length; i++) {
                 assert codeNames[i] != null;
-                names[i] = new Noun(LANGUAGE_NODE + "." + codeNames[i] + ".name");
+                names[i] = new Noun(LANGUAGE_NODE + '.' + codeNames[i] + ".name");
             }
 
             Language.addListener(this, LanguageListenerPriority.LATEST); // will initialise patterns, LATEST to make sure that m_age_pattern is updated before this
@@ -514,7 +514,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         @Override
         public void onLanguageChange() {
             for (int i = 0; i < codeNames.length; i++)
-                patterns[i] = AGE_PATTERN.matcher(Language.get(LANGUAGE_NODE + "." + codeNames[i] + ".pattern")).replaceAll(Matcher.quoteReplacement(m_age_pattern.toString()));
+                patterns[i] = AGE_PATTERN_MATCHER.reset(Language.get(LANGUAGE_NODE + '.' + codeNames[i] + ".pattern")).replaceAll(Matcher.quoteReplacement(m_age_pattern.toString()));
         }
 
         @Override
@@ -526,7 +526,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         }
 
         @Override
-        public boolean equals(final @Nullable Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)

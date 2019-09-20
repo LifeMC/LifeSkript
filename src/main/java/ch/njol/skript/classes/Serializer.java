@@ -146,6 +146,9 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
      * <p>
      * This method must only be called from Bukkit's main thread if {@link #mustSyncDeserialization()} returned true.
      *
+     * @deprecated This method uses the old format according to comment on the code and was
+     * deprecated in the commit https://github.com/Njol/Skript/commit/8d9dd58d8b33c7918b25cc5942b2a7b59f686f12#diff-cfd4f33a253ef540909a9c039905eeaeR125
+     *
      * @param s
      * @return The deserialised object or null if the input is invalid. An error message may be logged to specify the cause.
      */

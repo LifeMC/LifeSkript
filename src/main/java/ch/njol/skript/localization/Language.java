@@ -147,7 +147,7 @@ public final class Language {
         final String s = get(key);
         if (s.isEmpty())
             return " ";
-        return " " + s + " ";
+        return ' ' + s + ' ';
     }
 
     /**
@@ -186,7 +186,9 @@ public final class Language {
         try (final InputStream din = addon.plugin.getResource(addon.getLanguageFileDirectory() + "/english.lang")) {
             if (din == null)
                 throw new IllegalStateException(addon + " is missing the required english.lang file!");
-            en = new Config(new BufferedInputStream(din), new File(addon.getLanguageFileDirectory(), "english.lang").exists() ? "english.lang" : Objects.requireNonNull(addon.getFile()).getName() + "/" + addon.getLanguageFileDirectory() + "/english.lang", false, false, ":").toMap(".");
+            try (final BufferedInputStream buf = new BufferedInputStream(din)) {
+                en = new Config(buf, new File(addon.getLanguageFileDirectory(), "english.lang").exists() ? "english.lang" : Objects.requireNonNull(addon.getFile()).getName() + '/' + addon.getLanguageFileDirectory() + "/english.lang", false, false, ":").toMap(".");
+            }
         } catch (final Throwable tw) {
             throw Skript.exception(tw, "Could not load " + addon + "'s default language file!");
         }
@@ -234,13 +236,13 @@ public final class Language {
     private static final boolean load(final SkriptAddon addon, final String name) {
         if (addon.getLanguageFileDirectory() == null)
             return false;
-        final Map<String, String> l = load(addon.plugin.getResource(addon.getLanguageFileDirectory() + "/" + name + ".lang"), name);
+        final Map<String, String> l = load(addon.plugin.getResource(addon.getLanguageFileDirectory() + '/' + name + ".lang"), name);
         final File f = new File(addon.plugin.getDataFolder(), addon.getLanguageFileDirectory() + File.separator + name + ".lang");
-        try {
+        try (final InputStream is = new BufferedInputStream(new FileInputStream(f))) {
             if (f.exists())
-                l.putAll(load(new BufferedInputStream(new FileInputStream(f)), name));
-        } catch (final FileNotFoundException e) {
-            assert false;
+                l.putAll(load(is, name));
+        } catch (final IOException e) {
+            Skript.exception(e);
         }
         if (l.isEmpty())
             return false;
@@ -266,7 +268,7 @@ public final class Language {
         return true;
     }
 
-    private static final Map<String, String> load(final @Nullable InputStream in, final String name) {
+    private static final Map<String, String> load(@Nullable final InputStream in, final String name) {
         if (in == null)
             return new HashMap<>();
         BufferedInputStream buf = null;
@@ -362,7 +364,7 @@ public final class Language {
             try {
                 l.onLanguageChange();
             } catch (final Exception e) {
-                Skript.exception(e, "Error while changing the language " + (b ? "from english to" : "to english from") + " " + name, "Listener: " + l);
+                Skript.exception(e, "Error while changing the language " + (b ? "from english to" : "to english from") + ' ' + name, "Listener: " + l);
             }
         }
         return !b;

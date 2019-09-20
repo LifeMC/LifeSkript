@@ -73,7 +73,7 @@ public final class Workarounds {
             return;
         }
 
-        System.err.println("Uncaught exception in the thread \"" + t.getName() + "\"");
+        System.err.println("Uncaught exception in the thread \"" + t.getName() + '"');
         e.printStackTrace();
 
         System.err.flush();

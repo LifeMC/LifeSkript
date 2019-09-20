@@ -50,17 +50,17 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
-    static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>();
+    static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>(100);
     private static final Listener listener = new Listener() {
         /* empty */
     };
-    private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>();
+    private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>(100);
     /**
      * Stores which events are currently registered with Bukkit
      */
-    private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>();
-    private static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
-    private static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
+    private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>(100);
+    static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
+    public static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
     @Nullable
     public static Event last;
     static long startTrigger;

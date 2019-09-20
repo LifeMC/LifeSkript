@@ -120,7 +120,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final String name = delta == null ? null : (String) delta[0];
         if (changeType == ITEMSTACK) {
             if (Slot.class.isAssignableFrom(getExpr().getReturnType())) {
@@ -144,7 +144,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
             }
         } else {
             for (final Object o : getExpr().getArray(e)) {
-                if (o instanceof LivingEntity || o instanceof Player)
+                if (o instanceof LivingEntity)
                     type.set(o, name);
             }
         }
@@ -153,7 +153,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
     private enum NameType {
         NAME("name", "name[s]", PLAYER | ITEMSTACK | ENTITY, ITEMSTACK | ENTITY) {
             @Override
-            void set(final @Nullable Object o, final @Nullable String s) {
+            void set(@Nullable final Object o, @Nullable final String s) {
                 if (o == null)
                     return;
                 if (o instanceof LivingEntity) {
@@ -172,7 +172,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
 
             @Override
             @Nullable
-            String get(final @Nullable Object o) {
+            String get(@Nullable final Object o) {
                 if (o == null)
                     return null;
                 if (o instanceof Player) {
@@ -193,7 +193,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
         },
         DISPLAY_NAME("display name", "(display|nick|chat)[ ]name[s]", PLAYER | ITEMSTACK | ENTITY, PLAYER | ITEMSTACK | ENTITY) {
             @Override
-            void set(final @Nullable Object o, final @Nullable String s) {
+            void set(@Nullable final Object o, @Nullable final String s) {
                 if (o == null)
                     return;
                 if (o instanceof Player) {
@@ -215,7 +215,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
 
             @Override
             @Nullable
-            String get(final @Nullable Object o) {
+            String get(@Nullable final Object o) {
                 if (o == null)
                     return null;
                 if (o instanceof Player) {
@@ -236,7 +236,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
         },
         TABLIST_NAME("player list name", "(player|tab)[ ]list name[s]", PLAYER, PLAYER) {
             @Override
-            void set(final @Nullable Object o, final @Nullable String s) {
+            void set(@Nullable final Object o, @Nullable final String s) {
                 if (o == null)
                     return;
                 if (o instanceof Player) {
@@ -253,7 +253,7 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
 
             @Override
             @Nullable
-            String get(final @Nullable Object o) {
+            String get(@Nullable final Object o) {
                 if (o == null)
                     return null;
                 if (o instanceof Player) {
@@ -291,10 +291,10 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
                 if (1 << i == ENTITY && !Skript.isRunningMinecraft(1, 5))
                     continue;
                 if (b.length() != 0)
-                    b.append("/");
+                    b.append('/');
                 b.append(types[i]);
             }
-            return "" + b;
+            return b.toString();
         }
     }
 }

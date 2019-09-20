@@ -109,7 +109,7 @@ public abstract class TriggerItem implements Debuggable {
      */
     protected abstract boolean run(Event e);
 
-    public String getIndentation() {
+    public final String getIndentation() {
         String ind = indentation;
         if (ind == null) {
             int level = 0;

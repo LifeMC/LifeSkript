@@ -23,7 +23,7 @@
 package ch.njol.skript.aliases;
 
 import ch.njol.skript.log.BukkitLoggerFilter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

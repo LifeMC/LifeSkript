@@ -81,12 +81,12 @@ public final class Config {
 
             if (source.available() == 0 && !SkriptConfig.disableEmptyScriptWarnings.value()) {
                 main = new SectionNode(this);
-                Skript.warning("'" + this.fileName + "' is empty");
+                Skript.warning('\'' + this.fileName + "' is empty");
                 return;
             }
 
             if (Skript.logVeryHigh())
-                Skript.info("Loading '" + fileName + "'");
+                Skript.info("Loading '" + fileName + '\'');
 
             if (GLOBAL_BUFFER_LENGTH != -1) {
                 if (GLOBAL_BUFFER_LENGTH < 8192) // The default is 8192, below will cause performance drop
@@ -108,10 +108,18 @@ public final class Config {
         this(source instanceof BufferedInputStream ? (BufferedInputStream) source : new BufferedInputStream(source), fileName, simple, allowEmptySections, defaultSeparator);
     }
 
-    @SuppressWarnings("resource")
-    public Config(final File file, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
-        this(new BufferedInputStream(new FileInputStream(file)), file.getName(), simple, allowEmptySections, defaultSeparator);
+    public Config(final FileInputStream source, final File file, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
+        this(new BufferedInputStream(source), file.getName(), simple, allowEmptySections, defaultSeparator);
         this.file = file;
+    }
+
+    /**
+     * @deprecated use {@link Config#Config(FileInputStream, File, boolean, boolean, String)} instead
+     */
+    @SuppressWarnings("resource")
+    @Deprecated
+    public Config(final File file, final boolean simple, final boolean allowEmptySections, final String defaultSeparator) throws IOException {
+        this(new FileInputStream(file), file, simple, allowEmptySections, defaultSeparator);
     }
 
     /**
@@ -200,7 +208,7 @@ public final class Config {
             return ": ";
         if ("=".equals(separator))
             return " = ";
-        return " " + separator + " ";
+        return ' ' + separator + ' ';
     }
 
     /**
@@ -265,7 +273,7 @@ public final class Config {
         return validator.validate(main);
     }
 
-    private void load(final Class<?> c, final @Nullable Object o, final String path) {
+    private void load(final Class<?> c, @Nullable final Object o, final String path) {
         for (final Field f : c.getDeclaredFields()) {
             if (o != null || Modifier.isStatic(f.getModifiers())) {
                 try {
@@ -273,13 +281,13 @@ public final class Config {
                     if (OptionSection.class.isAssignableFrom(f.getType())) {
                         final Object p = f.get(o);
                         @NonNull final Class<?> pc = p.getClass();
-                        load(pc, p, path + ((OptionSection) p).key + ".");
+                        load(pc, p, path + ((OptionSection) p).key + '.');
                     } else if (Option.class.isAssignableFrom(f.getType())) {
                         ((Option<?>) f.get(o)).set(this, path);
                     }
                 } catch (final Throwable tw) {
                     if (Skript.testing() || Skript.debug())
-                        Skript.exception(tw, "Error when setting field \"" + f.getName() + "\"" + " in class \"" + c.getCanonicalName() + "\" (path: \"" + path + "\", object: \"" + (o != null ? o : "null") + "\")");
+                        Skript.exception(tw, "Error when setting field \"" + f.getName() + '"' + " in class \"" + c.getCanonicalName() + "\" (path: \"" + path + "\", object: \"" + (o != null ? o : "null") + "\")");
                 }
             }
         }

@@ -66,7 +66,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
         info.writeLock.lock();
         try {
             if (info.map.containsKey(name))
-                throw new IllegalArgumentException("Duplicate name '" + name + "'");
+                throw new IllegalArgumentException("Duplicate name '" + name + '\'');
             ordinal = info.values.size();
             info.values.add((T) this);
             info.map.put(name, (T) this);
@@ -147,7 +147,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @return The unique name of this constant.
      * @see Enum#name()
      */
-    public String name() {
+    public final String name() {
         return name;
     }
 
@@ -177,7 +177,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * Returns {@link #ordinal()}, i.e. distinct hash codes for distinct constants.
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return ordinal;
     }
 
@@ -185,7 +185,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * Checks for reference equality (==).
      */
     @Override
-    public boolean equals(@Nullable final Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         return obj == this;
     }
 
@@ -196,7 +196,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @throws CloneNotSupportedException always
      */
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    protected final Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 
@@ -208,7 +208,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
      * @see Enum#getDeclaringClass()
      */
     @SuppressWarnings("unchecked")
-    public Class<T> getDeclaringClass() {
+    public final Class<T> getDeclaringClass() {
         return getDeclaringClass(getClass());
     }
 

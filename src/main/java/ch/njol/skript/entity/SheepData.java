@@ -100,7 +100,7 @@ public final class SheepData extends EntityData<Sheep> {
         }
         final Noun name = getName();
         final Adjective age = getAgeAdjective();
-        return name.getArticleWithSpace(flags) + (age == null ? "" : age.toString(name.getGender(), flags) + " ") + Adjective.toString(adjectives, name.getGender(), flags, false) + " " + name.toString(flags & Language.NO_ARTICLE_MASK);
+        return name.getArticleWithSpace(flags) + (age == null ? "" : age.toString(name.getGender(), flags) + ' ') + Adjective.toString(adjectives, name.getGender(), flags, false) + ' ' + name.toString(flags & Language.NO_ARTICLE_MASK);
     }
 
     @Override

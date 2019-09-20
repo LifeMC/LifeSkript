@@ -200,7 +200,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "walk on " + Classes.toString(types, false);
 //		return "walk on " + (types != null ? Skript.toString(types, false) : "<block:" + world.getName() + ":" + x + "," + y + "," + z + ">");
     }

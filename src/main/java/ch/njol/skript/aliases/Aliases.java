@@ -40,10 +40,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map.Entry;
@@ -97,6 +94,8 @@ public final class Aliases {
     private static final RegexMessage p_every = new RegexMessage("aliases.every", "", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern UNDERSCORE_PATTERN = Pattern.compile("_", Pattern.LITERAL);
+    private static final Matcher UNDERSCORE_PATTERN_MATCHER = UNDERSCORE_PATTERN.matcher("");
     static String itemSingular = "item";
     static String itemPlural = "items";
     @Nullable
@@ -666,7 +665,7 @@ public final class Aliases {
      */
     @Nullable
     private static final ItemType getAlias(final String s) {
-        String lc = s.toLowerCase(Locale.ENGLISH).replace("minecraft:", "").replace("_", " ");
+        String lc = UNDERSCORE_PATTERN_MATCHER.reset(s.toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement(" "));
         final Matcher m = p_any.matcher(lc);
         if (m.matches()) {
             lc = m.group(m.groupCount());
@@ -778,9 +777,14 @@ public final class Aliases {
                     }
                     assert file != null || stream != null;
                     if (file != null)
-                        aliasConfig = new Config(file, false, true, "=");
-                    else
-                        aliasConfig = new Config(new BufferedInputStream(stream), Skript.getInstance().getFile().getName() + '/' + aliasesFileName, false, true, "=");
+                        try (final FileInputStream is = new FileInputStream(file)) {
+                            aliasConfig = new Config(is, file, false, true, "=");
+                        }
+                    else {
+                        try (final BufferedInputStream buf = new BufferedInputStream(stream)) {
+                            aliasConfig = new Config(buf, Skript.getInstance().getFile().getName() + '/' + aliasesFileName, false, true, "=");
+                        }
+                    }
                 } catch (final IOException e) {
                     Skript.error("Could not load the " + Language.getName() + " aliases config: " + e.getLocalizedMessage());
                     return;

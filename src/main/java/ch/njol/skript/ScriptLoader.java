@@ -56,11 +56,13 @@ import org.fusesource.jansi.Ansi;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -80,18 +82,22 @@ public final class ScriptLoader {
      * All loaded script files.
      */
     @SuppressWarnings("null")
-    static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>());
-    static final Collection<String> loadedScriptFiles = new ArrayList<>();
+    static final Set<File> loadedFiles = Collections.synchronizedSet(new HashSet<>(100));
+    static final Collection<String> loadedScriptFiles = new ArrayList<>(100);
     private static final Message m_no_errors = new Message("skript.no errors"),
             m_no_scripts = new Message("skript.no scripts");
     private static final PluralizingArgsMessage m_scripts_loaded = new PluralizingArgsMessage("skript.scripts loaded");
     private static final Map<String, ItemType> currentAliases = new HashMap<>();
-    private static final Map<String, Version> sourceRevisionMap = new HashMap<>();
+    private static final Map<String, Version> sourceRevisionMap = new HashMap<>(100);
     private static final Map<String, ScriptInfo> skipFiles = new HashMap<>();
     /**
      * must be synchronized
      */
     private static final ScriptInfo loadedScripts = new ScriptInfo();
+    private static final Pattern FUNC_PATTERN = Pattern.compile("func");
+    private static final Matcher FUNC_PATTERN_MATCHER = FUNC_PATTERN.matcher("");
+    private static final Pattern FUN_PATTERN = Pattern.compile("fun");
+    private static final Matcher FUN_PATTERN_MATCHER = FUN_PATTERN.matcher("");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -158,7 +164,7 @@ public final class ScriptLoader {
         final Thread loggerThread = Skript.newThread(() -> {
             while (loadingScripts) {
                 try {
-                    Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 10000L : 15000L); // low verbosity won't disable these messages, but makes them more rare
+                    Thread.sleep(Skript.logVeryHigh() ? 3000L : Skript.logHigh() ? 5000L : Skript.logNormal() ? 8000L : 10000L); // low verbosity won't disable these messages, but makes them more rare
                 } catch (final InterruptedException e) {
                     if (loadingScripts)
                         Skript.exception(e);
@@ -167,7 +173,6 @@ public final class ScriptLoader {
                     return;
                 }
                 synchronized (loadedFiles) {
-                    // FIXME does not work on first load, but works afterwards with /sk reload all
                     if (loadingScripts)
                         Skript.info("Loaded " + loadedFiles.size() + " scripts" + " so far...");
                 }
@@ -392,7 +397,7 @@ public final class ScriptLoader {
         //assert !loadedFiles.contains(f);
         //assert !loadedScriptFiles.contains(f.getName());
 
-        assert currentScript == null : "Current script should be null for script \"" + f.getName() + "\"";
+        assert currentScript == null : "Current script should be null for script \"" + f.getName() + '"';
 
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
@@ -450,26 +455,24 @@ public final class ScriptLoader {
 //			}
 //		}
 
+        @Nullable
+        Date startDate = null;
+
+        if (Skript.logHigh())
+            startDate = new Date();
+
         try {
 
-            @Nullable
-            Date startDate = null;
+            final Config config;
 
-            if (Skript.logHigh())
-                startDate = new Date();
-
-            final Config config = new Config(f, true, false, ":");
+            try (final FileInputStream is = new FileInputStream(f)) {
+                config = new Config(is, f, true, false, ":");
+            }
 
             if (SkriptConfig.keepConfigsLoaded.value()) {
                 SkriptConfig.configs.remove(config);
                 SkriptConfig.configs.add(config);
             }
-
-            int numTriggers = 0;
-            int numCommands = 0;
-            int numFunctions = 0;
-
-            boolean hasConfiguraton = false;
 
             Version scriptVersion = defaultScriptVersion.get();
 
@@ -481,8 +484,12 @@ public final class ScriptLoader {
 
             final CountingLogHandler numErrors = SkriptLogger.startLogHandler(new CountingLogHandler(SkriptLogger.SEVERE));
 
+            int numFunctions = 0;
+            int numCommands = 0;
+            int numTriggers = 0;
             try {
                 int index = 0;
+                boolean hasConfiguraton = false;
                 for (final Node cnode : config.getMainNode()) {
                     index++;
 
@@ -507,7 +514,7 @@ public final class ScriptLoader {
                         }
                         hasConfiguraton = true;
                         node.convertToEntries(0);
-                        final ArrayList<String> duplicateCheckList = new ArrayList<>();
+                        final List<String> duplicateCheckList = new ArrayList<>();
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
                                 Skript.error("invalid line in the configuration");
@@ -687,15 +694,15 @@ public final class ScriptLoader {
                             final String var = name;
                             name = StringUtils.replaceAll(name, "%(.+)?%", m -> {
                                 if (m.group(1).contains("{") || m.group(1).contains("}") || m.group(1).contains("%")) {
-                                    Skript.error("'" + var + "' is not a valid name for a default variable");
+                                    Skript.error('\'' + var + "' is not a valid name for a default variable");
                                     return null;
                                 }
                                 final ClassInfo<?> ci = Classes.getClassInfoFromUserInput(m.group(1));
                                 if (ci == null) {
-                                    Skript.error("Can't understand the type '" + m.group(1) + "'");
+                                    Skript.error("Can't understand the type '" + m.group(1) + '\'');
                                     return null;
                                 }
-                                return "<" + ci.getCodeName() + ">";
+                                return '<' + ci.getCodeName() + '>';
                             });
                             if (name == null) {
                                 continue;
@@ -714,7 +721,7 @@ public final class ScriptLoader {
                             try {
                                 o = Classes.parseSimple(((EntryNode) n).getValue(), Object.class, ParseContext.SCRIPT);
                                 if (o == null) {
-                                    log.printError("Can't understand the value '" + ((EntryNode) n).getValue() + "'");
+                                    log.printError("Can't understand the value '" + ((EntryNode) n).getValue() + '\'');
                                     continue;
                                 }
                                 log.printLog();
@@ -770,9 +777,9 @@ public final class ScriptLoader {
                         //     broadcast "Yey!"
                         if (!event.toLowerCase(Locale.ENGLISH).startsWith("function ")) {
                             if (event.startsWith("func ")) {
-                                node.setKey(event.replaceFirst("func", "function"));
+                                node.setKey(FUNC_PATTERN_MATCHER.reset(event).replaceFirst("function"));
                             } else {
-                                node.setKey(event.replaceFirst("fun", "function"));
+                                node.setKey(FUN_PATTERN_MATCHER.reset(event).replaceFirst("function"));
                             }
                         }
 
@@ -787,14 +794,14 @@ public final class ScriptLoader {
                     }
 
                     if (Skript.logVeryHigh() && !Skript.debug())
-                        Skript.info("loading trigger '" + event + "'");
+                        Skript.info("loading trigger '" + event + '\'');
 
                     if (StringUtils.startsWithIgnoreCase(event, "on "))
                         event = event.substring("on ".length());
 
                     event = replaceOptions(event);
 
-                    final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
+                    final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + '\'');
                     if (parsedEvent == null)
                         continue;
 
@@ -838,7 +845,7 @@ public final class ScriptLoader {
                         suffix += Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString();
                     }
 
-                    Skript.info(prefix + "Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + " " : "") + "in " + difference + suffix);
+                    Skript.info(prefix + "Loaded " + numTriggers + " trigger" + (numTriggers == 1 ? "" : "s") + ", " + numCommands + " command" + (numCommands == 1 ? "" : "s") + " and " + numFunctions + " function" + (numFunctions == 1 ? "" : "s") + " from '" + config.getFileName() + "' " + (Skript.logVeryHigh() ? "with source version " + scriptVersion + ' ' : "") + "in " + difference + suffix);
                 }
 
                 currentScript = null;
@@ -887,7 +894,7 @@ public final class ScriptLoader {
             SkriptLogger.setNode(null);
         }
         if (Skript.testing() || Skript.debug())
-            Skript.warning("Returning empty script info after loading \"" + f.getName() + "\"");
+            Skript.warning("Returning empty script info after loading \"" + f.getName() + '"');
         return new ScriptInfo();
     }
 
@@ -999,7 +1006,7 @@ public final class ScriptLoader {
                         if (loopedExpr != null)
                             loopedExpr = loopedExpr.getConvertedExpression(Object.class);
                         if (loopedExpr == null) {
-                            h.printErrors("Can't understand this loop: '" + name + "'");
+                            h.printErrors("Can't understand this loop: '" + name + '\'');
                             continue;
                         }
                         h.printLog();
@@ -1012,7 +1019,7 @@ public final class ScriptLoader {
                         continue;
                     }
                     if (Skript.debug() || n.debug())
-                        Skript.debug(indentation + "loop " + loopedExpr.toString(null, true) + ":");
+                        Skript.debug(indentation + "loop " + loopedExpr.toString(null, true) + ':');
                     final Kleenean hadDelayBefore = hasDelayBefore;
                     items.add(new Loop(loopedExpr, (SectionNode) n));
                     if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
@@ -1023,7 +1030,7 @@ public final class ScriptLoader {
                     if (c == null)
                         continue;
                     if (Skript.debug() || n.debug())
-                        Skript.debug(indentation + "while " + c.toString(null, true) + ":");
+                        Skript.debug(indentation + "while " + c.toString(null, true) + ':');
                     final Kleenean hadDelayBefore = hasDelayBefore;
                     items.add(new While(c, (SectionNode) n));
                     if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
@@ -1045,7 +1052,7 @@ public final class ScriptLoader {
                         continue;
                     }
                     name = name.substring("else if ".length());
-                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
+                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
                     if (Skript.debug() || n.debug())
@@ -1057,11 +1064,11 @@ public final class ScriptLoader {
                 } else {
                     if (StringUtils.startsWithIgnoreCase(name, "if "))
                         name = name.substring(3);
-                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + "'");
+                    final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
                     if (Skript.debug() || n.debug())
-                        Skript.debug(indentation + cond.toString(null, true) + ":");
+                        Skript.debug(indentation + cond.toString(null, true) + ':');
                     final Kleenean hadDelayBefore = hasDelayBefore;
                     hadDelayBeforeLastIf = hadDelayBefore;
                     items.add(new Conditional(cond, (SectionNode) n));
@@ -1101,12 +1108,13 @@ public final class ScriptLoader {
         if (event.toLowerCase(Locale.ENGLISH).startsWith("on "))
             event = event.substring("on ".length());
 
-        final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + "'");
+        final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parsedEvent = SkriptParser.parseEvent(event, "can't understand this event: '" + node.getKey() + '\'');
         if (parsedEvent == null) {
             assert false;
             return null;
         }
 
+        assert parsedEvent.getFirst() != null;
         setCurrentEvent("unit test", parsedEvent.getFirst().events);
         try {
             return new Trigger(null, event, parsedEvent.getSecond(), loadItems(node));

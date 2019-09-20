@@ -58,6 +58,7 @@ public final class EffLog extends AsyncEffect {
     private static final boolean flushAllLogsOnShutdownOnly = Boolean.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
     private static final Pattern WINDOWS_PATH_SEPARATOR = Pattern.compile("\\\\", Pattern.LITERAL);
+    private static final Matcher WINDOWS_PATH_SEPARATOR_MATCHER = WINDOWS_PATH_SEPARATOR.matcher("");
 
     static {
         Skript.closeOnDisable(() -> {
@@ -91,7 +92,7 @@ public final class EffLog extends AsyncEffect {
         for (final String message : messages.getArray(e)) {
             if (files != null) {
                 for (String s : files.getArray(e)) {
-                    s = WINDOWS_PATH_SEPARATOR.matcher(s.toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement("/"));
+                    s = WINDOWS_PATH_SEPARATOR_MATCHER.reset(s.toLowerCase(Locale.ENGLISH)).replaceAll(Matcher.quoteReplacement("/"));
                     if (!s.endsWith(".log"))
                         s += ".log";
                     if ("server.log".equals(s)) {

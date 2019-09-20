@@ -93,7 +93,7 @@ public class ParseLogHandler extends LogHandler {
      *
      * @param def Error to log if no error has been logged so far, can be null
      */
-    public void printError(final @Nullable String def) {
+    public void printError(@Nullable final String def) {
         printedErrorOrLog = true;
         stop();
         final LogEntry error = this.error;

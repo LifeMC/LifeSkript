@@ -39,9 +39,9 @@ import org.bukkit.event.Event
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.easymock.EasyMock.mock
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertThrows
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Test
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -124,8 +124,8 @@ class SkriptTest {
 
     @Test
     fun testPatterns() {
-        assertTrue(PATTERN_ON_SPACE.matcher(" ").matches())
-        assertTrue(NUMBER_PATTERN.matcher(/*Random.nextInt().toString()*/"12").matches())
+        assertTrue(PATTERN_ON_SPACE_MATCHER.reset(" ").matches())
+        assertTrue(NUMBER_PATTERN_MATCHER.reset(/*Random.nextInt().toString()*/"12").matches())
 
         assertSame(PatternCache.get("\\d+"), PatternCache.get("\\d+"))
     }
@@ -179,7 +179,7 @@ class SkriptTest {
         private val njol = mock<Player>(Player::class.java)
 
         //	@Test
-        fun main() {
+        fun testMain() {
             Thread {
                 //				org.bukkit.craftbukkit.Main.main(new String[] {"-nojline"});
             }.start()

@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
 public class ConfigurationSerializer<T extends ConfigurationSerializable> extends Serializer<T> {
 
     private static final Pattern BYTE_ORDER_MARK = Pattern.compile("\uFEFF", Pattern.LITERAL);
+    private static final Matcher BYTE_ORDER_MARK_MATCHER = BYTE_ORDER_MARK.matcher("");
 
     public static final String serializeCS(final ConfigurationSerializable o) {
         final YamlConfiguration y = new YamlConfiguration();
@@ -64,13 +65,16 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
         return (T) o;
     }
 
+    /**
+     * @deprecated Use {@link ConfigurationSerializer#deserializeCS(String, Class)} instead.
+     */
     @SuppressWarnings("unchecked")
     @Deprecated
     @Nullable
     public static final <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
-            y.loadFromString(BYTE_ORDER_MARK.matcher(s).replaceAll(Matcher.quoteReplacement("\n")));
+            y.loadFromString(BYTE_ORDER_MARK_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement("\n")));
         } catch (final InvalidConfigurationException e) {
             return null;
         }

@@ -311,7 +311,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return toString(null, false);
     }
 

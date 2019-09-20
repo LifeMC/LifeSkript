@@ -76,7 +76,7 @@ public abstract class TriggerSection extends TriggerItem {
      *
      * @param items
      */
-    protected void setTriggerItems(final List<TriggerItem> items) {
+    protected final void setTriggerItems(final List<TriggerItem> items) {
         if (!items.isEmpty()) {
             first = items.get(0);
             (last = items.get(items.size() - 1)).setNext(getNext());

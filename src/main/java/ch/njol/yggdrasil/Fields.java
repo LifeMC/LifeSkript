@@ -119,14 +119,13 @@ public final class Fields implements Iterable<FieldContext> {
                     continue;
                 final String id = Yggdrasil.getID(f);
                 if (ids.contains(id))
-                    throw new NotSerializableException(c + "/" + sc + ": duplicate field id '" + id + "'");
+                    throw new NotSerializableException(c + "/" + sc + ": duplicate field id '" + id + '\'');
                 f.setAccessible(true);
                 fields.add(f);
                 ids.add(id);
             }
         }
         fields = Collections.unmodifiableCollection(fields);
-        assert fields != null;
         cache.put(c, fields);
         return fields;
     }
@@ -165,6 +164,9 @@ public final class Fields implements Iterable<FieldContext> {
         }
     }
 
+    /**
+     * @deprecated use {@link Fields#setFields(Object)} instead
+     */
     @Deprecated
     public void setFields(final Object o, final Yggdrasil y) throws StreamCorruptedException, NotSerializableException {
         assert yggdrasil == y;
@@ -178,7 +180,7 @@ public final class Fields implements Iterable<FieldContext> {
         return fields.size();
     }
 
-    public void putObject(final String fieldID, final @Nullable Object value) {
+    public void putObject(final String fieldID, @Nullable final Object value) {
         FieldContext c = fields.get(fieldID);
         if (c == null)
             fields.put(fieldID, c = new FieldContext(fieldID));
@@ -323,7 +325,7 @@ public final class Fields implements Iterable<FieldContext> {
             return value;
         }
 
-        public void setObject(final @Nullable Object value) {
+        public void setObject(@Nullable final Object value) {
             this.value = value;
             isPrimitiveValue = false;
         }
@@ -388,7 +390,7 @@ public final class Fields implements Iterable<FieldContext> {
         }
 
         @Override
-        public boolean equals(final @Nullable Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)

@@ -96,7 +96,7 @@ public abstract class PropertyExpression<F, T> extends SimpleExpression<T> {
      * @return An array containing the converted values
      * @throws ArrayStoreException if the converter returned invalid values
      */
-    protected T[] get(final F[] source, final Converter<? super F, ? extends T> converter) {
+    protected final T[] get(final F[] source, final Converter<? super F, ? extends T> converter) {
         assert source != null;
         assert converter != null;
         return Converters.convertUnsafe(source, getReturnType(), converter);

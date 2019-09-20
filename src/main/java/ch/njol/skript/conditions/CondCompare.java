@@ -233,11 +233,11 @@ public final class CondCompare extends Condition {
         String s;
         final Expression<?> third = this.third;
         if (third == null)
-            s = first.toString(e, debug) + " is " + (isNegated() ? "not " : "") + relation + " " + second.toString(e, debug);
+            s = first.toString(e, debug) + " is " + (isNegated() ? "not " : "") + relation + ' ' + second.toString(e, debug);
         else
             s = first.toString(e, debug) + " is " + (isNegated() ? "not " : "") + "between " + second.toString(e, debug) + " and " + third.toString(e, debug);
         if (debug)
-            s += " (comparator: " + comp + ")";
+            s += " (comparator: " + comp + ')';
         return s;
     }
 

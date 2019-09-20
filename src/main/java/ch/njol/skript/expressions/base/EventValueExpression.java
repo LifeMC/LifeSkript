@@ -122,7 +122,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
 
     @SuppressWarnings("null")
     @Override
-    public boolean init() {
+    public final boolean init() {
         final Class<? extends Event>[] es = ScriptLoader.getCurrentEvents();
         if (es == null) {
             //assert false;

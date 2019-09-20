@@ -66,7 +66,7 @@ public final class PlayerUtils {
         throw new UnsupportedOperationException();
     }
 
-    public static final void updateInventory(final @Nullable Player p) {
+    public static final void updateInventory(@Nullable final Player p) {
         if (p != null)
             inviUpdate.add(p);
     }
@@ -95,6 +95,7 @@ public final class PlayerUtils {
                 Skript.exception(e);
             }
         }
+        assert getOnlinePlayers != null : Skript.getMinecraftVersion();
         try {
             final Object o = getOnlinePlayers.invoke(null);
             if (o instanceof Collection<?>)

@@ -62,7 +62,7 @@ public final class ChainedConverter<F, M, T> implements Converter<F, T> {
 
     @Override
     public String toString() {
-        return "ChainedConverter[first=" + first + ",second=" + second + "]";
+        return "ChainedConverter[first=" + first + ",second=" + second + ']';
     }
 
 }

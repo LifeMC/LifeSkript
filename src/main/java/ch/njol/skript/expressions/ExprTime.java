@@ -63,12 +63,7 @@ public final class ExprTime extends PropertyExpression<World, Time> {
 
     @Override
     protected Time[] get(final Event e, final World[] source) {
-        return get(source, new Getter<Time, World>() {
-            @Override
-            public Time get(final World w) {
-                return new Time((int) w.getTime());
-            }
-        });
+        return get(source, new TimeWorldGetter());
     }
 
     @SuppressWarnings("unchecked")
@@ -90,7 +85,7 @@ public final class ExprTime extends PropertyExpression<World, Time> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final World[] worlds = getExpr().getArray(e);
         int mod = 1;
         switch (mode) {
@@ -124,10 +119,20 @@ public final class ExprTime extends PropertyExpression<World, Time> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the time in " + getExpr().toString(e, debug);
         return Classes.getDebugMessage(getAll(e));
     }
 
+    private static final class TimeWorldGetter extends Getter<Time, World> {
+        TimeWorldGetter() {
+            super();
+        }
+
+        @Override
+        public final Time get(final World w) {
+            return new Time((int) w.getTime());
+        }
+    }
 }

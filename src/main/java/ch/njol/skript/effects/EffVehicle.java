@@ -75,7 +75,6 @@ public final class EffVehicle extends Effect {
             return;
         }
         if (passengers == null) {
-            assert vehicles != null;
             for (final Object v : vehicles.getArray(e))
                 ((Entity) v).eject();
             return;
@@ -106,7 +105,7 @@ public final class EffVehicle extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Expression<?> vehicles = this.vehicles;
         final Expression<Entity> passengers = this.passengers;
         if (vehicles == null) {
@@ -114,7 +113,6 @@ public final class EffVehicle extends Effect {
             return "make " + passengers.toString(e, debug) + " dismount";
         }
         if (passengers == null) {
-            assert vehicles != null;
             return "eject passenger" + (vehicles.isSingle() ? "" : "s") + " of " + vehicles.toString(e, debug);
         }
         return "make " + passengers.toString(e, debug) + " ride " + vehicles.toString(e, debug);

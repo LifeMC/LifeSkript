@@ -33,10 +33,7 @@ import ch.njol.skript.util.FileUtils;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -240,8 +237,8 @@ public final class SkriptConfig {
             }
 
             Config mc;
-            try {
-                mc = new Config(configFile, false, false, ":");
+            try (final FileInputStream is = new FileInputStream(configFile)) {
+                mc = new Config(is, configFile, false, false, ":");
             } catch (final Throwable tw) {
                 Skript.error("Could not load the main config: " + tw.getLocalizedMessage());
                 return false;

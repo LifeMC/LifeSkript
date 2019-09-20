@@ -25,7 +25,7 @@ package ch.njol.yggdrasil;
 import ch.njol.skript.util.EmptyArrays;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import org.eclipse.jdt.annotation.Nullable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -89,7 +89,7 @@ public final class YggdrasilTest {
     };
 
     @SuppressWarnings("null")
-    private static final byte[] save(final @Nullable Object o) throws IOException {
+    private static final byte[] save(@Nullable final Object o) throws IOException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final YggdrasilOutputStream s = y.newOutputStream(out);
         s.writeObject(o);
@@ -120,7 +120,7 @@ public final class YggdrasilTest {
 //        return l.readObject();
 //    }
 
-    private static final boolean equals(final @Nullable Object o1, final @Nullable Object o2) {
+    private static final boolean equals(@Nullable final Object o1, @Nullable final Object o2) {
         if (o1 == null || o2 == null)
             return o1 == o2;
         if (o1.getClass() != o2.getClass())
@@ -144,7 +144,7 @@ public final class YggdrasilTest {
                 if (!equals(i1.next(), i2.next()))
                     return false;
             }
-            return !i1.hasNext();
+            return true;
         }
         return o1.equals(o2);
     }
@@ -156,7 +156,7 @@ public final class YggdrasilTest {
 //        Map<?, ?> hm = new HashMap<>();
 //    }
 
-    private static final String toString(final @Nullable Object o) {
+    private static final String toString(@Nullable final Object o) {
         if (o == null)
             return "null";
         if (o.getClass().isArray()) {
@@ -168,14 +168,14 @@ public final class YggdrasilTest {
                     b.append(", ");
                 b.append(toString(Array.get(o, i)));
             }
-            b.append("]");
-            return "" + b;
+            b.append(']');
+            return b.toString();
         }
-        return "" + o;
+        return o.toString();
     }
 
 //    @Test
-//    public void generalXMLTest() throws IOException {
+//    public void testGeneralXML() throws IOException {
 //        System.out.println();
 //        for (final Object o : random) {
 //            final String d = saveXML(o);
@@ -189,7 +189,7 @@ public final class YggdrasilTest {
 //    }
 
     @SuppressWarnings({"EmptyMethod", "unused"})
-    private static final void print(final @Nullable Object o, final byte[] d) {
+    private static final void print(@Nullable final Object o, final byte[] d) {
         /*
         System.out.print(o);
         System.out.print(": ");
@@ -207,7 +207,7 @@ public final class YggdrasilTest {
     }
 
     @Test
-    public void generalTest() throws IOException {
+    public void testGeneral() throws IOException {
         //System.out.println();
         for (final Object o : random) {
             final byte[] d = save(o);
@@ -215,13 +215,13 @@ public final class YggdrasilTest {
             final Object l = load(d);
             assertTrue(equals(o, l), o.getClass().getName() + ": " + toString(o) + " <> " + toString(l));
             final byte[] d2 = save(l);
-            assertTrue(equals(d, d2), o.getClass().getName() + ": " + toString(o) + "\n" + toString(d) + " <>\n" + toString(d2));
+            assertTrue(equals(d, d2), o.getClass().getName() + ": " + toString(o) + '\n' + toString(d) + " <>\n" + toString(d2));
         }
     }
 
     @SuppressWarnings("static-method")
     @Test
-    public void keepReferencesTest() throws IOException {
+    public void testKeepReferences() throws IOException {
         //System.out.println();
         final Object ref = new Object();
         final Map<Integer, Object> m = new HashMap<>();
@@ -236,7 +236,7 @@ public final class YggdrasilTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void renameTest() throws IOException {
+    public void testRename() throws IOException {
         //System.out.println();
         currentModifiedClass = UnmodifiedClass.class;
         final UnmodifiedClass o1 = new UnmodifiedClass(200);
@@ -316,7 +316,7 @@ public final class YggdrasilTest {
         }
 
         @Override
-        public boolean equals(final @Nullable Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)
@@ -378,7 +378,7 @@ public final class YggdrasilTest {
         }
 
         @Override
-        public boolean equals(final @Nullable Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)

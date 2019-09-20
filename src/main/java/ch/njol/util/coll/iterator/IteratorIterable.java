@@ -37,9 +37,8 @@ public final class IteratorIterable<T> implements Iterable<T> {
         this.iter = iter;
     }
 
-    @NotNull
     @Override
-    public Iterator<T> iterator() {
+    public final @NotNull Iterator<T> iterator() {
         return iter;
     }
 

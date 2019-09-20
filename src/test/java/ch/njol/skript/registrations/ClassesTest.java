@@ -46,7 +46,7 @@ import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.objenesis.ObjenesisHelper;
 
 import ch.njol.skript.Skript;
@@ -78,7 +78,7 @@ import org.bukkit.entity.Snowball;
 */
 
 import ch.njol.skript.Skript;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -101,7 +101,7 @@ public final class ClassesTest {
     /*
     @Before
     @SuppressWarnings({"resource", "deprecation"})
-    public void before() throws Exception {
+    public void testBefore() throws Exception {
 
         final File dataDir = new File("target/classes/");
         final File jar = new File("target/", "skript.jar");

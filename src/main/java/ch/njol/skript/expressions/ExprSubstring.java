@@ -65,7 +65,6 @@ public final class ExprSubstring extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final String s = string.getSingle(e);
         if (s == null)
@@ -94,13 +93,12 @@ public final class ExprSubstring extends SimpleExpression<String> {
 
     @SuppressWarnings("null")
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (start == null) {
             assert end != null;
             return "the first " + end.toString(e, debug) + " characters of " + string.toString(e, debug);
         }
         if (end == null) {
-            assert start != null;
             return "the last " + start.toString(e, debug) + " characters of " + string.toString(e, debug);
         }
         return "the substring of " + string.toString(e, debug) + " from index " + start.toString(e, debug) + " to " + end.toString(e, debug);
