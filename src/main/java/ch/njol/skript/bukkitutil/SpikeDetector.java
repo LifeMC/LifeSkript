@@ -137,7 +137,7 @@ public final class SpikeDetector extends Thread {
         SpikeDetector.enabled = enabled;
 
         if (enabled)
-            Skript.info("Enabled spike detector");
+            Skript.debug("Enabled spike detector");
         else
             Skript.info("Spike detector is disabled");
     }
@@ -241,7 +241,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime > lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + earlyWarningEvery/* || currentTime < lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime <= lastEarlyWarning + earlyWarningEvery /*|| currentTime <= lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
@@ -270,7 +270,7 @@ public final class SpikeDetector extends Thread {
                         Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString() : "";
 
                 log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
-                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + " " + System.getProperty("java.vm.version") + ")" + " | OS: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
+                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')' + " | OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
 
                 log.log(Level.WARNING, prefix + "------------------------------");
                 log.log(Level.WARNING, prefix + "Server thread dump:");

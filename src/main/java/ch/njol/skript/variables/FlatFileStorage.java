@@ -308,10 +308,7 @@ public final class FlatFileStorage extends VariablesStorage {
             clearChangesQueue();
             synchronized (changesWriter) {
                 try (final PrintWriter cw = changesWriter.get()) {
-                    if (cw != null) {
-                        cw.close();
-                        changesWriter.set(null);
-                    }
+                    changesWriter.set(null);
                 }
             }
         }

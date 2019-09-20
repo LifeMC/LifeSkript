@@ -1526,7 +1526,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx("Version Information:");
             logEx("  Skript: " + Skript.getVersionWithSuffix());
             logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ')' + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
-            logEx("  Minecraft: " + getMinecraftVersion());
+            logEx("  Minecraft: " + (minecraftVersion != invalidVersion ? minecraftVersion : "not checked"));
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')');
             logEx("  OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
             logEx();
@@ -1839,7 +1839,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Setting thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.NORM_PRIORITY);
                             thread.setPriority(Thread.NORM_PRIORITY);
-                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") /*|| name.contains("consolehandler")*/ || name.contains("profiler") && !name.contains("iprofiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") && !name.contains("skript") || name.contains("rmi") || name.contains("jmx") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
+                        } else if ((name.contains("snooper") || name.contains("metrics") || name.contains("stats") || name.contains("logger") /*|| name.contains("consolehandler")*/ || name.contains("profiler") && !name.contains("iprofiler") || name.contains("waitloop") || name.contains("sleep") || name.contains("watchdog") || name.contains("rmi") || name.contains("jmx") || name.contains("yjp") || name.contains("destroy") || name.contains("blocking") || name.contains("playtime") || name.contains("spawner") || name.contains("skin") || name.contains("jdwp") || name.contains("updater")) && priority != Thread.MIN_PRIORITY) {
                             if (Skript.debug() && Skript.testing())
                                 Skript.info("Downgrading thread priority of the thread \"" + thread.getName() + "\" (" + name + ") " + "from " + priority + " to " + Thread.MIN_PRIORITY);
                             thread.setPriority(Thread.MIN_PRIORITY);
@@ -3178,7 +3178,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 HandlerList.unregisterAll(addon.plugin);
             }
 
-            SpikeDetector.doStop();
+            if (!SpikeDetector.alwaysEnabled)
+                SpikeDetector.doStop();
 
             // Bukkit gives a warning when plugins manually save the worlds to disk
 
