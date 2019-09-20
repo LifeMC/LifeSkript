@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 public final class Version implements Serializable, Comparable<Version> {
     @SuppressWarnings("null")
     public static final Pattern versionPattern = Pattern.compile("(\\d+)\\.(\\d+)(?:\\.(\\d+))?\\s*(.*)");
+    public static final Matcher versionPatternMatcher = versionPattern.matcher("");
     private static final long serialVersionUID = 8687040355286333293L;
     private final int[] version = new int[3];
     /**
@@ -47,7 +48,7 @@ public final class Version implements Serializable, Comparable<Version> {
         final int[] ver = new int[3];
 
         for (int i = 0; i < version.length; i++) {
-            if (ver.length > i && version.length > i)
+            if (ver.length > i)
                 ver[i] = version[i];
         }
 
@@ -64,7 +65,7 @@ public final class Version implements Serializable, Comparable<Version> {
         this(major, minor, (String[]) null);
     }
 
-    public Version(final int major, final int minor, final @Nullable String... postfix) {
+    public Version(final int major, final int minor, @Nullable final String... postfix) {
         version[0] = major;
         version[1] = minor;
 
@@ -83,7 +84,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     public Version(String version, final boolean failSafe) {
-        Matcher m = versionPattern.matcher(version.trim());
+        Matcher m = versionPatternMatcher.reset(version.trim());
         String postfixStr = "";
 
         if (!m.matches()) {
@@ -117,7 +118,7 @@ public final class Version implements Serializable, Comparable<Version> {
             if (version.length() == 1)
                 version += ".0";
 
-            m = versionPattern.matcher(version.trim());
+            m = versionPatternMatcher.reset(version.trim());
 
             // If it still fails.. Then probably it's a bad argument.
             if (!m.matches())
@@ -142,7 +143,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (!(obj instanceof Version))
@@ -157,7 +158,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     @Override
-    public int compareTo(final @Nullable Version other) {
+    public int compareTo(@Nullable final Version other) {
         if (other == null)
             return 1;
         for (int i = 0; i < version.length; i++) {
@@ -207,7 +208,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     public int getRevision() {
-        return version.length == 2 ? 0 : version[2];
+        return version.length <= 2 ? 0 : version[2];
     }
 
     @Override

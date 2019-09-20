@@ -63,6 +63,7 @@ import java.util.regex.Pattern;
 public final class ExprLoopValue extends SimpleExpression<Object> {
     @SuppressWarnings("null")
     private static final Pattern pattern = Pattern.compile("^(.+)-(\\d+)$");
+    private static final Matcher patternMatcher = pattern.matcher("");
 
     static {
         Skript.registerExpression(ExprLoopValue.class, Object.class, ExpressionType.SIMPLE, "[the] loop-<.+>");
@@ -82,7 +83,7 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
         name = parser.expr;
         String s = parser.regexes.get(0).group();
         int i = -1;
-        final Matcher m = pattern.matcher(s);
+        final Matcher m = patternMatcher.reset(s);
         if (m.matches()) {
             s = m.group(1);
             i = Utils.parseInt(m.group(2));

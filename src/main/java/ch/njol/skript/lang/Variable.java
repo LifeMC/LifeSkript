@@ -70,6 +70,7 @@ public final class Variable<T> implements Expression<T> {
     public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
     private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
     private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR, Pattern.LITERAL);
+    private static final Matcher SEPARATOR_PATTERN_MATCHER = SEPARATOR_PATTERN.matcher("");
     /**
      * The name of this variable, excluding the local variable token, but including the list variable token '::*'.
      */
@@ -133,7 +134,7 @@ public final class Variable<T> implements Expression<T> {
                 Skript.error("A variable's name must not contain the separator '" + SEPARATOR + "' multiple times in a row (error in variable {" + name + "})");
             return false;
         }
-        if (SEPARATOR_PATTERN.matcher(name).replaceAll(Matcher.quoteReplacement("")).contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
+        if (SEPARATOR_PATTERN_MATCHER.reset(name).replaceAll(Matcher.quoteReplacement("")).contains(SINGLE_SEPARATOR_CHAR) && printErrors) {
             Skript.warning("If you meant to make the variable {" + name + "} a list, its name should contain '" + SEPARATOR + "'. Having a single '" + SINGLE_SEPARATOR_CHAR + "' does nothing!");
         }
         return true;

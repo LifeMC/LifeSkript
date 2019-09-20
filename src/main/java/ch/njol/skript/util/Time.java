@@ -46,6 +46,9 @@ public final class Time implements YggdrasilSerializable {
     private static final Message m_error_12_hours = new Message("time.errors.12 hours");
     private static final Message m_error_60_minutes = new Message("time.errors.60 minutes");
     private static final Pattern TIME_PATTERN = Pattern.compile("\\d?\\d:\\d\\d");
+    private static final Matcher TIME_PATTERN_MATCHER = TIME_PATTERN.matcher("");
+    private static final Pattern DETAILED_TIME_PATTERN = Pattern.compile("(\\d?\\d)(:(\\d\\d))? ?(am|pm)", Pattern.CASE_INSENSITIVE);
+    private static final Matcher DETAILED_TIME_PATTERN_MATCHER = DETAILED_TIME_PATTERN.matcher("");
     private final int time;
 
     public Time() {
@@ -78,7 +81,7 @@ public final class Time implements YggdrasilSerializable {
 //		if (s.matches("\\d+")) {
 //			return new Time(Integer.parseInt(s));
 //		} else
-        if (TIME_PATTERN.matcher(s).matches()) {
+        if (TIME_PATTERN_MATCHER.reset(s).matches()) {
             int hours = Utils.parseInt(s.split(":")[0]);
             if (hours == 24) { // allows to write 24:00 - 24:59 instead of 0:00-0:59
                 hours = 0;
@@ -93,7 +96,7 @@ public final class Time implements YggdrasilSerializable {
             }
             return new Time((int) Math.round(hours * TICKS_PER_HOUR - HOUR_ZERO + minutes * TICKS_PER_MINUTE));
         }
-        final Matcher m = Pattern.compile("(\\d?\\d)(:(\\d\\d))? ?(am|pm)", Pattern.CASE_INSENSITIVE).matcher(s);
+        final Matcher m = DETAILED_TIME_PATTERN_MATCHER.reset(s);
         if (m.matches()) {
             int hours = Utils.parseInt(m.group(1));
             if (hours == 12) {
@@ -141,7 +144,7 @@ public final class Time implements YggdrasilSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

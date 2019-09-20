@@ -95,6 +95,7 @@ public final class SkriptParser {
     private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
     @SuppressWarnings("null")
     private static final Pattern functionCallPattern = Pattern.compile('(' + Functions.functionNamePattern + ")\\((.*?)\\)");
+    private static final Matcher functionCallPatternMatcher = functionCallPattern.matcher("");
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(100);
@@ -1403,7 +1404,7 @@ public final class SkriptParser {
 
             final List<int[]> pieces = new ArrayList<>();
             {
-                final Matcher m = listSplitPattern.matcher(expr);
+                final Matcher m = listSplitMatcher.reset(expr);
                 int i = 0;
                 for (int j = 0; i >= 0 && i <= expr.length(); i = next(expr, i, context)) {
                     if (i == expr.length() || m.region(i, expr.length()).lookingAt()) {
@@ -1573,7 +1574,7 @@ public final class SkriptParser {
             return null;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            final Matcher m = functionCallPattern.matcher(expr);
+            final Matcher m = functionCallPatternMatcher.reset(expr);
             if (!m.matches()) {
                 log.printLog();
                 return null;

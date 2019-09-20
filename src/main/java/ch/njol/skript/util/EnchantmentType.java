@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -44,6 +45,7 @@ public final class EnchantmentType implements YggdrasilSerializable {
     private static final String LANGUAGE_NODE = "enchantments";
     @SuppressWarnings("null")
     private static final Pattern pattern = Pattern.compile(".+ \\d+");
+    private static final Matcher patternMatcher = pattern.matcher("");
 
     static {
         Language.addListener(() -> {
@@ -89,7 +91,7 @@ public final class EnchantmentType implements YggdrasilSerializable {
     @SuppressWarnings("null")
     @Nullable
     public static final EnchantmentType parse(final String s) {
-        if (pattern.matcher(s).matches()) {
+        if (patternMatcher.reset(s).matches()) {
             final Enchantment ench = parseEnchantment(s.substring(0, s.lastIndexOf(' ')));
             if (ench == null)
                 return null;

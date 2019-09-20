@@ -971,7 +971,7 @@ public final class ScriptLoader {
         if (Skript.debug())
             indentation += "    ";
 
-        final List<TriggerItem> items = new ArrayList<>();
+        final List<TriggerItem> items = new ArrayList<>(100);
 
         Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
 

@@ -58,6 +58,7 @@ public final class Functions {
     private static final Matcher paramPatternMatcher = paramPattern.matcher("");
     private static final Collection<FunctionReference<?>> toValidate = new ArrayList<>(100);
     private static final Pattern functionNamePatternCompiled = Pattern.compile(functionNamePattern);
+    private static final Matcher functionNamePatternCompiledMatcher = functionNamePatternCompiled.matcher("");
     @Nullable
     public static ScriptFunction<?> currentFunction;
 
@@ -71,7 +72,7 @@ public final class Functions {
      */
     public static final JavaFunction<?> registerFunction(final JavaFunction<?> function) {
         Skript.checkAcceptRegistrations();
-        if (!functionNamePatternCompiled.matcher(function.name).matches())
+        if (!functionNamePatternCompiledMatcher.reset(function.name).matches())
             throw new SkriptAPIException("Invalid function name '" + function.name + '\'');
         if (functions.containsKey(function.name))
             throw new SkriptAPIException("Duplicate function " + function.name);

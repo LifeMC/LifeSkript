@@ -96,7 +96,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the id" + (single ? "" : "s") + " of " + getExpr().toString(e, debug);
     }
 
@@ -123,7 +123,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         assert delta != null;
         final ItemType it = getExpr().getSingle(e);
         if (it == null)
@@ -174,29 +174,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
         final Iterator<? extends ItemType> iter = getExpr().iterator(e);
         if (iter == null || !iter.hasNext())
             return null;
-        return new Iterator<Integer>() {
-            private Iterator<ItemData> current = iter.next().iterator();
-
-            @Override
-            public boolean hasNext() {
-                while (iter.hasNext() && !current.hasNext()) {
-                    current = iter.next().iterator();
-                }
-                return current.hasNext();
-            }
-
-            @Override
-            public Integer next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return current.next().getId();
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new IdIterator((Iterator<ItemType>) iter);
     }
 
     @Override
@@ -209,4 +187,33 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
         return "id".equalsIgnoreCase(s);
     }
 
+    private static final class IdIterator implements Iterator<Integer> {
+        private final Iterator<ItemType> iter;
+        private Iterator<ItemData> current;
+
+        public IdIterator(final Iterator<ItemType> iter) {
+            this.iter = iter;
+            current = iter.next().iterator();
+        }
+
+        @Override
+        public final boolean hasNext() {
+            while (iter.hasNext() && !current.hasNext()) {
+                current = iter.next().iterator();
+            }
+            return current.hasNext();
+        }
+
+        @Override
+        public final Integer next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return current.next().getId();
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }

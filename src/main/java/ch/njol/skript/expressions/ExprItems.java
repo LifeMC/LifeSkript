@@ -98,58 +98,12 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
     public Iterator<ItemStack> iterator(final Event e) {
         final Iterator<ItemStack> iter;
         if (types == null) {
-            iter = new Iterator<ItemStack>() {
-
-                private final Iterator<Material> iterator = new ArrayIterator<>(Material.values());
-
-                @Override
-                public boolean hasNext() {
-                    return iterator.hasNext();
-                }
-
-                @Override
-                public ItemStack next() {
-                    return new ItemStack(iterator.next());
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
-                }
-
-            };
+            iter = new ItemStackIterator();
         } else {
             @SuppressWarnings("null") final Iterator<ItemType> it = new ArrayIterator<>(types.getArray(e));
             if (!it.hasNext())
                 return null;
-            iter = new Iterator<ItemStack>() {
-
-                @SuppressWarnings("null")
-                Iterator<ItemStack> current = it.next().getAll().iterator();
-
-                @SuppressWarnings("null")
-                @Override
-                public boolean hasNext() {
-                    while (!current.hasNext() && it.hasNext()) {
-                        current = it.next().getAll().iterator();
-                    }
-                    return current.hasNext();
-                }
-
-                @SuppressWarnings("null")
-                @Override
-                public ItemStack next() {
-                    if (!hasNext())
-                        throw new NoSuchElementException();
-                    return current.next();
-                }
-
-                @Override
-                public void remove() {
-                    throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
-                }
-
-            };
+            iter = new TypedItemStackIterator(it);
         }
 
         if (!blocks)
@@ -164,9 +118,9 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Expression<ItemType> types = this.types;
-        return (blocks ? "blocks" : "items") + (types != null ? " of type" + (types.isSingle() ? "" : "s") + " " + types.toString(e, debug) : "");
+        return (blocks ? "blocks" : "items") + (types != null ? " of type" + (types.isSingle() ? "" : "s") + ' ' + types.toString(e, debug) : "");
     }
 
     @Override
@@ -179,4 +133,64 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
         return (blocks ? "block" : "item").equalsIgnoreCase(s);
     }
 
+    private static final class ItemStackIterator implements Iterator<ItemStack> {
+
+        private final Iterator<Material> iterator = new ArrayIterator<>(Material.values());
+
+        ItemStackIterator() {
+            super();
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public final ItemStack next() {
+            return new ItemStack(iterator.next());
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
+        }
+
+    }
+
+    private static final class TypedItemStackIterator implements Iterator<ItemStack> {
+
+        private final Iterator<ItemType> it;
+
+        @SuppressWarnings("null")
+        Iterator<ItemStack> current;
+
+        TypedItemStackIterator(final Iterator<ItemType> it) {
+            this.it = it;
+            current = it.next().getAll().iterator();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final boolean hasNext() {
+            while (!current.hasNext() && it.hasNext()) {
+                current = it.next().getAll().iterator();
+            }
+            return current.hasNext();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final ItemStack next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return current.next();
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException(); //FIXME make sure this not causes issues
+        }
+
+    }
 }

@@ -28,10 +28,7 @@ import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.skript.util.EmptyArrays;
-import ch.njol.skript.util.FileUtils;
-import ch.njol.skript.util.Task;
-import ch.njol.skript.util.Timespan;
+import ch.njol.skript.util.*;
 import ch.njol.skript.variables.SerializedVariable.Value;
 import ch.njol.util.Closeable;
 import org.eclipse.jdt.annotation.Nullable;
@@ -142,7 +139,7 @@ public abstract class VariablesStorage implements Closeable {
         if (pattern == null)
             return false;
         try {
-            variablePattern = ".*".equals(pattern) || ".+".equals(pattern) ? null : Pattern.compile(pattern);
+            variablePattern = ".*".equals(pattern) || ".+".equals(pattern) ? null : PatternCache.get(pattern);
         } catch (final PatternSyntaxException e) {
             Skript.error("Invalid pattern '" + pattern + "': " + e.getLocalizedMessage());
             return false;

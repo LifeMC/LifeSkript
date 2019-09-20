@@ -37,6 +37,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -62,12 +63,17 @@ public final class FlatFileStorage extends VariablesStorage {
     public static final int REQUIRED_CHANGES_FOR_RESAVE = Integer.getInteger("skript.requiredVariableChangesForSave", 1000);
     @SuppressWarnings("null")
     private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
+    private static final Matcher csvMatcher = csv.matcher("");
     /**
      * Use with find()
      */
     @SuppressWarnings("null")
     private static final Pattern containsWhitespace = Pattern.compile("\\s");
     private static final Matcher containsWhitespaceMatcher = containsWhitespace.matcher("");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\"\"", Pattern.LITERAL);
+    private static final Matcher SPLIT_PATTERN_MATCHER = SPLIT_PATTERN.matcher("");
+    private static final Pattern SINGLE_QUOTE = Pattern.compile("\"", Pattern.LITERAL);
+    private static final Matcher SINGLE_QUOTE_MATCHER = SINGLE_QUOTE.matcher("");
     static boolean savingVariables = false;
     private static long savedVariables;
     @Nullable
@@ -105,7 +111,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     @Nullable
     static final String[] splitCSV(final String line) {
-        final Matcher m = csv.matcher(line);
+        final Matcher m = csvMatcher.reset(line);
         int lastEnd = 0;
         final ArrayList<String> r = new ArrayList<>();
         while (m.find()) {
@@ -113,7 +119,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 return null;
             final String v = m.group(1);
             if (!v.isEmpty() && v.charAt(0) == '\"')
-                r.add(v.substring(1, v.length() - 1).replace("\"\"", "\""));
+                r.add(SPLIT_PATTERN_MATCHER.reset(v.substring(1, v.length() - 1)).replaceAll(Matcher.quoteReplacement("\"")));
             else
                 r.add(v.trim());
             lastEnd = m.end();
@@ -130,7 +136,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 pw.print(", ");
             String v = values[i];
             if (v != null && (v.contains(",") || v.contains("\"") || v.contains("#") || containsWhitespaceMatcher.reset(v).find()))
-                v = '"' + v.replace("\"", "\"\"") + '"';
+                v = '"' + SINGLE_QUOTE_MATCHER.reset(v).replaceAll(Matcher.quoteReplacement("\"\"")) + '"';
             pw.print(v);
         }
         pw.println();
@@ -152,14 +158,14 @@ public final class FlatFileStorage extends VariablesStorage {
         final Version v2_1 = new Version(2, 1);
         boolean update2_1 = false;
 
-        try (final BufferedReader r = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(file)), StandardCharsets.UTF_8))) {
+        try (final BufferedReader r = new BufferedReader(new InputStreamReader(new BufferedInputStream(new FileInputStream(Objects.requireNonNull(file))), StandardCharsets.UTF_8))) {
             String line;
             int lineNum = 0;
             boolean update2_0_beta3 = false;
             while ((line = r.readLine()) != null) {
                 lineNum++;
                 line = line.trim();
-                if (line.isEmpty() || !line.isEmpty() && line.charAt(0) == '#') {
+                if (line.isEmpty() || line.charAt(0) == '#') {
                     if (line.startsWith("# version:")) {
                         try {
                             // will be set later
@@ -273,7 +279,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     @SuppressWarnings({"resource", "unused", "null"})
     @Override
-    protected final boolean save(final String name, final @Nullable String type, final @Nullable byte[] value) {
+    protected final boolean save(final String name, @Nullable final String type, @Nullable final byte[] value) {
         synchronized (connectionLock) {
             synchronized (changesWriter) {
                 if (!loaded && type == null)
@@ -301,10 +307,11 @@ public final class FlatFileStorage extends VariablesStorage {
         synchronized (connectionLock) {
             clearChangesQueue();
             synchronized (changesWriter) {
-                final PrintWriter cw = changesWriter.get();
-                if (cw != null) {
-                    cw.close();
-                    changesWriter.set(null);
+                try (final PrintWriter cw = changesWriter.get()) {
+                    if (cw != null) {
+                        cw.close();
+                        changesWriter.set(null);
+                    }
                 }
             }
         }
@@ -318,7 +325,7 @@ public final class FlatFileStorage extends VariablesStorage {
                 if (changesWriter.get() != null)
                     return true;
                 try {
-                    changesWriter.set(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8)));
+                    changesWriter.set(new PrintWriter(new OutputStreamWriter(new FileOutputStream(Objects.requireNonNull(file), true), StandardCharsets.UTF_8)));
                     loaded = true;
                     return true;
                 } catch (final FileNotFoundException e) {
@@ -406,7 +413,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
                         if (Skript.logHigh())
                             // Unfortunately, this only displays the non-list variable counts.
-                            Skript.info("Saving approximately " + count + " variables to '" + fileName + "'");
+                            Skript.info("Saving approximately " + count + " variables to '" + fileName + '\'');
 
                         // reports once per second how many variables were saved. Useful to make clear that Skript is still doing something if it's saving many variables
                         final Thread savingLoggerThread = Skript.newThread(() -> {
@@ -419,7 +426,7 @@ public final class FlatFileStorage extends VariablesStorage {
                                 }
                                 if (savedVariables == 0 && !Skript.debug() && !Skript.testing())
                                     continue;
-                                Skript.info("Saved " + savedVariables + " variables" + (Skript.logHigh() ? " to '" + fileName + "'" : "") + " so far...");
+                                Skript.info("Saved " + savedVariables + " variables" + (Skript.logHigh() ? " to '" + fileName + '\'' : "") + " so far...");
                             }
                             Thread.currentThread().interrupt();
                         }, "Skript variable save tracker thread");
@@ -436,7 +443,7 @@ public final class FlatFileStorage extends VariablesStorage {
                         savingVariables = false;
 
                         savingLoggerThread.interrupt(); // In case if not interrupted
-                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + "'" : ""));
+                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + '\'' : ""));
 
                         savedVariables = 0; // Method may be called multiple times
 

@@ -59,31 +59,31 @@ public abstract class Function<T> {
         this.single = single;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
     @SuppressWarnings("null")
-    public Parameter<?> getParameter(final int index) {
+    public final Parameter<?> getParameter(final int index) {
         return parameters[index];
     }
 
-    public Parameter<?>[] getParameters() {
+    public final Parameter<?>[] getParameters() {
         return parameters;
     }
 
     @Nullable
-    public ClassInfo<T> getReturnType() {
+    public final ClassInfo<T> getReturnType() {
         return returnType;
     }
 
-    public boolean isSingle() {
+    public final boolean isSingle() {
         return single;
     }
 
     // TODO allow setting parameters by name
     @SuppressWarnings({"null", "unused"})
-    public int getMinParameters() {
+    public final int getMinParameters() {
         for (int i = parameters.length - 1; i >= 0; i--) {
             if (parameters[i].def == null && !parameters[i].isNone)
                 return i + 1;
@@ -91,7 +91,7 @@ public abstract class Function<T> {
         return 0;
     }
 
-    public int getMaxParameters() {
+    public final int getMaxParameters() {
         return parameters.length;
     }
 
@@ -146,7 +146,7 @@ public abstract class Function<T> {
     public abstract boolean resetReturnValue();
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "function " + name;
     }
 

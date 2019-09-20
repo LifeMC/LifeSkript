@@ -34,6 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
@@ -51,6 +52,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     @SuppressWarnings("unchecked")
     static final NonNullPair<Noun, Long>[] simpleValues = CollectionUtils.array(new NonNullPair<>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<>(m_hour, 1000L * 60 * 60), new NonNullPair<>(m_minute, 1000L * 60), new NonNullPair<>(m_second, 1000L)
     );
+    private static final Pattern TIMESPAN_SPLIT = Pattern.compile("\\s+");
 
     static {
         Language.addListener(() -> {
@@ -91,7 +93,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                 t += times[offset + i] * Utils.parseLong(ss[i]);
             }
         } else {
-            final String[] subs = s.toLowerCase(Locale.ENGLISH).split("\\s+");
+            final String[] subs = TIMESPAN_SPLIT.split(s.toLowerCase(Locale.ENGLISH));
             boolean minecraftTime = false;
             boolean isMinecraftTimeSet = false;
             for (int i = 0; i < subs.length; i++) {

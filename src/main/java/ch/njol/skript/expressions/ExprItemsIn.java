@@ -71,7 +71,7 @@ public final class ExprItemsIn extends SimpleExpression<Slot> {
     @SuppressWarnings("null")
     @Override
     protected Slot[] get(final Event e) {
-        final ArrayList<Slot> r = new ArrayList<>();
+        final ArrayList<Slot> r = new ArrayList<>(36);
         for (final Inventory invi : invis.getArray(e)) {
             for (int i = 0; i < invi.getSize(); i++) {
                 if (invi.getItem(i) != null)
@@ -87,38 +87,7 @@ public final class ExprItemsIn extends SimpleExpression<Slot> {
         final Iterator<? extends Inventory> is = invis.iterator(e);
         if (is == null || !is.hasNext())
             return null;
-        return new Iterator<Slot>() {
-            @SuppressWarnings("null")
-            Inventory current = is.next();
-
-            int next;
-
-            @SuppressWarnings("null")
-            @Override
-            public boolean hasNext() {
-                while (next < current.getSize() && current.getItem(next) == null)
-                    next++;
-                while (next >= current.getSize() && is.hasNext()) {
-                    current = is.next();
-                    next = 0;
-                    while (next < current.getSize() && current.getItem(next) == null)
-                        next++;
-                }
-                return next < current.getSize();
-            }
-
-            @Override
-            public Slot next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return new InventorySlot(current, next++);
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new SlotIterator(is);
     }
 
     @Override
@@ -127,7 +96,7 @@ public final class ExprItemsIn extends SimpleExpression<Slot> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "items in " + invis.toString(e, debug);
     }
 
@@ -141,4 +110,43 @@ public final class ExprItemsIn extends SimpleExpression<Slot> {
         return Slot.class;
     }
 
+    private static final class SlotIterator implements Iterator<Slot> {
+        private final Iterator<? extends Inventory> is;
+
+        @SuppressWarnings("null")
+        Inventory current;
+
+        int next;
+
+        SlotIterator(final Iterator<? extends Inventory> is) {
+            this.is = is;
+            current = is.next();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final boolean hasNext() {
+            while (next < current.getSize() && current.getItem(next) == null)
+                next++;
+            while (next >= current.getSize() && is.hasNext()) {
+                current = is.next();
+                next = 0;
+                while (next < current.getSize() && current.getItem(next) == null)
+                    next++;
+            }
+            return next < current.getSize();
+        }
+
+        @Override
+        public final Slot next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return new InventorySlot(current, next++);
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }

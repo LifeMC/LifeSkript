@@ -36,6 +36,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.EmptyArrays;
+import ch.njol.skript.util.PatternCache;
 import ch.njol.util.Kleenean;
 import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
@@ -170,7 +171,7 @@ public final class ExprLore extends SimpleExpression<String> {
                     if (SkriptConfig.caseSensitive.value()) {
                         lore = Arrays.asList((mode == ChangeMode.REMOVE ? StringUtils.join(lore, "\n").replaceFirst(Pattern.quote((String) delta[0]), "") : StringUtils.join(lore, "\n").replace((CharSequence) delta[0], "")).split("\n"));
                     } else {
-                        final Matcher m = Pattern.compile(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, "\n"));
+                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, "\n"));
                         lore = Arrays.asList((mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll("")).split("\n"));
                     }
                     break;
@@ -200,7 +201,7 @@ public final class ExprLore extends SimpleExpression<String> {
                     if (SkriptConfig.caseSensitive.value()) {
                         lore.set(l, mode == ChangeMode.REMOVE ? lore.get(l).replaceFirst(Pattern.quote((String) delta[0]), "") : lore.get(l).replace((CharSequence) delta[0], ""));
                     } else {
-                        final Matcher m = Pattern.compile(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(lore.get(l));
+                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(lore.get(l));
                         lore.set(l, mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll(""));
                     }
                     break;

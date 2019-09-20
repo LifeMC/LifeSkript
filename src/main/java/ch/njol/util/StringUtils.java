@@ -22,6 +22,7 @@
 
 package ch.njol.util;
 
+import ch.njol.skript.util.PatternCache;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
@@ -72,7 +73,7 @@ public final class StringUtils {
     @SuppressWarnings("null")
     @Nullable
     public static final String replaceAll(final CharSequence string, final String regex, final Callback<String, Matcher> callback) {
-        return replaceAll(string, Pattern.compile(regex), callback);
+        return replaceAll(string, PatternCache.get(regex), callback);
     }
 
     /**
@@ -86,7 +87,20 @@ public final class StringUtils {
      */
     @Nullable
     public static final String replaceAll(final CharSequence string, final Pattern regex, final Callback<String, Matcher> callback) {
-        final Matcher m = regex.matcher(string);
+        return replaceAll(string, regex.matcher(string), callback);
+    }
+
+    /**
+     * Performs regex replacing using a callback.
+     *
+     * @param string   the String in which should be searched & replaced
+     * @param m    the Matcher to match
+     * @param callback the callback will be run for every match of the regex in the string, and should return the replacement string for the given match.
+     *                 If the callback returns null for any given match this function will immediately terminate and return null.
+     * @return
+     */
+    @Nullable
+    public static final String replaceAll(final CharSequence string, final Matcher m, final Callback<String, Matcher> callback) {
         final StringBuffer sb = new StringBuffer(4096);
         while (m.find()) {
             final String r = callback.run(m);

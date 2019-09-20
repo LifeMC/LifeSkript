@@ -36,7 +36,7 @@ public final class EnumUtils<E extends Enum<E>> {
 
     private final Class<E> c;
     private final String languageNode;
-    private final HashMap<String, E> parseMap = new HashMap<>();
+    private final HashMap<String, E> parseMap;
     private String[] names;
 
     public EnumUtils(final Class<E> c, final String languageNode) {
@@ -46,7 +46,10 @@ public final class EnumUtils<E extends Enum<E>> {
         this.c = c;
         this.languageNode = languageNode;
 
-        names = new String[c.getEnumConstants().length];
+        final int enumLength = c.getEnumConstants().length;
+
+        this.parseMap = new HashMap<>(enumLength);
+        names = new String[enumLength];
 
         Language.addListener(() -> validate(true));
     }
@@ -54,7 +57,7 @@ public final class EnumUtils<E extends Enum<E>> {
     /**
      * Updates the names if the language has changed or the enum was modified (using reflection).
      */
-    void validate(final boolean force) {
+    final void validate(final boolean force) {
         boolean update = force;
 
         final int newL = c.getEnumConstants().length;
@@ -75,19 +78,19 @@ public final class EnumUtils<E extends Enum<E>> {
     }
 
     @Nullable
-    public E parse(final String s) {
+    public final E parse(final String s) {
         validate(false);
         return parseMap.get(s.toLowerCase(Locale.ENGLISH));
     }
 
     // REMIND flags?
     @SuppressWarnings("null")
-    public String toString(final E e, @SuppressWarnings("unused") final int flags) {
+    public final String toString(final E e, @SuppressWarnings("unused") final int flags) {
         validate(false);
         return names[e.ordinal()];
     }
 
-    public String getAllNames() {
+    public final String getAllNames() {
         validate(false);
         return StringUtils.join(names, ", ");
     }

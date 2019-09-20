@@ -39,12 +39,13 @@ public final class RegexMessage extends Message {
      */
     @SuppressWarnings("null")
     public static final Pattern nop = Pattern.compile("(?!)");
+    public static final Matcher nop_matcher = nop.matcher("");
     private final String prefix, suffix;
     private final int flags;
     @Nullable
     private Pattern pattern;
 
-    public RegexMessage(final String key, final @Nullable String prefix, final @Nullable String suffix, final int flags) {
+    public RegexMessage(final String key, @Nullable final String prefix, @Nullable final String suffix, final int flags) {
         super(key);
         this.prefix = prefix == null ? "" : prefix;
         this.suffix = suffix == null ? "" : suffix;

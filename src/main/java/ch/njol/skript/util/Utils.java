@@ -23,6 +23,7 @@
 package ch.njol.skript.util;
 
 import ch.njol.skript.aliases.ItemType;
+import ch.njol.skript.effects.EffTeleport;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.localization.Language;
@@ -39,6 +40,7 @@ import org.bukkit.util.Vector;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -79,6 +81,10 @@ public final class Utils {
     };
     @SuppressWarnings("null")
     private static final Pattern stylePattern = Pattern.compile("<([^<>]+)>");
+    private static final Matcher stylePatternMatcher = stylePattern.matcher("");
+    private static final Pattern NONE_PATTERN = Pattern.compile("<<none>>", Pattern.LITERAL);
+    private static final Matcher NONE_PATTERN_MATCHER = NONE_PATTERN.matcher("");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
 
     static {
         Language.addListener(() -> {
@@ -318,7 +324,7 @@ public final class Utils {
     }
 
     /**
-     * Gets the collision height of solid or partially-solid blocks at the center of the block. This is mostly for use in the {@link ch.njol.skript.effects.EffTeleport teleport effect}.
+     * Gets the collision height of solid or partially-solid blocks at the center of the block. This is mostly for use in the {@link EffTeleport teleport effect}.
      * <p>
      * TODO !Update with every version [blocks]
      *
@@ -391,7 +397,7 @@ public final class Utils {
     public static final String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll(message.replace("<<none>>", ""), stylePattern, m1 -> {
+        String m = StringUtils.replaceAll(NONE_PATTERN_MATCHER.reset(message).replaceAll(Matcher.quoteReplacement("")), stylePattern, m1 -> {
             @SuppressWarnings("null") final Color c = Color.byName(m1.group(1));
             if (c != null)
                 return c.getChat();
@@ -415,7 +421,7 @@ public final class Utils {
     public static final String replaceEnglishChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll(message, stylePattern, m1 -> {
+        String m = StringUtils.replaceAll(message, stylePatternMatcher, m1 -> {
             @SuppressWarnings("null") final Color c = Color.byEnglishName(m1.group(1));
             if (c != null)
                 return c.getChat();
@@ -487,7 +493,7 @@ public final class Utils {
      * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
      */
     public static final int parseInt(final String s) {
-        assert s.matches("-?\\d+") : s + " does not match regex";
+        assert NUMBER_PATTERN.matcher(s).matches() : s + " does not match regex";
         assert SkriptParser.isInteger(s) : s + " is not a valid integer";
         try {
             return Integer.parseInt(s);
@@ -505,7 +511,7 @@ public final class Utils {
      * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
      */
     public static final long parseLong(final String s) {
-        assert s.matches("-?\\d+") : s + " does not match regex";
+        assert NUMBER_PATTERN.matcher(s).matches() : s + " does not match regex";
         try {
             return Long.parseLong(s);
         } catch (final NumberFormatException e) {
