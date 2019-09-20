@@ -24,10 +24,7 @@ package ch.njol.util.coll;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Peter Güttinger
@@ -66,18 +63,18 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
     @SuppressWarnings("null")
     @Override
     @Nullable
-    public T2 getValue(final @Nullable T1 key) {
+    public T2 getValue(@Nullable final T1 key) {
         return get(key);
     }
 
     @Nullable
-    private T2 putDirect(final @Nullable T1 key, final @Nullable T2 value) {
+    private T2 putDirect(@Nullable final T1 key, @Nullable final T2 value) {
         return super.put(key, value);
     }
 
     @Override
     @Nullable
-    public T2 put(final @Nullable T1 key, final @Nullable T2 value) {
+    public T2 put(@Nullable final T1 key, @Nullable final T2 value) {
         if (key == null || value == null)
             throw new IllegalArgumentException("Can't store null in a BidiHashMap");
 
@@ -90,7 +87,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
 
     @SuppressWarnings("null")
     @Override
-    public void putAll(final @Nullable Map<? extends T1, ? extends T2> m) {
+    public void putAll(final Map<? extends T1, ? extends T2> m) {
         for (final Entry<? extends T1, ? extends T2> e : m.entrySet()) {
             put(e.getKey(), e.getValue());
         }
@@ -98,13 +95,13 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
 
     @SuppressWarnings("unlikely-arg-type")
     @Nullable
-    private T2 removeDirect(final @Nullable Object key) {
+    private T2 removeDirect(@Nullable final Object key) {
         return super.remove(key);
     }
 
     @Override
     @Nullable
-    public T2 remove(final @Nullable Object key) {
+    public T2 remove(@Nullable final Object key) {
         final T2 oldValue = removeDirect(key);
         if (oldValue != null)
             other.removeDirect(oldValue);
@@ -123,7 +120,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public boolean containsValue(final @Nullable Object value) {
+    public final boolean containsValue(@Nullable final Object value) {
         return other.containsKey(value);
     }
 
@@ -163,30 +160,25 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
      */
     @SuppressWarnings("null")
     @Override
-    public int hashCode() {
-        final int prime = 31;
+    public final int hashCode() {
         int result = super.hashCode();
-        result = prime * result + (this.other == null ? 0 : this.other.hashCode());
+        result = 31 * result + (other != null ? other.hashCode() : 0);
         return result;
     }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @SuppressWarnings({"null", "unused"})
+    @SuppressWarnings("null")
     @Override
-    public final boolean equals(@Nullable final Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (!(obj instanceof BidiHashMap))
-            return false;
-        final BidiHashMap<?, ?> other = (BidiHashMap<?, ?>) obj;
-        if (this.other == null) {
-            return other.other == null;
-        }
-        return this.other.equals(other.other);
+    public final boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        final BidiHashMap<?, ?> that = (BidiHashMap<?, ?>) o;
+
+        return Objects.equals(other, that.other);
     }
 
 }
