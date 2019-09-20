@@ -70,12 +70,16 @@ public final class EvtEntityBlockChange extends SkriptEvent {
         ENDERMAN_PLACE("enderman place", e -> e.getEntity() instanceof Enderman && e.getTo() != Material.AIR), ENDERMAN_PICKUP("enderman pickup", e -> e.getEntity() instanceof Enderman && e.getTo() == Material.AIR), SHEEP_EAT("sheep eat", e -> e.getEntity() instanceof Sheep);
         // TODO silverfishes
 
+        static final ChangeEvent[] values;
         static final String[] patterns;
 
         static {
-            patterns = new String[ChangeEvent.values().length];
+            values = ChangeEvent.values();
+            assert values.length > 0;
+
+            patterns = new String[values.length];
             for (int i = 0; i < patterns.length; i++) {
-                patterns[i] = values()[i].pattern;
+                patterns[i] = values[i].pattern;
             }
         }
 

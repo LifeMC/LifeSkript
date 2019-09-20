@@ -177,12 +177,16 @@ public final class ExprMessage extends SimpleExpression<String> {
             }
         };
 
+        static final MessageType[] values;
         static final String[] patterns;
 
         static {
-            patterns = new String[values().length];
+            values = MessageType.values();
+            assert values.length > 0;
+
+            patterns = new String[values.length];
             for (int i = 0; i < patterns.length; i++)
-                patterns[i] = values()[i].pattern;
+                patterns[i] = values[i].pattern;
         }
 
         final String name;
