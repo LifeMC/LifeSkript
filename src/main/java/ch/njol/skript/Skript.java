@@ -1115,21 +1115,12 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
-     * @param p The plugin
-     * @deprecated Backwards compatibility. Use {@link Skript#registerAddon(Plugin)}
-     */
-    @Deprecated
-    public static final SkriptAddon registerAddon(final JavaPlugin p) {
-        return registerAddon((Plugin) p);
-    }
-
-    /**
      * Registers an addon to Skript. This is currently not required for addons to work, but the returned {@link SkriptAddon} provides useful methods for registering syntax elements
      * and adding new strings to Skript's localization system (e.g. the required "types.[type]" strings for registered classes).
      *
      * @param p The plugin
      */
-    public static final SkriptAddon registerAddon(final Plugin p) {
+    public static final SkriptAddon registerAddon(final JavaPlugin p) {
         checkAcceptRegistrations();
         if (addons.containsKey(p.getName()))
             throw new IllegalArgumentException("The addon " + p.getName() + " is already registered!");
@@ -1138,6 +1129,15 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         if (Skript.testing() && Skript.debug())
             Skript.info("The addon " + p.getDescription().getFullName() + " was registered to Skript successfully.");
         return addon;
+    }
+
+    /**
+     * @param p The plugin
+     * @deprecated Backwards compatibility. Use {@link Skript#registerAddon(JavaPlugin)}
+     */
+    @Deprecated
+    public static final SkriptAddon registerAddon(final Plugin p) {
+        return registerAddon((JavaPlugin) p);
     }
 
     /**
@@ -1172,7 +1172,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final SkriptAddon getAddonInstance() {
         final SkriptAddon a = addon;
         if (a == null)
-            return addon = new SkriptAddon((Plugin) Skript.getInstance()).setLanguageFileDirectory("lang");
+            return addon = new SkriptAddon(Skript.getInstance()).setLanguageFileDirectory("lang");
         return a;
     }
 

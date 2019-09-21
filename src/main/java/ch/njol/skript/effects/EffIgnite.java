@@ -85,14 +85,14 @@ public final class EffIgnite extends Effect {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> en.setFireTicks(d));
             } else {
                 if (e instanceof EntityCombustEvent && ((EntityCombustEvent) e).getEntity() == en && !Delay.isDelayed(e))
-                    ((EntityCombustEvent) e).setCancelled(true);// can't change the duration, thus simply cancel the event (and create a new one)
+                    ((EntityCombustEvent) e).setCancelled(true); // can't change the duration, thus simply cancel the event (and create a new one)
                 en.setFireTicks(d);
             }
         }
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (ignite)
             return "set " + entities.toString(e, debug) + " on fire for " + (duration != null ? duration.toString(e, debug) : Timespan.fromTicks_i(DEFAULT_DURATION).toString());
         return "extinguish " + entities.toString(e, debug);

@@ -139,7 +139,7 @@ public final class Delay extends Effect {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "wait for " + duration.toString(e, debug) + (e == null ? "" : "...");
     }
 

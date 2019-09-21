@@ -309,7 +309,7 @@ public final class StringUtils {
         return string.substring(string.length() - end.length()).equalsIgnoreCase(end);
     }
 
-    public static final String multiply(final @Nullable String s, final int amount) {
+    public static final String multiply(@Nullable final String s, final int amount) {
         assert amount >= 0 : amount;
         if (s == null)
             return "";
@@ -333,19 +333,19 @@ public final class StringUtils {
         return new String(multiplied);
     }
 
-    public static final String join(final @Nullable Object[] strings) {
+    public static final String join(@Nullable final Object[] strings) {
         if (strings == null)
             return "";
         return join(strings, "", 0, strings.length);
     }
 
-    public static final String join(final @Nullable Object[] strings, final String delimiter) {
+    public static final String join(@Nullable final Object[] strings, final String delimiter) {
         if (strings == null)
             return "";
         return join(strings, delimiter, 0, strings.length);
     }
 
-    public static final String join(final @Nullable Object[] strings, final String delimiter, final int start, final int end) {
+    public static final String join(@Nullable final Object[] strings, final String delimiter, final int start, final int end) {
         if (strings == null)
             return "";
         assert start >= 0 && start <= end && end <= strings.length : start + ", " + end + ", " + strings.length;
@@ -359,19 +359,19 @@ public final class StringUtils {
         return b.toString();
     }
 
-    public static final String join(final @Nullable Iterable<?> strings) {
+    public static final String join(@Nullable final Iterable<?> strings) {
         if (strings == null)
             return "";
         return join(strings.iterator(), "");
     }
 
-    public static final String join(final @Nullable Iterable<?> strings, final String delimiter) {
+    public static final String join(@Nullable final Iterable<?> strings, final String delimiter) {
         if (strings == null)
             return "";
         return join(strings.iterator(), delimiter);
     }
 
-    public static final String join(final @Nullable Iterator<?> strings, final String delimiter) {
+    public static final String join(@Nullable final Iterator<?> strings, final String delimiter) {
         if (strings == null || !strings.hasNext())
             return "";
         final StringBuilder b = new StringBuilder(String.valueOf(strings.next()));

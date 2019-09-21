@@ -51,7 +51,7 @@ public final class SkriptAddon {
     public static final Method getFile =
             Skript.methodForName(JavaPlugin.class, "getFile", true);
 
-    public final Plugin plugin;
+    public final JavaPlugin plugin;
     public final Version version;
     private final String name;
 
@@ -63,20 +63,11 @@ public final class SkriptAddon {
     private File file;
 
     /**
-     * @param p The plugin that this add-on refers to.
-     * @deprecated Backwards compatibility. Use {@link SkriptAddon#SkriptAddon(Plugin)}
-     */
-    @Deprecated
-    SkriptAddon(final JavaPlugin p) {
-        this((Plugin) p);
-    }
-
-    /**
-     * Package-private constructor. Use {@link Skript#registerAddon(Plugin)} to get a SkriptAddon for your plugin.
+     * Package-private constructor. Use {@link Skript#registerAddon(JavaPlugin)} to get a SkriptAddon for your plugin.
      *
      * @param p The plugin that this add-on refers to.
      */
-    SkriptAddon(final Plugin p) {
+    SkriptAddon(final JavaPlugin p) {
         plugin = p;
         name = p.getName();
         Version v;
@@ -90,6 +81,15 @@ public final class SkriptAddon {
             Skript.warning("The plugin " + p.getName() + " uses a non-standard version syntax: '" + p.getDescription().getVersion() + "'. Skript will use " + v + " instead.");
         }
         version = v;
+    }
+
+    /**
+     * @param p The plugin that this add-on refers to.
+     * @deprecated Backwards compatibility. Use {@link SkriptAddon#SkriptAddon(JavaPlugin)}
+     */
+    @Deprecated
+    SkriptAddon(final Plugin p) {
+        this((JavaPlugin) p);
     }
 
     @Override
@@ -124,8 +124,8 @@ public final class SkriptAddon {
         assert getFile() != null;
         try (final JarFile jar = new JarFile(getFile(), false)) {
             for (int i = 0; i < subPackages.length; i++)
-                subPackages[i] = subPackages[i].replace('.', '/') + "/";
-            basePackage = basePackage.replace('.', '/') + "/";
+                subPackages[i] = subPackages[i].replace('.', '/') + '/';
+            basePackage = basePackage.replace('.', '/') + '/';
             for (final JarEntry e : new EnumerationIterable<>(jar.entries())) {
                 if (e.getName().startsWith(basePackage) && e.getName().endsWith(".class")) {
                     boolean load = subPackages.length == 0;

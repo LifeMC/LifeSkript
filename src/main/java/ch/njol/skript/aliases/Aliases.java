@@ -29,6 +29,7 @@ import ch.njol.skript.config.Config;
 import ch.njol.skript.config.EntryNode;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.config.validate.NodeValidator;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.localization.*;
 import ch.njol.skript.log.BlockingLogHandler;
@@ -792,7 +793,7 @@ public final class Aliases {
 
                 final ArrayList<String> aliasNodes = new ArrayList<>();
 
-                aliasConfig.validate(new SectionValidator().addEntry("aliases", s -> {
+                aliasConfig.validate((NodeValidator) new SectionValidator().addEntry("aliases", s -> {
                     for (final String n : s.split(","))
                         aliasNodes.add(n.trim());
                 }, false).addEntry("item", s -> {

@@ -89,37 +89,37 @@ public final class PropertiesFile extends File {
     }
 
     @Nullable
-    public final String get(final @Nullable String key) {
+    public final String get(@Nullable final String key) {
         return get(key, null);
     }
 
-    public final PropertiesFile set(final @Nullable String key,
-                                    final @Nullable String value) {
+    public final PropertiesFile set(@Nullable final String key,
+                                    @Nullable final String value) {
         checkLoad();
         properties.setProperty(key, value);
         return this;
     }
 
     @Nullable
-    public final String get(final @Nullable String key,
-                            final @Nullable String defaultValue) {
+    public final String get(@Nullable final String key,
+                            @Nullable final String defaultValue) {
         checkLoad();
         if (key == null)
             return defaultValue;
         return properties.getProperty(key, defaultValue);
     }
 
-    public final int getInt(final @Nullable String key) {
+    public final int getInt(@Nullable final String key) {
         return getInt(key, 0);
     }
 
-    public final PropertiesFile setInt(final @Nullable String key,
+    public final PropertiesFile setInt(@Nullable final String key,
                                        final int value) {
         set(key, String.valueOf(value));
         return this;
     }
 
-    public final int getInt(final @Nullable String key,
+    public final int getInt(@Nullable final String key,
                             final int defaultValue) {
         if (key == null)
             return defaultValue;
@@ -131,17 +131,17 @@ public final class PropertiesFile extends File {
         return Integer.parseInt(value);
     }
 
-    public final boolean getBoolean(final @Nullable String key) {
+    public final boolean getBoolean(@Nullable final String key) {
         return getBoolean(key, false);
     }
 
-    public final PropertiesFile setBoolean(final @Nullable String key,
+    public final PropertiesFile setBoolean(@Nullable final String key,
                                            final boolean value) {
         set(key, String.valueOf(value));
         return this;
     }
 
-    public final boolean getBoolean(final @Nullable String key,
+    public final boolean getBoolean(@Nullable final String key,
                                     final boolean defaultValue) {
         if (key == null)
             return defaultValue;

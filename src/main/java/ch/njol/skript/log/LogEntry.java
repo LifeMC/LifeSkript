@@ -58,7 +58,7 @@ public final class LogEntry {
         this(level, quality.quality(), message, SkriptLogger.getNode());
     }
 
-    public LogEntry(final Level level, final String message, final @Nullable Node node) {
+    public LogEntry(final Level level, final String message, @Nullable final Node node) {
         this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, node);
     }
 
@@ -66,12 +66,12 @@ public final class LogEntry {
         this(level, quality.quality(), message, node);
     }
 
-    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node) {
+    public LogEntry(final Level level, final int quality, final String message, @Nullable final Node node) {
         this(level, quality, message, node, false);
     }
 
     @SuppressWarnings("null")
-    public LogEntry(final Level level, final int quality, final String message, final @Nullable Node node, final boolean tracked) {
+    public LogEntry(final Level level, final int quality, final String message, @Nullable final Node node, final boolean tracked) {
         this.level = level;
         this.quality = quality;
         this.message = message;
@@ -91,7 +91,7 @@ public final class LogEntry {
                 i++;
             if (i >= es.length)
                 i = es.length - 1;
-            return " (from " + es[i] + ")";
+            return " (from " + es[i] + ')';
         }
         return " (from an unknown source)";
     }
@@ -114,12 +114,12 @@ public final class LogEntry {
 
     void discarded(final String info) {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " discarded" + findCaller() + "; " + new Throwable().getStackTrace()[1] + "; " + info); // Thread.currentThread().getStackTrace() is more memory friendly, but slower
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + '\'' + from + " discarded" + findCaller() + "; " + new Throwable().getStackTrace()[1] + "; " + info); // Thread.currentThread().getStackTrace() is more memory friendly, but slower
     }
 
     void logged() {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + "'" + from + " logged" + findCaller());
+            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + '\'' + from + " logged" + findCaller());
     }
 
     @Override

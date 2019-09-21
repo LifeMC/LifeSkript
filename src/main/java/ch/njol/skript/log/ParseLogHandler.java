@@ -84,7 +84,7 @@ public class ParseLogHandler extends LogHandler {
             error.discarded("not printed");
     }
 
-    public void printError() {
+    public final void printError() {
         printError(null);
     }
 
@@ -121,12 +121,12 @@ public class ParseLogHandler extends LogHandler {
         return error == null ? 0 : 1;
     }
 
-    public boolean hasError() {
+    public final boolean hasError() {
         return error != null;
     }
 
     @Nullable
-    public LogEntry getError() {
+    public final LogEntry getError() {
         return error;
     }
 
