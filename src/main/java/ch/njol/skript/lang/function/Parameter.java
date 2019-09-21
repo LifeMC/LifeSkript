@@ -96,7 +96,7 @@ public final class Parameter<T> {
 //			} else {
             final RetainingLogHandler log = SkriptLogger.startRetainingLog();
             try {
-                final String unquoted = "" + def.substring(1, def.length() - 1);
+                final String unquoted = def.substring(1, def.length() - 1);
                 if (def.startsWith("\"") && def.endsWith("\"")) { // Quoted string; always parse as string
                     // Don't ever parse strings as objects, it creates UnparsedLiterals
                     d = (Expression<? extends T>) VariableString.newInstance(unquoted);

@@ -63,10 +63,10 @@ import java.util.regex.Pattern;
  */
 public final class Classes {
 
-    private static final List<ClassInfo<?>> tempClassInfos = new ArrayList<>();
-    private static final HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<>();
-    private static final HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>();
-    private static final HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>();
+    private static final List<ClassInfo<?>> tempClassInfos = new ArrayList<>(100);
+    private static final HashMap<Class<?>, ClassInfo<?>> exactClassInfos = new HashMap<>(100);
+    private static final HashMap<Class<?>, ClassInfo<?>> superClassInfos = new HashMap<>(100);
+    private static final HashMap<String, ClassInfo<?>> classInfosByCodeName = new HashMap<>(100);
     /**
      * Consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */

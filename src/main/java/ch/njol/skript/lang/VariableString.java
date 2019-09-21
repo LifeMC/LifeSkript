@@ -108,7 +108,7 @@ public final class VariableString implements Expression<String> {
      * @return Whatever the string is quoted correctly
      */
     public static final boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
-        if (withQuotes && (!(!s.isEmpty() && s.charAt(0) == '\"') || !(!s.isEmpty() && s.charAt(s.length() - 1) == '\"')))
+        if (withQuotes && (!(!s.isEmpty() && s.charAt(0) == '\"') || !(s.charAt(s.length() - 1) == '\"')))
             return false;
         boolean quote = false;
         for (int i = withQuotes ? 1 : 0; i < (withQuotes ? s.length() - 1 : s.length()); i++) {

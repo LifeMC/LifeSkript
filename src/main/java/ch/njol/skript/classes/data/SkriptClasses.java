@@ -175,18 +175,18 @@ public final class SkriptClasses {
             public String toVariableNameString(final ItemType t) {
                 final StringBuilder b = new StringBuilder("itemtype:");
                 b.append(t.getInternalAmount());
-                b.append(",").append(t.isAll());
+                b.append(',').append(t.isAll());
                 for (final ItemData d : t.getTypes()) {
-                    b.append(",").append(d.getId());
-                    b.append(":").append(d.dataMin);
-                    b.append("/").append(d.dataMax);
+                    b.append(',').append(d.getId());
+                    b.append(':').append(d.dataMin);
+                    b.append('/').append(d.dataMax);
                 }
                 final Map<Enchantment, Integer> enchs = t.getEnchantments();
                 if (enchs != null && !enchs.isEmpty()) {
-                    b.append("|");
+                    b.append('|');
                     for (final Entry<Enchantment, Integer> e : enchs.entrySet()) {
-                        b.append("#").append(e.getKey().getId());
-                        b.append(":").append(e.getValue());
+                        b.append('#').append(e.getKey().getId());
+                        b.append(':').append(e.getValue());
                     }
                 }
                 return b.toString();
@@ -317,7 +317,7 @@ public final class SkriptClasses {
                 try {
                     return Timespan.parse(s);
                 } catch (final IllegalArgumentException e) {
-                    Skript.error("'" + s + "' is not a valid timespan");
+                    Skript.error('\'' + s + "' is not a valid timespan");
                     return null;
                 }
             }
@@ -404,7 +404,7 @@ public final class SkriptClasses {
 
                     @Override
                     public String toVariableNameString(final Timeperiod o) {
-                        return "timeperiod:" + o.start + "-" + o.end;
+                        return "timeperiod:" + o.start + '-' + o.end;
                     }
 
                     @Override
@@ -502,7 +502,7 @@ public final class SkriptClasses {
             }
 
             @Override
-            public void change(final Slot[] slots, final @Nullable Object[] deltas, final ChangeMode mode) {
+            public void change(final Slot[] slots, @Nullable final Object[] deltas, final ChangeMode mode) {
                 final Object delta = deltas == null ? null : deltas[0];
                 for (final Slot slot : slots) {
                     switch (mode) {
@@ -656,7 +656,7 @@ public final class SkriptClasses {
                     xp = Utils.parseInt(s.substring(0, s.indexOf(' ')));
                     s = s.substring(s.indexOf(' ') + 1);
                 }
-                if (pattern.matcher(s).matches())
+                if (pattern.matches(s))
                     return new Experience(xp);
                 return null;
             }

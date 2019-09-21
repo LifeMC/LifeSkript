@@ -1731,12 +1731,8 @@ public final class SkriptParser {
                                     if (j2 != -1) {
                                         final String str = pattern.substring(j + 1, j2);
                                         if (SkriptParser.isInteger(str)) {
-                                            try {
-                                                mark = Integer.parseInt(str);
-                                                j = j2;
-                                            } catch (final NumberFormatException ignored) {
-                                                /* ignored */
-                                            }
+                                            mark = Integer.parseInt(str);
+                                            j = j2;
                                         }
                                     }
                                 }

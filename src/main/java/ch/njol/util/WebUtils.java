@@ -53,6 +53,7 @@ public final class WebUtils {
     public static final String USER_AGENT =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36";
     private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
+    private static final Matcher RELEASES_MATCHER = RELEASES.matcher("");
 
     /**
      * Static magic.
@@ -157,7 +158,7 @@ public final class WebUtils {
             con.setRequestProperty("Accept", "*/*");
 
             con.setRequestProperty("User-Agent", USER_AGENT.trim());
-            con.setRequestProperty("Referer", RELEASES.matcher(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
+            con.setRequestProperty("Referer", RELEASES_MATCHER.reset(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
 
             in = new BufferedInputStream(con.getInputStream());
 

@@ -56,36 +56,47 @@ public class ContainerExpression extends SimpleExpression<Object> {
         final Iterator<? extends Container<?>> iter = expr.iterator(e);
         if (iter == null)
             return null;
-        return new Iterator<Object>() {
-            @Nullable
-            private Iterator<?> current;
+        return new ContainerIterator(iter, expr);
+    }
 
-            @Override
-            public boolean hasNext() {
-                Iterator<?> c = current;
-                while (iter.hasNext() && (c == null || !c.hasNext())) {
-                    current = c = iter.next().containerIterator();
-                }
-                return c != null && c.hasNext();
-            }
+    private static final class ContainerIterator implements Iterator<Object> {
+        private final Iterator<? extends Container<?>> iterator;
+        private final Expression<? extends Container<?>> expression;
 
-            @Override
-            public Object next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                final Iterator<?> c = current;
-                if (c == null)
-                    throw new NoSuchElementException();
-                final Object o = c.next();
-                assert o != null : current + "; " + expr;
-                return o;
-            }
+        @Nullable
+        private Iterator<?> current;
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+        ContainerIterator(final Iterator<? extends Container<?>> iterator,
+                          final Expression<? extends Container<?>> expression) {
+            this.iterator = iterator;
+            this.expression = expression;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            Iterator<?> c = current;
+            while (iterator.hasNext() && (c == null || !c.hasNext())) {
+                current = c = iterator.next().containerIterator();
             }
-        };
+            return c != null && c.hasNext();
+        }
+
+        @Override
+        public final Object next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final Iterator<?> c = current;
+            if (c == null)
+                throw new NoSuchElementException();
+            final Object o = c.next();
+            assert o != null : current + "; " + expression;
+            return o;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
@@ -104,7 +115,7 @@ public class ContainerExpression extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return expr.toString(e, debug);
     }
 

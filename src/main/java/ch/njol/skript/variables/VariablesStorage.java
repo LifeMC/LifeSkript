@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -84,7 +85,7 @@ public abstract class VariablesStorage implements Closeable {
      * null for '.*' or '.+'
      */
     @Nullable
-    private Pattern variablePattern;
+    private Matcher variablePatternMatcher;
     private long lastWarning = Long.MIN_VALUE;
     private long lastError = Long.MIN_VALUE;
 
@@ -106,7 +107,7 @@ public abstract class VariablesStorage implements Closeable {
                     break; // Server probably shutting down.
                 }
             }
-        }, "Skript variable save thread for database '" + name + "'");
+        }, "Skript variable save thread for database '" + name + '\'');
     }
 
     @Nullable
@@ -118,7 +119,7 @@ public abstract class VariablesStorage implements Closeable {
     protected final <T> T getValue(final SectionNode n, final String key, final Class<T> type) {
         final String v = n.getValue(key);
         if (v == null) {
-            Skript.error("The config is missing the entry for '" + key + "' in the database '" + databaseName + "'");
+            Skript.error("The config is missing the entry for '" + key + "' in the database '" + databaseName + '\'');
             return null;
         }
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
@@ -139,7 +140,9 @@ public abstract class VariablesStorage implements Closeable {
         if (pattern == null)
             return false;
         try {
-            variablePattern = ".*".equals(pattern) || ".+".equals(pattern) ? null : PatternCache.get(pattern);
+            final Pattern variablePattern = ".*".equals(pattern) || ".+".equals(pattern) ? null : PatternCache.get(pattern);
+            if (variablePattern != null)
+                variablePatternMatcher = variablePattern.matcher("");
         } catch (final PatternSyntaxException e) {
             Skript.error("Invalid pattern '" + pattern + "': " + e.getLocalizedMessage());
             return false;
@@ -245,10 +248,10 @@ public abstract class VariablesStorage implements Closeable {
     }
 
     @SuppressWarnings("null")
-    boolean accept(final @Nullable String var) {
+    boolean accept(@Nullable final String var) {
         if (var == null)
             return false;
-        return variablePattern == null || variablePattern.matcher(var).matches();
+        return variablePatternMatcher == null || variablePatternMatcher.reset(var).matches();
     }
 
     /**

@@ -42,7 +42,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class for Skript addons. Use {@link Skript#registerAddon(Plugin)} to create a SkriptAddon instance for your plugin.
+ * Utility class for Skript addons. Use {@link Skript#registerAddon(JavaPlugin)} to create a SkriptAddon instance for your plugin.
  *
  * @author Peter Güttinger
  */
@@ -50,6 +50,7 @@ public final class SkriptAddon {
 
     public static final Method getFile =
             Skript.methodForName(JavaPlugin.class, "getFile", true);
+    private static final Matcher VERSION_PATTERN_MATCHER = Pattern.compile("(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?").matcher("");
 
     public final JavaPlugin plugin;
     public final Version version;
@@ -74,7 +75,7 @@ public final class SkriptAddon {
         try {
             v = new Version(p.getDescription().getVersion());
         } catch (final IllegalArgumentException e) {
-            final Matcher m = Pattern.compile("(\\d+)(?:\\.(\\d+)(?:\\.(\\d+))?)?").matcher(p.getDescription().getVersion());
+            final Matcher m = VERSION_PATTERN_MATCHER.reset(p.getDescription().getVersion());
             if (!m.find())
                 throw new IllegalArgumentException("The version of the plugin " + p.getName() + " does not contain any numbers: " + p.getDescription().getVersion());
             v = new Version(Utils.parseInt(m.group(1)), m.group(2) == null ? 0 : Utils.parseInt("" + m.group(2)), m.group(3) == null ? 0 : Utils.parseInt("" + m.group(3)));

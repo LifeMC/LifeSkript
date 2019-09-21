@@ -66,7 +66,6 @@ public final class ExprRegionsAt extends SimpleExpression<Region> {
 
     @SuppressWarnings("null")
     @Override
-    @Nullable
     protected Region[] get(final Event e) {
         final Location[] ls = locs.getArray(e);
         if (ls.length == 0)
