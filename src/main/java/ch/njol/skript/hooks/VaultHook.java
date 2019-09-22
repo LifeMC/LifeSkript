@@ -29,6 +29,7 @@ import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 
 import java.io.IOException;
 
@@ -48,6 +49,15 @@ public final class VaultHook extends Hook<Vault> {
 
     @SuppressWarnings("null")
     public static Permission permission;
+
+    private static final boolean oldVault = !Skript.methodExists(Economy.class, "getBalance", OfflinePlayer.class) ||
+            !Skript.methodExists(Economy.class, "withdrawPlayer", OfflinePlayer.class, double.class) ||
+            !Skript.methodExists(Economy.class, "depositPlayer", OfflinePlayer.class, double.class);
+
+    static {
+        if (oldVault)
+            Skript.warning("You are using an old version of Vault, economy operations may act slow.");
+    }
 
     public VaultHook() throws IOException {
     }
@@ -75,6 +85,36 @@ public final class VaultHook extends Hook<Vault> {
     @Override
     public String getName() {
         return "Vault";
+    }
+
+    @SuppressWarnings("deprecation")
+    public static final double getBalance(final OfflinePlayer player) {
+        if (oldVault)
+            return economy.getBalance(player.getName());
+
+        return economy.getBalance(player);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static final void remove(final OfflinePlayer player,
+                                    final double amount) {
+        if (oldVault) {
+            economy.withdrawPlayer(player.getName(), amount);
+            return;
+        }
+
+        economy.withdrawPlayer(player, amount);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static final void add(final OfflinePlayer player,
+                                 final double amount) {
+        if (oldVault) {
+            economy.depositPlayer(player.getName(), amount);
+            return;
+        }
+
+        economy.depositPlayer(player, amount);
     }
 
 }

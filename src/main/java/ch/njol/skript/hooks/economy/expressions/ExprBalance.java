@@ -47,12 +47,7 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
     @SuppressWarnings("deprecation")
     @Override
     public Money convert(final OfflinePlayer p) {
-        try {
-            return new Money(VaultHook.economy.getBalance(p));
-        } catch (final NoSuchMethodError e) {
-            // Happens on Vault < 1.4 (before UUIDs)
-            return new Money(VaultHook.economy.getBalance(p.getName()));
-        }
+        return new Money(VaultHook.getBalance(p));
     }
 
     @Override
@@ -75,12 +70,12 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
 
     @SuppressWarnings("deprecation")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         assert mode != ChangeMode.REMOVE_ALL;
 
         if (delta == null) {
             for (final OfflinePlayer p : getExpr().getArray(e))
-                VaultHook.economy.withdrawPlayer(p.getName(), VaultHook.economy.getBalance(p.getName()));
+                VaultHook.remove(p, VaultHook.getBalance(p));
             return;
         }
 
@@ -88,21 +83,21 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
         for (final OfflinePlayer p : getExpr().getArray(e)) {
             switch (mode) {
                 case SET:
-                    final double b = VaultHook.economy.getBalance(p.getName());
+                    final double b = VaultHook.getBalance(p);
                     if (b < m) {
-                        //FIXME uuid support
-                        VaultHook.economy.depositPlayer(p.getName(), m - b);
+                        VaultHook.add(p, m - b);
                     } else if (b > m) {
-                        VaultHook.economy.withdrawPlayer(p.getName(), b - m);
+                        VaultHook.remove(p, b - m);
                     }
                     break;
                 case ADD:
-                    VaultHook.economy.depositPlayer(p.getName(), m);
+                    VaultHook.add(p, m);
                     break;
                 case REMOVE:
-                    VaultHook.economy.withdrawPlayer(p.getName(), m);
+                    VaultHook.remove(p, m);
                     break;
                 case DELETE:
+                    //noinspection ConstantConditions
                 case REMOVE_ALL:
                 case RESET:
                     assert false;
