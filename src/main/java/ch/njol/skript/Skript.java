@@ -1389,6 +1389,31 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         SkriptLogger.log(SkriptLogger.DEBUG, info);
     }
 
+    public static final void debug(@Nullable final Object... objects) {
+        if (objects == null || objects.length < 1)
+            return;
+        if (!debug())
+            return;
+        final StringBuilder builder = new StringBuilder(4096);
+        final Object last = objects[objects.length - 1];
+        boolean str = false;
+        for (final Object obj : objects) {
+            if (obj instanceof String && !str) {
+                builder.append((String) obj).append(" = ");
+                str = true;
+            } else {
+                if (obj instanceof Object[])
+                    builder.append(Arrays.deepToString((Object[]) obj));
+                else
+                    builder.append(obj);
+                str = false;
+            }
+            if (!str && obj != last)
+                builder.append(", ");
+        }
+        debug(builder.toString());
+    }
+
     /**
      * @see SkriptLogger#log(Level, String)
      */
