@@ -22,6 +22,7 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.localization.GeneralWords;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Noun;
@@ -33,6 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -41,7 +43,7 @@ import java.util.regex.Pattern;
 public final class Timespan implements YggdrasilSerializable, Comparable<Timespan> {
 
     static final long[] times = {50L, 1000L, 1000L * 60L, 1000L * 60L * 60L, 1000L * 60L * 60L * 24L};
-    static final HashMap<String, Long> parseValues = new HashMap<>();
+    static final HashMap<String, Long> parseValues = new HashMap<>(100);
     private static final Noun m_tick = new Noun("time.tick");
     private static final Noun m_second = new Noun("time.second");
     private static final Noun m_minute = new Noun("time.minute");
@@ -52,6 +54,11 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     static final NonNullPair<Noun, Long>[] simpleValues = CollectionUtils.array(new NonNullPair<>(m_day, 1000L * 60 * 60 * 24), new NonNullPair<>(m_hour, 1000L * 60 * 60), new NonNullPair<>(m_minute, 1000L * 60), new NonNullPair<>(m_second, 1000L)
     );
     private static final Pattern TIMESPAN_SPLIT = Pattern.compile("\\s+");
+    private static final Pattern TIMESPAN_PATTERN = Pattern.compile("^\\d+:\\d\\d(:\\d\\d)?(\\.\\d{1,4})?$");
+    private static final Matcher TIMESPAN_PATTERN_MATCHER = TIMESPAN_PATTERN.matcher("");
+    private static final Pattern TIMESPAN_SPLIT_TWO = Pattern.compile("[:.]");
+    private static final Pattern TIMESPAN_DOUBLE_PATTERN = Pattern.compile("^\\d+(.\\d+)?$");
+    private static final Matcher TIMESPAN_DOUBLE_PATTERN_MATCHER = TIMESPAN_DOUBLE_PATTERN.matcher("");
 
     static {
         Language.addListener(() -> {
@@ -83,8 +90,8 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
         if (s.isEmpty())
             return null;
         long t = 0;
-        if (s.matches("^\\d+:\\d\\d(:\\d\\d)?(\\.\\d{1,4})?$")) { // MM:SS[.ms] or HH:MM:SS[.ms]
-            final String[] ss = s.split("[:.]");
+        if (TIMESPAN_PATTERN_MATCHER.reset(s).matches()) { // MM:SS[.ms] or HH:MM:SS[.ms]
+            final String[] ss = TIMESPAN_SPLIT_TWO.split(s);
             final long[] times = {1000L * 60L * 60L, 1000L * 60L, 1000L, 1L}; // h, m, s, ms
 
             final int offset = ss.length == 3 && !s.contains(".") || ss.length == 4 ? 0 : 1;
@@ -110,14 +117,12 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                         return null;
                     amount = 1;
                     sub = subs[++i];
-                } else if (sub.matches("^\\d+(.\\d+)?$")) {
+                } else if (TIMESPAN_DOUBLE_PATTERN_MATCHER.reset(sub).matches()) {
                     if (i == subs.length - 1)
                         return null;
-                    try {
-                        amount = Double.parseDouble(sub);
-                    } catch (final NumberFormatException e) {
+                    if (!SkriptParser.isIntegerOrDouble(sub))
                         throw new IllegalArgumentException("invalid timespan: " + s);
-                    }
+                    amount = Double.parseDouble(sub);
                     sub = subs[++i];
                 }
 
@@ -132,7 +137,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
                     sub = subs[++i];
                 }
 
-                if (sub.endsWith(","))
+                if (!sub.isEmpty() && sub.charAt(sub.length() - 1) == ',')
                     sub = sub.substring(0, sub.length() - 1);
 
                 final Long d = parseValues.get(sub.toLowerCase(Locale.ENGLISH));
@@ -174,7 +179,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
             if (millis >= simpleValues[i].getSecond()) {
                 final double second = 1. * (millis % simpleValues[i].getSecond()) / simpleValues[i + 1].getSecond();
                 if (second != 0) {
-                    return toString(Math.floor(1. * millis / simpleValues[i].getSecond()), simpleValues[i], flags) + " " + GeneralWords.and + " " + toString(second, simpleValues[i + 1], flags);
+                    return toString(Math.floor(1. * millis / simpleValues[i].getSecond()), simpleValues[i], flags) + ' ' + GeneralWords.and + ' ' + toString(second, simpleValues[i + 1], flags);
                 }
                 return toString(1. * millis / simpleValues[i].getSecond(), simpleValues[i], flags);
             }
@@ -214,7 +219,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     }
 
     @Override
-    public int compareTo(final @Nullable Timespan o) {
+    public int compareTo(@Nullable final Timespan o) {
         final long d = o == null ? millis : millis - o.millis;
         return d > 0 ? 1 : d < 0 ? -1 : 0;
     }
@@ -228,7 +233,7 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

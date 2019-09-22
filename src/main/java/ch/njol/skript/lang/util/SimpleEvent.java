@@ -36,10 +36,6 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class SimpleEvent extends SkriptEvent {
 
-    public SimpleEvent() {
-        super();
-    }
-
     @Override
     public boolean check(final Event e) {
         return true;

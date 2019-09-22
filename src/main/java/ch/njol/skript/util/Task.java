@@ -182,6 +182,15 @@ public abstract class Task implements Runnable, Closeable {
     }
 
     /**
+     * Gets the period of this task.
+     *
+     * @return Period in ticks or -1 if this task is cancelled.
+     */
+    public long getPeriod() {
+        return period;
+    }
+
+    /**
      * Sets the period of this task. This will re-schedule the task to be run next after the given period if the task is still running.
      *
      * @param period Period in ticks or -1 to cancel the task and make it non-repeating

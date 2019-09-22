@@ -410,9 +410,9 @@ public final class JavaClasses {
             @Override
             @Nullable
             public Boolean parse(final String s, final ParseContext context) {
-                if (truePattern.matcher(s).matches())
+                if (truePattern.matches(s))
                     return Boolean.TRUE;
-                if (falsePattern.matcher(s).matches())
+                if (falsePattern.matches(s))
                     return Boolean.FALSE;
                 return null;
             }

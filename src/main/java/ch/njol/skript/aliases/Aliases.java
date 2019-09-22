@@ -611,7 +611,7 @@ public final class Aliases {
         }
         if (Skript.NUMBER_PATTERN.matcher(type).matches()) {
             ItemData d = new ItemData(Utils.parseInt(type));
-            final Material m = Material.getMaterial(d.getId());
+            final Material m = d.getType();
             if (m == null) {
                 Skript.error(m_invalid_id.toString(d.getId()));
                 return null;
@@ -624,7 +624,7 @@ public final class Aliases {
                 d = d.intersection(data);
             }
             if (!isAlias && d != null && !SkriptConfig.disableUsingIdInsteadOfAliasWarnings.value()) {
-                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + '\'') + "' (" + Material.getMaterial(d.getId()).name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + '\''));
+                Skript.warning("Using an ID instead of an alias is discouraged! " + (d.toString().equals(type) ? "Please create an alias for '" + type + (type.equals(s) ? "" : " or '" + s + '\'') + "' (" + d.getType().name() + ") in aliases-english.sk or the script's aliases section and use that instead." : "Please replace '" + s + "' with '" + d.toString(true, false) + '\''));
             }
             t.add(d);
             //if (Skript.fieldForName(Material.class, m.name()).isAnnotationPresent(Deprecated.class))

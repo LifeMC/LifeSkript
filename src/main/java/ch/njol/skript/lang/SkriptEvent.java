@@ -40,7 +40,7 @@ import org.bukkit.event.Event;
 public abstract class SkriptEvent implements SyntaxElement, Debuggable {
 
     @Override
-    public final boolean init(final ch.njol.skript.lang.Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         throw new UnsupportedOperationException();
     }
 

@@ -86,6 +86,11 @@ public final class EnumUtils<E extends Enum<E>> {
     // REMIND flags?
     @SuppressWarnings("null")
     public final String toString(final E e, @SuppressWarnings("unused") final int flags) {
+        return toString(e);
+    }
+
+    @SuppressWarnings("null")
+    public final String toString(final E e) {
         validate(false);
         return names[e.ordinal()];
     }

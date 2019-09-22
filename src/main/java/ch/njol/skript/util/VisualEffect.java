@@ -92,14 +92,6 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
     @Nullable
     private Object data;
 
-    /**
-     * For parsing & deserialisation
-     */
-    @SuppressWarnings("null")
-    public VisualEffect() {
-        super();
-    }
-
     @Nullable
     public static final VisualEffect parse(final String s) {
         final SyntaxElementInfo<VisualEffect> info = VisualEffect.info;

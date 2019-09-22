@@ -179,6 +179,10 @@ public final class SkriptLogger {
         return null;
     }
 
+    public static final Verbosity getVerbosity() {
+        return verbosity;
+    }
+
     public static final void setVerbosity(final Verbosity v) {
         verbosity = v;
         if (v.compareTo(Verbosity.DEBUG) >= 0)

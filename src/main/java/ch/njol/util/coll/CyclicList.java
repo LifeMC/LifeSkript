@@ -63,17 +63,17 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     @Override
-    public boolean add(final @Nullable E e) {
+    public boolean add(@Nullable final E e) {
         return addLast(e);
     }
 
-    public boolean addFirst(final @Nullable E e) {
+    public boolean addFirst(@Nullable final E e) {
         start = Math2.mod(start - 1, items.length);
         items[start] = e;
         return true;
     }
 
-    public boolean addLast(final @Nullable E e) {
+    public boolean addLast(@Nullable final E e) {
         items[start] = e;
         start = Math2.mod(start + 1, items.length);
         return true;
@@ -118,7 +118,7 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     @Override
-    public int indexOf(final @Nullable Object o) {
+    public int indexOf(@Nullable final Object o) {
         return toExternalIndex(CollectionUtils.indexOf(items, o));
     }
 
@@ -128,12 +128,12 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     @Override
-    public int lastIndexOf(final @Nullable Object o) {
+    public int lastIndexOf(@Nullable final Object o) {
         return toExternalIndex(CollectionUtils.lastIndexOf(items, o));
     }
 
     @Override
-    public boolean remove(final @Nullable Object o) {
+    public boolean remove(@Nullable final Object o) {
         throw new UnsupportedOperationException();
     }
 
@@ -143,19 +143,19 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     @Override
-    public boolean removeAll(final @Nullable Collection<?> c) {
+    public boolean removeAll(@Nullable final Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(final @Nullable Collection<?> c) {
+    public boolean retainAll(@Nullable final Collection<?> c) {
         throw new UnsupportedOperationException();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Nullable
-    public E set(final int index, final @Nullable E e) {
+    public E set(final int index, @Nullable final E e) {
         rangeCheck(index);
         final int i = toInternalIndex(index);
         final E old = (E) items[i];
@@ -173,14 +173,13 @@ public final class CyclicList<E> extends AbstractList<E> {
         return toArray(new Object[items.length]);
     }
 
-    @NotNull
-    @SuppressWarnings("unchecked")
     @Override
-    public final <T> T[] toArray(@Nullable final T[] array) {
+    @SuppressWarnings("unchecked")
+    public final @NotNull <T> T[] toArray(@Nullable T[] array) {
         if (array == null)
             return (T[]) toArray();
         if (array.length < items.length)
-            return toArray((T[]) Array.newInstance(array.getClass().getComponentType(), items.length));
+            array = (T[]) Array.newInstance(array.getClass().getComponentType(), items.length);
         System.arraycopy(items, start, array, 0, items.length - start);
         System.arraycopy(items, 0, array, items.length - start, start);
         if (array.length > items.length)
@@ -189,7 +188,7 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * @see Object#hashCode()
      */
     @Override
     public int hashCode() {
@@ -201,7 +200,7 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * @see Object#equals(Object)
      */
     @Override
     public boolean equals(@Nullable final Object obj) {

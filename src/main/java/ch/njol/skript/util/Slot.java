@@ -29,6 +29,6 @@ package ch.njol.skript.util;
  */
 public abstract class Slot extends ch.njol.skript.util.slot.Slot {
     protected Slot() {
-        super();
+        /* implicit super call */
     }
 }

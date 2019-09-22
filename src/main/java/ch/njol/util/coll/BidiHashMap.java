@@ -156,7 +156,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
     }
 
     /**
-     * @see java.lang.Object#hashCode()
+     * @see Object#hashCode()
      */
     @SuppressWarnings("null")
     @Override
@@ -167,7 +167,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
     }
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
+     * @see Object#equals(Object)
      */
     @SuppressWarnings("null")
     @Override

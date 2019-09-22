@@ -26,6 +26,7 @@ import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.classes.YggdrasilSerializer;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.registrations.Classes;
@@ -34,10 +35,19 @@ import ch.njol.yggdrasil.YggdrasilSerializable;
 import org.bukkit.entity.Entity;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Peter Güttinger
  */
 public final class EntityType implements Cloneable, YggdrasilSerializable {
+
+    private static final Pattern ENTITY_TYPE_PATTERN_ONE = Pattern.compile("\\d+ .+");
+    private static final Matcher ENTITY_TYPE_PATTERN_ONE_MATCHER = ENTITY_TYPE_PATTERN_ONE.matcher("");
+
+    private static final Pattern ENTITY_TYPE_PATTERN_TWO = Pattern.compile("(?i)an? .+");
+    private static final Matcher ENTITY_TYPE_PATTERN_TWO_MATCHER = ENTITY_TYPE_PATTERN_TWO.matcher("");
 
     static {
         Classes.registerClass(new ClassInfo<>(EntityType.class, "entitytype").name("Entity Type with Amount").description("An <a href='#entitydata'>entity type</a> with an amount, e.g. '2 zombies'. I might remove this type in the future and make a more general 'type' type, i.e. a type that has a number and a type.").usage("&lt;<a href='#number'>number</a>&gt; &lt;entity type&gt;").examples("spawn 5 creepers behind the player").since("1.3").defaultExpression(new SimpleLiteral<>(new EntityType(Entity.class, 1), true)).parser(new Parser<EntityType>() {
@@ -73,11 +83,10 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
                 @SuppressWarnings("null") final EntityData<?> d = EntityData.serializer.deserialize(split[1]);
                 if (d == null)
                     return null;
-                try {
-                    return new EntityType(d, Integer.parseInt(split[0]));
-                } catch (final NumberFormatException e) {
+                final String amount = split[0];
+                if (!SkriptParser.isInteger(amount))
                     return null;
-                }
+                return new EntityType(d, Integer.parseInt(amount));
             }
 
         }));
@@ -120,10 +129,10 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
     public static final EntityType parse(String s) {
         assert s != null && !s.isEmpty();
         int amount = -1;
-        if (s.matches("\\d+ .+")) {
+        if (ENTITY_TYPE_PATTERN_ONE_MATCHER.reset(s).matches()) {
             amount = Utils.parseInt(s.split(" ", 2)[0]);
             s = s.split(" ", 2)[1];
-        } else if (s.matches("(?i)an? .+")) {
+        } else if (ENTITY_TYPE_PATTERN_TWO_MATCHER.reset(s).matches()) {
             s = s.split(" ", 2)[1];
         }
 //		final Pair<String, Boolean> p = Utils.getPlural(s, amount != 1 && amount != -1);
@@ -171,7 +180,7 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

@@ -23,5 +23,7 @@
 /**
  * @author Peter Güttinger
  */
-@org.eclipse.jdt.annotation.NonNullByDefault
+@NonNullByDefault
 package ch.njol.skript.util.slot;
+
+import org.eclipse.jdt.annotation.NonNullByDefault;
