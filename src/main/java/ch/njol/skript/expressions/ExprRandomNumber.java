@@ -50,7 +50,7 @@ public final class ExprRandomNumber extends SimpleExpression<Number> {
         Skript.registerExpression(ExprRandomNumber.class, Number.class, ExpressionType.COMBINED, "[a] random (1¦integer|2¦number) (from|between) %number% (to|and) %number%");
     }
 
-    private final Random rand = new Random();
+    private static final Random rand = new Random();
     @SuppressWarnings("null")
     private Expression<? extends Number> lower, upper;
     private boolean integer;
