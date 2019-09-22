@@ -73,7 +73,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
                 @Override
                 public String toString(final @Nullable Event e, final boolean debug) {
                     if (debug && e == null)
-                        return '(' + WrapperExpression.this.toString(e, debug) + ")->" + to.getName();
+                        return '(' + WrapperExpression.this.toString(e, debug) + ")->" + super.to.getName();
                     return WrapperExpression.this.toString(e, debug);
                 }
             };

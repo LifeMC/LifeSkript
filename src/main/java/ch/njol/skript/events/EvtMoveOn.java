@@ -231,7 +231,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 
     private static final class EmptyListener implements Listener {
         EmptyListener() {
-            super();
+            /* implicit super call */
         }
     }
 

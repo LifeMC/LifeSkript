@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * Workarounds for Java & Minecraft & Bukkit quirks
  * <p>
- * See {@link ch.njol.skript.Skript#onLoad()} for
+ * See {@link Skript#onLoad()} for
  * other work arounds.
  *
  * @author Peter Güttinger

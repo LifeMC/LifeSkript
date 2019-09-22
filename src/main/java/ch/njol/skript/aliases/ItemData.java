@@ -179,6 +179,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         return new ItemStack(type, 1, (short) Utils.random(dataMin, dataMax + 1));
     }
 
+    @Nullable
     @SuppressWarnings("deprecation")
     public final Material getType() {
         return Material.getMaterial(typeid);
@@ -234,7 +235,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         private final Iterator<Material> iter = Arrays.asList(DefaultChangers.cachedMaterials).listIterator(1); // ignore air
 
         ItemStackIterator() {
-            super();
+            /* implicit super call */
         }
 
         @Override

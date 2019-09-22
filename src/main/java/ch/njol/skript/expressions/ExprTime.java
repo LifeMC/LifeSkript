@@ -127,7 +127,7 @@ public final class ExprTime extends PropertyExpression<World, Time> {
 
     private static final class TimeWorldGetter extends Getter<Time, World> {
         TimeWorldGetter() {
-            super();
+            /* implicit super call */
         }
 
         @Override

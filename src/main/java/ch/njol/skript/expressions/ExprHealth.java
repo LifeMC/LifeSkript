@@ -136,7 +136,7 @@ public final class ExprHealth extends PropertyExpression<LivingEntity, Double> {
 
     private static final class DoubleLivingEntityGetter extends Getter<Double, LivingEntity> {
         DoubleLivingEntityGetter() {
-            super();
+            /* implicit super call */
         }
 
         @SuppressWarnings("null")

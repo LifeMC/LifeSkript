@@ -164,12 +164,12 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "at " + Time.toString(tick) + " in worlds " + Classes.toString(worlds, true);
     }
 
     @Override
-    public int compareTo(final @Nullable EvtAtTime e) {
+    public int compareTo(@Nullable final EvtAtTime e) {
         return e == null ? tick : tick - e.tick;
     }
 
@@ -199,7 +199,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
         int currentIndex;
 
         public EvtAtInfo() {
-            super();
+            /* implicit super call */
         }
     }
 

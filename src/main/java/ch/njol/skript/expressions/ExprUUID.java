@@ -22,12 +22,19 @@
 
 package ch.njol.skript.expressions;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
+import ch.njol.skript.config.Config;
+import ch.njol.skript.config.Node;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.skript.log.SkriptLogger;
+import ch.njol.util.Kleenean;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -49,12 +56,37 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
         register(ExprUUID.class, String.class, "UUID", (offlineUUIDSupported ? "offlineplayers" : "players") + "/entities/worlds");
     }
 
+    @Nullable
+    private String script;
+    private int line;
+
+    @Override
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+        final Config currentScript = ScriptLoader.currentScript;
+        if (currentScript != null)
+            this.script = currentScript.getFileName();
+        final Node currentNode = SkriptLogger.getNode();
+        if (currentNode != null)
+            this.line = currentNode.getLine();
+        return super.init(exprs, matchedPattern, isDelayed, parseResult);
+    }
+
     @Override
     @Nullable
-    public String convert(final Object o) {
+    public final String convert(final Object o) {
         if (o instanceof OfflinePlayer) {
-            if (offlineUUIDSupported)
-                return ((OfflinePlayer) o).getUniqueId().toString();
+            if (offlineUUIDSupported) {
+                try {
+                    return ((OfflinePlayer) o).getUniqueId().toString();
+                } catch (final UnsupportedOperationException e) {
+                    // Some plugins (ProtocolLib) try to emulate offline players, but fail miserably
+                    // They will throw this exception... and somehow server may freeze when this happens
+                    Skript.warning("A script tried to get uuid of an offline player, which was faked by another plugin (probably ProtocolLib). (" + script + ", line " + line + ')');
+                    if (Skript.testing() || Skript.debug())
+                        Skript.exception(e, "Can't get UUID of a fake player");
+                    return null;
+                }
+            }
             return ((Player) o).getUniqueId().toString();
         }
         if (o instanceof Entity) {
@@ -67,12 +99,12 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
     }
 
     @Override
-    public Class<String> getReturnType() {
+    public final Class<String> getReturnType() {
         return String.class;
     }
 
     @Override
-    protected String getPropertyName() {
+    protected final String getPropertyName() {
         return "UUID";
     }
 

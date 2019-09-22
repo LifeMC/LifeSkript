@@ -74,7 +74,7 @@ public final class FlatFileStorage extends VariablesStorage {
     private static final Matcher SPLIT_PATTERN_MATCHER = SPLIT_PATTERN.matcher("");
     private static final Pattern SINGLE_QUOTE = Pattern.compile("\"", Pattern.LITERAL);
     private static final Matcher SINGLE_QUOTE_MATCHER = SINGLE_QUOTE.matcher("");
-    static boolean savingVariables = false;
+    static boolean savingVariables;
     private static long savedVariables;
     @Nullable
     private static Date lastSave;

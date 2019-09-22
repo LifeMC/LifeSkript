@@ -37,6 +37,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.EmptyArrays;
+import ch.njol.skript.util.Slot;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.variables.DatabaseStorage;
 import ch.njol.skript.variables.SerializedVariable;
@@ -282,7 +283,7 @@ public final class Classes {
     @Nullable
     public static final <T> ClassInfo<T> getExactClassInfo(@Nullable final Class<T> c) {
         if (c == ch.njol.skript.util.slot.Slot.class)
-            return (ClassInfo<T>) exactClassInfos.get(ch.njol.skript.util.Slot.class);
+            return (ClassInfo<T>) exactClassInfos.get(Slot.class);
         return (ClassInfo<T>) exactClassInfos.get(c);
     }
 

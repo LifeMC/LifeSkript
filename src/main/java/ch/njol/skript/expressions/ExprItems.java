@@ -138,7 +138,7 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
         private final Iterator<Material> iterator = new ArrayIterator<>(Material.values());
 
         ItemStackIterator() {
-            super();
+            /* implicit super call */
         }
 
         @Override

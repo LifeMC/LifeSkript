@@ -65,7 +65,7 @@ public final class Option<T> {
                 final T t = p.parse(s, ParseContext.CONFIG);
                 if (t != null)
                     return t;
-                Skript.error("'" + s + "' is not " + ci.getName().withIndefiniteArticle());
+                Skript.error('\'' + s + "' is not " + ci.getName().withIndefiniteArticle());
                 return null;
             };
         }
@@ -106,6 +106,11 @@ public final class Option<T> {
     public final void setValue(final T value) {
         this.value = String.valueOf(value);
         this.parsedValue = value;
+    }
+
+    @Nullable
+    public final String getValue() {
+        return this.value;
     }
 
     void onValueChange() {

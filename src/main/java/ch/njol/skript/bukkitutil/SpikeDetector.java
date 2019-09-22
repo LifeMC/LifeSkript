@@ -142,6 +142,10 @@ public final class SpikeDetector extends Thread {
             Skript.info("Spike detector is disabled");
     }
 
+    public static final boolean isEnabled() {
+        return SpikeDetector.enabled;
+    }
+
     public static final void tick() {
         if (instance != null) {
             instance.lastTick = monotonicMillis();

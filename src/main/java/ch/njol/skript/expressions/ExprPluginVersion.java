@@ -54,7 +54,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     Expression<String> pluginName;
 
     /**
-     * @see ch.njol.skript.lang.Expression#isSingle()
+     * @see Expression#isSingle()
      */
     @Override
     public boolean isSingle() {
@@ -62,7 +62,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     }
 
     /**
-     * @see ch.njol.skript.lang.Expression#getReturnType()
+     * @see Expression#getReturnType()
      */
     @Override
     public Class<String> getReturnType() {
@@ -70,7 +70,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     }
 
     /**
-     * @see ch.njol.skript.lang.SyntaxElement#init(ch.njol.skript.lang.Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
+     * @see ch.njol.skript.lang.SyntaxElement#init(Expression[], int, Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)
      */
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
@@ -79,7 +79,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     }
 
     /**
-     * @see ch.njol.skript.lang.Debuggable#toString(org.bukkit.event.Event, boolean)
+     * @see ch.njol.skript.lang.Debuggable#toString(Event, boolean)
      */
     @Override
     @SuppressWarnings("null")
@@ -88,7 +88,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     }
 
     /**
-     * @see ch.njol.skript.lang.util.SimpleExpression#get(org.bukkit.event.Event)
+     * @see SimpleExpression#get(Event)
      */
     @Override
     @Nullable

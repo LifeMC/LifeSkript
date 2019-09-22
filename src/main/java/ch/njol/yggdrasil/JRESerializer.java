@@ -22,6 +22,7 @@
 
 package ch.njol.yggdrasil;
 
+import ch.njol.skript.Skript;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.NotSerializableException;
@@ -84,7 +85,8 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
         try {
             return c.newInstance();
         } catch (final InstantiationException | IllegalAccessException e) { // all collections handled here have public nullary constructors
-            e.printStackTrace();
+            Skript.exception(e);
+
             assert false;
             return null;
         }

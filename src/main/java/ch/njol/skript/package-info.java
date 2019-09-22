@@ -25,5 +25,7 @@
  *
  * @author Peter Güttinger
  */
-@org.eclipse.jdt.annotation.NonNullByDefault
+@NonNullByDefault
 package ch.njol.skript;
+
+import org.eclipse.jdt.annotation.NonNullByDefault;

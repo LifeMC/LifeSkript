@@ -43,13 +43,9 @@ public final class SectionValidator implements NodeValidator {
     private boolean allowUndefinedSections;
     private boolean allowUndefinedEntries;
 
-    public SectionValidator() {
-        super();
-    }
-
     public static final void notASectionError(final Node node) {
         SkriptLogger.setNode(node);
-        Skript.error("'" + node.getKey() + "' is not a section (like 'name:', followed by one or more indented lines)");
+        Skript.error('\'' + node.getKey() + "' is not a section (like 'name:', followed by one or more indented lines)");
     }
 
     public SectionValidator addNode(final String name, final NodeValidator v, final boolean optional) {
@@ -89,7 +85,7 @@ public final class SectionValidator implements NodeValidator {
         for (final Entry<String, NodeInfo> e : nodes.entrySet()) {
             final Node n = ((SectionNode) node).get(e.getKey());
             if (n == null && !e.getValue().optional) {
-                Skript.error("Required entry '" + e.getKey() + "' is missing in " + (node.getParent() == null ? node.getConfig().getFileName() : "'" + node.getKey() + "' (" + node.getConfig().getFileName() + ", starting at line " + node.getLine() + ")"));
+                Skript.error("Required entry '" + e.getKey() + "' is missing in " + (node.getParent() == null ? node.getConfig().getFileName() : '\'' + node.getKey() + "' (" + node.getConfig().getFileName() + ", starting at line " + node.getLine() + ')'));
                 ok = false;
             } else if (n != null) {
                 ok &= e.getValue().v.validate(n);
@@ -118,9 +114,17 @@ public final class SectionValidator implements NodeValidator {
         return this;
     }
 
+    public final boolean isAllowingUndefinedSections() {
+        return allowUndefinedSections;
+    }
+
     public SectionValidator setAllowUndefinedEntries(final boolean b) {
         allowUndefinedEntries = b;
         return this;
+    }
+
+    public final boolean isAllowingUndefinedEntries() {
+        return allowUndefinedEntries;
     }
 
     private static final class NodeInfo {

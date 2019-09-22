@@ -116,7 +116,7 @@ public final class Commands {
     }
 
     static {
-        BukkitLoggerFilter.addFilter((final @Nullable LogRecord record) -> {
+        BukkitLoggerFilter.addFilter((@Nullable final LogRecord record) -> {
             if (record == null)
                 return false;
             if (suppressUnknownCommandMessage && record.getMessage() != null && record.getMessage().startsWith("Unknown command. Type")) {

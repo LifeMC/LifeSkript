@@ -206,7 +206,7 @@ public final class Converters {
 
     /**
      * Strictly converts an array to a non-null array of the specified class.
-     * Uses registered {@link ch.njol.skript.registrations.Converters} to convert.
+     * Uses registered {@link Converters} to convert.
      *
      * @param original The array to convert
      * @param to       What to convert {@code original} to

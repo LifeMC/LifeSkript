@@ -251,13 +251,13 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     static String latestVersion;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     static Version minecraftVersion = invalidVersion;
-    private static boolean closedOnEnable = false;
-    private static boolean closedOnDisable = false;
+    private static boolean closedOnEnable;
+    private static boolean closedOnDisable;
     private static boolean first;
     @Nullable
     private static ServerPlatform serverPlatform;
     @Nullable
-    private static Boolean hasJLineSupport = null;
+    private static Boolean hasJLineSupport;
     public static final String SKRIPT_PREFIX_CONSOLE = hasJLineSupport() && hasJansi() ? Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + "[" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).boldOff() + "Skript" + Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.WHITE).boldOff() + ']' + Ansi.ansi().a(Ansi.Attribute.RESET) + ' ' : "[Skript] ";
     public static final UncaughtExceptionHandler UEH = (t, e) -> Skript.exception(e, "Exception in thread " + (t == null ? null : t.getName()));
     private static boolean acceptRegistrations = true;
@@ -294,7 +294,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     public Skript() throws IllegalStateException {
-        super();
         if (instance != null)
             throw new IllegalStateException("Cannot create multiple instances of Skript!");
         instance = this;
@@ -808,7 +807,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Returns the specified method from the specified class, returns
-     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     * null on any exception (for example {@link NoSuchMethodException})
      *
      * @param c              The class to get the specified method.
      * @param methodName     The method name to get from the given class.
@@ -822,7 +821,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Returns the specified method from the specified class, returns
-     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     * null on any exception (for example {@link NoSuchMethodException})
      *
      * @param c              The class to get the specified method.
      * @param methodName     The method name to get from the given class.
@@ -849,7 +848,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Returns the specified method from the specified class, returns
-     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     * null on any exception (for example {@link NoSuchMethodException})
      *
      * @param c              The class to get the specified method.
      * @param methodName     The method name to get from the given class.
@@ -864,7 +863,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Returns the specified method from the specified class, returns
-     * null on any exception (for example {@link java.lang.NoSuchMethodException})
+     * null on any exception (for example {@link NoSuchMethodException})
      *
      * @param c              The class to get the specified method.
      * @param methodName     The method name to get from the given class.
@@ -899,7 +898,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Gets a constructor from the given class with the given arguments.
-     * Returns null on any exception (for example {@link java.lang.NoSuchMethodException})
+     * Returns null on any exception (for example {@link NoSuchMethodException})
      *
      * @param c              The class to get the constructor with given parameter types.
      * @param parameterTypes The parameter types to get constructor from the given class.
@@ -1416,7 +1415,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
-     * Use this in {@link Expression#init(Expression[], int, ch.njol.util.Kleenean, ch.njol.skript.lang.SkriptParser.ParseResult)} (and other methods that are called during the
+     * Use this in {@link Expression#init(Expression[], int, ch.njol.util.Kleenean, SkriptParser.ParseResult)} (and other methods that are called during the
      * parsing) to log
      * errors with a specific {@link ErrorQuality}.
      *
@@ -1729,7 +1728,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     /**
      * Finalizes any pending objects after GCs
-     * Useful for making sure {@link java.lang.Object#finalize} is called.
+     * Useful for making sure {@link Object#finalize} is called.
      * <p>
      * Can free up memory if used after heavy operations. Uses another thread to not
      * cause pauses.
@@ -3339,7 +3338,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     private static final class EmptyListener implements Listener {
         EmptyListener() {
-            super();
+            /* implicit super call */
         }
     }
 }

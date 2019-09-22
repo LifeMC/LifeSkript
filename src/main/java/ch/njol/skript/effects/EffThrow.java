@@ -88,7 +88,7 @@ public final class EffThrow extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "throw new " + getTypeName() + " because " + detail.toString(e, debug);
     }
 
@@ -107,7 +107,7 @@ public final class EffThrow extends Effect {
 
         private int line;
 
-        public ScriptError(final @Nullable String script, final int line, final @Nullable String detail) {
+        public ScriptError(@Nullable final String script, final int line, @Nullable final String detail) {
             this(detail);
 
             this.script = script;
@@ -120,7 +120,7 @@ public final class EffThrow extends Effect {
          *
          */
         public ScriptError() {
-            super();
+            /* implicit super call */
         }
 
         /**
@@ -144,7 +144,7 @@ public final class EffThrow extends Effect {
         /**
          * @param message
          */
-        public ScriptError(final @Nullable String message) {
+        public ScriptError(@Nullable final String message) {
             super(message);
         }
 

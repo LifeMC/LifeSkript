@@ -33,10 +33,6 @@ public final class ScriptEvent extends Event {
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
 
-    public ScriptEvent() {
-        super();
-    }
-
     public static final HandlerList getHandlerList() {
         return handlers;
     }

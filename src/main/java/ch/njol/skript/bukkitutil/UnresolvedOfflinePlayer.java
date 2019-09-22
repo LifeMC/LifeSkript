@@ -194,7 +194,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#isOnline()
+     * @see OfflinePlayer#isOnline()
      */
     @Override
     @SuppressWarnings("null")
@@ -204,7 +204,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getName()
+     * @see OfflinePlayer#getName()
      */
     @Override
     @SuppressWarnings("null")
@@ -214,7 +214,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getUniqueId()
+     * @see OfflinePlayer#getUniqueId()
      */
     @Override
     @SuppressWarnings("null")
@@ -224,7 +224,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#isBanned()
+     * @see OfflinePlayer#isBanned()
      */
     @Override
     @SuppressWarnings("null")
@@ -234,7 +234,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#setBanned(boolean)
+     * @see OfflinePlayer#setBanned(boolean)
      * @deprecated Use {@link org.bukkit.BanList#addBan(String, String, java.util.Date, String)} or {@link org.bukkit.BanList#pardon(String)} to enhance functionality
      */
     @Override
@@ -245,7 +245,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#isWhitelisted()
+     * @see OfflinePlayer#isWhitelisted()
      */
     @Override
     @SuppressWarnings({"null", "unused"})
@@ -259,7 +259,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#setWhitelisted(boolean)
+     * @see OfflinePlayer#setWhitelisted(boolean)
      */
     @Override
     @SuppressWarnings("null")
@@ -268,7 +268,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getPlayer()
+     * @see OfflinePlayer#getPlayer()
      */
     @Override
     @Nullable
@@ -278,7 +278,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getFirstPlayed()
+     * @see OfflinePlayer#getFirstPlayed()
      */
     @Override
     @SuppressWarnings("null")
@@ -288,7 +288,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getLastPlayed()
+     * @see OfflinePlayer#getLastPlayed()
      */
     @Override
     @SuppressWarnings("null")
@@ -298,7 +298,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#hasPlayedBefore()
+     * @see OfflinePlayer#hasPlayedBefore()
      */
     @Override
     @SuppressWarnings("null")
@@ -308,7 +308,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
     }
 
     /**
-     * @see org.bukkit.OfflinePlayer#getBedSpawnLocation()
+     * @see OfflinePlayer#getBedSpawnLocation()
      */
     @Override
     @SuppressWarnings("null")

@@ -280,7 +280,7 @@ public class PseudoEnum<T extends PseudoEnum<T>> {
         final Lock readLock = lock.readLock(), writeLock = lock.writeLock();
 
         public Info() {
-            super();
+            /* implicit super call */
         }
     }
 
