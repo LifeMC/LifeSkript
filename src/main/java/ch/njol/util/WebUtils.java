@@ -51,7 +51,7 @@ public final class WebUtils {
      * The current chrome user agent.
      */
     public static final String USER_AGENT =
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36";
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36";
     private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
     private static final Matcher RELEASES_MATCHER = RELEASES.matcher("");
 

@@ -1024,6 +1024,7 @@ public final class SkriptParser {
                         // Plural/singular sanity check
                         if (hasSingular && !var.isSingle()) {
                             Skript.error('\'' + expr + "' can only accept a single value of any type, not more", ErrorQuality.SEMANTIC_ERROR);
+                            //log.printError();
                             return null;
                         }
 
@@ -1060,6 +1061,7 @@ public final class SkriptParser {
                             Skript.error('\'' + expr + "' can only accept a single "
                                     + Classes.toString(Stream.of(vi.classes).map(ci -> ci.getName().toString()).toArray(), false)
                                     + ", not more", ErrorQuality.SEMANTIC_ERROR);
+                            //log.printError();
                             return null;
                         }
 
@@ -1104,9 +1106,11 @@ public final class SkriptParser {
                             if (!vi.isPlural[i] && !e.isSingle()) { // Wrong number of arguments
                                 if (context == ParseContext.COMMAND) {
                                     Skript.error(Commands.m_too_many_arguments.toString(vi.classes[i].getName().getIndefiniteArticle(), vi.classes[i].getName().toString()), ErrorQuality.SEMANTIC_ERROR);
+                                    //log.printError();
                                     return null;
                                 }
                                 Skript.error('\'' + expr + "' can only accept a single " + vi.classes[i].getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
+                                //log.printError();
                                 return null;
                             }
 

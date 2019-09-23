@@ -95,6 +95,7 @@ public final class SkriptConfig {
     public static final Option<Integer> numberAccuracy = new Option<>("number accuracy", 2);
     public static final Option<Integer> maxTargetBlockDistance = new Option<>("maximum target block distance", 100);
     public static final Option<Boolean> caseSensitive = new Option<>("case sensitive", false);
+    public static final Option<Boolean> optimizeAndOrLists = new Option<>("optimize and or lists", false);
     public static final Option<Boolean> allowFunctionsBeforeDefs = new Option<>("allow function calls before definitions", true);
     public static final Option<Boolean> disableDocumentationGeneration = new Option<>("disable documentation generation", false);
     public static final Option<Boolean> enableExplicitPlayerUseWarnings = new Option<>("warn when using explicit player pattern", false);

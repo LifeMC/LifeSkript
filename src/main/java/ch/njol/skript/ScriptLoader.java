@@ -98,6 +98,8 @@ public final class ScriptLoader {
     private static final Matcher FUNC_PATTERN_MATCHER = FUNC_PATTERN.matcher("");
     private static final Pattern FUN_PATTERN = Pattern.compile("fun");
     private static final Matcher FUN_PATTERN_MATCHER = FUN_PATTERN.matcher("");
+    private static final Pattern OR_PATTERN = Pattern.compile(" or ", Pattern.LITERAL);
+    private static final Matcher OR_PATTERN_MATCHER = OR_PATTERN.matcher("");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -199,7 +201,6 @@ public final class ScriptLoader {
         loggerThread.interrupt(); // In case if not interrupted
 
         loadingLoggerThread = null;
-        Skript.info("Loaded total of " + loadedFiles.size() + " scripts in " + start.difference(new Date()));
     }
 
     public static final boolean isErrorAllowed(final Version versionAdded) {
@@ -231,8 +232,8 @@ public final class ScriptLoader {
         final int major = normalVersion.getMajor();
         final int minor = normalVersion.getMinor();
 
-        //noinspection UnnecessaryCallToStringValueOf
-        final String sourceRevisionStr = String.valueOf(major) + String.valueOf(minor) + String.valueOf(sourceRevision);
+        //noinspection UnnecessaryBoxing,UnnecessaryCallToStringValueOf
+        final String sourceRevisionStr = Integer.toString(major) + Integer.toString(minor) + Integer.toString(sourceRevision);
         Version sourceVersion = sourceRevisionMap.get(sourceRevisionStr);
 
         if (sourceVersion == null) {
@@ -979,7 +980,7 @@ public final class ScriptLoader {
             SkriptLogger.setNode(n);
             if (n instanceof SimpleNode) {
                 final SimpleNode e = (SimpleNode) n;
-                @SuppressWarnings("null") final String s = replaceOptions(e.getKey());
+                @SuppressWarnings("null") final String s = optimizeAndOr(replaceOptions(e.getKey()));
                 if (!SkriptParser.validateLine(s))
                     continue;
                 final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
@@ -998,7 +999,7 @@ public final class ScriptLoader {
                 TypeHints.enterScope(); // Begin conditional type hints
 
                 if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
-                    final String l = name.substring("loop ".length());
+                    final String l = optimizeAndOr(name.substring("loop ".length()));
                     final RetainingLogHandler h = SkriptLogger.startRetainingLog();
                     Expression<?> loopedExpr;
                     try {
@@ -1013,7 +1014,6 @@ public final class ScriptLoader {
                     } finally {
                         h.stop();
                     }
-                    assert loopedExpr != null;
                     if (loopedExpr.isSingle()) {
                         Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
                         continue;
@@ -1025,7 +1025,7 @@ public final class ScriptLoader {
                     if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
                         hasDelayBefore = Kleenean.UNKNOWN;
                 } else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
-                    final String l = name.substring("while ".length());
+                    final String l = optimizeAndOr(name.substring("while ".length()));
                     final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
                     if (c == null)
                         continue;
@@ -1052,6 +1052,7 @@ public final class ScriptLoader {
                         continue;
                     }
                     name = name.substring("else if ".length());
+                    name = optimizeAndOr(name);
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
@@ -1064,6 +1065,7 @@ public final class ScriptLoader {
                 } else {
                     if (StringUtils.startsWithIgnoreCase(name, "if "))
                         name = name.substring(3);
+                    name = optimizeAndOr(name);
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
@@ -1091,6 +1093,14 @@ public final class ScriptLoader {
         return items;
     }
 
+    public static final String optimizeAndOr(final String s) {
+        if (SkriptConfig.optimizeAndOrLists.value() && !s.contains(", ") && s.contains(" or ")) {
+            return StringUtils.replaceLast(OR_PATTERN_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement(", ")),
+                    ", ", " or ");
+        }
+        return s;
+    }
+
     /**
      * For unit testing
      *
@@ -1098,7 +1108,6 @@ public final class ScriptLoader {
      * @return The loaded Trigger
      */
     @SuppressWarnings("null")
-    @Nullable
     static final Trigger loadTrigger(final SectionNode node) {
         String event = node.getKey();
         if (event == null) {

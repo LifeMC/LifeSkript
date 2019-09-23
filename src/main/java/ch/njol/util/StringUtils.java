@@ -100,6 +100,10 @@ public final class StringUtils {
         return sb.toString();
     }
 
+    public static final String replaceLast(final CharSequence text, final String regex, final String replacement) {
+        return PatternCache.get("(?s)(.*?)" + regex).matcher(text).replaceFirst("$1" + replacement);
+    }
+
     public static final int count(final String s, final char c) {
         return count(s, c, 0, s.length());
     }

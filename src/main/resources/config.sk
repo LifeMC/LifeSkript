@@ -167,6 +167,11 @@ case sensitive: false
 # This e.g. applies to the effect 'replace' and the conditions 'contains' and 'is/is not'.
 # Variable names are case-insensitive irrespective of this setting.
 
+optimize and or lists: false
+# When this is true, Skript will try to optimize long and or lists.
+# This optimization is not guaranteed to give performance boost, and may broke your code.
+# Use with caution and your own risk. As stated, this may break your code.
+
 
 allow function calls before definitions: true
 # Whether scripts should be allowed to call functions that are not yet loaded.
