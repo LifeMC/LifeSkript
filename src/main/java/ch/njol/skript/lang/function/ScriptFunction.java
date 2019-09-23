@@ -107,6 +107,7 @@ public final class ScriptFunction<T> extends Function<T> {
     public boolean resetReturnValue() {
         returnValue = null;
         returnValueSet = false;
+		ignoreEmptyReturn = false;
         return true;
     }
 
