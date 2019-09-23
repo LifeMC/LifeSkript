@@ -65,34 +65,43 @@ public final class SkriptEventHandler {
     public static Event last;
     static long startTrigger;
     private static long startEvent;
-    private static long lastCall;
-    public static final EventExecutor ee = (final @Nullable Listener l, final @Nullable Event e) -> {
-        if (e == null)
-            return;
+    static long lastCall;
+    public static final EventExecutor ee = new SkriptEventExecutor();
 
-        if (last == e) // an event is received multiple times if multiple superclasses of it are registered
-            return;
+    private static final class SkriptEventExecutor implements EventExecutor {
+        SkriptEventExecutor() {
+            /* implicit super call */
+        }
 
-        last = e;
+        @Override
+        public final void execute(@Nullable final Listener l, @Nullable final Event e) {
+            if (e == null)
+                return;
 
-        // Event is asynchronous, but it ran from main thread
-        assert !e.isAsynchronous() || !Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is asynchronous, but it ran from main thread";
+            if (last == e) // an event is received multiple times if multiple superclasses of it are registered
+                return;
 
-        // Event is synchronous, but it ran from a different thread
-        assert e.isAsynchronous() || Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is synchronous, but it ran from a different thread";
+            last = e;
 
-        // Skip the event if it's a frequently called event
-        // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
-        if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < moveEventCooldown)
-            return;
+            // Event is asynchronous, but it ran from main thread
+            assert !e.isAsynchronous() || !Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is asynchronous, but it ran from main thread";
 
-        if ((e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
-            return;
+            // Event is synchronous, but it ran from a different thread
+            assert e.isAsynchronous() || Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is synchronous, but it ran from a different thread";
 
-        lastCall = System.currentTimeMillis();
+            // Skip the event if it's a frequently called event
+            // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
+            if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < moveEventCooldown)
+                return;
 
-        check(e);
-    };
+            if ((e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
+                return;
+
+            lastCall = System.currentTimeMillis();
+
+            check(e);
+        }
+    }
 
     private SkriptEventHandler() {
         throw new UnsupportedOperationException();
