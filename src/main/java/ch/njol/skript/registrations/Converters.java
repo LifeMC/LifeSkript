@@ -275,8 +275,9 @@ public final class Converters {
     @Nullable
     public static final <F, T> Converter<? super F, ? extends T> getConverter(final Class<F> from, final Class<T> to) {
         final Pair<Class<?>, Class<?>> p = new Pair<>(from, to);
-        if (convertersCache.containsKey(p)) // can contain null to denote nonexistence of a converter
-            return (Converter<? super F, ? extends T>) convertersCache.get(p);
+        final Converter<?, ?> cached = convertersCache.get(p);
+        if (cached != null) // can contain null to denote nonexistence of a converter
+            return (Converter<? super F, ? extends T>) cached;
         final Converter<? super F, ? extends T> c = getConverter_i(from, to);
         convertersCache.put(p, c);
         return c;
