@@ -714,11 +714,31 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return Collections.unmodifiableList(types);
     }
 
+    /**
+     * Gets the type of this {@link ItemType}
+     * or {@code null} if not found.
+     *
+     * @return The type of this {@link ItemType}
+     * or {@code null} if not found.
+     */
+    @Nullable
     public Material getMaterial() {
         final ItemData data = types.get(0);
         if (data == null)
             throw new IllegalStateException("material not found");
         return data.getType();
+    }
+
+    /**
+     * Gets the type of this {@link ItemType}
+     * or {@link Material#AIR} if not found.
+     *
+     * @return The type of this {@link ItemType}
+     * or {@link Material#AIR} if not found.
+     */
+    public Material materialOrAir() {
+        final Material material = getMaterial();
+        return material != null ? material : Material.AIR;
     }
 
     public int numTypes() {

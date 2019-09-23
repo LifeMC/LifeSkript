@@ -88,6 +88,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
         });
     }
 
+    @SuppressWarnings("null")
     private Type type;
     @Nullable
     private Object data;

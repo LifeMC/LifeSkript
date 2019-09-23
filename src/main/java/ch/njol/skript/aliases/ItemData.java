@@ -65,11 +65,11 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
 
     public ItemData(final int typeid, final short dMin, final short dMax) {
         if (dMin < -1 || dMax < -1)
-            throw new IllegalArgumentException("datas (" + dMin + "," + dMax + ") must be >= -1");
+            throw new IllegalArgumentException("datas (" + dMin + ',' + dMax + ") must be >= -1");
         if ((dMin == -1) == (dMax != -1))
             throw new IllegalArgumentException("dataMin (" + dMin + ") and dataMax (" + dMax + ") must either both be -1 or positive");
         if (dMin > dMax)
-            throw new IllegalArgumentException("dataMin (" + dMin + ") must not be grater than dataMax (" + dMax + ")");
+            throw new IllegalArgumentException("dataMin (" + dMin + ") must not be grater than dataMax (" + dMax + ')');
         this.typeid = typeid;
         dataMin = dMin;
         dataMax = dMax;
@@ -77,8 +77,6 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
 
     public ItemData() {
         typeid = -1;
-        dataMin = -1;
-        dataMax = -1;
     }
 
     public ItemData(final ItemStack i) {
@@ -102,7 +100,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
      * @param item
      * @return Whatever the given item is of this type. If <tt>item</tt> is <tt>null</tt> this returns <tt>getId() == 0</tt>.
      */
-    public boolean isOfType(final @Nullable ItemStack item) {
+    public boolean isOfType(@Nullable final ItemStack item) {
         if (item == null)
             return typeid == 0;
         return isOfType(item.getTypeId(), item.getDurability());
@@ -136,7 +134,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (obj == this)
             return true;
         if (!(obj instanceof ItemData))
@@ -179,10 +177,29 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         return new ItemStack(type, 1, (short) Utils.random(dataMin, dataMax + 1));
     }
 
+    /**
+     * Gets the type of this {@link ItemData}
+     * or {@code null} if not found.
+     *
+     * @return The type of this {@link ItemData}
+     * or {@code null} if not found.
+     */
     @Nullable
     @SuppressWarnings("deprecation")
     public final Material getType() {
         return Material.getMaterial(typeid);
+    }
+
+    /**
+     * Gets the type of this {@link ItemData}
+     * or {@link Material#AIR} if not found.
+     *
+     * @return The type of this {@link ItemData}
+     * or {@link Material#AIR} if not found.
+     */
+    public final Material typeOrAir() {
+        final Material type = getType();
+        return type != null ? type : Material.AIR;
     }
 
     public Iterator<ItemStack> getAll() {
@@ -191,28 +208,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         }
         if (dataMin == dataMax)
             return new SingleItemIterator<>(new ItemStack(typeid, 1, dataMin == -1 ? 0 : dataMin));
-        return new Iterator<ItemStack>() {
-
-            private short data = dataMin;
-
-            @Override
-            public boolean hasNext() {
-                return data <= dataMax;
-            }
-
-            @Override
-            public ItemStack next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return new ItemStack(typeid, 1, data++);
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-        };
+        return new ItemStackDataIterator(dataMin, dataMax, typeid);
     }
 
     @SuppressWarnings("MethodDoesntCallSuperMethod")
@@ -246,6 +242,41 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         @Override
         public final ItemStack next() {
             return new ItemStack(iter.next(), 1);
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+    }
+
+    private static final class ItemStackDataIterator implements Iterator<ItemStack> {
+
+        private final short dataMax;
+        private final int typeid;
+
+        private short data;
+
+        ItemStackDataIterator(final short dataMin,
+                              final short dataMax,
+                              final int typeid) {
+            this.data = dataMin;
+
+            this.dataMax = dataMax;
+            this.typeid = typeid;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return data <= dataMax;
+        }
+
+        @Override
+        public final ItemStack next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return new ItemStack(typeid, 1, data++);
         }
 
         @Override
