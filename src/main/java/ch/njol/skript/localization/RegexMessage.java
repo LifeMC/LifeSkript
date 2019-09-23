@@ -23,6 +23,7 @@
 package ch.njol.skript.localization;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.util.PatternCache;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.regex.Matcher;
@@ -37,13 +38,14 @@ public final class RegexMessage extends Message {
     /**
      * A pattern that doesn't match anything
      */
-    @SuppressWarnings("null")
     public static final Pattern nop = Pattern.compile("(?!)");
     public static final Matcher nop_matcher = nop.matcher("");
     private final String prefix, suffix;
     private final int flags;
     @Nullable
     private Pattern pattern;
+    @Nullable
+    private Matcher matcher;
 
     public RegexMessage(final String key, @Nullable final String prefix, @Nullable final String suffix, final int flags) {
         super(key);
@@ -65,37 +67,58 @@ public final class RegexMessage extends Message {
     }
 
     @Nullable
-    public Pattern getPattern() {
+    public final Pattern getPattern() {
         validate();
         return pattern;
     }
 
-    @SuppressWarnings("null")
-    public Matcher matcher(final String s) {
+    @Nullable
+    public final Matcher getMatcher() {
+        validate();
+        return matcher;
+    }
+
+    /**
+     * Consider using direct {@link RegexMessage#matches(String)} or
+     * {@link RegexMessage#find(String)}
+     *
+     * If you need thread safety, use {@link RegexMessage#newMatcher(CharSequence)}
+     */
+    public final Matcher matcher(final String s) {
+        final Matcher m = getMatcher();
+        return (m == null ? nop_matcher : m).reset(s);
+    }
+
+    /**
+     * Thread safe but creates matchers every time,
+     * consider using {@link RegexMessage#matcher(String)} instead.
+     */
+    public final Matcher newMatcher(final CharSequence s) {
         final Pattern p = getPattern();
         return (p == null ? nop : p).matcher(s);
     }
 
-    public boolean matches(final String s) {
-        final Pattern p = getPattern();
-        return p != null && p.matcher(s).matches();
+    public final boolean matches(final String s) {
+        final Matcher m = getMatcher();
+        return m != null && m.reset(s).matches();
     }
 
-    public boolean find(final String s) {
-        final Pattern p = getPattern();
-        return p != null && p.matcher(s).find();
+    public final boolean find(final String s) {
+        final Matcher m = getMatcher();
+        return m != null && m.reset(s).find();
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         validate();
         return prefix + getValue() + suffix;
     }
 
     @Override
-    protected void onValueChange() {
+    protected final void onValueChange() {
         try {
-            pattern = Pattern.compile(prefix + getValue() + suffix, flags);
+            pattern = PatternCache.get(prefix + getValue() + suffix, flags);
+            matcher = pattern.matcher("");
         } catch (final PatternSyntaxException e) {
             Skript.error("Invalid Regex pattern '" + getValue() + "' found at '" + key + "' in the " + Language.getName() + " language file: " + e.getLocalizedMessage());
         }
