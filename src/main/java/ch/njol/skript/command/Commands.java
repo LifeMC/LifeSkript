@@ -54,6 +54,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventException;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -63,6 +64,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.help.HelpMap;
 import org.bukkit.help.HelpTopic;
+import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.SimplePluginManager;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -718,6 +720,32 @@ public final class Commands {
         return numCommands;
     }
 
+    private static final class SkriptPlayerCommandExecutor implements EventExecutor {
+        SkriptPlayerCommandExecutor() {
+            /* implicit super call */
+        }
+
+        @Override
+        public final void execute(@Nullable final Listener listener,
+                                  @Nullable final Event event) {
+            if (event instanceof PlayerCommandPreprocessEvent)
+                onPlayerCommand((PlayerCommandPreprocessEvent) event);
+        }
+    }
+
+    private static final class SkriptConsoleCommandExecutor implements EventExecutor {
+        SkriptConsoleCommandExecutor() {
+            /* implicit super call */
+        }
+
+        @Override
+        public final void execute(@Nullable final Listener listener,
+                                  @Nullable final Event event) {
+            if (event instanceof ServerCommandEvent)
+                onServerCommand((ServerCommandEvent) event);
+        }
+    }
+
     public static final void registerListeners() {
         if (!registeredListeners) {
             final EventPriority commandPriority = SkriptConfig.commandPriority.value();
@@ -727,17 +755,11 @@ public final class Commands {
 
             Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, new Listener() {
                 /* ignored */
-            }, commandPriority, (listener, event) -> {
-                if (event instanceof PlayerCommandPreprocessEvent)
-                    onPlayerCommand((PlayerCommandPreprocessEvent) event);
-            }, Skript.getInstance(), true);
+            }, commandPriority, new SkriptPlayerCommandExecutor(), Skript.getInstance(), true);
 
             Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, new Listener() {
                 /* ignored */
-            }, EventPriority.MONITOR, (listener, event) -> {
-                if (event instanceof ServerCommandEvent)
-                    onServerCommand((ServerCommandEvent) event);
-            }, Skript.getInstance(), true);
+            }, EventPriority.MONITOR, new SkriptConsoleCommandExecutor(), Skript.getInstance(), true);
 
             if (Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent")) {
                 Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
