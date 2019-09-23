@@ -51,6 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -99,10 +100,10 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             if (info == null)
                 throw new StreamCorruptedException("Invalid EntityData code name " + codeName);
             try {
-                final EntityData<?> d = info.c.newInstance();
+                final EntityData<?> d = Skript.newInstance(info.c);
                 d.deserialize(fields);
                 return d;
-            } catch (final InstantiationException | IllegalAccessException e) {
+            } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 Skript.exception(e);
             }
             throw new StreamCorruptedException();
@@ -122,8 +123,8 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
                 return null;
             final EntityData<?> d;
             try {
-                d = i.c.newInstance();
-            } catch (final Exception e) {
+                d = Skript.newInstance(i.c);
+            } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
                 Skript.exception(e, "Can't create an instance of " + i.c.getCanonicalName());
                 return null;
             }
@@ -282,10 +283,10 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         for (final EntityDataInfo<?> info : infos) {
             if (info.entityClass != Entity.class && (e == null ? info.entityClass.isAssignableFrom(c) : info.entityClass.isInstance(e))) {
                 try {
-                    @SuppressWarnings("unchecked") final EntityData<E> d = (EntityData<E>) info.c.newInstance();
+                    @SuppressWarnings("unchecked") final EntityData<E> d = (EntityData<E>) Skript.newInstance(info.c);
                     if (d.init(c, e))
                         return d;
-                } catch (final Exception ex) {
+                } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException ex) {
                     throw Skript.exception(ex);
                 }
             }

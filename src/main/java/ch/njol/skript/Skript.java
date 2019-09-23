@@ -980,6 +980,43 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         }
     }
 
+    /**
+     * Gets the public nullary constructor of the given class.
+     *
+     * @param clazz The class to get constructor of it.
+     * @param <T> The type that represents the class.
+     *
+     * @return The cached constructor object of the given class.
+     * @throws NoSuchMethodException If the class does not have a public nullary constructor.
+     */
+    @SuppressWarnings("null")
+    public static final <T> Constructor<T> getConstructor(@Nullable final Class<T> clazz) throws NoSuchMethodException {
+        if (clazz == null)
+            return null;
+        return ConstructorCache.get(clazz);
+    }
+
+    /**
+     * Creates a new instance of the given class using its cached
+     * public nullary constructor.
+     *
+     * @param clazz The class to create new instance of it.
+     * @param <T> The type that represents the class.
+     *
+     * @return A new instance of the given class and type.
+     *
+     * @throws InvocationTargetException If any error occurs during the constructor invocation.
+     * @throws NoSuchMethodException If class does not have a public nullary constructor.
+     * @throws InstantiationException If the class instantiation fails with an exception.
+     * @throws IllegalAccessException If the nullary constructor is not accessible (i.e private) or security manager is present.
+     */
+    @SuppressWarnings("null")
+    public static final <T> T newInstance(@Nullable final Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (clazz == null)
+            return null;
+        return getConstructor(clazz).newInstance();
+    }
+
     // ================ REGISTRATIONS ================
 
     /**
@@ -1389,6 +1426,25 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         SkriptLogger.log(SkriptLogger.DEBUG, info);
     }
 
+    /**
+     * Formats and prints a debug message with the given arguments.
+     * Enter arguments in this format: name, value, name, value and so on.
+     *
+     * Example usage:
+     * <pre>
+     * {@code
+     * final int variableValue = 5;
+     *
+     * // prints "variableName = 5, test = false"
+     * Skript.debug("variableName", variableValue, "test", false);
+     * }
+     * </pre>
+     *
+     * Arrays and string values are also supported. Not providing
+     * a name as string may cause unexpected behaviour.
+     *
+     * @param objects The objects with the format name, value
+     */
     public static final void debug(@Nullable final Object... objects) {
         if (objects == null || objects.length < 1)
             return;

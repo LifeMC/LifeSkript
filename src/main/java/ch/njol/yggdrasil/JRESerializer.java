@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public final class JRESerializer extends YggdrasilSerializer<Object> {
@@ -83,11 +84,9 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
     @Nullable
     public <T> T newInstance(final Class<T> c) {
         try {
-            return c.newInstance();
-        } catch (final InstantiationException | IllegalAccessException e) { // all collections handled here have public nullary constructors
+            return Skript.newInstance(c);
+        } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) { // all collections handled here have public nullary constructors
             Skript.exception(e);
-
-            assert false;
             return null;
         }
     }

@@ -25,42 +25,38 @@ package ch.njol.skript.util;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+import java.lang.reflect.Constructor;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
-public final class PatternCache {
+public final class ConstructorCache {
 
     @SuppressWarnings("UnstableApiUsage")
-    private static final Cache<String, Pattern> patternCache = CacheBuilder.newBuilder()
+    private static final Cache<Class<?>, Constructor<?>> constructorCache = CacheBuilder.newBuilder()
             //.softValues()
             .concurrencyLevel(Runtime.getRuntime().availableProcessors())
             .expireAfterWrite(1L, TimeUnit.MINUTES)
             .build();
 
-    private PatternCache() {
+    private ConstructorCache() {
         throw new UnsupportedOperationException("Static class");
     }
 
-    public static final Pattern get(final String pattern) {
-        return get(pattern, -1);
-    }
-
-    public static final Pattern get(final String pattern, final int flags) {
-        final Pattern cached = patternCache.getIfPresent(pattern);
+    public static final <T> Constructor<T> get(final Class<T> clazz) throws NoSuchMethodException {
+        final Constructor<?> cached = constructorCache.getIfPresent(clazz);
         if (cached != null)
-            return cached;
+            return (Constructor<T>) cached;
 
-        final Pattern compiled = flags == -1 ? Pattern.compile(pattern) : Pattern.compile(pattern, flags);
-        patternCache.put(pattern, compiled);
+        final Constructor<T> computed = clazz.getConstructor();
+        constructorCache.put(clazz, computed);
 
-        return compiled;
+        return computed;
     }
 
     public static final void clear() {
-        patternCache.cleanUp();
+        constructorCache.cleanUp();
 
-        patternCache.invalidateAll();
-        patternCache.cleanUp();
+        constructorCache.invalidateAll();
+        constructorCache.cleanUp();
     }
 
 }

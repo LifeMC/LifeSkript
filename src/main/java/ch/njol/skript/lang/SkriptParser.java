@@ -55,6 +55,7 @@ import com.google.common.primitives.Booleans;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -845,14 +846,14 @@ public final class SkriptParser {
                                     }
                                 }
                             }
-                            final T t = clazz.newInstance();
+                            final T t = Skript.newInstance(clazz);
                             if (t.init(res.exprs, i, ScriptLoader.hasDelayBefore, res)) {
                                 log.printLog();
                                 return t;
                             }
                         }
-                    } catch (final InstantiationException | IllegalAccessException e) {
-                        assert false : e;
+                    } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                        Skript.exception(e);
                     }
                 }
             }
@@ -1661,7 +1662,7 @@ public final class SkriptParser {
                         if (res != null) {
                             if (Skript.logSpam() && !info.c.getPackage().getName().startsWith("ch.njol")) // Log spam and it's not a native Skript event
                                 Skript.info("Using event " + info.c.getCanonicalName());
-                            final SkriptEvent e = info.c.newInstance();
+                            final SkriptEvent e = Skript.newInstance(info.c);
                             final Literal<?>[] ls = Arrays.copyOf(res.exprs, res.exprs.length, Literal[].class);
                             if (!e.init(ls, i, res)) {
                                 log.printError();
@@ -1670,8 +1671,8 @@ public final class SkriptParser {
                             log.printLog();
                             return new NonNullPair<>(info, e);
                         }
-                    } catch (final InstantiationException | IllegalAccessException e) {
-                        assert false : e;
+                    } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                        Skript.exception(e);
                     }
                 }
             }
