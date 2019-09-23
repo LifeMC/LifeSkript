@@ -81,10 +81,15 @@ public final class Utils {
     };
     @SuppressWarnings("null")
     private static final Pattern stylePattern = Pattern.compile("<([^<>]+)>");
-    private static final Matcher stylePatternMatcher = stylePattern.matcher("");
-    private static final Pattern NONE_PATTERN = Pattern.compile("<<none>>", Pattern.LITERAL);
-    private static final Matcher NONE_PATTERN_MATCHER = NONE_PATTERN.matcher("");
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
+
+    // Cached matchers for performance
+    private static final Matcher NONE_PATTERN_MATCHER = Pattern.compile("<<none>>", Pattern.LITERAL).matcher("");
+
+    private static final Matcher NUMBER_PATTERN_MATCHER = Pattern.compile("-?\\d+").matcher("");
+    private static final Matcher AMOUNT_PATTERN_ONE_MATCHER = Pattern.compile("\\d+ of .+").matcher("");
+
+    private static final Matcher AMOUNT_PATTERN_TWO_MATCHER = Pattern.compile("\\d+ .+").matcher("");
+    private static final Matcher AMOUNT_PATTERN_THREE_MATCHER = Pattern.compile("an? .+").matcher("");
 
     static {
         Language.addListener(() -> {
@@ -181,7 +186,7 @@ public final class Utils {
      * @param is2
      * @return Whatever the item stacks are of the same type
      */
-    public static final boolean itemStacksEqual(final @Nullable ItemStack is1, final @Nullable ItemStack is2) {
+    public static final boolean itemStacksEqual(@Nullable final ItemStack is1, @Nullable final ItemStack is2) {
         if (is1 == null || is2 == null)
             return is1 == is2;
         return is1.getType() == is2.getType() && is1.getDurability() == is2.getDurability() && (ItemType.itemMetaSupported ? is1.getItemMeta().equals(is2.getItemMeta()) : is1.getEnchantments().equals(is2.getEnchantments()));
@@ -220,13 +225,13 @@ public final class Utils {
     }
 
     public static final Pair<String, Integer> getAmount(final String s) {
-        if (s.matches("\\d+ of .+")) {
+        if (AMOUNT_PATTERN_ONE_MATCHER.reset(s).matches()) {
             return new Pair<>(s.split(" ", 3)[2], Utils.parseInt(s.split(" ", 2)[0]));
         }
-        if (s.matches("\\d+ .+")) {
+        if (AMOUNT_PATTERN_TWO_MATCHER.reset(s).matches()) {
             return new Pair<>(s.split(" ", 2)[1], Utils.parseInt(s.split(" ", 2)[0]));
         }
-        if (s.matches("an? .+")) {
+        if (AMOUNT_PATTERN_THREE_MATCHER.reset(s).matches()) {
             return new Pair<>(s.split(" ", 2)[1], 1);
         }
         return new Pair<>(s, -1);
@@ -397,7 +402,7 @@ public final class Utils {
     public static final String replaceChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll(NONE_PATTERN_MATCHER.reset(message).replaceAll(Matcher.quoteReplacement("")), stylePattern, m1 -> {
+        String m = StringUtils.replaceAll(NONE_PATTERN_MATCHER.reset(message).replaceAll(Matcher.quoteReplacement("")), stylePattern/*Matcher*/, m1 -> {
             @SuppressWarnings("null") final Color c = Color.byName(m1.group(1));
             if (c != null)
                 return c.getChat();
@@ -421,7 +426,7 @@ public final class Utils {
     public static final String replaceEnglishChatStyles(final String message) {
         if (message.isEmpty())
             return message;
-        String m = StringUtils.replaceAll(message, stylePatternMatcher, m1 -> {
+        String m = StringUtils.replaceAll(message, stylePattern/*Matcher*/, m1 -> {
             @SuppressWarnings("null") final Color c = Color.byEnglishName(m1.group(1));
             if (c != null)
                 return c.getChat();
@@ -493,7 +498,7 @@ public final class Utils {
      * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
      */
     public static final int parseInt(final String s) {
-        assert NUMBER_PATTERN.matcher(s).matches() : s + " does not match regex";
+        assert NUMBER_PATTERN_MATCHER.reset(s).matches() : s + " does not match regex";
         assert SkriptParser.isInteger(s) : s + " is not a valid integer";
         try {
             return Integer.parseInt(s);
@@ -511,7 +516,7 @@ public final class Utils {
      * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
      */
     public static final long parseLong(final String s) {
-        assert NUMBER_PATTERN.matcher(s).matches() : s + " does not match regex";
+        assert NUMBER_PATTERN_MATCHER.reset(s).matches() : s + " does not match regex";
         try {
             return Long.parseLong(s);
         } catch (final NumberFormatException e) {

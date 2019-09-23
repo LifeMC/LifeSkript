@@ -86,21 +86,10 @@ public final class StringUtils {
      */
     @Nullable
     public static final String replaceAll(final CharSequence string, final Pattern regex, final Callback<String, Matcher> callback) {
-        return replaceAll(string, regex.matcher(string), callback);
-    }
-
-    /**
-     * Performs regex replacing using a callback.
-     *
-     * @param string   the String in which should be searched & replaced
-     * @param m    the Matcher to match
-     * @param callback the callback will be run for every match of the regex in the string, and should return the replacement string for the given match.
-     *                 If the callback returns null for any given match this function will immediately terminate and return null.
-     * @return
-     */
-    @Nullable
-    public static final String replaceAll(final CharSequence string, final Matcher m, final Callback<String, Matcher> callback) {
+        // FIXME https://stackoverflow.com/questions/38376584/java-matcher-appendreplacement-and-matcher-appendtail-for-stringbuilder
+        // also replace with cached matcher version after replacing with StringBuilder
         final StringBuffer sb = new StringBuffer(4096);
+        final Matcher m = regex.matcher(string);
         while (m.find()) {
             final String r = callback.run(m);
             if (r == null)
