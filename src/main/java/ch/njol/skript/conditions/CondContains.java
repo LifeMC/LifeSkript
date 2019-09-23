@@ -57,7 +57,10 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class CondContains extends Condition {
     static {
-        Skript.registerCondition(CondContains.class, "%inventories% ha(s|ve) %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% contain[s] %itemtypes/strings/objects%", "%inventories% do[es](n't| not) have %itemtypes% [in [(the[ir]|his|her|its)] inventory]", "%inventories/strings/objects% (do[es](n't| not)| not) contain[s] %itemtypes/strings/objects%");
+        Skript.registerCondition(CondContains.class, "%inventories% ha(s|ve) %itemtypes% [in [(the[ir]|his|her|its)] inventory]",
+                "%strings/inventories/objects% contain[s] %strings/itemtypes/objects%",
+                "%inventories% (do[es](n't| not)| not) have %itemtypes% [in [(the[ir]|his|her|its)] inventory]",
+                "%strings/inventories/objects% (do[es](n't| not)| not) contain[s] %strings/itemtypes/objects%");
     }
 
     @SuppressWarnings("null")
