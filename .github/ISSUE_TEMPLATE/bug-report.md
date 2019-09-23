@@ -1,6 +1,9 @@
 ---
 name: Bug Report
 about: Create an issue for a bug report.
+title: ''
+labels: 'type: bug'
+assignees: ''
 
 ---
 
