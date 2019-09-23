@@ -50,7 +50,7 @@ public abstract class Parser<T> {
     public abstract T parse(String s, ParseContext context);
 
     /**
-     * @return Whatever {@link #parse(String, ParseContext)} can actually return something other that null for the given context
+     * @return Whatever {@link #parse(String, ParseContext)} can actually return something other than null for the given context
      */
     public boolean canParse(@SuppressWarnings("unused") final ParseContext context) {
         return true;

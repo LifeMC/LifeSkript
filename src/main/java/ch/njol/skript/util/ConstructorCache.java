@@ -32,7 +32,8 @@ public final class ConstructorCache {
 
     @SuppressWarnings("UnstableApiUsage")
     private static final Cache<Class<?>, Constructor<?>> constructorCache = CacheBuilder.newBuilder()
-            //.softValues()
+            .softValues()
+            .initialCapacity(100)
             .concurrencyLevel(Runtime.getRuntime().availableProcessors())
             .expireAfterWrite(1L, TimeUnit.MINUTES)
             .build();

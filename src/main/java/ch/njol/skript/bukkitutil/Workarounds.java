@@ -178,7 +178,7 @@ public final class Workarounds {
 
         // Netty
         oldValues.put("io.netty.eventLoopThreads", System.getProperty("io.netty.eventLoopThreads"));
-        System.setProperty("io.netty.eventLoopThreads", String.valueOf(Math2.min(4, Runtime.getRuntime().availableProcessors())));
+        System.setProperty("io.netty.eventLoopThreads", Integer.toString(Math2.min(4, Runtime.getRuntime().availableProcessors())));
 
         // Change Some Default Settings
         URLConnection.setDefaultAllowUserInteraction(false);

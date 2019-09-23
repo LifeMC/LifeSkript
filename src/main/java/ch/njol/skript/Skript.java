@@ -2024,7 +2024,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     final String contents = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8).trim();
                     final String replacedContents = contents
                             .replace("netty-threads: 4", "netty-threads: " + Math2.min(4, Runtime.getRuntime().availableProcessors()))
-                            .replace("view-distance: 10", "view-distance: " + (viewDistance < 10 ? String.valueOf(viewDistance) : "10")).trim();
+                            .replace("view-distance: 10", "view-distance: " + (viewDistance < 10 ? Integer.toString(viewDistance) : "10")).trim();
                     if (!contents.equalsIgnoreCase(replacedContents)) {
                         FileUtils.backup(spigotFile);
 

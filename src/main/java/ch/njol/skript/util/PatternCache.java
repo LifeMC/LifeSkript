@@ -32,7 +32,8 @@ public final class PatternCache {
 
     @SuppressWarnings("UnstableApiUsage")
     private static final Cache<String, Pattern> patternCache = CacheBuilder.newBuilder()
-            //.softValues()
+            .softValues()
+            .initialCapacity(100)
             .concurrencyLevel(Runtime.getRuntime().availableProcessors())
             .expireAfterWrite(1L, TimeUnit.MINUTES)
             .build();

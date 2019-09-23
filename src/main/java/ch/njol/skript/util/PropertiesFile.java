@@ -115,7 +115,7 @@ public final class PropertiesFile extends File {
 
     public final PropertiesFile setInt(@Nullable final String key,
                                        final int value) {
-        set(key, String.valueOf(value));
+        set(key, Integer.toString(value));
         return this;
     }
 

@@ -70,7 +70,6 @@ public final class StringUtils {
      *                 If the callback returns null for any given match this function will immediately terminate and return null.
      * @return
      */
-    @SuppressWarnings("null")
     @Nullable
     public static final String replaceAll(final CharSequence string, final String regex, final Callback<String, Matcher> callback) {
         return replaceAll(string, PatternCache.get(regex), callback);
@@ -149,7 +148,7 @@ public final class StringUtils {
     public static final String toString(final double d, final int accuracy) {
         assert accuracy >= 0;
         if (accuracy <= 0)
-            return String.valueOf(Math.round(d));
+            return Long.toString(Math.round(d));
         final String s = String.format(Locale.ENGLISH, "%." + accuracy + 'f', d);
         int c = s.length() - 1;
         while (s.charAt(c) == '0')

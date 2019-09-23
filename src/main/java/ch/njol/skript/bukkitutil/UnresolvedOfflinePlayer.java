@@ -122,11 +122,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             threadStarted.set(true);
             resolverThread.setPriority(Thread.MIN_PRIORITY);
             resolverThread.start();
-            Skript.closeOnDisable(() -> {
-                try {
-                    resolverThread.interrupt();
-                } catch (final Throwable ignored) { /* ignored */ }
-            });
+            Skript.closeOnDisable(resolverThread::interrupt);
         }
         this.name = name;
         toResolve.add(this); // Try to resolve on a background thread, if possible.

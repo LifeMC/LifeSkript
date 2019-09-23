@@ -504,7 +504,7 @@ public final class Variable<T> implements Expression<T> {
                             for (int j = 0; j < ((Object[]) d).length; j++)
                                 setIndex(e, i + SEPARATOR + j, ((Object[]) d)[j]);
                         } else {
-                            setIndex(e, String.valueOf(i), d);
+                            setIndex(e, Integer.toString(i), d);
                         }
                         i++;
                     }
@@ -581,9 +581,9 @@ public final class Variable<T> implements Expression<T> {
                         int i = 1;
                         for (final Object d : delta) {
                             if (o != null)
-                                while (o.containsKey(String.valueOf(i)))
+                                while (o.containsKey(Integer.toString(i)))
                                     i++;
-                            setIndex(e, String.valueOf(i), d);
+                            setIndex(e, Integer.toString(i), d);
                             i++;
                         }
                     }

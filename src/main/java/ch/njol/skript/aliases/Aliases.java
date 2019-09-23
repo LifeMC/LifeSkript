@@ -391,7 +391,7 @@ public final class Aliases {
                 MaterialName n = materialNames.get(d.getId());
                 if (d.dataMin == -1 && d.dataMax == -1) {
                     if (n != null) {
-                        if (n.singular.equals(String.valueOf(d.getId())) && n.singular.equals(n.plural)) {
+                        if (n.singular.equals(Integer.toString(d.getId())) && n.singular.equals(n.plural)) {
                             n.singular = p.getFirst();
                             n.plural = p.getSecond();
                         }
@@ -400,7 +400,7 @@ public final class Aliases {
                     }
                 } else {
                     if (n == null)
-                        materialNames.put(d.getId(), n = new MaterialName(d.getId(), String.valueOf(d.getId()), String.valueOf(d.getId()), g.getSecond()));
+                        materialNames.put(d.getId(), n = new MaterialName(d.getId(), Integer.toString(d.getId()), Integer.toString(d.getId()), g.getSecond()));
                     final NonNullPair<Short, Short> data = new NonNullPair<>(d.dataMin, d.dataMax);
                     n.names.put(data, p);
                 }
@@ -428,7 +428,7 @@ public final class Aliases {
     public static final String getMaterialName(final int id, final short dataMin, final short dataMax, final boolean plural) {
         final MaterialName n = getMaterialNames().get(id);
         if (n == null) {
-            return String.valueOf(id);
+            return Integer.toString(id);
         }
         return n.toString(dataMin, dataMax, plural);
     }

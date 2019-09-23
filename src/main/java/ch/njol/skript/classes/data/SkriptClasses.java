@@ -668,7 +668,7 @@ public final class SkriptClasses {
 
             @Override
             public String toVariableNameString(final Experience xp) {
-                return String.valueOf(xp.getXP());
+                return Integer.toString(xp.getXP());
             }
 
             @Override

@@ -72,7 +72,7 @@ public final class Classes {
      * Consists of {@link ch.njol.yggdrasil.Yggdrasil#MAGIC_NUMBER} and {@link Variables#YGGDRASIL_VERSION}
      */
     private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
-    @Nullable
+    @SuppressWarnings("null")
     private static ClassInfo<?>[] classInfos;
 
     private Classes() {
@@ -237,7 +237,7 @@ public final class Classes {
             throw new IllegalStateException("Cannot use classinfos until registration is over");
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "unused"})
     public static final List<ClassInfo<?>> getClassInfos() {
         checkAllowClassInfoInteraction();
         final ClassInfo<?>[] ci = classInfos;
@@ -482,7 +482,7 @@ public final class Classes {
      * @param to
      * @return A parser to parse object of the desired type
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unused", "unchecked", "null"})
     @Nullable
     public static final <T> Parser<? extends T> getParser(final Class<T> to) {
         checkAllowClassInfoInteraction();
