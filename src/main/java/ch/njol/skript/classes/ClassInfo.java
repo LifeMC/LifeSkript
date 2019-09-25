@@ -107,7 +107,7 @@ public class ClassInfo<T> implements Debuggable {
     /**
      * @param parser A parser to parse values of this class or null if not applicable
      */
-    public ClassInfo<T> parser(final Parser<? extends T> parser) {
+    public final ClassInfo<T> parser(final Parser<? extends T> parser) {
         //for mundosk - fix assertion error
         //assert this.parser == null;
         this.parser = parser;
@@ -120,7 +120,7 @@ public class ClassInfo<T> implements Debuggable {
      * @throws PatternSyntaxException If any of the patterns' syntaxes is invalid
      */
     @SuppressWarnings("null")
-    public ClassInfo<T> user(final String... userInputPatterns) throws PatternSyntaxException {
+    public final ClassInfo<T> user(final String... userInputPatterns) throws PatternSyntaxException {
         assert this.userInputPatterns == null;
         this.userInputPatterns = new Pattern[userInputPatterns.length];
         for (int i = 0; i < userInputPatterns.length; i++) {
@@ -134,7 +134,7 @@ public class ClassInfo<T> implements Debuggable {
      * @see EventValueExpression
      * @see SimpleLiteral
      */
-    public ClassInfo<T> defaultExpression(final DefaultExpression<T> defaultExpression) {
+    public final ClassInfo<T> defaultExpression(final DefaultExpression<T> defaultExpression) {
         assert this.defaultExpression == null;
         if (!defaultExpression.isDefault())
             throw new IllegalArgumentException("defaultExpression.isDefault() must return true for the default expression of a class");
@@ -142,7 +142,7 @@ public class ClassInfo<T> implements Debuggable {
         return this;
     }
 
-    public ClassInfo<T> serializer(final Serializer<? super T> serializer) {
+    public final ClassInfo<T> serializer(final Serializer<? super T> serializer) {
         assert this.serializer == null;
         if (serializeAs != null)
             throw new IllegalStateException("Can't set a serializer if this class is set to be serialized as another one");
@@ -151,7 +151,7 @@ public class ClassInfo<T> implements Debuggable {
         return this;
     }
 
-    public ClassInfo<T> serializeAs(final Class<?> serializeAs) {
+    public final ClassInfo<T> serializeAs(final Class<?> serializeAs) {
         //for skquery - fix assertion error
         //assert this.serializeAs == null;
         if (serializer != null)
@@ -160,13 +160,13 @@ public class ClassInfo<T> implements Debuggable {
         return this;
     }
 
-    public ClassInfo<T> changer(final Changer<? super T> changer) {
+    public final ClassInfo<T> changer(final Changer<? super T> changer) {
         assert this.changer == null;
         this.changer = changer;
         return this;
     }
 
-    public <R> ClassInfo<T> math(final Class<R> relativeType, final Arithmetic<? super T, R> math) {
+    public final <R> ClassInfo<T> math(final Class<R> relativeType, final Arithmetic<? super T, R> math) {
         assert this.math == null;
         this.math = math;
         mathRelativeType = relativeType;
@@ -325,7 +325,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param before
      * @return this ClassInfo
      */
-    public ClassInfo<T> before(final String... before) {
+    public final ClassInfo<T> before(final String... before) {
         assert this.before == null;
         this.before = new HashSet<>(Arrays.asList(before));
         return this;
@@ -342,7 +342,7 @@ public class ClassInfo<T> implements Debuggable {
      * @param after
      * @return this ClassInfo
      */
-    public ClassInfo<T> after(final String... after) {
+    public final ClassInfo<T> after(final String... after) {
         this.after.addAll(Arrays.asList(after));
         return this;
     }

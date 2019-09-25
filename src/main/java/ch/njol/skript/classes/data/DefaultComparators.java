@@ -46,6 +46,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -55,7 +56,7 @@ import java.util.Objects;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultComparators {
 
-    static final LinkedHashMap<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>();
+    static final Map<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>(100);
 
     // EntityData - ItemType
     public static final Comparator<EntityData, ItemType> entityItemComparator = (e, i) -> {

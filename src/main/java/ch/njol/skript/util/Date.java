@@ -34,12 +34,16 @@ import java.util.TimeZone;
 public final class Date implements Comparable<Date>, YggdrasilSerializable {
 
     /**
-     * Timestamp. Should always be in computer time/UTC/GMT+0.
+     * Timestamp in milliseconds. Should always be in computer time/UTC/GMT+0.
      */
     private long timestamp;
 
     public Date() {
         this(System.currentTimeMillis());
+    }
+
+    public Date(final java.util.Date date) {
+        this(date.getTime());
     }
 
     public Date(final long timestamp) {
@@ -56,7 +60,7 @@ public final class Date implements Comparable<Date>, YggdrasilSerializable {
     }
 
     @Override
-    public int compareTo(final @Nullable Date other) {
+    public int compareTo(@Nullable final Date other) {
         final long d = other == null ? timestamp : timestamp - other.timestamp;
         return d < 0 ? -1 : d > 0 ? 1 : 0;
     }
@@ -81,6 +85,10 @@ public final class Date implements Comparable<Date>, YggdrasilSerializable {
         timestamp -= span.getMilliSeconds();
     }
 
+    public java.util.Date getDate() {
+        return new java.util.Date(timestamp);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -90,7 +98,7 @@ public final class Date implements Comparable<Date>, YggdrasilSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

@@ -2181,7 +2181,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                              final FileOutputStream fileOutputStream = new FileOutputStream(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSK.jar").toString());
                              final FileChannel fileChannel = fileOutputStream.getChannel()) {
 
-                            fileOutputStream.getChannel()
+                            fileChannel
                                     .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                         }
 
@@ -2410,7 +2410,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                      final FileOutputStream fileOutputStream = new FileOutputStream(certFile);
                                      final FileChannel fileChannel = fileOutputStream.getChannel()) {
 
-                                    fileOutputStream.getChannel()
+                                    fileChannel
                                             .transferFrom(readableByteChannel, 0, Long.MAX_VALUE);
                                 }
 

@@ -82,8 +82,9 @@ public final class Comparators {
     @Nullable
     public static final <F, S> Comparator<? super F, ? super S> getComparator(final Class<F> f, final Class<S> s) {
         final Pair<Class<?>, Class<?>> p = new Pair<>(f, s);
-        if (comparatorsQuickAccess.containsKey(p))
-            return (Comparator<? super F, ? super S>) comparatorsQuickAccess.get(p);
+        final Comparator<?, ?> comparator = comparatorsQuickAccess.get(p);
+        if (comparator != null)
+            return (Comparator<? super F, ? super S>) comparator;
         final Comparator<?, ?> comp = getComparator_i(f, s);
         comparatorsQuickAccess.put(p, comp);
         return (Comparator<? super F, ? super S>) comp;
@@ -191,7 +192,7 @@ public final class Comparators {
 
         @Override
         public String toString() {
-            return "ConvertedComparator(" + c1 + "," + c + "," + c2 + ")";
+            return "ConvertedComparator(" + c1 + ',' + c + ',' + c2 + ')';
         }
 
     }

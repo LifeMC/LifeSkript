@@ -33,7 +33,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,6 +84,19 @@ public final class Workarounds {
     private static boolean init;
 
     static {
+        // fix problems in updating jar files by disabling default caching of URL connections.
+        // URLConnection default caching should be disabled since it causes jar file locking issues and JVM crashes in updating jar files.
+        // Changes to jar files won't be noticed in all cases when caching is enabled.
+        // sun.net.www.protocol.jar.JarURLConnection leaves the JarFile instance open if URLConnection caching is enabled.
+        try {
+            final URL url = new URL("jar:file://valid_jar_url_syntax.jar!/");
+            final URLConnection urlConnection = url.openConnection();
+
+            urlConnection.setDefaultUseCaches(false);
+        } catch (final IOException e) {
+            throw Skript.sneakyThrow(e);
+        }
+
         Skript.closeOnEnable(() -> {
             assert Skript.isBukkitRunning();
 
