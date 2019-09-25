@@ -60,8 +60,10 @@ public final class SpikeDetector extends Thread {
     private static final MethodHandle doStop = findDoStop();
     @Nullable
     private static final MethodHandle doStart = findDoStart();
-    private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", 5000L);
     private static final long earlyWarningDelay = Long.getLong("skript.earlyWarningDelay", 10000L);
+    private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", earlyWarningDelay / 2L);
+    private static final long sleepMillisDelay = Long.getLong("skript.sleepMillisDelay", 100L); // 100L to get truer stack traces
+    private static final long earlyWarningCooldown = Long.getLong("skript.earlyWarningCooldown", earlyWarningEvery - sleepMillisDelay);
     private static volatile boolean hasStarted = alwaysEnabled;
     private static volatile boolean enabled = alwaysEnabled;
     @Nullable
@@ -245,7 +247,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime <= lastEarlyWarning + earlyWarningEvery /*|| currentTime <= lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + /*earlyWarningEvery*/ earlyWarningCooldown /*|| currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
@@ -253,7 +255,7 @@ public final class SpikeDetector extends Thread {
                 serverThread.setPriority(Thread.MIN_PRIORITY);
 
                 // Get true spike time here
-                final long spikeTime = (currentTime - lastTick) / 1000L;
+                final long spikeTime = (currentTime + sleepMillisDelay - lastTick) / 1000L;
 
                 // Get true stack trace here
                 final ThreadInfo threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(serverThread.getId(), Integer.MAX_VALUE);
@@ -290,7 +292,7 @@ public final class SpikeDetector extends Thread {
             }
 
             try {
-                sleep(100L); // 100L to get truer stack traces
+                sleep(sleepMillisDelay);
             } catch (final InterruptedException e) {
                 interrupt();
                 return;

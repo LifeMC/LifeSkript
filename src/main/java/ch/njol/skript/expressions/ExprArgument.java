@@ -39,7 +39,6 @@ import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
-import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
@@ -73,11 +72,6 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
     private int matchedPattern;
 
-    @Nullable
-    private String script;
-
-    private int line;
-
     @Override
     @SuppressWarnings({"null", "unused"})
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
@@ -85,10 +79,6 @@ public final class ExprArgument extends SimpleExpression<Object> {
         final List<Argument<?>> currentArguments = Commands.currentArguments;
         if (currentArguments == null) {
             if ((ScriptLoader.isCurrentEvent(PlayerCommandPreprocessEvent.class) || ScriptLoader.isCurrentEvent(ServerCommandEvent.class)) && !ScriptLoader.isCurrentEvent(ScriptCommandEvent.class) && !ScriptLoader.isCurrentEvent(CommandEvent.class)) {
-                if (Skript.debug()) {
-                    script = ScriptLoader.currentScript.getFileName();
-                    line = SkriptLogger.getNode().getLine();
-                }
                 dynamic = true;
             } else {
                 Skript.error("The expression 'argument' can only be used within a command", ErrorQuality.SEMANTIC_ERROR);
@@ -215,7 +205,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
             assert matchedPattern != 0 || index == -1;
             assert finalIndex >= 0;
 
-            if (finalIndex >= args.length)
+            if (args == null || finalIndex >= args.length)
                 return null;
 
             return new String[]{args[finalIndex]};
@@ -232,7 +222,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (dynamic)
             return "the " + (matchedPattern == 0 ? "last" : StringUtils.fancyOrderNumber(index + 1)) + " argument";
         if (e == null)
