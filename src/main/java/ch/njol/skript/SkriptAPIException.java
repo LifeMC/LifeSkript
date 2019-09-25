@@ -47,7 +47,7 @@ public final class SkriptAPIException extends RuntimeException {
     }
 
     public static final void instantiationException(final String desc, final Class<?> c, final InstantiationException e) throws SkriptAPIException {
-        throw new SkriptAPIException(desc + " " + c.getName() + " can't be instantiated, likely because the class is abstract or has no nullary constructor", e);
+        throw new SkriptAPIException(desc + ' ' + c.getName() + " can't be instantiated, likely because the class is abstract or has no nullary constructor", e);
     }
 
 }

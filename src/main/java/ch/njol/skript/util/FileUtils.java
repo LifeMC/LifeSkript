@@ -69,7 +69,7 @@ public final class FileUtils {
         final File backupFolder = new File(f.getParentFile(), "backups" + File.separator);
         if (!backupFolder.exists() && !backupFolder.mkdirs())
             throw new IOException("Cannot create backups folder");
-        final File backup = new File(backupFolder, name + "_" + getBackupSuffix() + (ext == null ? "" : "." + ext));
+        final File backup = new File(backupFolder, name + '_' + getBackupSuffix() + (ext == null ? "" : '.' + ext));
         if (backup.exists())
             throw new IOException("Backup file " + backup.getName() + " does already exist");
         copy(f, backup);

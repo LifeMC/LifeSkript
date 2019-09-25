@@ -76,7 +76,7 @@ public final class ExprRound extends PropertyExpression<Number, Long> {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return (action == -1 ? "floor" : action == 0 ? "round" : "ceil") + "(" + getExpr().toString(e, debug) + ")";
+        return (action == -1 ? "floor" : action == 0 ? "round" : "ceil") + '(' + getExpr().toString(e, debug) + ')';
     }
 
 }

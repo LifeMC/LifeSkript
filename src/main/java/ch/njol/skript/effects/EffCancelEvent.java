@@ -128,11 +128,11 @@ public final class EffCancelEvent extends Effect {
 
         //noinspection ConstantConditions
         if (cancelled && Skript.logHigh())
-            Skript.info(e.getClass().getSimpleName() + " event was cancelled by a script" + (script != null ? " (" + script + ", line " + line + ")" : ""));
+            Skript.info(e.getClass().getSimpleName() + " event was cancelled by a script" + (script != null ? " (" + script + ", line " + line + ')' : ""));
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (cancel ? "" : "un") + "cancel the event";
     }
 

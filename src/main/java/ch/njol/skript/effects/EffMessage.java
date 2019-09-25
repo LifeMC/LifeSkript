@@ -83,7 +83,7 @@ public final class EffMessage extends Effect {
 //			message = StringUtils.fixCapitalization(message);
             final CommandSender[] recipientsArray = recipients.getArray(e);
             if (SkriptConfig.enableExplicitPlayerUseWarnings.value() && recipientsArray.length == 1 && !(recipientsArray[0] instanceof ConsoleCommandSender) && e instanceof ServerCommandEvent && !ExprNumbers.isInLoop()) {
-                Skript.warning("Command used from console, but send message uses the form of explicit \"to player\". For clarification, limit the command to the players, or remove the \"to player\" part." + (script != null ? " (" + script + ", line " + line + ")" : ""));
+                Skript.warning("Command used from console, but send message uses the form of explicit \"to player\". For clarification, limit the command to the players, or remove the \"to player\" part." + (script != null ? " (" + script + ", line " + line + ')' : ""));
             }
             for (final CommandSender receiver : recipientsArray) {
                 receiver.sendMessage(message);
@@ -92,7 +92,7 @@ public final class EffMessage extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "send " + messages.toString(e, debug) + " to " + recipients.toString(e, debug);
     }
 }

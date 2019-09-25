@@ -67,7 +67,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
                 writeUnsignedInt(writtenShortStrings.get(s));
         } else {
             if (nextShortStringID < 0)
-                throw new YggdrasilException("Too many field names/class IDs (max: " + Integer.MAX_VALUE + ")");
+                throw new YggdrasilException("Too many field names/class IDs (max: " + Integer.MAX_VALUE + ')');
             final byte[] d = s.getBytes(StandardCharsets.UTF_8);
             if (d.length >= (T_REFERENCE.tag & 0xFF))
                 throw new YggdrasilException("Field name or Class ID too long: " + s);

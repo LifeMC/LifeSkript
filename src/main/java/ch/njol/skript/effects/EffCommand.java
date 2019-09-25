@@ -112,19 +112,19 @@ public final class EffCommand extends Effect {
                 for (final CommandSender sender : senders.getArray(e)) {
                     assert sender != null;
                     if (flag)
-                        Skript.info("Executing command \"" + command + "\" as " + sender.getName() + (script != null ? " (" + script + ", line " + line + ")" : ""));
+                        Skript.info("Executing command \"" + command + "\" as " + sender.getName() + (script != null ? " (" + script + ", line " + line + ')' : ""));
                     Skript.dispatchCommand(sender, command);
                 }
             } else {
                 if (flag)
-                    Skript.info("Executing command \"" + command + "\" as console" + (script != null ? " (" + script + ", line " + line + ")" : ""));
+                    Skript.info("Executing command \"" + command + "\" as console" + (script != null ? " (" + script + ", line " + line + ')' : ""));
                 Skript.dispatchCommand(Bukkit.getConsoleSender(), command);
             }
         }
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "make " + (senders != null ? senders.toString(e, debug) : "the console") + " execute the command " + commands.toString(e, debug);
     }
 

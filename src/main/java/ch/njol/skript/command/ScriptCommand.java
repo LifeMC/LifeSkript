@@ -295,7 +295,7 @@ public final class ScriptCommand implements TabExecutor {
         }
 
         if (Skript.log(Verbosity.VERY_HIGH))
-            Skript.info("# /" + name + " " + rest);
+            Skript.info("# /" + name + ' ' + rest);
         final long startTrigger = System.nanoTime();
 
         if (!trigger.execute(event))
@@ -350,7 +350,7 @@ public final class ScriptCommand implements TabExecutor {
         }
     }
 
-    public void unregister(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, final @Nullable Set<String> aliases) {
+    public void unregister(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, @Nullable final Set<String> aliases) {
         synchronized (commandMap) {
             knownCommands.remove(label);
             knownCommands.remove("skript:" + label);
@@ -392,7 +392,7 @@ public final class ScriptCommand implements TabExecutor {
                 topics.setAccessible(true);
                 @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 for (final String alias : activeAliases) {
-                    final HelpTopic at = new CommandAliasHelpTopic("/" + alias, "/" + label, help);
+                    final HelpTopic at = new CommandAliasHelpTopic('/' + alias, '/' + label, help);
                     as.add(at);
                     helps.add(at);
                 }

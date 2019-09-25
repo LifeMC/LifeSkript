@@ -120,8 +120,8 @@ public final class ExprArithmetic extends SimpleExpression<Number> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return first.toString(e, debug) + " " + op + " " + second.toString(e, debug);
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return first.toString(e, debug) + ' ' + op + ' ' + second.toString(e, debug);
     }
 
     @SuppressWarnings("null")

@@ -64,6 +64,6 @@ final class MaterialName {
             return p ? s.getSecond() : s.getFirst();
         if (dataMin == -1 && dataMax == -1 || dataMin == 0 && dataMax == 0)
             return p ? plural : singular;
-        return (p ? plural : singular) + ":" + (dataMin == -1 ? 0 : dataMin) + (dataMin == dataMax ? "" : "-" + (dataMax == -1 ? id <= Skript.MAXBLOCKID ? 15 : Short.MAX_VALUE : dataMax));
+        return (p ? plural : singular) + ':' + (dataMin == -1 ? 0 : dataMin) + (dataMin == dataMax ? "" : "-" + (dataMax == -1 ? id <= Skript.MAXBLOCKID ? 15 : Short.MAX_VALUE : dataMax));
     }
 }

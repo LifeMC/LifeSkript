@@ -77,7 +77,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
             return s.length() + " space" + (s.length() == 1 ? "" : "s");
         if (s.matches("\t+"))
             return s.length() + " tab" + (s.length() == 1 ? "" : "s");
-        return "'" + s.replace("\t", "->").replace(' ', '_').replaceAll("\\s", "?") + "' [-> = tab, _ = space, ? = other whitespace]";
+        return '\'' + s.replace("\t", "->").replace(' ', '_').replaceAll("\\s", "?") + "' [-> = tab, _ = space, ? = other whitespace]";
     }
 
     private NodeMap getNodeMap() {
@@ -192,7 +192,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
      * @return The node with the given name
      */
     @Nullable
-    public Node get(final @Nullable String key) {
+    public Node get(@Nullable final String key) {
         return getNodeMap().get(key);
     }
 
@@ -227,7 +227,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         }
     }
 
-    public void set(final String key, final @Nullable Node node) {
+    public void set(final String key, @Nullable final Node node) {
         if (node == null) {
             remove(key);
             return;
@@ -249,7 +249,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         add(node);
     }
 
-    void renamed(final Node node, final @Nullable String oldKey) {
+    void renamed(final Node node, @Nullable final String oldKey) {
         if (!nodes.contains(node))
             throw new IllegalArgumentException();
         getNodeMap().remove(oldKey);
@@ -284,7 +284,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
                     indentationSet = true;
                 } else {
                     nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
-                    Skript.error("indentation error: indent must only consist of either spaces or tabs, but not mixed (found " + readableWhitespace(s) + ")");
+                    Skript.error("indentation error: indent must only consist of either spaces or tabs, but not mixed (found " + readableWhitespace(s) + ')');
                     continue;
                 }
             }
@@ -292,7 +292,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
                 if (value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\s.*") || !value.matches("^(" + config.getIndentation() + ")*\\S.*")) {
                     nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
                     final String s = value.replaceFirst("\\S.*$", "");
-                    Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + " " + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
+                    Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + ' ' + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
                     continue;
                 }
                 if (parent != null && !config.allowEmptySections && isEmpty() && !SkriptConfig.disableEmptyConfigurationSectionWarnings.value()) {
@@ -412,7 +412,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
     @Override
     String save_i() {
         assert key != null;
-        return key + ":";
+        return key + ':';
     }
 
     public boolean validate(final SectionValidator validator) {

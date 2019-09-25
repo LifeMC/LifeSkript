@@ -96,9 +96,9 @@ public final class Commands {
     private static final Map<String, ScriptCommand> commands = new HashMap<>(300);
     private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("tab completer", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
     @SuppressWarnings("null")
-    private static final Pattern escape = Pattern.compile("[" + Pattern.quote("(|)<>%\\") + "]");
+    private static final Pattern escape = Pattern.compile('[' + Pattern.quote("(|)<>%\\") + ']');
     @SuppressWarnings("null")
-    private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + "]");
+    private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + ']');
     @SuppressWarnings("null")
     private static final Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
@@ -203,7 +203,7 @@ public final class Commands {
                     SkriptEventHandler.last = null;
                     SkriptEventHandler.ee.execute(null, new PlayerCommandPreprocessEvent(e.getPlayer(), e.getMessage()));
                 } catch (final EventException ex) {
-                    Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + "\"");
+                    Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + '"');
                 }
             }
         }
@@ -236,7 +236,7 @@ public final class Commands {
                 SkriptEventHandler.last = null;
                 SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
             } catch (final EventException ex) {
-                Skript.exception(ex, "Error when handling player command \"" + command + "\"");
+                Skript.exception(ex, "Error when handling player command \"" + command + '"');
             }
         }
     }
@@ -337,7 +337,7 @@ public final class Commands {
                     log.clear(); // Ignore warnings and stuff
                     log.printLog();
 
-                    sender.sendMessage(ChatColor.GRAY + "executing '" + ChatColor.stripColor(command) + "'");
+                    sender.sendMessage(ChatColor.GRAY + "executing '" + ChatColor.stripColor(command) + '\'');
                     if (SkriptConfig.logPlayerCommands.value() && !(sender instanceof ConsoleCommandSender))
                         info(sender.getName() + " issued effect command: " + command);
                     TriggerItem.walk(e, new EffectCommandEvent(!Bukkit.isPrimaryThread(), sender, command));
@@ -360,7 +360,7 @@ public final class Commands {
             }
             return true;
         } catch (final Exception e) {
-            Skript.exception(e, "Unexpected error while executing effect command '" + command + "' by '" + sender.getName() + "'");
+            Skript.exception(e, "Unexpected error while executing effect command '" + command + "' by '" + sender.getName() + '\'');
             sender.sendMessage(ChatColor.RED + "An internal error occurred while executing this effect. Please refer to the server log for details.");
             return true;
         } finally {
@@ -430,7 +430,7 @@ public final class Commands {
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());
             if (c == null) {
-                Skript.error("Unknown type '" + m.group(2) + "'");
+                Skript.error("Unknown type '" + m.group(2) + '\'');
                 return null;
             }
             final Parser<?> parser = c.getParser();
@@ -448,7 +448,7 @@ public final class Commands {
                 pattern.append('[');
                 optionals++;
             }
-            pattern.append("%").append(arg.isOptional() ? "-" : "").append(Utils.toEnglishPlural(c.getCodeName(), p.getSecond())).append("%");
+            pattern.append('%').append(arg.isOptional() ? "-" : "").append(Utils.toEnglishPlural(c.getCodeName(), p.getSecond())).append('%');
         }
 
         pattern.append(escape(arguments.substring(lastEnd)));
@@ -457,14 +457,14 @@ public final class Commands {
         for (int i = 0; i < optionals; i++)
             pattern.append(']');
 
-        String desc = "/" + command + " ";
+        String desc = '/' + command + ' ';
         final boolean wasLocal = Language.setUseLocal(true); // use localised class names in description
         try {
             desc += StringUtils.replaceAll(pattern, "(?<!\\\\)%-?(.+?)%", m1 -> {
                 assert m1 != null;
                 final NonNullPair<String, Boolean> p = Utils.getEnglishPlural(m1.group(1));
                 final String s1 = p.getFirst();
-                return "<" + Classes.getClassInfo(s1).getName().toString(p.getSecond()) + ">";
+                return '<' + Classes.getClassInfo(s1).getName().toString(p.getSecond()) + '>';
             });
         } finally {
             Language.setUseLocal(wasLocal);
@@ -500,7 +500,7 @@ public final class Commands {
             } else if ("players".equalsIgnoreCase(b) || "player".equalsIgnoreCase(b)) {
                 executableBy |= ScriptCommand.PLAYERS;
             } else {
-                Skript.warning("'executable by' should be either be 'players', 'console', or both, but found '" + b + "'");
+                Skript.warning("'executable by' should be either be 'players', 'console', or both, but found '" + b + '\'');
             }
         }
 
@@ -510,7 +510,7 @@ public final class Commands {
             // ParseContext doesn't matter for Timespan's parser
             cooldown = Classes.parse(cooldownString, Timespan.class, ParseContext.DEFAULT);
             if (cooldown == null) {
-                Skript.warning("'" + cooldownString + "' is an invalid timespan for the cooldown");
+                Skript.warning('\'' + cooldownString + "' is an invalid timespan for the cooldown");
             }
         }
 
@@ -556,7 +556,7 @@ public final class Commands {
         }
 
         if (Skript.debug() || node.debug())
-            Skript.debug("command " + desc + ":");
+            Skript.debug("command " + desc + ':');
 
         final File config = node.getConfig().getFile();
         if (config == null) {
@@ -814,9 +814,9 @@ public final class Commands {
         private final HelpMap helpMap;
 
         public CommandAliasHelpTopic(final String alias, final String aliasFor, final HelpMap helpMap) {
-            this.aliasFor = aliasFor.startsWith("/") ? aliasFor : "/" + aliasFor;
+            this.aliasFor = aliasFor.startsWith("/") ? aliasFor : '/' + aliasFor;
             this.helpMap = helpMap;
-            name = alias.startsWith("/") ? alias : "/" + alias;
+            name = alias.startsWith("/") ? alias : '/' + alias;
             Validate.isTrue(!name.equals(this.aliasFor), "Command " + name + " cannot be alias for itself");
             shortText = ChatColor.YELLOW + "Alias for " + ChatColor.WHITE + this.aliasFor;
         }
@@ -826,7 +826,7 @@ public final class Commands {
             final StringBuilder sb = new StringBuilder(shortText);
             final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
             if (aliasForTopic != null) {
-                sb.append("\n");
+                sb.append('\n');
                 sb.append(aliasForTopic.getFullText(forWho));
             }
             return sb.toString();

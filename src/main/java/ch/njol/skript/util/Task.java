@@ -207,4 +207,9 @@ public abstract class Task implements Runnable, Closeable {
         }
     }
 
+    public final Task period(final long period) {
+        this.period = period;
+        return this;
+    }
+
 }

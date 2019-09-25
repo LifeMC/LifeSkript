@@ -190,7 +190,7 @@ public abstract class YggdrasilInputStream implements Closeable {
                     final Fields fields = readFields();
                     o = s.deserialize(c, fields);
                     if (o == null)
-                        throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from deserialize(" + c + "," + fields + ")");
+                        throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from deserialize(" + c + ',' + fields + ')');
                     final int ref = readObjects.size();
                     readObjects.add(null);
                     readObjects.set(ref, o);

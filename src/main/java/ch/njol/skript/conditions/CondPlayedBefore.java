@@ -65,8 +65,8 @@ public final class CondPlayedBefore extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return player.toString(e, debug) + " " + (isNegated() ? "hasn't" : "has") + " played on this server before";
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return player.toString(e, debug) + ' ' + (isNegated() ? "hasn't" : "has") + " played on this server before";
     }
 
 }

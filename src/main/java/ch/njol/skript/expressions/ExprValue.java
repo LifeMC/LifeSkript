@@ -79,7 +79,7 @@ public final class ExprValue extends SimpleExpression<Unit> {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return amount.toString(e, debug) + " " + unit;
+        return amount.toString(e, debug) + ' ' + unit;
     }
 
 }

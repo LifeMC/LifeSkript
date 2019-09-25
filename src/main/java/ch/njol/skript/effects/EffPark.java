@@ -77,8 +77,8 @@ public final class EffPark extends Effect {
 
     private int line;
 
-    private static final void announcePark(final Event e, final long milliSeconds, final @Nullable String scriptName, final int line, final boolean isFromEffectCommand, final CommandSender... sender) {
-        final String announcementMessage = "Parking the server for " + milliSeconds + " milliseconds as requested by " + scriptName + ", line " + line + " in event " + e + " " + (isFromEffectCommand ? "by using an effect command " : "") + (sender.length == 1 && sender[0] != null ? "from " + sender[0].getName() : "");
+    private static final void announcePark(final Event e, final long milliSeconds, @Nullable final String scriptName, final int line, final boolean isFromEffectCommand, final CommandSender... sender) {
+        final String announcementMessage = "Parking the server for " + milliSeconds + " milliseconds as requested by " + scriptName + ", line " + line + " in event " + e + ' ' + (isFromEffectCommand ? "by using an effect command " : "") + (sender.length == 1 && sender[0] != null ? "from " + sender[0].getName() : "");
 
         announce(announcementMessage);
     }
@@ -172,7 +172,7 @@ public final class EffPark extends Effect {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "park the server for " + duration.toString(e, debug);
     }
 

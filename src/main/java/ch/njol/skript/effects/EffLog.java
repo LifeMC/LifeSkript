@@ -111,12 +111,12 @@ public final class EffLog extends AsyncEffect {
                             return;
                         }
                     }
-                    w.println("[" + SkriptConfig.formatDate(System.currentTimeMillis()) + "] " + message);
+                    w.println('[' + SkriptConfig.formatDate(System.currentTimeMillis()) + "] " + message);
                 }
             } else {
                 final Trigger t = getTrigger();
                 final File script = t == null ? null : t.getScript();
-                Skript.info("[" + (script != null ? script.getName() : "---") + "] " + message);
+                Skript.info('[' + (script != null ? script.getName() : "---") + "] " + message);
             }
         }
 
@@ -127,7 +127,7 @@ public final class EffLog extends AsyncEffect {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "log " + messages.toString(e, debug) + (files != null ? " to " + files.toString(e, debug) : "");
     }
 }

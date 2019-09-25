@@ -125,7 +125,7 @@ public final class Math2 {
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
     public static final int fit(final int min, final int x, final int max) {
-        assert min <= max : min + "," + x + "," + max;
+        assert min <= max : min + "," + x + ',' + max;
         return x <= min ? min : x >= max ? max : x;
     }
 
@@ -135,7 +135,7 @@ public final class Math2 {
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
     public static final short fit(final short min, final short x, final short max) {
-        assert min <= max : min + "," + x + "," + max;
+        assert min <= max : min + "," + x + ',' + max;
         return x <= min ? min : x >= max ? max : x;
     }
 
@@ -145,7 +145,7 @@ public final class Math2 {
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
     public static final long fit(final long min, final long x, final long max) {
-        assert min <= max : min + "," + x + "," + max;
+        assert min <= max : min + "," + x + ',' + max;
         return x <= min ? min : x >= max ? max : x;
     }
 
@@ -155,7 +155,7 @@ public final class Math2 {
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
     public static final float fit(final float min, final float x, final float max) {
-        assert min <= max : min + "," + x + "," + max;
+        assert min <= max : min + "," + x + ',' + max;
         return x <= min ? min : x >= max ? max : x;
     }
 
@@ -165,7 +165,7 @@ public final class Math2 {
      * @return <tt>x <= min ? min : x >= max ? max : x</tt>
      */
     public static final double fit(final double min, final double x, final double max) {
-        assert min <= max : min + "," + x + "," + max;
+        assert min <= max : min + "," + x + ',' + max;
         return x <= min ? min : x >= max ? max : x;
     }
 

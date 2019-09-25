@@ -136,7 +136,7 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
      */
     @SuppressWarnings("unused")
     protected T deserialize(final Fields fields) throws StreamCorruptedException, NotSerializableException {
-        throw new SkriptAPIException("deserialize(Fields) has not been overridden in " + getClass() + " (serializer of " + info + ")");
+        throw new SkriptAPIException("deserialize(Fields) has not been overridden in " + getClass() + " (serializer of " + info + ')');
     }
 
     /**

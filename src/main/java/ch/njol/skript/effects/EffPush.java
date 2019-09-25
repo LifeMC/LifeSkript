@@ -97,8 +97,8 @@ public final class EffPush extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "push " + entities.toString(e, debug) + " " + direction.toString(e, debug) + (speed != null ? " at speed " + speed.toString(e, debug) : "");
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "push " + entities.toString(e, debug) + ' ' + direction.toString(e, debug) + (speed != null ? " at speed " + speed.toString(e, debug) : "");
     }
 
 }

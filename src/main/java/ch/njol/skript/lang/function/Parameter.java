@@ -113,14 +113,14 @@ public final class Parameter<T> {
                     } else {
                         // Usage of SimpleLiteral is also deprecated; not worth the risk to change it
                         if (def.contains(" ")) // Warn about whitespace in unquoted string
-                            Skript.warning("'" + def + "' contains spaces and is unquoted, which is discouraged");
+                            Skript.warning('\'' + def + "' contains spaces and is unquoted, which is discouraged");
                         d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                     }
                 } else {
                     d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
                 }
                 if (d == null && !isNone) {
-                    log.printErrors("'" + def + "' is not " + type.getName().withIndefiniteArticle());
+                    log.printErrors('\'' + def + "' is not " + type.getName().withIndefiniteArticle());
                     return null;
                 }
                 log.printLog();

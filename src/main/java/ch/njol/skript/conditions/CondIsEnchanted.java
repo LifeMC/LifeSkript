@@ -79,9 +79,9 @@ public final class CondIsEnchanted extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Expression<EnchantmentType> es = enchs;
-        return items.toString(e, debug) + " " + (items.isSingle() ? "is" : "are") + (isNegated() ? " not" : "") + " enchanted" + (es == null ? "" : " with " + es.toString(e, debug));
+        return items.toString(e, debug) + ' ' + (items.isSingle() ? "is" : "are") + (isNegated() ? " not" : "") + " enchanted" + (es == null ? "" : " with " + es.toString(e, debug));
     }
 
 }

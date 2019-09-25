@@ -192,7 +192,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
             fields = new Fields(o, yggdrasil);
         }
         if (fields.size() > Short.MAX_VALUE)
-            throw new YggdrasilException("Class " + c.getCanonicalName() + " has too many fields (" + fields.size() + ")");
+            throw new YggdrasilException("Class " + c.getCanonicalName() + " has too many fields (" + fields.size() + ')');
 
         writeTag(T_OBJECT);
         writeObjectType(yggdrasil.getID(c));

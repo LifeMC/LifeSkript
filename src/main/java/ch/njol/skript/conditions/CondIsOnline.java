@@ -65,8 +65,8 @@ public final class CondIsOnline extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return players.toString(e, debug) + " " + (players.isSingle() ? "is" : "are") + " " + (isNegated() ? "offline" : "online");
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return players.toString(e, debug) + ' ' + (players.isSingle() ? "is" : "are") + ' ' + (isNegated() ? "offline" : "online");
     }
 
 }

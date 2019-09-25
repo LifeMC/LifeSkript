@@ -80,7 +80,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
         this.isDefault = isDefault;
     }
 
-    public SimpleLiteral(final T[] data, final Class<T> to, final boolean and, final @Nullable UnparsedLiteral source) {
+    public SimpleLiteral(final T[] data, final Class<T> to, final boolean and, @Nullable final UnparsedLiteral source) {
         this(data, to, and);
         this.source = source;
     }
@@ -144,9 +144,9 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (debug)
-            return "[" + Classes.toString(data, and, StringMode.DEBUG) + "]";
+            return '[' + Classes.toString(data, and, StringMode.DEBUG) + ']';
         return Classes.toString(data, and);
     }
 
@@ -186,7 +186,7 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final ClassInfo<? super T> rti = returnTypeInfo;
         if (rti == null)
             throw new UnsupportedOperationException();

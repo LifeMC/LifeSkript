@@ -113,8 +113,8 @@ public final class EffVisualEffect extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "play " + effects.toString(e, debug) + " " + direction.toString(e, debug) + " " + where.toString(e, debug) + (players != null ? " to " + players.toString(e, debug) : "");
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "play " + effects.toString(e, debug) + ' ' + direction.toString(e, debug) + ' ' + where.toString(e, debug) + (players != null ? " to " + players.toString(e, debug) : "");
     }
 
 }

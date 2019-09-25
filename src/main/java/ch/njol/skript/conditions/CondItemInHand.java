@@ -69,8 +69,8 @@ public final class CondItemInHand extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return entities.toString(e, debug) + " " + (entities.isSingle() ? "is" : "are") + " holding " + types.toString(e, debug);
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return entities.toString(e, debug) + ' ' + (entities.isSingle() ? "is" : "are") + " holding " + types.toString(e, debug);
     }
 
 }

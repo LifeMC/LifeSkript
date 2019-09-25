@@ -76,8 +76,8 @@ public final class EffTree extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "grow tree of type " + type.toString(e, debug) + " " + blocks.toString(e, debug);
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "grow tree of type " + type.toString(e, debug) + ' ' + blocks.toString(e, debug);
     }
 
 }

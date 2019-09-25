@@ -85,7 +85,7 @@ public final class ExprProperty extends SimpleExpression<String> {
     @Override
     @SuppressWarnings("null")
     public String toString(@Nullable final Event e, final boolean debug) {
-        return "property \"" + propertyName.getSingle(e) + "\" (" + Arrays.toString(get(e)) + ")";
+        return "property \"" + propertyName.getSingle(e) + "\" (" + Arrays.toString(get(e)) + ')';
     }
 
     /**

@@ -168,7 +168,7 @@ public final class ExprBlocks extends SimpleExpression<Block> {
         }
         final Expression<Direction> direction = this.direction;
         assert direction != null;
-        return "block" + (isSingle() ? "" : "s") + " " + direction.toString(e, debug) + " " + from.toString(e, debug);
+        return "block" + (isSingle() ? "" : "s") + ' ' + direction.toString(e, debug) + ' ' + from.toString(e, debug);
     }
 
 }

@@ -71,7 +71,7 @@ public final class EffExec extends Effect {
         if (s == null)
             return;
         SkriptLogger.startSuppressing();
-        final Effect eff = Effect.parse(s, "Can't understand this effect: '" + s + "'");
+        final Effect eff = Effect.parse(s, "Can't understand this effect: '" + s + '\'');
         if (eff instanceof EffExec || eff instanceof EffAsyncExec) {
             Skript.error("Execute effects may not be nested!");
             return;
@@ -82,7 +82,7 @@ public final class EffExec extends Effect {
         } else {
             final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
-                errorBuilder.append(SkriptLogger.format(entry)).append("\n");
+                errorBuilder.append(SkriptLogger.format(entry)).append('\n');
             }
             lastExecuteErrors = errorBuilder.toString();
         }
@@ -94,7 +94,7 @@ public final class EffExec extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "exec " + input.toString(e, debug);
     }
 

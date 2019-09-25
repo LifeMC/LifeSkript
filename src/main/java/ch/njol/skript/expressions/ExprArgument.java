@@ -178,7 +178,7 @@ public final class ExprArgument extends SimpleExpression<Object> {
                     else if (j == 1)
                         Skript.error("There is only one " + c + " argument in this command", ErrorQuality.SEMANTIC_ERROR);
                     else
-                        Skript.error("There are only " + j + " " + c + " arguments in this command", ErrorQuality.SEMANTIC_ERROR);
+                        Skript.error("There are only " + j + ' ' + c + " arguments in this command", ErrorQuality.SEMANTIC_ERROR);
                     return false;
                 }
                 break;
@@ -217,9 +217,6 @@ public final class ExprArgument extends SimpleExpression<Object> {
 
             if (finalIndex >= args.length)
                 return null;
-
-            if (Skript.debug())
-                Skript.info("Getting dynamic argument at the index " + finalIndex + (script != null ? " (" + script + ", line " + line + ")" : ""));
 
             return new String[]{args[finalIndex]};
         }

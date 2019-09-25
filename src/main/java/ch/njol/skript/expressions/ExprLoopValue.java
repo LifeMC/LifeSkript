@@ -109,7 +109,7 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
             }
         }
         if (loop == null) {
-            Skript.error("There's no loop that matches 'loop-" + s + "'", ErrorQuality.SEMANTIC_ERROR);
+            Skript.error("There's no loop that matches 'loop-" + s + '\'', ErrorQuality.SEMANTIC_ERROR);
             return false;
         }
         if (loop.getLoopedExpression() instanceof Variable) {
@@ -169,7 +169,7 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
             @SuppressWarnings("unchecked") final Entry<String, Object> current = (Entry<String, Object>) loop.getCurrent(e);
             if (current == null)
                 return Classes.getDebugMessage(null);
-            return isIndex ? "\"" + current.getKey() + "\"" : Classes.getDebugMessage(current.getValue());
+            return isIndex ? '"' + current.getKey() + '"' : Classes.getDebugMessage(current.getValue());
         }
         return Classes.getDebugMessage(loop.getCurrent(e));
     }

@@ -128,8 +128,8 @@ public final class EffShoot extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "shoot " + types.toString(e, debug) + " from " + shooters.toString(e, debug) + (velocity != null ? " at speed " + velocity.toString(e, debug) : "") + (direction != null ? " " + direction.toString(e, debug) : "");
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "shoot " + types.toString(e, debug) + " from " + shooters.toString(e, debug) + (velocity != null ? " at speed " + velocity.toString(e, debug) : "") + (direction != null ? ' ' + direction.toString(e, debug) : "");
     }
 
 }

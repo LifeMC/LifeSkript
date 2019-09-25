@@ -224,7 +224,7 @@ public final class EffChange extends Effect {
                     else if (mode == ChangeMode.SET)
                         Skript.error(what + " can't be set to " + changer + " because the latter is " + SkriptParser.notOfType(r), ErrorQuality.SEMANTIC_ERROR);
                     else
-                        Skript.error(changer + " can't be " + (mode == ChangeMode.ADD ? "added to" : "removed from") + " " + what + " because the former is " + SkriptParser.notOfType(r), ErrorQuality.SEMANTIC_ERROR);
+                        Skript.error(changer + " can't be " + (mode == ChangeMode.ADD ? "added to" : "removed from") + ' ' + what + " because the former is " + SkriptParser.notOfType(r), ErrorQuality.SEMANTIC_ERROR);
                     return false;
                 }
                 log.printLog();
@@ -248,7 +248,7 @@ public final class EffChange extends Effect {
                 if (mode == ChangeMode.SET)
                     Skript.error(changed + " can only be set to one " + Classes.getSuperClassInfo(x).getName() + ", not more", ErrorQuality.SEMANTIC_ERROR);
                 else
-                    Skript.error("only one " + Classes.getSuperClassInfo(x).getName() + " can be " + (mode == ChangeMode.ADD ? "added to" : "removed from") + " " + changed + ", not more", ErrorQuality.SEMANTIC_ERROR);
+                    Skript.error("only one " + Classes.getSuperClassInfo(x).getName() + " can be " + (mode == ChangeMode.ADD ? "added to" : "removed from") + ' ' + changed + ", not more", ErrorQuality.SEMANTIC_ERROR);
                 return false;
             }
 
@@ -289,7 +289,7 @@ public final class EffChange extends Effect {
 
     @SuppressWarnings("null")
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Expression<?> changer = this.changer;
         switch (mode) {
             case ADD:

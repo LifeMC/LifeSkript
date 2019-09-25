@@ -75,7 +75,7 @@ public final class CondPermission extends Condition {
             // player has perm skript.foo.bar if he has skript.foo.* or skript.*, but not for other plugin's permissions since they can define their own *
             if (perm.startsWith("skript.")) {
                 for (int i = perm.lastIndexOf('.'); i != -1; i = perm.lastIndexOf('.', i - 1)) {
-                    if (s.hasPermission(perm.substring(0, i + 1) + "*"))
+                    if (s.hasPermission(perm.substring(0, i + 1) + '*'))
                         return true;
                 }
             }
@@ -84,8 +84,8 @@ public final class CondPermission extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return senders.toString(e, debug) + " " + (isNegated() ? "doesn't have" : "has") + " the permission " + permissions.toString(e, debug);
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return senders.toString(e, debug) + ' ' + (isNegated() ? "doesn't have" : "has") + " the permission " + permissions.toString(e, debug);
     }
 
 }

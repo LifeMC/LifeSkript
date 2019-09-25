@@ -75,7 +75,7 @@ public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator 
 //			if (setter != null)
             setter.set(e);
         } catch (final IllegalArgumentException e) {
-            Skript.error("'" + n.getValue() + "' is not a valid value for '" + n.getKey() + "'" + (allowedValues == null ? "" : ". Allowed values are: " + allowedValues));
+            Skript.error('\'' + n.getValue() + "' is not a valid value for '" + n.getKey() + '\'' + (allowedValues == null ? "" : ". Allowed values are: " + allowedValues));
             return false;
         }
         return true;

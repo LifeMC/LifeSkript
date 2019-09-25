@@ -126,18 +126,18 @@ public final class SkriptCommand implements CommandExecutor {
     }
 
     private static final void info(final CommandSender sender, String what, final Object... args) {
-        what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
+        what = args.length == 0 ? Language.get(NODE + '.' + what) : PluralizingArgsMessage.format(Language.format(NODE + '.' + what, args));
         Skript.info(sender, StringUtils.fixCapitalization(what));
     }
 
     @SuppressWarnings("unused")
     private static final void message(final CommandSender sender, String what, final Object... args) {
-        what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
+        what = args.length == 0 ? Language.get(NODE + '.' + what) : PluralizingArgsMessage.format(Language.format(NODE + '.' + what, args));
         Skript.message(sender, StringUtils.fixCapitalization(what));
     }
 
     private static final void error(final CommandSender sender, String what, final Object... args) {
-        what = args.length == 0 ? Language.get(NODE + "." + what) : PluralizingArgsMessage.format(Language.format(NODE + "." + what, args));
+        what = args.length == 0 ? Language.get(NODE + '.' + what) : PluralizingArgsMessage.format(Language.format(NODE + '.' + what, args));
         Skript.error(sender, StringUtils.fixCapitalization(what));
     }
 
@@ -168,7 +168,7 @@ public final class SkriptCommand implements CommandExecutor {
             script = script.substring(1);
         File f = new File(Skript.getInstance().getDataFolder(), Skript.SCRIPTSFOLDER + File.separator + script);
         if (!f.exists()) {
-            f = new File(f.getParentFile(), "-" + f.getName());
+            f = new File(f.getParentFile(), '-' + f.getName());
             if (!f.exists()) {
                 return null;
             }
@@ -179,7 +179,7 @@ public final class SkriptCommand implements CommandExecutor {
     private static final Collection<File> toggleScripts(final File folder, final boolean enable) throws IOException {
         return FileUtils.renameAll(folder, name -> {
             if (StringUtils.endsWithIgnoreCase(name, ".sk") && name.startsWith("-") == enable)
-                return enable ? name.substring(1) : "-" + name;
+                return enable ? name.substring(1) : '-' + name;
             return null;
         });
     }
@@ -331,7 +331,7 @@ public final class SkriptCommand implements CommandExecutor {
                         resetPriority();
 
                         try {
-                            FileUtils.move(f, new File(f.getParentFile(), "-" + f.getName()), false);
+                            FileUtils.move(f, new File(f.getParentFile(), '-' + f.getName()), false);
                         } catch (final IOException e) {
                             error(sender, "disable.single.io error", f.getName(), ExceptionUtils.toString(e));
                             return true;
@@ -465,7 +465,7 @@ public final class SkriptCommand implements CommandExecutor {
                 skriptCommandHelp.showHelp(sender);
             }
         } catch (final Exception e) {
-            Skript.exception(e, "Exception occurred in Skript's main command", "Used command: /" + label + " " + StringUtils.join(args, " "));
+            Skript.exception(e, "Exception occurred in Skript's main command", "Used command: /" + label + ' ' + StringUtils.join(args, " "));
         } finally {
             r.stop();
         }

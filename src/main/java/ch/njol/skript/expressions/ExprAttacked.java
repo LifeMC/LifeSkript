@@ -71,7 +71,7 @@ public final class ExprAttacked extends SimpleExpression<Entity> {
         } else {
             final EntityData<?> t = EntityData.parse(type);
             if (t == null) {
-                Skript.error("'" + type + "' is not an entity type", ErrorQuality.NOT_AN_EXPRESSION);
+                Skript.error('\'' + type + "' is not an entity type", ErrorQuality.NOT_AN_EXPRESSION);
                 return false;
             }
             this.type = t;

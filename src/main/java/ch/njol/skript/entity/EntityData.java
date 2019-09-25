@@ -71,7 +71,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             m_adult = new Adjective(LANGUAGE_NODE + ".age adjectives.adult");
 
     // must be here to be initialised before 'new SimpleLiteral' is called in the register block below
-    private static final List<EntityDataInfo<?>> infos = new ArrayList<>();
+    private static final List<EntityDataInfo<?>> infos = new ArrayList<>(100);
 
     public static final Serializer<EntityData> serializer = new Serializer<EntityData>() {
         @Override

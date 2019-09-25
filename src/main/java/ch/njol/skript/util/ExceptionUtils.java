@@ -38,8 +38,8 @@ public final class ExceptionUtils {
 
     @Nullable
     public static final String toString(final IOException e) {
-        if (Language.keyExists(IO_NODE + "." + e.getClass().getSimpleName())) {
-            return Language.format(IO_NODE + "." + e.getClass().getSimpleName(), e.getLocalizedMessage());
+        if (Language.keyExists(IO_NODE + '.' + e.getClass().getSimpleName())) {
+            return Language.format(IO_NODE + '.' + e.getClass().getSimpleName(), e.getLocalizedMessage());
         }
         if (Skript.testing())
             e.printStackTrace();

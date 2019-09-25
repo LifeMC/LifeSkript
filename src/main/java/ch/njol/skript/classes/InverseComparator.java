@@ -45,7 +45,7 @@ public final class InverseComparator<T1, T2> implements Comparator<T1, T2> {
 
     @Override
     public String toString() {
-        return "InverseComparator(" + comp + ")";
+        return "InverseComparator(" + comp + ')';
     }
 
 }

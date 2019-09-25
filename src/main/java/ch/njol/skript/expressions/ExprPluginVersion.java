@@ -84,7 +84,7 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
     @Override
     @SuppressWarnings("null")
     public String toString(@Nullable final Event e, final boolean debug) {
-        return "version of plugin \"" + pluginName.getSingle(e) + "\" (" + (get(e) != null ? get(e) : "") + ")";
+        return "version of plugin \"" + pluginName.getSingle(e) + "\" (" + (get(e) != null ? get(e) : "") + ')';
     }
 
     /**

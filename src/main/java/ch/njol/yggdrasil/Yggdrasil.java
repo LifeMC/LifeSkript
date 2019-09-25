@@ -138,9 +138,9 @@ public final class Yggdrasil {
                 throw new StreamCorruptedException(c + " does not have any enum constants");
             final Enum<?> e = ((YggdrasilRobustEnum) cs[0]).excessiveConstant(id);
             if (e == null)
-                throw new YggdrasilException("YggdrasilRobustEnum " + c + " returned null from excessiveConstant(" + id + ")");
+                throw new YggdrasilException("YggdrasilRobustEnum " + c + " returned null from excessiveConstant(" + id + ')');
             if (!c.isInstance(e))
-                throw new YggdrasilException(c + " returned a foreign enum constant: " + e.getClass() + "." + e);
+                throw new YggdrasilException(c + " returned a foreign enum constant: " + e.getClass() + '.' + e);
             return (Enum<T>) e;
         }
         // TODO use field handlers/new enum handlers
@@ -202,7 +202,7 @@ public final class Yggdrasil {
         for (final ClassResolver r : classResolvers) {
             final Class<?> c = r.getClass(id);
             if (c != null) { // TODO error if not serialisable?
-                assert Tag.byName(id) == null && (Tag.getType(c) == Tag.T_OBJECT || Tag.getType(c) == Tag.T_ENUM) : "Tag IDs should not be matched: " + id + " (class resolver: " + r + ")";
+                assert Tag.byName(id) == null && (Tag.getType(c) == Tag.T_OBJECT || Tag.getType(c) == Tag.T_ENUM) : "Tag IDs should not be matched: " + id + " (class resolver: " + r + ')';
                 assert id.equals(r.getID(c)) : r + " returned " + c + " for id " + id + ", but returns id " + r.getID(c) + " for that class";
                 return c;
             }
@@ -226,7 +226,7 @@ public final class Yggdrasil {
         for (final ClassResolver r : classResolvers) {
             final String id = r.getID(c);
             if (id != null) {
-                assert Tag.byName(id) == null : "Class IDs should not match Tag IDs: " + id + " (class resolver: " + r + ")";
+                assert Tag.byName(id) == null : "Class IDs should not match Tag IDs: " + id + " (class resolver: " + r + ')';
                 final Class<?> c2 = r.getClass(id);
                 assert c2 != null && (r instanceof YggdrasilSerializer ? id.equals(r.getID(c2)) : r.getClass(id) == c) : r + " returned id " + id + " for " + c + ", but returns " + c2 + " for that id";
                 return id;
@@ -299,7 +299,7 @@ public final class Yggdrasil {
             }
             final Object o = s.newInstance(c);
             if (o == null)
-                throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from newInstance(" + c + ")");
+                throw new YggdrasilException("YggdrasilSerializer " + s + " returned null from newInstance(" + c + ')');
             return o;
         }
         // try whatever a nullary constructor exists

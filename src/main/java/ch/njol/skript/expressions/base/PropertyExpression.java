@@ -52,7 +52,7 @@ public abstract class PropertyExpression<F, T> extends SimpleExpression<T> {
      * @param fromType Should be plural but doesn't have to be
      */
     public static final <T> void register(final Class<? extends Expression<T>> c, final Class<T> type, final String property, final String fromType) {
-        Skript.registerExpression(c, type, ExpressionType.PROPERTY, "[the] " + property + " of %" + fromType + "%", "%" + fromType + "%'[s] " + property);
+        Skript.registerExpression(c, type, ExpressionType.PROPERTY, "[the] " + property + " of %" + fromType + '%', '%' + fromType + "%'[s] " + property);
     }
 
     public final Expression<? extends F> getExpr() {

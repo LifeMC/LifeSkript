@@ -68,7 +68,7 @@ public final class EffAsyncExec extends AsyncEffect {
         if (s == null)
             return;
         SkriptLogger.startSuppressing();
-        final Effect eff = Effect.parse(s, "can't understand this effect: '" + s + "'");
+        final Effect eff = Effect.parse(s, "can't understand this effect: '" + s + '\'');
         if (eff instanceof EffExec || eff instanceof EffAsyncExec) {
             Skript.error("Execute effects may not be nested!");
             return;
@@ -79,7 +79,7 @@ public final class EffAsyncExec extends AsyncEffect {
         } else {
             final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
-                errorBuilder.append(entry.getLevel().getLocalizedName()).append(" ").append(SkriptLogger.format(entry)).append("\n");
+                errorBuilder.append(entry.getLevel().getLocalizedName()).append(' ').append(SkriptLogger.format(entry)).append('\n');
             }
             EffExec.lastExecuteErrors = errorBuilder.toString();
         }
@@ -91,7 +91,7 @@ public final class EffAsyncExec extends AsyncEffect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "exec " + input.toString(e, debug) + " async";
     }
 

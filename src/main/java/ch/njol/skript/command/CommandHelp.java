@@ -59,7 +59,7 @@ public final class CommandHelp {
         this.command = command;
         this.argsColor = argsColor.getChat();
         this.langNode = langNode;
-        description = new Message(langNode + "." + DEFAULTENTRY);
+        description = new Message(langNode + '.' + DEFAULTENTRY);
     }
 
     public CommandHelp(final String command, final Color argsColor) {
@@ -70,18 +70,18 @@ public final class CommandHelp {
     public CommandHelp add(final String argument) {
         if (langNode == null) {
             if (argument.startsWith("<") && argument.endsWith(">")) {
-                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + ">";
+                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
                 arguments.put(carg, argument);
             } else {
                 arguments.put(argument, null);
             }
         } else {
             if (argument.startsWith("<") && argument.endsWith(">")) {
-                wildcardArg = new Message(langNode + "." + argument);
-                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + ">";
+                wildcardArg = new Message(langNode + '.' + argument);
+                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
                 arguments.put(carg, wildcardArg);
             } else {
-                arguments.put(argument, new Message(langNode + "." + argument));
+                arguments.put(argument, new Message(langNode + '.' + argument));
             }
         }
         return this;
@@ -94,18 +94,18 @@ public final class CommandHelp {
     }
 
     void onAdd(final CommandHelp parent) {
-        langNode = parent.langNode + "." + command;
-        description = new Message(langNode + "." + DEFAULTENTRY);
-        command = parent.command + " " + parent.argsColor + command;
+        langNode = parent.langNode + '.' + command;
+        description = new Message(langNode + '.' + DEFAULTENTRY);
+        command = parent.command + ' ' + parent.argsColor + command;
         for (final Entry<String, Object> e : arguments.entrySet()) {
             if (e.getValue() instanceof CommandHelp) {
                 ((CommandHelp) e.getValue()).onAdd(this);
             } else {
                 if (e.getValue() != null) { // wildcard arg
-                    wildcardArg = new Message(langNode + "." + e.getValue());
+                    wildcardArg = new Message(langNode + '.' + e.getValue());
                     e.setValue(wildcardArg);
                 } else {
-                    e.setValue(new Message(langNode + "." + e.getKey()));
+                    e.setValue(new Message(langNode + '.' + e.getKey()));
                 }
             }
         }
@@ -136,12 +136,12 @@ public final class CommandHelp {
     }
 
     private void showHelp(final CommandSender sender, final String pre) {
-        Skript.message(sender, pre + " " + command + " " + argsColor + "...");
+        Skript.message(sender, pre + ' ' + command + ' ' + argsColor + "...");
         for (final Entry<String, Object> e : arguments.entrySet()) {
             // TODO Make this a feature: Hiding commands / arguments in the help message
             if (e.getKey().contains("track") || e.getKey().contains("untrack") || e.getKey().contains("update")) // update is replaced with version for now
                 continue;
-            Skript.message(sender, "  " + argsColor + e.getKey() + " " + GRAY + "-" + RESET + " " + e.getValue());
+            Skript.message(sender, "  " + argsColor + e.getKey() + ' ' + GRAY + '-' + RESET + ' ' + e.getValue());
         }
     }
 

@@ -98,8 +98,8 @@ public final class EffDrop extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "drop " + drops.toString(e, debug) + " " + locations.toString(e, debug);
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "drop " + drops.toString(e, debug) + ' ' + locations.toString(e, debug);
     }
 
 }

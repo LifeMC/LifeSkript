@@ -154,14 +154,14 @@ public final class Functions {
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());
             if (c == null) {
-                Skript.error("Cannot recognise the type '" + returnType + "'");
+                Skript.error("Cannot recognise the type '" + returnType + '\'');
                 return null;
             }
         }
 
         final String name = "" + m.group(1);
         if (Skript.debug() || node.debug())
-            Skript.debug("function " + name + "(" + StringUtils.join(params, ", ") + ")" + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ":");
+            Skript.debug("function " + name + '(' + StringUtils.join(params, ", ") + ')' + (c != null && p != null ? " :: " + Utils.toEnglishPlural(c.getCodeName(), p.getSecond()) : "") + ':');
 
         @SuppressWarnings("null") final Function<?> f = new ScriptFunction<>(name, params.toArray(EmptyArrays.EMPTY_PARAMETER_ARRAY), node, (ClassInfo<Object>) c, p != null && !p.getSecond());
 //		functions.put(name, new FunctionData(f)); // in constructor

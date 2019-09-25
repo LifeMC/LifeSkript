@@ -113,7 +113,7 @@ public final class DroppedItemData extends EntityData<Item> {
             return super.toString(flags);
         return Noun.getArticleWithSpace(types[0].getTypes().get(0).getGender(), flags) +
                 m_adjective.toString(types[0].getTypes().get(0).getGender(), flags) +
-                " " +
+                ' ' +
                 Classes.toString(types, flags & Language.NO_ARTICLE_MASK, false);
     }
 

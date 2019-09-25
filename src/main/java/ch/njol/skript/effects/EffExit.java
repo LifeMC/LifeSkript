@@ -79,7 +79,7 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
                     if (numLevels(type) == 0)
                         Skript.error("can't stop any " + names[type] + " as there are no " + names[type] + " present", ErrorQuality.SEMANTIC_ERROR);
                     else
-                        Skript.error("can't stop " + breakLevels + " " + names[type] + " as there are only " + numLevels(type) + " " + names[type] + " present", ErrorQuality.SEMANTIC_ERROR);
+                        Skript.error("can't stop " + breakLevels + ' ' + names[type] + " as there are only " + numLevels(type) + ' ' + names[type] + " present", ErrorQuality.SEMANTIC_ERROR);
                     return false;
                 }
                 break;
@@ -123,8 +123,8 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
-        return "stop " + breakLevels + " " + names[type];
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "stop " + breakLevels + ' ' + names[type];
     }
 
 }

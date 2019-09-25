@@ -53,9 +53,7 @@ import ch.njol.skript.variables.FlatFileStorage;
 import ch.njol.skript.variables.Variables;
 import ch.njol.skript.variables.VariablesStorage;
 import ch.njol.util.Closeable;
-import ch.njol.util.Math2;
-import ch.njol.util.StringUtils;
-import ch.njol.util.WebUtils;
+import ch.njol.util.*;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.EnumerationIterable;
@@ -248,7 +246,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static Version version;
     static boolean disabled;
     @Nullable
-    static String latestVersion;
+    public static String latestVersion;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
     static Version minecraftVersion = invalidVersion;
     private static boolean closedOnEnable;
@@ -1305,16 +1303,26 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
-        return new CheckedIterator<>(getExpressions(), i -> {
+        return new CheckedIterator<>(getExpressions(), new ExpressionInfoChecker(returnTypes));
+    }
+
+    private static final class ExpressionInfoChecker implements NullableChecker<ExpressionInfo<?, ?>> {
+        private final Class<?>[] returnTypes;
+
+        ExpressionInfoChecker(final Class<?>[] returnTypes) {
+            this.returnTypes = returnTypes;
+        }
+
+        @Override
+        public final boolean check(@Nullable final ExpressionInfo<?, ?> i) {
             if (i == null || i.returnType == Object.class)
                 return true;
             for (final Class<?> returnType : returnTypes) {
-                assert returnType != null;
                 if (Converters.converterExists(i.returnType, returnType))
                     return true;
             }
             return false;
-        });
+        }
     }
 
     /**
@@ -1496,7 +1504,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     }
 
     /**
-     * Use this in {@link Expression#init(Expression[], int, ch.njol.util.Kleenean, SkriptParser.ParseResult)} (and other methods that are called during the
+     * Use this in {@link Expression#init(Expression[], int, Kleenean, SkriptParser.ParseResult)} (and other methods that are called during the
      * parsing) to log
      * errors with a specific {@link ErrorQuality}.
      *
@@ -1825,7 +1833,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * Example usage:
      * <pre>
      * public void run() {
-     *     throw sneakyThrow(new IOException("You don't need to catch me!"));
+     *     throw Skript.sneakyThrow(new IOException("You don't need to catch me!"));
      * }
      * </pre>
      * <p>
@@ -3211,7 +3219,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
                 // Not slow down the server, it's just an updater!
                 // and maybe updater can also be rewrited with proper OOP and Java usage, with checking updates from github
-                // instead, just in case the web site is down.
+                // instead, just in case the website is down.
                 t.setPriority(Thread.MIN_PRIORITY);
                 t.setDaemon(true);
                 t.start();

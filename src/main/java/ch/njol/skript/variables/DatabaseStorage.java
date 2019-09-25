@@ -329,7 +329,7 @@ public final class DatabaseStorage extends VariablesStorage {
             final Database db = this.db.get();
             if (db == null || !db.open()) {
                 if (first)
-                    Skript.error("Cannot connect to the database '" + databaseName + "'! Please make sure that all settings are correct" + (type == Type.MYSQL ? " and that the database software is running" : "") + ".");
+                    Skript.error("Cannot connect to the database '" + databaseName + "'! Please make sure that all settings are correct" + (type == Type.MYSQL ? " and that the database software is running" : "") + '.');
                 else
                     Skript.exception("Cannot reconnect to the database '" + databaseName + "'!");
                 return false;
@@ -477,7 +477,7 @@ public final class DatabaseStorage extends VariablesStorage {
             }
 
             if (!closed) { // Skript may have been disabled in the meantime // TODO not fixed
-                new Task(Skript.getInstance(), (long) Math.ceil(2. * monitorInterval / 50) + 100, true) { // 2 times the interval + 5 seconds
+                new Task(Skript.getInstance(), true) { // 2 times the interval + 5 seconds
                     @Override
                     public final void run() {
                         try {
@@ -493,7 +493,7 @@ public final class DatabaseStorage extends VariablesStorage {
                             sqlException(e);
                         }
                     }
-                };
+                }.schedule((long) Math.ceil(2. * monitorInterval / 50) + 100);
             }
         } catch (final SQLException e) {
             sqlException(e);
@@ -700,7 +700,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 return new MySQL(SkriptLogger.LOGGER, "[Skript]", host, port, database, user, password);
             }
         },
-        SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY, " + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ")") {// SQLite uses Unicode exclusively
+        SQLITE("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" + "name         VARCHAR(" + MAX_VARIABLE_NAME_LENGTH + ")  NOT NULL  PRIMARY KEY, " + "type         VARCHAR(" + MAX_CLASS_CODENAME_LENGTH + ")," + "value        BLOB(" + MAX_VALUE_SIZE + ")," + "update_guid  CHAR(36)  NOT NULL" + ')') {// SQLite uses Unicode exclusively
 
             @SuppressWarnings({"null", "unused"})
             @Override
