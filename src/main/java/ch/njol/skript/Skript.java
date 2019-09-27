@@ -277,7 +277,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         try {
             ipAddress = WebUtils.getResponse("https://checkip.amazonaws.com");
         } catch (final IOException e) {
-            if (Skript.testing() || Skript.debug())
+            if (Skript.testing() && Skript.debug())
                 Skript.exception(e);
         }
 
@@ -1613,7 +1613,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             logEx();
             logEx("Version Information:");
             logEx("  Skript: " + Skript.getVersionWithSuffix());
-            logEx("  Bukkit: " + Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ')' + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : ""));
+            logEx("  Bukkit: " + (Skript.isBukkitRunning() ? Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ')' + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : "") : "unknown"));
             logEx("  Minecraft: " + (minecraftVersion != invalidVersion ? minecraftVersion : "not checked"));
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')');
             logEx("  OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
