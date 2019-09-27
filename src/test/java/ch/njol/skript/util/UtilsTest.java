@@ -29,8 +29,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
  * @author Peter Güttinger

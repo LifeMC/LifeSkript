@@ -174,14 +174,12 @@ public final class CyclicList<E> extends AbstractList<E> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     public final @NotNull <T> T[] toArray(@Nullable T[] array) {
         if (array == null)
             return (T[]) toArray();
         if (array.length < items.length)
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), items.length);
-        if (array == null) // Sanity check for eclipse compiler
-            return (T[]) toArray();
         System.arraycopy(items, start, array, 0, items.length - start);
         System.arraycopy(items, 0, array, items.length - start, start);
         if (array.length > items.length)

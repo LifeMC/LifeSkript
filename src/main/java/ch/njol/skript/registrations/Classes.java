@@ -413,7 +413,6 @@ public final class Classes {
     public static final <T> T parseSimple(final String s, final Class<T> c, final ParseContext context) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            assert classInfos != null : "Can't find class infos";
             for (final ClassInfo<?> info : classInfos) {
                 final Parser<?> parser = info.getParser();
                 if (parser == null || !parser.canParse(context) || !c.isAssignableFrom(info.getC()))
@@ -576,15 +575,11 @@ public final class Classes {
     }
 
     public static final String getDebugMessage(@Nullable final Object o) {
-        return toString(o, StringMode.DEBUG, 0);
+        return toString(o, StringMode.DEBUG, 0, null, false);
     }
 
     public static final <T> String toString(@Nullable final T o, final StringMode mode) {
-        return toString(o, mode, 0);
-    }
-
-    private static final <T> String toString(@Nullable final T o, final StringMode mode, final int flags) {
-        return toString(o, mode, flags, null, false);
+        return toString(o, mode, 0, null, false);
     }
 
     private static final <T> String toString(@Nullable final T o, final StringMode mode, final int flags,
@@ -612,7 +607,7 @@ public final class Classes {
             for (final Object i : (Object[]) o) {
                 if (!first)
                     b.append(", ");
-                b.append(toString(i, mode, flags));
+                b.append(toString(i, mode, flags, null, false));
                 first = false;
             }
             return "[" + b + ']';
@@ -647,7 +642,7 @@ public final class Classes {
         if (os.length == 0)
             return toString(null);
         if (os.length == 1)
-            return toString(os[0], mode, flags);
+            return toString(os[0], mode, flags, null, false);
         final StringBuilder b = new StringBuilder(4096);
         for (int i = 0; i < os.length; i++) {
             if (i != 0) {
@@ -658,7 +653,7 @@ public final class Classes {
                 else
                     b.append(", ");
             }
-            b.append(toString(os[i], mode, flags));
+            b.append(toString(os[i], mode, flags, null, false));
         }
         return b.toString();
     }

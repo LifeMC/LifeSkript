@@ -98,19 +98,22 @@ public final class FileUtils {
      */
     public static final Collection<File> renameAll(final File directory, final Converter<String, String> renamer) throws IOException {
         final Collection<File> changed = new ArrayList<>();
-        for (final File f : directory.listFiles()) {
-            if (f.isDirectory()) {
-                changed.addAll(renameAll(f, renamer));
-            } else {
-                final String name = f.getName();
-                if (name == null)
-                    continue;
-                final String newName = renamer.convert(name);
-                if (newName == null)
-                    continue;
-                final File newFile = new File(f.getParent(), newName);
-                move(f, newFile, false);
-                changed.add(newFile);
+        final File[] files = directory.listFiles();
+        if (files != null) {
+            for (final File f : files) {
+                if (f.isDirectory()) {
+                    changed.addAll(renameAll(f, renamer));
+                } else {
+                    final String name = f.getName();
+                    if (name == null)
+                        continue;
+                    final String newName = renamer.convert(name);
+                    if (newName == null)
+                        continue;
+                    final File newFile = new File(f.getParent(), newName);
+                    move(f, newFile, false);
+                    changed.add(newFile);
+                }
             }
         }
         return changed;

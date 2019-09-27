@@ -97,7 +97,7 @@ public enum Color implements YggdrasilSerializable {
     private static final DyeColor getSilver() {
         try {
             return DyeColor.SILVER;
-        } catch (final NoSuchFieldError tw) {
+        } catch (final NoSuchFieldError e) {
             return DyeColor.valueOf("GRAY");
         }
     }

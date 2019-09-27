@@ -412,6 +412,12 @@
             <artifactId>junit-platform-runner</artifactId>
             <version>1.5.2</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.easymock</groupId>

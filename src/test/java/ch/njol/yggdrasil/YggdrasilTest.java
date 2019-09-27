@@ -31,12 +31,7 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
-import static kotlin.test.AssertionsKt.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("resource")
 public final class YggdrasilTest {
@@ -234,7 +229,7 @@ public final class YggdrasilTest {
         assertTrue(ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2), String.valueOf(ms));
     }
 
-    @SuppressWarnings("static-method")
+    @SuppressWarnings({"static-method", "null"})
     @Test
     public void testRename() throws IOException {
         //System.out.println();

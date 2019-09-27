@@ -26,6 +26,7 @@ import ch.njol.skript.Skript;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.IllegalFormatException;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 public final class FormattedMessage extends Message {
@@ -62,7 +63,7 @@ public final class FormattedMessage extends Message {
     public String toString() {
         try {
             final String val = getValue();
-            return val == null ? key : "" + String.format(val, args != null ? args : supplier.get());
+            return val == null ? key : String.format(Locale.ENGLISH, val, args != null ? args : supplier.get());
         } catch (final IllegalFormatException e) {
             final String m = "The formatted message '" + key + "' uses an illegal format: " + e.getLocalizedMessage();
             Skript.adminBroadcast("<red>" + m);
