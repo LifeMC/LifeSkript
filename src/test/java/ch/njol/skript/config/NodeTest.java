@@ -25,7 +25,7 @@ package ch.njol.skript.config;
 import ch.njol.util.NonNullPair;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
  * @author Peter Güttinger
@@ -42,7 +42,7 @@ public final class NodeTest {
 
         for (final String[] d : data) {
             final NonNullPair<String, String> p = Node.splitLine(d[0]);
-            assertArrayEquals(d[0], new String[]{d[1], d[2]}, new String[]{p.getFirst(), p.getSecond()});
+            assertArrayEquals(new String[]{d[1], d[2]}, new String[]{p.getFirst(), p.getSecond()}, () -> d[0]);
         }
 
     }

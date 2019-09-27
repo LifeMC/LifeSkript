@@ -63,7 +63,7 @@ public final class EvtEntityBlockChange extends SkriptEvent {
 
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
-        return "" + event.name().replace('_', ' ').toLowerCase(Locale.ENGLISH);
+        return event.name().replace('_', ' ').toLowerCase(Locale.ENGLISH);
     }
 
     private enum ChangeEvent {

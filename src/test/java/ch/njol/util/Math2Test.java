@@ -28,8 +28,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author Peter Güttinger
@@ -93,47 +93,47 @@ public final class Math2Test {
         final int[][] modvs = {{5, 4, 1}, {-3, 4, 1}, {4, 4, 0}, {-4, 4, 0}, {-100, 5, 0}, {-50, 100, 50}, {-1000, 4, 0}, {-10, 9, 8}
         };
         for (final int[] v : modvs)
-            assertEquals("mod(" + v[0] + ',' + v[1] + ')', v[2], Math2.mod(v[0], v[1]));
+            assertEquals(v[2], Math2.mod(v[0], v[1]), () -> "mod(" + v[0] + ',' + v[1] + ')');
 
         final int[][] p2vsI = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, Integer.MIN_VALUE}, {Integer.MIN_VALUE, Integer.MIN_VALUE}
         };
         for (final int[] v : p2vsI)
-            assertEquals(Integer.toString(v[0]), v[1], Math2.nextPowerOfTwo(v[0]));
+            assertEquals(v[1], Math2.nextPowerOfTwo(v[0]), () -> Integer.toString(v[0]));
         final long[][] p2vsL = {{1, 1}, {2, 2}, {7, 8}, {8, 8}, {9, 16}, {100, 128}, {-1, -1}, {-2, -2}, {-3, -2}, {-5, -4}, {-100, -64}, {Integer.MAX_VALUE, (long) Integer.MAX_VALUE + 1}, {Integer.MIN_VALUE, Integer.MIN_VALUE}, {Long.MAX_VALUE, Long.MIN_VALUE}, {Long.MIN_VALUE, Long.MIN_VALUE}
         };
         for (final long[] v : p2vsL)
-            assertEquals(Long.toString(v[0]), v[1], Math2.nextPowerOfTwo(v[0]));
+            assertEquals(v[1], Math2.nextPowerOfTwo(v[0]), () -> Long.toString(v[0]));
 
         for (int i = -31; i <= 31; i++) {
             final int n = i < 0 ? -1 << -i : 1 << i;
             for (int a = 0; a < RANDOM_NUMBERS; a++) {
                 final int b = rand.nextInt(Math.max((n < 0 ? -n : n) / 2, 1));
-                assertEquals(Integer.toString(n - b), n, Math2.nextPowerOfTwo(n - b));
+                assertEquals(n, Math2.nextPowerOfTwo(n - b), () -> Integer.toString(n - b));
             }
         }
 
         for (final double d : doubles) {
-            assertEquals(Double.toString(d), (long) Math.floor(d), Math2.floor(d));
-            assertEquals(Double.toString(d), (long) Math.ceil(d), Math2.ceil(d));
-            assertEquals(Double.toString(d), d + 0.5 == d + 1 ? (long) d : Math.round(d), Math2.round(d));
-            assertEquals(Double.toString(d), Math.round(d) > Integer.MAX_VALUE ? Integer.MAX_VALUE : Math.round(d) < Integer.MIN_VALUE ? Integer.MIN_VALUE : Math.round(d), Math2.roundI(d));
-            assertEquals(Double.toString(d), (int) Math.floor(d), Math2.floorI(d));
-            assertEquals(Double.toString(d), (int) Math.ceil(d), Math2.ceilI(d));
+            assertEquals((long) Math.floor(d), Math2.floor(d), () -> Double.toString(d));
+            assertEquals((long) Math.ceil(d), Math2.ceil(d), () -> Double.toString(d));
+            assertEquals(d + 0.5 == d + 1 ? (long) d : Math.round(d), Math2.round(d), () -> Double.toString(d));
+            assertEquals(Math.round(d) > Integer.MAX_VALUE ? Integer.MAX_VALUE : Math.round(d) < Integer.MIN_VALUE ? Integer.MIN_VALUE : Math.round(d), Math2.roundI(d), () -> Double.toString(d));
+            assertEquals((int) Math.floor(d), Math2.floorI(d), () -> Double.toString(d));
+            assertEquals((int) Math.ceil(d), Math2.ceilI(d), () -> Double.toString(d));
 
             final double r = Math2.frac(d);
-            assertTrue(d + "; " + r, Double.isNaN(r) || 0 <= r && r < 1);
+            assertTrue(Double.isNaN(r) || 0 <= r && r < 1, () -> d + "; " + r);
         }
 
         for (final float f : floats) {
-            assertEquals(Float.toString(f), (long) Math.floor(f), Math2.floor(f));
-            assertEquals(Float.toString(f), (long) Math.ceil(f), Math2.ceil(f));
-            assertEquals(Float.toString(f), Math.round((double) f), Math2.round(f));
-            assertEquals(Float.toString(f), f + 0.5f == f + 1 ? (int) f : Math.round(f), Math2.roundI(f));
-            assertEquals(Float.toString(f), (int) Math.floor(f), Math2.floorI(f));
-            assertEquals(Float.toString(f), (int) Math.ceil(f), Math2.ceilI(f));
+            assertEquals((long) Math.floor(f), Math2.floor(f), () -> Float.toString(f));
+            assertEquals((long) Math.ceil(f), Math2.ceil(f), () -> Float.toString(f));
+            assertEquals(Math.round((double) f), Math2.round(f), () -> Float.toString(f));
+            assertEquals(f + 0.5f == f + 1 ? (int) f : Math.round(f), Math2.roundI(f), () -> Float.toString(f));
+            assertEquals((int) Math.floor(f), Math2.floorI(f), () -> Float.toString(f));
+            assertEquals((int) Math.ceil(f), Math2.ceilI(f), () -> Float.toString(f));
 
             final float r = Math2.frac(f);
-            assertTrue(f + "; " + r, Float.isNaN(r) || 0 <= r && r < 1);
+            assertTrue(Float.isNaN(r) || 0 <= r && r < 1, () -> f + "; " + r);
         }
 
     }

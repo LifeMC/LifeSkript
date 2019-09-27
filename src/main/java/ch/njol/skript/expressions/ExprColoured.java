@@ -61,7 +61,7 @@ public final class ExprColoured extends PropertyExpression<String, String> {
 
     @Override
     protected String[] get(final Event e, final String[] source) {
-        return get(source, s -> color ? Utils.replaceChatStyles(s) : "" + ChatColor.stripColor(s));
+        return get(source, s -> color ? Utils.replaceChatStyles(s) : ChatColor.stripColor(s));
     }
 
     @Override

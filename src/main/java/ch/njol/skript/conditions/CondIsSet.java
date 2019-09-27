@@ -52,13 +52,13 @@ public final class CondIsSet extends Condition {
 
     @SuppressWarnings("null")
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         expr = exprs[0];
         setNegated(matchedPattern == 1);
         return true;
     }
 
-    private boolean check(final Expression<?> expr, final Event e) {
+    private final boolean check(final Expression<?> expr, final Event e) {
         if (expr instanceof ExpressionList) {
             for (final Expression<?> ex : ((ExpressionList<?>) expr).getExpressions()) {
                 assert ex != null;
@@ -74,12 +74,12 @@ public final class CondIsSet extends Condition {
     }
 
     @Override
-    public boolean check(final Event e) {
+    public final boolean check(final Event e) {
         return check(expr, e);
     }
 
     @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return expr.toString(e, debug) + ' ' + (isNegated() ? "isn't" : "is") + " set";
     }
 

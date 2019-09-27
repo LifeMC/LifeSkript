@@ -24,6 +24,8 @@ package ch.njol.skript.localization;
 
 import ch.njol.util.StringUtils;
 
+import java.util.Locale;
+
 /**
  * An {@link ArgsMessage} that pluralises words following numbers. The plurals have to be in the format <tt>shel¦f¦ves¦</tt> (i.e. use 3 '¦'s).
  *
@@ -60,14 +62,14 @@ public final class PluralizingArgsMessage extends Message {
         if (last == 0)
             return s;
         b.append(s.substring(last));
-        return "" + b;
+        return b.toString();
     }
 
     public String toString(final Object... args) {
         final String val = getValue();
         if (val == null)
             return key;
-        return format("" + String.format(val, args));
+        return format(String.format(Locale.ENGLISH, val, args));
     }
 
 }

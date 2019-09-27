@@ -275,7 +275,7 @@ public final class JavaClasses {
         Classes.registerClass(new ClassInfo<>(Double.class, "double").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1., true)).after("long").before("float", "integer", "short", "byte").parser(new Parser<Double>() {
             @Override
             @Nullable
-            public Double parse(final String s, final ParseContext context) {
+            public final Double parse(final String s, final ParseContext context) {
                 try {
                     if (s.endsWith("%")) {
                         final String str = s.substring(0, s.length() - 1);
@@ -292,17 +292,17 @@ public final class JavaClasses {
             }
 
             @Override
-            public String toString(final Double d, final int flags) {
+            public final String toString(final Double d, final int flags) {
                 return StringUtils.toString(d, SkriptConfig.numberAccuracy.value());
             }
 
             @Override
-            public String toVariableNameString(final Double d) {
+            public final String toVariableNameString(final Double d) {
                 return StringUtils.toString(d, VARIABLENAME_NUMBERACCURACY);
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "-?\\d+(\\.\\d+)?";
             }
         }).serializer(new Serializer<Double>() {

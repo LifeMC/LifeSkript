@@ -75,7 +75,7 @@ public final class ExprArmorSlot extends SimplePropertyExpression<LivingEntity, 
 
     @Override
     protected String getPropertyName() {
-        return "" + slot.name().toLowerCase(Locale.ENGLISH);
+        return slot.name().toLowerCase(Locale.ENGLISH);
     }
 
     @Override

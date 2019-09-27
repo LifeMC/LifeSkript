@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Güttinger
@@ -49,21 +49,21 @@ public final class AliasesTest {
         final ItemType t = new ItemType();
         t.add(new ItemData(0));
 
-        final HashMap<String, ItemType> var1 = new LinkedHashMap<>();
+        final HashMap<String, ItemType> var1 = new LinkedHashMap<>(3);
         var1.put("{default}", t);
         var1.put("v1.1", t);
         var1.put("v1.2", t);
         final Aliases.Variations v = new Aliases.Variations();
         v.put("var1", var1);
-        final HashMap<String, ItemType> var2 = new LinkedHashMap<>();
+        final HashMap<String, ItemType> var2 = new LinkedHashMap<>(2);
         var2.put("v2.1 @a", t);
         var2.put("v2.2", t);
         v.put("var2", var2);
-        final HashMap<String, ItemType> var3 = new LinkedHashMap<>();
+        final HashMap<String, ItemType> var3 = new LinkedHashMap<>(2);
         var3.put("v3.1¦¦s¦", t);
         var3.put("v3.2¦a¦b¦", t);
         v.put("var3", var3);
-        final HashMap<String, ItemType> varL = new LinkedHashMap<>();
+        final HashMap<String, ItemType> varL = new LinkedHashMap<>(3);
         varL.put("{default}", t);
         varL.put("normales ", t);
         varL.put("Birken", t);
@@ -74,10 +74,10 @@ public final class AliasesTest {
 
         for (final String[] test : tests) {
             @SuppressWarnings("null") final Set<String> names = Aliases.getAliases(test[0], t, v).keySet();
-            assertEquals(test[0], test.length - 1, names.size());
+            assertEquals(test.length - 1, names.size(), () -> test[0]);
             int i = 1;
             for (final String name : names)
-                assertEquals(test[0], test[i++], name);
+                assertEquals(test[i++], name, () -> test[0]);
         }
     }
 

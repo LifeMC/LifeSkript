@@ -71,7 +71,7 @@ public abstract class TriggerItem implements Debuggable {
             return true;
         } catch (final StackOverflowError err) {
             if (Skript.debug())
-                err.printStackTrace();
+                Skript.exception(err);
             final Trigger t = start.getTrigger();
             final File sc = t == null ? null : t.getScript();
             Skript.adminBroadcast("<red>The script '<gold>" + (sc == null ? "<unknown>" : sc.getName()) + "<red>' infinitely (or excessively) repeated itself!");

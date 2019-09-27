@@ -83,7 +83,7 @@ public final class ExprVersion extends SimpleExpression<String> {
         BUKKIT("Bukkit") {
             @Override
             public String get() {
-                return "" + Bukkit.getBukkitVersion();
+                return Bukkit.getBukkitVersion();
             }
         },
         MINECRAFT("Minecraft") {

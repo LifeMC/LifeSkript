@@ -160,9 +160,7 @@ public final class Language {
         final String s = get_i(key.toLowerCase(Locale.ENGLISH));
         if (s == null)
             return new String[]{key.toLowerCase(Locale.ENGLISH)};
-        final String[] r = listSplitPattern.split(s);
-        assert r != null;
-        return r;
+        return listSplitPattern.split(s, 0);
     }
 
     /**
