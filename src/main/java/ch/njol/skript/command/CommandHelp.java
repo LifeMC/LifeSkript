@@ -131,11 +131,11 @@ public final class CommandHelp {
     }
 
     @SuppressWarnings("null")
-    public void showHelp(final CommandSender sender) {
+    public final void showHelp(final CommandSender sender) {
         showHelp(sender, m_usage.toString());
     }
 
-    private void showHelp(final CommandSender sender, final String pre) {
+    private final void showHelp(final CommandSender sender, final String pre) {
         Skript.message(sender, pre + ' ' + command + ' ' + argsColor + "...");
         for (final Entry<String, Object> e : arguments.entrySet()) {
             // TODO Make this a feature: Hiding commands / arguments in the help message

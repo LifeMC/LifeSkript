@@ -76,7 +76,7 @@ public final class ExprLastExecuteInfo extends SimpleExpression<Object> {
     }
 
     @Nullable
-    private String getExpressionName() {
+    private final String getExpressionName() {
         switch (mark) {
             case 0:
                 return "last execute state";

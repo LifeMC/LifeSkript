@@ -29,6 +29,7 @@ import ch.njol.skript.aliases.ItemType;
 import ch.njol.skript.classes.*;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Noun;
 import ch.njol.skript.localization.RegexMessage;
@@ -56,6 +57,8 @@ public final class SkriptClasses {
 
     static final Pattern EXPERIENCE_PATTERN = Pattern.compile("\\d+ .+");
     static final Matcher EXPERIENCE_PATTERN_MATCHER = EXPERIENCE_PATTERN.matcher("");
+
+    static final RegexMessage experiencePattern = new RegexMessage("types.experience.pattern", Pattern.CASE_INSENSITIVE);
 
     private SkriptClasses() {
         throw new UnsupportedOperationException();
@@ -646,45 +649,41 @@ public final class SkriptClasses {
         }));
 
         Classes.registerClass(new ClassInfo<>(Experience.class, "experience").name("Experience").description("Experience points. Please note that Bukkit only allows to give XP, but not remove XP from players. " + "You can however change a player's <a href='../expressions/#ExprLevel'>level</a> and <a href='../expressions/#ExprLevelProgress'>level progress</a> freely.").usage("<code>[&lt;number&gt;] ([e]xp|experience [point[s]])</code>").examples("give 10 xp to the player").since("2.0").parser(new Parser<Experience>() {
-            private final RegexMessage pattern = new RegexMessage("types.experience.pattern", Pattern.CASE_INSENSITIVE);
-
             @Override
             @Nullable
-            public Experience parse(String s, final ParseContext context) {
+            public final Experience parse(String s, final ParseContext context) {
                 int xp = -1;
                 if (EXPERIENCE_PATTERN_MATCHER.reset(s).matches()) {
                     xp = Utils.parseInt(s.substring(0, s.indexOf(' ')));
                     s = s.substring(s.indexOf(' ') + 1);
                 }
-                if (pattern.matches(s))
+                if (experiencePattern.matches(s))
                     return new Experience(xp);
                 return null;
             }
 
             @Override
-            public String toString(final Experience xp, final int flags) {
+            public final String toString(final Experience xp, final int flags) {
                 return xp.toString();
             }
 
             @Override
-            public String toVariableNameString(final Experience xp) {
+            public final String toVariableNameString(final Experience xp) {
                 return Integer.toString(xp.getXP());
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "\\d+";
             }
         }).serializer(new YggdrasilSerializer<Experience>() {
             //						return xp;
             @Override
             @Nullable
-            public Experience deserialize(final String s) {
-                try {
-                    return new Experience(Integer.parseInt(s));
-                } catch (final NumberFormatException e) {
+            public final Experience deserialize(final String s) {
+                if (!SkriptParser.isInteger(s))
                     return null;
-                }
+                return new Experience(Integer.parseInt(s));
             }
         }));
 

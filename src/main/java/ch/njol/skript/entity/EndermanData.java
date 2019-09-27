@@ -58,7 +58,7 @@ public final class EndermanData extends EntityData<Enderman> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Enderman> c, final @Nullable Enderman e) {
+    protected boolean init(@Nullable final Class<? extends Enderman> c, @Nullable final Enderman e) {
         if (e != null) {
             final MaterialData m = e.getCarriedMaterial();
             if (m != null) {
@@ -149,7 +149,7 @@ public final class EndermanData extends EntityData<Enderman> {
         return false;
     }
 
-    private boolean isSubhand(final @Nullable ItemType[] sub) {
+    private final boolean isSubhand(@Nullable final ItemType[] sub) {
         if (hand != null)
             return sub != null && ItemType.isSubset(hand, sub);
         return true;

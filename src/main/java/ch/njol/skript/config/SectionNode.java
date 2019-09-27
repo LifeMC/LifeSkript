@@ -80,7 +80,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         return '\'' + s.replace("\t", "->").replace(' ', '_').replaceAll("\\s", "?") + "' [-> = tab, _ = space, ? = other whitespace]";
     }
 
-    private NodeMap getNodeMap() {
+    private final NodeMap getNodeMap() {
         NodeMap nodeMap = this.nodeMap;
         if (nodeMap == null) {
             nodeMap = this.nodeMap = new NodeMap();
@@ -265,7 +265,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
     }
 
     @SuppressWarnings({"null", "unused"})
-    private SectionNode load_i(final ConfigReader r) throws IOException {
+    private final SectionNode load_i(final ConfigReader r) throws IOException {
         boolean indentationSet = false;
         String fullLine;
         while ((fullLine = r.readLine()) != null) {
@@ -351,7 +351,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
         return this;
     }
 
-    private Node getEntry(final String keyAndValue, final String comment, final int lineNum, final String separator) {
+    private final Node getEntry(final String keyAndValue, final String comment, final int lineNum, final String separator) {
         final int x = keyAndValue.indexOf(separator);
         if (x == -1) {
             final InvalidNode in = new InvalidNode(keyAndValue, comment, this, lineNum);

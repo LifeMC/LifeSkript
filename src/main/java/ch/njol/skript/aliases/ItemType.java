@@ -285,7 +285,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param item
      * @return Whatever the given item has correct enchantments & ItemMeta, but doesn't check its type
      */
-    private boolean hasMeta(final @Nullable ItemStack item) {
+    private final boolean hasMeta(final @Nullable ItemStack item) {
         final Map<Enchantment, Integer> enchs = enchantments;
         if (enchs != null) {
             if (item == null)
@@ -490,7 +490,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     /**
      * @param type A cloned or newly created ItemData
      */
-    private void add_(final @Nullable ItemData type) {
+    private final void add_(final @Nullable ItemData type) {
         if (type != null) {
             types.add(type);
             numItems += type.numItems();
@@ -1028,7 +1028,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return toString(false, flags, a);
     }
 
-    private String toString(final boolean debug, final int flags, final @Nullable Adjective a) {
+    private final String toString(final boolean debug, final int flags, final @Nullable Adjective a) {
         final StringBuilder b = new StringBuilder(4096);
 //		if (types.size() == 1 && !types.get(0).hasDataRange()) {
 //			if (getAmount() != 1)

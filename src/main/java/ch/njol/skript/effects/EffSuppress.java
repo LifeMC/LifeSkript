@@ -58,7 +58,7 @@ public final class EffSuppress extends Effect {
         return true;
     }
 
-    private String getTypeName() {
+    private final String getTypeName() {
         return mark > 0 ? "errors" : "warnings";
     }
 
@@ -89,7 +89,7 @@ public final class EffSuppress extends Effect {
             return true;
         }
 
-        private String getTypeName() {
+        private final String getTypeName() {
             return mark > 0 ? "errors" : "warnings";
         }
 
