@@ -95,7 +95,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
 
     @SuppressWarnings("unlikely-arg-type")
     @Nullable
-    private T2 removeDirect(@Nullable final Object key) {
+    private final T2 removeDirect(@Nullable final Object key) {
         return super.remove(key);
     }
 
@@ -108,7 +108,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
         return oldValue;
     }
 
-    private void clearDirect() {
+    private final void clearDirect() {
         super.clear();
     }
 

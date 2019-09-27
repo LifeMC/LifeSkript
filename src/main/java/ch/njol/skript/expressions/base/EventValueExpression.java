@@ -76,7 +76,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
         this(c, null);
     }
 
-    public EventValueExpression(final Class<? extends T> c, final @Nullable Changer<? super T> changer) {
+    public EventValueExpression(final Class<? extends T> c, @Nullable final Changer<? super T> changer) {
         assert c != null;
         this.c = c;
         this.changer = changer;
@@ -95,7 +95,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
 
     @SuppressWarnings("unchecked")
     @Nullable
-    private <E extends Event> T getValue(final E e) {
+    private final <E extends Event> T getValue(final E e) {
         if (getters.containsKey(e.getClass())) {
             final Getter<? extends T, ? super E> g = (Getter<? extends T, ? super E>) getters.get(e.getClass());
             return g == null ? null : g.get(e);
@@ -164,7 +164,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (!debug || e == null)
             return "event-" + Classes.getSuperClassInfo(c).getName();
         return Classes.getDebugMessage(getValue(e));
@@ -181,7 +181,7 @@ public class EventValueExpression<T> extends SimpleExpression<T> implements Defa
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final Changer<? super T> ch = changer;
         if (ch == null)
             throw new UnsupportedOperationException();

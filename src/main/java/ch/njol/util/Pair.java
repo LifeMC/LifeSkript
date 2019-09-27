@@ -43,7 +43,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
         second = null;
     }
 
-    public Pair(final @Nullable T1 first, final @Nullable T2 second) {
+    public Pair(@Nullable final T1 first, @Nullable final T2 second) {
         this.first = first;
         this.second = second;
     }
@@ -58,7 +58,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
         return first;
     }
 
-    public void setFirst(final @Nullable T1 first) {
+    public void setFirst(@Nullable final T1 first) {
         this.first = first;
     }
 
@@ -67,7 +67,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
         return second;
     }
 
-    public void setSecond(final @Nullable T2 second) {
+    public void setSecond(@Nullable final T2 second) {
         this.second = second;
     }
 
@@ -83,7 +83,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
      * Checks for equality with Entries to match {@link #hashCode()}
      */
     @Override
-    public final boolean equals(final @Nullable Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         if (obj == this)
             return true;
         if (!(obj instanceof Entry))
@@ -118,7 +118,7 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
 
     @Override
     @Nullable
-    public T2 setValue(final @Nullable T2 value) {
+    public T2 setValue(@Nullable final T2 value) {
         final T2 old = second;
         second = value;
         return old;

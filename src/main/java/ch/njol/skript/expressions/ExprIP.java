@@ -109,7 +109,7 @@ public final class ExprIP extends SimpleExpression<String> {
                 .toArray(String[]::new);
     }
 
-    private String getIP(final Player player, final Event e) {
+    private final String getIP(final Player player, final Event e) {
         final InetAddress address;
         // The player has no IP yet in a connect event, but the event has it
         // It is a "feature" of Spigot, apparently

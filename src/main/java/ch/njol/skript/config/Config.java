@@ -273,7 +273,7 @@ public final class Config {
         return validator.validate(main);
     }
 
-    private void load(final Class<?> c, @Nullable final Object o, final String path) {
+    private final void load(final Class<?> c, @Nullable final Object o, final String path) {
         for (final Field f : c.getDeclaredFields()) {
             if (o != null || Modifier.isStatic(f.getModifiers())) {
                 try {

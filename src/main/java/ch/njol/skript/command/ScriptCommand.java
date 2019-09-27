@@ -439,7 +439,7 @@ public final class ScriptCommand implements TabExecutor {
     }
 
     @Nullable
-    private String getStorageVariableName(final Event event) {
+    private final String getStorageVariableName(final Event event) {
         assert cooldownStorage != null;
         String variableString = cooldownStorage.getSingle(event);
         if (variableString == null) {

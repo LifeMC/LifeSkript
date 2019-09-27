@@ -404,7 +404,7 @@ public final class Direction implements YggdrasilRobustSerializable {
         return getDirection(pitchOrX == IGNORE_PITCH ? 0 : f.getModZ() * Math.PI / 2 /* only up and down have a z mod */, Math.atan2(f.getModZ(), f.getModX()));
     }
 
-    private Vector getDirection(final double p, final double y) {
+    private final Vector getDirection(final double p, final double y) {
         if (pitchOrX == IGNORE_PITCH)
             return new Vector(Math.cos(y + yawOrY) * lengthOrZ, 0, Math.sin(y + yawOrY) * lengthOrZ);
         final double lxz = Math.cos(p + pitchOrX) * lengthOrZ;

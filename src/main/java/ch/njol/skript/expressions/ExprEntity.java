@@ -69,7 +69,7 @@ public final class ExprEntity extends SimpleExpression<Entity> {
             if (!StringUtils.startsWithIgnoreCase(parseResult.expr, "the ") && !StringUtils.startsWithIgnoreCase(parseResult.expr, "event-")) {
 
                 final String s = parseResult.regexes.get(0).group();
-                final ItemType item = Aliases.parseItemType("" + s);
+                final ItemType item = Aliases.parseItemType(s);
                 log.clear();
                 if (item != null) {
                     log.printLog();
@@ -82,7 +82,7 @@ public final class ExprEntity extends SimpleExpression<Entity> {
 
             }
 
-            final EntityData<?> type = EntityData.parseWithoutIndefiniteArticle("" + parseResult.regexes.get(0).group());
+            final EntityData<?> type = EntityData.parseWithoutIndefiniteArticle(parseResult.regexes.get(0).group());
             log.clear();
             log.printLog();
             if (type == null || type.isPlural().isTrue())

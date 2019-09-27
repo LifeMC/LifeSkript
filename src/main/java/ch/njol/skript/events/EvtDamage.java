@@ -81,7 +81,7 @@ public final class EvtDamage extends SkriptEvent {
         return checkDamage(e);
     }
 
-    private boolean checkType(final Entity e) {
+    private final boolean checkType(final Entity e) {
         if (types != null) {
             for (final EntityData<?> d : types.getAll()) {
                 if (d.isInstance(e))

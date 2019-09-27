@@ -69,7 +69,7 @@ public final class EffThrow extends Effect {
         return true;
     }
 
-    private String getTypeName() {
+    private final String getTypeName() {
         return error ? java ? "java error" : "error" : "warning";
     }
 

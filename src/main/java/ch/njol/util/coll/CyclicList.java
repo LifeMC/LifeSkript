@@ -54,11 +54,11 @@ public final class CyclicList<E> extends AbstractList<E> {
         this.items = c.toArray();
     }
 
-    private int toInternalIndex(final int index) {
+    private final int toInternalIndex(final int index) {
         return Math2.mod(start + index, items.length);
     }
 
-    private int toExternalIndex(final int internal) {
+    private final int toExternalIndex(final int internal) {
         return Math2.mod(internal - start, items.length);
     }
 
@@ -104,7 +104,7 @@ public final class CyclicList<E> extends AbstractList<E> {
         throw new UnsupportedOperationException();
     }
 
-    private void rangeCheck(final int index) {
+    private final void rangeCheck(final int index) {
         if (index < 0 || index >= items.length)
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + items.length);
     }

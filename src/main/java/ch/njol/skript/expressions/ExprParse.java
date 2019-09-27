@@ -75,7 +75,7 @@ public final class ExprParse extends SimpleExpression<Object> {
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         text = (Expression<String>) exprs[0];
         if (exprs[1] == null) {
-            String pattern = "" + parseResult.regexes.get(0).group();
+            String pattern = parseResult.regexes.get(0).group();
             if (!VariableString.isQuotedCorrectly(pattern, false)) {
                 Skript.error("Invalid amount and/or placement of double quotes in '" + pattern + '\'', ErrorQuality.SEMANTIC_ERROR);
                 return false;

@@ -62,7 +62,7 @@ public final class ConfigReader extends BufferedReader {
 
     @Override
     @Nullable
-    public String readLine() throws IOException {
+    public final String readLine() throws IOException {
         if (reset) {
             reset = false;
         } else {
@@ -73,10 +73,10 @@ public final class ConfigReader extends BufferedReader {
     }
 
     @Nullable
-    private String stripUTF8BOM(final @Nullable String line) {
+    private final String stripUTF8BOM(@Nullable final String line) {
         if (!hasNonEmptyLine && line != null && !line.isEmpty()) {
             hasNonEmptyLine = true;
-            if (!line.isEmpty() && line.charAt(0) == '\uFEFF') {
+            if (line.charAt(0) == '\uFEFF') {
                 return line.substring(1);
             }
         }
