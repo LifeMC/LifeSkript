@@ -32,6 +32,6 @@ public interface NullableChecker<T> extends Checker<T> {
     NullableChecker<Object> nullChecker = Objects::nonNull;
 
     @Override
-    boolean check(final @Nullable T o);
+    boolean check(@Nullable final T o);
 
 }

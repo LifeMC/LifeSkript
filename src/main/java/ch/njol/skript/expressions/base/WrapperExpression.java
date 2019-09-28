@@ -71,7 +71,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
                 continue;
             return new ConvertedExpression<T, R>(expr, c, conv) {
                 @Override
-                public String toString(final @Nullable Event e, final boolean debug) {
+                public String toString(@Nullable final Event e, final boolean debug) {
                     if (debug && e == null)
                         return '(' + WrapperExpression.this.toString(e, debug) + ")->" + super.to.getName();
                     return WrapperExpression.this.toString(e, debug);
@@ -114,7 +114,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         expr.change(e, delta, mode);
     }
 

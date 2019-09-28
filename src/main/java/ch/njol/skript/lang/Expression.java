@@ -249,6 +249,6 @@ public interface Expression<T> extends SyntaxElement, Debuggable {
      * @param mode
      * @throws UnsupportedOperationException (optional) - If this method was called on an unsupported ChangeMode.
      */
-    void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode);
+    void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode);
 
 }

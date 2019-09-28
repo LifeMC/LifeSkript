@@ -30,6 +30,6 @@ import org.eclipse.jdt.annotation.Nullable;
 @FunctionalInterface
 public interface Predicate<T> {
 
-    boolean test(final @Nullable T paramT);
+    boolean test(@Nullable final T paramT);
 
 }

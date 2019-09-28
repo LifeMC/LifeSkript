@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import java.util.function.Supplier;
 
 final class Main {
@@ -22,6 +23,8 @@ final class Main {
 
 	private static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
 	private static final Pattern PATTERN_ON_BRACKET = Pattern.compile("(", Pattern.LITERAL);
+
+	private static final Pattern FILE_SEPARATOR_PATTERN = Pattern.compile(Matcher.quoteReplacement(File.separator));
 
     public static final void main(final String[] args) throws IOException {
         System.out.println("");
@@ -149,12 +152,16 @@ final class Main {
             if ((line.contains("static") && !line.contains("statically") && !line.contains("initializer") && !line.contains("is static") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !noMethodFinalWarning)
                 warning(file, line, i, "Static method maybe final");
             else if ((line.contains("private")) && !line.contains("*") /* javadoc */ && !line.contains("static") && !line.contains("private final") && !line.contains("=") && !line.contains("val") && line.contains("(") && !noMethodFinalWarning) {
-				if (PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0]).length != 2) // constructor
+				if (PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim()).length != 2) // constructor
 					warning(file, line, i, "Private method maybe final");
+			} else if ((line.contains("(")) && !line.contains("*") /* javadoc */ && (line.contains("{") || line.contains(";")) && !line.contains("();") && !line.contains("(final ") && !line.contains("=") && !line.contains("+") && !line.contains("val") && !line.contains("return ") && !line.contains("() {") && !line.contains("@Nullable final") && !line.contains("@NonNull final") && !line.contains("() ->") && !line.contains(") -> {") && !line.contains("},") && !(line.contains("?") && line.contains(":")) && !noMethodFinalWarning) {
+				final var method = PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim());
+				if ((method.length > 4 || method[0].contains("abstract")) && (method.length < 4 || !method[4].contains("static")) || method.length > 5)
+					warning(file, line, i, "Method parameters maybe final");
 			} else if ((line.contains("\"\"+") || line.contains("\"\" +")) && !line.contains("\\\"\"") && !noConcenationWarning)
                 warning(file, line, i, "Redundant empty string concenation");
             else if ((line.contains("catch(") || line.contains("catch (")) && !line.contains("(final ") && !noCatchFinalWarning)
-                warning(file, line, i, "Catched exception may be final");
+                warning(file, line, i, "Catched exception maybe final");
         }
 
         processedLines += i;
@@ -162,7 +169,10 @@ final class Main {
     }
 
 	private static final void warning(final File file, final String line, final int lineNumber, final String message) {
-		System.out.println(message + " (" + file.getName() + ", line " + lineNumber + "): " + line);
+		final var parent = file.getParent();
+		final var split = FILE_SEPARATOR_PATTERN.split(parent);
+
+		System.out.println(message + " (" + split[split.length - 1] + File.separator + file.getName() + ", line " + lineNumber + "): " + line);
 		printedWarnings++;
 	}
 }

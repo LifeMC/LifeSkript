@@ -208,9 +208,9 @@ public final class YggdrasilTest {
             final byte[] d = save(o);
             print(o, d);
             final Object l = load(d);
-            assertTrue(equals(o, l), o.getClass().getName() + ": " + toString(o) + " <> " + toString(l));
+            assertTrue(equals(o, l), () -> o.getClass().getName() + ": " + toString(o) + " <> " + toString(l));
             final byte[] d2 = save(l);
-            assertTrue(equals(d, d2), o.getClass().getName() + ": " + toString(o) + '\n' + toString(d) + " <>\n" + toString(d2));
+            assertTrue(equals(d, d2), () -> o.getClass().getName() + ": " + toString(o) + '\n' + toString(d) + " <>\n" + toString(d2));
         }
     }
 
@@ -226,7 +226,7 @@ public final class YggdrasilTest {
         final byte[] md = save(m);
         print(m, md);
         @SuppressWarnings("unchecked") final Map<Integer, Object> ms = (Map<Integer, Object>) load(md);
-        assertTrue(ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2), String.valueOf(ms));
+        assertTrue(ms != null && ms.get(1) == ms.get(3) && ms.get(1) != ms.get(2), () -> String.valueOf(ms));
     }
 
     @SuppressWarnings({"static-method", "null"})

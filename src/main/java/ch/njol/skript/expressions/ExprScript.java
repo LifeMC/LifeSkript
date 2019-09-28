@@ -60,7 +60,7 @@ public final class ExprScript extends SimpleExpression<String> {
         }
         String name = script.getFileName();
         if (name.contains("."))
-            name = "" + name.substring(0, name.lastIndexOf('.'));
+            name = name.substring(0, name.lastIndexOf('.'));
         this.name = name;
         return true;
     }

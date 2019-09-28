@@ -36,7 +36,7 @@ public interface Debuggable {
      * @param debug If true this should print more information, if false this should print what is shown to the end user
      * @return String representation of this object
      */
-    String toString(final @Nullable Event e, final boolean debug);
+    String toString(@Nullable final Event e, final boolean debug);
 
     /**
      * Should return <tt>{@link #toString(Event, boolean) toString}(null, false)</tt>

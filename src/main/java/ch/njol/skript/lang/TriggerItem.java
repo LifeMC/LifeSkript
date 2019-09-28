@@ -137,7 +137,7 @@ public abstract class TriggerItem implements Debuggable {
         return parent;
     }
 
-    public TriggerItem setParent(final @Nullable TriggerSection parent) {
+    public TriggerItem setParent(@Nullable final TriggerSection parent) {
         this.parent = parent;
         return this;
     }
@@ -160,7 +160,7 @@ public abstract class TriggerItem implements Debuggable {
         return next;
     }
 
-    public TriggerItem setNext(final @Nullable TriggerItem next) {
+    public TriggerItem setNext(@Nullable final TriggerItem next) {
         this.next = next;
         return this;
     }

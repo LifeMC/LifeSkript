@@ -58,7 +58,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
     }
 
     // TODO return a kleenean (UNKNOWN if 'all' is null or empty)
-    public static final <T> boolean check(final @Nullable T[] all, final Checker<? super T> c, final boolean invert, final boolean and) {
+    public static final <T> boolean check(@Nullable final T[] all, final Checker<? super T> c, final boolean invert, final boolean and) {
         if (all == null)
             return invert;
         boolean hasElement = false;
@@ -228,7 +228,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final ClassInfo<?> rti = returnTypeInfo;
         if (rti == null)
             throw new UnsupportedOperationException();

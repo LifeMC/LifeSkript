@@ -87,7 +87,7 @@ public abstract class TriggerSection extends TriggerItem {
     }
 
     @Override
-    public TriggerSection setNext(final @Nullable TriggerItem next) {
+    public TriggerSection setNext(@Nullable final TriggerItem next) {
         super.setNext(next);
         if (last != null)
             last.setNext(next);

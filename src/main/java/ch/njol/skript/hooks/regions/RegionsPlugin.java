@@ -117,12 +117,12 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
         return true;
     }
 
-    public abstract boolean canBuild_i(Player p, Location l);
+    public abstract boolean canBuild_i(final Player p, final Location l);
 
-    public abstract Collection<? extends Region> getRegionsAt_i(Location l);
+    public abstract Collection<? extends Region> getRegionsAt_i(final Location l);
 
     @Nullable
-    public abstract Region getRegion_i(World world, String name);
+    public abstract Region getRegion_i(final World world, final String name);
 
     public abstract boolean hasMultipleOwners_i();
 

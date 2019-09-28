@@ -138,6 +138,8 @@ public final class ExprSignText extends SimpleExpression<String> {
                     assert delta != null;
                     ((SignChangeEvent) e).setLine(line, (String) delta[0]);
                     break;
+                default:
+                    assert false : mode;
             }
         } else {
             if (b.getType() != Material.SIGN_POST && b.getType() != Material.WALL_SIGN)
@@ -151,6 +153,8 @@ public final class ExprSignText extends SimpleExpression<String> {
                     assert delta != null;
                     s.setLine(line, (String) delta[0]);
                     break;
+                default:
+                    assert false : mode;
             }
             if (hasUpdateBooleanBoolean) {
                 try {

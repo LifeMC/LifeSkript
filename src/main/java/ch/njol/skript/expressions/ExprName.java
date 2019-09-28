@@ -276,10 +276,10 @@ public final class ExprName extends SimplePropertyExpression<Object, String> {
             acceptChange = change;
         }
 
-        abstract void set(@Nullable Object o, @Nullable String s);
+        abstract void set(@Nullable final Object o, @Nullable final String s);
 
         @Nullable
-        abstract String get(@Nullable Object o);
+        abstract String get(@Nullable final Object o);
 
         final String getFrom() {
             final StringBuilder b = new StringBuilder(4096);

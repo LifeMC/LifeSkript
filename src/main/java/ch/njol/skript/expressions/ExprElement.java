@@ -75,27 +75,35 @@ public final class ExprElement extends SimpleExpression<Object> {
     @SuppressWarnings("null")
     protected Object[] get(final Event e) {
         final Object o;
-        if (element == -1) {
-            final Iterator<?> iter = expr.iterator(e);
-            if (iter == null || !iter.hasNext())
-                return null;
-            o = iter.next();
-        } else if (element == 1) {
-            final Object[] os = expr.getArray(e);
-            if (os.length == 0)
-                return null;
-            o = os[os.length - 1];
-        } else if (element == 2) {
-            final Object[] os = expr.getArray(e);
-            final Number number = this.number.getSingle(e);
-            if (number == null || number.intValue() - 1 >= os.length || number.intValue() - 1 < 0)
-                return null;
-            o = os[number.intValue() - 1];
-        } else {
-            final Object[] os = expr.getArray(e);
-            if (os.length == 0)
-                return null;
-            o = CollectionUtils.getRandom(os);
+        switch (element) {
+            case -1:
+                final Iterator<?> iter = expr.iterator(e);
+                if (iter == null || !iter.hasNext())
+                    return null;
+                o = iter.next();
+                break;
+            case 1: {
+                final Object[] os = expr.getArray(e);
+                if (os.length == 0)
+                    return null;
+                o = os[os.length - 1];
+                break;
+            }
+            case 2: {
+                final Object[] os = expr.getArray(e);
+                final Number number = this.number.getSingle(e);
+                if (number == null || number.intValue() - 1 >= os.length || number.intValue() - 1 < 0)
+                    return null;
+                o = os[number.intValue() - 1];
+                break;
+            }
+            default: {
+                final Object[] os = expr.getArray(e);
+                if (os.length == 0)
+                    return null;
+                o = CollectionUtils.getRandom(os);
+                break;
+            }
         }
         final Object[] r = (Object[]) Array.newInstance(getReturnType(), 1);
         r[0] = o;
@@ -113,7 +121,7 @@ public final class ExprElement extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (element == 0 ? "a " : "the ") + (element == -1 ? "first" : element == 1 ? "last" : "random") + " element of " + expr.toString(e, debug);
     }
 

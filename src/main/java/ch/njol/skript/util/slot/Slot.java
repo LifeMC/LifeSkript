@@ -41,7 +41,7 @@ public abstract class Slot implements Debuggable {
     @Nullable
     public abstract ItemStack getItem();
 
-    public abstract void setItem(final @Nullable ItemStack item);
+    public abstract void setItem(@Nullable final ItemStack item);
 
     @Override
     @SuppressWarnings("null")
@@ -51,7 +51,7 @@ public abstract class Slot implements Debuggable {
 
     @Override
     @SuppressWarnings("null")
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         if (!debug)
             Classes.toString(getItem());
         return toString_i();

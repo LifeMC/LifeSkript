@@ -51,38 +51,37 @@ public final class ExprEventCancelled extends SimpleExpression<Boolean> {
     private Kleenean delay;
 
     @Override
-    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         delay = isDelayed;
         return true;
     }
 
     @Override
-    public boolean isSingle() {
+    public final boolean isSingle() {
         return true;
     }
 
     @Override
-    @Nullable
-    protected Boolean[] get(final Event e) {
+    protected final Boolean[] get(final Event e) {
         if (!(e instanceof Cancellable))
             return EmptyArrays.EMPTY_WRAPPER_BOOLEAN_ARRAY;
         return new Boolean[]{((Cancellable) e).isCancelled()};
     }
 
     @Override
-    public Class<Boolean> getReturnType() {
+    public final Class<Boolean> getReturnType() {
         return Boolean.class;
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "is event cancelled";
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Nullable
-    public Class<?>[] acceptChange(final ChangeMode mode) {
+    public final Class<?>[] acceptChange(final ChangeMode mode) {
         if (delay != Kleenean.FALSE) {
             Skript.error("Can't cancel the event anymore after it has already passed");
             return null;
@@ -94,7 +93,7 @@ public final class ExprEventCancelled extends SimpleExpression<Boolean> {
 
     @SuppressWarnings("incomplete-switch")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public final void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (!(e instanceof Cancellable))
             return;
         switch (mode) {
@@ -104,6 +103,9 @@ public final class ExprEventCancelled extends SimpleExpression<Boolean> {
             case SET:
                 assert delta != null;
                 ((Cancellable) e).setCancelled((Boolean) delta[0]);
+                break;
+            default:
+                assert false : mode;
         }
     }
 

@@ -146,6 +146,8 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                     return new Class<?>[]{Timespan.class};
                 }
                 //$FALL-THROUGH$
+            case DELETE:
+                break;
             case REMOVE_ALL:
             case RESET:
             case SET:
@@ -154,7 +156,7 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                     return new Class<?>[]{Timespan.class};
                 }
                 if (mark == 3) {
-                    // last usage dtae
+                    // last usage date
                     return new Class<?>[]{Date.class};
                 }
         }
@@ -220,6 +222,8 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                         command.setElapsedMilliSeconds(uuid, commandEvent, timespan.getMilliSeconds());
                     }
                     break;
+                case DELETE:
+                    assert false : mode;
             }
         } else if (mark == 3) {
             switch (mode) {
@@ -231,6 +235,8 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                     final Date date = delta == null ? null : (Date) delta[0];
                     command.setLastUsage(uuid, commandEvent, date);
                     break;
+                case DELETE:
+                    assert false : mode;
             }
         }
     }

@@ -61,7 +61,7 @@ public final class ExprMessage extends SimpleExpression<String> {
 
     @SuppressWarnings("null")
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         type = MessageType.values()[matchedPattern];
         if (!ScriptLoader.isCurrentEvent(type.events)) {
             Skript.error("The " + type.name + " message can only be used in a " + type.name + " event", ErrorQuality.SEMANTIC_ERROR);
@@ -71,7 +71,7 @@ public final class ExprMessage extends SimpleExpression<String> {
     }
 
     @Override
-    protected String[] get(final Event e) {
+    protected final String[] get(final Event e) {
         for (final Class<? extends Event> c : type.events) {
             if (c.isInstance(e))
                 return new String[]{type.get(e)};
@@ -82,34 +82,34 @@ public final class ExprMessage extends SimpleExpression<String> {
     @SuppressWarnings("unchecked")
     @Override
     @Nullable
-    public Class<?>[] acceptChange(final ChangeMode mode) {
+    public final Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET)
             return CollectionUtils.array(String.class);
         return null;
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public final void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         assert mode == ChangeMode.SET;
         assert delta != null;
         for (final Class<? extends Event> c : type.events) {
             if (c.isInstance(e))
-                type.set(e, "" + delta[0]);
+                type.set(e, String.valueOf(delta[0]));
         }
     }
 
     @Override
-    public boolean isSingle() {
+    public final boolean isSingle() {
         return true;
     }
 
     @Override
-    public Class<String> getReturnType() {
+    public final Class<String> getReturnType() {
         return String.class;
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "the " + type.name + " message";
     }
 
@@ -201,9 +201,9 @@ public final class ExprMessage extends SimpleExpression<String> {
         }
 
         @Nullable
-        abstract String get(Event e);
+        abstract String get(final Event e);
 
-        abstract void set(Event e, String message);
+        abstract void set(final Event e, final String message);
 
     }
 
