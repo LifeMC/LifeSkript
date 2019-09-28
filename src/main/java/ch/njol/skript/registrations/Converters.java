@@ -39,7 +39,7 @@ import java.util.*;
 public final class Converters {
 
     private static final List<ConverterInfo<?, ?>> converters = new ArrayList<>(100);
-    private static final Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<>();
+    private static final Map<Pair<Class<?>, Class<?>>, Converter<?, ?>> convertersCache = new HashMap<>(100);
 
     private Converters() {
         throw new UnsupportedOperationException();
@@ -113,7 +113,7 @@ public final class Converters {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static final <F, T> T convert(final @Nullable F o, final Class<T> to) {
+    public static final <F, T> T convert(@Nullable final F o, final Class<T> to) {
         if (o == null)
             return null;
         if (to.isInstance(o))
@@ -135,7 +135,7 @@ public final class Converters {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static final <F, T> T convert(final @Nullable F o, final Class<? extends T>[] to) {
+    public static final <F, T> T convert(@Nullable final F o, final Class<? extends T>[] to) {
         if (o == null)
             return null;
         for (final Class<? extends T> t : to)
@@ -160,7 +160,7 @@ public final class Converters {
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public static final <T> T[] convertArray(final @Nullable Object[] o, final Class<T> to) {
+    public static final <T> T[] convertArray(@Nullable final Object[] o, final Class<T> to) {
         assert to != null;
         if (o == null)
             return null;
@@ -184,11 +184,9 @@ public final class Converters {
      * @return The converted array
      */
     @SuppressWarnings("unchecked")
-    public static final <T> T[] convertArray(final @Nullable Object[] o, final Class<? extends T>[] to, final Class<T> superType) {
+    public static final <T> T[] convertArray(@Nullable final Object[] o, final Class<? extends T>[] to, final Class<T> superType) {
         if (o == null) {
-            final T[] r = (T[]) Array.newInstance(superType, 0);
-            assert r != null;
-            return r;
+            return (T[]) Array.newInstance(superType, 0);
         }
         for (final Class<? extends T> t : to)
             if (t.isAssignableFrom(o.getClass().getComponentType()))
@@ -199,9 +197,7 @@ public final class Converters {
             if (c != null)
                 l.add(c);
         }
-        final T[] r = l.toArray((T[]) Array.newInstance(superType, l.size()));
-        assert r != null;
-        return r;
+        return l.toArray((T[]) Array.newInstance(superType, l.size()));
     }
 
     /**
@@ -275,9 +271,8 @@ public final class Converters {
     @Nullable
     public static final <F, T> Converter<? super F, ? extends T> getConverter(final Class<F> from, final Class<T> to) {
         final Pair<Class<?>, Class<?>> p = new Pair<>(from, to);
-        final Converter<?, ?> cached = convertersCache.get(p);
-        if (cached != null) // can contain null to denote nonexistence of a converter
-            return (Converter<? super F, ? extends T>) cached;
+        if (convertersCache.containsKey(p)) // can contain null to denote nonexistence of a converter
+            return (Converter<? super F, ? extends T>) convertersCache.get(p);
         final Converter<? super F, ? extends T> c = getConverter_i(from, to);
         convertersCache.put(p, c);
         return c;
@@ -286,21 +281,30 @@ public final class Converters {
     @SuppressWarnings("unchecked")
     @Nullable
     private static final <F, T> Converter<? super F, ? extends T> getConverter_i(final Class<F> from, final Class<T> to) {
-        for (final ConverterInfo<?, ?> conv : converters) {
-            if (conv.from.isAssignableFrom(from) && to.isAssignableFrom(conv.to))
-                return (Converter<? super F, ? extends T>) conv.converter;
+        for (final ConverterInfo<?, ?> converter : converters) {
+            if (converter.from.isAssignableFrom(from) && to.isAssignableFrom(converter.to))
+                return (Converter<? super F, ? extends T>) converter.converter;
         }
-        for (final ConverterInfo<?, ?> conv : converters) {
-            if (conv.from.isAssignableFrom(from) && conv.to.isAssignableFrom(to)) {
-                return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(conv.converter, to);
-            }
-            if (from.isAssignableFrom(conv.from) && to.isAssignableFrom(conv.to)) {
-                return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(conv);
+        final Converter<? super F, ? extends T> converter0 = getConverter0(from, to);
+        if (converter0 != null)
+            return converter0;
+        for (final ConverterInfo<?, ?> converter : converters) {
+            if (from.isAssignableFrom(converter.from) && converter.to.isAssignableFrom(to)) {
+                return (Converter<? super F, ? extends T>) ConverterUtils.createDoubleInstanceofConverter(converter, to);
             }
         }
-        for (final ConverterInfo<?, ?> conv : converters) {
-            if (from.isAssignableFrom(conv.from) && conv.to.isAssignableFrom(to)) {
-                return (Converter<? super F, ? extends T>) ConverterUtils.createDoubleInstanceofConverter(conv, to);
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    private static final <F, T> Converter<? super F, ? extends T> getConverter0(final Class<F> from, final Class<T> to) {
+        for (final ConverterInfo<?, ?> converter : converters) {
+            if (converter.from.isAssignableFrom(from) && converter.to.isAssignableFrom(to)) {
+                return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(converter.converter, to);
+            }
+            if (from.isAssignableFrom(converter.from) && to.isAssignableFrom(converter.to)) {
+                return (Converter<? super F, ? extends T>) ConverterUtils.createInstanceofConverter(converter);
             }
         }
         return null;
@@ -319,8 +323,7 @@ public final class Converters {
     }
 
     public static final <F, T> T[] convert(final F[] from, final Class<T> to, final Converter<? super F, ? extends T> conv) {
-        @SuppressWarnings("unchecked")
-        T[] ts = (T[]) Array.newInstance(to, from.length);
+        @SuppressWarnings("unchecked") final T[] ts = (T[]) Array.newInstance(to, from.length);
         int j = 0;
         for (final F f : from) {
             final T t = f == null ? null : conv.convert(f);
@@ -328,8 +331,7 @@ public final class Converters {
                 ts[j++] = t;
         }
         if (j != ts.length)
-            ts = Arrays.copyOf(ts, j);
-        assert ts != null;
+            return Arrays.copyOf(ts, j);
         return ts;
     }
 

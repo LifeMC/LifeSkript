@@ -57,7 +57,7 @@ public interface Changer<T> {
      * @param mode
      * @throws UnsupportedOperationException (optional) if this method was called on an unsupported ChangeMode.
      */
-    void change(final T[] what, final @Nullable Object[] delta, final ChangeMode mode);
+    void change(final T[] what, @Nullable final Object[] delta, final ChangeMode mode);
 
     enum ChangeMode {
         ADD, SET, REMOVE, REMOVE_ALL, DELETE, RESET
@@ -70,7 +70,7 @@ public interface Changer<T> {
         }
 
         @SuppressWarnings("unchecked")
-        public static final <T> void change(final Changer<T> changer, final Object[] what, final @Nullable Object[] delta, final ChangeMode mode) {
+        public static final <T> void change(final Changer<T> changer, final Object[] what, @Nullable final Object[] delta, final ChangeMode mode) {
             changer.change((T[]) what, delta, mode);
         }
 

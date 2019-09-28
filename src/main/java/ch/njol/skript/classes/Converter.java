@@ -117,7 +117,7 @@ public interface Converter<F, T> {
         }
 
         @Override
-        public String toString(final @Nullable Event e, final boolean debug) {
+        public String toString(@Nullable final Event e, final boolean debug) {
             if (debug) {
                 final String str = Arrays.stream(chain).map(Classes::getExactClassName).collect(Collectors.joining(" -> "));
 

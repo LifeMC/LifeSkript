@@ -65,7 +65,7 @@ public final class Comparators {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static final Relation compare(final @Nullable Object o1, final @Nullable Object o2) {
+    public static final Relation compare(@Nullable final Object o1, @Nullable final Object o2) {
         if (o1 == null || o2 == null)
             return Relation.NOT_EQUAL;
         final Comparator c = getComparator(o1.getClass(), o2.getClass());
@@ -82,9 +82,8 @@ public final class Comparators {
     @Nullable
     public static final <F, S> Comparator<? super F, ? super S> getComparator(final Class<F> f, final Class<S> s) {
         final Pair<Class<?>, Class<?>> p = new Pair<>(f, s);
-        final Comparator<?, ?> comparator = comparatorsQuickAccess.get(p);
-        if (comparator != null)
-            return (Comparator<? super F, ? super S>) comparator;
+        if (comparatorsQuickAccess.containsKey(p)) // can contain null to denote nonexistence of a comparator
+            return (Comparator<? super F, ? super S>) comparatorsQuickAccess.get(p);
         final Comparator<?, ?> comp = getComparator_i(f, s);
         comparatorsQuickAccess.put(p, comp);
         return (Comparator<? super F, ? super S>) comp;
