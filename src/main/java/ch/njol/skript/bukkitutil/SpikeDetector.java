@@ -24,6 +24,8 @@ package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.ServerPlatform;
 import ch.njol.skript.Skript;
+import ch.njol.skript.config.Node;
+import ch.njol.skript.log.SkriptLogger;
 import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
@@ -31,6 +33,7 @@ import org.fusesource.jansi.Ansi;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.management.LockInfo;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
@@ -106,7 +109,7 @@ public final class SpikeDetector extends Thread {
 
     public static final void testSpike() {
         try {
-            Thread.sleep(earlyWarningDelay);
+            Thread.sleep(earlyWarningEvery);
         } catch (final InterruptedException e) {
             Skript.exception(e);
             Thread.currentThread().interrupt();
@@ -211,17 +214,27 @@ public final class SpikeDetector extends Thread {
         }
     }
 
-    private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean suspended, final ThreadInfo threadInfo, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
+    private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean suspended, final ThreadInfo threadInfo, @Nullable final LockInfo lockInfo, final LockInfo[] lockedSynchronizers, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
         log.log(Level.WARNING, prefix + "------------------------------");
 
         log.log(Level.WARNING, prefix + "Current Thread: " + threadInfo.getThreadName());
         log.log(Level.WARNING, prefix + "\tPID: " + threadInfo.getThreadId() + " | Suspended: " + suspended + " | Native: " + threadInfo
                 .isInNative() + " | Daemon: " + thread
                 .isDaemon() + " | State: " + state + " | Priority: " + priority);
-        if (monitorInfo.length != 0) {
+        if (monitorInfo.length > 0) {
             log.log(Level.WARNING, prefix + "\tThread is waiting on monitor(s):");
             for (final MonitorInfo monitor : monitorInfo) {
-                log.log(Level.WARNING, prefix + "\t\tLocked on:" + monitor.getLockedStackFrame());
+                log.log(Level.WARNING, prefix + "\t\tLocked on: " + monitor.getLockedStackFrame());
+            }
+        }
+        if (lockInfo != null) {
+            log.log(Level.WARNING, prefix + "\tThread is locked on:");
+            log.log(Level.WARNING, prefix + "\t\tLocked on: " + lockInfo.getClassName());
+        }
+        if (lockedSynchronizers.length > 0) {
+            log.log(Level.WARNING, prefix + "\tThread is locked on synchronizer(s):");
+            for (final LockInfo lock : lockedSynchronizers) {
+                log.log(Level.WARNING, prefix + "\t\tLocked on: " + lock.getClassName());
             }
         }
         log.log(Level.WARNING, prefix + "\tStack:");
@@ -247,7 +260,7 @@ public final class SpikeDetector extends Thread {
 
             final long currentTime = monotonicMillis();
 
-            if (lastTick != 0L && currentTime >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + /*earlyWarningEvery*/ earlyWarningCooldown /*|| currentTime < lastTick + earlyWarningDelay*/)) {
+            if (lastTick != 0L && currentTime + sleepMillisDelay >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + /*earlyWarningEvery*/ earlyWarningCooldown /*|| currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
                 // Minimize server thread to get true stack trace
@@ -265,6 +278,10 @@ public final class SpikeDetector extends Thread {
                 final MonitorInfo[] monitorInfo = threadInfo.getLockedMonitors();
                 final State threadState = threadInfo.getThreadState();
 
+                // Get true lock info here
+                final LockInfo lockInfo = threadInfo.getLockInfo();
+                final LockInfo[] lockedSynchronizers = threadInfo.getLockedSynchronizers();
+
                 // Get true suspended status here
                 final boolean suspended = threadInfo.isSuspended();
 
@@ -280,7 +297,12 @@ public final class SpikeDetector extends Thread {
 
                 log.log(Level.WARNING, prefix + "------------------------------");
                 log.log(Level.WARNING, prefix + "Server thread dump:");
-                dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, monitorInfo, stackTrace, log, prefix);
+                dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, lockInfo, lockedSynchronizers, monitorInfo, stackTrace, log, prefix);
+                final Node node;
+                if ((node = SkriptLogger.getNode()) != null) {
+                    final String key;
+                    log.log(Level.WARNING, prefix + "\tNode: " + node + " (" + ((key = node.getKey()) != null ? key : "") + ')');
+                }
                 log.log(Level.WARNING, prefix + "------------------------------" + suffix);
 
                 // Flush to guarantee everything is written
