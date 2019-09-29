@@ -13,8 +13,8 @@ Also, Skript is a very easy and understandable domain-specific scripting languag
 
 # Server Compatibility
 Requirements for running Skript is:
-- Java 8 **or later** installed. (java 8 or 11 is recommended) (java 8 is highly recommended)
-- A bukkit or bukkit-based (bukkit, craftbukkit, spigot, paperspigot, tacospigot etc.) server to run Skript.
+- Java 8 **or later** installed. (Java 8, 11 or 13 is recommended) (Java 8 is highly recommended)
+- A Bukkit or Bukkit-based (Bukkit, CraftBukkit, Spigot, PaperSpigot, TacoSpigot, etc.) server to run Skript.
 - Minecraft version compatibility is:
   - Tested: 1.7.10 - 1.8.8 (also any version between these) (recommended: TacoSpigot 1.8.8)
   - Can maybe work: 1.2.5 and above (others also maybe work)
@@ -24,17 +24,17 @@ I've only created this fork for my old 1.7.10 server, so don't expect too much. 
 
 # Goals Of This Fork
 - Provide bug fixes and backports to older server versions.
-- Improve over-all performance of the plugin and scripts.
+- Improve the overall performance of the plugin and scripts.
 
 For more info about performance, see the wiki: [Improving performance](https://github.com/LifeMC/LifeSkript/wiki/Why-the-Skript-Parser-is-so-slow%3F-%5BPerformance-Tips%5D)
 
 # Issues and Pull Requests
-Feel free to report all issues, make pull requests etc. but I can't guarantee these issues will be fixed because i'm not the original
+Feel free to report all issues, make pull requests, etc. but I can't guarantee these issues will be fixed because I'm not the original
 author of the Skript and don't know everything about Skript.
 
 # Versioning System
-* Stable Releases: No suffix. Just (generally) a major version. (like 2.2.14, 2.2.15 etc.)
-* Beta Releases (tested): Stable version + A suffix from alphabet. (like 2.2.14b, 2.2.15c etc.)
+* Stable Releases: No suffix. Just (generally) a major version. (like 2.2.17, 2.2.18 etc.)
+* Beta or Preview Releases (tested): Stable version + A suffix and number. (like 2.2.16-beta1, 2.2.16-pre2 etc.)
 * Nightly Builds (untested): Not available via an official download. Clone this repo and <a href="https://github.com/LifeMC/LifeSkript/wiki/%5BProject-Tutorial%5D-How-to-build-the-project-yourself">build yourself</a>.
 
 Note: Some releases may also contain hotfixes or backports from newer releases or commits.
@@ -44,10 +44,10 @@ You can download the latest release from here:<br />
 https://github.com/LifeMC/LifeSkript/releases/latest/
 
 If you want to use dev versions or your custom version, you should clone the repo and compile yourself.<br />
-Note: For this, a basic XML, Maven, Git and Java information is required. Search it if you interested.
+Note: For this, a basic XML, Maven, Git and Java information is required. Search it if you are interested.
 
 # Wiki & How-To Pages
-Wiki contains some information maybe useful for you ;)<br />
+The wiki contains some information may be useful for you ;)<br />
 https://github.com/LifeMC/LifeSkript/wiki
 
 # Useful Links
