@@ -17,6 +17,6 @@ assignees: ''
 [A clear and detailed description of any alternative solutions or features you've considered.]
 
 **Additional information**
-[Add any other informations or screenshots about the feature request here.]
+[Add any other pieces of information or screenshots about the feature request here.]
 
-[After all, remove the all text between brackets including brackets]
+[After all, remove all text between brackets including brackets]

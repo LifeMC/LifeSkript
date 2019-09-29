@@ -26,4 +26,4 @@ assignees: ''
 **Additional information**
 [Add any other information about the problem here.]
 
-[After all, remove the all text between brackets including brackets]
+[After all, remove all text between brackets including brackets]
