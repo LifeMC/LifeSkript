@@ -229,7 +229,7 @@ public final class CondCompare extends Condition {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         String s;
         final Expression<?> third = this.third;
         if (third == null)

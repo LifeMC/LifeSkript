@@ -94,12 +94,9 @@ public final class ScriptLoader {
      * must be synchronized
      */
     private static final ScriptInfo loadedScripts = new ScriptInfo();
-    private static final Pattern FUNC_PATTERN = Pattern.compile("func");
-    private static final Matcher FUNC_PATTERN_MATCHER = FUNC_PATTERN.matcher("");
-    private static final Pattern FUN_PATTERN = Pattern.compile("fun");
-    private static final Matcher FUN_PATTERN_MATCHER = FUN_PATTERN.matcher("");
-    private static final Pattern OR_PATTERN = Pattern.compile(" or ", Pattern.LITERAL);
-    private static final Matcher OR_PATTERN_MATCHER = OR_PATTERN.matcher("");
+    private static final Matcher FUNC_PATTERN_MATCHER = Pattern.compile("func").matcher("");
+    private static final Matcher FUN_PATTERN_MATCHER = Pattern.compile("fun").matcher("");
+    private static final Matcher OR_PATTERN_MATCHER = Pattern.compile(" or ", Pattern.LITERAL).matcher("");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -980,7 +977,7 @@ public final class ScriptLoader {
             SkriptLogger.setNode(n);
             if (n instanceof SimpleNode) {
                 final SimpleNode e = (SimpleNode) n;
-                @SuppressWarnings("null") final String s = optimizeAndOr(replaceOptions(e.getKey()));
+                @SuppressWarnings("null") final String s = optimizeAndOr(n, replaceOptions(e.getKey()));
                 if (!SkriptParser.validateLine(s))
                     continue;
                 final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
@@ -999,7 +996,7 @@ public final class ScriptLoader {
                 TypeHints.enterScope(); // Begin conditional type hints
 
                 if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
-                    final String l = optimizeAndOr(name.substring("loop ".length()));
+                    final String l = optimizeAndOr(n, name.substring("loop ".length()));
                     final RetainingLogHandler h = SkriptLogger.startRetainingLog();
                     Expression<?> loopedExpr;
                     try {
@@ -1014,6 +1011,8 @@ public final class ScriptLoader {
                     } finally {
                         h.stop();
                     }
+                    //noinspection ConstantConditions
+                    assert loopedExpr != null;
                     if (loopedExpr.isSingle()) {
                         Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
                         continue;
@@ -1025,7 +1024,7 @@ public final class ScriptLoader {
                     if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
                         hasDelayBefore = Kleenean.UNKNOWN;
                 } else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
-                    final String l = optimizeAndOr(name.substring("while ".length()));
+                    final String l = optimizeAndOr(n, name.substring("while ".length()));
                     final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
                     if (c == null)
                         continue;
@@ -1052,7 +1051,7 @@ public final class ScriptLoader {
                         continue;
                     }
                     name = name.substring("else if ".length());
-                    name = optimizeAndOr(name);
+                    name = optimizeAndOr(n, name);
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
@@ -1065,7 +1064,7 @@ public final class ScriptLoader {
                 } else {
                     if (StringUtils.startsWithIgnoreCase(name, "if "))
                         name = name.substring(3);
-                    name = optimizeAndOr(name);
+                    name = optimizeAndOr(n, name);
                     final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
                     if (cond == null)
                         continue;
@@ -1085,6 +1084,7 @@ public final class ScriptLoader {
         for (int i = 0; i < items.size() - 1; i++)
             items.get(i).setNext(items.get(i + 1));
 
+        optimizeAndOr(node);
         SkriptLogger.setNode(node);
 
         if (Skript.debug())
@@ -1093,12 +1093,22 @@ public final class ScriptLoader {
         return items;
     }
 
-    public static final String optimizeAndOr(final String s) {
-        if (SkriptConfig.optimizeAndOrLists.value() && !s.contains(", ") && s.contains(" or ")) {
-            return StringUtils.replaceLast(OR_PATTERN_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement(", ")),
+    public static final void optimizeAndOr(@Nullable final Node n) {
+        optimizeAndOr(n, null);
+    }
+
+    @SuppressWarnings({"ConstantConditions", "null"})
+    public static final String optimizeAndOr(@Nullable final Node n, @Nullable final String s) {
+        if (n == null && s == null)
+            throw new IllegalArgumentException();
+        String optimized = s != null ? s : n != null ? n.getKey() : null;
+        if (optimized != null && (!Skript.isConfigLoaded() || SkriptConfig.optimizeAndOrLists.value()) && !optimized.contains(", ") && optimized.contains(" or ")) {
+            optimized = StringUtils.replaceLast(OR_PATTERN_MATCHER.reset(optimized).replaceAll(Matcher.quoteReplacement(", ")),
                     ", ", " or ");
         }
-        return s;
+        if (n != null && optimized != null)
+            n.setKey(optimized);
+        return optimized;
     }
 
     /**

@@ -340,7 +340,7 @@ public final class JavaClasses {
             }
         }).math(Number.class, new NumberArithmetic()));
 
-        // FIXME Implement SkriptParser#isByte , SkriptParser#isShort and SkriptParser#isFloat to improve the performance without disabling the parsers
+        // FIXME Implement SkriptParser#isByte and SkriptParser#isFloat to improve the performance without disabling the parsers
         if (!DISABLE_BYTE_SHORT_FLOAT) {
             Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1f, true)).parser(new Parser<Float>() {
                 @Override

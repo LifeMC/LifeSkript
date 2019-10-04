@@ -620,6 +620,8 @@
                         <arg>-Xsuppress-missing-builtins-error</arg>
 
                         <arg>-Xno-exception-on-explicit-equals-for-boxed-null</arg>
+
+                        <arg>-Xallow-no-source-files</arg>
                     </args>
                     <!-- Target and arguments same as with javac. -->
                     <jvmTarget>1.8</jvmTarget>

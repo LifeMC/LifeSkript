@@ -341,6 +341,7 @@ public final class StringUtils {
         if (strings == null)
             return "";
         assert start >= 0 && start <= end && end <= strings.length : start + ", " + end + ", " + strings.length;
+        //noinspection ConstantConditions
         if (start < 0 || start >= strings.length || start == end)
             return "";
         final StringBuilder b = new StringBuilder(String.valueOf(strings[start]));

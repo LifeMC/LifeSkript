@@ -73,7 +73,6 @@ public final class YggdrasilTest {
 
     // random objects
     /* private constructor is tested -> */
-    @SuppressWarnings("synthetic-access")
     final Object[] random = {1, .5, true, 'a', "abc", "multi\nline\r\nstring\rwith\t\n\r\ttabs \u2001\nand\n\u00A0other\u2000\nwhitespace\0-\0", 2L, (byte) -1, (short) 124, Float.POSITIVE_INFINITY, Byte.MIN_VALUE, Byte.MAX_VALUE, (byte) -1, Short.MIN_VALUE, Short.MAX_VALUE, (short) -1, Integer.MIN_VALUE, Integer.MAX_VALUE, -1, Long.MIN_VALUE, Long.MAX_VALUE, -1L, Float.MIN_NORMAL, Float.MIN_VALUE, Float.NEGATIVE_INFINITY, -Float.MAX_VALUE, Double.MIN_NORMAL, Double.MIN_VALUE, Double.NEGATIVE_INFINITY, -Double.MAX_VALUE, (byte) 0x12, (short) 0x1234, 0x12345678, 0x123456789abcdef0L, Float.intBitsToFloat(0x12345678), Double.longBitsToDouble(0x123456789abcdef0L),
 
             new double[]{0, 1, Double.MIN_NORMAL, Double.POSITIVE_INFINITY, Double.MAX_VALUE, -500, 0.123456, Double.NaN}, new float[]{.1f, 7f, 300}, new byte[]{0x12, 0x34, 0x56, 0x78, (byte) 0x9a, (byte) 0xbc, (byte) 0xde, (byte) 0xf0}, new long[][][]{{{0}, {0, 5, 7}, null, EmptyArrays.EMPTY_LONG_ARRAY}}, new Object[][]{{new int[]{0, 4}}, null, {EmptyArrays.EMPTY_INT_ARRAY, null, new int[]{-1, 300, 42}}, EmptyArrays.EMPTY_INTEGER_ARRAY, new Integer[]{5, 7, null}, {null, null, new int[][]{null, {5, 7}, EmptyArrays.EMPTY_INT_ARRAY}}}, new ArrayList<?>[][]{{new ArrayList<>(Arrays.asList(1, 2, null, 9, 100)), null, null, new ArrayList<>(Collections.emptyList())}, {null}, null, EMPTY_RAW_ARRAY_LIST_ARRAY},

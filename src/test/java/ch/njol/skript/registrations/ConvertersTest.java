@@ -50,7 +50,7 @@ public final class ConvertersTest {
         }
 
         final int getNumber() {
-            return this.number;
+            return number;
         }
     }
 
@@ -61,15 +61,15 @@ public final class ConvertersTest {
 
         SampleConvertableTargetObject(final int number) {
             this.number = number;
-            this.n2 = number << 1;
+            n2 = number << 1;
         }
 
         final int getNumber() {
-            return this.number;
+            return number;
         }
 
         final int getN2() {
-            return this.n2;
+            return n2;
         }
     }
 

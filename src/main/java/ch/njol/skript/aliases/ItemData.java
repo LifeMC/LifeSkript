@@ -66,7 +66,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
     public ItemData(final int typeid, final short dMin, final short dMax) {
         if (dMin < -1 || dMax < -1)
             throw new IllegalArgumentException("datas (" + dMin + ',' + dMax + ") must be >= -1");
-        if ((dMin == -1) == (dMax != -1))
+        if (dMin == -1 == (dMax != -1))
             throw new IllegalArgumentException("dataMin (" + dMin + ") and dataMax (" + dMax + ") must either both be -1 or positive");
         if (dMin > dMax)
             throw new IllegalArgumentException("dataMin (" + dMin + ") must not be grater than dataMax (" + dMax + ')');
@@ -185,7 +185,6 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
      * or {@code null} if not found.
      */
     @Nullable
-    @SuppressWarnings("deprecation")
     public final Material getType() {
         return Material.getMaterial(typeid);
     }
@@ -261,7 +260,7 @@ public final class ItemData implements Cloneable, YggdrasilSerializable {
         ItemStackDataIterator(final short dataMin,
                               final short dataMax,
                               final int typeid) {
-            this.data = dataMin;
+            data = dataMin;
 
             this.dataMax = dataMax;
             this.typeid = typeid;

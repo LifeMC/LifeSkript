@@ -128,18 +128,18 @@ public final class AABB implements Iterable<Block> {
         BlockIterator(final World world, final Vector upperBound, final Vector lowerBound) {
             this.world = world;
 
-            this.minX = Math2.ceilI(lowerBound.getX() - Skript.EPSILON);
+            minX = Math2.ceilI(lowerBound.getX() - Skript.EPSILON);
             final int minY = Math2.ceilI(lowerBound.getY() - Skript.EPSILON);
-            this.minZ = Math2.ceilI(lowerBound.getZ() - Skript.EPSILON);
+            minZ = Math2.ceilI(lowerBound.getZ() - Skript.EPSILON);
 
-            this.maxX = Math2.floorI(upperBound.getX() + Skript.EPSILON) - 1;
-            this.maxY = Math2.floorI(upperBound.getY() + Skript.EPSILON) - 1;
-            this.maxZ = Math2.floorI(upperBound.getZ() + Skript.EPSILON) - 1;
+            maxX = Math2.floorI(upperBound.getX() + Skript.EPSILON) - 1;
+            maxY = Math2.floorI(upperBound.getY() + Skript.EPSILON) - 1;
+            maxZ = Math2.floorI(upperBound.getZ() + Skript.EPSILON) - 1;
 
-            this.x = minX - 1; // next() increases x by one immediately
+            x = minX - 1; // next() increases x by one immediately
 
-            this.y = minY;
-            this.z = minZ;
+            y = minY;
+            z = minZ;
         }
 
         @Override

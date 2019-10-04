@@ -41,8 +41,8 @@ import java.util.Map;
  */
 public final class Comparators {
 
-    public static final Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<>();
-    private static final Map<Pair<Class<?>, Class<?>>, Comparator<?, ?>> comparatorsQuickAccess = new HashMap<>();
+    public static final Collection<ComparatorInfo<?, ?>> comparators = new ArrayList<>(100);
+    private static final Map<Pair<Class<?>, Class<?>>, Comparator<?, ?>> comparatorsQuickAccess = new HashMap<>(100);
     private static final java.util.Comparator<Object> javaComparator = (o1, o2) -> compare(o1, o2).getRelation();
 
     private Comparators() {
@@ -104,7 +104,7 @@ public final class Comparators {
         }
 
         // same class but no comparator
-        if (s == f && f != Object.class && s != Object.class) {
+        if (s == f && f != Object.class) {
             return Comparator.equalsComparator;
         }
 

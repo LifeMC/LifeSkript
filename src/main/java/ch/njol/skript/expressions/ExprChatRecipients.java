@@ -96,7 +96,7 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
         return ae.getRecipients().toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);
     }
 
-    @SuppressWarnings({"incomplete-switch", "null"})
+    @SuppressWarnings("null")
     @Override
     public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final Player[] playerArray = (Player[]) delta;
@@ -107,8 +107,7 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
                     a.getRecipients().remove(p);
                 return;
             case REMOVE_ALL:
-                a.getRecipients().clear();
-                return;
+            //$FALL-THROUGH$
             case DELETE:
                 a.getRecipients().clear();
                 return;

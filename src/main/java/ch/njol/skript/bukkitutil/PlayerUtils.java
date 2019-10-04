@@ -44,7 +44,6 @@ public final class PlayerUtils {
     static final Set<Player> inviUpdate = new HashSet<>();
     // created when first used
     public static final Task task = new Task(Skript.getInstance(), 1L, 1L) {
-        @SuppressWarnings("deprecation")
         @Override
         public final void run() {
             SpikeDetector.tick();

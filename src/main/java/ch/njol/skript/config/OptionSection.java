@@ -40,7 +40,7 @@ public final class OptionSection {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public <T> T get(String key) {
+    public final <T> T get(String key) {
         if (this.getClass() == OptionSection.class)
             return null;
         key = key.toLowerCase(Locale.ENGLISH);
@@ -52,7 +52,7 @@ public final class OptionSection {
                     if (o.key.equals(key))
                         return (T) o.value();
                 } catch (final IllegalArgumentException | IllegalAccessException e) {
-                    assert false;
+                    assert false : e;
                 }
             }
         }

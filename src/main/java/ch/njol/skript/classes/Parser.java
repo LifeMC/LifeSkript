@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A parser used to parse data from a string or turn data into a string.
+ * TODO Convert to interface (with default methods)
  *
  * @param <T> the type of this parser
  * @author Peter Güttinger

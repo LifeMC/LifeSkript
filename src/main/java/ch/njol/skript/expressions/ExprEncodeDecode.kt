@@ -47,8 +47,7 @@ class ExprEncodeDecode : SimpleExpression<String>() {
         }
     }
 
-    @JvmField
-    var str: Expression<String>? = null
+    private var str: Expression<String>? = null
     private var encode: Boolean = false
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
@@ -58,7 +57,7 @@ class ExprEncodeDecode : SimpleExpression<String>() {
         return true
     }
 
-    override fun getReturnType(): Class<out String> {
+    override fun getReturnType(): Class<String> {
         return String::class.java
     }
 

@@ -55,9 +55,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("rawtypes")
 public final class SkriptClasses {
 
-    static final Pattern EXPERIENCE_PATTERN = Pattern.compile("\\d+ .+");
-    static final Matcher EXPERIENCE_PATTERN_MATCHER = EXPERIENCE_PATTERN.matcher("");
-
+    static final Matcher EXPERIENCE_PATTERN_MATCHER = Pattern.compile("\\d+ .+").matcher("");
     static final RegexMessage experiencePattern = new RegexMessage("types.experience.pattern", Pattern.CASE_INSENSITIVE);
 
     private SkriptClasses() {
