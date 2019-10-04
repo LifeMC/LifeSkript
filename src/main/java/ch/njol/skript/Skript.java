@@ -251,6 +251,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     static Version minecraftVersion = invalidVersion;
     private static boolean closedOnEnable;
     private static boolean closedOnDisable;
+    private static boolean configLoaded;
     private static boolean first;
     @Nullable
     private static ServerPlatform serverPlatform;
@@ -1132,6 +1133,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     public static final boolean isAcceptRegistrations() {
         return acceptRegistrations;
+    }
+
+    /**
+     * Returns true if the Skript config is loaded.
+     *
+     * This can be used before accessing the values in the SkriptConfig class
+     * to not give errors when used outside of Bukkit (i.e tests)
+     *
+     * @return True if the Skript config is loaded.
+     */
+    public static final boolean isConfigLoaded() {
+        return configLoaded;
     }
 
     // ================ CONDITIONS & EFFECTS ================
@@ -2724,6 +2737,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 configStart = new Date();
 
             SkriptConfig.load();
+            configLoaded = true;
 
             Date configEnd = null;
 
