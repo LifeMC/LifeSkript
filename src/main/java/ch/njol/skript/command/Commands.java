@@ -305,7 +305,7 @@ public final class Commands {
                 Skript.info("Executing script command \"/" + command + "\" as " + (sender instanceof Player ? sender.getName() : "console"));
             else if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
-            c.execute(sender, cmd[0]);
+            c.execute(sender, cmd.length == 1 ? "" : cmd[1]);
             return true;
         }
         return false;
