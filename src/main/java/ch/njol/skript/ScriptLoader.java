@@ -304,9 +304,9 @@ public final class ScriptLoader {
         } finally {
             Language.setUseLocal(true);
             h.stop();
-        }
 
-        endTracker();
+            endTracker();
+        }
 
         if (i.files == 0)
             Skript.warning(m_no_scripts.toString());
@@ -395,7 +395,7 @@ public final class ScriptLoader {
         //assert !loadedFiles.contains(f);
         //assert !loadedScriptFiles.contains(f.getName());
 
-        assert currentScript == null : "Current script should be null for script \"" + f.getName() + '"';
+        assert currentScript == null : "Current script should be null for script \"" + f.getName() + "\" (" + currentScript + ')';
 
 //		File cache = null;
 //		if (SkriptConfig.enableScriptCaching.value()) {
@@ -893,6 +893,7 @@ public final class ScriptLoader {
         }
         if (Skript.testing() || Skript.debug())
             Skript.warning("Returning empty script info after loading \"" + f.getName() + '"');
+        currentScript = null;
         return new ScriptInfo();
     }
 

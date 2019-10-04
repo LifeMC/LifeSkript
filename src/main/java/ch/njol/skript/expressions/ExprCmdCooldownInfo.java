@@ -235,6 +235,10 @@ public final class ExprCmdCooldownInfo extends SimpleExpression<Object> {
                     final Date date = delta == null ? null : (Date) delta[0];
                     command.setLastUsage(uuid, commandEvent, date);
                     break;
+                case ADD:
+                    //$FALL-THROUGH$
+                case REMOVE:
+                    //$FALL-THROUGH$
                 case DELETE:
                     assert false : mode;
             }
