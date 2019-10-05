@@ -43,10 +43,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
-import ch.njol.skript.util.EmptyArrays;
-import ch.njol.skript.util.PatternCache;
-import ch.njol.skript.util.Time;
-import ch.njol.skript.util.Utils;
+import ch.njol.skript.util.*;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -64,11 +61,12 @@ import java.util.regex.PatternSyntaxException;
 import java.util.stream.Stream;
 
 /**
- * Used for parsing my custom patterns.<br>
+ * Used for parsing custom patterns of {@link Skript}.<br>
  * <br>
  * Note: All parse methods print one error at most xor any amount of warnings and lower level log messages. If the given string doesn't match any pattern then nothing is printed.
  *
  * @author Peter Güttinger
+ * @see ScriptLoader
  */
 public final class SkriptParser {
 
@@ -97,8 +95,8 @@ public final class SkriptParser {
     private static final Matcher functionCallPatternMatcher = Pattern.compile('(' + Functions.functionNamePattern + ")\\((.*?)\\)").matcher("");
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
-    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(100);
-    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack"); // FIXME test this
+    private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(300);
+    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack");
     public final ParseContext context;
     final String expr;
     private final int flags;
@@ -1179,6 +1177,28 @@ public final class SkriptParser {
         return this;
     }
 
+    @Nullable
+    private final Expression<?> andOrHack(final boolean isObject,
+                                          final ParseLogHandler log) {
+        if (!disableAndOrHack && isObject && (flags & PARSE_LITERALS) != 0) {
+            // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
+            final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
+            if (!p.suppressMissingAndOrWarnings) {
+                p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings;
+                // If we suppress warnings here, we suppress them in the parser we created too
+            }
+            for (final Class<?> c : new Class<?>[]{Number.class, Time.class, ItemType.class, ItemStack.class}) {
+                final Expression<?> e = p.parseExpression(c);
+                if (e != null) {
+                    log.printLog();
+                    return e;
+                }
+                log.clear();
+            }
+        }
+        return null;
+    }
+
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public final <T> Expression<? extends T> parseExpression(final Class<? extends T>... types) {
@@ -1191,26 +1211,10 @@ public final class SkriptParser {
         final boolean isObject = types.length == 1 && types[0] == Object.class;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            if (!disableAndOrHack) {
-                //Mirre
-                if (isObject && (flags & PARSE_LITERALS) != 0) {
-                    // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
-                    final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
-                    if (!p.suppressMissingAndOrWarnings) {
-                        p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings;
-                        // If we suppress warnings here, we suppress them in the parser we created too
-                    }
-                    for (final Class<?> c : new Class<?>[]{Number.class, Time.class, ItemType.class, ItemStack.class}) {
-                        final Expression<?> e = p.parseExpression(c);
-                        if (e != null) {
-                            log.printLog();
-                            return (Expression<? extends T>) e;
-                        }
-                        log.clear();
-                    }
-                }
-                //Mirre
-            }
+            final Expression<?> andOrHack = andOrHack(isObject, log);
+            if (andOrHack != null)
+                return (Expression<? extends T>) andOrHack;
+
             final Expression<? extends T> r = parseSingleExpr(false, null, types);
             if (r != null) {
                 log.printLog();
@@ -1379,23 +1383,9 @@ public final class SkriptParser {
         final boolean isObject = vi.classes.length == 1 && vi.classes[0].getC() == Object.class;
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            //Mirre
-            if (isObject) {
-                if ((flags & PARSE_LITERALS) != 0) {
-                    // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
-                    final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
-                    p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings; // If we suppress warnings here, we suppress them in parser what we created too
-                    for (final Class<?> c : new Class[]{Number.class, Time.class, ItemType.class, ItemStack.class}) {
-                        @SuppressWarnings("unchecked") final Expression<?> e = p.parseExpression(c);
-                        if (e != null) {
-                            log.printLog();
-                            return e;
-                        }
-                        log.clear();
-                    }
-                }
-            }
-            //Mirre
+            final Expression<?> andOrHack = andOrHack(isObject, log);
+            if (andOrHack != null)
+                return andOrHack;
 
             // Attempt to parse a single expression
             final Expression<?> r = parseSingleExpr(false, null, vi);
