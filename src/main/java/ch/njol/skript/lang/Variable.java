@@ -48,7 +48,6 @@ import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.EmptyIterator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -68,7 +67,6 @@ public final class Variable<T> implements Expression<T> {
     public static final String LOCAL_VARIABLE_TOKEN = "_";
     private static final String SINGLE_SEPARATOR_CHAR = ":";
     public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
-    private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
     private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR, Pattern.LITERAL);
     private static final Matcher SEPARATOR_PATTERN_MATCHER = SEPARATOR_PATTERN.matcher("");
     /**
@@ -309,7 +307,7 @@ public final class Variable<T> implements Expression<T> {
         if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
             final Player p = (Player) t;
             if (!p.isValid() && p.isOnline()) {
-                final Player player = uuidSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
+                final Player player = Skript.offlineUUIDSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
                 Variables.setVariable(key, player, event, local);
                 return player;
             }
