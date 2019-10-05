@@ -81,8 +81,10 @@ public final class SkriptParser {
      * Matches ',', 'and', 'or', etc. as well as surrounding whitespace.
      * <p>
      * group 1 is null for ',', otherwise it's one of and/or/nor (not necessarily lowercase).
+     *
+     * @deprecated use {@link SkriptParser#listSplitMatcher} instead
      */
-    @SuppressWarnings("null")
+    @SuppressWarnings("null") @Deprecated
     public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(?:and|n?or)\\s+|\\s*,\\s*");
     public static final Matcher listSplitMatcher = listSplitPattern.matcher("");
     @SuppressWarnings("rawtypes")
