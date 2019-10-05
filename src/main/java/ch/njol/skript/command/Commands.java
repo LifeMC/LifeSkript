@@ -23,7 +23,6 @@
 package ch.njol.skript.command;
 
 import ch.njol.skript.ScriptLoader;
-import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
 import ch.njol.skript.SkriptEventHandler;
 import ch.njol.skript.bukkitutil.SpikeDetector;
@@ -90,7 +89,7 @@ public final class Commands {
 
     public static final ArgsMessage m_too_many_arguments = new ArgsMessage("commands.too many arguments");
     public static final Message m_internal_error = new Message("commands.internal error");
-    public static final boolean cancellableServerCommand = Skript.methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
+    public static final boolean cancellableServerCommand = methodExists(ServerCommandEvent.class, "setCancelled", boolean.class);
     public static final AtomicBoolean cancelledEvent =
             new AtomicBoolean();
     private static final Map<String, ScriptCommand> commands = new HashMap<>(300);
@@ -102,6 +101,9 @@ public final class Commands {
     @SuppressWarnings("null")
     private static final Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
+    private static final Matcher commandPatternMatcher = commandPattern.matcher(""),
+            argumentPatternMatcher = argumentPattern.matcher("");
+    private static final Matcher STRING_QUOTE = Pattern.compile("\"", Pattern.LITERAL).matcher("");
     @Nullable
     public static List<Argument<?>> currentArguments;
     static boolean suppressUnknownCommandMessage;
@@ -147,7 +149,7 @@ public final class Commands {
 
                 try {
                     // Aliases field is removed in new versions. (probably 1.7+)
-                    if (!Skript.isRunningMinecraft(1, 7, 10)) {
+                    if (!isRunningMinecraft(1, 7, 10)) {
                         //noinspection JavaReflectionMemberAccess
                         final Field aliasesField = SimpleCommandMap.class.getDeclaredField("aliases");
                         aliasesField.setAccessible(true);
@@ -156,13 +158,13 @@ public final class Commands {
                 } catch (final NoSuchFieldException ignored) {
                     /* ignored */
                 }
-            } else if (Skript.logHigh())
-                Skript.warning("Your server is using an unsupported plugin manager. Commands will NOT be registered.");
+            } else if (logHigh())
+                warning("Your server is using an unsupported plugin manager. Commands will NOT be registered.");
         } catch (final SecurityException e) {
-            Skript.error("Please disable the security manager");
+            error("Please disable the security manager");
             commandMap = null;
         } catch (final Exception e) {
-            Skript.outdatedError(e);
+            outdatedError(e);
             commandMap = null;
         }
     }
@@ -180,12 +182,12 @@ public final class Commands {
             SkriptTimings.timingsEnabled = true;
             if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDetector.value()))
                 SpikeDetector.setEnabled(true);
-            Skript.info("Timings mode enabled");
+            info("Timings mode enabled");
         } else if ("timings off".equalsIgnoreCase(command) && SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = false;
             if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDetector.value()))
                 SpikeDetector.setEnabled(false);
-            Skript.info("Timings mode disabled");
+            info("Timings mode disabled");
         }
     }
 
@@ -203,7 +205,7 @@ public final class Commands {
                     SkriptEventHandler.last = null;
                     SkriptEventHandler.ee.execute(null, new PlayerCommandPreprocessEvent(e.getPlayer(), e.getMessage()));
                 } catch (final EventException ex) {
-                    Skript.exception(ex, "Error when handling player command \"" + e.getMessage() + '"');
+                    exception(ex, "Error when handling player command \"" + e.getMessage() + '"');
                 }
             }
         }
@@ -236,7 +238,7 @@ public final class Commands {
                 SkriptEventHandler.last = null;
                 SkriptEventHandler.ee.execute(null, new ServerCommandEvent(e.getSender(), command));
             } catch (final EventException ex) {
-                Skript.exception(ex, "Error when handling player command \"" + command + '"');
+                exception(ex, "Error when handling player command \"" + command + '"');
             }
         }
     }
@@ -251,17 +253,17 @@ public final class Commands {
                 cancelledEvent.set(true);
             }
         } else {
-            final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(Skript.getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
+            final Future<Boolean> f = Bukkit.getScheduler().callSyncMethod(getInstance(), () -> handleEffectCommand(e.getPlayer(), e.getMessage()));
             try {
                 try {
                     if (f.get())
                         e.setCancelled(true);
                 } catch (final InterruptedException ie) {
-                    Skript.exception(ie);
+                    exception(ie);
                     Thread.currentThread().interrupt();
                 }
             } catch (final ExecutionException ee) {
-                Skript.exception(ee);
+                exception(ee);
             }
         }
     }
@@ -301,8 +303,8 @@ public final class Commands {
 //                c.sendHelp(sender);
 //                return true;
 //            }
-            if (Skript.logHigh())
-                Skript.info("Executing script command \"/" + command + "\" as " + (sender instanceof Player ? sender.getName() : "console"));
+            if (logHigh())
+                info("Executing script command \"/" + command + "\" as " + (sender instanceof Player ? sender.getName() : "console"));
             else if (SkriptConfig.logPlayerCommands.value() && sender instanceof Player)
                 SkriptLogger.LOGGER.info(sender.getName() + " [" + ((Player) sender).getUniqueId() + "]: /" + command);
             c.execute(sender, cmd.length == 1 ? "" : cmd[1]);
@@ -359,8 +361,8 @@ public final class Commands {
                 log.stop();
             }
             return true;
-        } catch (final Exception e) {
-            Skript.exception(e, "Unexpected error while executing effect command '" + command + "' by '" + sender.getName() + '\'');
+        } catch (final Throwable tw) {
+            exception(tw, "Unexpected error while executing effect command '" + command + "' by '" + sender.getName() + '\'');
             sender.sendMessage(ChatColor.RED + "An internal error occurred while executing this effect. Please refer to the server log for details.");
             return true;
         } finally {
@@ -387,18 +389,18 @@ public final class Commands {
                 level++;
             } else if (s.charAt(i) == ']') {
                 if (level == 0) {
-                    Skript.error("Invalid placement of [optional brackets]");
+                    error("Invalid placement of [optional brackets]");
                     return null;
                 }
                 level--;
             }
         }
         if (level > 0) {
-            Skript.error("Invalid amount of [optional brackets]");
+            error("Invalid amount of [optional brackets]");
             return null;
         }
 
-        Matcher m = commandPattern.matcher(s);
+        Matcher m = commandPatternMatcher.reset(s);
         final boolean a = m.matches();
         assert a;
 
@@ -407,7 +409,7 @@ public final class Commands {
         final ScriptCommand existingCommand = commands.get(command);
         if (existingCommand != null && existingCommand.getLabel().equals(command)) {
             final File f = existingCommand.getScript();
-            Skript.error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
+            error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
             return null;
         }
 
@@ -415,7 +417,7 @@ public final class Commands {
         final StringBuilder pattern = new StringBuilder(4096);
 
         final List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
-        m = argumentPattern.matcher(arguments);
+        m = argumentPatternMatcher.reset(arguments);
         int lastEnd = 0;
         int optionals = 0;
         for (int i = 0; m.find(); i++) {
@@ -430,12 +432,12 @@ public final class Commands {
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());
             if (c == null) {
-                Skript.error("Unknown type '" + m.group(2) + '\'');
+                error("Unknown type '" + m.group(2) + '\'');
                 return null;
             }
             final Parser<?> parser = c.getParser();
             if (parser == null || !parser.canParse(ParseContext.COMMAND)) {
-                Skript.error("Can't use " + c + " as argument of a command");
+                error("Can't use " + c + " as argument of a command");
                 return null;
             }
 
@@ -500,7 +502,7 @@ public final class Commands {
             } else if ("players".equalsIgnoreCase(b) || "player".equalsIgnoreCase(b)) {
                 executableBy |= ScriptCommand.PLAYERS;
             } else {
-                Skript.warning("'executable by' should be either be 'players', 'console', or both, but found '" + b + '\'');
+                warning("'executable by' should be either be 'players', 'console', or both, but found '" + b + '\'');
             }
         }
 
@@ -510,7 +512,7 @@ public final class Commands {
             // ParseContext doesn't matter for Timespan's parser
             cooldown = Classes.parse(cooldownString, Timespan.class, ParseContext.DEFAULT);
             if (cooldown == null) {
-                Skript.warning('\'' + cooldownString + "' is an invalid timespan for the cooldown");
+                warning('\'' + cooldownString + "' is an invalid timespan for the cooldown");
             }
         }
 
@@ -522,7 +524,7 @@ public final class Commands {
         }
 
         if (usingCooldownMessage && cooldownString.isEmpty()) {
-            Skript.warning("command /" + command + " has a cooldown message set, but not a cooldown");
+            warning("command /" + command + " has a cooldown message set, but not a cooldown");
         }
 
         final String cooldownStorageString = ScriptLoader.replaceOptions(node.get("cooldown storage", ""));
@@ -539,7 +541,7 @@ public final class Commands {
 
         if (tabCompleterFunction != null) {
             if (!tabCompleterFunction.isSimple()) { // TODO maybe add expression support
-                Skript.error("Tab completer function name should be a literal (i.e must not contain any expressions, but can contain options)");
+                error("Tab completer function name should be a literal (i.e must not contain any expressions, but can contain options)");
                 return null;
             }
 
@@ -552,11 +554,11 @@ public final class Commands {
 
         final String permission = ScriptLoader.replaceOptions(node.get("permission", ""));
         if (permissionMessage != null && permission.isEmpty()) {
-            Skript.warning("command /" + command + " has a permission message set, but not permission");
+            warning("command /" + command + " has a permission message set, but not permission");
         }
 
-        if (Skript.debug() || node.debug())
-            Skript.debug("command " + desc + ':');
+        if (debug() || node.debug())
+            debug("command " + desc + ':');
 
         final File config = node.getConfig().getFile();
         if (config == null) {
@@ -578,7 +580,7 @@ public final class Commands {
         }
         registerCommand(c);
 
-        if (Skript.logVeryHigh() && !Skript.debug())
+        if (logVeryHigh() && !debug())
             info("registered command " + desc);
         return c;
     }
@@ -647,7 +649,7 @@ public final class Commands {
 
         if (function == null) { // TODO add functions before definitions support
             if (printErrors)
-                Skript.error("The tab completer function '" + functionName + "' does not exist, please put it before the command");
+                error("The tab completer function '" + functionName + "' does not exist, please put it before the command");
             return null;
         }
 
@@ -655,19 +657,19 @@ public final class Commands {
 
         if (returnType == null) { // May happen with add-ons (e.g skript-mirror)
             if (printErrors)
-                Skript.error("Return type of the tab completer function '" + functionName + "' should be known at parse time, please make sure you put the function before the command");
+                error("Return type of the tab completer function '" + functionName + "' should be known at parse time, please make sure you put the function before the command");
             return null;
         }
 
         if (returnType.getC() != String.class || function.isSingle()) {
             if (printErrors)
-                Skript.error("Return type of the tab completer function '" + functionName + "' must be list of strings/texts, not " + returnType.getCodeName());
+                error("Return type of the tab completer function '" + functionName + "' must be list of strings/texts, not " + returnType.getCodeName());
             return null;
         }
 
         if (function.getParameters().length != 4 || function.getParameter(0).getType().getC() != CommandSender.class || function.getParameter(1).getType().getC() != String.class || function.getParameter(2).getType().getC() != String.class || function.getParameter(3).getType().getC() != String.class || function.getParameter(3).isSingle()) {
             if (printErrors)
-                Skript.error("The definition of the tab completer function '" + functionName + "' should look like: function onTabComplete(sender: command sender, command: string, alias: string, args: strings) :: strings:");
+                error("The definition of the tab completer function '" + functionName + "' should look like: function onTabComplete(sender: command sender, command: string, alias: string, args: strings) :: strings:");
             return null;
         }
 
@@ -688,7 +690,7 @@ public final class Commands {
         final ScriptCommand existingCommand = commands.get(command.getLabel());
         if (existingCommand != null && existingCommand.getLabel().equals(command.getLabel())) {
             final File f = existingCommand.getScript();
-            Skript.error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
+            error("A command with the name /" + existingCommand.getName() + " is already defined" + (f == null ? "" : " in " + f.getName()));
             return;
         }
         if (commandMap != null) {
@@ -750,35 +752,35 @@ public final class Commands {
         if (!registeredListeners) {
             final EventPriority commandPriority = SkriptConfig.commandPriority.value();
 
-            if (Skript.debug())
-                Skript.debug("Using command priority " + commandPriority.name().toLowerCase(Locale.ENGLISH));
+            if (debug())
+                debug("Using command priority " + commandPriority.name().toLowerCase(Locale.ENGLISH));
 
             Bukkit.getPluginManager().registerEvent(PlayerCommandPreprocessEvent.class, new Listener() {
                 /* ignored */
-            }, commandPriority, new SkriptPlayerCommandExecutor(), Skript.getInstance(), true);
+            }, commandPriority, new SkriptPlayerCommandExecutor(), getInstance(), true);
 
             Bukkit.getPluginManager().registerEvent(ServerCommandEvent.class, new Listener() {
                 /* ignored */
-            }, EventPriority.MONITOR, new SkriptConsoleCommandExecutor(), Skript.getInstance(), true);
+            }, EventPriority.MONITOR, new SkriptConsoleCommandExecutor(), getInstance(), true);
 
-            if (Skript.classExists("org.bukkit.event.player.AsyncPlayerChatEvent")) {
+            if (classExists("org.bukkit.event.player.AsyncPlayerChatEvent")) {
                 Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, new Listener() {
                     /* ignored */
                 }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof AsyncPlayerChatEvent)
                         onAsyncPlayerChat((AsyncPlayerChatEvent) event);
-                }, Skript.getInstance(), true);
-            } else if (Skript.classExists("org.bukkit.event.player.PlayerChatEvent")) {
-                if (Skript.logHigh())
-                    Skript.warning("Using non-async chat event, performance may drop!");
+                }, getInstance(), true);
+            } else if (classExists("org.bukkit.event.player.PlayerChatEvent")) {
+                if (logHigh())
+                    warning("Using non-async chat event, performance may drop!");
                 Bukkit.getPluginManager().registerEvent(PlayerChatEvent.class, new Listener() {
                     /* ignored */
                 }, EventPriority.MONITOR, (listener, event) -> {
                     if (event instanceof PlayerChatEvent)
                         onPlayerChat((PlayerChatEvent) event);
-                }, Skript.getInstance(), true);
+                }, getInstance(), true);
             } else
-                Skript.outdatedError(new UnsupportedOperationException("Can't find chat event"));
+                outdatedError(new UnsupportedOperationException("Can't find chat event"));
 
             // If we use these methods, Bukkit will use reflection to access @EventHandler methods
             // so it's super slow, and we are handling the events manually to fix performance impact.

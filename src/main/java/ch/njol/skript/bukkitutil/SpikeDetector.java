@@ -24,8 +24,10 @@ package ch.njol.skript.bukkitutil;
 
 import ch.njol.skript.ServerPlatform;
 import ch.njol.skript.Skript;
+import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.registrations.Classes;
 import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
@@ -63,10 +65,10 @@ public final class SpikeDetector extends Thread {
     private static final MethodHandle doStop = findDoStop();
     @Nullable
     private static final MethodHandle doStart = findDoStart();
-    private static final long earlyWarningDelay = Long.getLong("skript.earlyWarningDelay", 10000L);
-    private static final long earlyWarningEvery = Long.getLong("skript.earlyWarningEvery", earlyWarningDelay / 2L);
-    private static final long sleepMillisDelay = Long.getLong("skript.sleepMillisDelay", 100L); // 100L to get truer stack traces
-    private static final long earlyWarningCooldown = Long.getLong("skript.earlyWarningCooldown", earlyWarningEvery - sleepMillisDelay);
+    private static final long earlyWarningDelay = Long.getLong("skript.spikeDetector.earlyWarningDelay", 10000L);
+    private static final long earlyWarningEvery = Long.getLong("skript.spikeDetector.earlyWarningEvery", earlyWarningDelay / 2L);
+    private static final long sleepMillisDelay = Long.getLong("skript.spikeDetector.sleepMillisDelay", 100L); // 100L to get truer stack traces
+    private static final long earlyWarningCooldown = Long.getLong("skript.spikeDetector.earlyWarningCooldown", earlyWarningEvery - sleepMillisDelay);
     private static volatile boolean hasStarted = alwaysEnabled;
     private static volatile boolean enabled = alwaysEnabled;
     @Nullable
@@ -81,6 +83,9 @@ public final class SpikeDetector extends Thread {
         super.setPriority(Thread.MAX_PRIORITY);
 
         this.serverThread = serverThread;
+
+        assert serverThread != this : this;
+        assert !Skript.isBukkitRunning() || Bukkit.isPrimaryThread() : Thread.currentThread();
     }
 
     @Nullable
@@ -117,7 +122,7 @@ public final class SpikeDetector extends Thread {
     }
 
     private static final long monotonicMillis() {
-        return System.nanoTime() / 1000000L;
+        return System.nanoTime() / 100_00_00L;
     }
 
     /**
@@ -128,6 +133,7 @@ public final class SpikeDetector extends Thread {
             instance = new SpikeDetector(serverThread);
             instance.start();
         }
+        PlayerUtils.task.run();
     }
 
     /**
@@ -214,11 +220,11 @@ public final class SpikeDetector extends Thread {
         }
     }
 
-    private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean suspended, final ThreadInfo threadInfo, @Nullable final LockInfo lockInfo, final LockInfo[] lockedSynchronizers, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
+    private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean alive, final boolean suspended, final boolean interrupted, final ThreadInfo threadInfo, @Nullable final LockInfo lockInfo, final LockInfo[] lockedSynchronizers, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
         log.log(Level.WARNING, prefix + "------------------------------");
 
-        log.log(Level.WARNING, prefix + "Current Thread: " + threadInfo.getThreadName());
-        log.log(Level.WARNING, prefix + "\tPID: " + threadInfo.getThreadId() + " | Suspended: " + suspended + " | Native: " + threadInfo
+        log.log(Level.WARNING, prefix + "Thread Name: " + threadInfo.getThreadName());
+        log.log(Level.WARNING, prefix + "\tPID: " + threadInfo.getThreadId() + " | Alive: " + alive + " | Suspended: " + suspended + " | Interrupted: " + interrupted + " | Native: " + threadInfo
                 .isInNative() + " | Daemon: " + thread
                 .isDaemon() + " | State: " + state + " | Priority: " + priority);
         if (monitorInfo.length > 0) {
@@ -243,6 +249,7 @@ public final class SpikeDetector extends Thread {
         }
     }
 
+    @SuppressWarnings("null")
     @Override
     public final void run() {
         while (!stopping) {
@@ -282,8 +289,12 @@ public final class SpikeDetector extends Thread {
                 final LockInfo lockInfo = threadInfo.getLockInfo();
                 final LockInfo[] lockedSynchronizers = threadInfo.getLockedSynchronizers();
 
-                // Get true suspended status here
+                // Get true alive and suspended status here
+                final boolean alive = serverThread.isAlive();
                 final boolean suspended = threadInfo.isSuspended();
+
+                // Get true interrupted status here
+                final boolean interrupted = serverThread.isInterrupted();
 
                 // Print colored to make admins pay attention, if possible
                 final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
@@ -293,15 +304,19 @@ public final class SpikeDetector extends Thread {
                         Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString() : "";
 
                 log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
-                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')' + " | OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
+                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + (Skript.version != null ? " | Skript: " + Skript.version : "") + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')' + " | OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
 
                 log.log(Level.WARNING, prefix + "------------------------------");
                 log.log(Level.WARNING, prefix + "Server thread dump:");
-                dumpThread(serverThread, threadState, oldPriority, suspended, threadInfo, lockInfo, lockedSynchronizers, monitorInfo, stackTrace, log, prefix);
+                dumpThread(serverThread, threadState, oldPriority, alive, suspended, interrupted, threadInfo, lockInfo, lockedSynchronizers, monitorInfo, stackTrace, log, prefix);
                 final Node node;
-                if ((node = SkriptLogger.getNode()) != null) {
-                    final String key;
-                    log.log(Level.WARNING, prefix + "\tNode: " + node + " (" + ((key = node.getKey()) != null ? key : "") + ')');
+                if ((node = SkriptLogger.getNode()) != null)
+                    log.log(Level.WARNING, prefix + "\tNode: " + node);
+                final Parser<?> lastParser;
+                final Class<?> lastParserClass;
+                if ((lastParser = Classes.lastCheckedParser) != null && (lastParserClass = lastParser.getClass()) != null) {
+                    final Class<?> enclosingClass;
+                    log.log(Level.WARNING, prefix + "\tParser: " + lastParserClass + " (" + ((enclosingClass = Classes.getEnclosingClass(lastParserClass)) != null ? enclosingClass : "no enclosing class") + ')');
                 }
                 log.log(Level.WARNING, prefix + "------------------------------" + suffix);
 

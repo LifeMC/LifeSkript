@@ -134,6 +134,8 @@ public final class SkriptConfig {
                     SpikeDetector.setEnabled(enableTimings.value());
                 else
                     SpikeDetector.setEnabled(Boolean.parseBoolean(t));
+                if (SpikeDetector.isEnabled() && SpikeDetector.alwaysEnabled)
+                    SpikeDetector.doStart(Thread.currentThread());
             });
     public static final Option<String> defaultSourceVersion = new Option<>("default source version", "default");
     public static final Option<Boolean> disableBackupsCompletely = new Option<>("disable backups completely", false);

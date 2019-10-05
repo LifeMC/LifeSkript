@@ -3034,8 +3034,6 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                         SpikeDetector.doStart(mainThread);
                                 }
 
-                                PlayerUtils.task.run();
-
                                 if (Boolean.getBoolean("skript.testSpike"))
                                     SpikeDetector.testSpike();
 

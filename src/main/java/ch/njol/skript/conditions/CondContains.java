@@ -142,8 +142,8 @@ public final class CondContains extends Condition {
                     }
 
                     // OK, so we have a variable...
-                    final Object val = container instanceof Variable
-                            ? ((Variable<?>) container).getSingle(e) : container;
+                    final Object val = container instanceof Expression
+                            ? ((Expression<?>) container).getSingle(e) : container;
 
                     final Inventory inventory = Converters.convert(val, Inventory.class);
                     if (inventory != null) {
