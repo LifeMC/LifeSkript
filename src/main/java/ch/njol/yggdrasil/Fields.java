@@ -138,7 +138,7 @@ public final class Fields implements Iterable<FieldContext> {
      * @throws NotSerializableException
      * @throws YggdrasilException       If this was called on a Fields object not created by Yggdrasil itself
      */
-    public void setFields(final Object o) throws StreamCorruptedException, NotSerializableException {
+    public final void setFields(final Object o) throws StreamCorruptedException, NotSerializableException {
         final Yggdrasil y = yggdrasil;
         if (y == null)
             throw new YggdrasilException("");
@@ -187,7 +187,7 @@ public final class Fields implements Iterable<FieldContext> {
         c.setObject(value);
     }
 
-    public void putPrimitive(final String fieldID, final Object value) {
+    public final void putPrimitive(final String fieldID, final Object value) {
         FieldContext c = fields.get(fieldID);
         if (c == null)
             fields.put(fieldID, c = new FieldContext(fieldID));
@@ -366,7 +366,7 @@ public final class Fields implements Iterable<FieldContext> {
             return (T) value;
         }
 
-        public void setField(final Object o, final Field f, final Yggdrasil y) throws StreamCorruptedException {
+        public final void setField(final Object o, final Field f, final Yggdrasil y) throws StreamCorruptedException {
             if (Modifier.isStatic(f.getModifiers()))
                 throw new StreamCorruptedException("The field " + id + " of " + f.getDeclaringClass() + " is static");
             if (Modifier.isTransient(f.getModifiers()))

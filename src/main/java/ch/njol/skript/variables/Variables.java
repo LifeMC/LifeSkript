@@ -115,8 +115,8 @@ public final class Variables {
                 init(); // separate method for the annotation
             }
 
-            @SuppressWarnings({"unchecked", "null", "cast"})
-            private void init() {
+            @SuppressWarnings({"unchecked", "null"})
+            private final void init() {
                 // used by asserts
                 info = (ClassInfo<? extends ConfigurationSerializable>) (ClassInfo<?>) Classes.getExactClassInfo(Object.class);
             }
