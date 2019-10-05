@@ -728,7 +728,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     /**
      * Gets a specific class if it exists, otherwise returns null.
      * Note this simply catches the exception and returns null on exception.
-     * Yo should use {@link Skript#classExists(String)} if you want to actually check if it exists.
+     * You should use {@link Skript#classExists(String)} if you want to actually check if it exists.
      *
      * @param className The {@link Class#getCanonicalName() canonical name} of the class
      * @return The class representing the given class name
@@ -786,25 +786,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     @SuppressWarnings("null")
     public static final boolean methodExists(@Nullable final Class<?> c, @Nullable final String methodName, final Class<?>[] parameterTypes, final Class<?> returnType) {
-        if (c == null || methodName == null)
-            return false;
-        try {
-            final Method m = c.getDeclaredMethod(methodName, parameterTypes);
-            if (m.getReturnType() == returnType)
-                return true;
-            // Lookup needed, hope there are not so many methods!
-            for (final Method method : c.getDeclaredMethods()) {
-                if (method.getName().equalsIgnoreCase(methodName) && method.getReturnType() == returnType)
-                    return true;
-            }
-            //if (Skript.testing() && Skript.debug())
-            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
-            return false; // There is no such method!
-        } catch (final NoSuchMethodException | SecurityException ignored) {
-            //if (Skript.testing() && Skript.debug())
-            //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
-            return false;
-        }
+        return methodForName(c, methodName, parameterTypes, returnType, false) != null;
     }
 
     /**
@@ -881,20 +863,28 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             return null;
         try {
             final Method m = c.getDeclaredMethod(methodName, parameterTypes);
-            if (m.getReturnType() == returnType)
+            if (m.getReturnType() == returnType) {
+                if (setAccessible)
+                    m.setAccessible(true);
                 return m;
+            }
             // Lookup needed, hope there are not so many methods!
             for (final Method method : c.getDeclaredMethods()) {
-                if (method.getName().equalsIgnoreCase(methodName) && method.getReturnType() == returnType)
+                if (method.getName().equalsIgnoreCase(methodName) && method.getReturnType() == returnType) {
+                    if (setAccessible)
+                        method.setAccessible(true);
                     return method;
+                }
             }
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
-            return null; // There is no such method!
+            if (setAccessible)
+                m.setAccessible(true);
+            return m; // Use and trust the get declared method
         } catch (final NoSuchMethodException | SecurityException ignored) {
             //if (Skript.testing() && Skript.debug())
             //debug("The method \"" + methodName + "\" does not exist in class \"" + c.getCanonicalName() + "\".");
-            return null;
+            return null; // There is no such method!
         }
     }
 
@@ -913,7 +903,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             return null;
         try {
             if (parameterTypes == null)
-                return c.getDeclaredConstructor();
+                return c.getDeclaredConstructor(EmptyArrays.EMPTY_CLASS_ARRAY);
             return c.getDeclaredConstructor(parameterTypes);
         } catch (final NoSuchMethodException | SecurityException ignored) {
             return null;
@@ -1322,8 +1312,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     public static final <E extends Expression<T>, T> void registerExpression(final Class<E> expression, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
-        if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
-            throw new IllegalArgumentException("returnType must be a normal type");
+        //if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
+            //throw new IllegalArgumentException("returnType must be a normal type");
+        if (returnType.isAnnotation())
+            throw new IllegalArgumentException("returnType must not be an annotation");
+        if (returnType.isArray())
+            throw new IllegalArgumentException("returnType must not be an array");
+        if (returnType == Void.class || returnType == void.class)
+            throw new IllegalArgumentException("returnType must not be void");
+        if (returnType.isPrimitive()) // hint: use KClass#javaObjectType for Kotlin
+            throw new IllegalArgumentException("returnType must not be a primitive");
         if (Skript.testing() && Skript.debug())
             checkDuplicatePatterns(expression, "expression", patterns);
         final ExpressionInfo<E, T> info = new ExpressionInfo<>(patterns, returnType, expression);
@@ -2607,6 +2605,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             }
 
             Workarounds.init();
+            Delay.delayingDisabled = false;
 
             if (Bukkit.isPrimaryThread() && SpikeDetector.alwaysEnabled)
                 SpikeDetector.doStart(Thread.currentThread());
