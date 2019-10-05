@@ -25,11 +25,13 @@
 package ch.njol.skript.timings
 
 import ch.njol.skript.Skript
+import ch.njol.skript.util.EmptyArrays
 import co.aikar.timings.Timing
 import co.aikar.timings.Timings
 import org.bukkit.Bukkit
 import org.bukkit.plugin.SimplePluginManager
 import org.eclipse.jdt.annotation.Nullable
+import java.lang.reflect.Method
 
 @Volatile
 private var enabled: Boolean = false
@@ -41,6 +43,13 @@ private val timings: Boolean = Skript.classExists("co.aikar.timings.Timings") &&
 private val syncMethods: Boolean = timings && Skript.methodExists(Timings::class.java, "startTimingIfSync")
 private val isEnabledMethod: Boolean = timings && Skript.methodExists(Timings::class.java, "isTimingsEnabled")
 
+private val startTimingVoid: Boolean = timings && Skript.methodExists(Timings::class.java, "startTiming", EmptyArrays.EMPTY_CLASS_ARRAY, Void::class.javaPrimitiveType)
+
+private val startTimingMethod: Method? = if (timings && !startTimingVoid)
+    Skript.methodForName(Timing::class.java, "startTiming", EmptyArrays.EMPTY_CLASS_ARRAY, Timing::class.java)
+else
+    null
+
 @JvmField
 var timingsEnabled: Boolean = false
 
@@ -51,8 +60,12 @@ fun start(name: String): Any? {
     val timing = Timings.of(skript!!, name)
     if (syncMethods)
         timing!!.startTimingIfSync() // No warning spam in async code
-    else if (Bukkit.isPrimaryThread())
-        timing!!.startTiming() // FIXME fix timings on LifeSpigot
+    else if (Bukkit.isPrimaryThread()) {
+        if (startTimingVoid)
+            timing!!.startTiming()
+        else
+            startTimingMethod!!.invoke(timing)
+    }
     @Suppress("SENSELESS_COMPARISON")
     assert(timing != null)
     return timing
@@ -78,7 +91,16 @@ fun enabled(): Boolean {
 }
 
 fun setEnabled(flag: Boolean) {
-    enabled = flag
+    if (!flag) {
+        enabled = flag
+        return
+    }
+    if (syncMethods || startTimingVoid || startTimingMethod != null)
+        enabled = true
+    else {
+        Skript.warning("Can't enable timings on an unsupported environment!")
+        enabled = false // Just to make sure
+    }
 }
 
 fun setSkript(plugin: Skript) {

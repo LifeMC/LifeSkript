@@ -183,6 +183,7 @@ public final class FunctionReference<T> {
         return function;
     }
 
+    @SuppressWarnings("null")
     public boolean resetReturnValue() {
         if (function == null)
             return false;

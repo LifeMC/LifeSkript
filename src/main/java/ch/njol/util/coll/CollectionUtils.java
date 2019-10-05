@@ -51,7 +51,7 @@ public final class CollectionUtils {
      * @param t     The object to search for
      * @return The index of the first occurrence of the given object or -1 if not found
      */
-    public static final <T> int indexOf(final @Nullable T[] array, final @Nullable T t) {
+    public static final <T> int indexOf(@Nullable final T[] array, @Nullable final T t) {
         if (array == null)
             return -1;
         for (int i = 0; i < array.length; i++) {
@@ -61,7 +61,7 @@ public final class CollectionUtils {
         return -1;
     }
 
-    public static final <T> int lastIndexOf(final @Nullable T[] array, final @Nullable T t) {
+    public static final <T> int lastIndexOf(@Nullable final T[] array, @Nullable final T t) {
         if (array == null)
             return -1;
         for (int i = array.length - 1; i >= 0; i--) {
@@ -71,7 +71,7 @@ public final class CollectionUtils {
         return -1;
     }
 
-    public static final <T> int indexOf(final @Nullable T[] array, final @Nullable T t, final int start, final int end) {
+    public static final <T> int indexOf(@Nullable final T[] array, @Nullable final T t, final int start, final int end) {
         if (array == null)
             return -1;
         for (int i = start; i < end; i++) {
@@ -81,12 +81,12 @@ public final class CollectionUtils {
         return -1;
     }
 
-    public static final <T> boolean contains(final @Nullable T[] array, final @Nullable T o) {
+    public static final <T> boolean contains(@Nullable final T[] array, @Nullable final T o) {
         return indexOf(array, o) != -1;
     }
 
     @SafeVarargs
-    public static final <T> boolean containsAny(final @Nullable T[] array, final @Nullable T... os) {
+    public static final <T> boolean containsAny(@Nullable final T[] array, @Nullable final T... os) {
         if (array == null || os == null)
             return false;
         for (final T o : os) {
@@ -97,7 +97,7 @@ public final class CollectionUtils {
     }
 
     @SafeVarargs
-    public static final <T> boolean containsAll(final @Nullable T[] array, final @Nullable T... os) {
+    public static final <T> boolean containsAll(@Nullable final T[] array, @Nullable final T... os) {
         if (array == null || os == null)
             return false;
         for (final T o : os) {
@@ -107,19 +107,19 @@ public final class CollectionUtils {
         return true;
     }
 
-    public static final int indexOf(final @Nullable int[] array, final int num) {
+    public static final int indexOf(@Nullable final int[] array, final int num) {
         if (array == null)
             return -1;
         return indexOf(array, num, 0, array.length);
     }
 
-    public static final int indexOf(final @Nullable int[] array, final int num, final int start) {
+    public static final int indexOf(@Nullable final int[] array, final int num, final int start) {
         if (array == null)
             return -1;
         return indexOf(array, num, start, array.length);
     }
 
-    public static final int indexOf(final @Nullable int[] array, final int num, final int start, final int end) {
+    public static final int indexOf(@Nullable final int[] array, final int num, final int start, final int end) {
         if (array == null)
             return -1;
         for (int i = start; i < end; i++) {
@@ -129,7 +129,7 @@ public final class CollectionUtils {
         return -1;
     }
 
-    public static final boolean contains(final @Nullable int[] array, final int num) {
+    public static final boolean contains(@Nullable final int[] array, final int num) {
         return indexOf(array, num) != -1;
     }
 
@@ -140,7 +140,7 @@ public final class CollectionUtils {
      * @param s     the string to search for
      * @return the index of the first occurrence of the given string or -1 if not found
      */
-    public static final int indexOfIgnoreCase(final @Nullable String[] array, final @Nullable String s) {
+    public static final int indexOfIgnoreCase(@Nullable final String[] array, @Nullable final String s) {
         if (array == null)
             return -1;
         int i = 0;
@@ -152,7 +152,7 @@ public final class CollectionUtils {
         return -1;
     }
 
-    public static final boolean containsIgnoreCase(final @Nullable String[] array, final @Nullable String s) {
+    public static final boolean containsIgnoreCase(@Nullable final String[] array, @Nullable final String s) {
         return indexOfIgnoreCase(array, s) != -1;
     }
 
@@ -163,7 +163,7 @@ public final class CollectionUtils {
      * @param o    The object to search for
      * @return The index of the first occurrence of the given object or -1 if not found
      */
-    public static final <T> int indexOf(final @Nullable Iterable<T> iter, final @Nullable T o) {
+    public static final <T> int indexOf(@Nullable final Iterable<T> iter, @Nullable final T o) {
         if (iter == null)
             return -1;
         int i = 0;
@@ -182,7 +182,7 @@ public final class CollectionUtils {
      * @param s    The string to search for
      * @return The index of the first occurrence of the given string or -1 if not found
      */
-    public static final int indexOfIgnoreCase(final @Nullable Iterable<String> iter, final @Nullable String s) {
+    public static final int indexOfIgnoreCase(@Nullable final Iterable<String> iter, @Nullable final String s) {
         if (iter == null)
             return -1;
         int i = 0;
@@ -200,7 +200,7 @@ public final class CollectionUtils {
      * @return A new entry object or null if the key is not in the map
      */
     @Nullable
-    public static final <T, U> Entry<T, U> containsKey(final @Nullable Map<T, U> map, final @Nullable T key) {
+    public static final <T, U> Entry<T, U> containsKey(@Nullable final Map<T, U> map, @Nullable final T key) {
         if (map == null)
             return null;
         if (map.containsKey(key))
@@ -209,7 +209,7 @@ public final class CollectionUtils {
     }
 
     @Nullable
-    public static final <U> Entry<String, U> containsKeyIgnoreCase(final @Nullable Map<String, U> map, final @Nullable String key) {
+    public static final <U> Entry<String, U> containsKeyIgnoreCase(@Nullable final Map<String, U> map, @Nullable final String key) {
         if (key == null)
             return containsKey(map, null);
         if (map == null)
@@ -226,7 +226,7 @@ public final class CollectionUtils {
      * @param c       The class to look for
      * @return Whatever the class or any of its superclasses are contained in the array
      */
-    public static final boolean containsSuperclass(final @Nullable Class<?>[] classes, final @Nullable Class<?> c) {
+    public static final boolean containsSuperclass(@Nullable final Class<?>[] classes, @Nullable final Class<?> c) {
         if (classes == null || c == null)
             return false;
         for (final Class<?> cl : classes) {
@@ -243,7 +243,7 @@ public final class CollectionUtils {
      * @param cs      The classes to look for
      * @return Whatever the classes or any of their superclasses are contained in the array
      */
-    public static final boolean containsAnySuperclass(final @Nullable Class<?>[] classes, final @Nullable Class<?>... cs) {
+    public static final boolean containsAnySuperclass(@Nullable final Class<?>[] classes, @Nullable final Class<?>... cs) {
         if (classes == null || cs == null)
             return false;
         for (final Class<?> cl : classes) {
@@ -258,21 +258,21 @@ public final class CollectionUtils {
     }
 
     @Nullable
-    public static final <T> T getRandom(final @Nullable T[] os) {
+    public static final <T> T getRandom(@Nullable final T[] os) {
         if (os == null || os.length == 0)
             return null;
         return os[random.nextInt(os.length)];
     }
 
     @Nullable
-    public static final <T> T getRandom(final @Nullable T[] os, final int start) {
+    public static final <T> T getRandom(@Nullable final T[] os, final int start) {
         if (os == null || os.length == 0)
             return null;
         return os[random.nextInt(os.length - start) + start];
     }
 
     @Nullable
-    public static final <T> T getRandom(final @Nullable List<T> os) {
+    public static final <T> T getRandom(@Nullable final List<T> os) {
         if (os == null || os.isEmpty())
             return null;
         return os.get(random.nextInt(os.size()));
@@ -283,7 +283,7 @@ public final class CollectionUtils {
      * @param sub The set to test for being a subset of <tt>set</tt>
      * @return Whatever <tt>sub</tt> only contains elements out of <tt>set</tt> or not
      */
-    public static final boolean isSubset(final @Nullable Object[] set, final @Nullable Object[] sub) {
+    public static final boolean isSubset(@Nullable final Object[] set, @Nullable final Object[] sub) {
         if (set == null || sub == null)
             return false;
         for (final Object s : set) {
@@ -301,7 +301,7 @@ public final class CollectionUtils {
      */
     @SafeVarargs
     @SuppressWarnings("null")
-    public static final <E> Set<E> intersection(final @Nullable Set<E>... sets) {
+    public static final <E> Set<E> intersection(@Nullable final Set<E>... sets) {
         if (sets == null || sets.length == 0)
             return Collections.emptySet();
         if (sets.length == 1 && sets[0] != null)
@@ -323,7 +323,7 @@ public final class CollectionUtils {
      */
     @SafeVarargs
     @SuppressWarnings("null")
-    public static final <E> Set<E> union(final @Nullable Set<E>... sets) {
+    public static final <E> Set<E> union(@Nullable final Set<E>... sets) {
         if (sets == null || sets.length == 0)
             return Collections.emptySet();
         if (sets.length == 1 && sets[0] != null)
@@ -349,7 +349,7 @@ public final class CollectionUtils {
     @SuppressWarnings({"null", "ConstantConditions"})
     @NonNull
     @Contract("null->null")
-    public static final <T> T[] array(final @Nullable T... array) {
+    public static final <T> T[] array(@Nullable final T... array) {
         return array;
     }
 
@@ -413,7 +413,7 @@ public final class CollectionUtils {
      * @return An int[] containing the elements of the given collection in the order they were returned by the collection's iterator.
      */
     @SuppressWarnings("null")
-    public static final int[] toArray(final @Nullable Collection<Integer> ints) {
+    public static final int[] toArray(@Nullable final Collection<Integer> ints) {
         if (ints == null)
             return EmptyArrays.EMPTY_INT_ARRAY;
         final int[] r = new int[ints.size()];
@@ -427,7 +427,7 @@ public final class CollectionUtils {
         return r;
     }
 
-    public static final float[] toFloats(final @Nullable double[] doubles) {
+    public static final float[] toFloats(@Nullable final double[] doubles) {
         if (doubles == null)
             return EmptyArrays.EMPTY_FLOAT_ARRAY;
         final float[] floats = new float[doubles.length];
@@ -436,7 +436,7 @@ public final class CollectionUtils {
         return floats;
     }
 
-    public static final Double[] wrap(final double[] primitive) {
+    public static final Double[] wrap(final double... primitive) {
         final Double[] wrapped = new Double[primitive.length];
         for (int i = 0; i < primitive.length; i++) {
             wrapped[i] = primitive[i];

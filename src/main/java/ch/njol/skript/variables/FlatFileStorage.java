@@ -62,7 +62,7 @@ public final class FlatFileStorage extends VariablesStorage {
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
     public static final int REQUIRED_CHANGES_FOR_RESAVE = Integer.getInteger("skript.requiredVariableChangesForSave", 1000);
     @SuppressWarnings("null")
-    private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*([^\",]*|\"([^\"]|\"\")*\")\\s*(,|$)");
+    private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*?([^\",]*?|\"([^\"]|\"\")*?\")\\s*?(,|$)");
     private static final Matcher csvMatcher = csv.matcher("");
     /**
      * Use with find()
