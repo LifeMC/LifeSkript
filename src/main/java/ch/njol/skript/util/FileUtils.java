@@ -22,6 +22,7 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Converter;
 import org.apache.commons.lang.time.FastDateFormat;
 import org.eclipse.jdt.annotation.Nullable;
@@ -66,7 +67,7 @@ public final class FileUtils {
         final String ext = c == -1 ? null : name.substring(c + 1);
         if (c != -1)
             name = name.substring(0, c);
-        final File backupFolder = new File(f.getParentFile(), "backups" + File.separator);
+        final File backupFolder = new File(Skript.getInstance().getDataFolder(), "backups" + File.separator);
         if (!backupFolder.exists() && !backupFolder.mkdirs())
             throw new IOException("Cannot create backups folder");
         final File backup = new File(backupFolder, name + '_' + getBackupSuffix() + (ext == null ? "" : '.' + ext));
@@ -129,7 +130,7 @@ public final class FileUtils {
     public static final void save(final InputStream in, final File file) throws IOException {
         file.getParentFile().mkdirs();
         try (final FileOutputStream out = new FileOutputStream(file)) {
-            final byte[] buffer = new byte[(16 << 10)];
+            final byte[] buffer = new byte[16 << 10];
             int read;
             while ((read = in.read(buffer)) > 0) {
                 out.write(buffer, 0, read);
