@@ -57,7 +57,7 @@ public abstract class Statement extends TriggerItem implements SyntaxElement {
         } finally {
             log.stop();
         }
-        return (Statement) SkriptParser.parse(s, (Iterator) Skript.getStatements().iterator(), defaultError);
+        return SkriptParser.<Statement>parse(s, (Iterator/*<? extends SyntaxElementInfo<Statement>>*/) Skript.getStatements().iterator(), defaultError);
     }
 
 }

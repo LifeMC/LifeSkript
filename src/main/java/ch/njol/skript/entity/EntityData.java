@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
  * @author Peter Güttinger
  */
 @SuppressWarnings("rawtypes")
-public abstract class EntityData<E extends Entity> implements SyntaxElement, YggdrasilExtendedSerializable {// TODO extended horse support, zombie villagers // REMIND unit
+public abstract class EntityData<E extends Entity> implements SyntaxElement, YggdrasilExtendedSerializable { // TODO extended horse support, zombie villagers // REMIND unit
 
     public static final String LANGUAGE_NODE = "entities";
 
@@ -70,7 +70,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     public static final Adjective m_baby = new Adjective(LANGUAGE_NODE + ".age adjectives.baby"),
             m_adult = new Adjective(LANGUAGE_NODE + ".age adjectives.adult");
 
-    // must be here to be initialised before 'new SimpleLiteral' is called in the register block below
+    // must be here to be initialized before 'new SimpleLiteral' is called in the register block below
     private static final List<EntityDataInfo<?>> infos = new ArrayList<>(100);
 
     public static final Serializer<EntityData> serializer = new Serializer<EntityData>() {
@@ -140,20 +140,20 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
     };
 
     static {
-        Classes.registerClass(new ClassInfo<>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData>() {
+        Classes.registerClass(new ClassInfo<>(EntityData.class, "entitydata").user("entity ?types?").name("Entity Type").description("The type of an <a href='#entity'>entity</a>, e.g. player, wolf, powered creeper, etc.").usage("<i>Detailed usage will be added eventually</i>").examples("victim is a cow", "spawn a creeper").since("1.3").defaultExpression(new SimpleLiteral<>(new SimpleEntityData(Entity.class), true)).before("entitytype").parser(new Parser<EntityData<?>>() {
             @Override
-            public String toString(final EntityData d, final int flags) {
+            public String toString(final EntityData<?> d, final int flags) {
                 return d.toString(flags);
             }
 
             @Override
             @Nullable
-            public EntityData parse(final String s, final ParseContext context) {
+            public EntityData<?> parse(final String s, final ParseContext context) {
                 return EntityData.parse(s);
             }
 
             @Override
-            public String toVariableNameString(final EntityData o) {
+            public String toVariableNameString(final EntityData<?> o) {
                 return "entitydata:" + o;
             }
 
@@ -218,10 +218,10 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      * @param s String with optional indefinite article at the beginning
      * @return The parsed entity data
      */
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "RedundantTypeArguments"}) // Eclipse compiler can't infer these type arguments, interesting...
     @Nullable
     public static final EntityData<?> parse(final String s) {
-        return SkriptParser.<EntityData>parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
+        return SkriptParser.<EntityData<?>>parseStatic(Noun.stripIndefiniteArticle(s), infos.iterator(), null); // fix for Java 9/10
     }
 
     /**
@@ -230,10 +230,10 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      * @param s
      * @return The parsed entity data
      */
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "RedundantTypeArguments"}) // Eclipse compiler can't infer these type arguments, interesting...
     @Nullable
     public static final EntityData<?> parseWithoutIndefiniteArticle(final String s) {
-        return SkriptParser.<EntityData>parseStatic(s, infos.iterator(), null); // fix for Java 9/10
+        return SkriptParser.<EntityData<?>>parseStatic(s, infos.iterator(), null); // fix for Java 9/10
     }
 
     /**
@@ -277,6 +277,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return list.toArray((E[]) Array.newInstance(type, list.size()));
     }
 
+    @SuppressWarnings("null")
     private static final <E extends Entity> EntityData<? super E> getData(@Nullable final Class<E> c, @Nullable final E e) {
         assert c == null ^ e == null;
         assert c == null || c.isInterface();
@@ -294,7 +295,6 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         if (e != null) {
             return new SimpleEntityData(e);
         }
-        assert c != null;
         return new SimpleEntityData(c);
     }
 
@@ -355,7 +355,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      *
      * @return The supertype of this entity data. Must not be null.
      */
-    public abstract EntityData getSuperType();
+    public abstract EntityData<? extends E> getSuperType();
 
     @Override
     public final String toString() {
@@ -408,9 +408,9 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof EntityData))
+        if (!(obj instanceof EntityData<?>))
             return false;
-        final EntityData other = (EntityData) obj;
+        final EntityData<?> other = (EntityData<?>) obj;
         if (baby != other.baby)
             return false;
         if (plural != other.plural)
@@ -532,9 +532,9 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
                 return true;
             if (obj == null)
                 return false;
-            if (!(obj instanceof EntityDataInfo))
+            if (!(obj instanceof EntityDataInfo<?>))
                 return false;
-            final EntityDataInfo other = (EntityDataInfo) obj;
+            final EntityDataInfo<?> other = (EntityDataInfo<?>) obj;
             if (!codeName.equals(other.codeName))
                 return false;
             assert Arrays.equals(codeNames, other.codeNames);

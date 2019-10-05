@@ -226,7 +226,7 @@ public final class SkriptLogger {
             return;
         }
         if (Skript.testing() && node != null && node.debug())
-            System.out.print("---> " + entry.level + '/' + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller());
+            System.out.print("---> " + entry.level + '/' + ErrorQuality.get(entry.quality) + ": " + entry.getMessage() + " ::" + LogEntry.findCaller(entry, true));
         synchronized (handlers) {
             for (final LogHandler h : handlers) {
                 final LogResult r = h.log(entry);

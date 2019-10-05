@@ -62,7 +62,7 @@ public abstract class Effect extends Statement {
         } finally {
             log.stop();
         }
-        return (Effect) SkriptParser.parse(s, (Iterator) Skript.getEffects().iterator(), defaultError);
+        return SkriptParser.<Effect>parse(s, (Iterator/*<? extends SyntaxElementInfo<Effect>>*/) Skript.getEffects().iterator(), defaultError);
     }
 
     /**

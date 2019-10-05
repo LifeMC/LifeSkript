@@ -68,7 +68,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
         return true;
     }
 
-    final void execute(final @Nullable World w) {
+    final void execute(@Nullable final World w) {
         final Trigger t = this.t;
         if (t == null) {
             assert false;
@@ -92,6 +92,8 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     @SuppressWarnings("null")
     @Override
     public final void register(final Trigger t) {
+        if (Delay.delayingDisabled)
+            return;
         this.t = t;
         final int[] taskIDs;
         if (worlds == null) {
@@ -101,7 +103,6 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
             for (int i = 0; i < worlds.length; i++) {
                 final World w = worlds[i];
                 taskIDs[i] = Bukkit.getScheduler().scheduleSyncRepeatingTask(Skript.getInstance(), () -> execute(w), period.getTicks_i() - w.getFullTime() % period.getTicks_i(), period.getTicks_i());
-                assert worlds != null; // FindBugs
             }
         }
         this.taskIDs = taskIDs;
@@ -125,7 +126,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "every " + period;
     }
 

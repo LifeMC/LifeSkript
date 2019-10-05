@@ -77,10 +77,22 @@ public final class LogEntry {
         this.message = message;
         this.node = node;
         this.tracked = tracked;
-        from = tracked || Skript.debug() ? findCaller() : "";
+        from = tracked || Skript.debug() ? findCaller(this) : "";
     }
 
+    /**
+     * @deprecated use {@link LogEntry#findCaller(LogEntry)} instead
+     */
+    @Deprecated
     static final String findCaller() {
+        return findCaller(null);
+    }
+
+    static final String findCaller(@Nullable final LogEntry entry) {
+        return findCaller(entry, false);
+    }
+
+    static final String findCaller(@Nullable final LogEntry entry, final boolean actual) {
         // Thread.currentThread().getStackTrace() is more memory friendly, but slower
         final StackTraceElement[] es = new Throwable().getStackTrace();
         for (int i = 0; i < es.length; i++) {

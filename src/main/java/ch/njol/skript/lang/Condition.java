@@ -23,6 +23,7 @@
 package ch.njol.skript.lang;
 
 import ch.njol.skript.Skript;
+import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -47,7 +48,37 @@ public abstract class Condition extends Statement {
         s = s.trim();
         while (!s.isEmpty() && s.charAt(0) == '(' && SkriptParser.next(s, 0, ParseContext.DEFAULT) == s.length())
             s = s.substring(1, s.length() - 1);
-        return (Condition) SkriptParser.parse(s, (Iterator) Skript.getConditions().iterator(), defaultError);
+        return SkriptParser.<Condition>parse(s, (Iterator/*<? extends SyntaxElementInfo<Condition>>*/) Skript.getConditions().iterator(), defaultError);
+    }
+
+    public static final Condition wrap(final Expression<Boolean> bool) {
+        return new BooleanCondition(bool);
+    }
+
+    /**
+     * Not an actual registered condition. (for now?)
+     */
+    private static final class BooleanCondition extends Condition {
+        private final Expression<Boolean> bool;
+
+        BooleanCondition(final Expression<Boolean> bool) {
+            this.bool = bool;
+        }
+
+        @Override
+        public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+            return true;
+        }
+
+        @Override
+        public final boolean check(final Event e) {
+            return bool.check(e, o -> o, isNegated());
+        }
+
+        @Override
+        public final String toString(@Nullable final Event e, final boolean debug) {
+            return bool.toString(e, debug);
+        }
     }
 
     /**

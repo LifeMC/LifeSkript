@@ -128,6 +128,8 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
     @Nullable
     public static final EntityType parse(String s) {
         assert s != null && !s.isEmpty();
+        s = s.trim();
+
         int amount = -1;
         if (ENTITY_TYPE_PATTERN_ONE_MATCHER.reset(s).matches()) {
             amount = Utils.parseInt(s.split(" ", 2)[0]);

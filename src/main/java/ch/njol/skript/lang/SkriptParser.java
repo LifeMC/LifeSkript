@@ -127,6 +127,7 @@ public final class SkriptParser {
     public SkriptParser(final String expr, final int flags, final ParseContext context) {
         assert expr != null;
         assert (flags & ALL_FLAGS) != 0;
+
         this.expr = expr.trim();
         this.flags = flags;
         this.context = context;
@@ -276,7 +277,7 @@ public final class SkriptParser {
 //            log.printLog();
 //        }
 //
-//        final Matcher m = listSplitPattern.matcher(expr);
+//        final Matcher m = listSplitMatcher.reset(expr);
 //        if (!m.find())
 //            return new UnparsedLiteral(expr, log.getError());
 //        m.reset();
@@ -577,7 +578,7 @@ public final class SkriptParser {
      * Validates a user-defined pattern (used in {@link ch.njol.skript.expressions.ExprParse}).
      *
      * @param pattern
-     * @return The pattern with %codenames% and a boolean array that contains whetehr the expressions are plural or not
+     * @return The pattern with %codenames% and a boolean array that contains whether the expressions are plural or not
      */
     @SuppressWarnings("null")
     @Nullable
@@ -840,9 +841,8 @@ public final class SkriptParser {
 
                                     // Those are un required and laggy expressions that hangs the parser
                                     // TODO Refuse to register those conditions in future
-                                    if (!SkriptConfig.disableDeprecationWarnings.value()) {
-                                        if ("com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name))
-                                            Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ')');
+                                    if (!SkriptConfig.disableDeprecationWarnings.value() && "com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name)) {
+                                        Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ')');
                                     }
                                 }
                             }
@@ -853,7 +853,7 @@ public final class SkriptParser {
                             }
                         }
                     } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
-                        Skript.exception(e);
+                        throw Skript.exception(e);
                     }
                 }
             }
@@ -864,7 +864,7 @@ public final class SkriptParser {
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes", "null"})
+    @SuppressWarnings({"rawtypes", "null"})
     @Nullable
     private final <T> Expression<? extends T> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final Class<? extends T>... types) {
         assert types.length > 0;
@@ -893,7 +893,7 @@ public final class SkriptParser {
                 final FunctionReference<T> fr = parseFunction(types);
                 if (fr != null) {
                     log.printLog();
-                    return new ExprFunctionCall(fr);
+                    return new ExprFunctionCall<>(fr);
                 }
                 if (log.hasError()) {
                     log.printError();
@@ -906,7 +906,7 @@ public final class SkriptParser {
                 if (expr.charAt(0) == '\"' && expr.charAt(expr.length() - 1) == '\"' && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                     e = VariableString.newInstance(expr.substring(1, expr.length() - 1));
                 } else {
-                    e = SkriptParser.<Expression<?>>parse(expr, (Iterator) Skript.getExpressions(types), null);
+                    e = SkriptParser.<Expression<?>>parse(expr, (Iterator/*<? extends SyntaxElementInfo<Expression<?>>>*/) Skript.getExpressions(types), null);
                 }
                 if (e != null) {
                     for (final Class<? extends T> t : types) {
@@ -972,7 +972,7 @@ public final class SkriptParser {
             return new SkriptParser(this, expr.substring(1, expr.length() - 1)).parseSingleExpr(allowUnparsedLiteral, error, vi);
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
-            // Construct types array which contains all potential classes
+            // Construct types array, which contains all potential classes
             final Class<?>[] types = new Class[vi.classes.length]; // This may contain nulls!
             boolean hasSingular = false;
             boolean hasPlural = false;
@@ -1052,7 +1052,7 @@ public final class SkriptParser {
                         // can hold any possible type, and the type used can only be 100% known at runtime
                         //
                         // TODO:
-                        // despite of that, we should probably implement a runtime check for this somewhere
+                        // despite that, we should probably implement a runtime check for this somewhere
                         // before executing the syntax element (perhaps even exceptionally with a console warning,
                         // otherwise users may have some hard time debugging the plurality issues) - currently an
                         // improper use in a script would result in an exception
@@ -1091,7 +1091,7 @@ public final class SkriptParser {
                 if (expr.charAt(0) == '\"' && expr.charAt(expr.length() - 1) == '\"' && expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                     e = VariableString.newInstance(expr.substring(1, expr.length() - 1));
                 } else {
-                    e = (Expression<?>) parse(expr, (Iterator) Skript.getExpressions(types), null);
+                    e = SkriptParser.<Expression<?>>parse(expr, (Iterator/*<? extends SyntaxElementInfo<Expression<?>>>*/) Skript.getExpressions(types), null);
                 }
                 if (e != null) { // Expression/VariableString parsing success
                     final Class<?> returnType = e.getReturnType(); // Sometimes getReturnType does non-trivial costly operations
@@ -1356,7 +1356,7 @@ public final class SkriptParser {
             if (and.isUnknown() && !suppressMissingAndOrWarnings && !SkriptConfig.disableMissingAndOrWarnings.value())
                 Skript.warning(MISSING_AND_OR + ": " + expr);
 
-            final Class<? extends T>[] exprRetTypes = new Class[ts.size()];
+            final Class<?>[] exprRetTypes = new Class<?>[ts.size()];
             for (int i = 0; i < ts.size(); i++)
                 exprRetTypes[i] = ts.get(i).getReturnType();
 
@@ -1557,7 +1557,8 @@ public final class SkriptParser {
             for (int i = 0; i < ts.size(); i++)
                 exprRetTypes[i] = ts.get(i).getReturnType();
 
-            if (isLiteralList) {
+            if (isLiteralList) { // If it's a literal list
+                //noinspection SuspiciousToArrayCall
                 final Literal<?>[] ls = ts.toArray(EmptyArrays.EMPTY_LITERAL_ARRAY);
                 return new LiteralList(ls, Utils.getSuperType(exprRetTypes), !and.isFalse());
             }
@@ -1572,7 +1573,7 @@ public final class SkriptParser {
      * @param types The required return type or null if it is not used (e.g. when calling a void function)
      * @return The parsed function, or null if the given expression is not a function call or is an invalid function call (check for an error to differentiate these two)
      */
-    @SuppressWarnings({"unchecked", "null"})
+    @SuppressWarnings("null")
     @Nullable
     public final <T> FunctionReference<T> parseFunction(@Nullable final Class<? extends T>... types) {
         if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
@@ -1664,7 +1665,7 @@ public final class SkriptParser {
                         assert pattern != null;
                         final ParseResult res = parse_i(pattern, 0, 0);
                         if (res != null) {
-                            if (Skript.logSpam() && !info.c.getPackage().getName().startsWith("ch.njol")) // Log spam and it's not a native Skript event
+                            if (Skript.logSpam() && !info.c.getPackage().getName().startsWith("ch.njol")) // Log spam is true, and it's not a native Skript event
                                 Skript.info("Using event " + info.c.getCanonicalName());
                             final SkriptEvent e = Skript.newInstance(info.c);
                             final Literal<?>[] ls = Arrays.copyOf(res.exprs, res.exprs.length, Literal[].class);
@@ -1676,7 +1677,7 @@ public final class SkriptParser {
                             return new NonNullPair<>(info, e);
                         }
                     } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
-                        Skript.exception(e);
+                        throw Skript.exception(e);
                     }
                 }
             }
@@ -1827,7 +1828,7 @@ public final class SkriptParser {
                     return null;
                 }
                 case '<': {
-                    end = pattern.indexOf('>', j + 1);// not next()
+                    end = pattern.indexOf('>', j + 1); // not next()
                     if (end == -1)
                         throw new MalformedPatternException(pattern, "Missing closing regex bracket '>'");
                     final Pattern p;
