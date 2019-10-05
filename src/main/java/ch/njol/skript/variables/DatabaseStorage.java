@@ -321,7 +321,7 @@ public final class DatabaseStorage extends VariablesStorage {
     }
 
     @SuppressWarnings("null")
-    private boolean connect(final boolean first) {
+    private final boolean connect(final boolean first) {
         synchronized (db) {
             // isConnected doesn't work in SQLite
 //			if (db.isConnected())
@@ -349,7 +349,7 @@ public final class DatabaseStorage extends VariablesStorage {
      *
      * @return True on success, false if an error is occurred and reported.
      */
-    private boolean prepareQueries() {
+    private final boolean prepareQueries() {
         synchronized (db) {
             final Database db = this.db.get();
             assert db != null;
@@ -503,7 +503,7 @@ public final class DatabaseStorage extends VariablesStorage {
     /**
      * Doesn't lock the database - {@link #save(String, String, byte[])} does that // what?
      */
-    private void loadVariables(final ResultSet r) throws SQLException {
+    private final void loadVariables(final ResultSet r) throws SQLException {
 //		assert !Thread.holdsLock(db);
 //		synchronized (syncDeserializing) {
 
@@ -589,7 +589,7 @@ public final class DatabaseStorage extends VariablesStorage {
      * @deprecated Only used for upgrading old variables/tables
      */
     @Deprecated
-    private void oldLoadVariables(final ResultSet r, final boolean hadNewTable) throws SQLException {
+    private final void oldLoadVariables(final ResultSet r, final boolean hadNewTable) throws SQLException {
 //		synchronized (oldSyncDeserializing) {
 
         final VariablesStorage temp = new OldVariablesStorage(databaseName);

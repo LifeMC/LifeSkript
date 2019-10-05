@@ -147,7 +147,7 @@ public final class Yggdrasil {
         throw new StreamCorruptedException("Enum constant " + id + " does not exist in " + c);
     }
 
-    public YggdrasilOutputStream newOutputStream(final OutputStream out) throws IOException {
+    public final YggdrasilOutputStream newOutputStream(final OutputStream out) throws IOException {
         return new DefaultYggdrasilOutputStream(this, out);
     }
 
@@ -188,7 +188,7 @@ public final class Yggdrasil {
     }
 
     @Nullable
-    YggdrasilSerializer<?> getSerializer(final Class<?> c) {
+    final YggdrasilSerializer<?> getSerializer(final Class<?> c) {
         for (final ClassResolver r : classResolvers) {
             if (r instanceof YggdrasilSerializer && r.getID(c) != null)
                 return (YggdrasilSerializer<?>) r;
@@ -212,7 +212,7 @@ public final class Yggdrasil {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Nullable
-    private String getIDNoError(Class<?> c) {
+    private final String getIDNoError(Class<?> c) {
         if (c == Object.class)
             return "Object";
         assert Tag.getType(c) == Tag.T_OBJECT || Tag.getType(c) == Tag.T_ENUM;

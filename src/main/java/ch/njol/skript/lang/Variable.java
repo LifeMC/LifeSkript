@@ -48,7 +48,6 @@ import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.EmptyIterator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -68,7 +67,6 @@ public final class Variable<T> implements Expression<T> {
     public static final String LOCAL_VARIABLE_TOKEN = "_";
     private static final String SINGLE_SEPARATOR_CHAR = ":";
     public static final String SEPARATOR = SINGLE_SEPARATOR_CHAR + SINGLE_SEPARATOR_CHAR;
-    private static final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
     private static final Pattern SEPARATOR_PATTERN = Pattern.compile(SEPARATOR, Pattern.LITERAL);
     private static final Matcher SEPARATOR_PATTERN_MATCHER = SEPARATOR_PATTERN.matcher("");
     /**
@@ -83,7 +81,7 @@ public final class Variable<T> implements Expression<T> {
     private final Variable<?> source;
 
     @SuppressWarnings("unchecked")
-    private Variable(final VariableString name, final Class<? extends T>[] types, final boolean local, final boolean list, final @Nullable Variable<?> source) {
+    private Variable(final VariableString name, final Class<? extends T>[] types, final boolean local, final boolean list, @Nullable final Variable<?> source) {
         assert name != null;
         assert types != null && types.length > 0;
 
@@ -169,7 +167,7 @@ public final class Variable<T> implements Expression<T> {
                     assert type != null;
                     if (type.isAssignableFrom(hint)) {
                         // Hint matches, use variable with exactly correct type
-                        return new Variable<>(vs, CollectionUtils.array(type), isLocal, isPlural, null);
+                        return new Variable<>(vs, CollectionUtils.array(type), true, isPlural, null);
                     }
                 }
 
@@ -178,17 +176,17 @@ public final class Variable<T> implements Expression<T> {
                     assert type != null;
                     if (Converters.converterExists(hint, type)) {
                         // Hint matches, even though converter is needed
-                        return new Variable<>(vs, CollectionUtils.array(type), isLocal, isPlural, null);
+                        return new Variable<>(vs, CollectionUtils.array(type), true, isPlural, null);
                     }
 
                     // Special cases
                     if (type.isAssignableFrom(World.class) && hint.isAssignableFrom(String.class)) {
                         // String->World conversion is weird spaghetti code
-                        return new Variable<>(vs, types, isLocal, isPlural, null);
+                        return new Variable<>(vs, types, true, isPlural, null);
                     }
                     if (type.isAssignableFrom(Player.class) && hint.isAssignableFrom(String.class)) {
                         // String->Player conversion is not available at this point
-                        return new Variable<>(vs, types, isLocal, isPlural, null);
+                        return new Variable<>(vs, types, true, isPlural, null);
                     }
                 }
 
@@ -236,7 +234,7 @@ public final class Variable<T> implements Expression<T> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e != null)
             return Classes.toString(get(e), name, debug); // Special handling for variables
         return '{' + (local ? "_" : "") + StringUtils.substring(name.toString(e, debug), 1, -1) + '}' + (debug ? "(as " + superType.getName() + ')' : "");
@@ -261,7 +259,7 @@ public final class Variable<T> implements Expression<T> {
         final String n = name.toString(e).toLowerCase(Locale.ENGLISH);
         if (n.endsWith(Variable.SEPARATOR + '*') != list) // prevents e.g. {%expr%} where "%expr%" ends with "::*" from returning a Map
             return null;
-        final Object val = !list ? convertIfOldPlayer(n, e, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local);
+        final Object val = !list ? convertIfOldPlayer(n, e, local, Variables.getVariable(n, e, local)) : Variables.getVariable(n, e, local);
         if (val == null)
             return Variables.getVariable((local ? LOCAL_VARIABLE_TOKEN : "") + name.getDefaultVariableName().toLowerCase(Locale.ENGLISH), e, false);
         return val;
@@ -279,7 +277,7 @@ public final class Variable<T> implements Expression<T> {
         final String name = StringUtils.substring(this.name.toString(e), 0, -1).toLowerCase(Locale.ENGLISH);
         for (final Entry<String, ?> v : ((Map<String, ?>) val).entrySet()) {
             if (v.getKey() != null && v.getValue() != null) {
-                l.add(convertIfOldPlayer(name + v.getKey(), e, v.getValue() instanceof Map ? ((Map<String, ?>) v.getValue()).get(null) : v.getValue()));
+                l.add(convertIfOldPlayer(name + v.getKey(), e, local, v.getValue() instanceof Map ? ((Map<String, ?>) v.getValue()).get(null) : v.getValue()));
             }
         }
         return l.toArray();
@@ -304,13 +302,12 @@ public final class Variable<T> implements Expression<T> {
      * because the player object inside the variable will be a (kinda) dead variable
      * as a new player object has been created by the server.
      */
-    @SuppressWarnings("deprecation")
     @Nullable
     static final Object convertIfOldPlayer(final String key, final Event event, final boolean local, @Nullable final Object t) {
         if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
             final Player p = (Player) t;
             if (!p.isValid() && p.isOnline()) {
-                final Player player = uuidSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
+                final Player player = Skript.offlineUUIDSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
                 Variables.setVariable(key, player, event, local);
                 return player;
             }
@@ -458,21 +455,21 @@ public final class Variable<T> implements Expression<T> {
     }
 
     @Nullable
-    private T getConverted(final Event e) {
+    private final T getConverted(final Event e) {
         assert !list;
         return Converters.convert(get(e), types);
     }
 
-    private T[] getConvertedArray(final Event e) {
+    private final T[] getConvertedArray(final Event e) {
         assert list;
         return Converters.convertArray((Object[]) get(e), types, superType);
     }
 
-    private void set(final Event e, final @Nullable Object value) {
+    private void set(final Event e, @Nullable final Object value) {
         Variables.setVariable(name.toString(e).toLowerCase(Locale.ENGLISH), value, e, local);
     }
 
-    private void setIndex(final Event e, final String index, final @Nullable Object value) {
+    private void setIndex(final Event e, final String index, @Nullable final Object value) {
         assert list;
         final String s = name.toString(e).toLowerCase(Locale.ENGLISH);
         assert s.endsWith("::*") : s + "; " + name;
@@ -489,7 +486,7 @@ public final class Variable<T> implements Expression<T> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
-    public final void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public final void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         switch (mode) {
             case DELETE:
                 set(e, null);
@@ -544,7 +541,7 @@ public final class Variable<T> implements Expression<T> {
                     if (mode == ChangeMode.REMOVE) {
                         if (o == null)
                             return;
-                        final ArrayList<String> rem = new ArrayList<>(); // prevents CMEs
+                        final List<String> rem = new ArrayList<>(); // prevents CMEs
                         for (final Object d : delta) {
                             for (final Entry<String, Object> i : o.entrySet()) {
                                 if (Relation.EQUAL.is(Comparators.compare(i.getValue(), d))) {
@@ -565,7 +562,7 @@ public final class Variable<T> implements Expression<T> {
                     } else if (mode == ChangeMode.REMOVE_ALL) {
                         if (o == null)
                             return;
-                        final ArrayList<String> rem = new ArrayList<>(); // prevents CMEs
+                        final List<String> rem = new ArrayList<>(); // prevents CMEs
                         for (final Entry<String, Object> i : o.entrySet()) {
                             for (final Object d : delta) {
                                 if (Relation.EQUAL.is(Comparators.compare(i.getValue(), d)))
@@ -635,7 +632,7 @@ public final class Variable<T> implements Expression<T> {
                         for (int i = 0; i < cs.length; i++)
                             cs2[i] = cs[i].isArray() ? cs[i].getComponentType() : cs[i];
 
-                        final ArrayList<Object> l = new ArrayList<>();
+                        final List<Object> l = new ArrayList<>();
                         for (final Object d : delta) {
                             final Object d2 = Converters.convert(d, cs2);
                             if (d2 != null)

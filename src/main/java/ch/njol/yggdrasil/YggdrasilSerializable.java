@@ -54,7 +54,7 @@ public interface YggdrasilSerializable {
          * <tt>yggdrasil.{@link Yggdrasil#incompatibleField(Object, Field, FieldContext) incompatibleField}(this, field, value)</tt> will be called.
          */
         @SuppressWarnings("null")
-        boolean incompatibleField(final @NonNull Field field, final @NonNull FieldContext value) throws StreamCorruptedException;
+        boolean incompatibleField(@NonNull final Field field, @NonNull final FieldContext value) throws StreamCorruptedException;
 
         /**
          * Called if a field was read from stream which does not exist in this class.
@@ -63,7 +63,7 @@ public interface YggdrasilSerializable {
          * @return Whatever the field was handled. If false, <tt>yggdrasil.{@link Yggdrasil#excessiveField(Object, FieldContext) excessiveField}(this, field)</tt> will be called.
          */
         @SuppressWarnings("null")
-        boolean excessiveField(final @NonNull FieldContext field) throws StreamCorruptedException;
+        boolean excessiveField(@NonNull final FieldContext field) throws StreamCorruptedException;
 
         /**
          * Called if a field was not found in the stream.
@@ -73,7 +73,7 @@ public interface YggdrasilSerializable {
          * <tt>yggdrasil.{@link Yggdrasil#missingField(Object, Field) missingField}(this, field)</tt> will be called.
          */
         @SuppressWarnings("null")
-        boolean missingField(final @NonNull Field field) throws StreamCorruptedException;
+        boolean missingField(@NonNull final Field field) throws StreamCorruptedException;
 
     }
 
@@ -130,7 +130,7 @@ public interface YggdrasilSerializable {
          * @throws NotSerializableException
          */
         @SuppressWarnings("null")
-        void deserialize(final @NonNull Fields fields) throws StreamCorruptedException, NotSerializableException;
+        void deserialize(@NonNull final Fields fields) throws StreamCorruptedException, NotSerializableException;
 
     }
 

@@ -53,7 +53,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     protected abstract void writeTag(Tag t) throws IOException;
 
-    private void writeNull() throws IOException {
+    private final void writeNull() throws IOException {
         writeTag(T_NULL);
     }
 
@@ -63,7 +63,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     // String
 
-    private void writePrimitive(final Object o) throws IOException {
+    private final void writePrimitive(final Object o) throws IOException {
         final Tag t = getType(o.getClass());
         assert t.isWrapper();
         final Tag p = t.getPrimitive();
@@ -72,7 +72,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
         writePrimitiveValue(o);
     }
 
-    private void writeWrappedPrimitive(final Object o) throws IOException {
+    private final void writeWrappedPrimitive(final Object o) throws IOException {
         final Tag t = getType(o.getClass());
         assert t.isWrapper();
         writeTag(t);
@@ -83,7 +83,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     protected abstract void writeStringValue(String s) throws IOException;
 
-    private void writeString(final String s) throws IOException {
+    private final void writeString(final String s) throws IOException {
         writeTag(T_STRING);
         writeStringValue(s);
     }
@@ -97,7 +97,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
     @SuppressWarnings("EmptyMethod")
     protected abstract void writeArrayEnd() throws IOException;
 
-    private void writeArray(final Object array) throws IOException {
+    private final void writeArray(final Object array) throws IOException {
         final int length = Array.getLength(array);
         final Class<?> ct = array.getClass().getComponentType();
         assert ct != null;
@@ -124,7 +124,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     // Class
 
-    private void writeEnum(final Enum<?> o) throws IOException {
+    private final void writeEnum(final Enum<?> o) throws IOException {
         writeTag(T_ENUM);
         final Class<?> c = o.getDeclaringClass();
         assert c != null;
@@ -132,7 +132,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
         writeEnumID(Yggdrasil.getID(o));
     }
 
-    private void writeEnum(final PseudoEnum<?> o) throws IOException {
+    private final void writeEnum(final PseudoEnum<?> o) throws IOException {
         writeTag(T_ENUM);
         writeEnumType(yggdrasil.getID(o.getDeclaringClass()));
         writeEnumID(o.name());
@@ -142,7 +142,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
 
     protected abstract void writeClassType(Class<?> c) throws IOException;
 
-    private void writeClass(final Class<?> c) throws IOException {
+    private final void writeClass(final Class<?> c) throws IOException {
         writeTag(T_CLASS);
         writeClassType(c);
     }
@@ -169,7 +169,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
     protected abstract void writeObjectEnd() throws IOException;
 
     @SuppressWarnings({"rawtypes", "unchecked", "unused", "null"})
-    private void writeGenericObject(final Object o, int ref) throws IOException {
+    private final void writeGenericObject(final Object o, int ref) throws IOException {
         final Class<?> c = o.getClass();
         assert c != null;
         if (!yggdrasil.isSerializable(c))
@@ -210,7 +210,7 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
             writtenObjects.put(o, ~ref);
     }
 
-    public final void writeObject(final @Nullable Object o) throws IOException {
+    public final void writeObject(@Nullable final Object o) throws IOException {
         if (o == null) {
             writeNull();
             return;

@@ -31,6 +31,7 @@ import ch.njol.skript.classes.*;
 import ch.njol.skript.entity.EntityData;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.ParseContext;
+import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.registrations.Classes;
@@ -65,8 +66,16 @@ import java.util.regex.Pattern;
 // TODO vectors
 public final class BukkitClasses {
 
-    static final Pattern parsePattern = Pattern.compile("(?:(?:the )?world )?\"(.+)\"", Pattern.CASE_INSENSITIVE);
-    static final Matcher parsePatternMatcher = parsePattern.matcher("");
+    static final Pattern blockDeserializePattern = Pattern.compile("[:,]");
+
+    static final Matcher parsePatternMatcher = Pattern.compile("(?:(?:the )?world )?\"(.+)\"", Pattern.CASE_INSENSITIVE).matcher("");
+    static final Matcher validPlayerNameMatcher = Pattern.compile("\\S+").matcher("");
+
+    // This speeds up variable saving a lot (like 8 minutes to 10 seconds for 720.000+ variables)
+    // Because UUIDs are always known when OfflinePlayer/Player objects are created, but names must be read from world data.
+    // It is stable as I tested it a lot, so I decided to make it default. Of course you can also disable it.
+    // See https://github.com/LifeMC/LifeSkript/issues/82 for more information about this topic and problem.
+    static final boolean dontUseNames = Skript.offlineUUIDSupported && System.getProperty("skript.dontUseNamesForSerialization") == null || Boolean.parseBoolean(System.getProperty("skript.dontUseNamesForSerialization"));
 
     private BukkitClasses() {
         throw new UnsupportedOperationException();
@@ -108,40 +117,39 @@ public final class BukkitClasses {
         Classes.registerClass(new ClassInfo<>(Block.class, "block").user("blocks?").name("Block").description("A block in a <a href='#world'>world</a>. It has a <a href='#location'>location</a> and a <a href='#itemstack'>type</a>, " + "and can also have a <a href='#direction'>direction</a> (mostly a <a href='../expressions/#ExprFacing'>facing</a>), an <a href='#inventory'>inventory</a>, or other special properties.").usage("").examples("").since("1.0").defaultExpression(new EventValueExpression<>(Block.class)).parser(new Parser<Block>() {
             @Override
             @Nullable
-            public Block parse(final String s, final ParseContext context) {
+            public final Block parse(final String s, final ParseContext context) {
                 return null;
             }
 
             @Override
-            public boolean canParse(final ParseContext context) {
+            public final boolean canParse(final ParseContext context) {
                 return false;
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            public String toString(final Block b, final int flags) {
+            public final String toString(final Block b, final int flags) {
                 return ItemType.toString(new ItemStack(b.getTypeId(), 1, b.getState().getRawData()), flags);
             }
 
             @Override
-            public String toVariableNameString(final Block b) {
+            public final String toVariableNameString(final Block b) {
                 return b.getWorld().getName() + ':' + b.getX() + ',' + b.getY() + ',' + b.getZ();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return ".+:-?\\d+,-?\\d+,-?\\d+";
             }
 
             @Override
-            public String getDebugMessage(final Block b) {
+            public final String getDebugMessage(final Block b) {
                 return toString(b, 0) + " block (" + b.getWorld().getName() + ':' + b.getX() + ',' + b.getY() + ',' + b.getZ() + ')';
             }
         }).changer(DefaultChangers.blockChanger).serializer(new Serializer<Block>() {
             @SuppressWarnings("null")
             @Override
-            @Nullable
-            public Fields serialize(final Block b) {
+            public final Fields serialize(final Block b) {
                 final Fields f = new Fields();
                 f.putObject("world", b.getWorld());
                 f.putPrimitive("x", b.getX());
@@ -151,12 +159,12 @@ public final class BukkitClasses {
             }
 
             @Override
-            public void deserialize(final Block o, final Fields f) {
+            public final void deserialize(final Block o, final Fields f) {
                 assert false;
             }
 
             @Override
-            protected Block deserialize(final Fields fields) throws StreamCorruptedException {
+            protected final Block deserialize(final Fields fields) throws StreamCorruptedException {
                 final World w = fields.getObject("world", World.class);
                 final int x = fields.getPrimitive("x", int.class), y = fields.getPrimitive("y", int.class), z = fields.getPrimitive("z", int.class);
                 final Block b;
@@ -166,71 +174,71 @@ public final class BukkitClasses {
             }
 
             @Override
-            public boolean mustSyncDeserialization() {
+            public final boolean mustSyncDeserialization() {
                 return true;
             }
 
             @Override
-            public boolean canBeInstantiated() {
+            public final boolean canBeInstantiated() {
                 return false;
             }
 
             //					return b.getWorld().getName() + ":" + b.getX() + "," + b.getY() + "," + b.getZ();
+            @Deprecated
             @Override
             @Nullable
-            public Block deserialize(final String s) {
-                final String[] split = s.split("[:,]");
+            public final Block deserialize(final String s) {
+                final String[] split = blockDeserializePattern.split(s);
                 if (split.length != 4)
                     return null;
                 final World w = Bukkit.getWorld(split[0]);
-                if (w == null) {
+                if (w == null)
                     return null;
+                final int[] l = new int[3];
+                for (int i = 0; i < 3; i++) {
+                    final String n = split[i + 1];
+                    if (!SkriptParser.isInteger(n))
+                        return null;
+                    l[i] = Integer.parseInt(n);
                 }
-                try {
-                    final int[] l = new int[3];
-                    for (int i = 0; i < 3; i++)
-                        l[i] = Integer.parseInt(split[i + 1]);
-                    return w.getBlockAt(l[0], l[1], l[2]);
-                } catch (final NumberFormatException e) {
-                    return null;
-                }
+                return w.getBlockAt(l[0], l[1], l[2]);
             }
         }));
 
         Classes.registerClass(new ClassInfo<>(Location.class, "location").user("locations?").name("Location").description("A location in a <a href='#world'>world</a>. Locations are world-specific and even store a <a href='#direction'>direction</a>, " + "e.g. if you save a location and later teleport to it you will face the exact same direction you did when you saved the location.").usage("").examples("").since("1.0").defaultExpression(new EventValueExpression<>(Location.class)).parser(new Parser<Location>() {
             @Override
             @Nullable
-            public Location parse(final String s, final ParseContext context) {
+            public final Location parse(final String s, final ParseContext context) {
                 return null;
             }
 
             @Override
-            public boolean canParse(final ParseContext context) {
+            public final boolean canParse(final ParseContext context) {
                 return false;
             }
 
             @Override
-            public String toString(final Location l, final int flags) {
+            public final String toString(final Location l, final int flags) {
                 return "x: " + Skript.toString(l.getX()) + ", y: " + Skript.toString(l.getY()) + ", z: " + Skript.toString(l.getZ());
             }
 
             @Override
-            public String toVariableNameString(final Location l) {
+            public final String toVariableNameString(final Location l) {
                 return l.getWorld().getName() + ':' + l.getX() + ',' + l.getY() + ',' + l.getZ();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "\\S:-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?,-?\\d+(\\.\\d+)?";
             }
 
             @Override
-            public String getDebugMessage(final Location l) {
+            public final String getDebugMessage(final Location l) {
                 return '(' + l.getWorld().getName() + ':' + l.getX() + ',' + l.getY() + ',' + l.getZ() + "|yaw=" + l.getYaw() + "/pitch=" + l.getPitch() + ')';
             }
         }).serializer(new Serializer<Location>() {
             @Override
-            public Fields serialize(final Location l) throws NotSerializableException {
+            public final Fields serialize(final Location l) throws NotSerializableException {
                 final Fields f = new Fields();
                 f.putObject("world", l.getWorld());
                 f.putPrimitive("x", l.getX());
@@ -242,29 +250,29 @@ public final class BukkitClasses {
             }
 
             @Override
-            public void deserialize(final Location o, final Fields f) throws StreamCorruptedException {
+            public final void deserialize(final Location o, final Fields f) throws StreamCorruptedException {
                 assert false;
             }
 
             @Override
-            public Location deserialize(final Fields f) throws StreamCorruptedException, NotSerializableException {
+            public final Location deserialize(final Fields f) throws StreamCorruptedException, NotSerializableException {
                 return new Location(f.getObject("world", World.class), f.getPrimitive("x", double.class), f.getPrimitive("y", double.class), f.getPrimitive("z", double.class), f.getPrimitive("yaw", float.class), f.getPrimitive("pitch", float.class));
             }
 
             @Override
-            public boolean canBeInstantiated() {
+            public final boolean canBeInstantiated() {
                 return false; // no nullary constructor - also, saving the location manually prevents errors should Location ever be changed
             }
 
             @Override
-            public boolean mustSyncDeserialization() {
+            public final boolean mustSyncDeserialization() {
                 return true;
             }
 
             //					return l.getWorld().getName() + ":" + l.getX() + "," + l.getY() + "," + l.getZ() + "|" + l.getYaw() + "/" + l.getPitch();
             @Override
             @Nullable
-            public Location deserialize(final String s) {
+            public final Location deserialize(final String s) {
                 final String[] split = s.split("[:,|/]");
                 if (split.length != 6)
                     return null;
@@ -286,7 +294,7 @@ public final class BukkitClasses {
         Classes.registerClass(new ClassInfo<>(World.class, "world").user("worlds?").name("World").description("One of the server's worlds. Worlds can be put into scripts by surrounding their name with double quotes, e.g. \"world_nether\", " + "but this might not work reliably as <a href='#string'>text</a> uses the same syntax.").usage("<code>\"world_name\"</code>, e.g. \"world\"").examples("broadcast \"Hello!\" to the world \"world_nether\"").since("1.0, 2.2 (alternate syntax)").after("string").defaultExpression(new EventValueExpression<>(World.class)).parser(new Parser<World>() {
             @Override
             @Nullable
-            public World parse(final String s, final ParseContext context) {
+            public final World parse(final String s, final ParseContext context) {
                 // REMIND allow shortcuts '[over]world', 'nether' and '[the_]end' (server.properties: 'level-name=world') // inconsistent with 'world is "..."'
                 if (context == ParseContext.COMMAND || context == ParseContext.CONFIG)
                     return Bukkit.getWorld(s);
@@ -388,7 +396,7 @@ public final class BukkitClasses {
             @Nullable
             public Player parse(final String s, final ParseContext context) {
                 if (context == ParseContext.COMMAND) {
-                    @SuppressWarnings("deprecation") final List<Player> ps = Bukkit.matchPlayer(s);
+                    final List<Player> ps = Bukkit.matchPlayer(s);
                     if (ps.size() == 1)
                         return ps.get(0);
                     if (ps.isEmpty())
@@ -434,12 +442,11 @@ public final class BukkitClasses {
         }).changer(DefaultChangers.playerChanger).serializeAs(OfflinePlayer.class));
 
         Classes.registerClass(new ClassInfo<>(OfflinePlayer.class, "offlineplayer").user("offline ?players?").name("Offlineplayer").description("A player that is possibly offline. See <a href='#player'>player</a> for more information. " + "Please note that while all effects and conditions that require a player can be used with an offline player as well, they will not work if the player is not actually online.").usage("").examples("").since("").defaultExpression(new EventValueExpression<>(OfflinePlayer.class)).after("string", "world").parser(new Parser<OfflinePlayer>() {
-            @SuppressWarnings("deprecation")
             @Override
             @Nullable
-            public OfflinePlayer parse(final String s, final ParseContext context) {
+            public final OfflinePlayer parse(final String s, final ParseContext context) {
                 if (context == ParseContext.COMMAND) {
-                    if (!s.matches("\\S+") || s.length() > 16) {
+                    if (!validPlayerNameMatcher.reset(s).matches() || s.length() > 16) {
                         Skript.error("The player name \"" + s + "\" is not a valid player name");
                         return null;
                     }
@@ -455,61 +462,60 @@ public final class BukkitClasses {
             }
 
             @Override
-            public boolean canParse(final ParseContext context) {
+            public final boolean canParse(final ParseContext context) {
                 return context == ParseContext.COMMAND;
             }
 
             @Override
-            public String toString(final OfflinePlayer p, final int flags) {
+            public final String toString(final OfflinePlayer p, final int flags) {
                 return p.getName();
             }
 
             @Override
-            public String toVariableNameString(final OfflinePlayer p) {
+            public final String toVariableNameString(final OfflinePlayer p) {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return p.getUniqueId().toString();
                 return p.getName();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 if (SkriptConfig.usePlayerUUIDsInVariableNames.value())
                     return "[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}";
                 return "\\S+";
             }
 
             @Override
-            public String getDebugMessage(final OfflinePlayer p) {
+            public final String getDebugMessage(final OfflinePlayer p) {
                 if (p.isOnline())
                     return Classes.getDebugMessage(p.getPlayer());
                 return p.getName();
             }
         }).serializer(new Serializer<OfflinePlayer>() {
-            private final boolean uuidSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
-
             @Override
-            public Fields serialize(final OfflinePlayer p) {
+            public final Fields serialize(final OfflinePlayer p) {
                 final Fields f = new Fields();
-                if (uuidSupported)
+                if (Skript.offlineUUIDSupported || dontUseNames)
                     f.putObject("uuid", p.getUniqueId());
-                f.putObject("name", p.getName());
+                if (!dontUseNames)
+                    f.putObject("name", p.getName());
                 return f;
             }
 
             @Override
-            public void deserialize(final OfflinePlayer o, final Fields f) {
+            public final void deserialize(final OfflinePlayer o, final Fields f) {
                 assert false;
             }
 
             @Override
-            public boolean canBeInstantiated() {
+            public final boolean canBeInstantiated() {
                 return false;
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            protected OfflinePlayer deserialize(final Fields fields) throws StreamCorruptedException {
-                if (fields.contains("uuid") && uuidSupported) {
+            protected final OfflinePlayer deserialize(final Fields fields) throws StreamCorruptedException {
+                if (fields.contains("uuid") && Skript.offlineUUIDSupported || dontUseNames) {
                     final UUID uuid = fields.getObject("uuid", UUID.class);
                     final OfflinePlayer p;
                     if (uuid == null || (p = Bukkit.getOfflinePlayer(uuid)) == null)
@@ -524,15 +530,15 @@ public final class BukkitClasses {
             }
 
             //					return p.getName();
-            @SuppressWarnings("deprecation")
+            @Deprecated
             @Override
             @Nullable
-            public OfflinePlayer deserialize(final String s) {
+            public final OfflinePlayer deserialize(final String s) {
                 return Bukkit.getOfflinePlayer(s);
             }
 
             @Override
-            public boolean mustSyncDeserialization() {
+            public final boolean mustSyncDeserialization() {
                 return true;
             }
         }));
@@ -606,7 +612,7 @@ public final class BukkitClasses {
         Classes.registerClass(new ClassInfo<>(ItemStack.class, "itemstack").user("item", "material").name("Item / Material").description("An item, e.g. a stack of torches, a furnace, or a wooden sword of sharpness 2. " + "Unlike <a href='#itemtype'>item type</a> an item can only represent exactly one item (e.g. an upside-down cobblestone stair facing west), " + "while an item type can represent a whole range of items (e.g. any cobble stone stairs regardless of direction).", "You don't usually need this type except when you want to make a command that only accepts an exact item.", "Please note that currently 'material' is exactly the same as 'item', i.e. can have an amount & enchantments.").usage("<code>[&lt;number&gt; [of]] &lt;alias&gt; [of &lt;enchantment&gt; &lt;level&gt;]</code>, Where &lt;alias&gt; must be an alias that represents exactly one item " + "(i.e cannot be a general alias like 'sword' or 'plant')").examples("set {_item} to type of the targeted block", "{_item} is a torch").since("1.0").after("number").parser(new Parser<ItemStack>() {
             @Override
             @Nullable
-            public ItemStack parse(final String s, final ParseContext context) {
+            public final ItemStack parse(final String s, final ParseContext context) {
                 ItemType t = Aliases.parseItemType(s);
                 if (t == null)
                     return null;
@@ -628,13 +634,13 @@ public final class BukkitClasses {
             }
 
             @Override
-            public String toString(final ItemStack i, final int flags) {
+            public final String toString(final ItemStack i, final int flags) {
                 return ItemType.toString(i, flags);
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            public String toVariableNameString(final ItemStack i) {
+            public final String toVariableNameString(final ItemStack i) {
                 final StringBuilder b = new StringBuilder("item:");
                 b.append(i.getType().name());
                 b.append(':').append(i.getDurability());
@@ -647,7 +653,7 @@ public final class BukkitClasses {
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "item:.+";
             }
         }).serializer(new ConfigurationSerializer<>()));
@@ -657,22 +663,22 @@ public final class BukkitClasses {
         Classes.registerClass(new ClassInfo<>(Biome.class, "biome").user("biomes?").name("Biome").description("All possible biomes Minecraft uses to generate a world.").usage(BiomeUtils.getAllNames()).examples("biome at the player is desert").since("1.4.4").parser(new Parser<Biome>() {
             @Override
             @Nullable
-            public Biome parse(final String s, final ParseContext context) {
+            public final Biome parse(final String s, final ParseContext context) {
                 return BiomeUtils.parse(s);
             }
 
             @Override
-            public String toString(final Biome b, final int flags) {
+            public final String toString(final Biome b, final int flags) {
                 return BiomeUtils.toString(b, flags);
             }
 
             @Override
-            public String toVariableNameString(final Biome b) {
+            public final String toVariableNameString(final Biome b) {
                 return b.name();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "\\S+";
             }
         }).serializer(new EnumSerializer<>(Biome.class)));
@@ -792,7 +798,6 @@ public final class BukkitClasses {
         }).serializer(new Serializer<Chunk>() {
             @SuppressWarnings("null")
             @Override
-            @Nullable
             public Fields serialize(final Chunk c) {
                 final Fields f = new Fields();
                 f.putObject("world", c.getWorld());

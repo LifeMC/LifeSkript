@@ -59,6 +59,7 @@ import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.EnumerationIterable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -206,6 +207,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     @Nullable
     public static final Logger minecraftLogger = isBukkitRunning() ? Bukkit.getLogger() : null;
+    public static final boolean offlineUUIDSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
     @SuppressWarnings("null")
     private static final Collection<Closeable> closeOnDisable = Collections.synchronizedCollection(new ArrayList<>(100));
     private static final Collection<Closeable> closeOnEnable = Collections.synchronizedCollection(new ArrayList<>(100));

@@ -106,14 +106,14 @@ public enum Tag {
     public final Class<?> c;
     public final String name;
 
-    Tag(final int tag, final @Nullable Class<?> c, final String name) {
+    Tag(final int tag, @Nullable final Class<?> c, final String name) {
         assert 0 <= tag && tag <= 0xFF : tag;
         this.tag = (byte) tag;
         this.c = c;
         this.name = name;
     }
 
-    public static final Tag getType(final @Nullable Class<?> c) {
+    public static final Tag getType(@Nullable final Class<?> c) {
         if (c == null)
             return T_NULL;
         final Tag t = types.get(c);
