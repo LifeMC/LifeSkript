@@ -44,7 +44,6 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
         register(ExprBalance.class, Money.class, "(money|balance|[bank] account)", "offlineplayers");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public Money convert(final OfflinePlayer p) {
         return new Money(VaultHook.getBalance(p));
@@ -68,7 +67,6 @@ public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, M
         return new Class<?>[]{Money.class, Number.class};
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         assert mode != ChangeMode.REMOVE_ALL;

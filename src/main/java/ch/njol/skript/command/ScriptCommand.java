@@ -74,6 +74,8 @@ public final class ScriptCommand implements TabExecutor {
     public static final ConcurrentMap<String, ScriptCommand> commandMap =
             new ConcurrentHashMap<>(300);
 
+    private static final Field topics = Skript.fieldForName(IndexHelpTopic.class, "allTopics", true);
+
     public static final Message m_executable_by_players = new Message("commands.executable by players");
     public static final Message m_executable_by_console = new Message("commands.executable by console");
     public static final int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
@@ -388,8 +390,6 @@ public final class ScriptCommand implements TabExecutor {
         if (aliases instanceof IndexHelpTopic) {
             aliases.getFullText(Bukkit.getConsoleSender()); // CraftBukkit has a lazy IndexHelpTopic class (org.bukkit.craftbukkit.help.CustomIndexHelpTopic) - maybe its used for aliases as well
             try {
-                final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
-                topics.setAccessible(true);
                 @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 for (final String alias : activeAliases) {
                     final HelpTopic at = new CommandAliasHelpTopic('/' + alias, '/' + label, help);
@@ -398,8 +398,8 @@ public final class ScriptCommand implements TabExecutor {
                 }
                 as.sort(HelpTopicComparator.helpTopicComparatorInstance());
                 topics.set(aliases, as);
-            } catch (final Exception e) {
-                Skript.outdatedError(e);//, "error registering aliases for /" + getName());
+            } catch (final Throwable tw) {
+                Skript.outdatedError(tw);//, "error registering aliases for /" + getName());
             }
         }
     }
@@ -409,13 +409,11 @@ public final class ScriptCommand implements TabExecutor {
         final HelpTopic aliases = Bukkit.getHelpMap().getHelpTopic("Aliases");
         if (aliases instanceof IndexHelpTopic) {
             try {
-                final Field topics = IndexHelpTopic.class.getDeclaredField("allTopics");
-                topics.setAccessible(true);
                 @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 as.removeAll(helps);
                 topics.set(aliases, as);
-            } catch (final Exception e) {
-                Skript.outdatedError(e);//, "error unregistering aliases for /" + getName());
+            } catch (final Throwable tw) {
+                Skript.outdatedError(tw);//, "error unregistering aliases for /" + getName());
             }
         }
         helps.clear();

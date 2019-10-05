@@ -84,6 +84,9 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     public Version(String version, final boolean failSafe) {
+        if (!version.isEmpty() && version.charAt(0) == 'v')
+            version = version.substring(1);
+
         Matcher m = versionPatternMatcher.reset(version.trim());
         String postfixStr = "";
 

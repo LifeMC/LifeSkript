@@ -44,7 +44,7 @@ import java.util.Map;
  * Workarounds for Java & Minecraft & Bukkit quirks
  * <p>
  * See {@link Skript#onLoad()} for
- * other work arounds.
+ * other workarounds.
  *
  * @author Peter Güttinger
  */
@@ -125,7 +125,7 @@ public final class Workarounds {
     }
 
     private Workarounds() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Static class");
     }
 
     @SuppressWarnings("null")
@@ -138,6 +138,17 @@ public final class Workarounds {
         if (!init) {
             init();
         }
+    }
+
+    public static final void setProperty(final String key,
+                                          final String value) {
+        oldValues.put(key, System.getProperty(key));
+        System.setProperty(key, value);
+    }
+
+    public static final void setProperty(final String key,
+                                          final int value) {
+        setProperty(key, Integer.toString(value));
     }
 
     public static final void init() {
@@ -155,45 +166,36 @@ public final class Workarounds {
         oldValues.clear();
 
         // UTF-8 Fixes
-        oldValues.put("file.encoding", System.getProperty("file.encoding"));
-        System.setProperty("file.encoding", "UTF-8");
+        setProperty("file.encoding", "UTF-8");
+        setProperty("sun.jnu.encoding", "UTF-8");
 
-        oldValues.put("sun.jnu.encoding", System.getProperty("sun.jnu.encoding"));
-        System.setProperty("sun.jnu.encoding", "UTF-8");
-
-        oldValues.put("sun.stderr.encoding", System.getProperty("sun.stderr.encoding"));
-        System.setProperty("sun.stderr.encoding", "UTF-8");
-
-        oldValues.put("sun.stdout.encoding", System.getProperty("sun.stdout.encoding"));
-        System.setProperty("sun.stdout.encoding", "UTF-8");
+        setProperty("sun.stderr.encoding", "UTF-8");
+        setProperty("sun.stdout.encoding", "UTF-8");
 
         // Http Agent Fix
-        oldValues.put("http.agent", System.getProperty("http.agent"));
-        System.setProperty("http.agent", WebUtils.USER_AGENT);
+        setProperty("http.agent", WebUtils.USER_AGENT);
 
-        // Language Fix
-        oldValues.put("user.language", System.getProperty("user.language"));
-        System.setProperty("user.language", "en");
-
-        // Country Fix
-        oldValues.put("user.country", System.getProperty("user.country"));
-        System.setProperty("user.country", "US");
+        // Locale Fixes
+        setProperty("user.language", "en");
+        setProperty("user.country", "US");
 
         // Keep Alive Fix
-        oldValues.put("paper.playerconnection.keepalive", System.getProperty("paper.playerconnection.keepalive"));
-        System.setProperty("paper.playerconnection.keepalive", "60");
+        setProperty("paper.playerconnection.keepalive", "60");
 
         // LifeSkript
-        oldValues.put("using.lifeskript", System.getProperty("using.lifeskript"));
-        System.setProperty("using.lifeskript", "true");
+        setProperty("using.lifeskript", "true");
 
         // Kotlin
-        oldValues.put("kotlinx.coroutines.debug", System.getProperty("kotlinx.coroutines.debug"));
-        System.setProperty("kotlinx.coroutines.debug", "off");
+        setProperty("kotlinx.coroutines.debug", "off");
 
         // Netty
-        oldValues.put("io.netty.eventLoopThreads", System.getProperty("io.netty.eventLoopThreads"));
-        System.setProperty("io.netty.eventLoopThreads", Integer.toString(Math2.min(4, Runtime.getRuntime().availableProcessors())));
+        setProperty("io.netty.eventLoopThreads", Math2.min(4, Runtime.getRuntime().availableProcessors()));
+
+        // Web
+        setProperty("sun.net.http.errorstream.enableBuffering", "true");
+
+        setProperty("sun.net.client.defaultConnectTimeout", WebUtils.CONNECT_TIMEOUT);
+        setProperty("sun.net.client.defaultReadTimeout", WebUtils.READ_TIMEOUT);
 
         // Change Some Default Settings
         URLConnection.setDefaultAllowUserInteraction(false);

@@ -107,7 +107,7 @@ public abstract class TriggerItem implements Debuggable {
      * @param e
      * @return True if the next item should be run, or false for the item following this item's parent.
      */
-    protected abstract boolean run(Event e);
+    protected abstract boolean run(final Event e);
 
     public final String getIndentation() {
         String ind = indentation;

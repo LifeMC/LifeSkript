@@ -233,8 +233,14 @@ public final class DefaultChangers {
                                         if (i != null)
                                             invi.addItem(i);
                                     }
-                                } else {
+                                } else if (d instanceof ItemStack) {
+                                	new ItemType((ItemStack) d).addTo(invi);
+                                } else if (d instanceof ItemType) {
                                     ((ItemType) d).addTo(invi);
+                                } else if (d instanceof Block) {
+                                    new ItemType((Block) d).addTo(invi);
+                                } else {
+                                    Skript.error("Can't " + d + " to an inventory!");
                                 }
                             }
                         } else {

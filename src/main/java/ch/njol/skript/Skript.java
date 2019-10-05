@@ -90,6 +90,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.*;
 import java.nio.file.attribute.FileTime;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -1014,6 +1016,28 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         if (clazz == null)
             return null;
         return getConstructor(clazz).newInstance();
+    }
+
+    /**
+     * Sets the given {@link AccessibleObject}'s accessible status. Catches
+     * security exceptions and handles {@link PrivilegedAction}s.
+     * 
+     * @param accessibleObject The {@link AccessibleObject} to set accessible status of.
+     * @return The passed {@link AccessibleObject} that will now hold the new accessible status.
+     */
+    @SuppressWarnings("null")
+    public static final <T extends AccessibleObject> T setAccessible(@Nullable final T accessibleObject,
+    																 final boolean flag) {
+    	if (accessibleObject == null)
+    		return null;
+    	return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
+            try {
+                accessibleObject.setAccessible(flag);
+            } catch (final SecurityException e) {
+                throw Skript.exception(e, "Cannot set the accessible flag of \"" + accessibleObject + "\" to " + flag);
+            }
+            return accessibleObject;
+        });
     }
 
     // ================ REGISTRATIONS ================

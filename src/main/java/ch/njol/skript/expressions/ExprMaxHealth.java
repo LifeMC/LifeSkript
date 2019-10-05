@@ -41,6 +41,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 @Events({"damage", "death"})
 public final class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, Double> {
+    private static final boolean setMaxHealth = Skript.methodExists(Damageable.class, "setMaxHealth", double.class);
+
     static {
         register(ExprMaxHealth.class, Double.class, "max[imum] health", "livingentities");
     }
@@ -63,7 +65,7 @@ public final class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, 
     @Override
     @Nullable
     public Class<?>[] acceptChange(final ChangeMode mode) {
-        if (!Skript.methodExists(Damageable.class, "setMaxHealth", double.class)) {
+        if (!setMaxHealth) {
             Skript.error("The max health of an entity can only be changed in Minecraft 1.6 and later");
             return null;
         }
@@ -74,7 +76,7 @@ public final class ExprMaxHealth extends SimplePropertyExpression<LivingEntity, 
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         double d = delta == null ? 0 : ((Number) delta[0]).doubleValue();
         for (final LivingEntity en : getExpr().getArray(e)) {
             assert en != null : getExpr();

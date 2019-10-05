@@ -95,8 +95,7 @@ public final class Aliases {
     private static final RegexMessage p_every = new RegexMessage("aliases.every", "", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
-    private static final Pattern UNDERSCORE_PATTERN = Pattern.compile("_", Pattern.LITERAL);
-    private static final Matcher UNDERSCORE_PATTERN_MATCHER = UNDERSCORE_PATTERN.matcher("");
+    private static final Matcher UNDERSCORE_PATTERN_MATCHER = Pattern.compile("_", Pattern.LITERAL).matcher("");
     static String itemSingular = "item";
     static String itemPlural = "items";
     @Nullable
@@ -199,16 +198,22 @@ public final class Aliases {
                     boolean hasParts = false;
                     for (int j = i + 1; j < end; j++) {
                         final char x = name.charAt(j);
-                        if (x == '(') {
-                            n++;
-                        } else if (x == ')') {
-                            n--;
-                        } else if (x == '|') {
-                            if (n > 0)
-                                continue;
-                            hasParts = true;
-                            r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(last + 1, j), name.substring(end + 1)), value, variations));
-                            last = j;
+                        switch (x) {
+                            case '(':
+                                n++;
+                                break;
+                            case ')':
+                                n--;
+                                break;
+                            case '|':
+                                if (n > 0)
+                                    continue;
+                                hasParts = true;
+                                r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(last + 1, j), name.substring(end + 1)), value, variations));
+                                last = j;
+                                break;
+                            default:
+                            	break;
                         }
                     }
                     if (!hasParts) {

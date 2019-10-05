@@ -33,7 +33,6 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
-import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.function.FunctionEvent;
 import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.Timespan;
@@ -54,7 +53,6 @@ import java.util.WeakHashMap;
 @Examples({"wait 2 minutes", "halt for 5 minecraft hours", "wait a tick"})
 @Since("1.4")
 public final class Delay extends Effect {
-    @SuppressWarnings("null")
     public static final Set<Event> delayed = Collections.newSetFromMap(new WeakHashMap<>(100));
     public static boolean delayingDisabled;
 
@@ -63,7 +61,7 @@ public final class Delay extends Effect {
     }
 
     @SuppressWarnings("null")
-    Expression<Timespan> duration;
+    private Expression<Timespan> duration;
 
     public static final boolean isDelayed(final Event e) {
         return delayed.contains(e);
@@ -73,9 +71,9 @@ public final class Delay extends Effect {
         delayed.add(event);
     }
 
-    @SuppressWarnings({"unchecked", "null"})
+    @SuppressWarnings("unchecked")
     @Override
-    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         duration = (Expression<Timespan>) exprs[0];
         if (duration instanceof Literal) {
             final Literal<Timespan> timespan = (Literal<Timespan>) duration;
@@ -88,7 +86,7 @@ public final class Delay extends Effect {
                 return false;
             }
 
-            if (millis > 86400000L && !SkriptConfig.disableTooLongDelayWarnings.value())
+            if (millis > 864_000_00L && !SkriptConfig.disableTooLongDelayWarnings.value())
                 Skript.warning("Delays greater than one day are not persistent, please use variables to store date and calculate difference instead.");
         }
         if (ScriptLoader.isCurrentEvent(FunctionEvent.class) && !SkriptConfig.disableDelaysInFunctionsWarnings.value())

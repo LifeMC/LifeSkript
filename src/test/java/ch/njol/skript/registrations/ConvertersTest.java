@@ -89,7 +89,7 @@ public final class ConvertersTest {
 
         try {
             convertersCache = (Map<Pair<Class<?>, Class<?>>, Converter<?, ?>>) Skript.invoke(Converters.class.getDeclaredField("convertersCache"), (Consumer<Field>) field ->
-                    field.setAccessible(true)
+                    Skript.setAccessible(field, true)
             ).get(null);
         } catch (final NoSuchFieldException | IllegalAccessException e) {
             throw Assertions.<RuntimeException>fail("Can't get converters cache", e);
