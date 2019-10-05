@@ -49,8 +49,9 @@ public class HandlerList implements Iterable<LogHandler> {
         return list.iterator();
     }
 
+    @SuppressWarnings("ListIndexOfReplaceableByContains")
     public final boolean contains(final LogHandler h) {
-        return list.contains(h);
+        return list.indexOf(h) != -1;
     }
 
 }

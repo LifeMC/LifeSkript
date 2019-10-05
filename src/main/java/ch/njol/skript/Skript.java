@@ -81,8 +81,7 @@ import org.fusesource.jansi.Ansi;
 import java.io.*;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.*;
-import java.net.URI;
-import java.net.URL;
+import java.net.*;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -1825,6 +1824,31 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      */
     public static final <T, R> R invoke(final T obj, final Function<T, R> function) {
         return function.apply(obj);
+    }
+
+    /**
+     * Returns an {@link URL} object that represents the given
+     * web address.
+     *
+     * Correctly handles the URL encoding and special characters
+     * and ensures it is valid.
+     *
+     * @param address The web address to get a {@link URL} from it.
+     * @return An {@link URL} object that represents the given web address.
+     *
+     * @throws MalformedURLException If the given address is malformed.
+     *
+     * @implNote This method currently returns a new URL each time,
+     * but can be improved in future to cache URL objects.
+     */
+    public static final URL urlOf(final String address) throws MalformedURLException {
+        try {
+            final URL url = new URL(address);
+
+            return new URI(url.getProtocol(), url.getUserInfo(), IDN.toASCII(url.getHost()), url.getPort(), url.getPath(), url.getQuery(), url.getRef()).toURL();
+        } catch (final URISyntaxException e) {
+            throw Skript.exception(e, "Could not get URL from address \"" + address + '"');
+        }
     }
 
     /**

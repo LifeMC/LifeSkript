@@ -50,10 +50,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"# prevents people from joining the server if they use the name of a player", "# who has played on this server at least once since this script has been added", "on login:", "	{uuids.%name of player%} exists:", "		{uuids.%name of player%} is not UUID of player", "		kick player due to \"Someone with your name has played on this server before\"", "	else:", "		set {uuids.%name of player%} to UUID of player"})
 @Since("2.1.2, 2.2 (offline players' UUIDs), 2.2.16 (entity UUIDs)")
 public final class ExprUUID extends SimplePropertyExpression<Object, String> {
-    private static final boolean offlineUUIDSupported = Skript.methodExists(OfflinePlayer.class, "getUniqueId");
-
     static {
-        register(ExprUUID.class, String.class, "UUID", (offlineUUIDSupported ? "offlineplayers" : "players") + "/entities/worlds");
+        register(ExprUUID.class, String.class, "UUID", (Skript.offlineUUIDSupported ? "offlineplayers" : "players") + "/entities/worlds");
     }
 
     @Nullable
@@ -64,10 +62,10 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
     public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
         final Config currentScript = ScriptLoader.currentScript;
         if (currentScript != null)
-            this.script = currentScript.getFileName();
+            script = currentScript.getFileName();
         final Node currentNode = SkriptLogger.getNode();
         if (currentNode != null)
-            this.line = currentNode.getLine();
+            line = currentNode.getLine();
         return super.init(exprs, matchedPattern, isDelayed, parseResult);
     }
 
@@ -75,7 +73,7 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
     @Nullable
     public final String convert(final Object o) {
         if (o instanceof OfflinePlayer) {
-            if (offlineUUIDSupported) {
+            if (Skript.offlineUUIDSupported) {
                 try {
                     return ((OfflinePlayer) o).getUniqueId().toString();
                 } catch (final UnsupportedOperationException e) {

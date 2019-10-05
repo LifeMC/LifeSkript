@@ -27,12 +27,11 @@ import ch.njol.skript.bukkitutil.Workarounds;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -52,6 +51,13 @@ public final class WebUtils {
      */
     public static final String USER_AGENT =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36";
+
+    /**
+     * Default is 5 seconds for connect and read.
+     */
+    public static final int CONNECT_TIMEOUT = 5000;
+    public static final int READ_TIMEOUT = 5000;
+
     private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
     private static final Matcher RELEASES_MATCHER = RELEASES.matcher("");
 
@@ -134,70 +140,94 @@ public final class WebUtils {
      */
     @Nullable
     public static final String getResponse(final String address, final String contentType, final boolean useWorkarounds) throws IOException {
+        return getResponse(Skript.urlOf(address), contentType, useWorkarounds);
+    }
+
+    /**
+     * Connects to the given address and returns the web response as
+     * {@link String String}.
+     *
+     * @param url            - The url of the web server / website to
+     *                       connect and get response from it.
+     * @param contentType    - The content type header of the http web request to the
+     *                       selected address / url.
+     * @param useWorkarounds - Pass false to not use workarounds.
+     * @return The web response from the given url as {@link String
+     * String}, maybe null in some cases.
+     * @throws IOException If any connection errors occurred when making the http
+     *                     request to the address.
+     */
+    @Nullable
+    public static final String getResponse(final URL url, final String contentType, final boolean useWorkarounds) throws IOException {
+        //Skript.debug("url", url, "contentType", contentType, "useWorkarounds", useWorkarounds, "async", Skript.isBukkitRunning() && !Bukkit.isPrimaryThread());
+
         if (useWorkarounds)
             Workarounds.initIfNotAlready();
 
-        BufferedInputStream in = null;
-        BufferedReader br = null;
+        final URLConnection con = url.openConnection();
+        setup(con, contentType, /* followRedirects: */true);
 
-        try {
-            final URL url = new URL(address);
-            final URLConnection con = url.openConnection();
+        con.connect();
 
-            con.setAllowUserInteraction(false);
-
-            con.setDoOutput(false);
-            con.setUseCaches(false);
-
-            con.setRequestProperty("Method", "GET");
-
-            con.setRequestProperty("Charset", "UTF-8");
-            con.setRequestProperty("Encoding", "UTF-8");
-
-            con.setRequestProperty("Content-Type", contentType.trim());
-            con.setRequestProperty("Accept", "*/*");
-
-            con.setRequestProperty("User-Agent", USER_AGENT.trim());
-            con.setRequestProperty("Referer", RELEASES_MATCHER.reset(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
-
-            in = new BufferedInputStream(con.getInputStream());
-
+        try (final InputStream is = StreamUtils.getInputStream(con);
+            final BufferedInputStream in = new BufferedInputStream(is)) {
             final String encoding = con.getContentEncoding();
 
             if (encoding != null) {
                 if ("gzip".equalsIgnoreCase(encoding)) {
-                    in = new BufferedInputStream(new GZIPInputStream(in));
-                } else if ("deflate".equalsIgnoreCase(encoding)) {
-                    in = new BufferedInputStream(new InflaterInputStream(in, new Inflater(true)));
+                    try (final GZIPInputStream gzipIs = new GZIPInputStream(in);
+                        final BufferedInputStream gzip = new BufferedInputStream(gzipIs)) {
+                        return StreamUtils.readString(gzip);
+                    }
+                }
+                if ("deflate".equalsIgnoreCase(encoding)) {
+                    try (final InflaterInputStream inf = new InflaterInputStream(in, new Inflater(true));
+                        final BufferedInputStream deflate = new BufferedInputStream(inf)) {
+                        return StreamUtils.readString(deflate);
+                    }
                 }
             }
 
-            final StringBuilder responseBody = new StringBuilder(4096);
-            br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+            return StreamUtils.readString(in);
+        }
+    }
 
-            String line;
+    public static final void setup(final URLConnection con,
+                                   @Nullable final String contentType,
+                                   final boolean followRedirects) {
+        setup(con, contentType, followRedirects, "*/*");
+    }
 
-            while ((line = br.readLine()) != null) {
-                responseBody.append(line.trim()).append('\n');
-            }
+    public static final void setup(final URLConnection con,
+                                   @Nullable final String contentType,
+                                   final boolean followRedirects,
+                                   final String acceptType) {
+        con.setAllowUserInteraction(false);
 
-            in.close();
-            br.close();
+        if (con instanceof HttpURLConnection) {
+            final HttpURLConnection conn = (HttpURLConnection) con;
 
-            in = null;
-            br = null;
-
-            return responseBody.toString().trim();
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-
-            if (br != null) {
-                br.close();
-            }
+            conn.setInstanceFollowRedirects(followRedirects);
         }
 
+        con.setDoOutput(false);
+        con.setUseCaches(false);
+
+        con.setConnectTimeout(CONNECT_TIMEOUT);
+        con.setReadTimeout(READ_TIMEOUT);
+
+        con.setRequestProperty("Method", "GET");
+
+        con.setRequestProperty("Charset", "UTF-8");
+        con.setRequestProperty("Encoding", "UTF-8");
+
+        if (contentType != null)
+            con.setRequestProperty("Content-Type", contentType.trim());
+
+        con.setRequestProperty("Accept", acceptType);
+
+        con.setRequestProperty("User-Agent", (USER_AGENT + (Skript.version != null ? " Skript/" + Skript.version : "")).trim());
+        con.setRequestProperty("Referer", RELEASES_MATCHER.reset(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
     }
 
 }
