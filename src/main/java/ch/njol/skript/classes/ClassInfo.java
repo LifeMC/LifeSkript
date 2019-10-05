@@ -310,7 +310,7 @@ public class ClassInfo<T> implements Debuggable {
     }
 
     @Nullable
-    public final String getDocName() {
+    public String getDocName() {
         return docName;
     }
 

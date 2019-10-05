@@ -184,6 +184,8 @@ public final class FunctionReference<T> {
     }
 
     public boolean resetReturnValue() {
+        if (function == null)
+            return false;
         return function.resetReturnValue();
     }
 

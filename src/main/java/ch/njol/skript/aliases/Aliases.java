@@ -900,6 +900,11 @@ public final class Aliases {
 
     static final class Variations extends HashMap<String, HashMap<String, ItemType>> {
         private static final long serialVersionUID = -139481665727386819L;
+
+        @Override
+        public Variations clone() {
+            return (Variations) super.clone();
+        }
     }
 
 }

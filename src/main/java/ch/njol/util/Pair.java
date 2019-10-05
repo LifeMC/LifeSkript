@@ -22,6 +22,7 @@
 
 package ch.njol.util;
 
+import ch.njol.skript.Skript;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.Serializable;
@@ -127,10 +128,13 @@ public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
     /**
      * @return a shallow copy of this pair
      */
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
     public Pair<T1, T2> clone() {
-        return new Pair<>(this);
+        try {
+            return (Pair<T1, T2>) super.clone();
+        } catch (final CloneNotSupportedException e) {
+            throw Skript.sneakyThrow(e);
+        }
     }
 
 }
