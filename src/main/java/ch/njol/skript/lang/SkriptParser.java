@@ -89,14 +89,10 @@ public final class SkriptParser {
     public static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
     @SuppressWarnings("rawtypes")
     public static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
-    @SuppressWarnings("null")
-    private static final Pattern varPattern = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}");
-    private static final Matcher varPatternMatcher = varPattern.matcher("");
+    private static final Matcher varPatternMatcher = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}").matcher("");
     private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
     private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
-    @SuppressWarnings("null")
-    private static final Pattern functionCallPattern = Pattern.compile('(' + Functions.functionNamePattern + ")\\((.*?)\\)");
-    private static final Matcher functionCallPatternMatcher = functionCallPattern.matcher("");
+    private static final Matcher functionCallPatternMatcher = Pattern.compile('(' + Functions.functionNamePattern + ")\\((.*?)\\)").matcher("");
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(100);
@@ -142,7 +138,7 @@ public final class SkriptParser {
      * <p>
      * Prints errors.
      */
-    @SuppressWarnings({"unchecked", "null"})
+    @SuppressWarnings("null")
     @Nullable
     public static final <T> Literal<? extends T> parseLiteral(String expr, final Class<T> c, final ParseContext context) {
         expr = expr.trim();
@@ -1553,7 +1549,7 @@ public final class SkriptParser {
                 Skript.warning(MISSING_AND_OR + ": " + expr);
             }
 
-            final Class<?>[] exprRetTypes = new Class[ts.size()];
+            final Class<?>[] exprRetTypes = new Class<?>[ts.size()];
             for (int i = 0; i < ts.size(); i++)
                 exprRetTypes[i] = ts.get(i).getReturnType();
 

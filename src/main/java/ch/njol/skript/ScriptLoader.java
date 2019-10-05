@@ -544,6 +544,8 @@ public final class ScriptLoader {
                                     }
                                     if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
                                         Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
+                                    if (scriptVersion == null || scriptVersion.isSmallerThan(target))
+                                        scriptVersion = target;
                                     duplicateCheckList.add("target");
                                 } else if ("loops".equalsIgnoreCase(key)) {
                                     if (duplicateCheckList.contains("loops")) {
@@ -577,7 +579,8 @@ public final class ScriptLoader {
                                         else // it does not exist at all
                                             Skript.error("This script requires plugin " + value);
                                         return new ScriptInfo();
-                                    }
+                                    } else if ("Skript".equalsIgnoreCase(value))
+                                        Skript.warning("Requiring Skript is redundant. Please remove this requires plugin section.");
                                 } else if ("requires addon".equalsIgnoreCase(key) && Skript.getAddon(value) == null) {
                                     // This can be duplicateable to require more than one addon
 
