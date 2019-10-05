@@ -26,7 +26,7 @@ import ch.njol.skript.Skript;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Level;
 
 /**
@@ -34,7 +34,7 @@ import java.util.logging.Level;
  */
 public class ParseLogHandler extends LogHandler {
 
-    private final List<LogEntry> log = new ArrayList<>();
+    private final Collection<LogEntry> log = new ArrayList<>();
     boolean printedErrorOrLog;
     @Nullable
     private LogEntry error;
@@ -49,7 +49,9 @@ public class ParseLogHandler extends LogHandler {
                     e.discarded("overridden by '" + entry.getMessage() + "' (" + ErrorQuality.get(entry.getQuality()) + " > " + ErrorQuality.get(e.getQuality()) + ')');
             }
         } else {
-            log.add(entry);
+            synchronized (log) {
+                log.add(entry);
+            }
         }
         return LogResult.CACHED;
     }
@@ -68,9 +70,14 @@ public class ParseLogHandler extends LogHandler {
      * Clears all log messages except for the error
      */
     public final void clear() {
-        for (final LogEntry e : log)
-            e.discarded("cleared");
-        log.clear();
+        synchronized (log) {
+            if (!log.isEmpty()) {
+                for (final LogEntry e : log) {
+                    e.discarded("cleared");
+                }
+            }
+            log.clear();
+        }
     }
 
     /**
@@ -79,13 +86,25 @@ public class ParseLogHandler extends LogHandler {
     public final void printLog() {
         printedErrorOrLog = true;
         stop();
-        SkriptLogger.logAll((Iterable<LogEntry>) log); // Cast is required to not use deprecated method
+        synchronized (log) {
+            SkriptLogger.logAll((Iterable<LogEntry>) log); // Cast is required to not use deprecated method
+        }
         if (error != null)
             error.discarded("not printed");
     }
 
     public final void printError() {
         printError(null);
+    }
+
+    private final void notPrinted() {
+        synchronized (log) {
+            if (!log.isEmpty()) {
+                for (final LogEntry e : log) {
+                    e.discarded("not printed");
+                }
+            }
+        }
     }
 
     /**
@@ -101,8 +120,7 @@ public class ParseLogHandler extends LogHandler {
             SkriptLogger.log(error);
         else if (def != null)
             SkriptLogger.log(new LogEntry(SkriptLogger.SEVERE, ErrorQuality.SEMANTIC_ERROR, def));
-        for (final LogEntry e : log)
-            e.discarded("not printed");
+        notPrinted();
     }
 
     public final void printError(final String def, final ErrorQuality quality) {
@@ -113,8 +131,7 @@ public class ParseLogHandler extends LogHandler {
             SkriptLogger.log(error);
         else
             SkriptLogger.log(new LogEntry(SkriptLogger.SEVERE, quality, def));
-        for (final LogEntry e : log)
-            e.discarded("not printed");
+        notPrinted();
     }
 
     public int getNumErrors() {

@@ -255,7 +255,7 @@ public final class SkriptLogger {
             return;
         }
         entry.logged();
-        LOGGER.log(level, format(entry));
+        LOGGER.log(level, () -> format(entry));
     }
 
     public static final void suppressWarnings(final boolean suppressWarnings) {

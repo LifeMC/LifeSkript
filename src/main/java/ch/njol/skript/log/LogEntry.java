@@ -114,12 +114,12 @@ public final class LogEntry {
 
     void discarded(final String info) {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + '\'' + from + " discarded" + findCaller() + "; " + new Throwable().getStackTrace()[1] + "; " + info); // Thread.currentThread().getStackTrace() is more memory friendly, but slower
+            SkriptLogger.LOGGER.warning(() -> " # LogEntry '" + message + '\'' + from + " discarded" + findCaller(this) + "; " + new Throwable().getStackTrace()[1] + "; " + info); // Thread.currentThread().getStackTrace() is more memory friendly, but slower
     }
 
     void logged() {
         if (tracked)
-            SkriptLogger.LOGGER.warning(" # LogEntry '" + message + '\'' + from + " logged" + findCaller());
+            SkriptLogger.LOGGER.warning(() -> " # LogEntry '" + message + '\'' + from + " logged" + findCaller(this));
     }
 
     @Override
