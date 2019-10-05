@@ -68,7 +68,7 @@ public abstract class YggdrasilSerializer<T> implements ClassResolver {
      * @return A new instance of the given class. Must not be null if {@link #canBeInstantiated(Class)} returned true.
      */
     @Nullable
-    public abstract <E extends T> E newInstance(Class<E> c);
+    public abstract <E extends T> E newInstance(final Class<E> c);
 
     /**
      * Deserialises an object.

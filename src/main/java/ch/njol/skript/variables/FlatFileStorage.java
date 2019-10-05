@@ -93,7 +93,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     static final String encode(final byte[] data) {
-        final char[] r = new char[(data.length << 1)];
+        final char[] r = new char[data.length << 1];
         for (int i = 0; i < data.length; i++) {
             r[2 * i] = Character.toUpperCase(Character.forDigit((data[i] & 0xF0) >>> 4, 16));
             r[2 * i + 1] = Character.toUpperCase(Character.forDigit(data[i] & 0xF, 16));
@@ -143,7 +143,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     /**
-     * Doesn'ts lock the connection as required by {@link Variables#variableLoaded(String, Object, VariablesStorage)}.
+     * Doesn't lock the connection as required by {@link Variables#variableLoaded(String, Object, VariablesStorage)}.
      */
     @SuppressWarnings({"deprecation", "unused", "null"})
     @Override

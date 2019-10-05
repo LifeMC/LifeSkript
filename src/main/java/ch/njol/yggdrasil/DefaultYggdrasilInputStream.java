@@ -62,18 +62,18 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     /**
      * @throws EOFException If the end of the stream is reached
      */
-    private int read() throws IOException {
+    private final int read() throws IOException {
         final int b = in.read();
         if (b < 0)
             throw new EOFException();
         return b;
     }
 
-    private void readFully(final byte[] buf) throws IOException {
+    private final void readFully(final byte[] buf) throws IOException {
         readFully(buf, 0, buf.length);
     }
 
-    private void readFully(final byte[] buf, int off, final int len) throws IOException {
+    private final void readFully(final byte[] buf, int off, final int len) throws IOException {
         int l = len;
         while (l > 0) {
             final int n = in.read(buf, off, l);
@@ -84,13 +84,13 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
         }
     }
 
-    private String readShortString() throws IOException {
+    private final String readShortString() throws IOException {
         final int length = read();
         if (length == (T_REFERENCE.tag & 0xFF)) {
             final int i = version <= 1 ? readInt() : readUnsignedInt();
             if (i < 0 || i > readShortStrings.size())
                 throw new StreamCorruptedException("Invalid short string reference " + i);
-            return "" + readShortStrings.get(i);
+            return readShortStrings.get(i);
         }
         final byte[] d = new byte[length];
         readFully(d);
@@ -103,7 +103,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     // Tag
 
     @Override
-    protected Tag readTag() throws IOException {
+    protected final Tag readTag() throws IOException {
         final int t = read();
         final Tag tag = Tag.byID(t);
         if (tag == null)
@@ -113,49 +113,49 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
 
     // Primitives
 
-    private byte readByte() throws IOException {
+    private final byte readByte() throws IOException {
         return (byte) read();
     }
 
-    private short readShort() throws IOException {
+    private final short readShort() throws IOException {
         return (short) (read() << 8 | read());
     }
 
-    private short readUnsignedShort() throws IOException {
+    private final short readUnsignedShort() throws IOException {
         final int b = read();
         if ((b & 0x80) != 0)
             return (short) (b & ~0x80);
         return (short) (b << 8 | read());
     }
 
-    private int readInt() throws IOException {
+    private final int readInt() throws IOException {
         return read() << 24 | read() << 16 | read() << 8 | read();
     }
 
-    private int readUnsignedInt() throws IOException {
+    private final int readUnsignedInt() throws IOException {
         final int b = read();
         if ((b & 0x80) != 0)
             return (b & ~0x80) << 8 | read();
         return b << 24 | read() << 16 | read() << 8 | read();
     }
 
-    private long readLong() throws IOException {
+    private final long readLong() throws IOException {
         return (long) read() << 56 | (long) read() << 48 | (long) read() << 40 | (long) read() << 32 | (long) read() << 24 | read() << 16 | read() << 8 | read();
     }
 
-    private float readFloat() throws IOException {
+    private final float readFloat() throws IOException {
         return Float.intBitsToFloat(readInt());
     }
 
-    private double readDouble() throws IOException {
+    private final double readDouble() throws IOException {
         return Double.longBitsToDouble(readLong());
     }
 
-    private char readChar() throws IOException {
+    private final char readChar() throws IOException {
         return (char) readShort();
     }
 
-    private boolean readBoolean() throws IOException {
+    private final boolean readBoolean() throws IOException {
         final int r = read();
         if (r == 0)
             return false;
@@ -165,7 +165,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     }
 
     @Override
-    protected Object readPrimitive(final Tag type) throws IOException {
+    protected final Object readPrimitive(final Tag type) throws IOException {
         switch (type) {
             case T_BYTE:
                 return readByte();
@@ -190,14 +190,14 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     }
 
     @Override
-    protected Object readPrimitive_(final Tag type) throws IOException {
+    protected final Object readPrimitive_(final Tag type) throws IOException {
         return readPrimitive(type);
     }
 
     // String
 
     @Override
-    protected String readString() throws IOException {
+    protected final String readString() throws IOException {
         final int length = readUnsignedInt();
         final byte[] d = new byte[length];
         readFully(d);
@@ -207,24 +207,24 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     // Array
 
     @Override
-    protected Class<?> readArrayComponentType() throws IOException {
+    protected final Class<?> readArrayComponentType() throws IOException {
         return readClass();
     }
 
     @Override
-    protected int readArrayLength() throws IOException {
+    protected final int readArrayLength() throws IOException {
         return readUnsignedInt();
     }
 
     // Enum
 
     @Override
-    protected Class<?> readEnumType() throws IOException {
+    protected final Class<?> readEnumType() throws IOException {
         return yggdrasil.getClass(readShortString());
     }
 
     @Override
-    protected String readEnumID() throws IOException {
+    protected final String readEnumID() throws IOException {
         return readShortString();
     }
 
@@ -232,7 +232,7 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
 
     @SuppressWarnings("null")
     @Override
-    protected Class<?> readClass() throws IOException {
+    protected final Class<?> readClass() throws IOException {
         Tag type;
         int dim = 0;
         while ((type = readTag()) == T_ARRAY)
@@ -280,34 +280,34 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     // Reference
 
     @Override
-    protected int readReference() throws IOException {
+    protected final int readReference() throws IOException {
         return readUnsignedInt();
     }
 
     // generic Object
 
     @Override
-    protected Class<?> readObjectType() throws IOException {
+    protected final Class<?> readObjectType() throws IOException {
         return yggdrasil.getClass(readShortString());
     }
 
     @Override
-    protected short readNumFields() throws IOException {
+    protected final short readNumFields() throws IOException {
         return readUnsignedShort();
     }
 
     @Override
-    protected String readFieldID() throws IOException {
+    protected final String readFieldID() throws IOException {
         return readShortString();
     }
 
     // stream
 
     @Override
-    public void close() throws IOException {
+    public final void close() throws IOException {
         try {
             read();
-            throw new StreamCorruptedException("Stream still has data, at least " + (1 + in.available()) + " bytes remain");
+            throw new StreamCorruptedException("Stream still has data, at least " + (1 + in.available()) + " bytes remaining");
         } catch (final EOFException ignored) {
             /* ignored */
         } finally {
