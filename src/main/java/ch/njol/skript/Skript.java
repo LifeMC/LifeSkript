@@ -1872,7 +1872,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
         Thread[] threads = new Thread[rootThreadGroup.activeCount() + 1];
         while (rootThreadGroup.enumerate(threads, true) == threads.length) {
-            threads = new Thread[(threads.length << 1)];
+            threads = new Thread[threads.length << 1];
         }
 
         return threads;
@@ -2430,10 +2430,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             final String prefix = "[%d{HH:mm:ss}] [%t/%level]: ";
                             final String replaced = prefix + "%replace{%msg}{\\x1B\\[([0-9]{1,2}(;[0-9]{1,2})*)?[m|K]}{}%n";
                             final String original = prefix + "%msg%n";
-                            if (contents.contains(original) && !contents.contains(replaced)) {
-                                if (Skript.isRunningMinecraft(1, 7) && !Skript.isRunningMinecraft(1, 9)) {
-                                    replacedContents = contents.replace(original, replaced);
-                                }
+                            if (contents.contains(original) && !contents.contains(replaced) && Skript.isRunningMinecraft(1, 7) && !Skript.isRunningMinecraft(1, 9)) {
+                                replacedContents = contents.replace(original, replaced);
                             }
 
                             if (replacedContents != null && !contents.equalsIgnoreCase(replacedContents)) { // If we are not already patched the file
@@ -2485,7 +2483,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 final Map<String, String> env = new HashMap<>();
 
                                 env.put("create", "true");
-                                env.put("encoding", "UTF-8");
+                                env.put("encoding", StandardCharsets.UTF_8.name());
 
                                 final File tempServerJarFile = File.createTempFile(serverJarFile.getName().replace(".jar", "") + "-patched", ".jar");
 
@@ -2659,9 +2657,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             final File file = new File(scripts, (fileName.startsWith("-") ? "" : "-") + fileName);
                             if (!file.exists())
                                 saveTo = file;
-                        } else if ("config.sk".equals(e.getName())) {
-                            if (!config.exists())
-                                saveTo = config;
+                        } else if ("config.sk".equals(e.getName()) && !config.exists()) {
+                        	saveTo = config;
                         }
 //                      else if (e.getName().startsWith("aliases-") && e.getName().endsWith(".sk") && !e.getName().contains("/")) {
 //                          final File af = new File(getDataFolder(), e.getName());
@@ -2957,9 +2954,21 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 if (logNormal())
                     info("Loaded " + Variables.numVariables() + " variables in " + vld / 100 / 10. + " seconds");
 
-                ScriptLoader.loadScripts();
-                PatternCache.clear(); // Free memory
+                // Speed up enclosing class
+                Classes.getEnclosingClass(this.getClass());
+                Classes.enclosingClassCache.clear();
 
+                // Load scripts
+                {
+                    ScriptLoader.loadScripts();
+                }
+
+                // Free memory
+                Classes.enclosingClassCache.clear();
+                PatternCache.clear();
+                ConstructorCache.clear();
+
+                // Finished loading
                 Skript.info(m_finished_loading.toString());
 
                 EvtSkript.onSkriptStart();
@@ -2970,7 +2979,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.this, () -> BukkitLoggerFilter.removeFilter(f), 1);
 
                 if (Skript.logVeryHigh()) {
-                    info("Skript enabled successfully with " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
+                    info("Skript enabled successfully with " + Classes.getClassInfos().size() + " types, " + events.size() + " events, " + expressions.size() + " expressions, " + conditions.size() + " conditions, " + effects.size() + " effects, " + statements.size() + " statements, " + Functions.javaFunctions.size() + " java functions and " + (Functions.functions.size() - Functions.javaFunctions.size()) + " skript functions.");
                     emptyPrinter.run();
                 }
 
@@ -3149,20 +3158,18 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                     else
                         assert false : "Netty task is null";
 
-                    if (SkriptConfig.checkForNewVersion.value()) {
-                        if (e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
-                            new Task(Skript.this) {
-                                @Override
-                                public final void run() {
-                                    final Player p = e.getPlayer();
-                                    assert p != null;
-                                    if (updateAvailable) {
-                                        info(p, m_update_available.toString());
-                                        info(p, getDownloadLink());
-                                    }
+                    if (SkriptConfig.checkForNewVersion.value() && e.getPlayer().hasPermission("skript.seeupdates") || e.getPlayer().hasPermission("skript.admin") || e.getPlayer().hasPermission("skript.*") || e.getPlayer().isOp()) {
+                        new Task(Skript.this) {
+                            @Override
+                            public final void run() {
+                                final Player p = e.getPlayer();
+                                assert p != null;
+                                if (updateAvailable) {
+                                    info(p, m_update_available.toString());
+                                    info(p, getDownloadLink());
                                 }
-                            }.schedule(0L);
-                        }
+                            }
+                        }.schedule(0L);
                     }
                 }
             }, this, true);
@@ -3315,7 +3322,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 info("Disabling scripts...");
             disableScripts();
 
-            // Ensure no new tasks are quued before cancelling existing ones
+            // Ensure no new tasks are queued before cancelling existing ones
 
             Delay.delayingDisabled = true;
             Delay.delayed.clear();
@@ -3371,13 +3378,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             final Map<Thread, Integer> saveThreads = new HashMap<>();
 
             for (final Thread thread : Skript.getAllThreads()) {
-                if (thread != null) {
-                    if (thread.getName().toLowerCase(Locale.ENGLISH).contains("variable save thread".toLowerCase(Locale.ENGLISH))) {
-                        final int oldPriority = thread.getPriority();
-                        thread.setPriority(Thread.MAX_PRIORITY);
+                if (thread != null && thread.getName().toLowerCase(Locale.ENGLISH).contains("variable save thread".toLowerCase(Locale.ENGLISH))) {
+                    final int oldPriority = thread.getPriority();
+                    thread.setPriority(Thread.MAX_PRIORITY);
 
-                        saveThreads.put(thread, oldPriority);
-                    }
+                    saveThreads.put(thread, oldPriority);
                 }
             }
 

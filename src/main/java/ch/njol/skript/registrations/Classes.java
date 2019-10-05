@@ -74,6 +74,9 @@ public final class Classes {
     private static final byte[] YGGDRASIL_START = {(byte) 'Y', (byte) 'g', (byte) 'g', 0, Variables.YGGDRASIL_VERSION >>> 8 & 0xFF, Variables.YGGDRASIL_VERSION & 0xFF};
     @SuppressWarnings("null")
     private static ClassInfo<?>[] classInfos;
+    private static final boolean disableEnumClassInfos = Boolean.getBoolean("skript.disableEnumClassInfos");
+    private static final boolean disableEnumTypes = Boolean.getBoolean("skript.disableEnumTypes");
+    private static final boolean disableTypeManagers = Boolean.getBoolean("skript.disableTypeManagers");
 
     private Classes() {
         throw new UnsupportedOperationException();
@@ -336,7 +339,7 @@ public final class Classes {
     public static final ClassInfo<?> getClassInfoFromUserInput(String name) {
         checkAllowClassInfoInteraction();
         name = name.toLowerCase(Locale.ENGLISH);
-        for (final ClassInfo<?> ci : getClassInfos()) {
+        for (final ClassInfo<?> ci : classInfos) {
             final Pattern[] uip = ci.getUserInputPatterns();
             if (uip == null)
                 continue;
@@ -400,6 +403,9 @@ public final class Classes {
         return ci == null ? null : ci.getCodeName();
     }
 
+    @Nullable
+    public static Parser<?> lastCheckedParser;
+
     /**
      * Parses without trying to convert anything.
      * <p>
@@ -409,17 +415,17 @@ public final class Classes {
      * @param c
      * @return The parsed object
      */
+    @SuppressWarnings({"unchecked", "null"})
     @Nullable
     public static final <T> T parseSimple(final String s, final Class<T> c, final ParseContext context) {
         final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             for (final ClassInfo<?> info : classInfos) {
                 final Parser<?> parser = info.getParser();
-                if (parser == null || !parser.canParse(context) || !c.isAssignableFrom(info.getC()))
+                if ((lastCheckedParser = parser) == null || !parser.canParse(context) || !c.isAssignableFrom(info.getC()) || !isAllowed(parser))
                     continue;
                 log.clear();
-                // FIXME slow parse time on EnumClassInfo (skquery, skellet etc.)
-                @SuppressWarnings("unchecked") final T t = (T) parser.parse(s, context);
+                final T t = (T) parser.parse(s, context);
                 if (t != null) {
                     log.printLog();
                     return t;
@@ -428,8 +434,43 @@ public final class Classes {
             log.printError();
         } finally {
             log.stop();
+            lastCheckedParser = null;
         }
         return null;
+    }
+
+    public static final Map<Class<?>, Class<?>> enclosingClassCache =
+            new HashMap<>(100);
+
+    @Nullable
+    public static final Class<?> getEnclosingClass(@Nullable final Class<?> clazz) {
+        if (clazz == null)
+            return null;
+
+        final Class<?> cachedEnclosingClass = enclosingClassCache.get(clazz);
+
+        if (cachedEnclosingClass != null)
+            return cachedEnclosingClass;
+
+        final Class<?> enclosingClass = clazz.getEnclosingClass();
+        enclosingClassCache.put(clazz, enclosingClass);
+
+        return enclosingClass;
+    }
+
+    public static final boolean isAllowed(@Nullable final Parser<?> parser) {
+        if (parser == null)
+            return false;
+        if (!disableEnumClassInfos && !disableEnumTypes && !disableTypeManagers)
+            return true;
+        final Class<?> enclosingClass;
+        if ((enclosingClass = getEnclosingClass(parser.getClass())) != null) {
+            final String name = enclosingClass.getName();
+            return (!disableEnumClassInfos || !name.contains("EnumClassInfo")) &&
+                   (!disableEnumTypes || !name.contains("EnumType")) &&
+                   (!disableTypeManagers || !name.contains("TypeManager"));
+        }
+        return true;
     }
 
     /**
