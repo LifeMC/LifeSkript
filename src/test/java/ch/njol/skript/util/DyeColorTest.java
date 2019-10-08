@@ -22,10 +22,14 @@
 
 package ch.njol.skript.util;
 
+import ch.njol.skript.Skript;
 import org.bukkit.DyeColor;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("static-method")
 public final class DyeColorTest {
@@ -40,7 +44,11 @@ public final class DyeColorTest {
 
     @Test
     public final void testSilver() {
-        assertSame(DyeColor.SILVER, Color.getSilver());
+        try {
+            assertSame(DyeColor.SILVER, Skript.methodForName(Color.class, "getSilver", true).invoke(null));
+        } catch (final InvocationTargetException | IllegalAccessException e) {
+            fail(e);
+        }
     }
 
 }

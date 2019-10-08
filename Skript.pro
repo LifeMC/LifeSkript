@@ -47,7 +47,7 @@
 # Class merging & marking final: Mostly breaks binary compatibility and causes strange errors
 # Field propagation, marking private etc.: Breaks binary compatibility and it's bugged
 # Code allocation: Changes variable stack map and causes runtime strange errors
--optimizations !class/merging/**,!class/marking/final,!method/marking/final,!method/propagation/**,!field/**,!method/marking/private,!method/removal/parameter,!code/allocation/variable
+-optimizations !class/merging/**,!class/marking/final,!method/marking/final,!method/propagation/**,!field/**,!method/marking/private,!method/removal/parameter
 
 # We mostly use optimization, and we want a powerful optimization. This maybe increased, but 10 looks powerful enough.
 # We also don't want to wait too much when building the project, so don't increase this too much.
