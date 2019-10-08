@@ -1,7 +1,7 @@
 apiVersion=1.3
 codeStyle/codeStyleId=KOTLIN_OFFICIAL
 codeStyle/globalsOverridden=true
-compilerFlags=-Xjsr305\=warn -Xjvm-default\=enable -Xno-param-assertions -Xno-call-assertions -Xno-receiver-assertions -Xassertions\=jvm -Xskip-runtime-version-check -Xsuppress-missing-builtins-error -Xno-exception-on-explicit-equals-for-boxed-null
+compilerFlags=-Xjsr305\=warn -Xjvm-default\=enable -Xno-param-assertions -Xno-call-assertions -Xno-receiver-assertions -Xassertions\=jvm -Xskip-runtime-version-check -Xsuppress-missing-builtins-error -Xno-exception-on-explicit-equals-for-boxed-null -Xallow-no-source-files
 eclipse.preferences.version=1
 globalsOverridden=true
 jvmTarget=JVM_1_8

@@ -56,7 +56,7 @@ public final class ExprAttacker extends SimpleExpression<Entity> {
     }
 
     @Nullable
-    private static final Entity getAttacker(final @Nullable Event e) {
+    private static final Entity getAttacker(@Nullable final Event e) {
         if (e == null)
             return null;
         if (e instanceof EntityDamageByEntityEvent) {
@@ -103,7 +103,7 @@ public final class ExprAttacker extends SimpleExpression<Entity> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the attacker";
         return Classes.getDebugMessage(getSingle(e));

@@ -106,7 +106,7 @@ public final class EffCommand extends Effect {
     public void execute(final Event e) {
         for (String command : commands.getArray(e)) {
             assert command != null;
-            if (command.startsWith("/"))
+            if (!command.isEmpty() && command.charAt(0) == '/')
                 command = command.substring(1);
             if (senders != null) {
                 for (final CommandSender sender : senders.getArray(e)) {

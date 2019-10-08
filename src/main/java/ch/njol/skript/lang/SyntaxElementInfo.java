@@ -22,6 +22,8 @@
 
 package ch.njol.skript.lang;
 
+import ch.njol.skript.Skript;
+
 /**
  * @param <E> the syntax element this info is for
  * @author Peter Güttinger
@@ -35,7 +37,7 @@ public class SyntaxElementInfo<E extends SyntaxElement> {
         this.patterns = patterns;
         this.c = c;
         try {
-            c.getConstructor();
+            Skript.getConstructor(c);
 //			if (!c.getDeclaredConstructor().isAccessible())
 //				throw new IllegalArgumentException("The nullary constructor of class "+c.getName()+" is not public");
         } catch (final NoSuchMethodException e) {

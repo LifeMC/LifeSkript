@@ -447,10 +447,8 @@ public final class Classes {
         if (clazz == null)
             return null;
 
-        final Class<?> cachedEnclosingClass = enclosingClassCache.get(clazz);
-
-        if (cachedEnclosingClass != null)
-            return cachedEnclosingClass;
+        if (enclosingClassCache.containsKey(clazz))  // Can contain null
+            return enclosingClassCache.get(clazz);
 
         final Class<?> enclosingClass = clazz.getEnclosingClass();
         enclosingClassCache.put(clazz, enclosingClass);
@@ -607,7 +605,7 @@ public final class Classes {
      * @see Parser
      */
     public static final String toString(@Nullable final Object o) {
-        return toString(o, null, false);
+        return toString(o, StringMode.MESSAGE, 0, null, false);
     }
 
     public static final String toString(@Nullable final Object o,
@@ -653,7 +651,7 @@ public final class Classes {
             }
             return "[" + b + ']';
         }
-        for (final ClassInfo<?> ci : getClassInfos()) {
+        for (final ClassInfo<?> ci : classInfos) {
             final Parser<?> parser = ci.getParser();
             if (parser != null && ci.getC().isInstance(o)) {
                 @SuppressWarnings("unchecked") final String s = mode == StringMode.MESSAGE ? ((Parser<T>) parser).toString(o, flags) : mode == StringMode.DEBUG ? '[' + ci.getCodeName() + ':' + ((Parser<T>) parser).toString(o, mode) + ']' : ((Parser<T>) parser).toString(o, mode);
@@ -842,6 +840,9 @@ public final class Classes {
      * Deserialises an object.
      * <p>
      * This method must only be called from Bukkits main thread!
+     *
+     * @deprecated not used anymore, see {@link Classes#deserialize(ClassInfo, InputStream)},
+     * {@link Classes#deserialize(ClassInfo, byte[])} and {@link Classes#deserialize(String, byte[])}.
      *
      * @param type
      * @param value

@@ -238,35 +238,49 @@ public final class ExprEntities extends SimpleExpression<Entity> {
         }
         if (worlds == null && returnType == Player.class)
             return super.iterator(e);
-        return new NonNullIterator<Entity>() {
+        return new EntityIterator(returnType, worlds, e, types);
+    }
 
-            private final World[] ws = worlds == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
-            private final EntityData<?>[] ts = types.getAll(e);
-            private int w = -1;
-            @Nullable
-            private Iterator<? extends Entity> curIter;
+    private static final class EntityIterator extends NonNullIterator<Entity> {
+        private final World[] ws;
 
-            @Override
-            @Nullable
-            protected Entity getNext() {
-                while (Skript.isSkriptRunning()) {
-                    while (curIter == null || !curIter.hasNext()) {
-                        w++;
-                        if (w == ws.length)
-                            return null;
-                        curIter = ws[w].getEntitiesByClass(returnType).iterator();
-                    }
-                    while (curIter.hasNext()) {
-                        final Entity current = curIter.next();
-                        for (final EntityData<?> t : ts) {
-                            if (t.isInstance(current))
-                                return current;
-                        }
+        private final EntityData<?>[] ts;
+        private int w = -1;
+
+        @Nullable
+        private Iterator<? extends Entity> curIter;
+        private final Class<? extends Entity> returnType;
+
+        EntityIterator(final Class<? extends Entity> returnType,
+                       @Nullable final Expression<World> worlds,
+                       final Event e,
+                       final Expression<? extends EntityData<?>> types) {
+            this.returnType = returnType;
+            this.ws = worlds == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
+            this.ts = types.getAll(e);
+        }
+
+        @Override
+        @Nullable
+        @SuppressWarnings("null")
+        protected final Entity getNext() {
+            while (Skript.isSkriptRunning()) {
+                while (curIter == null || !curIter.hasNext()) {
+                    w++;
+                    if (w == ws.length)
+                        return null;
+                    curIter = ws[w].getEntitiesByClass(returnType).iterator();
+                }
+                while (curIter.hasNext()) {
+                    final Entity current = curIter.next();
+                    for (final EntityData<?> t : ts) {
+                        if (t.isInstance(current))
+                            return current;
                     }
                 }
-                return null;
             }
-        };
+            return null;
+        }
     }
 
     @SuppressWarnings("null")

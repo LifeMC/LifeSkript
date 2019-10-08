@@ -73,7 +73,7 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
 
         this.events = events;
 
-        if (name.startsWith("*")) {
+        if (!name.isEmpty() && name.charAt(0) == '*') {
             this.name = name = name.substring(1);
         } else {
             this.name = "On " + name;

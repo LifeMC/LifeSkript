@@ -157,23 +157,23 @@ public final class SkriptClasses {
         Classes.registerClass(new ClassInfo<>(ItemType.class, "itemtype").user("item ?types?", "items", "materials").name("Item Type").description("An item type is an alias, e.g. 'a pickaxe', 'all plants', etc., and can result in different items when added to an inventory, " + "and unlike <a href='#itemstack'>items</a> they are well suited for checking whatever an inventory contains a certain item or whatever a certain item is of a certain type.", "An item type can also have one or more <a href='#enchantmenttype'>enchantments</a> with or without a specific level defined, " + "and can optionally start with 'all' or 'every' to make this item type represent <i>all</i> types that the alias represents, including data ranges.").usage("<code>[&lt;number&gt; [of]] [all/every] &lt;alias&gt; [of &lt;enchantment&gt; [&lt;level&gt;] [,/and &lt;more enchantments...&gt;]]</code>").examples("give 4 torches to the player", "add all slabs to the inventory of the block", "player's tool is a diamond sword of sharpness", "remove a pickaxes of fortune 4 from {stored items::*}", "set {_item} to 10 of every upside-down stair", "block is dirt or farmland").since("1.0").before("itemstack", "entitydata", "entitytype").after("number", "integer", "long", "time").parser(new Parser<ItemType>() {
             @Override
             @Nullable
-            public ItemType parse(final String s, final ParseContext context) {
+            public final ItemType parse(final String s, final ParseContext context) {
                 return Aliases.parseItemType(s);
             }
 
             @Override
-            public String toString(final ItemType t, final int flags) {
+            public final String toString(final ItemType t, final int flags) {
                 return t.toString(flags);
             }
 
             @Override
-            public String getDebugMessage(final ItemType t) {
+            public final String getDebugMessage(final ItemType t) {
                 return t.getDebugMessage();
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            public String toVariableNameString(final ItemType t) {
+            public final String toVariableNameString(final ItemType t) {
                 final StringBuilder b = new StringBuilder("itemtype:");
                 b.append(t.getInternalAmount());
                 b.append(',').append(t.isAll());
@@ -194,7 +194,7 @@ public final class SkriptClasses {
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "itemtype:.+";
             }
         }).serializer(new YggdrasilSerializer<ItemType>() {
@@ -221,7 +221,7 @@ public final class SkriptClasses {
             @Override
             @Deprecated
             @Nullable
-            public ItemType deserialize(final String s) {
+            public final ItemType deserialize(final String s) {
                 final String[] ss = s.split("\\|");
                 if (ss.length > 2)
                     return null;
@@ -314,7 +314,7 @@ public final class SkriptClasses {
         Classes.registerClass(new ClassInfo<>(Timespan.class, "timespan").user("time ?spans?").name("Timespan").description("A timespan is a difference of two different dates or times, e.g '10 minutes'. Timespans are always displayed as real life time, but can be defined as minecraft time, e.g. '5 minecraft days and 12 hours'.", "See <a href='#date'>date</a> and <a href='#time'>time</a> for the other time types of Skript.").usage("<code>&lt;number&gt; [minecraft/mc/real/rl/irl] ticks/seconds/minutes/hours/days [[,/and] &lt;more...&gt;</code>]", "<code>[###:]##:##[.####]</code> ([hours:]minutes:seconds[.milliseconds])").examples("every 5 minecraft days:", "	wait a minecraft second and 5 ticks", "every 10 mc days and 12 hours:", "	halt for 12.7 irl minutes, 12 hours and 120.5 seconds").since("1.0").parser(new Parser<Timespan>() {
             @Override
             @Nullable
-            public Timespan parse(final String s, final ParseContext context) {
+            public final Timespan parse(final String s, final ParseContext context) {
                 try {
                     return Timespan.parse(s);
                 } catch (final IllegalArgumentException e) {
@@ -324,24 +324,24 @@ public final class SkriptClasses {
             }
 
             @Override
-            public String toString(final Timespan t, final int flags) {
+            public final String toString(final Timespan t, final int flags) {
                 return t.toString(flags);
             }
 
             @Override
-            public String toVariableNameString(final Timespan o) {
+            public final String toVariableNameString(final Timespan o) {
                 return "timespan:" + o.getMilliSeconds();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "timespan:\\d+";
             }
         }).serializer(new YggdrasilSerializer<Timespan>() {
             //						return t.getMilliSeconds();
             @Override
             @Nullable
-            public Timespan deserialize(final String s) {
+            public final Timespan deserialize(final String s) {
                 try {
                     return new Timespan(Long.parseLong(s));
                 } catch (final NumberFormatException e) {
@@ -351,17 +351,17 @@ public final class SkriptClasses {
 
         }).math(Timespan.class, new Arithmetic<Timespan, Timespan>() {
             @Override
-            public Timespan difference(final Timespan t1, final Timespan t2) {
+            public final Timespan difference(final Timespan t1, final Timespan t2) {
                 return new Timespan(Math.abs(t1.getMilliSeconds() - t2.getMilliSeconds()));
             }
 
             @Override
-            public Timespan add(final Timespan value, final Timespan difference) {
+            public final Timespan add(final Timespan value, final Timespan difference) {
                 return new Timespan(value.getMilliSeconds() + difference.getMilliSeconds());
             }
 
             @Override
-            public Timespan subtract(final Timespan value, final Timespan difference) {
+            public final Timespan subtract(final Timespan value, final Timespan difference) {
                 return new Timespan(Math.max(0, value.getMilliSeconds() - difference.getMilliSeconds()));
             }
         }));
@@ -371,7 +371,7 @@ public final class SkriptClasses {
                 .defaultExpression(new SimpleLiteral<>(new Timeperiod(0, 23999), true)).parser(new Parser<Timeperiod>() {
                     @Override
                     @Nullable
-                    public Timeperiod parse(final String s, final ParseContext context) {
+                    public final Timeperiod parse(final String s, final ParseContext context) {
                         if ("day".equalsIgnoreCase(s)) {
                             return new Timeperiod(0, 11999);
                         }
@@ -399,24 +399,24 @@ public final class SkriptClasses {
                     }
 
                     @Override
-                    public String toString(final Timeperiod o, final int flags) {
+                    public final String toString(final Timeperiod o, final int flags) {
                         return o.toString();
                     }
 
                     @Override
-                    public String toVariableNameString(final Timeperiod o) {
+                    public final String toVariableNameString(final Timeperiod o) {
                         return "timeperiod:" + o.start + '-' + o.end;
                     }
 
                     @Override
-                    public String getVariableNamePattern() {
+                    public final String getVariableNamePattern() {
                         return "timeperiod:\\d+-\\d+";
                     }
                 }).serializer(new YggdrasilSerializer<Timeperiod>() {
                     //						return t.start + "-" + t.end;
                     @Override
                     @Nullable
-                    public Timeperiod deserialize(final String s) {
+                    public final Timeperiod deserialize(final String s) {
                         final String[] split = s.split("-");
                         if (split.length != 2)
                             return null;
@@ -432,7 +432,7 @@ public final class SkriptClasses {
             //						return d.getTimestamp();
             @Override
             @Nullable
-            public Date deserialize(final String s) {
+            public final Date deserialize(final String s) {
                 try {
                     return new Date(Long.parseLong(s));
                 } catch (final NumberFormatException e) {
@@ -441,17 +441,17 @@ public final class SkriptClasses {
             }
         }).math(Timespan.class, new Arithmetic<Date, Timespan>() {
             @Override
-            public Timespan difference(final Date first, final Date second) {
+            public final Timespan difference(final Date first, final Date second) {
                 return first.difference(second);
             }
 
             @Override
-            public Date add(final Date value, final Timespan difference) {
+            public final Date add(final Date value, final Timespan difference) {
                 return new Date(value.getTimestamp() + difference.getMilliSeconds());
             }
 
             @Override
-            public Date subtract(final Date value, final Timespan difference) {
+            public final Date subtract(final Date value, final Timespan difference) {
                 return new Date(value.getTimestamp() - difference.getMilliSeconds());
             }
         }));

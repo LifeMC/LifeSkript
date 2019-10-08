@@ -65,7 +65,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The {@link ScriptLoader} that loads scripts
+ * from file system as specified in the configuration.
+ *
  * @author Peter Güttinger
+ * @see SkriptParser
  */
 public final class ScriptLoader {
     public static final boolean COLOR_BASED_ON_LOAD_TIMES = Boolean.getBoolean("skript.colorBasedOnLoadTimes");
@@ -579,7 +583,8 @@ public final class ScriptLoader {
                                         else // it does not exist at all
                                             Skript.error("This script requires plugin " + value);
                                         return new ScriptInfo();
-                                    } else if ("Skript".equalsIgnoreCase(value))
+                                    }
+                                    if ("Skript".equalsIgnoreCase(value))
                                         Skript.warning("Requiring Skript is redundant. Please remove this requires plugin section.");
                                 } else if ("requires addon".equalsIgnoreCase(key) && Skript.getAddon(value) == null) {
                                     // This can be duplicateable to require more than one addon

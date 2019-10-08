@@ -80,7 +80,7 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                 if (b.getType() != Material.FURNACE && b.getType() != Material.BURNING_FURNACE)
                     return null;
                 if (getTime() >= 0 && (e instanceof FurnaceSmeltEvent && b.equals(((FurnaceSmeltEvent) e).getBlock()) || e instanceof FurnaceBurnEvent && b.equals(((FurnaceBurnEvent) e).getBlock())) && !Delay.isDelayed(e)) {
-                    return new FurnaceEventSlot(e, ((Furnace) b.getState()).getInventory());
+                    return new FurnaceEventSlot(e, ((Furnace) b.getState()).getInventory(), slot, getTime());
                 }
                 return new InventorySlot(((Furnace) b.getState()).getInventory(), slot);
             }
@@ -93,9 +93,9 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
-            return "the " + (getTime() == -1 ? "past " : getTime() == 1 ? "future " : "") + slotNames[slot] + " slot of " + getExpr().toString(e, debug);
+            return "the " + (getTime() == -1 ? "past " : getTime() == 1 ? "future " : "") + slotNames[slot] + " slot of " + getExpr().toString(null, debug);
         return Classes.getDebugMessage(getSingle(e));
     }
 
@@ -105,26 +105,32 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
         return super.setTime(time, getExpr(), FurnaceSmeltEvent.class, FurnaceBurnEvent.class);
     }
 
-    private final class FurnaceEventSlot extends InventorySlot {
+    private static final class FurnaceEventSlot extends InventorySlot {
 
         private final Event e;
 
-        public FurnaceEventSlot(final Event e, final FurnaceInventory invi) {
+        private final int slot;
+        private final int time;
+
+        FurnaceEventSlot(final Event e, final FurnaceInventory invi, final int slot, final int time) {
             super(invi, slot);
             this.e = e;
+
+            this.slot = slot;
+            this.time = time;
         }
 
         @Override
         @Nullable
-        public ItemStack getItem() {
+        public final ItemStack getItem() {
             if (e instanceof FurnaceSmeltEvent) {
                 if (slot == RESULT) {
-                    if (getTime() >= 0)
+                    if (time >= 0)
                         return ((FurnaceSmeltEvent) e).getResult().clone();
                     return super.getItem();
                 }
                 if (slot == ORE) {
-                    if (getTime() <= 0) {
+                    if (time <= 0) {
                         return super.getItem();
                     }
                     final ItemStack i = super.getItem();
@@ -136,7 +142,7 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
                 return super.getItem();
             }
             if (slot == FUEL) {
-                if (getTime() <= 0) {
+                if (time <= 0) {
                     return super.getItem();
                 }
                 final ItemStack i = super.getItem();
@@ -150,21 +156,21 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
 
         @SuppressWarnings("synthetic-access")
         @Override
-        public void setItem(final @Nullable ItemStack item) {
+        public final void setItem(@Nullable final ItemStack item) {
             if (e instanceof FurnaceSmeltEvent) {
-                if (slot == RESULT && getTime() >= 0) {
+                if (slot == RESULT && time >= 0) {
                     if (item == null || item.getType() == Material.AIR) { // null/air crashes the server on account of a NPE if using event.setResult(...)
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(null));
                     } else {
                         ((FurnaceSmeltEvent) e).setResult(item);
                     }
-                } else if (slot == ORE && getTime() >= 0) {
+                } else if (slot == ORE && time >= 0) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(item));
                 } else {
                     super.setItem(item);
                 }
             } else {
-                if (slot == FUEL && getTime() >= 0) {
+                if (slot == FUEL && time >= 0) {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> FurnaceEventSlot.super.setItem(item));
                 } else {
                     super.setItem(item);

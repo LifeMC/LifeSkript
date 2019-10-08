@@ -121,7 +121,7 @@ public final class Functions {
                 String argType = n.group(2);
                 final String def = n.group(3);
                 boolean nullable = false;
-                if (("" + argType).endsWith("?")) {
+                if (!("" + argType).isEmpty() && ("" + argType).charAt(("" + argType).length() - 1) == '?') {
                     nullable = true;
                     argType = argType.substring(0, argType.length() - 1);
                 } else if (def != null)
@@ -154,7 +154,7 @@ public final class Functions {
             if (c == null)
                 c = Classes.getClassInfoFromUserInput(p.getFirst());
             if (c == null) {
-                Skript.error("Cannot recognise the type '" + returnType + '\'');
+                Skript.error("Cannot recognize the type '" + returnType + '\'');
                 return null;
             }
         }

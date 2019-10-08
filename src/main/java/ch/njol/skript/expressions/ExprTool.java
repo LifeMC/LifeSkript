@@ -83,37 +83,59 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
                         return new InventorySlot(i, getTime() >= 0 ? ((PlayerItemHeldEvent) e).getNewSlot() : ((PlayerItemHeldEvent) e).getPreviousSlot());
                     }
                     if (e instanceof PlayerBucketEvent && ((PlayerBucketEvent) e).getPlayer() == p) {
-                        final PlayerInventory i = ((PlayerBucketEvent) e).getPlayer().getInventory();
-                        assert i != null;
-                        return new InventorySlot(i, ((PlayerBucketEvent) e).getPlayer().getInventory().getHeldItemSlot()) {
-                            @Override
-                            @Nullable
-                            public ItemStack getItem() {
-                                return getTime() <= 0 ? super.getItem() : ((PlayerBucketEvent) e).getItemStack();
-                            }
-
-                            @Override
-                            public void setItem(final @Nullable ItemStack item) {
-                                if (getTime() >= 0) {
-                                    ((PlayerBucketEvent) e).setItemStack(item);
-                                } else {
-                                    super.setItem(item);
-                                }
-                            }
-                        };
+                        return new BucketInventorySlot((PlayerBucketEvent) e, getTime());
                     }
                 }
                 final EntityEquipment e = p.getEquipment();
                 if (e == null)
                     return null;
-                return new EquipmentSlot(e, EquipmentSlot.EquipSlot.TOOL) {
-                    @Override
-                    public String toString_i() {
-                        return "the " + (getTime() == 1 ? "future " : getTime() == -1 ? "former " : "") + super.toString_i();
-                    }
-                };
+                return new ToolEquipmentSlot(e, getTime());
             }
         });
+    }
+
+    private static final class BucketInventorySlot extends InventorySlot {
+        private final PlayerBucketEvent event;
+        private final int time;
+
+        BucketInventorySlot(final PlayerBucketEvent event,
+                            final int time) {
+            super(event.getPlayer().getInventory(), event.getPlayer().getInventory().getHeldItemSlot());
+
+            this.event = event;
+            this.time = time;
+        }
+
+        @Override
+        @Nullable
+        public final ItemStack getItem() {
+            return time <= 0 ? super.getItem() : event.getItemStack();
+        }
+
+        @Override
+        public final void setItem(@Nullable final ItemStack item) {
+            if (time >= 0) {
+                event.setItemStack(item);
+            } else {
+                super.setItem(item);
+            }
+        }
+    }
+
+    private static final class ToolEquipmentSlot extends EquipmentSlot {
+        private final int time;
+
+        ToolEquipmentSlot(final EntityEquipment e,
+                          final int time) {
+            super(e, EquipmentSlot.EquipSlot.TOOL);
+
+            this.time = time;
+        }
+
+        @Override
+        public final String toString_i() {
+            return "the " + (time == 1 ? "future " : time == -1 ? "former " : "") + super.toString_i();
+        }
     }
 
     @Override
@@ -122,9 +144,9 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
-            return "the " + (getTime() == 1 ? "future " : getTime() == -1 ? "former " : "") + "tool of " + getExpr().toString(e, debug);
+            return "the " + (getTime() == 1 ? "future " : getTime() == -1 ? "former " : "") + "tool of " + getExpr().toString(null, debug);
         return Classes.getDebugMessage(getSingle(e));
     }
 

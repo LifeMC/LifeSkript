@@ -69,7 +69,7 @@ public final class Variables {
      * <p>
      * Access must be synchronized.
      */
-    static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>(100));
+    static final SynchronizedReference<Map<String, NonNullPair<Object, VariablesStorage>>> tempVars = new SynchronizedReference<>(new HashMap<>(300));
     static final BlockingQueue<SerializedVariable> queue = new LinkedBlockingQueue<>();
     static final BlockingQueue<SerializedVariable> saveQueue = queue;
     static final ReadWriteLock variablesLock = new ReentrantReadWriteLock(true);

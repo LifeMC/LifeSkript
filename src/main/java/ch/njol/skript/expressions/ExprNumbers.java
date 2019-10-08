@@ -121,46 +121,62 @@ public final class ExprNumbers extends SimpleExpression<Number> {
         final Number s = start.getSingle(e), f = end.getSingle(e);
         if (s == null || f == null || s.doubleValue() > f.doubleValue())
             return null;
-        return new Iterator<Number>() {
-            final double max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
-            double i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
+        return new NumberIterator(integer, isInLoop, f, s);
+    }
 
-            long startTime;
-            long endTime;
+    private static final class NumberIterator implements Iterator<Number> {
+        private final boolean integer;
+        private final boolean isInLoop;
 
-            @Override
-            public boolean hasNext() {
-                final boolean hasNext = i <= max;
-                if (!hasNext && integer && isInLoop && SkriptAgentKt.isTrackingEnabled()) {
-                    endTime = System.nanoTime();
-                    SkriptAgentKt.throwEvent(new ForLoopEndEvent((int) max, startTime, endTime));
-                }
-                return hasNext;
+        final double max;
+        double i;
+
+        long startTime;
+        long endTime;
+
+        NumberIterator(final boolean integer,
+                       final boolean isInLoop,
+                       final Number f,
+                       final Number s) {
+            this.integer = integer;
+            this.isInLoop = isInLoop;
+
+            this.max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
+            this.i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
+        }
+
+        @Override
+        public final boolean hasNext() {
+            final boolean hasNext = i <= max;
+            if (!hasNext && integer && isInLoop && SkriptAgentKt.isTrackingEnabled()) {
+                endTime = System.nanoTime();
+                SkriptAgentKt.throwEvent(new ForLoopEndEvent((int) max, startTime, endTime));
             }
+            return hasNext;
+        }
 
-            @SuppressWarnings("null")
-            @Override
-            public Number next() {
-                if (integer && isInLoop && i == 1 && SkriptAgentKt.isTrackingEnabled()) {
-                    startTime = System.nanoTime();
-                    SkriptAgentKt.throwEvent(new ForLoopStartEvent((int) max));
-                }
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                if (integer)
-                    return (long) i++;
-                return i++;
+        @SuppressWarnings("null")
+        @Override
+        public final Number next() {
+            if (integer && isInLoop && i == 1 && SkriptAgentKt.isTrackingEnabled()) {
+                startTime = System.nanoTime();
+                SkriptAgentKt.throwEvent(new ForLoopStartEvent((int) max));
             }
+            if (!hasNext())
+                throw new NoSuchElementException();
+            if (integer)
+                return (long) i++;
+            return i++;
+        }
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (integer ? "integers" : "numbers") + " from " + start.toString(e, debug) + " to " + end.toString(e, debug);
     }
 

@@ -56,7 +56,7 @@ public final class FunctionReference<T> {
     private boolean single;
 
     @SuppressWarnings("null")
-    public FunctionReference(final String functionName, final @Nullable Node node, @Nullable final File script, @Nullable final Class<? extends T>[] returnTypes, final Expression<?>[] params) {
+    public FunctionReference(final String functionName, @Nullable final Node node, @Nullable final File script, @Nullable final Class<? extends T>[] returnTypes, final Expression<?>[] params) {
         this.functionName = functionName;
         this.node = node;
         this.script = script;
@@ -183,7 +183,7 @@ public final class FunctionReference<T> {
         return function;
     }
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "unused"})
     public boolean resetReturnValue() {
         if (function == null)
             return false;

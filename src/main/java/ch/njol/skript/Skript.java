@@ -60,7 +60,6 @@ import ch.njol.util.coll.iterator.EnumerationIterable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -96,6 +95,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.jar.JarEntry;
@@ -108,6 +108,8 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+//import org.bukkit.World;
 
 // TODO meaningful error if someone uses an %expression with percent signs% outside of text or a variable
 
@@ -227,7 +229,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static final boolean logSpam = Boolean.getBoolean("skript.logSpam");
     private static final boolean showRegisteredNonSkript = Boolean.getBoolean("skript.showRegisteredNonSkript");
     private static final boolean assertionsEnabled = Skript.class.desiredAssertionStatus();
-    private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> new Thread(r, "Skript netty optimizer thread"));
+    private static final ExecutorService nettyOptimizerThread = Executors.newFixedThreadPool(1, r -> Skript.invoke(new Thread(r, "Skript netty optimizer thread"), (Consumer<Thread>) t -> t.setPriority(Thread.MIN_PRIORITY)));
     private static final Pattern SPACE = Pattern.compile(" ", Pattern.LITERAL);
     private static final Pattern DASH = Pattern.compile("-", Pattern.LITERAL);
     private static final Matcher DASH_MATCHER = DASH.matcher("");
@@ -1573,6 +1575,14 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return exception(cause, null, item, info);
     }
 
+    private static final class StackedException extends Throwable {
+        private static final long serialVersionUID = 5931142792396172230L;
+
+        StackedException() {
+            /* implicit super call */
+        }
+    }
+
     /**
      * Used if something happens that shouldn't happen
      *
@@ -1643,7 +1653,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 logEx((first ? "" : "Caused by: ") + cause);
                 for (final StackTraceElement e : cause.getStackTrace())
                     logEx("    at " + e);
+                final Throwable prevCause = cause;
                 cause = cause.getCause();
+                if (cause == null && !(prevCause instanceof StackedException))
+                    cause = new StackedException(); // Print method callers stack, i.e exception handler
                 first = false;
             }
             logEx();
@@ -2850,8 +2863,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 try {
                                     final Class<?> hook = Class.forName(cl, true, getBukkitClassLoader());
                                     if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
-                                        hook.getDeclaredConstructor().setAccessible(true);
-                                        hook.getDeclaredConstructor().newInstance();
+                                        final Constructor<?> constructor = hook.getDeclaredConstructor();
+
+                                        constructor.setAccessible(true);
+                                        constructor.newInstance();
                                     }
                                 } catch (final NoClassDefFoundError ncdffe) {
                                     Skript.exception(ncdffe, "Cannot load class " + cl + " because it missing some dependencies");
@@ -3337,6 +3352,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             if (!SpikeDetector.alwaysEnabled)
                 SpikeDetector.doStop();
 
+            /* Unnecessary for now as variable saving performance is fixed in 2.2.18.
+
             // Bukkit gives a warning when plugins manually save the worlds to disk
 
             BukkitLoggerFilter.addFilter(record -> record.getLevel() != Level.WARNING || !record.getMessage().contains("A manual (plugin-induced) save has been detected"));
@@ -3352,6 +3369,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             for (final World world : Bukkit.getWorlds()) {
                 world.save();
             }
+            */
 
             closedOnDisable = true;
 

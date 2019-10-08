@@ -37,6 +37,7 @@ import org.bukkit.plugin.Plugin;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -146,7 +147,7 @@ public final class DatabaseStorage extends VariablesStorage {
 
             try {
                 try {
-                    db.query(type.createQuery);
+                    db.query(type.createQuery).close();
                 } catch (final SQLException e) {
                     Skript.error("Could not create the variables table in the database '" + databaseName + "': " + e.getLocalizedMessage() + ". " + "Please create the table yourself using the following query: " + type.createQuery.replace(",", ", ").replaceAll("\\s+", " "));
                     return false;
@@ -190,8 +191,8 @@ public final class DatabaseStorage extends VariablesStorage {
                             Variables.getReadLock().unlock();
                         }
                     }
-                    db.query("DELETE FROM " + OLD_TABLE_NAME + " WHERE value IS NULL");
-                    db.query("DELETE FROM old USING " + OLD_TABLE_NAME + " AS old, " + TABLE_NAME + " AS new WHERE old.name = new.name");
+                    db.query("DELETE FROM " + OLD_TABLE_NAME + " WHERE value IS NULL").close();
+                    db.query("DELETE FROM old USING " + OLD_TABLE_NAME + " AS old, " + TABLE_NAME + " AS new WHERE old.name = new.name").close();
                     try (final ResultSet r = db.query("SELECT * FROM " + OLD_TABLE_NAME + " LIMIT 1")) {
                         if (r.next()) {// i.e. the old table is not empty
                             Skript.error("Could not successfully convert & transfer all variables to the new table in the database '" + databaseName + "'. " + "Variables that could not be transferred are left in the old table and Skript will reattempt to transfer them whenever it starts until the old table is empty or is manually deleted. " + "Please note that variables recreated by scripts will count as converted and will be removed from the old table on the next restart.");
@@ -200,7 +201,7 @@ public final class DatabaseStorage extends VariablesStorage {
                             try {
                                 disconnect(); // prevents SQLITE_LOCKED error
                                 connect();
-                                db.query("DROP TABLE " + OLD_TABLE_NAME);
+                                db.query("DROP TABLE " + OLD_TABLE_NAME).close();
                             } catch (final SQLException e) {
                                 Skript.error("There was an error deleting the old variables table from the database '" + databaseName + "', please delete it yourself: " + e.getLocalizedMessage());
                                 error = true;
@@ -224,7 +225,7 @@ public final class DatabaseStorage extends VariablesStorage {
                         try {
                             final Database db1 = DatabaseStorage.this.db.get();
                             if (db1 != null)
-                                db1.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1");
+                                db1.query("SELECT * FROM " + TABLE_NAME + " LIMIT 1").close();
                             db.wait(1000L * 10L);
                         } catch (final SQLException e) {
                             if (Skript.testing() || Skript.debug())
@@ -444,8 +445,8 @@ public final class DatabaseStorage extends VariablesStorage {
             super.close();
             final Database db = this.db.get();
             if (db != null) {
-                try {
-                    db.getConnection().commit();
+                try (final Connection con = db.getConnection()) {
+                    con.commit();
                 } catch (final SQLException e) {
                     sqlException(e);
                 }

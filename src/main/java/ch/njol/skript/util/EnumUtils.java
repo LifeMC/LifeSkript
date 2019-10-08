@@ -41,7 +41,7 @@ public final class EnumUtils<E extends Enum<E>> {
 
     public EnumUtils(final Class<E> c, final String languageNode) {
         assert c != null && c.isEnum() : c;
-        assert languageNode != null && !languageNode.isEmpty() && !languageNode.endsWith(".") : languageNode;
+        assert languageNode != null && !languageNode.isEmpty() && languageNode.charAt(languageNode.length() - 1) != '.' : languageNode;
 
         this.c = c;
         this.languageNode = languageNode;

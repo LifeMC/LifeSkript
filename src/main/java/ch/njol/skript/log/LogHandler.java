@@ -41,7 +41,9 @@ public abstract class LogHandler/* implements AutoCloseable */ {
     }
 
     public final void stop() {
-        SkriptLogger.removeHandler(this);
+        {
+            SkriptLogger.removeHandler(this);
+        }
         onStop();
     }
 

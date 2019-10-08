@@ -713,6 +713,7 @@
                 </executions>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+					<minimizeJar>false</minimizeJar>
                     <artifactSet>
                         <includes>
                             <include>*:*</include>

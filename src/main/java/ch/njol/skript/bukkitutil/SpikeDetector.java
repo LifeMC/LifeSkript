@@ -74,7 +74,7 @@ public final class SpikeDetector extends Thread {
     @Nullable
     private static SpikeDetector instance;
     private final Thread serverThread;
-    private long lastEarlyWarning;
+    private volatile long lastEarlyWarning;
     private volatile long lastTick;
     private volatile boolean stopping;
 

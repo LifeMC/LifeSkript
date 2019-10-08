@@ -86,9 +86,11 @@ public final class Timespan implements YggdrasilSerializable, Comparable<Timespa
     }
 
     @Nullable
-    public static final Timespan parse(final String s) {
+    public static final Timespan parse(String s) {
         if (s.isEmpty())
             return null;
+        s = s.trim();
+
         long t = 0;
         if (TIMESPAN_PATTERN_MATCHER.reset(s).matches()) { // MM:SS[.ms] or HH:MM:SS[.ms]
             final String[] ss = TIMESPAN_SPLIT_TWO.split(s);

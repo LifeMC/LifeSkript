@@ -32,6 +32,7 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Iterator;
+import java.util.function.BiFunction;
 
 /**
  * Represents an expression which is a wrapper of another one. Remember to set the wrapped expression in the constructor ({@link #WrapperExpression(SimpleExpression)})
@@ -48,7 +49,11 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
     protected WrapperExpression() {
     }
 
-    protected WrapperExpression(final SimpleExpression<? extends T> expr) {
+    protected  WrapperExpression(final SimpleExpression<? extends T> expr) {
+        this((Expression<? extends T>) expr); // Backwards compatibility
+    }
+
+    protected WrapperExpression(final Expression<? extends T> expr) {
         this.expr = expr;
     }
 
@@ -69,16 +74,29 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
             @SuppressWarnings("unchecked") final Converter<? super T, ? extends R> conv = (Converter<? super T, ? extends R>) Converters.getConverter(getReturnType(), c);
             if (conv == null)
                 continue;
-            return new ConvertedExpression<T, R>(expr, c, conv) {
-                @Override
-                public String toString(@Nullable final Event e, final boolean debug) {
-                    if (debug && e == null)
-                        return '(' + WrapperExpression.this.toString(e, debug) + ")->" + super.to.getName();
-                    return WrapperExpression.this.toString(e, debug);
-                }
-            };
+            return new ConvertedWrapperExpression<>(expr, c, conv, this::toString);
         }
         return null;
+    }
+
+    private static final class ConvertedWrapperExpression<T, R> extends ConvertedExpression<T, R> {
+        private final BiFunction<Event, Boolean, String> toStringFunction;
+
+        ConvertedWrapperExpression(final Expression<? extends T> expr,
+                                   final Class<R> c,
+                                   final Converter<? super T, ? extends R> converter,
+                                   final BiFunction<Event, Boolean, String> toStringFunction) {
+            super(expr, c, converter);
+
+            this.toStringFunction = toStringFunction;
+        }
+
+        @Override
+        public final String toString(@Nullable final Event e, final boolean debug) {
+            if (debug && e == null)
+                return '(' + toStringFunction.apply(null, true) + ")->" + super.to.getName();
+            return toStringFunction.apply(e, debug);
+        }
     }
 
     @Override

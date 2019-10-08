@@ -482,6 +482,9 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         fields.setFields(this);
     }
 
+    /**
+     * @deprecated not used anymore
+     */
     @Deprecated
     protected boolean deserialize(@SuppressWarnings("unused") final String s) {
         return false;

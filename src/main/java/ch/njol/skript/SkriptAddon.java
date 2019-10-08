@@ -195,7 +195,7 @@ public final class SkriptAddon {
         if (languageFileDirectory != null)
             throw new IllegalStateException();
         directory = directory.replace('\\', '/');
-        if (directory.endsWith("/"))
+        if (!directory.isEmpty() && directory.charAt(directory.length() - 1) == '/')
             directory = directory.substring(0, directory.length() - 1);
         languageFileDirectory = directory;
         Language.loadDefault(this);
