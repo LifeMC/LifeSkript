@@ -68,7 +68,6 @@ public final class ExprLocationAt extends SimpleExpression<Location> {
     }
 
     @Override
-    @Nullable
     protected Location[] get(final Event e) {
         final World w = world.getSingle(e);
         final Number x = this.x.getSingle(e), y = this.y.getSingle(e), z = this.z.getSingle(e);

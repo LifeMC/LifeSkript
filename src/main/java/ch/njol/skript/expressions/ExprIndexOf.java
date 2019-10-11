@@ -48,10 +48,10 @@ public final class ExprIndexOf extends SimpleExpression<Integer> {
         Skript.registerExpression(ExprIndexOf.class, Integer.class, ExpressionType.COMBINED, "[the] (0¦|0¦first|1¦last) index of %string% in %string%");
     }
 
-    boolean first;
+    private boolean first;
 
     @SuppressWarnings("null")
-    Expression<String> haystack, needle;
+    private Expression<String> haystack, needle;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
@@ -63,7 +63,6 @@ public final class ExprIndexOf extends SimpleExpression<Integer> {
     }
 
     @Override
-    @Nullable
     protected Integer[] get(final Event e) {
         final String h = haystack.getSingle(e), n = needle.getSingle(e);
         if (h == null || n == null)

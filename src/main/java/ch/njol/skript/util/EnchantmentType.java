@@ -40,8 +40,8 @@ import java.util.regex.Pattern;
  */
 public final class EnchantmentType implements YggdrasilSerializable {
 
-    static final Map<Enchantment, String> enchantmentNames = new HashMap<>();
-    static final Map<String, Enchantment> enchantmentPatterns = new HashMap<>();
+    private static final Map<Enchantment, String> enchantmentNames = new HashMap<>();
+    private static final Map<String, Enchantment> enchantmentPatterns = new HashMap<>();
     private static final String LANGUAGE_NODE = "enchantments";
     @SuppressWarnings("null")
     private static final Pattern pattern = Pattern.compile(".+ \\d+");
@@ -90,7 +90,10 @@ public final class EnchantmentType implements YggdrasilSerializable {
 
     @SuppressWarnings("null")
     @Nullable
-    public static final EnchantmentType parse(final String s) {
+    public static final EnchantmentType parse(String s) {
+        if (s.isEmpty())
+            return null;
+        s = s.trim();
         if (patternMatcher.reset(s).matches()) {
             final Enchantment ench = parseEnchantment(s.substring(0, s.lastIndexOf(' ')));
             if (ench == null)

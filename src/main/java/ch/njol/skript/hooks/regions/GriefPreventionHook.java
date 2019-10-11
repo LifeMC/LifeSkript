@@ -59,7 +59,7 @@ import java.util.List;
 @RequiredPlugins("GriefPrevention")
 public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
 
-    public static final boolean getClaimPublic = Skript.classExists("me.ryanhamshire.GriefPrevention.DataStore")
+    private static final boolean getClaimPublic = Skript.classExists("me.ryanhamshire.GriefPrevention.DataStore")
             && Skript.methodExists(DataStore.class, "getClaim", long.class)
             && Modifier.isPublic(Skript.methodForName(DataStore.class, "getClaim", long.class).getModifiers());
 

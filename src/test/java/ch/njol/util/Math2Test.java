@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Peter Güttinger
  */
-public final class Math2Test {
+final class Math2Test {
 
     private static final int RANDOM_NUMBERS = 10000;
 
@@ -81,7 +81,7 @@ public final class Math2Test {
     @SuppressWarnings({"unused", "static-method"})
     @SuppressFBWarnings("FE_FLOATING_POINT_EQUALITY")
     @Test
-    public void testMath() {
+    void testMath() {
 
         a(Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);
         a(Long.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE + 1, Long.MAX_VALUE - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, Integer.MIN_VALUE + 1, Integer.MAX_VALUE - 1, 0, -1, 1);

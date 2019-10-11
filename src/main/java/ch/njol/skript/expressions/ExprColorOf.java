@@ -52,7 +52,7 @@ public final class ExprColorOf extends SimplePropertyExpression<Object, Color> {
         register(ExprColorOf.class, Color.class, "colo[u]r[s]", "itemstacks/entities");
     }
 
-    boolean changeItemStack;
+    private boolean changeItemStack;
 
     @SuppressWarnings("null")
     @Override

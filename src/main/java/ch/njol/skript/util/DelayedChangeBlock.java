@@ -43,7 +43,7 @@ import java.util.List;
 @NonNullByDefault(false)
 public final class DelayedChangeBlock implements Block {
 
-    final Block b;
+    private final Block b;
     @Nullable
     private final BlockState newState;
 

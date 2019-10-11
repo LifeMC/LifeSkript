@@ -54,8 +54,11 @@ import java.util.regex.Pattern;
  */
 @SuppressWarnings("rawtypes")
 public final class SkriptClasses {
+    static final Pattern ITEMTYPE_DESERIALIZE_PATTERN = Pattern.compile("[,:/]");
 
     static final Matcher EXPERIENCE_PATTERN_MATCHER = Pattern.compile("\\d+ .+").matcher("");
+    static final Matcher ITEM_META_PATTERN_MATCHER = Pattern.compile("¦¦", Pattern.LITERAL).matcher("");
+
     static final RegexMessage experiencePattern = new RegexMessage("types.experience.pattern", Pattern.CASE_INSENSITIVE);
 
     private SkriptClasses() {
@@ -66,49 +69,49 @@ public final class SkriptClasses {
         Classes.registerClass(new ClassInfo<>(ClassInfo.class, "classinfo").user("types?").name("Type").description("Represents a type, e.g. number, object, item type, location, block, world, entity type, etc.", "This is mostly used for expressions like 'event-&lt;type&gt;', '&lt;type&gt;-argument', 'loop-&lt;type&gt;', etc., e.g. event-world, number-argument and loop-player.").usage("See the type name patterns of all types - including this one").examples("{variable} is a number # check whatever the variable contains a number, e.g. -1 or 5.5", "{variable} is a type # check whatever the variable contains a type, e.g. number or player", "{variable} is an object # will always succeed if the variable is set as everything is an object, even types.", "disable PvP in the event-world", "kill the loop-entity").since("2.0").after("entitydata", "entitytype", "itemtype").parser(new Parser<ClassInfo>() {
             @Override
             @Nullable
-            public ClassInfo parse(final String s, final ParseContext context) {
+            public final ClassInfo parse(final String s, final ParseContext context) {
                 return Classes.getClassInfoFromUserInput(Noun.stripIndefiniteArticle(s));
             }
 
             @Override
-            public String toString(final ClassInfo c, final int flags) {
+            public final String toString(final ClassInfo c, final int flags) {
                 return c.toString(flags);
             }
 
             @Override
-            public String toVariableNameString(final ClassInfo c) {
+            public final String toVariableNameString(final ClassInfo c) {
                 return c.getCodeName();
             }
 
             @Override
-            public String getDebugMessage(final ClassInfo c) {
+            public final String getDebugMessage(final ClassInfo c) {
                 return c.getCodeName();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "\\S+";
             }
         }).serializer(new Serializer<ClassInfo>() {
             @Override
-            public Fields serialize(final ClassInfo c) {
+            public final Fields serialize(final ClassInfo c) {
                 final Fields f = new Fields();
                 f.putObject("codeName", c.getCodeName());
                 return f;
             }
 
             @Override
-            public boolean canBeInstantiated() {
+            public final boolean canBeInstantiated() {
                 return false;
             }
 
             @Override
-            public void deserialize(final ClassInfo o, final Fields f) throws StreamCorruptedException {
+            public final void deserialize(final ClassInfo o, final Fields f) throws StreamCorruptedException {
                 assert false;
             }
 
             @Override
-            protected ClassInfo deserialize(final Fields fields) throws StreamCorruptedException {
+            protected final ClassInfo deserialize(final Fields fields) throws StreamCorruptedException {
                 final String codeName = fields.getObject("codeName", String.class);
                 if (codeName == null)
                     throw new StreamCorruptedException();
@@ -119,14 +122,18 @@ public final class SkriptClasses {
             }
 
             //					return c.getCodeName();
+            /**
+             * @deprecated not used anymore
+             */
+            @Deprecated
             @Override
             @Nullable
-            public ClassInfo deserialize(final String s) {
+            public final ClassInfo deserialize(final String s) {
                 return Classes.getClassInfoNoError(s);
             }
 
             @Override
-            public boolean mustSyncDeserialization() {
+            public final boolean mustSyncDeserialization() {
                 return false;
             }
         }));
@@ -225,7 +232,7 @@ public final class SkriptClasses {
                 final String[] ss = s.split("\\|");
                 if (ss.length > 2)
                     return null;
-                final String[] split = ss[0].split("[,:/]");
+                final String[] split = ITEMTYPE_DESERIALIZE_PATTERN.split(ss[0]);
                 if (split.length < 5 || (split.length - 2) % 3 != 0)
                     return null;
                 final ItemType t = new ItemType();
@@ -266,7 +273,7 @@ public final class SkriptClasses {
                     if (sss.length == 2) {
                         if (!ItemType.itemMetaSupported)
                             return null;
-                        final ItemMeta m = ConfigurationSerializer.deserializeCSOld(sss[1].replace("¦¦", "¦"), ItemMeta.class);
+                        final ItemMeta m = ConfigurationSerializer.deserializeCSOld(ITEM_META_PATTERN_MATCHER.reset(sss[1]).replaceAll(Matcher.quoteReplacement("¦")), ItemMeta.class);
                         if (m == null)
                             return null;
                         t.setItemMeta(m);
@@ -608,22 +615,22 @@ public final class SkriptClasses {
         Classes.registerClass(new ClassInfo<>(EnchantmentType.class, "enchantmenttype").user("enchant(ing|ment) types?").name("Enchantment Type").description("An enchantment with an optional level, e.g. 'sharpness 2' or 'fortune'.").usage("<code>&lt;enchantment&gt; [&lt;level&gt;]</code>").examples("enchant the player's tool with sharpness 5", "helmet is enchanted with waterbreathing").since("1.4.6").parser(new Parser<EnchantmentType>() {
             @Override
             @Nullable
-            public EnchantmentType parse(final String s, final ParseContext context) {
+            public final EnchantmentType parse(final String s, final ParseContext context) {
                 return EnchantmentType.parse(s);
             }
 
             @Override
-            public String toString(final EnchantmentType t, final int flags) {
+            public final String toString(final EnchantmentType t, final int flags) {
                 return t.toString();
             }
 
             @Override
-            public String toVariableNameString(final EnchantmentType o) {
+            public final String toVariableNameString(final EnchantmentType o) {
                 return o.toString();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return ".+";
             }
         }).serializer(new YggdrasilSerializer<EnchantmentType>() {
@@ -631,7 +638,7 @@ public final class SkriptClasses {
             @SuppressWarnings("deprecation")
             @Override
             @Nullable
-            public EnchantmentType deserialize(final String s) {
+            public final EnchantmentType deserialize(final String s) {
                 final String[] split = s.split(":");
                 if (split.length != 2)
                     return null;

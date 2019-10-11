@@ -52,7 +52,7 @@ public final class ExprLightLevel extends PropertyExpression<Location, Byte> {
         Skript.registerExpression(ExprLightLevel.class, Byte.class, ExpressionType.PROPERTY, "[(1¦sky|1¦sun|2¦block)[ ]]light[ ]level [(of|%direction%) %location%]");
     }
 
-    int whatLight = ANY;
+    private int whatLight = ANY;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override

@@ -58,7 +58,7 @@ public final class ExprTarget extends PropertyExpression<LivingEntity, Entity> {
     }
 
     @Nullable
-    EntityData<?> type;
+    private EntityData<?> type;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
@@ -89,13 +89,13 @@ public final class ExprTarget extends PropertyExpression<LivingEntity, Entity> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         if (e == null)
-            return "the target" + (type == null ? "" : "ed " + type) + (getExpr().isDefault() ? "" : " of " + getExpr().toString(e, debug));
+            return "the target" + (type == null ? "" : "ed " + type) + (getExpr().isDefault() ? "" : " of " + getExpr().toString(null, debug));
         return Classes.getDebugMessage(getAll(e));
     }
 
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, EntityTargetEvent.class, getExpr());
+        return setTime(time, EntityTargetEvent.class, getExpr());
     }
 
     @SuppressWarnings("unchecked")

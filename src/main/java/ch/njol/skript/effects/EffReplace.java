@@ -71,7 +71,7 @@ public final class EffReplace extends Effect {
 
     @SuppressWarnings("null")
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         haystack = exprs[1 + matchedPattern % 2];
         replaceString = matchedPattern < 2;
         if (replaceString && !ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
@@ -85,7 +85,7 @@ public final class EffReplace extends Effect {
 
     @SuppressWarnings("null")
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         final Object[] haystack = this.haystack.getAll(e);
         final Object[] needles = this.needles.getAll(e);
         final Object replacement = this.replacement.getSingle(e);
@@ -105,7 +105,7 @@ public final class EffReplace extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "replace " + needles.toString(e, debug) + " in " + haystack.toString(e, debug) + " with " + replacement.toString(e, debug);
     }
 

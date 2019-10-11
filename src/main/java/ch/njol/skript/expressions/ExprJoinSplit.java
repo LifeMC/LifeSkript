@@ -67,7 +67,6 @@ public final class ExprJoinSplit extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final String[] s = strings.getArray(e);
         final String d = delimiter != null ? delimiter.getSingle(e) : "";

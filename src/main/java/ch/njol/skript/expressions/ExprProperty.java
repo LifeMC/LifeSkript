@@ -33,6 +33,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -43,7 +44,7 @@ import java.util.Arrays;
  */
 @Name("System Property")
 @Description("Gets a system property.")
-@Examples("on load:\n\tmessage \"The file encoding is %property \"file.encoding\"%")
+@Examples("on load:" + LineSeparators.UNIX + LineSeparators.TAB + "message \"The file encoding is %property \"file.encoding\"%")
 @Since("2.2-Fixes-V12")
 public final class ExprProperty extends SimpleExpression<String> {
 

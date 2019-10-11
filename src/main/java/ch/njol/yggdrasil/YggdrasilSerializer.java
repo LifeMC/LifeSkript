@@ -45,7 +45,7 @@ public abstract class YggdrasilSerializer<T> implements ClassResolver {
      * @return A Fields object representing the object's fields to serialise. Must not be null.
      * @throws NotSerializableException If this object could not be serialised
      */
-    public abstract Fields serialize(T o) throws NotSerializableException;
+    public abstract Fields serialize(final T o) throws NotSerializableException;
 
     /**
      * Whatever an instance of the given class can be dynamically created. If this method returns false, {@link #newInstance(Class)} and {@link #deserialize(Object, Fields)} will
@@ -80,7 +80,7 @@ public abstract class YggdrasilSerializer<T> implements ClassResolver {
      * @throws StreamCorruptedException If deserialisation failed because the data read from stream is incomplete or invalid.
      * @throws NotSerializableException
      */
-    public abstract void deserialize(T o, Fields fields) throws StreamCorruptedException, NotSerializableException;
+    public abstract void deserialize(final T o, final Fields fields) throws StreamCorruptedException, NotSerializableException;
 
     /**
      * Deserialises an object.

@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * @author Peter Güttinger
  */
 @Name("Me")
-@Description("A 'me' expression that can be used in effect commands only.")
+@Description("A 'me' expression that can only be used in effect commands.")
 @Examples({"!heal me", "!kick myself", "!give a diamond axe to me"})
 @Since("2.1.1")
 public final class ExprMe extends SimpleExpression<CommandSender> {
@@ -57,7 +57,6 @@ public final class ExprMe extends SimpleExpression<CommandSender> {
     }
 
     @Override
-    @Nullable
     protected CommandSender[] get(final Event e) {
         if (e instanceof EffectCommandEvent)
             return new CommandSender[]{((EffectCommandEvent) e).getSender()};

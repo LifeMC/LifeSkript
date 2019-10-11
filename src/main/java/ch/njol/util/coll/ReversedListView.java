@@ -53,7 +53,7 @@ public final class ReversedListView<T> implements List<T> {
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public boolean contains(final @Nullable Object o) {
+    public boolean contains(@Nullable final Object o) {
         return list.contains(o);
     }
 
@@ -72,9 +72,8 @@ public final class ReversedListView<T> implements List<T> {
         return new ReversedListIterator<>(list, index);
     }
 
-    @NotNull
     @Override
-    public Object[] toArray() {
+    public @NotNull Object[] toArray() {
         final Object[] r = new Object[size()];
         int i = 0;
         for (final Object o : this)
@@ -82,10 +81,9 @@ public final class ReversedListView<T> implements List<T> {
         return r;
     }
 
-    @NotNull
-    @SuppressWarnings({"unchecked", "null"})
     @Override
-    public <R> R[] toArray(final R[] a) {
+    @SuppressWarnings({"unchecked", "null"})
+    public @NotNull <R> R[] toArray(final R[] a) {
         final R[] t = a.length >= size() ? a : (R[]) Array.newInstance(a.getClass().getComponentType(), size());
         int i = 0;
         for (final T o : this)
@@ -103,7 +101,7 @@ public final class ReversedListView<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(final @Nullable Object o) {
+    public boolean remove(@Nullable final Object o) {
         @SuppressWarnings("unlikely-arg-type") final int i = list.lastIndexOf(o);
         if (i != -1)
             list.remove(i);
@@ -112,7 +110,7 @@ public final class ReversedListView<T> implements List<T> {
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public boolean containsAll(final @Nullable Collection<?> c) {
+    public boolean containsAll(@Nullable final Collection<?> c) {
         return list.containsAll(c);
     }
 
@@ -135,13 +133,13 @@ public final class ReversedListView<T> implements List<T> {
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public boolean removeAll(final @Nullable Collection<?> c) {
+    public boolean removeAll(@Nullable final Collection<?> c) {
         return list.removeAll(c);
     }
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public boolean retainAll(final @Nullable Collection<?> c) {
+    public boolean retainAll(@Nullable final Collection<?> c) {
         return list.retainAll(c);
     }
 
@@ -177,13 +175,13 @@ public final class ReversedListView<T> implements List<T> {
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public int indexOf(final @Nullable Object o) {
+    public int indexOf(@Nullable final Object o) {
         return size() - list.lastIndexOf(o) - 1;
     }
 
     @SuppressWarnings("unlikely-arg-type")
     @Override
-    public int lastIndexOf(final @Nullable Object o) {
+    public int lastIndexOf(@Nullable final Object o) {
         return size() - list.indexOf(o) - 1;
     }
 
@@ -201,7 +199,7 @@ public final class ReversedListView<T> implements List<T> {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (obj == this)
             return true;
         if (!(obj instanceof List<?>))

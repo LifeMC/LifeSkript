@@ -153,6 +153,6 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), PlayerItemHeldEvent.class, PlayerBucketFillEvent.class, PlayerBucketEmptyEvent.class);
+        return setTime(time, getExpr(), PlayerItemHeldEvent.class, PlayerBucketFillEvent.class, PlayerBucketEmptyEvent.class);
     }
 }

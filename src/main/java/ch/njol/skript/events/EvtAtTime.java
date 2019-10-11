@@ -50,7 +50,7 @@ import java.util.Map.Entry;
  */
 @SuppressFBWarnings("EQ_COMPARETO_USE_OBJECT_EQUALS")
 public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Comparable<EvtAtTime> {
-    static final HashMap<World, EvtAtInfo> triggers = new HashMap<>();
+    private static final HashMap<World, EvtAtInfo> triggers = new HashMap<>();
     private static final int CHECKPERIOD = 10;
     private static int taskID = -1;
 
@@ -58,7 +58,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
         Skript.registerEvent("*At Time", EvtAtTime.class, ScheduledEvent.class, "at %time% [in %worlds%]").description("An event that occurs at a given <a href='../classes/#time'>minecraft time</a> in every world or only in specific worlds.").examples("at 18:00", "at 7am in \"world\"").since("1.3.4");
     }
 
-    int tick;
+    private int tick;
     @Nullable
     private Trigger t;
     @SuppressWarnings("null")
@@ -102,13 +102,13 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
+    public final boolean init(final Literal<?>[] args, final int matchedPattern, final ParseResult parser) {
         tick = ((Literal<Time>) args[0]).getSingle().getTicks();
         worlds = args[1] == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : ((Literal<World>) args[1]).getAll();
         return true;
     }
 
-    void execute(final World w) {
+    private final void execute(final World w) {
         final Trigger t = this.t;
         if (t == null) {
             assert false;
@@ -138,7 +138,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     @Override
-    public void unregister(final Trigger t) {
+    public final void unregister(final Trigger t) {
         assert t == this.t;
         this.t = null;
         final Iterator<EvtAtInfo> iter = triggers.values().iterator();
@@ -155,7 +155,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     @Override
-    public void unregisterAll() {
+    public final void unregisterAll() {
         if (taskID != -1)
             Bukkit.getScheduler().cancelTask(taskID);
         t = null;
@@ -164,17 +164,17 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "at " + Time.toString(tick) + " in worlds " + Classes.toString(worlds, true);
     }
 
     @Override
-    public int compareTo(@Nullable final EvtAtTime e) {
+    public final int compareTo(@Nullable final EvtAtTime e) {
         return e == null ? tick : tick - e.tick;
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + tick;
@@ -182,7 +182,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     }
 
     @Override
-    public boolean equals(@Nullable final Object obj) {
+    public final boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -195,10 +195,11 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
 
     private static final class EvtAtInfo {
         final ArrayList<EvtAtTime> list = new ArrayList<>();
+
         int lastTick; // as Bukkit's scheduler is inconsistent this saves the exact tick when the events were last checked
         int currentIndex;
 
-        public EvtAtInfo() {
+        EvtAtInfo() {
             /* implicit super call */
         }
     }

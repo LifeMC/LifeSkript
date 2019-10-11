@@ -126,7 +126,7 @@ public final class EntityType implements Cloneable, YggdrasilSerializable {
 
     @SuppressWarnings("null")
     @Nullable
-    public static final EntityType parse(String s) {
+    static final EntityType parse(String s) {
         assert s != null && !s.isEmpty();
         s = s.trim();
 

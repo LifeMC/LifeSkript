@@ -41,7 +41,6 @@ public final class ConfigReader extends BufferedReader {
      * @deprecated Use {@link StandardCharsets}
      */
     @Deprecated
-    @SuppressWarnings("null")
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
 
     @Nullable
@@ -66,8 +65,10 @@ public final class ConfigReader extends BufferedReader {
         if (reset) {
             reset = false;
         } else {
-            line = stripUTF8BOM(super.readLine());
-            ln++;
+            {
+                line = stripUTF8BOM(super.readLine());
+            }
+            ++ln;
         }
         return line;
     }
@@ -84,7 +85,7 @@ public final class ConfigReader extends BufferedReader {
     }
 
     @Override
-    public void reset() {
+    public final void reset() {
         if (reset)
             throw new IllegalStateException("reset was called twice without a readLine inbetween");
         reset = true;
@@ -96,26 +97,26 @@ public final class ConfigReader extends BufferedReader {
      * compatibility.
      */
     @Deprecated
-    public int getLineNum() {
+    public final int getLineNum() {
         return ln;
     }
 
-    public int getLineNumber() {
+    public final int getLineNumber() {
         return ln;
     }
 
     @Nullable
-    public String getLine() {
+    public final String getLine() {
         return line;
     }
 
     @Override
-    public boolean markSupported() {
+    public final boolean markSupported() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void mark(final int readAheadLimit) throws IOException {
+    public final void mark(final int readAheadLimit) throws IOException {
         throw new UnsupportedOperationException();
     }
 

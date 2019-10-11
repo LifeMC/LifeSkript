@@ -45,22 +45,17 @@ public final class Config {
     public static final int GLOBAL_BUFFER_LENGTH = System.getProperty("skript.bufferLength") != null
             ? Integer.parseInt(System.getProperty("skript.bufferLength")) : -1;
 
-    final String defaultSeparator;
+    private final String defaultSeparator;
     final boolean allowEmptySections;
     private final SectionNode main;
     boolean simple;
     String separator;
 
-    /**
-     * @deprecated unused
-     */
-    @Deprecated
-    static final String line = "";
-
     int level;
     int errors;
-    String fileName;
+    private final String fileName;
     @Nullable
+    private
     File file;
     /**
      * One level of the indentation, e.g. a tab or 4 spaces.
@@ -315,7 +310,6 @@ public final class Config {
                 ", main=" + main +
                 ", simple=" + simple +
                 ", separator='" + separator + '\'' +
-                ", line='" + line + '\'' +
                 ", level=" + level +
                 ", errors=" + errors +
                 ", fileName='" + fileName + '\'' +

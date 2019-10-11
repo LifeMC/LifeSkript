@@ -23,6 +23,7 @@
 package ch.njol.yggdrasil;
 
 import ch.njol.skript.util.EmptyArrays;
+import ch.njol.util.LineSeparators;
 import ch.njol.yggdrasil.YggdrasilSerializable.YggdrasilExtendedSerializable;
 import org.eclipse.jdt.annotation.Nullable;
 import org.junit.jupiter.api.Test;
@@ -36,11 +37,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SuppressWarnings("resource")
 public final class YggdrasilTest {
 
-    public static final PETest1 PET1_3 = new PETest1("PET1_3");
+    private static final PETest1 PET1_3 = new PETest1("PET1_3");
     @SuppressWarnings("rawtypes")
-    public static final ArrayList[] EMPTY_RAW_ARRAY_LIST_ARRAY = new ArrayList[0];
-    static final Yggdrasil y = new Yggdrasil();
-    static final String modifiedClassID = "something random";
+    private static final ArrayList[] EMPTY_RAW_ARRAY_LIST_ARRAY = new ArrayList[0];
+    private static final Yggdrasil y = new Yggdrasil();
+    private static final String modifiedClassID = "something random";
     static Class<?> currentModifiedClass = UnmodifiedClass.class;
 
     static {
@@ -73,7 +74,7 @@ public final class YggdrasilTest {
 
     // random objects
     /* private constructor is tested -> */
-    final Object[] random = {1, .5, true, 'a', "abc", "multi\nline\r\nstring\rwith\t\n\r\ttabs \u2001\nand\n\u00A0other\u2000\nwhitespace\0-\0", 2L, (byte) -1, (short) 124, Float.POSITIVE_INFINITY, Byte.MIN_VALUE, Byte.MAX_VALUE, (byte) -1, Short.MIN_VALUE, Short.MAX_VALUE, (short) -1, Integer.MIN_VALUE, Integer.MAX_VALUE, -1, Long.MIN_VALUE, Long.MAX_VALUE, -1L, Float.MIN_NORMAL, Float.MIN_VALUE, Float.NEGATIVE_INFINITY, -Float.MAX_VALUE, Double.MIN_NORMAL, Double.MIN_VALUE, Double.NEGATIVE_INFINITY, -Double.MAX_VALUE, (byte) 0x12, (short) 0x1234, 0x12345678, 0x123456789abcdef0L, Float.intBitsToFloat(0x12345678), Double.longBitsToDouble(0x123456789abcdef0L),
+    private final Object[] random = {1, .5, true, 'a', "abc", "multi" + LineSeparators.UNIX + "line" + LineSeparators.DOS + "string" + LineSeparators.MAC + "with" + LineSeparators.TAB + LineSeparators.UNIX + LineSeparators.MAC + LineSeparators.TAB + "tabs \u2001" + LineSeparators.UNIX + "and" + LineSeparators.UNIX + "\u00A0other\u2000" + LineSeparators.UNIX + "whitespace\0-\0", 2L, (byte) -1, (short) 124, Float.POSITIVE_INFINITY, Byte.MIN_VALUE, Byte.MAX_VALUE, (byte) -1, Short.MIN_VALUE, Short.MAX_VALUE, (short) -1, Integer.MIN_VALUE, Integer.MAX_VALUE, -1, Long.MIN_VALUE, Long.MAX_VALUE, -1L, Float.MIN_NORMAL, Float.MIN_VALUE, Float.NEGATIVE_INFINITY, -Float.MAX_VALUE, Double.MIN_NORMAL, Double.MIN_VALUE, Double.NEGATIVE_INFINITY, -Double.MAX_VALUE, (byte) 0x12, (short) 0x1234, 0x12345678, 0x123456789abcdef0L, Float.intBitsToFloat(0x12345678), Double.longBitsToDouble(0x123456789abcdef0L),
 
             new double[]{0, 1, Double.MIN_NORMAL, Double.POSITIVE_INFINITY, Double.MAX_VALUE, -500, 0.123456, Double.NaN}, new float[]{.1f, 7f, 300}, new byte[]{0x12, 0x34, 0x56, 0x78, (byte) 0x9a, (byte) 0xbc, (byte) 0xde, (byte) 0xf0}, new long[][][]{{{0}, {0, 5, 7}, null, EmptyArrays.EMPTY_LONG_ARRAY}}, new Object[][]{{new int[]{0, 4}}, null, {EmptyArrays.EMPTY_INT_ARRAY, null, new int[]{-1, 300, 42}}, EmptyArrays.EMPTY_INTEGER_ARRAY, new Integer[]{5, 7, null}, {null, null, new int[][]{null, {5, 7}, EmptyArrays.EMPTY_INT_ARRAY}}}, new ArrayList<?>[][]{{new ArrayList<>(Arrays.asList(1, 2, null, 9, 100)), null, null, new ArrayList<>(Collections.emptyList())}, {null}, null, EMPTY_RAW_ARRAY_LIST_ARRAY},
 
@@ -201,7 +202,7 @@ public final class YggdrasilTest {
     }
 
     @Test
-    public void testGeneral() throws IOException {
+    void testGeneral() throws IOException {
         //System.out.println();
         for (final Object o : random) {
             final byte[] d = save(o);
@@ -209,13 +210,13 @@ public final class YggdrasilTest {
             final Object l = load(d);
             assertTrue(equals(o, l), () -> o.getClass().getName() + ": " + toString(o) + " <> " + toString(l));
             final byte[] d2 = save(l);
-            assertTrue(equals(d, d2), () -> o.getClass().getName() + ": " + toString(o) + '\n' + toString(d) + " <>\n" + toString(d2));
+            assertTrue(equals(d, d2), () -> o.getClass().getName() + ": " + toString(o) + LineSeparators.UNIX + toString(d) + " <>" + LineSeparators.UNIX + toString(d2));
         }
     }
 
     @SuppressWarnings("static-method")
     @Test
-    public void testKeepReferences() throws IOException {
+    void testKeepReferences() throws IOException {
         //System.out.println();
         final Object ref = new Object();
         final Map<Integer, Object> m = new HashMap<>();
@@ -230,7 +231,7 @@ public final class YggdrasilTest {
 
     @SuppressWarnings({"static-method", "null"})
     @Test
-    public void testRename() throws IOException {
+    void testRename() throws IOException {
         //System.out.println();
         currentModifiedClass = UnmodifiedClass.class;
         final UnmodifiedClass o1 = new UnmodifiedClass(200);
@@ -251,35 +252,35 @@ public final class YggdrasilTest {
         assertEquals(o3.changed, o4.unchanged);
     }
 
-    @YggdrasilID("test-enum #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶")
+    @YggdrasilID("test-enum #!~/" + LineSeparators.DOS + LineSeparators.TAB + "\\\"'<>&amp;,.:'`´¢⽰杻鱶")
     private enum TestEnum implements YggdrasilSerializable {
         SOMETHING, SOMETHINGELSE
     }
 
     @YggdrasilID("PETest1")
     private static class PETest1 extends PseudoEnum<PETest1> {
-        public static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/\r\n\t\\\"'<>&amp;,.:'`´¢⽰杻鱶");
-        public static final PETest2 PET2_2 = new PETest2("PET2_2");
-        public static final PETest1 PET1_2 = new PETest1("PET1_2") {
+        static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/" + LineSeparators.DOS + LineSeparators.TAB + "\\\"'<>&amp;,.:'`´¢⽰杻鱶");
+        static final PETest2 PET2_2 = new PETest2("PET2_2");
+        static final PETest1 PET1_2 = new PETest1("PET1_2") {
             /* empty */
         };
 
-        protected PETest1(final String name) {
+        PETest1(final String name) {
             super(name);
         }
 
         @YggdrasilID("PETest2")
         public static class PETest2 extends PETest1 {
-            public static final PETest2 PET2_0 = new PETest2("PET2_0");
-            public static final PETest2 PET2_1 = new PETest2("PET2_1") {
+            static final PETest2 PET2_0 = new PETest2("PET2_0");
+            static final PETest2 PET2_1 = new PETest2("PET2_1") {
                 @Override
                 public String toString() {
                     return "PET2_1!!!";
                 }
             };
-            public static final PETest1 PET1_1 = new PETest1("PET1_1");
+            static final PETest1 PET1_1 = new PETest1("PET1_1");
 
-            protected PETest2(final String name) {
+            PETest2(final String name) {
                 super(name);
             }
 
@@ -296,7 +297,7 @@ public final class YggdrasilTest {
             blah = "blah";
         }
 
-        public TestClass1(final String b) {
+        TestClass1(final String b) {
             blah = b;
         }
 
@@ -338,7 +339,7 @@ public final class YggdrasilTest {
         private transient boolean ok;
 
         @SuppressWarnings("unused")
-        public TestClass2() {
+        TestClass2() {
             someFinalInt = DEFAULT;
         }
 

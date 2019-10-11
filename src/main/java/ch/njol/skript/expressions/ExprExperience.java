@@ -60,7 +60,6 @@ public final class ExprExperience extends SimpleExpression<Experience> {
     }
 
     @Override
-    @Nullable
     protected Experience[] get(final Event e) {
         if (!(e instanceof ExperienceSpawnEvent))
             return EmptyArrays.EMPTY_EXPERIENCE_ARRAY;

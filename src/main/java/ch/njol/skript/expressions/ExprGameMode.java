@@ -103,6 +103,6 @@ public final class ExprGameMode extends PropertyExpression<Player, GameMode> {
 
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, PlayerGameModeChangeEvent.class, getExpr());
+        return setTime(time, PlayerGameModeChangeEvent.class, getExpr());
     }
 }

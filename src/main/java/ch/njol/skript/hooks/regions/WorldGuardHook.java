@@ -82,7 +82,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
 
     @SuppressWarnings({"null", "unused"})
     @Override
-    public Collection<? extends Region> getRegionsAt_i(final @Nullable Location l) {
+    public Collection<? extends Region> getRegionsAt_i(@Nullable final Location l) {
         if (l == null)
             return Collections.emptyList();
         if (l.getWorld() == null)
@@ -255,7 +255,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
         }
 
         @Override
-        public boolean equals(final @Nullable Object o) {
+        public boolean equals(@Nullable final Object o) {
             if (o == this)
                 return true;
             if (o == null)

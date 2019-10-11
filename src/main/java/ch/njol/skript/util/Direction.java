@@ -273,7 +273,6 @@ public final class Direction implements YggdrasilRobustSerializable {
     }
 
     //		return relative + ":" + (relative ? pitch + "," + yaw + "," + length : mod[0] + "," + mod[1] + "," + mod[2]);
-    @Deprecated
     @Nullable
     public static final Direction deserialize(final String s) {
         final String[] split = s.split(":");

@@ -60,7 +60,7 @@ public final class ExprIdOf extends PropertyExpression<ItemType, Integer> {
         Skript.registerExpression(ExprIdOf.class, Integer.class, ExpressionType.PROPERTY, "[the] id(1¦s|) of %itemtype%", "%itemtype%'[s] id(1¦s|)");
     }
 
-    boolean changeItemStack;
+    private boolean changeItemStack;
     private boolean single;
 
     @SuppressWarnings({"unchecked", "null"})

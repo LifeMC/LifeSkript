@@ -51,7 +51,7 @@ public final class EquipmentSlot extends Slot {
     }
 
     @Override
-    public void setItem(final @Nullable ItemStack item) {
+    public void setItem(@Nullable final ItemStack item) {
         slot.set(e, item);
         if (e.getHolder() instanceof Player)
             PlayerUtils.updateInventory((Player) e.getHolder());
@@ -71,7 +71,7 @@ public final class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 ch.njol.skript.util.EquipmentSlot.EquipSlot.TOOL.set(e, item);
             }
         },
@@ -83,7 +83,7 @@ public final class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 ch.njol.skript.util.EquipmentSlot.EquipSlot.HELMET.set(e, item);
             }
         },
@@ -95,7 +95,7 @@ public final class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 ch.njol.skript.util.EquipmentSlot.EquipSlot.CHESTPLATE.set(e, item);
             }
         },
@@ -107,7 +107,7 @@ public final class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 ch.njol.skript.util.EquipmentSlot.EquipSlot.LEGGINGS.set(e, item);
             }
         },
@@ -119,15 +119,15 @@ public final class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 ch.njol.skript.util.EquipmentSlot.EquipSlot.BOOTS.set(e, item);
             }
         };
 
         @Nullable
-        public abstract ItemStack get(EntityEquipment e);
+        public abstract ItemStack get(final EntityEquipment e);
 
-        public abstract void set(EntityEquipment e, @Nullable ItemStack item);
+        public abstract void set(final EntityEquipment e, @Nullable final ItemStack item);
 
     }
 

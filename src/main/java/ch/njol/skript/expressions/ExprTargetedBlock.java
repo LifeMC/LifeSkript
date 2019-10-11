@@ -78,7 +78,7 @@ public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     @Override
     public String toString(final @Nullable Event e, final boolean debug) {
         if (e == null)
-            return "the targeted block" + (getExpr().isSingle() ? "" : "s") + " of " + getExpr().toString(e, debug);
+            return "the targeted block" + (getExpr().isSingle() ? "" : "s") + " of " + getExpr().toString(null, debug);
         return Classes.getDebugMessage(getAll(e));
     }
 

@@ -66,7 +66,6 @@ public final class ExprCommand extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final String s;
         if (e instanceof PlayerCommandPreprocessEvent) {

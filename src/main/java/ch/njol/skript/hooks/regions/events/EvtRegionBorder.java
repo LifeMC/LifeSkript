@@ -63,7 +63,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
 
         @SuppressWarnings({"null", "unlikely-arg-type"})
         @Override
-        public final void execute(final @Nullable Listener listener, final Event event) throws EventException {
+        public final void execute(@Nullable final Listener listener, final Event event) throws EventException {
             if (event == last)
                 return;
             last = event;
@@ -142,7 +142,7 @@ public final class EvtRegionBorder extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Literal<Region> r = regions;
         return (enter ? "enter" : "leave") + " of " + (r == null ? "a region" : r.toString(e, debug));
     }

@@ -135,7 +135,7 @@ public abstract class Function<T> {
      * @return Whatever this function is supposed to return. May be null or empty, but must not contain null elements.
      */
     @Nullable
-    public abstract T[] execute(FunctionEvent<? extends T> e, final Object[][] params);
+    public abstract T[] execute(final FunctionEvent<? extends T> e, final Object[][] params);
 
     /**
      * Resets the return value of the {@code Function}.

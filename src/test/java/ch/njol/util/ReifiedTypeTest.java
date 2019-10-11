@@ -26,11 +26,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class ReifiedTypeTest {
+final class ReifiedTypeTest {
 
     @Test
     @SuppressWarnings("static-method")
-    public void testReifiedTypes() {
+    void testReifiedTypes() {
         assertSame(String.class, ReifiedTypeParameter.<String>getReifiedType());
     }
 

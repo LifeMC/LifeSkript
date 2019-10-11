@@ -90,7 +90,6 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
     }
 
     @Override
-    @Nullable
     protected Player[] get(final Event e) {
         final AsyncPlayerChatEvent ae = (AsyncPlayerChatEvent) e;
         return ae.getRecipients().toArray(EmptyArrays.EMPTY_PLAYER_ARRAY);

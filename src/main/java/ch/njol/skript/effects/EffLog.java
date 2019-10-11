@@ -54,7 +54,7 @@ import java.util.regex.Pattern;
 @Examples({"on place of TNT:", "	log \"%player% placed TNT in %world% at %location of block%\" to \"tnt/placement.log\""})
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
-    static final HashMap<String, PrintWriter> writers = new HashMap<>();
+    private static final HashMap<String, PrintWriter> writers = new HashMap<>();
     private static final boolean flushAllLogsOnShutdownOnly = Boolean.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
     private static final Pattern WINDOWS_PATH_SEPARATOR = Pattern.compile("\\\\", Pattern.LITERAL);

@@ -61,7 +61,6 @@ public final class ExprDistance extends SimpleExpression<Double> {
     }
 
     @Override
-    @Nullable
     protected Double[] get(final Event e) {
         final Location l1 = loc1.getSingle(e), l2 = loc2.getSingle(e);
         if (l1 == null || l2 == null || l1.getWorld() != l2.getWorld())

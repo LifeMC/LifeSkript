@@ -49,7 +49,7 @@ public final class ExprColoured extends PropertyExpression<String, String> {
         Skript.registerExpression(ExprColoured.class, String.class, ExpressionType.COMBINED, "(colo[u]r-|colo[u]red )%strings%", "(un|non)[-](colo[u]r-|colo[u]red )%strings%");
     }
 
-    boolean color;
+    private boolean color;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override

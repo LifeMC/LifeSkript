@@ -136,13 +136,15 @@ public final class StringUtils {
      *
      * @param d        The number to be turned into a string
      * @param accuracy Maximum number of digits after the period
-     * @return
+     *
+     * @return The string that represents the given number
      */
     public static final String toString(final double d, final int accuracy) {
         assert accuracy >= 0;
         if (accuracy <= 0)
             return Long.toString(Math.round(d));
-        final String s = String.format(Locale.ENGLISH, "%." + accuracy + 'f', d);
+        final String format = "%." + accuracy + 'f';
+        final String s = String.format(Locale.ENGLISH, format, d);
         int c = s.length() - 1;
         while (s.charAt(c) == '0')
             c--;

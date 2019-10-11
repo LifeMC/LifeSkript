@@ -817,7 +817,9 @@ public final class ScriptLoader {
                     setCurrentEvent(parsedEvent.getFirst().getName().toLowerCase(Locale.ENGLISH), parsedEvent.getFirst().events);
                     final Trigger trigger;
                     try {
-                        trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
+                        {
+                            trigger = new Trigger(config.getFile(), event, parsedEvent.getSecond(), loadItems(node));
+                        }
                         trigger.setLineNumber(node.getLine());
                         trigger.setDebugLabel(config.getFileName() + ": line " + node.getLine());
                     } finally {

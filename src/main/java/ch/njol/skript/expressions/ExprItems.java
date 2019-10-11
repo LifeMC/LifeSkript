@@ -61,7 +61,7 @@ public final class ExprItems extends SimpleExpression<ItemStack> {
     }
 
     @Nullable
-    Expression<ItemType> types;
+    private Expression<ItemType> types;
     private boolean blocks;
     @Nullable
     private ItemStack[] buffer;

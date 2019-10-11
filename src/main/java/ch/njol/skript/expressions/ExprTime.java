@@ -121,7 +121,7 @@ public final class ExprTime extends PropertyExpression<World, Time> {
     @Override
     public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
-            return "the time in " + getExpr().toString(e, debug);
+            return "the time in " + getExpr().toString(null, debug);
         return Classes.getDebugMessage(getAll(e));
     }
 

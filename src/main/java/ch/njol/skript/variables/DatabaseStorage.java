@@ -68,7 +68,7 @@ public final class DatabaseStorage extends VariablesStorage {
     @SuppressWarnings("null")
     final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
-    long monitorInterval;
+    private long monitorInterval;
     /**
      * Params: rowID
      * <p>
@@ -76,7 +76,7 @@ public final class DatabaseStorage extends VariablesStorage {
      */
     @Nullable
     PreparedStatement monitorCleanUpQuery;
-    long lastRowID = -1;
+    private long lastRowID = -1;
     private boolean monitor;
     /**
      * Params: name, type, value, GUID
@@ -457,7 +457,7 @@ public final class DatabaseStorage extends VariablesStorage {
     }
 
     @SuppressWarnings({"null", "unused"})
-    void checkDatabase() {
+    private final void checkDatabase() {
         try {
             final long lastRowID; // local variable as this is used to clean the database below
 
@@ -723,7 +723,7 @@ public final class DatabaseStorage extends VariablesStorage {
         }
 
         @Nullable
-        protected abstract Object initialise(DatabaseStorage s, SectionNode config);
+        protected abstract Object initialise(final DatabaseStorage s, final SectionNode config); // TODO rename: make initialize (s -> z)
     }
 
     private static final class OldVariablesStorage extends VariablesStorage {

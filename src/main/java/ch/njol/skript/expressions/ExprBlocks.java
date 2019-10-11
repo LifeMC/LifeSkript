@@ -92,7 +92,6 @@ public final class ExprBlocks extends SimpleExpression<Block> {
 
     @SuppressWarnings("null")
     @Override
-    @Nullable
     protected Block[] get(final Event e) {
         final Expression<Direction> direction = this.direction;
         if (direction != null && !from.isSingle()) {

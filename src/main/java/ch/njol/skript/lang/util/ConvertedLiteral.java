@@ -40,7 +40,7 @@ import java.util.Iterator;
  */
 public final class ConvertedLiteral<F, T> extends ConvertedExpression<F, T> implements Literal<T> {
 
-    final transient T[] data;
+    private final transient T[] data;
 
     public ConvertedLiteral(final Literal<F> source, final T[] data, final Class<T> to) {
         super(source, to, f -> {

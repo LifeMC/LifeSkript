@@ -94,7 +94,6 @@ public final class ExprStringCase extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final String str;
         if (literal != null)

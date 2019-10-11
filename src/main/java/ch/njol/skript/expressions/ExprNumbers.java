@@ -57,8 +57,8 @@ public final class ExprNumbers extends SimpleExpression<Number> {
         Skript.registerExpression(ExprNumbers.class, Number.class, ExpressionType.COMBINED, "[(all|the)] (numbers|1¦integers) (between|from) %number% (and|to) %number%", "%number% times");
     }
 
-    boolean integer;
-    boolean isInLoop;
+    private boolean integer;
+    private boolean isInLoop;
 
     @SuppressWarnings("null")
     private Expression<Number> start, end;

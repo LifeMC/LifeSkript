@@ -69,13 +69,11 @@ public final class ExprWorlds extends SimpleExpression<World> {
     }
 
     @Override
-    @Nullable
     protected World[] get(final Event e) {
         return Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY);
     }
 
     @Override
-    @Nullable
     public Iterator<World> iterator(final Event e) {
         return Bukkit.getWorlds().iterator();
     }

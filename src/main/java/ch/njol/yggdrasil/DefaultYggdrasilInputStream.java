@@ -42,7 +42,7 @@ import static ch.njol.yggdrasil.Tag.T_REFERENCE;
 
 public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
 
-    final InputStream in;
+    private final InputStream in;
     private final short version;
     private final List<String> readShortStrings = new ArrayList<>();
 
@@ -93,8 +93,13 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
             return readShortStrings.get(i);
         }
         final byte[] d = new byte[length];
-        readFully(d);
-        final String s = new String(d, StandardCharsets.UTF_8);
+        {
+            readFully(d);
+        }
+        final String s;
+        {
+            s = new String(d, StandardCharsets.UTF_8);
+        }
         if (length > 4)
             readShortStrings.add(s);
         return s;
@@ -200,8 +205,12 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
     protected final String readString() throws IOException {
         final int length = readUnsignedInt();
         final byte[] d = new byte[length];
-        readFully(d);
-        return new String(d, StandardCharsets.UTF_8);
+        {
+            readFully(d);
+        }
+        {
+            return new String(d, StandardCharsets.UTF_8);
+        }
     }
 
     // Array
@@ -268,7 +277,6 @@ public final class DefaultYggdrasilInputStream extends YggdrasilInputStream {
             case T_NULL:
             case T_REFERENCE:
                 throw new StreamCorruptedException("unexpected tag " + type);
-            case T_ARRAY:
             default:
                 throw new YggdrasilException("Internal error; " + type);
         }

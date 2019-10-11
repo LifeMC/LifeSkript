@@ -61,7 +61,6 @@ public final class ExprAlphabetList extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final String[] sorted = texts.getAll(e).clone(); // Not yet sorted
         Arrays.sort(sorted); // Now sorted

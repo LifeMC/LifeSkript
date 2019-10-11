@@ -85,14 +85,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Peter Güttinger
  */
-public final class ClassesTest {
+final class ClassesTest {
 
     /**
      * Dummy test to not show class as empty
      */
     @Test
     @SuppressWarnings("static-method")
-    public void testDummy() {
+    void testDummy() {
         assertTrue(Skript.methodExists(ClassesTest.class, "testDummy"));
 
         assertTrue(Skript.classExists("ch.njol.skript.Skript"));

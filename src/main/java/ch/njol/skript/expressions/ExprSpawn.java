@@ -102,7 +102,7 @@ public final class ExprSpawn extends PropertyExpression<World, Location> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), SpawnChangeEvent.class);
+        return setTime(time, getExpr(), SpawnChangeEvent.class);
     }
 
 }

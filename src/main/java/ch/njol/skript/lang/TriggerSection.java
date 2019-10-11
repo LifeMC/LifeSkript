@@ -107,7 +107,7 @@ public abstract class TriggerSection extends TriggerItem {
 
     @Override
     @Nullable
-    protected abstract TriggerItem walk(Event e);
+    protected abstract TriggerItem walk(final Event e);
 
     @Nullable
     protected final TriggerItem walk(final Event e, final boolean run) {

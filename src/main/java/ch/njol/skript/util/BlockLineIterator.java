@@ -106,7 +106,7 @@ public final class BlockLineIterator extends StoppableIterator<Block> {
         private final Location start;
         private final double distSq;
 
-        public BlockNullableChecker(final double dist, final Location start) {
+        BlockNullableChecker(final double dist, final Location start) {
             this.start = start;
             distSq = dist * dist;
         }

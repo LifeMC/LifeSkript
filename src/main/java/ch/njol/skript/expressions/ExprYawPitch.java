@@ -34,7 +34,6 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * @author Peter Güttinger
@@ -45,7 +44,7 @@ import org.eclipse.jdt.annotation.NonNull;
 @Since("2.0")
 public final class ExprYawPitch extends SimplePropertyExpression<Location, Number> {
 
-    public static final boolean randomSK = true;
+    //public static /*final*/ boolean randomSK = true;
 
     static {
         register(ExprYawPitch.class, Number.class, "(0¦yaw|1¦pitch)", "locations");
@@ -89,9 +88,11 @@ public final class ExprYawPitch extends SimplePropertyExpression<Location, Numbe
         return null;
     }
 
-    @SuppressWarnings({"incomplete-switch", "null"})
+    @SuppressWarnings({"incomplete-switch", "null", "unused"})
     @Override
-    public void change(final Event e, final @NonNull Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, final Object[] delta, final ChangeMode mode) {
+        if (delta == null)
+            return;
         final Location l = getExpr().getSingle(e);
         if (delta[0] == null || l == null)
             return;

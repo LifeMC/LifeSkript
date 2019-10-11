@@ -33,6 +33,7 @@ import ch.njol.skript.lang.function.JavaFunction;
 import ch.njol.skript.lang.function.Parameter;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.Utils;
+import ch.njol.util.LineSeparators;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
@@ -201,8 +202,8 @@ public final class Documentation {
             Skript.warning(info.c.getSimpleName() + "'s description or 'since' is invalid");
             return;
         }
-        final String patterns = cleanPatterns(StringUtils.join(info.patterns, "\n", 0, info.c == CondCompare.class ? 8 : info.patterns.length));
-        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = TRIM(LEADING '\n' FROM CONCAT(patterns, '\n', '" + escapeSQL(patterns) + "'))", escapeHTML(info.c.getSimpleName()), escapeHTML(info.c.getAnnotation(Name.class).value()), type, patterns, desc, escapeHTML(StringUtils.join(info.c.getAnnotation(Examples.class).value(), "\n")), since);
+        final String patterns = cleanPatterns(StringUtils.join(info.patterns, LineSeparators.UNIX_STR, 0, info.c == CondCompare.class ? 8 : info.patterns.length));
+        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = TRIM(LEADING '" + LineSeparators.UNIX + "' FROM CONCAT(patterns, '" + LineSeparators.UNIX + "', '" + escapeSQL(patterns) + "'))", escapeHTML(info.c.getSimpleName()), escapeHTML(info.c.getAnnotation(Name.class).value()), type, patterns, desc, escapeHTML(StringUtils.join(info.c.getAnnotation(Examples.class).value(), LineSeparators.UNIX_STR)), since);
     }
 
     private static final void insertEvent(final PrintWriter pw, final SkriptEventInfo<?> info) {
@@ -224,8 +225,8 @@ public final class Documentation {
             Skript.warning("description or 'since' of " + info.getName() + " (" + info.c.getSimpleName() + ") is invalid");
             return;
         }
-        final String patterns = cleanPatterns(info.getName().startsWith("On ") ? "[on] " + StringUtils.join(info.patterns, "\n[on] ") : StringUtils.join(info.patterns, "\n"));
-        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = '" + escapeSQL(patterns) + '\'', escapeHTML(info.getId()), escapeHTML(info.getName()), "event", patterns, desc, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
+        final String patterns = cleanPatterns(info.getName().startsWith("On ") ? "[on] " + StringUtils.join(info.patterns, LineSeparators.UNIX + "[on] ") : StringUtils.join(info.patterns, LineSeparators.UNIX_STR));
+        insertOnDuplicateKeyUpdate(pw, "syntax_elements", "id, name, type, patterns, description, examples, since", "patterns = '" + escapeSQL(patterns) + '\'', escapeHTML(info.getId()), escapeHTML(info.getName()), "event", patterns, desc, escapeHTML(StringUtils.join(info.getExamples(), LineSeparators.UNIX_STR)), since);
     }
 
     private static final void insertClass(final PrintWriter pw, final ClassInfo<?> info) {
@@ -242,8 +243,8 @@ public final class Documentation {
             Skript.warning("Class " + info.getCodeName() + "'s description, usage or 'since' is invalid");
             return;
         }
-        final String patterns = info.getUserInputPatterns() == null ? "" : convertRegex(StringUtils.join(info.getUserInputPatterns(), "\n"));
-        insertOnDuplicateKeyUpdate(pw, "classes", "id, name, description, patterns, `usage`, examples, since", "patterns = TRIM(LEADING '\n' FROM CONCAT(patterns, '\n', '" + escapeSQL(patterns) + "'))", escapeHTML(info.getCodeName()), escapeHTML(info.getDocName()), desc, patterns, usage, escapeHTML(StringUtils.join(info.getExamples(), "\n")), since);
+        final String patterns = info.getUserInputPatterns() == null ? "" : convertRegex(StringUtils.join(info.getUserInputPatterns(), LineSeparators.UNIX_STR));
+        insertOnDuplicateKeyUpdate(pw, "classes", "id, name, description, patterns, `usage`, examples, since", "patterns = TRIM(LEADING '" + LineSeparators.UNIX + "' FROM CONCAT(patterns, '" + LineSeparators.UNIX + "', '" + escapeSQL(patterns) + "'))", escapeHTML(info.getCodeName()), escapeHTML(info.getDocName()), desc, patterns, usage, escapeHTML(StringUtils.join(info.getExamples(), LineSeparators.UNIX_STR)), since);
     }
 
     private static final void insertFunction(final PrintWriter pw, final JavaFunction<?> func) {
@@ -259,7 +260,7 @@ public final class Documentation {
             Skript.warning("Function " + func.getName() + "'s description or 'since' is invalid");
             return;
         }
-        replaceInto(pw, "functions", "name, parameters, description, examples, since", escapeHTML(func.getName()), escapeHTML(params.toString()), desc, escapeHTML(StringUtils.join(func.getExamples(), "\n")), since);
+        replaceInto(pw, "functions", "name, parameters, description, examples, since", escapeHTML(func.getName()), escapeHTML(params.toString()), desc, escapeHTML(StringUtils.join(func.getExamples(), LineSeparators.UNIX_STR)), since);
     }
 
     private static final void insertOnDuplicateKeyUpdate(final PrintWriter pw, final String table, final String fields, final String update, final String... values) {
@@ -274,6 +275,7 @@ public final class Documentation {
         pw.println("REPLACE INTO " + table + " (" + fields + ") VALUES ('" + StringUtils.join(values, "','") + "');");
     }
 
+    @SuppressWarnings("null")
     @Nullable
     private static final String validateHTML(@Nullable String html, final String baseURL) {
         if (html == null) {

@@ -46,6 +46,7 @@ import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.util.Timespan;
 import ch.njol.skript.util.Utils;
+import ch.njol.util.LineSeparators;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.Validate;
@@ -94,11 +95,8 @@ public final class Commands {
             new AtomicBoolean();
     private static final Map<String, ScriptCommand> commands = new HashMap<>(300);
     private static final SectionValidator commandStructure = new SectionValidator().addEntry("usage", true).addEntry("description", true).addEntry("permission", true).addEntry("permission message", true).addEntry("cooldown", true).addEntry("cooldown message", true).addEntry("cooldown bypass", true).addEntry("cooldown storage", true).addEntry("tab completer", true).addEntry("aliases", true).addEntry("executable by", true).addSection("trigger", false);
-    @SuppressWarnings("null")
-    private static final Pattern escape = Pattern.compile('[' + Pattern.quote("(|)<>%\\") + ']');
-    @SuppressWarnings("null")
-    private static final Pattern unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + ']');
-    @SuppressWarnings("null")
+    private static final Matcher escape = Pattern.compile('[' + Pattern.quote("(|)<>%\\") + ']').matcher("");
+    private static final Matcher unescape = Pattern.compile("\\\\[" + Pattern.quote("(|)<>%\\") + ']').matcher("");
     private static final Pattern commandPattern = Pattern.compile("(?i)^command /?(\\S+)\\s*(\\s+(.+))?$"),
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
     private static final Matcher commandPatternMatcher = commandPattern.matcher(""),
@@ -106,7 +104,7 @@ public final class Commands {
     private static final Matcher STRING_QUOTE = Pattern.compile("\"", Pattern.LITERAL).matcher("");
     @Nullable
     public static List<Argument<?>> currentArguments;
-    static boolean suppressUnknownCommandMessage;
+    private static boolean suppressUnknownCommandMessage;
     @Nullable
     private static SimpleCommandMap commandMap;
     @Nullable
@@ -169,15 +167,15 @@ public final class Commands {
         }
     }
 
-    private static final String escape(final String s) {
-        return escape.matcher(s).replaceAll("\\\\$0");
+    private static final String escape(final CharSequence s) {
+        return escape.reset(s).replaceAll("\\\\$0");
     }
 
-    private static final String unescape(final String s) {
-        return unescape.matcher(s).replaceAll("$0");
+    private static final String unescape(final CharSequence s) {
+        return unescape.reset(s).replaceAll("$0");
     }
 
-    public static final void checkTimings(final String command) {
+    private static final void checkTimings(final String command) {
         if ("timings on".equalsIgnoreCase(command) && !SkriptTimings.timingsEnabled) {
             SkriptTimings.timingsEnabled = true;
             if ("default".equalsIgnoreCase(SkriptConfig.enableSpikeDetector.value()))
@@ -824,18 +822,17 @@ public final class Commands {
         }
 
         @Override
-        public String getFullText(final @Nullable CommandSender forWho) {
+        public String getFullText(@Nullable final CommandSender forWho) {
             final StringBuilder sb = new StringBuilder(shortText);
             final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
             if (aliasForTopic != null) {
-                sb.append('\n');
-                sb.append(aliasForTopic.getFullText(forWho));
+                sb.append(LineSeparators.UNIX).append(aliasForTopic.getFullText(forWho));
             }
             return sb.toString();
         }
 
         @Override
-        public boolean canSee(final @Nullable CommandSender commandSender) {
+        public boolean canSee(@Nullable final CommandSender commandSender) {
             if (amendedPermission == null) {
                 final HelpTopic aliasForTopic = helpMap.getHelpTopic(aliasFor);
                 if (aliasForTopic != null) {

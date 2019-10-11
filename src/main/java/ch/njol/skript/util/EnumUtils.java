@@ -90,7 +90,7 @@ public final class EnumUtils<E extends Enum<E>> {
     }
 
     @SuppressWarnings("null")
-    public final String toString(final E e) {
+    private final String toString(final E e) {
         validate(false);
         return names[e.ordinal()];
     }

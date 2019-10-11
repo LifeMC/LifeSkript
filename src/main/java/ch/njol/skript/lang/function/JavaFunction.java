@@ -47,7 +47,7 @@ public abstract class JavaFunction<T> extends Function<T> {
 
     @Override
     @Nullable
-    public abstract T[] execute(FunctionEvent<? extends T> e, Object[][] params);
+    public abstract T[] execute(final FunctionEvent<? extends T> e, Object[][] params);
 
     /**
      * Only used for Skript's documentation.

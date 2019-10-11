@@ -28,6 +28,7 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import ch.njol.util.LineSeparators;
 import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
@@ -37,7 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Spectator Target")
 @Description("Spectator target of a Player")
-@Examples("spawn a sheep\nset spectator target of event-player to last spawned entity")
+@Examples("spawn a sheep" + LineSeparators.UNIX + "set spectator target of event-player to last spawned entity")
 @Since("2.2.16")
 public final class ExprSpectatorTarget extends SimplePropertyExpression<Player, Entity> {
 

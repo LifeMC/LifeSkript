@@ -38,9 +38,11 @@ public final class RegionBorderEvent extends Event implements Cancellable {
 
     // Bukkit stuff
     private static final HandlerList handlers = new HandlerList();
-    final Player player;
+
+    private final Player player;
     private final Region region;
     private final boolean enter;
+
     private boolean cancelled;
 
     /**

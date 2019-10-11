@@ -35,15 +35,14 @@ import java.util.NoSuchElementException;
 public final class EnumerationIterable<T> implements Iterable<T> {
 
     @Nullable
-    final Enumeration<? extends T> e;
+    private final Enumeration<? extends T> e;
 
-    public EnumerationIterable(final @Nullable Enumeration<? extends T> e) {
+    public EnumerationIterable(@Nullable final Enumeration<? extends T> e) {
         this.e = e;
     }
 
-    @NotNull
     @Override
-    public Iterator<T> iterator() {
+    public @NotNull Iterator<T> iterator() {
         final Enumeration<? extends T> e = this.e;
         if (e == null)
             return EmptyIterator.get();

@@ -48,7 +48,7 @@ public final class EffOpenInventory extends Effect {
         Skript.registerEffect(EffOpenInventory.class, "(0¦open|1¦show) ((crafting [table]|workbench) (view|window|inventory|)|%-inventory%) (to|for) %players%", "close [the] inventory [view] (to|of|for) %players%", "close %players%'[s] inventory [view]");
     }
 
-    boolean open;
+    private boolean open;
     @Nullable
     private Expression<Inventory> invi;
     @SuppressWarnings("null")
@@ -86,7 +86,7 @@ public final class EffOpenInventory extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (open ? "open " + (invi != null ? invi.toString(e, debug) : "crafting table") + " to " : "close inventory view of ") + players.toString(e, debug);
     }
 

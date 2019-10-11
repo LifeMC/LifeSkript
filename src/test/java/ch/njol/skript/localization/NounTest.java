@@ -30,11 +30,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author Peter Güttinger
  */
-public final class NounTest {
+final class NounTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testGetPlural() {
+    void testGetPlural() {
         final String[][] tests = {{"a", "a", "a"}, {"a¦b", "a", "ab"}, {"a¦b¦c", "ab", "ac"}, {"a¦b¦c¦d", "abd", "acd"}, {"a¦b¦c¦d¦e", "abd", "acde"}, {"a¦b¦c¦d¦e¦f", "abde", "acdf"}, {"a¦b¦c¦d¦e¦f¦g", "abdeg", "acdfg"},
         };
         for (final String[] test : tests) {
@@ -46,7 +46,7 @@ public final class NounTest {
 
     @SuppressWarnings({"null", "static-method"})
     @Test
-    public void testNormalizePluralMarkers() {
+    void testNormalizePluralMarkers() {
         final String[][] tests = {{"a", "a"}, {"a¦b", "a¦¦b¦"}, {"a¦b¦c", "a¦b¦c¦"}, {"a¦b¦c¦d", "a¦b¦c¦d"}, {"a¦b¦c¦d¦e", "a¦b¦c¦d¦¦e¦"}, {"a¦b¦c¦d¦e¦f", "a¦b¦c¦d¦e¦f¦"}, {"a¦b¦c¦d¦e¦f¦g", "a¦b¦c¦d¦e¦f¦g"},
         };
         for (final String[] test : tests) {

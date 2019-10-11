@@ -51,7 +51,7 @@ import java.util.NoSuchElementException;
  */
 public class ConvertedExpression<F, T> implements Expression<T> {
 
-    final Converter<? super F, ? extends T> conv;
+    private final Converter<? super F, ? extends T> conv;
     protected Expression<? extends F> source;
     protected Class<T> to;
     @Nullable
@@ -91,7 +91,7 @@ public class ConvertedExpression<F, T> implements Expression<T> {
     @Override
     public String toString(@Nullable final Event e, final boolean debug) {
         if (debug && e == null)
-            return '(' + source.toString(e, debug) + " >> " + conv + ": " + source.getReturnType().getName() + "->" + to.getName() + ')';
+            return '(' + source.toString(null, true) + " >> " + conv + ": " + source.getReturnType().getName() + "->" + to.getName() + ')';
         return source.toString(e, debug);
     }
 

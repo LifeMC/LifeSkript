@@ -52,7 +52,7 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
     }
 
     @SuppressWarnings("null")
-    Expression<Number> amount;
+    private Expression<Number> amount;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override

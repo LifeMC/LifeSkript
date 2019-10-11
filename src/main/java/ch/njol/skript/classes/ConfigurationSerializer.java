@@ -22,6 +22,7 @@
 
 package ch.njol.skript.classes;
 
+import ch.njol.util.LineSeparators;
 import ch.njol.yggdrasil.Fields;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -74,7 +75,7 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
     public static final <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
-            y.loadFromString(BYTE_ORDER_MARK_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement("\n")));
+            y.loadFromString(BYTE_ORDER_MARK_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX_STR)));
         } catch (final InvalidConfigurationException e) {
             return null;
         }

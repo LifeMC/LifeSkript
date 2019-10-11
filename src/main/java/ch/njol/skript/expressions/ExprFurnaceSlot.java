@@ -102,7 +102,7 @@ public final class ExprFurnaceSlot extends PropertyExpression<Block, Slot> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), FurnaceSmeltEvent.class, FurnaceBurnEvent.class);
+        return setTime(time, getExpr(), FurnaceSmeltEvent.class, FurnaceBurnEvent.class);
     }
 
     private static final class FurnaceEventSlot extends InventorySlot {

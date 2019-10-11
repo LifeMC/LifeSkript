@@ -95,7 +95,7 @@ public final class ExprWorld extends PropertyExpression<Object, World> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), PlayerTeleportEvent.class);
+        return setTime(time, getExpr(), PlayerTeleportEvent.class);
     }
 
 }

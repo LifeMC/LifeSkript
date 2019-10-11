@@ -69,6 +69,7 @@ public final class ExprUUID extends SimplePropertyExpression<Object, String> {
         return super.init(exprs, matchedPattern, isDelayed, parseResult);
     }
 
+    @SuppressWarnings("CastConflictsWithInstanceof")
     @Override
     @Nullable
     public final String convert(final Object o) {

@@ -156,7 +156,7 @@ public final class EffThrow extends Effect {
         }
 
         @Nullable
-        public String getScript() {
+        public final String getScript() {
             return script;
         }
 
@@ -167,11 +167,11 @@ public final class EffThrow extends Effect {
          * @return The details, or the cause of the error.
          */
         @Nullable
-        public String getDetail() {
+        public final String getDetail() {
             return detail;
         }
 
-        public int getLine() {
+        public final int getLine() {
             return line;
         }
 

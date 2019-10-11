@@ -52,8 +52,8 @@ public enum Color implements YggdrasilSerializable {
 
     DARK_PURPLE(DyeColor.PURPLE, ChatColor.DARK_PURPLE, org.bukkit.Color.fromRGB(0x7F3FB2)), LIGHT_PURPLE(DyeColor.MAGENTA, ChatColor.LIGHT_PURPLE, org.bukkit.Color.fromRGB(0xB24CD8));
 
-    static final Map<String, Color> byName = new HashMap<>();
-    static final Map<String, Color> byEnglishName = new HashMap<>();
+    private static final Map<String, Color> byName = new HashMap<>();
+    private static final Map<String, Color> byEnglishName = new HashMap<>();
     private static final String LANGUAGE_NODE = "colors";
     private static final Color[] byWool = new Color[16];
     public static boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
@@ -86,6 +86,7 @@ public enum Color implements YggdrasilSerializable {
     private final ChatColor chat;
     private final org.bukkit.Color bukkit;
     @Nullable
+    private
     Adjective adjective;
 
     Color(final DyeColor wool, final ChatColor chat, final org.bukkit.Color bukkit) {
@@ -104,12 +105,12 @@ public enum Color implements YggdrasilSerializable {
 
     @Nullable
     public static final Color byName(final String name) {
-        return byName.get(name.toLowerCase(Locale.ENGLISH));
+        return byName.get(name.trim().toLowerCase(Locale.ENGLISH));
     }
 
     @Nullable
     public static final Color byEnglishName(final String name) {
-        return byEnglishName.get(name.toLowerCase(Locale.ENGLISH));
+        return byEnglishName.get(name.trim().toLowerCase(Locale.ENGLISH));
     }
 
     @Nullable

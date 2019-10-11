@@ -497,6 +497,7 @@ public final class Utils {
      * @param s
      * @return The parsed integer, {@link Integer#MIN_VALUE} or {@link Integer#MAX_VALUE} respectively
      */
+    @SuppressWarnings("AssertWithSideEffects")
     public static final int parseInt(final String s) {
         assert NUMBER_PATTERN_MATCHER.reset(s).matches() : s + " does not match regex";
         assert SkriptParser.isInteger(s) : s + " is not a valid integer";
@@ -515,6 +516,7 @@ public final class Utils {
      * @param s
      * @return The parsed long, {@link Long#MIN_VALUE} or {@link Long#MAX_VALUE} respectively
      */
+    @SuppressWarnings("AssertWithSideEffects")
     public static final long parseLong(final String s) {
         assert NUMBER_PATTERN_MATCHER.reset(s).matches() : s + " does not match regex";
         try {

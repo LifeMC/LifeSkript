@@ -58,8 +58,10 @@ public final class WebUtils {
     public static final int CONNECT_TIMEOUT = 5000;
     public static final int READ_TIMEOUT = 5000;
 
-    private static final Pattern RELEASES = Pattern.compile("/releases", Pattern.LITERAL);
-    private static final Matcher RELEASES_MATCHER = RELEASES.matcher("");
+    /**
+     * The referer field of the requests.
+     */
+    private static final String REFERER = Pattern.compile("/releases", Pattern.LITERAL).matcher(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim();
 
     /**
      * Static magic.
@@ -160,14 +162,11 @@ public final class WebUtils {
     @Nullable
     public static final String getResponse(final URL url, final String contentType, final boolean useWorkarounds) throws IOException {
         //Skript.debug("url", url, "contentType", contentType, "useWorkarounds", useWorkarounds, "async", Skript.isBukkitRunning() && !Bukkit.isPrimaryThread());
-
         if (useWorkarounds)
             Workarounds.initIfNotAlready();
 
         final URLConnection con = url.openConnection();
         setup(con, contentType, /* followRedirects: */true);
-
-        con.connect();
 
         try (final InputStream is = StreamUtils.getInputStream(con);
             final BufferedInputStream in = new BufferedInputStream(is)) {
@@ -227,7 +226,7 @@ public final class WebUtils {
         con.setRequestProperty("Accept", acceptType);
 
         con.setRequestProperty("User-Agent", (USER_AGENT + (Skript.version != null ? " Skript/" + Skript.version : "")).trim());
-        con.setRequestProperty("Referer", RELEASES_MATCHER.reset(Skript.LATEST_VERSION_DOWNLOAD_LINK).replaceAll(Matcher.quoteReplacement("")).trim());
+        con.setRequestProperty("Referer", REFERER);
     }
 
 }

@@ -41,7 +41,7 @@ import java.util.NoSuchElementException;
  */
 public final class AABB implements Iterable<Block> {
 
-    final World world;
+    private final World world;
     final Vector lowerBound, upperBound;
 
     //	private static final Vector EPSILON = new Vector(Skript.EPSILON, Skript.EPSILON, Skript.EPSILON);

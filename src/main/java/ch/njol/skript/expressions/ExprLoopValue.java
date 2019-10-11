@@ -69,9 +69,9 @@ public final class ExprLoopValue extends SimpleExpression<Object> {
     }
 
     // whatever this loops a variable
-    boolean isVariableLoop;
+    private boolean isVariableLoop;
     // if this loops a variable and isIndex is true, return the index of the variable instead of the value
-    boolean isIndex;
+    private boolean isIndex;
     @SuppressWarnings("null")
     private String name;
     @SuppressWarnings("null")

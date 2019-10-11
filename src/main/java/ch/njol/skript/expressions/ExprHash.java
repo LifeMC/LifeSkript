@@ -49,10 +49,10 @@ import java.security.NoSuchAlgorithmException;
 public final class ExprHash extends PropertyExpression<String, String> {
 
     @Nullable
-    static final MessageDigest md5;
+    private static final MessageDigest md5;
 
     @Nullable
-    static final MessageDigest sha256;
+    private static final MessageDigest sha256;
 
     @Nullable
     private MessageDigest algorithm;

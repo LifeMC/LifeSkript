@@ -33,6 +33,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -82,7 +83,7 @@ public final class EffExec extends Effect {
         } else {
             final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
-                errorBuilder.append(SkriptLogger.format(entry)).append('\n');
+                errorBuilder.append(SkriptLogger.format(entry)).append(LineSeparators.UNIX);
             }
             lastExecuteErrors = errorBuilder.toString();
         }

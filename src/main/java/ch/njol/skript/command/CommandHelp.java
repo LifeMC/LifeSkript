@@ -93,7 +93,7 @@ public final class CommandHelp {
         return this;
     }
 
-    void onAdd(final CommandHelp parent) {
+    private final void onAdd(final CommandHelp parent) {
         langNode = parent.langNode + '.' + command;
         description = new Message(langNode + '.' + DEFAULTENTRY);
         command = parent.command + ' ' + parent.argsColor + command;

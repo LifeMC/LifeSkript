@@ -74,21 +74,42 @@ public final class StreamUtils {
 
     /**
      * Reads a complete {@link String} from the given {@link InputStream}.
-     * Uses default unix line terminators in the return {@link String}.
+     * Uses default <b>unix line terminators</b> in the return {@link String}.
      *
      * @param is The {@link InputStream} to read {@link String} from it.
      * @return The complete read {@link String}.
      *
      * @throws IOException If any error occurs when reading.
+     * @implNote Uses {@link LineSeparators#UNIX} as line separator.
+     *
+     * @see StreamUtils#readString(InputStream, String)
      */
     public static final String readString(final InputStream is) throws IOException {
+        return readString(is, LineSeparators.UNIX_STR);
+    }
+
+    /**
+     * Reads a complete {@link String} from the given {@link InputStream}.
+     * Uses the given line terminators in the return {@link String}.
+     *
+     * @param is The {@link InputStream} to read {@link String} from it.
+     * @param lineSeparator The line terminator/separator to use
+     *
+     * @return The complete read {@link String}.
+     * @throws IOException If any error occurs when reading.
+     *
+     * @see LineSeparators
+     * @see StreamUtils#readString(InputStream)
+     */
+    public static final String readString(final InputStream is,
+                                          final String lineSeparator) throws IOException {
         final StringBuilder responseBody = new StringBuilder(4096);
         try(final InputStreamReader ir = new InputStreamReader(is, StandardCharsets.UTF_8);
             final BufferedReader br = new BufferedReader(ir)) {
             String line;
 
             while ((line = br.readLine()) != null) {
-                responseBody.append(line.trim()).append('\n');
+                responseBody.append(line.trim()).append(lineSeparator);
             }
 
             return responseBody.toString().trim();

@@ -66,7 +66,6 @@ public final class ExprDamage extends SimpleExpression<Double> {
     }
 
     @Override
-    @Nullable
     protected Double[] get(final Event e) {
         if (!(e instanceof EntityDamageEvent))
             return EmptyArrays.EMPTY_WRAPPER_DOUBLE_ARRAY;

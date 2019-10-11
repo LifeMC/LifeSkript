@@ -28,10 +28,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("static-method")
-public final class PairCloneTest {
+final class PairCloneTest {
 
     @Test
-    public final void testPairClone() {
+    final void testPairClone() {
         final Pair<Class<String>, Class<Skript>> samplePair = new Pair<>();
 
         samplePair.setFirst(String.class);

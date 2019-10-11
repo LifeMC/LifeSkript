@@ -74,7 +74,6 @@ public final class ExprDrops extends SimpleExpression<ItemStack> {
     }
 
     @Override
-    @Nullable
     protected ItemStack[] get(final Event e) {
         if (!(e instanceof EntityDeathEvent))
             return EmptyArrays.EMPTY_ITEMSTACK_ARRAY;

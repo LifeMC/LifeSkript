@@ -456,7 +456,7 @@ public final class Classes {
         return enclosingClass;
     }
 
-    public static final boolean isAllowed(@Nullable final Parser<?> parser) {
+    private static final boolean isAllowed(@Nullable final Parser<?> parser) {
         if (parser == null)
             return false;
         if (!disableEnumClassInfos && !disableEnumTypes && !disableTypeManagers)

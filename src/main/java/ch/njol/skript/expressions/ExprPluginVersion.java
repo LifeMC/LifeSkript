@@ -32,6 +32,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.Plugin;
@@ -42,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @Name("Plugin Version")
 @Description("Gets version of a specific plugin.")
-@Examples("on load:\n\tmessage \"The version of Skript is %version of plugin \"Skript\"%")
+@Examples("on load:" + LineSeparators.UNIX + LineSeparators.TAB + "message \"The version of Skript is %version of plugin \"Skript\"%")
 @Since("2.2-Fixes-V12")
 public final class ExprPluginVersion extends SimpleExpression<String> {
 

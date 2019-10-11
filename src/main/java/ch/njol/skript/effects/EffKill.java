@@ -34,6 +34,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -61,16 +62,17 @@ public final class EffKill extends Effect {
         return true;
     }
 
+    @SuppressWarnings("CastConflictsWithInstanceof")
     @Override
     protected void execute(final Event e) {
         for (final Entity entity : entities.getArray(e)) {
             if (entity instanceof LivingEntity) {
-                final boolean creative = entity instanceof Player && ((Player) entity).getGameMode() == GameMode.CREATIVE;
+                final boolean creative = entity instanceof HumanEntity && ((HumanEntity) entity).getGameMode() == GameMode.CREATIVE;
                 if (creative)
-                    ((Player) entity).setGameMode(GameMode.SURVIVAL);
+                    ((HumanEntity) entity).setGameMode(GameMode.SURVIVAL);
                 HealthUtils.damage((LivingEntity) entity, HealthUtils.getMaxHealth((LivingEntity) entity) * 100); // just to make sure that it really dies >:)
                 if (creative)
-                    ((Player) entity).setGameMode(GameMode.CREATIVE);
+                    ((HumanEntity) entity).setGameMode(GameMode.CREATIVE);
             }
 
             // if everything done so far has failed to kill this thing

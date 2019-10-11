@@ -68,7 +68,7 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
         }
 
         @Override
-        public final void execute(final @Nullable Listener l, final @Nullable Event e) throws EventException {
+        public final void execute(@Nullable final Listener l, @Nullable final Event e) throws EventException {
             if (e == null)
                 return;
             if (!triggers.isEmpty()) {
@@ -95,7 +95,7 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "chat";
     }
 

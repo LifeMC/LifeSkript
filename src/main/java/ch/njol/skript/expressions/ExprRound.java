@@ -48,7 +48,7 @@ public final class ExprRound extends PropertyExpression<Number, Long> {
         Skript.registerExpression(ExprRound.class, Long.class, ExpressionType.PROPERTY, "(a|the|) round[ed] down %number%", "(a|the|) round[ed] %number%", "(a|the|) round[ed] up %number%");
     }
 
-    int action;
+    private int action;
 
     @SuppressWarnings({"unchecked", "null"})
     @Override

@@ -76,7 +76,9 @@ public class ParseLogHandler extends LogHandler {
                     e.discarded("cleared");
                 }
             }
-            log.clear();
+            {
+                log.clear();
+            }
         }
     }
 

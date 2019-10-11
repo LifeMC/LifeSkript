@@ -37,7 +37,7 @@ import java.util.NoSuchElementException;
  */
 public class ContainerExpression extends SimpleExpression<Object> {
 
-    final Expression<? extends Container<?>> expr;
+    private final Expression<? extends Container<?>> expr;
     private final Class<?> c;
 
     public ContainerExpression(final Expression<? extends Container<?>> expr, final Class<?> c) {

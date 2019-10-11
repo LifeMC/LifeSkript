@@ -81,6 +81,54 @@ public final class Functions {
         return function;
     }
 
+    /**
+     * Wraps a function {@link Function} that returns a single type.
+     * e.g a function returning string, not strings.
+     *
+     * @param function The function to wrap it as {@link java.util.function.Function}.
+     * @param <T> The return type of the {@link Function}.
+     *
+     * @return The wrapped {@link java.util.function.Function} object that
+     * returns the result of the function.
+     */
+    public static final <T> java.util.function.Function<Object[][], T> wrapSingle(final Function<T> function) {
+        if (!function.isSingle())
+            throw new IllegalArgumentException("wrapSingle can only be used in single return type functions");
+
+        final java.util.function.Function<Object[][], T[]> wrapped = wrap(function);
+
+        return params -> {
+            final T[] returnValue = wrapped.apply(params);
+
+            if (returnValue == null || returnValue.length < 1)
+                return null;
+
+            return returnValue[0];
+        };
+    }
+
+    /**
+     * Wraps a function {@link Function} to an {@link java.util.function.Function}
+     * object that can be used easily.
+     *
+     * The return type of the {@link Function} can be single or plural, in case of
+     * single type functions use {@link Functions#wrapSingle(Function)} instead.
+     *
+     * @param function The function to wrap it as {@link java.util.function.Function}.
+     * @param <T> The return type of the {@link Function}.
+     *
+     * @return The wrapped {@link java.util.function.Function} object that
+     * returns the result of the function.
+     */
+    public static final <T> java.util.function.Function<Object[][], T[]> wrap(final Function<T> function) {
+        return params -> {
+            final T[] returnValue = function.execute(params);
+            function.resetReturnValue();
+
+            return returnValue;
+        };
+    }
+
     static final void registerCaller(final FunctionReference<?> r) {
         final FunctionData d = functions.get(r.functionName);
         assert d != null;

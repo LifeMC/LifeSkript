@@ -80,7 +80,7 @@ public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the food level of " + getExpr().toString(e, debug);
     }
 
@@ -94,9 +94,7 @@ public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-        assert mode != ChangeMode.REMOVE_ALL;
-
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final int s = delta == null ? 0 : Math.round(((Number) delta[0]).floatValue() * 2);
         for (final Player player : getExpr().getArray(e)) {
             final boolean event = getTime() >= 0 && e instanceof FoodLevelChangeEvent && ((FoodLevelChangeEvent) e).getEntity() == player && !Delay.isDelayed(e);
@@ -120,7 +118,7 @@ public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
                     food = 20;
                     break;
                 case REMOVE_ALL:
-                    assert false;
+                    assert false : mode;
             }
             if (event)
                 ((FoodLevelChangeEvent) e).setFoodLevel(food);
@@ -131,6 +129,6 @@ public final class ExprFoodLevel extends PropertyExpression<Player, Float> {
 
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, FoodLevelChangeEvent.class, getExpr());
+        return setTime(time, FoodLevelChangeEvent.class, getExpr());
     }
 }

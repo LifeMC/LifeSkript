@@ -49,6 +49,8 @@ import java.io.NotSerializableException;
 import java.io.StreamCorruptedException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @ContainerType(ItemStack.class)
 @SuppressWarnings("deprecation")
@@ -58,6 +60,9 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     public static final boolean itemMetaSupported = Skript.classExists("org.bukkit.inventory.meta.ItemMeta");
     private static final Message m_named = new Message("aliases.named");
     private static final Random random = new Random();
+    @SuppressWarnings("RegExpEmptyAlternationBranch")
+    private static final Matcher ITEMTYPE_SEPARATOR = Pattern.compile("||", Pattern.LITERAL).matcher("");
+    private static final Pattern ITEMTYPE_SPLITTER = Pattern.compile("(?!<\\|)\\|(?!\\|)");
     /**
      * Note to self: use {@link #add_(ItemData)} to add item datas, don't add them directly to this list.
      */
@@ -130,7 +135,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
             enchantments = new HashMap<>(i.enchantments);
     }
 
-    private static final void unsetItemMetaEnchs(final @Nullable ItemMeta meta) {
+    private static final void unsetItemMetaEnchs(@Nullable final ItemMeta meta) {
         if (meta == null)
             return;
         for (final Enchantment e : meta.getEnchants().keySet())
@@ -145,7 +150,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return buf;
     }
 
-    private static final boolean addTo(final @Nullable ItemStack item, final ItemStack[] buf) {
+    private static final boolean addTo(@Nullable final ItemStack item, final ItemStack[] buf) {
         if (item == null || item.getType() == Material.AIR)
             return true;
         int added = 0;
@@ -195,16 +200,18 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     /**
      * Loads an array of ItemTypes separated by '|'
+     *
+     * @deprecated use {@link ItemType#deserialize(Fields)} instead
      */
     @Deprecated
     @Nullable
     public static final ItemType[] deserialize(final String s) {
         if (s.isEmpty())
             return null;
-        final String[] split = s.split("(?!<\\|)\\|(?!\\|)");
+        final String[] split = ITEMTYPE_SPLITTER.split(s);
         final ItemType[] types = new ItemType[split.length];
         for (int i = 0; i < types.length; i++) {
-            final ItemType t = (ItemType) Classes.deserialize("itemtype", split[i].replace("||", "|"));
+            final ItemType t = (ItemType) Classes.deserialize("itemtype", ITEMTYPE_SEPARATOR.reset(split[i]).replaceAll(Matcher.quoteReplacement("|")));
             if (t == null)
                 return null;
             types[i] = t;
@@ -285,7 +292,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @param item
      * @return Whatever the given item has correct enchantments & ItemMeta, but doesn't check its type
      */
-    private final boolean hasMeta(final @Nullable ItemStack item) {
+    private final boolean hasMeta(@Nullable final ItemStack item) {
         final Map<Enchantment, Integer> enchs = enchantments;
         if (enchs != null) {
             if (item == null)
@@ -306,7 +313,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return true;
     }
 
-    public boolean isOfType(final @Nullable ItemStack item) {
+    public boolean isOfType(@Nullable final ItemStack item) {
         if (item == null)
             return isOfType(0, (short) 0);
         if (!hasMeta(item))
@@ -314,7 +321,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return isOfType(item.getTypeId(), item.getDurability());
     }
 
-    public boolean isOfType(final @Nullable Block block) {
+    public boolean isOfType(@Nullable final Block block) {
         if (enchantments != null)
             return false;
         if (block == null)
@@ -366,7 +373,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return item == null ? this : item;
     }
 
-    void setItem(final @Nullable ItemType item) {
+    void setItem(@Nullable final ItemType item) {
         if (equals(item)) { // can happen if someone defines a 'x' and 'x item/block' alias that have the same value, e.g. 'dirt' and 'dirt block'
             this.item = null;
         } else {
@@ -400,7 +407,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return block == null ? this : block;
     }
 
-    void setBlock(final @Nullable ItemType block) {
+    void setBlock(@Nullable final ItemType block) {
         if (equals(block)) {
             this.block = null;
         } else {
@@ -482,7 +489,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     /**
      * @param type Some ItemData. Only a copy of it will be stored.
      */
-    public void add(final @Nullable ItemData type) {
+    public void add(@Nullable final ItemData type) {
         if (type != null)
             add_(type.clone());
     }
@@ -490,7 +497,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     /**
      * @param type A cloned or newly created ItemData
      */
-    private final void add_(final @Nullable ItemData type) {
+    private final void add_(@Nullable final ItemData type) {
         if (type != null) {
             types.add(type);
             numItems += type.numItems();
@@ -548,43 +555,61 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     @Override
     public Iterator<ItemStack> containerIterator() {
-        return new Iterator<ItemStack>() {
-            @SuppressWarnings("null")
-            final
-            Iterator<ItemData> iter = types.iterator();
-            @Nullable
-            Iterator<ItemStack> currentDataIter;
+        return new ItemStackIterator(types, meta, enchantments, getAmount());
+    }
 
-            @Override
-            public boolean hasNext() {
-                Iterator<ItemStack> cdi = currentDataIter;
-                while (iter.hasNext() && (cdi == null || !cdi.hasNext())) {
-                    currentDataIter = cdi = iter.next().getAll();
-                }
-                return cdi != null && cdi.hasNext();
-            }
+    private static final class ItemStackIterator implements Iterator<ItemStack> {
+        @Nullable
+        private final transient Map<Enchantment, Integer> enchantments;
+        private final Iterator<ItemData> iter;
 
-            @Override
-            public ItemStack next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                final Iterator<ItemStack> cdi = currentDataIter;
-                if (cdi == null)
-                    throw new NoSuchElementException();
-                final ItemStack is = cdi.next();
-                is.setAmount(getAmount());
-                if (meta != null)
-                    is.setItemMeta(Bukkit.getItemFactory().asMetaFor((ItemMeta) meta, is.getType()));
-                if (enchantments != null)
-                    is.addUnsafeEnchantments(enchantments);
-                return is;
-            }
+        @Nullable
+        private final transient Object meta;
+        private final int amount;
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+        @Nullable
+        private Iterator<ItemStack> currentDataIter;
+
+        ItemStackIterator(final Iterable<ItemData> types,
+                          @Nullable final Object meta,
+                          @Nullable final Map<Enchantment, Integer> enchantments,
+                          final int amount) {
+            this.iter = types.iterator();
+            this.meta = meta;
+
+            this.enchantments = enchantments;
+            this.amount = amount;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            Iterator<ItemStack> cdi = currentDataIter;
+            while (iter.hasNext() && (cdi == null || !cdi.hasNext())) {
+                currentDataIter = cdi = iter.next().getAll();
             }
-        };
+            return cdi != null && cdi.hasNext();
+        }
+
+        @Override
+        public final ItemStack next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final Iterator<ItemStack> cdi = currentDataIter;
+            if (cdi == null)
+                throw new NoSuchElementException();
+            final ItemStack is = cdi.next();
+            is.setAmount(amount);
+            if (meta != null)
+                is.setItemMeta(Bukkit.getItemFactory().asMetaFor((ItemMeta) meta, is.getType()));
+            if (enchantments != null)
+                is.addUnsafeEnchantments(enchantments);
+            return is;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     /**
@@ -607,7 +632,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     @Nullable
-    public ItemStack removeAll(final @Nullable ItemStack item) {
+    public ItemStack removeAll(@Nullable final ItemStack item) {
         final boolean wasAll = all;
         final int oldAmount = amount;
         all = true;
@@ -627,7 +652,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @return The passed ItemStack or null if the resulting amount is <= 0
      */
     @Nullable
-    public ItemStack removeFrom(final @Nullable ItemStack item) {
+    public ItemStack removeFrom(@Nullable final ItemStack item) {
         if (item == null)
             return null;
         if (!isOfType(item))
@@ -648,7 +673,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
      * @return The passed ItemStack or a new one if the passed is null or air
      */
     @Nullable
-    public ItemStack addTo(final @Nullable ItemStack item) {
+    public ItemStack addTo(@Nullable final ItemStack item) {
         if (item == null || item.getTypeId() == 0)
             return getRandom();
         if (isOfType(item))
@@ -754,29 +779,40 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
 
     @Override
     public Iterator<ItemData> iterator() {
-        return new Iterator<ItemData>() {
-            private int next;
+        return new ItemDataIterator(this, types);
+    }
 
-            @Override
-            public boolean hasNext() {
-                return next < types.size();
-            }
+    private static final class ItemDataIterator implements Iterator<ItemData> {
+        private final ItemType itemType;
+        private final List<ItemData> types;
 
-            @SuppressWarnings("null")
-            @Override
-            public ItemData next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                return types.get(next++);
-            }
+        private int next;
 
-            @Override
-            public void remove() {
-                if (next <= 0)
-                    throw new IllegalStateException();
-                ItemType.this.remove(--next);
-            }
-        };
+        ItemDataIterator(final ItemType itemType,
+                         final List<ItemData> types) {
+            this.itemType = itemType;
+            this.types = types;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return next < types.size();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final ItemData next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return types.get(next++);
+        }
+
+        @Override
+        public final void remove() {
+            if (next <= 0)
+                throw new IllegalStateException();
+            itemType.remove(--next);
+        }
     }
 
     public boolean isContainedIn(final Inventory invi) {
@@ -987,7 +1023,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -1024,11 +1060,11 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return toString(false, flags, null);
     }
 
-    public String toString(final int flags, final @Nullable Adjective a) {
+    public String toString(final int flags, @Nullable final Adjective a) {
         return toString(false, flags, a);
     }
 
-    private final String toString(final boolean debug, final int flags, final @Nullable Adjective a) {
+    private final String toString(final boolean debug, final int flags, @Nullable final Adjective a) {
         final StringBuilder b = new StringBuilder(4096);
 //		if (types.size() == 1 && !types.get(0).hasDataRange()) {
 //			if (getAmount() != 1)

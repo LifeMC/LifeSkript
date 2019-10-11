@@ -120,7 +120,7 @@ public final class ExprPassenger extends SimplePropertyExpression<Entity, Entity
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), VehicleEnterEvent.class, VehicleExitEvent.class);
+        return setTime(time, getExpr(), VehicleEnterEvent.class, VehicleExitEvent.class);
     }
 
 }

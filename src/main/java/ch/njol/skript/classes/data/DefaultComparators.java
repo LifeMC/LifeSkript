@@ -56,7 +56,7 @@ import java.util.Objects;
 @SuppressWarnings({"rawtypes", "deprecation"})
 public final class DefaultComparators {
 
-    static final Map<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>(100);
+    private static final Map<Class<? extends Entity>, Material> entityMaterials = new LinkedHashMap<>(100);
 
     // EntityData - ItemType
     public static final Comparator<EntityData, ItemType> entityItemComparator = (e, i) -> {

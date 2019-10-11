@@ -158,6 +158,8 @@ final class Main {
 				final var method = PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim());
 				if ((method.length > 4 || method[0].contains("abstract")) && (method.length < 4 || !method[4].contains("static")) || method.length > 5)
 					warning(file, line, i, "Method parameters maybe final");
+				else if (line.contains("abstract") && !line.contains("()"))
+					warning(file, line, i, "Abstract method parameters maybe final");
 			} else if ((line.contains("\"\"+") || line.contains("\"\" +")) && !line.contains("\\\"\"") && !noConcenationWarning)
                 warning(file, line, i, "Redundant empty string concenation");
             else if ((line.contains("catch(") || line.contains("catch (")) && !line.contains("(final ") && !noCatchFinalWarning)

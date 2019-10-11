@@ -65,7 +65,7 @@ public final class EffEquip extends Effect implements Testable {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] vars, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         entities = (Expression<LivingEntity>) vars[0];
         types = (Expression<ItemType>) vars[1];
         return true;
@@ -73,7 +73,7 @@ public final class EffEquip extends Effect implements Testable {
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         final ItemType[] ts = types.getArray(e);
         for (final LivingEntity en : entities.getArray(e)) {
             if (en instanceof Pig) {
@@ -146,7 +146,7 @@ public final class EffEquip extends Effect implements Testable {
     }
 
     @Override
-    public boolean test(final Event e) {
+    public final boolean test(final Event e) {
 //		final Iterable<Player> ps = players.getArray(e);
 //		for (final ItemType t : types.getArray(e)) {
 //			for (final Player p : ps) {
@@ -157,7 +157,7 @@ public final class EffEquip extends Effect implements Testable {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "equip " + entities.toString(e, debug) + " with " + types.toString(e, debug);
     }
 

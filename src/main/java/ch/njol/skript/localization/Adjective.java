@@ -38,6 +38,7 @@ public final class Adjective extends Message {
 
     private final HashMap<Integer, String> genders = new HashMap<>();
     @Nullable
+    private
     String def;
 
     public Adjective(final String key) {

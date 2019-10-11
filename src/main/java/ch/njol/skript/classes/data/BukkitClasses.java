@@ -68,7 +68,7 @@ public final class BukkitClasses {
 
     static final Pattern blockDeserializePattern = Pattern.compile("[:,]");
 
-    static final Matcher parsePatternMatcher = Pattern.compile("(?:(?:the )?world )?\"(.+)\"", Pattern.CASE_INSENSITIVE).matcher("");
+    static final Matcher parsePatternMatcher = Pattern.compile("(?:(?:the )?world )?\"(.+?)\"", Pattern.CASE_INSENSITIVE).matcher("");
     static final Matcher validPlayerNameMatcher = Pattern.compile("\\S+").matcher("");
 
     // This speeds up variable saving a lot (like 8 minutes to 10 seconds for 720.000+ variables)
@@ -298,7 +298,9 @@ public final class BukkitClasses {
                 // REMIND allow shortcuts '[over]world', 'nether' and '[the_]end' (server.properties: 'level-name=world') // inconsistent with 'world is "..."'
                 if (context == ParseContext.COMMAND || context == ParseContext.CONFIG)
                     return Bukkit.getWorld(s);
-                final Matcher m = parsePatternMatcher.reset(s);
+                if (s.isEmpty())
+                    return null;
+                final Matcher m = parsePatternMatcher.reset(s.trim());
                 if (m.matches())
                     return Bukkit.getWorld(m.group(1));
                 return null;

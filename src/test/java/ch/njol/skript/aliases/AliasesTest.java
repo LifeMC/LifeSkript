@@ -28,13 +28,14 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author Peter Güttinger
  */
-public final class AliasesTest {
+final class AliasesTest {
     static {
         BukkitLoggerFilter.addFilter(record -> {
             if (record == null)
@@ -45,7 +46,7 @@ public final class AliasesTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testNames() {
+    void testNames() {
         final ItemType t = new ItemType();
         t.add(new ItemData(0));
 
@@ -73,11 +74,12 @@ public final class AliasesTest {
         };
 
         for (final String[] test : tests) {
+            final Supplier<String> testFirstIndexSupplier = () -> test[0];
             @SuppressWarnings("null") final Set<String> names = Aliases.getAliases(test[0], t, v).keySet();
-            assertEquals(test.length - 1, names.size(), () -> test[0]);
+            assertEquals(test.length - 1, names.size(), testFirstIndexSupplier);
             int i = 1;
             for (final String name : names)
-                assertEquals(test[i++], name, () -> test[0]);
+                assertEquals(test[i++], name, testFirstIndexSupplier);
         }
     }
 

@@ -143,8 +143,10 @@ public final class SkriptAddon {
                             continue;
                         }
                         try {
-                            Class.forName(c, true, plugin.getClass().getClassLoader());
-                            loadedClasses.incrementAndGet(); // successfully loaded
+                            {
+                                Class.forName(c, true, plugin.getClass().getClassLoader());
+                            }
+                            loadedClasses.getAndIncrement(); // successfully loaded
                         } catch (final NoClassDefFoundError ncdfe) {
                             // not supported or not available on this version, skip it.
                             if (Skript.logHigh()) {
@@ -158,19 +160,19 @@ public final class SkriptAddon {
                                     }
                                 }
                             }
-                            unloadableClasses.incrementAndGet();
+                            unloadableClasses.getAndIncrement();
                         } catch (final ExceptionInInitializerError err) {
                             Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
-                            unloadableClasses.incrementAndGet();
+                            unloadableClasses.getAndIncrement();
                         } catch (final LinkageError le) {
                             if (Skript.testing() || Skript.debug()) {
                                 Skript.exception(le, "Cannot load class " + c + " from " + this);
                             }
-                            unloadableClasses.incrementAndGet();
+                            unloadableClasses.getAndIncrement();
                         } catch (final Throwable ex) {
                             // Catch any other exceptions.
                             Skript.exception(ex, "Cannot load class " + c + " from " + this);
-                            unloadableClasses.incrementAndGet();
+                            unloadableClasses.getAndIncrement();
                         }
                     }
                 }

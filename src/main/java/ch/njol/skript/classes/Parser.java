@@ -48,7 +48,7 @@ public abstract class Parser<T> {
      * @return The parsed input or null if the input is invalid for this parser.
      */
     @Nullable
-    public abstract T parse(String s, ParseContext context);
+    public abstract T parse(final String s, final ParseContext context);
 
     /**
      * @return Whatever {@link #parse(String, ParseContext)} can actually return something other than null for the given context
@@ -64,7 +64,7 @@ public abstract class Parser<T> {
      * @return The String representation of the object.
      * @see #getDebugMessage(Object)
      */
-    public abstract String toString(T o, int flags);
+    public abstract String toString(final T o, final int flags);
 
     /**
      * Gets a string representation of this object for the given mode

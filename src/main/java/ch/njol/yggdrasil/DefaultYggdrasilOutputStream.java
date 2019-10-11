@@ -36,7 +36,7 @@ public final class DefaultYggdrasilOutputStream extends YggdrasilOutputStream {
     private final HashMap<String, Integer> writtenShortStrings = new HashMap<>(100);
 
     // private
-    int nextShortStringID;
+    private int nextShortStringID;
 
     public DefaultYggdrasilOutputStream(final Yggdrasil y, final OutputStream out) throws IOException {
         super(y);

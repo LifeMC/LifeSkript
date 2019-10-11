@@ -101,7 +101,7 @@ public final class FlatFileStorage extends VariablesStorage {
         return new String(r);
     }
 
-    static final byte[] decode(final String hex) {
+    private static final byte[] decode(final CharSequence hex) {
         final byte[] r = new byte[hex.length() / 2];
         for (int i = 0; i < r.length; i++) {
             r[i] = (byte) ((Character.digit(hex.charAt(2 * i), 16) << 4) + Character.digit(hex.charAt(2 * i + 1), 16));
@@ -110,7 +110,7 @@ public final class FlatFileStorage extends VariablesStorage {
     }
 
     @Nullable
-    static final String[] splitCSV(final String line) {
+    private static final String[] splitCSV(final CharSequence line) {
         final Matcher m = csvMatcher.reset(line);
         int lastEnd = 0;
         final ArrayList<String> r = new ArrayList<>();

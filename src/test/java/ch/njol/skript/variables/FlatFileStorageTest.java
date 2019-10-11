@@ -22,30 +22,53 @@
 
 package ch.njol.skript.variables;
 
+import ch.njol.skript.Skript;
+import org.eclipse.jdt.annotation.Nullable;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.function.Function;
 
 import static kotlin.test.AssertionsKt.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Peter Güttinger
  */
-public final class FlatFileStorageTest {
+final class FlatFileStorageTest {
+
+    private static final byte[] decode(final CharSequence hex) {
+        try {
+            return (byte[]) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("decode", CharSequence.class), (Function<Method, Method>) Skript::setAccessible).invoke(null, hex);
+        } catch (final InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            return fail(e);
+        }
+    }
+
+    @Nullable
+    private static final String[] splitCSV(final CharSequence line) {
+        try {
+            return (String[]) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("splitCSV", CharSequence.class), (Function<Method, Method>) Skript::setAccessible).invoke(null, line);
+        } catch (final InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            return fail(e);
+        }
+    }
 
     @SuppressWarnings("static-method")
     @Test
-    public void testHexCoding() {
+    void testHexCoding() {
         final byte[] bytes = {-0x80, -0x50, -0x01, 0x00, 0x01, 0x44, 0x7F};
         final String string = "80B0FF0001447F";
         assertEquals(string, FlatFileStorage.encode(bytes));
-        assert Arrays.equals(bytes, FlatFileStorage.decode(string)) : Arrays.toString(bytes) + " != " + Arrays.toString(FlatFileStorage.decode(string));
+        assert Arrays.equals(bytes, decode(string)) : Arrays.toString(bytes) + " != " + Arrays.toString(decode(string));
     }
 
     @SuppressWarnings({"null", "static-method"})
     @Test
-    public void testCSV() {
+    void testCSV() {
         final String[][] vs = {{"", ""}, {",", "", ""}, {",,", "", "", ""}, {"a", "a"}, {"a,", "a", ""}, {",a", "", "a"}, {",a,", "", "a", ""}, {" , a , ", "", "a", ""}, {"a,b,c", "a", "b", "c"}, {" a , b , c ", "a", "b", "c"},
 
                 {"\"\"", ""}, {"\",\"", ","}, {"\"\"\"\"", "\""}, {"\" \"", " "}, {"a, \"\"\"\", b, \", c\", d", "a", "\"", "b", ", c", "d"}, {"a, \"\"\", b, \", c", "a", "\", b, ", "c"},
@@ -53,7 +76,7 @@ public final class FlatFileStorageTest {
                 {"\"\t\0\"", "\t\0"},
         };
         for (final String[] v : vs) {
-            assertTrue(Arrays.equals(Arrays.copyOfRange(v, 1, v.length), FlatFileStorage.splitCSV(v[0])), v[0] + ": " + Arrays.toString(Arrays.copyOfRange(v, 1, v.length)) + " != " + Arrays.toString(FlatFileStorage.splitCSV(v[0])));
+            assertTrue(Arrays.equals(Arrays.copyOfRange(v, 1, v.length), splitCSV(v[0])), v[0] + ": " + Arrays.toString(Arrays.copyOfRange(v, 1, v.length)) + " != " + Arrays.toString(splitCSV(v[0])));
         }
     }
 

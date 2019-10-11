@@ -64,8 +64,8 @@ public final class ExprDirection extends SimpleExpression<Direction> {
         Skript.registerExpression(ExprDirection.class, Direction.class, ExpressionType.COMBINED, "[%-number% [(block|met(er|re))[s]] [to the]] (" + NORTH + "¦north[(-| |)(" + (NORTH_EAST ^ NORTH) + "¦east|" + (NORTH_WEST ^ NORTH) + "¦west)][(ward(s|ly|)|er(n|ly|))] [of]" + '|' + SOUTH + "¦south[(-| |)(" + (SOUTH_EAST ^ SOUTH) + "¦east|" + (SOUTH_WEST ^ SOUTH) + "¦west)][(ward(s|ly|)|er(n|ly|))] [of]" + "|(" + EAST + "¦east|" + WEST + "¦west)[(ward(s|ly|)|er(n|ly|))] [of]" + '|' + UP + "¦above|" + UP + "¦over|(" + UP + "¦up|" + DOWN + "¦down)[ward(s|ly|)]|" + DOWN + "¦below|" + DOWN + "¦under[neath]|" + DOWN + "¦beneath" + ") [%-direction%]", "[%-number% [(block|met(er|re))[s]]] in [the] (0¦direction|1¦horizontal direction|2¦facing|3¦horizontal facing) of %entity/block% (of|from|)", "[%-number% [(block|met(er|re))[s]]] in %entity/block%'[s] (0¦direction|1¦horizontal direction|2¦facing|3¦horizontal facing) (of|from|)", "[%-number% [(block|met(er|re))[s]]] (0¦in[ ]front [of]|0¦forward[s]|2¦behind|2¦backwards|[to the] (1¦right|-1¦left) [of])", "[%-number% [(block|met(er|re))[s]]] horizontal[ly] (0¦in[ ]front [of]|0¦forward[s]|2¦behind|2¦backwards|to the (1¦right|-1¦left) [of])");
     }
 
-    boolean horizontal;
-    boolean facing;
+    private boolean horizontal;
+    private boolean facing;
     @Nullable
     private Expression<Number> amount;
     @Nullable
@@ -108,7 +108,6 @@ public final class ExprDirection extends SimpleExpression<Direction> {
     }
 
     @Override
-    @Nullable
     protected Direction[] get(final Event e) {
         final Number n = amount != null ? amount.getSingle(e) : 1;
         if (n == null)

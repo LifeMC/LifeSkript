@@ -32,18 +32,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("static-method")
-public final class DyeColorTest {
+final class DyeColorTest {
 
     @SuppressWarnings("deprecation")
     @Test
-    public final void testGetData() {
+    final void testGetData() {
         for (final DyeColor dyeColor : DyeColor.values()) {
             assertSame(dyeColor.getWoolData(), Color.getData(dyeColor));
         }
     }
 
     @Test
-    public final void testSilver() {
+    final void testSilver() {
         try {
             assertSame(DyeColor.SILVER, Skript.methodForName(Color.class, "getSilver", true).invoke(null));
         } catch (final InvocationTargetException | IllegalAccessException e) {

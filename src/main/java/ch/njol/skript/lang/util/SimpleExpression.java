@@ -166,7 +166,7 @@ public abstract class SimpleExpression<T> implements Expression<T> {
      * @return An array of values for this event. May not contain nulls.
      */
     @Nullable
-    protected abstract T[] get(Event e);
+    protected abstract T[] get(final Event e);
 
     @Override
     public final boolean check(final Event e, final Checker<? super T> c) {

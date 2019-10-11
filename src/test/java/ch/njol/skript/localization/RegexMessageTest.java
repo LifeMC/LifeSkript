@@ -22,6 +22,7 @@
 
 package ch.njol.skript.localization;
 
+import ch.njol.util.LineSeparators;
 import org.junit.jupiter.api.Test;
 
 import static kotlin.test.AssertionsKt.assertTrue;
@@ -29,13 +30,13 @@ import static kotlin.test.AssertionsKt.assertTrue;
 /**
  * @author Peter Güttinger
  */
-public final class RegexMessageTest {
+final class RegexMessageTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testRegexMessage() {
+    void testRegexMessage() {
 
-        final String[] tests = {"", "!", "a", "()", "^$", "$^", "\n", "\r\n"};
+        final String[] tests = {"", "!", "a", "()", "^$", "$^", LineSeparators.UNIX_STR, LineSeparators.DOS};
 
         for (final String test : tests)
             assertTrue(!RegexMessage.nop_matcher.reset(test).find() && !RegexMessage.nop_matcher.reset(test).matches(), test);

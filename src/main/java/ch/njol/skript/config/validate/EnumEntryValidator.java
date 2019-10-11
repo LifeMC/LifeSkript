@@ -71,7 +71,7 @@ public final class EnumEntryValidator<E extends Enum<E>> extends EntryValidator 
         final EntryNode n = (EntryNode) node;
         try {
             final E e = Enum.valueOf(enumType, n.getValue().toUpperCase(Locale.ENGLISH).replace(' ', '_'));
-            assert e != null;
+//          assert e != null;
 //			if (setter != null)
             setter.set(e);
         } catch (final IllegalArgumentException e) {

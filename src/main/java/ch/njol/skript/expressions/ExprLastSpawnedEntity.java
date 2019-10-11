@@ -54,7 +54,7 @@ public final class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
         Skript.registerExpression(ExprLastSpawnedEntity.class, Entity.class, ExpressionType.SIMPLE, "[the] [last[ly]] (0¦spawned|1¦shot) %*entitydata%");
     }
 
-    boolean spawned;
+    private boolean spawned;
     @SuppressWarnings("null")
     private EntityData<?> type;
 

@@ -65,7 +65,7 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
     }
 
     @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
+    public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         switch (matchedPattern) {
             case 0:
                 breakLevels = ScriptLoader.currentSections.size() + 1;
@@ -118,12 +118,12 @@ public final class EffExit extends Effect { // TODO [code style] warn user about
     }
 
     @Override
-    protected void execute(final Event e) {
+    protected final void execute(final Event e) {
         assert false;
     }
 
     @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "stop " + breakLevels + ' ' + names[type];
     }
 

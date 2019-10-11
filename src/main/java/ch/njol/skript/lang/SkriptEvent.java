@@ -58,7 +58,7 @@ public abstract class SkriptEvent implements SyntaxElement, Debuggable {
      * @param e
      * @return true if this is SkriptEvent is represented by the Bukkit Event or false if not
      */
-    public abstract boolean check(Event e);
+    public abstract boolean check(final Event e);
 
     @Override
     public final String toString() {

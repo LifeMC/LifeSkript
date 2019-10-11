@@ -75,9 +75,7 @@ public final class ExprItem extends EventValueExpression<ItemStack> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-        assert mode != ChangeMode.RESET;
-
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final Item i = item != null ? item.getSingle(e) : null;
         final Slot s = slot != null ? slot.getSingle(e) : null;
         if (i == null && s == null)
@@ -108,7 +106,7 @@ public final class ExprItem extends EventValueExpression<ItemStack> {
                     i.remove();
                 break;
             case RESET:
-                assert false;
+                assert false : mode;
         }
         if (i != null)
             i.setItemStack(is);

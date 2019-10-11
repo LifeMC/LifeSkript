@@ -94,7 +94,7 @@ public abstract class WrapperExpression<T> extends SimpleExpression<T> {
         @Override
         public final String toString(@Nullable final Event e, final boolean debug) {
             if (debug && e == null)
-                return '(' + toStringFunction.apply(null, true) + ")->" + super.to.getName();
+                return '(' + toStringFunction.apply(null, true) + ")->" + to.getName();
             return toStringFunction.apply(e, debug);
         }
     }

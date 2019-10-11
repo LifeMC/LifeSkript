@@ -49,7 +49,7 @@ public abstract class SimplePropertyExpression<F, T> extends PropertyExpression<
 
     @Override
     protected T[] get(final Event e, final F[] source) {
-        return super.get(source, this);
+        return get(source, this);
     }
 
     @Override

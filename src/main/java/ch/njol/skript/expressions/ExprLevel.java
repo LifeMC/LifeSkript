@@ -50,7 +50,7 @@ public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
 
     @Override
     protected Integer[] get(final Event e, final Player[] source) {
-        return super.get(source, p -> {
+        return get(source, p -> {
             if (e instanceof PlayerLevelChangeEvent && ((PlayerLevelChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e)) {
                 return getTime() < 0 ? ((PlayerLevelChangeEvent) e).getOldLevel() : ((PlayerLevelChangeEvent) e).getNewLevel();
             }
@@ -88,9 +88,7 @@ public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-        assert mode != ChangeMode.REMOVE_ALL;
-
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final int l = delta == null ? 0 : ((Number) delta[0]).intValue();
 
         for (final Player p : getExpr().getArray(e)) {
@@ -115,7 +113,7 @@ public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
                     level = 0;
                     break;
                 case REMOVE_ALL:
-                    assert false;
+                    assert false : mode;
                     continue;
             }
             if (getTime() > 0 && e instanceof PlayerDeathEvent && ((PlayerDeathEvent) e).getEntity() == p && !Delay.isDelayed(e)) {
@@ -129,7 +127,7 @@ public final class ExprLevel extends SimplePropertyExpression<Player, Integer> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), PlayerLevelChangeEvent.class, PlayerDeathEvent.class);
+        return setTime(time, getExpr(), PlayerLevelChangeEvent.class, PlayerDeathEvent.class);
     }
 
     @Override

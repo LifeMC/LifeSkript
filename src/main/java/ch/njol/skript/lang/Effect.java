@@ -70,7 +70,7 @@ public abstract class Effect extends Statement {
      *
      * @param e
      */
-    protected abstract void execute(Event e);
+    protected abstract void execute(final Event e);
 
     @Override
     public final boolean run(final Event e) {

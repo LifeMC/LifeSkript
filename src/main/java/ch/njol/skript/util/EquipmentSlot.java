@@ -51,7 +51,7 @@ public class EquipmentSlot extends Slot {
     }
 
     @Override
-    public void setItem(final @Nullable ItemStack item) {
+    public void setItem(@Nullable final ItemStack item) {
         slot.set(e, item);
         if (e.getHolder() instanceof Player)
             PlayerUtils.updateInventory((Player) e.getHolder());
@@ -71,7 +71,7 @@ public class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 e.setItemInHand(item);
             }
         },
@@ -83,7 +83,7 @@ public class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 e.setHelmet(item);
             }
         },
@@ -95,7 +95,7 @@ public class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 e.setChestplate(item);
             }
         },
@@ -107,7 +107,7 @@ public class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 e.setLeggings(item);
             }
         },
@@ -119,15 +119,15 @@ public class EquipmentSlot extends Slot {
             }
 
             @Override
-            public void set(final EntityEquipment e, final @Nullable ItemStack item) {
+            public void set(final EntityEquipment e, @Nullable final ItemStack item) {
                 e.setBoots(item);
             }
         };
 
         @Nullable
-        public abstract ItemStack get(EntityEquipment e);
+        public abstract ItemStack get(final EntityEquipment e);
 
-        public abstract void set(EntityEquipment e, @Nullable ItemStack item);
+        public abstract void set(final EntityEquipment e, @Nullable final ItemStack item);
 
     }
 

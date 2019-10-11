@@ -79,7 +79,6 @@ public final class ExprBlockSphere extends SimpleExpression<Block> {
     }
 
     @Override
-    @Nullable
     protected Block[] get(final Event e) {
         final Number r = radius.getSingle(e);
         if (r == null)

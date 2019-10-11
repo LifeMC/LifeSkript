@@ -118,7 +118,7 @@ public final class ExprWeather extends PropertyExpression<World, WeatherType> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, getExpr(), WeatherChangeEvent.class, ThunderChangeEvent.class);
+        return setTime(time, getExpr(), WeatherChangeEvent.class, ThunderChangeEvent.class);
     }
 
 }

@@ -43,7 +43,7 @@ public abstract class Getter<R, A> implements Converter<A, R> {
      * @return the value
      */
     @Nullable
-    public abstract R get(A arg);
+    public abstract R get(final A arg);
 
     /**
      * Convenience method to make getter implement converter

@@ -49,8 +49,7 @@ class EffUpdateInventory : Effect() {
         }
     }
 
-    @JvmField
-    var players: Expression<Player>? = null
+    private var players: Expression<Player>? = null
 
     override fun init(exprs: Array<out Expression<*>>, matchedPattern: Int, isDelayed: Kleenean, parseResult: SkriptParser.ParseResult): Boolean {
         @Suppress("UNCHECKED_CAST")

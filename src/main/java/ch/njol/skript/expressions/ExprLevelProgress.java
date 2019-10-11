@@ -57,9 +57,7 @@ public final class ExprLevelProgress extends SimplePropertyExpression<Player, Fl
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
-        assert mode != ChangeMode.REMOVE_ALL;
-
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final float d = delta == null ? 0 : ((Number) delta[0]).floatValue();
         for (final Player p : getExpr().getArray(e)) {
             final float c;
@@ -79,7 +77,7 @@ public final class ExprLevelProgress extends SimplePropertyExpression<Player, Fl
                     break;
                 case REMOVE_ALL:
                 default:
-                    assert false;
+                    assert false : mode;
                     return;
             }
             p.setLevel(Math.max(0, p.getLevel() + (int) Math.floor(c)));

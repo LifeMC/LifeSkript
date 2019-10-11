@@ -130,7 +130,7 @@ public interface YggdrasilSerializable {
          * @throws NotSerializableException
          */
         @SuppressWarnings("null")
-        void deserialize(@NonNull final Fields fields) throws StreamCorruptedException, NotSerializableException;
+        void deserialize(final Fields fields) throws StreamCorruptedException, NotSerializableException;
 
     }
 

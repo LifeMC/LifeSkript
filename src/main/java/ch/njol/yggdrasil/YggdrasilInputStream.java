@@ -49,11 +49,11 @@ public abstract class YggdrasilInputStream implements Closeable {
 
     protected abstract Tag readTag() throws IOException;
 
-    protected abstract Object readPrimitive(Tag type) throws IOException;
+    protected abstract Object readPrimitive(final Tag type) throws IOException;
 
     // String
 
-    protected abstract Object readPrimitive_(Tag type) throws IOException;
+    protected abstract Object readPrimitive_(final Tag type) throws IOException;
 
     // Array
 
@@ -231,10 +231,8 @@ public abstract class YggdrasilInputStream implements Closeable {
             case T_LONG:
             case T_SHORT:
                 throw new StreamCorruptedException();
-            case T_REFERENCE:
-            case T_NULL:
             default:
-                assert false;
+                assert false : t;
                 throw new StreamCorruptedException();
         }
         readObjects.add(o);

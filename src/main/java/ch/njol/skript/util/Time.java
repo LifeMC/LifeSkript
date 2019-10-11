@@ -77,7 +77,11 @@ public final class Time implements YggdrasilSerializable {
      */
     @SuppressWarnings("null")
     @Nullable
-    public static final Time parse(final String s) {
+    public static final Time parse(String s) {
+        if (s.isEmpty())
+            return null;
+        s = s.trim();
+
 //		if (s.matches("\\d+")) {
 //			return new Time(Integer.parseInt(s));
 //		} else

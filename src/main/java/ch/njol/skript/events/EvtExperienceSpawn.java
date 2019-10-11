@@ -84,7 +84,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
             ((EntityDeathEvent) e).setDroppedExp(es.getSpawnedXP());
         } else if (e instanceof ExpBottleEvent) {
             ((ExpBottleEvent) e).setExperience(es.getSpawnedXP());
-        } else if (e instanceof PlayerFishEvent) {
+        } else {
             ((PlayerFishEvent) e).setExpToDrop(es.getSpawnedXP());
         }
     };

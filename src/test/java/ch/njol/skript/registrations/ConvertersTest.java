@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("static-method")
-public final class ConvertersTest {
+final class ConvertersTest {
 
     @SuppressWarnings("unused")
     private static final class SampleConvertableObject {
@@ -75,7 +75,7 @@ public final class ConvertersTest {
 
     @SuppressWarnings("null")
     @Test
-    public final void testConverters() {
+    final void testConverters() {
         final Converter<SampleConvertableObject, SampleConvertableTargetObject> converter = SampleConvertableObject::convert;
         Converters.registerConverter(SampleConvertableObject.class, SampleConvertableTargetObject.class, converter);
 

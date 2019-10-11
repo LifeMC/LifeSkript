@@ -61,7 +61,7 @@ public final class Conditional extends TriggerSection {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return cond.toString(e, debug);
     }
 
@@ -91,7 +91,7 @@ public final class Conditional extends TriggerSection {
     }
 
     @Override
-    public Conditional setNext(final @Nullable TriggerItem next) {
+    public Conditional setNext(@Nullable final TriggerItem next) {
         super.setNext(next);
         if (elseClause != null)
             elseClause.setNext(next);
@@ -99,7 +99,7 @@ public final class Conditional extends TriggerSection {
     }
 
     @Override
-    public Conditional setParent(final @Nullable TriggerSection parent) {
+    public Conditional setParent(@Nullable final TriggerSection parent) {
         super.setParent(parent);
         if (elseClause != null)
             elseClause.setParent(parent);
@@ -114,7 +114,7 @@ public final class Conditional extends TriggerSection {
         @Override
         @Nullable
         public final TriggerItem walk(final Event e) {
-            return super.walk(e, true);
+            return walk(e, true);
         }
 
         @Override

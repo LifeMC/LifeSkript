@@ -90,10 +90,10 @@ public abstract class Serializer<T> extends YggdrasilSerializer<T> {
      * <b>This method must be thread-safe</b>. Use {@link ch.njol.skript.util.Task#callSync(java.util.concurrent.Callable)} if you need to serialise on Bukkit's main thread.
      */
     @Override
-    public abstract Fields serialize(T o) throws NotSerializableException;
+    public abstract Fields serialize(final T o) throws NotSerializableException;
 
     @Override
-    public abstract void deserialize(T o, Fields f) throws StreamCorruptedException, NotSerializableException;
+    public abstract void deserialize(final T o, final Fields f) throws StreamCorruptedException, NotSerializableException;
 
     /**
      * Not currently used (everything happens on Bukkit's main thread).

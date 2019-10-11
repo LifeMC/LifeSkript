@@ -88,7 +88,7 @@ public abstract class PropertyExpression<F, T> extends SimpleExpression<T> {
      * @return An array of the converted objects, which may contain less elements than the source array, but must not be null.
      * @see Converters#convert(Object[], Class, Converter)
      */
-    protected abstract T[] get(Event e, F[] source);
+    protected abstract T[] get(final Event e, final F[] source);
 
     /**
      * @param source

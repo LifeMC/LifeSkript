@@ -82,12 +82,11 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
 
     @Override
     @Nullable
-    public <T> T newInstance(final Class<T> c) {
+    public final <T> T newInstance(final Class<T> c) {
         try {
             return Skript.newInstance(c);
         } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) { // all collections handled here have public nullary constructors
-            Skript.exception(e);
-            return null;
+            throw Skript.exception(e);
         }
     }
 

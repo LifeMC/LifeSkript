@@ -43,7 +43,7 @@ import java.util.List;
 @NonNullByDefault(false)
 public final class BlockStateBlock implements Block {
 
-    final BlockState state;
+    private final BlockState state;
     private final boolean delayChanges;
 
     public BlockStateBlock(final BlockState state) {

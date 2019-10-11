@@ -29,11 +29,11 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class ReversedListViewTest {
+final class ReversedListViewTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testReversedListView() {
+    void testReversedListView() {
 
         final ArrayList<Integer> list = new ArrayList<>(Arrays.asList(1, 1, 2, 4, 7));
         final ReversedListView<Integer> reverse = new ReversedListView<>(list);

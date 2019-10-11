@@ -96,14 +96,16 @@ public final class Aliases {
     private static final RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
     private static final Matcher UNDERSCORE_PATTERN_MATCHER = Pattern.compile("_", Pattern.LITERAL).matcher("");
-    static String itemSingular = "item";
-    static String itemPlural = "items";
+    private static final Matcher DOUBLE_SPACE = Pattern.compile(" {2}", Pattern.LITERAL).matcher("");
+    private static final Matcher WHITESPACE = Pattern.compile("\\s+").matcher("");
+    private static String itemSingular = "item";
+    private static String itemPlural = "items";
     @Nullable
-    static String itemGender;
-    static String blockSingular = "block";
-    static String blockPlural = "blocks";
+    private static String itemGender;
+    private static String blockSingular = "block";
+    private static String blockPlural = "blocks";
     @Nullable
-    static String blockGender;
+    private static String blockGender;
 
     static {
         everything.setAll(true);
@@ -172,7 +174,7 @@ public final class Aliases {
                 b.append(part);
             }
         }
-        return b.toString().replace("  ", " ").trim();
+        return DOUBLE_SPACE.reset(b.toString()).replaceAll(Matcher.quoteReplacement(" ")).trim();
     }
 
     /**
@@ -191,7 +193,9 @@ public final class Aliases {
                     return r;
                 if (c == '[') {
                     r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(i + 1, end), name.substring(end + 1)), value, variations));
-                    r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(end + 1)), value, variations));
+                    {
+                        r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(end + 1)), value, variations));
+                    }
                 } else if (c == '(') {
                     int n = 0;
                     int last = i;
@@ -205,13 +209,16 @@ public final class Aliases {
                             case ')':
                                 n--;
                                 break;
-                            case '|':
+                            case '|': {
                                 if (n > 0)
                                     continue;
                                 hasParts = true;
-                                r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(last + 1, j), name.substring(end + 1)), value, variations));
+                                {
+                                    r.putAll(getAliases(concatenate(name.substring(0, i), name.substring(last + 1, j), name.substring(end + 1)), value, variations));
+                                }
                                 last = j;
                                 break;
+                            }
                             default:
                             	break;
                         }
@@ -282,8 +289,10 @@ public final class Aliases {
                     final int g = s.lastIndexOf('@');
                     if (g != -1)
                         s = s.substring(0, g + 1) + '-';
-                    r.putAll(getAliases(s, value, variations));
-                    return r;
+                    {
+                        r.putAll(getAliases(s, value, variations));
+                        return r;
+                    }
                 }
                 final String[][] os = {{"item", itemSingular, itemPlural, itemGender}, {"block", blockSingular, blockPlural, blockGender}, {"item/block", itemSingular, itemPlural, itemGender, blockSingular, blockPlural, blockGender}, {"block/item", blockSingular, blockPlural, blockGender, itemSingular, itemPlural, itemGender},
                 };
@@ -317,17 +326,17 @@ public final class Aliases {
      * @return amount of added aliases
      */
     @SuppressWarnings("null")
-    static final int addAliases(final String name, final String value, final Variations variations) {
+    private static final int addAliases(final CharSequence name, final String value, final Variations variations) {
         final ItemType t = parseAlias(value);
         if (t == null) {
             return 0;
         }
         final HashMap<String, ItemType> aliases = getAliases();
-        final HashMap<String, ItemType> as = getAliases(name.replaceAll("\\s+", " "), t, variations);
+        final HashMap<String, ItemType> as = getAliases(WHITESPACE.reset(name).replaceAll(" "), t, variations);
         boolean printedStartingWithNumberError = false;
 //		boolean printedSyntaxError = false;
         for (final Entry<String, ItemType> e : as.entrySet()) {
-            final String s = e.getKey().trim().replaceAll("\\s+", " ");
+            final String s = WHITESPACE.reset(e.getKey().trim()).replaceAll(" ");
             final NonNullPair<String, Integer> g = Noun.stripGender(s, e.getKey());
             final NonNullPair<String, String> p = Noun.getPlural(g.getFirst());
             final String lcs = p.getFirst().toLowerCase(Locale.ENGLISH);
@@ -350,7 +359,7 @@ public final class Aliases {
             final ItemType alias;
             if ((b = lcs.endsWith(itemSingular)) || lcp.endsWith(itemPlural)) {
                 String m = b ? lcs.substring(0, lcs.length() - itemSingular.length()) : lcp.substring(0, lcp.length() - itemPlural.length());
-                if (m.endsWith(" ") || m.endsWith("-"))
+                if (!m.isEmpty() && (m.charAt(m.length() - 1) == ' ' || m.charAt(m.length() - 1) == '-'))
                     m = m.substring(0, m.length() - 1);
                 final ItemType si = aliases.get(m);
                 if (si != null)
@@ -358,7 +367,7 @@ public final class Aliases {
                 alias = e.getValue();
             } else if ((b = lcs.endsWith(blockSingular)) || lcp.endsWith(blockPlural)) {
                 String m = b ? lcs.substring(0, lcs.length() - blockSingular.length()) : lcp.substring(0, lcp.length() - blockPlural.length());
-                if (m.endsWith(" ") || m.endsWith("-"))
+                if (!m.isEmpty() && (m.charAt(m.length() - 1) == ' ' || m.charAt(m.length() - 1) == '-'))
                     m = m.substring(0, m.length() - 1);
                 final ItemType si = aliases.get(m);
                 if (si != null)
@@ -470,7 +479,7 @@ public final class Aliases {
      * @return how many ids are missing an alias, including the 'any id' (-1)
      */
     @SuppressWarnings("null")
-    static final int addMissingMaterialNames() {
+    private static final int addMissingMaterialNames() {
         final HashMap<Integer, MaterialName> materialNames = getMaterialNames();
         int r = 0;
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
@@ -844,7 +853,7 @@ public final class Aliases {
                                 assert false;
                                 continue;
                             }
-                            if (!(key.startsWith("{") && key.endsWith("}"))) {
+                            if (!(!key.isEmpty() && key.charAt(0) == '{' && key.charAt(key.length() - 1) == '}')) {
                                 Skript.error(m_unexpected_non_variation_section.toString());
                                 continue;
                             }
@@ -889,7 +898,7 @@ public final class Aliases {
 //            Skript.info("Loaded aliases in " + start.difference(new Date()));
     }
 
-    public static final boolean localizedAliases() {
+    private static final boolean localizedAliases() {
         final boolean isLocalized = !"english".equals(Language.getName());
 
         if (isLocalized)

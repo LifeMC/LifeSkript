@@ -88,7 +88,6 @@ public final class ExprIP extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         if (!isProperty) {
             final InetAddress address;

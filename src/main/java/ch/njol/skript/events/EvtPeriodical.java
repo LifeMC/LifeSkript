@@ -68,7 +68,7 @@ public final class EvtPeriodical extends SelfRegisteringSkriptEvent {
         return true;
     }
 
-    final void execute(@Nullable final World w) {
+    private final void execute(@Nullable final World w) {
         final Trigger t = this.t;
         if (t == null) {
             assert false;

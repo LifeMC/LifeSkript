@@ -31,11 +31,11 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
  * @author Peter Güttinger
  */
 @SuppressWarnings("null")
-public final class NodeTest {
+final class NodeTest {
 
     @SuppressWarnings("static-method")
     @Test
-    public void testSplitLine() {
+    void testSplitLine() {
 
         final String[][] data = {{"", "", ""}, {"ab", "ab", ""}, {"ab#", "ab", "#"}, {"ab##", "ab#", ""}, {"ab###", "ab#", "#"}, {"#ab", "", "#ab"}, {"ab#cd", "ab", "#cd"}, {"ab##cd", "ab#cd", ""}, {"ab###cd", "ab#", "#cd"}, {"######", "###", ""}, {"#######", "###", "#"}, {"#### # ####", "## ", "# ####"}, {"##### ####", "##", "# ####"}, {"#### #####", "## ##", "#"}, {"#########", "####", "#"}, {"a##b#c##d#e", "a#b", "#c##d#e"}, {" a ## b # c ## d # e ", " a # b ", "# c ## d # e "},
         };

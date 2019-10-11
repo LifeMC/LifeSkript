@@ -34,6 +34,7 @@ import ch.njol.skript.log.LogEntry;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -79,7 +80,7 @@ public final class EffAsyncExec extends AsyncEffect {
         } else {
             final StringBuilder errorBuilder = new StringBuilder(4096);
             for (final LogEntry entry : entryList) {
-                errorBuilder.append(entry.getLevel().getLocalizedName()).append(' ').append(SkriptLogger.format(entry)).append('\n');
+                errorBuilder.append(entry.getLevel().getLocalizedName()).append(' ').append(SkriptLogger.format(entry)).append(LineSeparators.UNIX);
             }
             EffExec.lastExecuteErrors = errorBuilder.toString();
         }

@@ -247,7 +247,6 @@ public final class DefaultFunctions {
 
         Functions.registerFunction(new JavaFunction<World>("world", new Parameter<?>[]{new Parameter<>("name", Classes.getExactClassInfo(String.class), true, null)}, Classes.getExactClassInfo(World.class), true) {
             @Override
-            @Nullable
             public World[] execute(final FunctionEvent<? extends World> e, final Object[][] params) {
                 final World w = Bukkit.getWorld((String) params[0][0]);
                 return w == null ? EmptyArrays.EMPTY_WORLD_ARRAY : new World[]{w};

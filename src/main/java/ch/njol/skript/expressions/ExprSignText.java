@@ -51,7 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Examples({"on rightclick on sign:", "	line 2 of the clicked block is \"[Heal]\":", "		heal the player", "	set line 3 to \"%player%\""})
 @Since("1.3")
 public final class ExprSignText extends SimpleExpression<String> {
-    static boolean hasUpdateBooleanBoolean = true;
+    private static boolean hasUpdateBooleanBoolean = true;
 
     static {
         Skript.registerExpression(ExprSignText.class, String.class, ExpressionType.PROPERTY, "[the] line %number% [of %block%]", "[the] (1¦1st|1¦first|2¦2nd|2¦second|3¦3rd|3¦third|4¦4th|4¦fourth) line [of %block%]");
@@ -84,7 +84,6 @@ public final class ExprSignText extends SimpleExpression<String> {
     }
 
     @Override
-    @Nullable
     protected String[] get(final Event e) {
         final Number l = line.getSingle(e);
         if (l == null)
@@ -159,7 +158,7 @@ public final class ExprSignText extends SimpleExpression<String> {
             if (hasUpdateBooleanBoolean) {
                 try {
                     s.update(false, false);
-                } catch (final NoSuchMethodError err) {
+                } catch (final NoSuchMethodError err) { // FIXME remove catch and make constant (Skript#methodExists)
                     hasUpdateBooleanBoolean = false;
                     s.update();
                 }
@@ -171,7 +170,7 @@ public final class ExprSignText extends SimpleExpression<String> {
 
     @Override
     public boolean setTime(final int time) {
-        return super.setTime(time, SignChangeEvent.class, block);
+        return setTime(time, SignChangeEvent.class, block);
     }
 
 }

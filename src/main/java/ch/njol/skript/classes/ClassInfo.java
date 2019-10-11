@@ -100,7 +100,7 @@ public class ClassInfo<T> implements Debuggable {
         name = new Noun("types." + codeName);
     }
 
-    public static final boolean isVaildCodeName(final String name) {
+    private static final boolean isVaildCodeName(final CharSequence name) {
         return VALID_CODENAME_MATCHER.reset(name).matches();
     }
 

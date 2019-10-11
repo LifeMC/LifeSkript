@@ -38,6 +38,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.PatternCache;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import ch.njol.util.Math2;
 import ch.njol.util.StringUtils;
 import org.bukkit.Bukkit;
@@ -169,10 +170,10 @@ public final class ExprLore extends SimpleExpression<String> {
                 case REMOVE_ALL:
                     assert delta != null;
                     if (SkriptConfig.caseSensitive.value()) {
-                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? StringUtils.join(lore, "\n").replaceFirst(Pattern.quote((String) delta[0]), "") : StringUtils.join(lore, "\n").replace((CharSequence) delta[0], "")).split("\n"));
+                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? StringUtils.join(lore, LineSeparators.UNIX_STR).replaceFirst(Pattern.quote((String) delta[0]), "") : StringUtils.join(lore, LineSeparators.UNIX_STR).replace((CharSequence) delta[0], "")).split(LineSeparators.UNIX_STR));
                     } else {
-                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, "\n"));
-                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll("")).split("\n"));
+                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, LineSeparators.UNIX_STR));
+                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll("")).split(LineSeparators.UNIX_STR));
                     }
                     break;
                 case RESET:

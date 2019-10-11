@@ -30,6 +30,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.*;
 import ch.njol.util.Kleenean;
+import ch.njol.util.LineSeparators;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -40,7 +41,7 @@ import java.util.List;
  */
 @Name("Continue")
 @Description("Skips the value currently being looped, moving on to the next value if it exists.")
-@Examples("loop all players:\n" + "\tif loop-value does not have permission \"moderator\":\n" + "\t\tcontinue # filter out non moderators\n" + "\tbroadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
+@Examples("loop all players:" + LineSeparators.UNIX + LineSeparators.TAB + "if loop-value does not have permission \"moderator\":" + LineSeparators.UNIX + LineSeparators.TAB + LineSeparators.TAB + "continue # filter out non moderators" + LineSeparators.UNIX + LineSeparators.TAB + "broadcast \"%loop-player% is a moderator!\" # only moderators get broadcast")
 @Since("2.2-Fixes-V10")
 public final class EffContinue extends Effect {
 

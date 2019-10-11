@@ -106,13 +106,13 @@ public abstract class Region implements YggdrasilExtendedSerializable {
         }));
     }
 
-    public abstract boolean contains(Location l);
+    public abstract boolean contains(final Location l);
 
-    public abstract boolean isMember(OfflinePlayer p);
+    public abstract boolean isMember(final OfflinePlayer p);
 
     public abstract Collection<OfflinePlayer> getMembers();
 
-    public abstract boolean isOwner(OfflinePlayer p);
+    public abstract boolean isOwner(final OfflinePlayer p);
 
     public abstract Collection<OfflinePlayer> getOwners();
 
@@ -124,7 +124,7 @@ public abstract class Region implements YggdrasilExtendedSerializable {
     public abstract RegionsPlugin<?> getPlugin();
 
     @Override
-    public abstract boolean equals(@Nullable Object o);
+    public abstract boolean equals(@Nullable final Object o);
 
     @Override
     public abstract int hashCode();

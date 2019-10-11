@@ -28,6 +28,8 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementInfo<E> {
 
@@ -35,6 +37,8 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
      * Use this as {@link #description(String...)} to prevent warnings about missing documentation.
      */
     public static final String[] NO_DOC = EmptyArrays.EMPTY_STRING_ARRAY;
+    private static final Matcher HTML = Pattern.compile("[#'\"<>/&]").matcher("");
+    private static final Matcher WHITESPACE = Pattern.compile("\\s+").matcher("");
     public final String name;
 
     private final String id;
@@ -80,7 +84,7 @@ public final class SkriptEventInfo<E extends SkriptEvent> extends SyntaxElementI
         }
 
         // uses the name without 'on ' or '*'
-        this.id = name.toLowerCase(Locale.ENGLISH).replaceAll("[#'\"<>/&]", "").replaceAll("\\s+", "_");
+        this.id = WHITESPACE.reset(HTML.reset(name.toLowerCase(Locale.ENGLISH)).replaceAll("")).replaceAll("_");
     }
 
     /**

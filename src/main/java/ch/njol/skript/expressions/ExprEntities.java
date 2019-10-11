@@ -63,17 +63,17 @@ public final class ExprEntities extends SimpleExpression<Entity> {
     // World#getNearbyEntities only available on 1.8 and above.
     public static final boolean getNearbyEntities = Skript.methodExists(World.class, "getNearbyEntities", Location.class, double.class, double.class, double.class);
     // We don't want to try the World#getNearbyEntities method everytime in case of a fail.
-    public static boolean hardFail;
+    private static boolean hardFail;
 
     static {
         Skript.registerExpression(ExprEntities.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[all] %*entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] entities of type[s] %entitydatas% [(in|of) [world[s]] %-worlds%]", "[all] %*entitydatas% (within|[with]in radius) %number% [(block[s]|met(er|re)[s])] (of|around) %location%", "[all] entities of type[s] %entitydatas% in radius %number% (of|around) %location%");
     }
 
     @SuppressWarnings("null")
-    Expression<? extends EntityData<?>> types;
+    private Expression<? extends EntityData<?>> types;
     @Nullable
-    Expression<World> worlds;
-    Class<? extends Entity> returnType = Entity.class;
+    private Expression<World> worlds;
+    private Class<? extends Entity> returnType = Entity.class;
     @Nullable
     private Expression<Number> radius;
     @Nullable
@@ -165,7 +165,6 @@ public final class ExprEntities extends SimpleExpression<Entity> {
     }
 
     @Override
-    @Nullable
     protected Entity[] get(final Event e) {
         if (matchedPattern >= 2) {
             final Iterator<? extends Entity> iter = iterator(e);
