@@ -98,6 +98,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Filter;
@@ -271,6 +272,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     private static ThreadGroup rootThreadGroup;
     @Nullable
     private static Runnable optimizeNetty;
+    @Nullable
+    public static Class<?> currentlyConstructing;
 
     static {
         // Default Handler
@@ -1008,7 +1011,96 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     public static final <T> T newInstance(@Nullable final Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if (clazz == null)
             return null;
-        return getConstructor(clazz).newInstance();
+        currentlyConstructing = clazz;
+        try {
+            return newInstance(clazz, true);
+        } finally {
+            currentlyConstructing = null;
+        }
+    }
+
+    private static final Map<Class<?>, InstanceSupplier<?>> instanceSupplierMap = new HashMap<>(100);
+
+    public static final <T> void registerInstanceSupplier(final Class<T> clazz,
+                                               final InstanceSupplier<T> instanceSupplier) {
+        instanceSupplierMap.put(clazz, instanceSupplier);
+    }
+
+    /**
+     * Creates a new instance of the given class using its cached
+     * public nullary constructor.
+     *
+     * @param clazz The class to create new instance of it.
+     * @param <T> The type that represents the class.
+     *
+     * @return A new instance of the given class and type.
+     *
+     * @throws InvocationTargetException If any error occurs during the constructor invocation.
+     * @throws NoSuchMethodException If class does not have a public nullary constructor.
+     * @throws InstantiationException If the class instantiation fails with an exception.
+     * @throws IllegalAccessException If the nullary constructor is not accessible (i.e private) or security manager is present.
+     */
+    @SuppressWarnings("null")
+    public static final <T> T newInstance(@Nullable final Class<T> clazz,
+                                          final boolean useSupplierMap) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (clazz == null)
+            return null;
+        if (useSupplierMap) {
+            final InstanceSupplier<T> instanceSupplier = (InstanceSupplier<T>) instanceSupplierMap.get(clazz);
+            if (instanceSupplier != null)
+                return getInstance(instanceSupplier);
+        }
+        return getInstance(() -> getConstructor(clazz).newInstance());
+    }
+
+    @FunctionalInterface
+    public interface InstanceSupplier<T> extends Supplier<T> {
+
+        /**
+         * Gets an instance of the specified type.
+         *
+         * @return An instance of the specified type.
+         */
+        T newInstance() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+
+        @Override
+        default T get() {
+            try {
+                return newInstance();
+            } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                throw Skript.sneakyThrow(e);
+            }
+        }
+
+    }
+
+    /**
+     * Gets an instance of the given type using the given
+     * {@link InstanceSupplier}.
+     *
+     * @param instanceSupplier The supplier to use when getting instances.
+     * @param <T> The type to get instances of it using the given supplier.
+     *
+     * @return An instance of the given type get with the given
+     * {@link InstanceSupplier}.
+     */
+    @SuppressWarnings("null")
+    public static final <T> T getInstance(@Nullable final InstanceSupplier<T> instanceSupplier) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if (instanceSupplier == null)
+            return null;
+        return instanceSupplier.newInstance();
+    }
+
+    /**
+     * Sets the given {@link AccessibleObject} accessible. Catches
+     * security exceptions and handles {@link PrivilegedAction}s.
+     *
+     * @param accessibleObject The {@link AccessibleObject} to set accessible.
+     * @return The passed {@link AccessibleObject} that will now be accessible.
+     */
+    @SuppressWarnings("null")
+    public static final <T extends AccessibleObject> T setAccessible(@Nullable final T accessibleObject) {
+        return setAccessible(accessibleObject, true);
     }
 
     /**
@@ -1016,6 +1108,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * security exceptions and handles {@link PrivilegedAction}s.
      * 
      * @param accessibleObject The {@link AccessibleObject} to set accessible status of.
+     * @param flag The accessible status to set for the given {@link AccessibleObject}.
      * @return The passed {@link AccessibleObject} that will now hold the new accessible status.
      */
     @SuppressWarnings("null")
@@ -1313,6 +1406,19 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @throws IllegalArgumentException if returnType is not a normal class
      */
     public static final <E extends Expression<T>, T> void registerExpression(final Class<E> expression, final Class<T> returnType, final ExpressionType type, final String... patterns) throws IllegalArgumentException {
+        registerExpression(expression, returnType, type, null, patterns);
+    }
+
+    /**
+     * Registers an {@link Expression}.
+     *
+     * @param expression The expression's class
+     * @param returnType The superclass of all values returned by the expression
+     * @param type       The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
+     * @param patterns   Skript patterns that match this expression
+     * @throws IllegalArgumentException if returnType is not a normal class
+     */
+    public static final <E extends Expression<T>, T> void registerExpression(final Class<E> expression, final Class<T> returnType, final ExpressionType type, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         //if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
             //throw new IllegalArgumentException("returnType must be a normal type");
@@ -1331,6 +1437,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
             expressionTypesStartIndices[i]++;
         }
         expressions.add(expressionTypesStartIndices[type.ordinal()], info);
+        if (instanceSupplier != null)
+            registerInstanceSupplier(expression, instanceSupplier);
     }
 
     // ================ EVENTS ================
@@ -1575,7 +1683,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
         return exception(cause, null, item, info);
     }
 
-    private static final class StackedException extends Throwable {
+    private static final class StackedException extends RuntimeException {
         private static final long serialVersionUID = 5931142792396172230L;
 
         StackedException() {
@@ -1931,6 +2039,8 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     @SuppressWarnings("unchecked")
     private static final <T extends Throwable> T sneakyThrow0(final Throwable tw) throws T {
+        if (Skript.testing() || Skript.logHigh())
+            throw Skript.exception(tw);
         throw (T) tw;
     }
 
@@ -2215,7 +2325,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
 
                             if (resp != null) { // The error is already printed if we're on debug verbosity
-                                for (final String line : resp.split("\n")) {
+                                for (final String line : resp.split(LineSeparators.UNIX_STR)) {
                                     if (line.startsWith("version: ")) {
                                         sharpSkversion = line.replace("version: ", "").trim();
                                     }
@@ -2417,10 +2527,10 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                     String line;
 
                                     while ((line = br.readLine()) != null) {
-                                        builder.append(line).append('\n');
+                                        builder.append(line).append(LineSeparators.UNIX);
                                     }
 
-                                    contents = builder.toString().replace("\n\n", "\n");
+                                    contents = builder.toString().replace(LineSeparators.UNIX_STR + LineSeparators.UNIX, LineSeparators.UNIX_STR);
                                 } catch (final SecurityException ignored) {
                                     continue outer;
                                 }
@@ -2828,7 +2938,9 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 aliasesStart = new Date();
 
             Language.setUseLocal(true);
-            Aliases.load();
+            {
+                Aliases.load();
+            }
             Commands.registerListeners();
 
             Date aliasesEnd = null;
@@ -2861,7 +2973,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                                 if (cl.contains("VaultHook") && Bukkit.getPluginManager().getPlugin("Vault") == null)
                                     continue;
                                 try {
-                                    final Class<?> hook = Class.forName(cl, true, getBukkitClassLoader());
+                                    final Class<?> hook = Class.forName(cl);
                                     if (hook != null && Hook.class.isAssignableFrom(hook) && !hook.isInterface() && Hook.class != hook) {
                                         final Constructor<?> constructor = hook.getDeclaredConstructor();
 
@@ -3159,9 +3271,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                 });
             }
 
-            Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new Listener() {
-                /* empty */
-            }, EventPriority.MONITOR, (listener, event) -> {
+            Bukkit.getPluginManager().registerEvent(PlayerJoinEvent.class, new EmptyJoinListener(), EventPriority.MONITOR, (listener, event) -> {
                 if (event instanceof PlayerJoinEvent) {
                     final PlayerJoinEvent e = (PlayerJoinEvent) event;
 
@@ -3511,6 +3621,16 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     private static final class EmptyListener implements Listener {
         EmptyListener() {
+            /* implicit super call */
+        }
+    }
+
+    /**
+     * Separate listener than {@link EmptyListener} for not registering
+     * all events in one listener, which is bad
+     */
+    private static final class EmptyJoinListener implements Listener {
+        EmptyJoinListener() {
             /* implicit super call */
         }
     }
