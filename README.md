@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/badge/license-gpl%203.0-brightgreen.svg)](https://opensource.org/licenses/GPL-3.0)
 [![Build Status](https://travis-ci.org/LifeMC/LifeSkript.svg?branch=master)](https://travis-ci.org/LifeMC/LifeSkript)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/42c5db206def479d8b31f8430203034f)](https://app.codacy.com/app/TheDGOfficial/LifeSkript?utm_source=github.com&utm_medium=referral&utm_content=LifeMC/LifeSkript&utm_campaign=Badge_Grade_Dashboard)
-[![Known Vulnerabilities](https://snyk.io/test/github/LifeMC/LifeSkript/badge.svg)](https://snyk.io/test/github/LifeMC/LifeSkript)
+[![Known Vulnerabilities](https://snyk.io//test/github/LifeMC/LifeSkript/badge.svg?targetFile=pom.xml)](https://snyk.io//test/github/LifeMC/LifeSkript?targetFile=pom.xml)
 
 LifeSkript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify servers without learning Java.<br />
 It can also be useful if you know Java; some tasks are quicker to do with Skript, and so it can be used for prototyping etc.
