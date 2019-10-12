@@ -1415,6 +1415,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param expression The expression's class
      * @param returnType The superclass of all values returned by the expression
      * @param type       The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
+     * @param instanceSupplier The instance supplier, can be constructor reference (e.g ExprEntity::new)
      * @param patterns   Skript patterns that match this expression
      * @throws IllegalArgumentException if returnType is not a normal class
      */
@@ -2039,7 +2040,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     @SuppressWarnings("unchecked")
     private static final <T extends Throwable> T sneakyThrow0(final Throwable tw) throws T {
-        if (Skript.testing() || Skript.logHigh())
+        if (Skript.isBukkitRunning() && (Skript.testing() || Skript.logHigh()))
             throw Skript.exception(tw);
         throw (T) tw;
     }

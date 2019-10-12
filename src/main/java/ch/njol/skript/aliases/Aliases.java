@@ -96,7 +96,7 @@ public final class Aliases {
     private static final RegexMessage p_of_every = new RegexMessage("aliases.of every", "(\\d+) ", " (.+)", Pattern.CASE_INSENSITIVE);
     private static final RegexMessage p_of = new RegexMessage("aliases.of", "(\\d+) (?:", " )?(.+)", Pattern.CASE_INSENSITIVE);
     private static final Matcher UNDERSCORE_PATTERN_MATCHER = Pattern.compile("_", Pattern.LITERAL).matcher("");
-    private static final Matcher DOUBLE_SPACE = Pattern.compile(" {2}", Pattern.LITERAL).matcher("");
+    private static final Matcher DOUBLE_SPACE = Pattern.compile(" {2}").matcher("");
     private static final Matcher WHITESPACE = Pattern.compile("\\s+").matcher("");
     private static String itemSingular = "item";
     private static String itemPlural = "items";
