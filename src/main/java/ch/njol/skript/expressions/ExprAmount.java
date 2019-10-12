@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class ExprAmount extends SimpleExpression<Integer> {
     static {
-        Skript.registerExpression(ExprAmount.class, Integer.class, ExpressionType.PROPERTY, "(amount|number|size) of %objects%");
+        Skript.registerExpression(ExprAmount.class, Integer.class, ExpressionType.PROPERTY, ExprAmount::new, "(amount|number|size) of %objects%");
     }
 
     @SuppressWarnings("null")

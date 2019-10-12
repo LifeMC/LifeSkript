@@ -61,7 +61,7 @@ import java.util.regex.MatchResult;
 @Since("1.0")
 public final class ExprArgument extends SimpleExpression<Object> {
     static {
-        Skript.registerExpression(ExprArgument.class, Object.class, ExpressionType.SIMPLE, "[the] last arg[ument][s]", "[the] arg[ument][s](-| )<(\\d+)>", "[the] <(\\d*1)st|(\\d*2)nd|(\\d*3)rd|(\\d*[4-90])th> arg[ument][s]", "[the] arg[ument][s]", "[the] %*classinfo%( |-)arg[ument][( |-)<\\d+>]", "[the] arg[ument]( |-)%*classinfo%[( |-)<\\d+>]");
+        Skript.registerExpression(ExprArgument.class, Object.class, ExpressionType.SIMPLE, ExprArgument::new, "[the] last arg[ument][s]", "[the] arg[ument][s](-| )<(\\d+)>", "[the] <(\\d*1)st|(\\d*2)nd|(\\d*3)rd|(\\d*[4-90])th> arg[ument][s]", "[the] arg[ument][s]", "[the] %*classinfo%( |-)arg[ument][( |-)<\\d+>]", "[the] arg[ument]( |-)%*classinfo%[( |-)<\\d+>]");
     }
 
     @SuppressWarnings("null")

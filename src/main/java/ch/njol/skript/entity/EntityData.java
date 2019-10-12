@@ -342,11 +342,11 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
      * @param e An actual entity, or null to get an entity data for an entity class
      * @return Whatever initialisation was successful
      */
-    protected abstract boolean init(@Nullable Class<? extends E> c, @Nullable E e);
+    protected abstract boolean init(@Nullable final Class<? extends E> c, @Nullable final E e);
 
-    public abstract void set(E entity);
+    public abstract void set(final E entity);
 
-    protected abstract boolean match(E entity);
+    protected abstract boolean match(final E entity);
 
     public abstract Class<? extends E> getType();
 
@@ -400,7 +400,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return result;
     }
 
-    protected abstract boolean equals_i(EntityData<?> obj);
+    protected abstract boolean equals_i(final EntityData<?> obj);
 
     @Override
     public final boolean equals(@Nullable final Object obj) {
@@ -470,7 +470,7 @@ public abstract class EntityData<E extends Entity> implements SyntaxElement, Ygg
         return getType().isInstance(e) && match((E) e);
     }
 
-    public abstract boolean isSupertypeOf(EntityData<?> e);
+    public abstract boolean isSupertypeOf(final EntityData<?> e);
 
     @Override
     public Fields serialize() throws NotSerializableException {

@@ -53,7 +53,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class ExprEntity extends SimpleExpression<Entity> {
     static {
-        Skript.registerExpression(ExprEntity.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "[the] [event-]<.+>");
+        Skript.registerExpression(ExprEntity.class, Entity.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, ExprEntity::new, "[the] [event-]<.+>");
     }
 
     @SuppressWarnings("null")
