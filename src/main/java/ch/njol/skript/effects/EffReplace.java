@@ -58,7 +58,7 @@ import java.util.regex.Matcher;
 @Since("2.0, 2.2.16 (replace in muliple strings and replace items in inventory)")
 public final class EffReplace extends Effect {
     static {
-        Skript.registerEffect(EffReplace.class,
+        Skript.registerEffect(EffReplace.class, EffReplace::new,
                 "replace (all|every|) %strings% in %strings% with %string%",
                 "replace (all|every|) %strings% with %string% in %strings%",
                 "replace (all|every|) %itemstacks% in %inventories% with %itemstack%",

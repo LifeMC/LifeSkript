@@ -1359,12 +1359,24 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param patterns  Skript patterns to match this condition
      */
     public static final <E extends Condition> void registerCondition(final Class<E> condition, final String... patterns) throws IllegalArgumentException {
+        registerCondition(condition, null, patterns);
+    }
+
+    /**
+     * Registers a {@link Condition}.
+     *
+     * @param condition The condition's class
+     * @param patterns  Skript patterns to match this condition
+     */
+    public static final <E extends Condition> void registerCondition(final Class<E> condition, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
             checkDuplicatePatterns(condition, "condition", patterns);
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, condition);
         conditions.add(info);
         statements.add(info);
+        if (instanceSupplier != null)
+            registerInstanceSupplier(condition, instanceSupplier);
     }
 
     // ================ EXPRESSIONS ================
@@ -1376,12 +1388,24 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * @param patterns Skript patterns to match this effect
      */
     public static final <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
+        registerEffect(effect, null, patterns);
+    }
+
+    /**
+     * Registers an {@link Effect}.
+     *
+     * @param effect   The effect's class
+     * @param patterns Skript patterns to match this effect
+     */
+    public static final <E extends Effect> void registerEffect(final Class<E> effect, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
             checkDuplicatePatterns(effect, "effect", patterns);
         final SyntaxElementInfo<E> info = new SyntaxElementInfo<>(patterns, effect);
         effects.add(info);
         statements.add(info);
+        if (instanceSupplier != null)
+            registerInstanceSupplier(effect, instanceSupplier);
     }
 
     public static final Collection<SyntaxElementInfo<? extends Statement>> getStatements() {

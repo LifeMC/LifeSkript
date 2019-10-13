@@ -53,7 +53,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class ExprMessage extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprMessage.class, String.class, ExpressionType.SIMPLE, MessageType.patterns);
+        Skript.registerExpression(ExprMessage.class, String.class, ExpressionType.SIMPLE, ExprMessage::new, MessageType.patterns);
     }
 
     @SuppressWarnings("null")
