@@ -150,7 +150,7 @@ public final class SkriptAddon {
                         } catch (final NoClassDefFoundError ncdfe) {
                             // not supported or not available on this version, skip it.
                             if (Skript.logHigh()) {
-                                if (!plugin.equals(Skript.getInstance())) { // if it is not a Skript class (e.g from an addon)
+                                if (!(plugin instanceof Skript)) { // if it is not a Skript class (e.g from an addon)
                                     Skript.exception(ncdfe, "Cannot load class " + c + " from " + this);
                                 } else {
                                     // Probably Skript is running ona unsupported or half supported server version,
@@ -165,7 +165,7 @@ public final class SkriptAddon {
                             Skript.exception(err.getCause(), this + "'s class " + c + " generated an exception while loading");
                             unloadableClasses.getAndIncrement();
                         } catch (final LinkageError le) {
-                            if (Skript.testing() || Skript.debug()) {
+                            if (plugin instanceof Skript || Skript.testing() || Skript.debug()) {
                                 Skript.exception(le, "Cannot load class " + c + " from " + this);
                             }
                             unloadableClasses.getAndIncrement();
@@ -178,6 +178,9 @@ public final class SkriptAddon {
                 }
             }
         }
+        final int unloadableClassCount = unloadableClasses.get();
+        if (!(plugin instanceof Skript) && unloadableClassCount >  0 && !Skript.testing() && !Skript.debug())
+            Skript.warning(name + ": Skipping " + unloadableClassCount + " unloadable classes, use debug verbosity for more details");
         return this;
     }
 
