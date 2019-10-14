@@ -52,6 +52,7 @@ import com.google.common.primitives.Booleans;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.regex.MatchResult;
@@ -68,6 +69,7 @@ import java.util.stream.Stream;
  * @author Peter Güttinger
  * @see ScriptLoader
  */
+@NotThreadSafe
 public final class SkriptParser {
 
     public static final int PARSE_EXPRESSIONS = 1;

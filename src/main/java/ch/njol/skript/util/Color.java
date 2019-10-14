@@ -56,9 +56,8 @@ public enum Color implements YggdrasilSerializable {
     private static final Map<String, Color> byEnglishName = new HashMap<>();
     private static final String LANGUAGE_NODE = "colors";
     private static final Color[] byWool = new Color[16];
-    public static boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
-    // We don't want an infinite method loop, java has a StackOverflowException, but just guarantee it.
-    public static int infiniNumTrack;
+    private static final boolean silver = Skript.fieldExists(DyeColor.class, "SILVER");
+    public static final boolean getWoolData = Skript.methodExists(DyeColor.class, "getWoolData");
 
     static {
         for (final Color c : values()) {
@@ -96,11 +95,9 @@ public enum Color implements YggdrasilSerializable {
     }
 
     private static final DyeColor getSilver() {
-        try {
+        if (silver)
             return DyeColor.SILVER;
-        } catch (final NoSuchFieldError e) {
-            return DyeColor.valueOf("GRAY");
-        }
+        return DyeColor.valueOf("GRAY");
     }
 
     @Nullable
@@ -139,19 +136,10 @@ public enum Color implements YggdrasilSerializable {
      * @return The data of the given color.
      */
     public static final byte getData(final DyeColor color) {
-        try {
-            if (getWoolData) {
-                return color.getWoolData();
-            }
-            return color.getData();
-        } catch (final NoSuchMethodError e) {
-            getWoolData = !getWoolData;
-            if (infiniNumTrack > 2) {
-                throw new IllegalStateException("Unable to find required methods. Please report this error.");
-            }
-            infiniNumTrack++;
-            return getData(color);
+        if (getWoolData) {
+            return color.getWoolData();
         }
+        return color.getData();
     }
 
     public byte getDye() {
