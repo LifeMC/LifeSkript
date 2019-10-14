@@ -101,7 +101,9 @@ public final class Commands {
             argumentPattern = Pattern.compile("<\\s*(?:(.+?)\\s*:\\s*)?(.+?)\\s*(?:=\\s*(" + SkriptParser.wildcard + "))?\\s*>");
     private static final Matcher commandPatternMatcher = commandPattern.matcher(""),
             argumentPatternMatcher = argumentPattern.matcher("");
-    private static final Matcher STRING_QUOTE = Pattern.compile("\"", Pattern.LITERAL).matcher("");
+    private static final Matcher STRING_QUOTE = Pattern.compile("\"", Pattern.LITERAL).matcher(""),
+            CONDITION = Pattern.compile("condition", Pattern.LITERAL).matcher(""),
+            EXPRESSION = Pattern.compile("expression", Pattern.LITERAL).matcher("");
     @Nullable
     public static List<Argument<?>> currentArguments;
     private static boolean suppressUnknownCommandMessage;
@@ -311,7 +313,7 @@ public final class Commands {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "null"})
     public static final boolean handleEffectCommand(final CommandSender sender, String command) {
         if (!(sender instanceof ConsoleCommandSender || sender.hasPermission("skript.effectcommands") || SkriptConfig.allowOpsToUseEffectCommands.value() && sender.isOp()))
             return false;
@@ -326,10 +328,15 @@ public final class Commands {
             try {
                 ScriptLoader.setCurrentEvent("effect command", EffectCommandEvent.class);
                 Effect e = Effect.parse(command, null);
-                if (e == null) {
-                    // Send return value of the expression or condition
+                if (e == null && (log.getFirstError() == null || log.getFirstError().getMessage().contains("Can't understand"))) {
+                    // Send return value of the expression
                     log.clear(); // Clear the first error
-                    e = Effect.parse("send \"%" + command.replace("\"", "\"\"") + "%\" to me", null);
+                    e = Effect.parse("send \"%" + STRING_QUOTE.reset(command).replaceAll(Matcher.quoteReplacement("\"\"")) + "%\" to me", null);
+                    if (e == null && (log.getFirstError() == null || log.getFirstError().getMessage().contains("Can't understand"))) {
+                        // Send return value of the condition
+                        log.clear(); // Clear the first error
+                        e = Effect.parse("send \"%result of condition " + STRING_QUOTE.reset(command).replaceAll(Matcher.quoteReplacement("\"\"")) + "%\" to me", null);
+                    }
                 }
                 ScriptLoader.deleteCurrentEvent();
 
@@ -343,15 +350,21 @@ public final class Commands {
                     TriggerItem.walk(e, new EffectCommandEvent(!Bukkit.isPrimaryThread(), sender, command));
                 } else {
                     if (sender == Bukkit.getConsoleSender()) // log as SEVERE instead of INFO like printErrors below
-                        error("Error in: " + ChatColor.stripColor(command));
+                        SkriptLogger.LOGGER.severe("Error in: " + ChatColor.stripColor(command));
                     else
-                        info(sender, ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
-                    if (log.getFirstError("").message.contains("Can't understand this expression"))
-                        log.clear();
-                    for (final LogEntry error : log.getErrors()) {
-                        if (error.getMessage().trim().isEmpty())
-                            continue;
-                        error.setMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(error.getMessage()));
+                        sender.sendMessage(ChatColor.RED + "Error in: " + ChatColor.GRAY + ChatColor.stripColor(command));
+                    final Collection<LogEntry> errors = log.getErrors();
+                    if (!errors.isEmpty()) {
+                        for (final LogEntry error : errors) {
+                            String message = error.getMessage();
+                            if (message.trim().isEmpty())
+                                continue;
+                            if (message.startsWith("Can't understand this expression: "))
+                                message = EXPRESSION.reset(message).replaceAll(Matcher.quoteReplacement("effect, expression or condition"));
+                            else if (message.startsWith("Can't understand this condition: "))
+                                message = CONDITION.reset(message).replaceAll(Matcher.quoteReplacement("effect, expression or condition"));
+                            error.setMessage((sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles(message));
+                        }
                     }
                     log.printErrors(sender, (sender instanceof ConsoleCommandSender ? SKRIPT_PREFIX_CONSOLE : SKRIPT_PREFIX) + Utils.replaceEnglishChatStyles("(No specific information is available)"));
                 }

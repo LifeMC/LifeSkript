@@ -26,19 +26,26 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.lang.SkriptParser;
 
 /**
- * A utility class for options controlled by the JVM arguments.
+ * A utility class for options controlled by the JVM arguments.<br /><br />
  *
  * Supports default values, minimum maximum ranges and gives warnings
- * when an invalid input is found instead of just silently returning the default value.
+ * when an invalid input is found instead of just silently returning the default value.<br /><br />
  *
  * This prevents typos, etc. This the main reason we don't use direct
- * methods like {@link Integer#getInteger(String, int)}, the another reason is that
- * method returns a boxed Integer, which is not a primitive.
+ * methods like {@link Integer#getInteger(String, int)}.<br /><br />
+ *
+ * The another reason is that method returns a boxed Integer, which is not a primitive.
  */
 public final class PropertyManager {
 
     private PropertyManager() {
         throw new UnsupportedOperationException("Static class");
+    }
+
+    private static final void invalidProperty(final String propertyName,
+                                              final String propertyValue,
+                                              final int defaultValue) {
+        invalidProperty(propertyName, propertyValue, Integer.toString(defaultValue));
     }
 
     /**
@@ -61,13 +68,12 @@ public final class PropertyManager {
                                            final boolean defaultValue) {
         final String propertyValue = System.getProperty(propertyName);
         if (propertyValue != null) {
-            final Runnable invalidPropertyValue = () -> invalidProperty(propertyName, propertyValue, Boolean.toString(defaultValue));
             final boolean isTrue = "true".equalsIgnoreCase(propertyValue);
 
             if (isTrue || "false".equalsIgnoreCase(propertyValue))
                 return isTrue;
 
-            invalidPropertyValue.run();
+            invalidProperty(propertyName, propertyValue, Boolean.toString(defaultValue));
         }
         return defaultValue;
     }
@@ -89,14 +95,13 @@ public final class PropertyManager {
                                    final int maximumValue) {
         final String propertyValue = System.getProperty(propertyName);
         if (propertyValue != null) {
-            final Runnable invalidPropertyValue = () -> invalidProperty(propertyName, propertyValue, Integer.toString(defaultValue));
             if (SkriptParser.isInteger(propertyValue)) {
                 final int value;
 
                 try {
                     value = Integer.parseInt(propertyValue);
                 } catch (final NumberFormatException e) {
-                    invalidPropertyValue.run();
+                    invalidProperty(propertyName, propertyValue, defaultValue);
                     return defaultValue;
                 }
 
@@ -112,7 +117,7 @@ public final class PropertyManager {
 
                 return value;
             }
-            invalidPropertyValue.run();
+            invalidProperty(propertyName, propertyValue, defaultValue);
         }
         return defaultValue;
     }
