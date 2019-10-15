@@ -141,8 +141,8 @@ public final class ExprNumbers extends SimpleExpression<Number> {
             this.integer = integer;
             this.isInLoop = isInLoop;
 
-            this.max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
-            this.i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
+            max = integer ? Math.floor(f.doubleValue()) : f.doubleValue();
+            i = integer ? Math.ceil(s.doubleValue()) : s.doubleValue();
         }
 
         @Override

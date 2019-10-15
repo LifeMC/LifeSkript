@@ -342,7 +342,7 @@ public final class JavaClasses {
 
         // FIXME Implement SkriptParser#isByte and SkriptParser#isFloat to improve the performance without disabling the parsers
         if (!DISABLE_BYTE_SHORT_FLOAT) {
-            Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1f, true)).parser(new Parser<Float>() {
+            Classes.registerClass(new ClassInfo<>(Float.class, "float").name(ClassInfo.NO_DOC).defaultExpression(new SimpleLiteral<>(1F, true)).parser(new Parser<Float>() {
                 @Override
                 @Nullable
                 public Float parse(final String s, final ParseContext context) {
@@ -455,7 +455,7 @@ public final class JavaClasses {
                     return Boolean.TRUE;
                 if ("false".equals(s))
                     return Boolean.FALSE;
-                assert false;
+                assert false : s;
                 return null;
             }
 

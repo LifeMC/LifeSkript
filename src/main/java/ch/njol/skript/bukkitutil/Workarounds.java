@@ -172,6 +172,9 @@ public final class Workarounds {
         setProperty("sun.stderr.encoding", "UTF-8");
         setProperty("sun.stdout.encoding", "UTF-8");
 
+        // jAnsi Fix
+        setProperty("library.jansi.version", "Skript");
+
         // Http Agent Fix
         setProperty("http.agent", WebUtils.USER_AGENT);
 

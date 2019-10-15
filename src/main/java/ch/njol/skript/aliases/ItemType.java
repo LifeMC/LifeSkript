@@ -574,7 +574,7 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
                           @Nullable final Object meta,
                           @Nullable final Map<Enchantment, Integer> enchantments,
                           final int amount) {
-            this.iter = types.iterator();
+            iter = types.iterator();
             this.meta = meta;
 
             this.enchantments = enchantments;

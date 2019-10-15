@@ -38,6 +38,7 @@ import ch.njol.skript.lang.Variable;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.log.ErrorQuality;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.EmptyArrays;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
@@ -116,7 +117,7 @@ public final class ExprDifference extends SimpleExpression<Object> {
     protected Object[] get(final Event e) {
         final Object f = first.getSingle(e), s = second.getSingle(e);
         if (f == null || s == null)
-            return null;
+            return EmptyArrays.EMPTY_OBJECT_ARRAY;
         final Object[] one = (Object[]) Array.newInstance(relativeType, 1);
         one[0] = math.difference(f, s);
         return one;

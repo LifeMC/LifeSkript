@@ -255,8 +255,8 @@ public final class ExprEntities extends SimpleExpression<Entity> {
                        final Event e,
                        final Expression<? extends EntityData<?>> types) {
             this.returnType = returnType;
-            this.ws = worlds == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
-            this.ts = types.getAll(e);
+            ws = worlds == null ? Bukkit.getWorlds().toArray(EmptyArrays.EMPTY_WORLD_ARRAY) : worlds.getArray(e);
+            ts = types.getAll(e);
         }
 
         @Override

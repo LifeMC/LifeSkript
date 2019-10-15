@@ -308,11 +308,11 @@ public final class Math2 {
      * This method is more exact and faster than {@link Math#round(float)} of Java 7 and older.
      */
     public static final long round(final float f) {
-        if (f == 0x1.fffffep-2f) // greatest float value less than 0.5
+        if (f == 0x1.fffffep-2F) // greatest float value less than 0.5
             return 0;
         if (Math.getExponent(f) >= 23)
             return (long) f;
-        return floor(f + 0.5f);
+        return floor(f + 0.5F);
     }
 
     public static final int floorI(final float f) {
@@ -339,11 +339,11 @@ public final class Math2 {
      * This method is more exact and faster than {@link Math#round(float)} of Java 7 and older.
      */
     public static final int roundI(final float f) {
-        if (f == 0x1.fffffep-2f) // greatest float value less than 0.5
+        if (f == 0x1.fffffep-2F) // greatest float value less than 0.5
             return 0;
         if (Math.getExponent(f) >= 23)
             return (int) f;
-        return floorI(f + 0.5f);
+        return floorI(f + 0.5F);
     }
 
     /**

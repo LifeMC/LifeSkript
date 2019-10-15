@@ -551,7 +551,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     @Nullable
     public static final String getLatestVersion(@Nullable final Consumer<Throwable> handler,
                                                 final boolean checkThread) {
-        if (checkThread && classExists("org.bukkit.Bukkit") && Bukkit.isPrimaryThread())
+        if (checkThread && Skript.isBukkitRunning() && Bukkit.isPrimaryThread())
             throw new SkriptAPIException("This method must be called asynchronously!");
         try {
             return WebUtils.getResponse(UPDATE_CHECK_URL);
@@ -686,7 +686,7 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
      * via reflection but method object is cached, so performance impact is minimal.
      *
      * @param qualifiedName The full qualified binary name of the class.
-     *                      Binary means you have to use $ for sub classes, etc.
+     *                      Binary means you have to use $ for nested classes, etc.
      * @return True if the given class is currently loaded, false if not loaded.
      */
     public static final boolean isClassLoaded(final String qualifiedName) {

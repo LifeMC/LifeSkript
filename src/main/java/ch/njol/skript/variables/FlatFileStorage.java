@@ -92,7 +92,7 @@ public final class FlatFileStorage extends VariablesStorage {
         super(name);
     }
 
-    static final String encode(final byte[] data) {
+    private static final String encode(final byte[] data) {
         final char[] r = new char[data.length << 1];
         for (int i = 0; i < data.length; i++) {
             r[2 * i] = Character.toUpperCase(Character.forDigit((data[i] & 0xF0) >>> 4, 16));
@@ -131,7 +131,7 @@ public final class FlatFileStorage extends VariablesStorage {
 
     private static final void writeCSV(final PrintWriter pw, final String... values) {
         assert values.length == 3; // name, type, value
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.length; ++i) {
             if (i != 0)
                 pw.print(", ");
             String v = values[i];
@@ -346,7 +346,7 @@ public final class FlatFileStorage extends VariablesStorage {
      * @param finalSave whatever this is the last save in this session or not.
      */
     @SuppressWarnings({"null", "unused"})
-    public final void saveVariables(final boolean finalSave) {
+    final void saveVariables(final boolean finalSave) {
         if (finalSave) {
             final Task st = saveTask;
             if (st != null)

@@ -438,8 +438,16 @@ public final class CollectionUtils {
 
     public static final Double[] wrap(final double... primitive) {
         final Double[] wrapped = new Double[primitive.length];
-        for (int i = 0; i < primitive.length; i++) {
-            wrapped[i] = primitive[i];
+        for (int i = 0; i < primitive.length; ++i) {
+            wrapped[i] = primitive[i]; // Auto boxing
+        }
+        return wrapped;
+    }
+
+    public static final Byte[] wrap(final byte[] primitive) {
+        final Byte[] wrapped = new Byte[primitive.length];
+        for (int i = 0; i < primitive.length; ++i) {
+            wrapped[i] = primitive[i]; // Auto boxing
         }
         return wrapped;
     }

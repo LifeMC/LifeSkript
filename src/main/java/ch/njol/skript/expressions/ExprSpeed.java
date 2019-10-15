@@ -95,7 +95,7 @@ public final class ExprSpeed extends SimplePropertyExpression<Player, Float> {
                     break;
                 //$CASES-OMITTED$
                 default:
-                    newSpeed = walk ? 0.2f : 0.1f;
+                    newSpeed = walk ? 0.2F : 0.1F;
                     break;
             }
 

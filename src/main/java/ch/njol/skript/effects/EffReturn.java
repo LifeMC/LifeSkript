@@ -104,7 +104,7 @@ public final class EffReturn extends Effect {
     protected TriggerItem walk(final Event e) {
         debug(e, false);
         if (e instanceof FunctionEvent)
-            ((ScriptFunction) function).setReturnValue((FunctionEvent) e, value.getArray(e), value instanceof ExprEmpty);
+            ((ScriptFunction) function).setReturnValue(value.getArray(e), value instanceof ExprEmpty);
         else
             assert false : e;
         return null;

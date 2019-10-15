@@ -338,7 +338,7 @@ public final class Classes {
     @Nullable
     public static final ClassInfo<?> getClassInfoFromUserInput(String name) {
         checkAllowClassInfoInteraction();
-        name = name.toLowerCase(Locale.ENGLISH);
+        name = name.trim().toLowerCase(Locale.ENGLISH);
         for (final ClassInfo<?> ci : classInfos) {
             final Pattern[] uip = ci.getUserInputPatterns();
             if (uip == null)

@@ -53,7 +53,7 @@ public final class EvtDamage extends SkriptEvent {
         if (!(e.getEntity() instanceof LivingEntity))
             return true;
         final LivingEntity en = (LivingEntity) e.getEntity();
-        return !(HealthUtils.getHealth(en) <= 0);
+        return HealthUtils.getHealth(en) > 0;
 //        if (en.getNoDamageTicks() <= en.getMaximumNoDamageTicks() / 2) {
 //            lastDamages.put(en, e.getDamage());
 //            return true;

@@ -38,7 +38,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class ScriptFunction<T> extends Function<T> {
 
     final Trigger trigger;
-    public boolean ignoreEmptyReturn;
+    boolean ignoreEmptyReturn;
     private boolean returnValueSet;
     @Nullable
     private T[] returnValue;
@@ -75,8 +75,21 @@ public final class ScriptFunction<T> extends Function<T> {
      * @param e
      * @param value
      * @param ignoreEmptyReturn
+     * 
+     * @deprecated use {@link ScriptFunction#setReturnValue(Object[], boolean)} instead.
      */
-    public void setReturnValue(final FunctionEvent<? extends T> e, final @Nullable T[] value, final boolean ignoreEmptyReturn) {
+    @Deprecated
+    public void setReturnValue(@SuppressWarnings("unused") final FunctionEvent<? extends T> e, final @Nullable T[] value, final boolean ignoreEmptyReturn) {
+    	setReturnValue(value, ignoreEmptyReturn);
+    }
+
+    /**
+     * Should only be called by {@link ch.njol.skript.effects.EffReturn}.
+     *
+     * @param value
+     * @param ignoreEmptyReturn
+     */
+    public void setReturnValue(@Nullable final T[] value, final boolean ignoreEmptyReturn) {
         assert !returnValueSet;
         returnValueSet = true;
         returnValue = value;

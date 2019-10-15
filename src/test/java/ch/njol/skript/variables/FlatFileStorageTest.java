@@ -40,6 +40,14 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 final class FlatFileStorageTest {
 
+    private static final String encode(final byte[] data) {
+        try {
+            return (String) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("encode", byte[].class), (Function<Method, Method>) Skript::setAccessible).invoke(null, new Object[] {data});
+        } catch (final InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            return fail(e);
+        }
+    }
+
     private static final byte[] decode(final CharSequence hex) {
         try {
             return (byte[]) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("decode", CharSequence.class), (Function<Method, Method>) Skript::setAccessible).invoke(null, hex);
@@ -62,7 +70,7 @@ final class FlatFileStorageTest {
     void testHexCoding() {
         final byte[] bytes = {-0x80, -0x50, -0x01, 0x00, 0x01, 0x44, 0x7F};
         final String string = "80B0FF0001447F";
-        assertEquals(string, FlatFileStorage.encode(bytes));
+        assertEquals(string, encode(bytes));
         assert Arrays.equals(bytes, decode(string)) : Arrays.toString(bytes) + " != " + Arrays.toString(decode(string));
     }
 

@@ -112,7 +112,7 @@ public final class EffTeleport extends Effect {
             } else if (e instanceof PlayerMoveEvent && entity.equals(((PlayerMoveEvent) e).getPlayer()) && !Delay.isDelayed(e)) {
                 ((PlayerMoveEvent) e).setTo(loc);
             } else {
-                entity.setFallDistance(0.0f);
+                entity.setFallDistance(0.0F);
                 entity.teleport(loc);
             }
         }
