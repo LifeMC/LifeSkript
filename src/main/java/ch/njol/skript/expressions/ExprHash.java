@@ -43,7 +43,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Peter Güttinger
  */
 @Name("Hash")
-@Description({"Hashes the given text using the MD5 or SHA-256 algorithms. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an hashed text is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though, which can easily crack short, common or insecure passwords."})
+@Description({"Hashes the given text using the MD5 or SHA-256 algorithms. This is useful for storing passwords or IP addresses without having to store them literally.", "Please note that an hashed text is irreversible, i.e. you won't be able to get the original text back (which is the point of storing passwords like this). Brute-force attacks can still be performed on hashes though, which can easily crack short, common or insecure passwords.", "Note: Since 2.2.18, the MD5 algorithm is deprecated and insecure. Please use SHA-256 instead."})
 @Examples({"command /setpass <text>:", "	trigger:", "		set {password.%player%} text-argument hashed with SHA-256", "command /login <text>:", "	trigger:", "		{password.%player%} is text-argument hashed with SHA-256:", "			message \"login successful.\"", "		else:", "			message \"wrong password!\""})
 @Since("2.0, 2.2.17 (SHA-256 algorithm)")
 public final class ExprHash extends PropertyExpression<String, String> {
@@ -100,6 +100,8 @@ public final class ExprHash extends PropertyExpression<String, String> {
             return false;
         }
         setExpr((Expression<String>) exprs[0]);
+        if (algorithm == md5)
+        	Skript.warning("The MD5 hashing algorithm is deprecated and will be removed in a future release. Use SHA-256 instead. (e.g " + getExpr() + " hashed with SHA-256)");
         return true;
     }
 
@@ -115,7 +117,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
 
     @Override
     public final String toString(@Nullable final Event e, final boolean debug) {
-        return "hash of " + getExpr();
+        return "hash of " + getExpr().toString(e, debug);
     }
 
     @Override
