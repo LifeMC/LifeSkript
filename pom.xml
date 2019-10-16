@@ -127,7 +127,7 @@
         </repository>
     </repositories>
 
-	<pluginRepositories>
+    <pluginRepositories>
         <pluginRepository>
             <id>central</id>
             <name>Central Repository</name>
@@ -178,11 +178,11 @@
             <name>md_5's Release Repository</name>
             <url>https://repo.md-5.net/content/repositories/releases/</url>
         </pluginRepository>
-	    <pluginRepository>
-		    <id>tudelft-repository</id>
-			<name>tudelft's Repository</name>
-		    <url>https://simulation.tudelft.nl/maven/</url>
-		</pluginRepository>
+        <pluginRepository>
+            <id>tudelft-repository</id>
+            <name>tudelft's Repository</name>
+            <url>https://simulation.tudelft.nl/maven/</url>
+        </pluginRepository>
         <pluginRepository>
             <id>spigot-releases</id>
             <name>Spigot Releases Repository</name>
@@ -193,7 +193,7 @@
             <name>Spigot Snapshots Repository</name>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </pluginRepository>
-	</pluginRepositories>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -667,7 +667,7 @@
 
                         <arg>-O</arg>
 
-						<arg>-Xpkginfo:always</arg>
+                        <arg>-Xpkginfo:always</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
@@ -702,29 +702,29 @@
                     </dependency>
                 </dependencies>
             </plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-				  <execution>
-					<id>regex-property</id>
-					<phase>validate</phase>
-					<goals>
-					  <goal>regex-property</goal>
-					</goals>
-					<configuration>
-					  <name>project.internalPackage</name>
-					  <value>${project.version}</value>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>regex-property</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>regex-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>project.internalPackage</name>
+                            <value>${project.version}</value>
 
-					  <regex>(\d+)\.(\d+)(?:\.(\d+))?\s*(.*)</regex>
+                            <regex>(\d+)\.(\d+)(?:\.(\d+))?\s*(.*)</regex>
 
-					  <replacement>ch.njol.internal.skript.v$1_$3_R$2</replacement>
-					  <failIfNoMatch>true</failIfNoMatch>
-					</configuration>
-				  </execution>
-				</executions>
-			</plugin>
+                            <replacement>ch.njol.internal.skript.v$1_$3_R$2</replacement>
+                            <failIfNoMatch>true</failIfNoMatch>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -740,7 +740,7 @@
                 </executions>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
-					<minimizeJar>false</minimizeJar>
+                    <minimizeJar>false</minimizeJar>
                     <artifactSet>
                         <includes>
                             <include>*:*</include>

@@ -52,7 +52,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -76,7 +75,7 @@ public final class SkriptCommand implements CommandExecutor {
     private static final ArgsMessage m_changes_title = new ArgsMessage(NODE + ".update.changes.title");
     private static final ArgsMessage m_invalid_script = new ArgsMessage(NODE + ".invalid script");
     private static final ArgsMessage m_invalid_folder = new ArgsMessage(NODE + ".invalid folder");
-    private static final List<TrackerAgent> registeredTrackers =
+    private static final Collection<TrackerAgent> registeredTrackers =
             new ArrayList<>();
     public static volatile int oldPriority = Thread.NORM_PRIORITY;
 
@@ -187,7 +186,7 @@ public final class SkriptCommand implements CommandExecutor {
     @SuppressWarnings("null")
     @Override
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    public boolean onCommand(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
+    public boolean onCommand(@Nullable final CommandSender sender, @Nullable final Command command, @Nullable final String label, @Nullable final String[] args) {
         if (sender == null || command == null || label == null || args == null)
             throw new IllegalArgumentException();
         if (!skriptCommandHelp.test(sender, args))

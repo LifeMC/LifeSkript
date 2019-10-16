@@ -41,8 +41,8 @@ import java.util.NoSuchElementException;
  */
 public final class AABB implements Iterable<Block> {
 
-    private final World world;
     final Vector lowerBound, upperBound;
+    private final World world;
 
     //	private static final Vector EPSILON = new Vector(Skript.EPSILON, Skript.EPSILON, Skript.EPSILON);
 
@@ -113,6 +113,32 @@ public final class AABB implements Iterable<Block> {
         return new BlockIterator(world, upperBound, lowerBound);
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + lowerBound.hashCode();
+        result = prime * result + upperBound.hashCode();
+        result = prime * result + world.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(@Nullable final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof AABB))
+            return false;
+        final AABB other = (AABB) obj;
+        if (!lowerBound.equals(other.lowerBound))
+            return false;
+        if (!upperBound.equals(other.upperBound))
+            return false;
+        return world.equals(other.world);
+    }
+
     private static final class BlockIterator implements Iterator<Block> {
         private final World world;
 
@@ -170,32 +196,6 @@ public final class AABB implements Iterable<Block> {
         public final void remove() {
             throw new UnsupportedOperationException();
         }
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + lowerBound.hashCode();
-        result = prime * result + upperBound.hashCode();
-        result = prime * result + world.hashCode();
-        return result;
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof AABB))
-            return false;
-        final AABB other = (AABB) obj;
-        if (!lowerBound.equals(other.lowerBound))
-            return false;
-        if (!upperBound.equals(other.upperBound))
-            return false;
-        return world.equals(other.world);
     }
 
 }

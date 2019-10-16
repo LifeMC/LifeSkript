@@ -43,13 +43,13 @@ public final class AddonRelease implements Release {
     private final String downloadUrl;
 
     public AddonRelease(final SkriptAddon addon,
-                         final String downloadUrl,
+                        final String downloadUrl,
 
-                         final AddonUpdater updater,
-                         final Version version,
-                         final ReleaseChannel channel,
-                         final ReleaseStatus status,
-                         final boolean installed) {
+                        final AddonUpdater updater,
+                        final Version version,
+                        final ReleaseChannel channel,
+                        final ReleaseStatus status,
+                        final boolean installed) {
         this.addon = addon;
         this.downloadUrl = downloadUrl;
 

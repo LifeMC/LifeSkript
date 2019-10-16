@@ -45,7 +45,7 @@ public final class FileUtils {
     private static final FastDateFormat backupFormat = FastDateFormat.getInstance("yyyy-MM-dd_HH-mm-ss", Locale.ENGLISH);
 
     private FileUtils() {
-		throw new UnsupportedOperationException("Static class");
+        throw new UnsupportedOperationException("Static class");
     }
 
     /**

@@ -39,14 +39,13 @@ public final class EmptyIterable<T> implements Iterable<T> {
         return (EmptyIterable<T>) instance;
     }
 
-    @NotNull
     @Override
-    public Iterator<T> iterator() {
+    public @NotNull Iterator<T> iterator() {
         return EmptyIterator.get();
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         return obj instanceof EmptyIterable;
     }
 

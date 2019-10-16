@@ -79,7 +79,7 @@ public final class ReifiedTypeParameter {
      * @since 2.2.17
      */
     @SafeVarargs
-    public static final <T> Class<T> getReifiedType(final @Nullable T... dummy) {
+    public static final <T> Class<T> getReifiedType(@Nullable final T... dummy) {
         if (dummy == null || dummy.length > 0)
             throw new IllegalArgumentException("Dummy argument should be inferred by the compiler");
         final Class<T> reifiedType = (Class<T>) dummy.getClass().getComponentType();

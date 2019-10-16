@@ -210,6 +210,24 @@ public final class Variable<T> implements Expression<T> {
         return "index".equalsIgnoreCase(s);
     }
 
+    /**
+     * Workaround for player variables when a player has left and rejoined
+     * because the player object inside the variable will be a (kinda) dead variable
+     * as a new player object has been created by the server.
+     */
+    @Nullable
+    static final Object convertIfOldPlayer(final String key, final Event event, final boolean local, @Nullable final Object t) {
+        if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
+            final Player p = (Player) t;
+            if (!p.isValid() && p.isOnline()) {
+                final Player player = Skript.offlineUUIDSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
+                Variables.setVariable(key, player, event, local);
+                return player;
+            }
+        }
+        return t;
+    }
+
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         throw new UnsupportedOperationException();
@@ -297,24 +315,6 @@ public final class Variable<T> implements Expression<T> {
         return convertIfOldPlayer(key, event, local, t);
     }
 
-    /**
-     * Workaround for player variables when a player has left and rejoined
-     * because the player object inside the variable will be a (kinda) dead variable
-     * as a new player object has been created by the server.
-     */
-    @Nullable
-    static final Object convertIfOldPlayer(final String key, final Event event, final boolean local, @Nullable final Object t) {
-        if (SkriptConfig.enablePlayerVariableFix.value() && t instanceof Player) {
-            final Player p = (Player) t;
-            if (!p.isValid() && p.isOnline()) {
-                final Player player = Skript.offlineUUIDSupported ? Bukkit.getPlayer(p.getUniqueId()) : Bukkit.getPlayerExact(p.getName());
-                Variables.setVariable(key, player, event, local);
-                return player;
-            }
-        }
-        return t;
-    }
-
     public final Iterator<Pair<String, Object>> variablesIterator(final Event e) {
         if (!list)
             throw new SkriptAPIException("Looping a non-list variable");
@@ -326,61 +326,6 @@ public final class Variable<T> implements Expression<T> {
         // temporary list to prevent CMEs
         @SuppressWarnings("unchecked") final Iterator<String> keys = new ArrayList<>(((Map<String, Object>) val).keySet()).iterator();
         return new PlayerVariableFixerIterator(keys, name, e, local);
-    }
-
-    private static final class PlayerVariableFixerIterator implements Iterator<Pair<String, Object>> {
-        @Nullable
-        private String key;
-
-        @Nullable
-        private Object next;
-
-        private final Iterator<String> keys;
-
-        private final String name;
-        private final Event event;
-
-        private final boolean local;
-
-        PlayerVariableFixerIterator(final Iterator<String> keys, final String name,
-                                           final Event event, final boolean local) {
-            this.keys = keys;
-
-            this.name = name;
-            this.event = event;
-
-            this.local = local;
-        }
-
-        @Override
-        public final boolean hasNext() {
-            if (next != null)
-                return true;
-            while (keys.hasNext()) {
-                key = keys.next();
-                if (key != null) {
-                    next = convertIfOldPlayer(name + key, event, local, Variables.getVariable(name + key, event, local));
-                    if (next != null && !(next instanceof TreeMap))
-                        return true;
-                }
-            }
-            next = null;
-            return false;
-        }
-
-        @Override
-        public final Pair<String, Object> next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            final Pair<String, Object> n = new Pair<>(key, next);
-            next = null;
-            return n;
-        }
-
-        @Override
-        public final void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 
     @Override
@@ -395,63 +340,6 @@ public final class Variable<T> implements Expression<T> {
         // temporary list to prevent CMEs
         @SuppressWarnings("unchecked") final Iterator<String> keys = new ArrayList<>(((Map<String, Object>) val).keySet()).iterator();
         return new VariableIterator<>(keys, types, name, e, local);
-    }
-
-    private static final class VariableIterator<T> implements Iterator<T> {
-        @Nullable
-        private T next;
-
-        private final Iterator<String> keys;
-        private final Class<? extends T>[] types;
-
-        private final String name;
-        private final Event event;
-
-        private final boolean local;
-
-        VariableIterator(final Iterator<String> keys, final Class<? extends T>[] types,
-                                final String name, final Event event, final boolean local) {
-            this.keys = keys;
-            this.types = types;
-
-            this.name = name;
-            this.event = event;
-
-            this.local = local;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public final boolean hasNext() {
-            if (next != null)
-                return true;
-            while (keys.hasNext()) {
-                final String key = keys.next();
-                if (key != null) {
-                    next = Converters.convert(Variables.getVariable(name + key, event, local), types);
-                    next = (T) convertIfOldPlayer(name + key, event, local, next);
-                    if (next != null && !(next instanceof TreeMap))
-                        return true;
-                }
-            }
-            next = null;
-            return false;
-        }
-
-        @Override
-        public final T next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            final T n = next;
-            assert n != null;
-            next = null;
-            return n;
-        }
-
-        @Override
-        public final void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 
     @Nullable
@@ -541,7 +429,7 @@ public final class Variable<T> implements Expression<T> {
                     if (mode == ChangeMode.REMOVE) {
                         if (o == null)
                             return;
-                        final List<String> rem = new ArrayList<>(); // prevents CMEs
+                        final Collection<String> rem = new ArrayList<>(); // prevents CMEs
                         for (final Object d : delta) {
                             for (final Entry<String, Object> i : o.entrySet()) {
                                 if (Relation.EQUAL.is(Comparators.compare(i.getValue(), d))) {
@@ -562,7 +450,7 @@ public final class Variable<T> implements Expression<T> {
                     } else if (mode == ChangeMode.REMOVE_ALL) {
                         if (o == null)
                             return;
-                        final List<String> rem = new ArrayList<>(); // prevents CMEs
+                        final Collection<String> rem = new ArrayList<>(); // prevents CMEs
                         for (final Entry<String, Object> i : o.entrySet()) {
                             for (final Object d : delta) {
                                 if (Relation.EQUAL.is(Comparators.compare(i.getValue(), d)))
@@ -632,7 +520,7 @@ public final class Variable<T> implements Expression<T> {
                         for (int i = 0; i < cs.length; i++)
                             cs2[i] = cs[i].isArray() ? cs[i].getComponentType() : cs[i];
 
-                        final List<Object> l = new ArrayList<>();
+                        final Collection<Object> l = new ArrayList<>();
                         for (final Object d : delta) {
                             final Object d2 = Converters.convert(d, cs2);
                             if (d2 != null)
@@ -718,6 +606,111 @@ public final class Variable<T> implements Expression<T> {
     @Override
     public Expression<? extends T> simplify() {
         return this;
+    }
+
+    private static final class PlayerVariableFixerIterator implements Iterator<Pair<String, Object>> {
+        private final Iterator<String> keys;
+        private final String name;
+        private final Event event;
+        private final boolean local;
+        @Nullable
+        private String key;
+        @Nullable
+        private Object next;
+
+        PlayerVariableFixerIterator(final Iterator<String> keys, final String name,
+                                    final Event event, final boolean local) {
+            this.keys = keys;
+
+            this.name = name;
+            this.event = event;
+
+            this.local = local;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            if (next != null)
+                return true;
+            while (keys.hasNext()) {
+                key = keys.next();
+                if (key != null) {
+                    next = convertIfOldPlayer(name + key, event, local, Variables.getVariable(name + key, event, local));
+                    if (next != null && !(next instanceof TreeMap))
+                        return true;
+                }
+            }
+            next = null;
+            return false;
+        }
+
+        @Override
+        public final Pair<String, Object> next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final Pair<String, Object> n = new Pair<>(key, next);
+            next = null;
+            return n;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private static final class VariableIterator<T> implements Iterator<T> {
+        private final Iterator<String> keys;
+        private final Class<? extends T>[] types;
+        private final String name;
+        private final Event event;
+        private final boolean local;
+        @Nullable
+        private T next;
+
+        VariableIterator(final Iterator<String> keys, final Class<? extends T>[] types,
+                         final String name, final Event event, final boolean local) {
+            this.keys = keys;
+            this.types = types;
+
+            this.name = name;
+            this.event = event;
+
+            this.local = local;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public final boolean hasNext() {
+            if (next != null)
+                return true;
+            while (keys.hasNext()) {
+                final String key = keys.next();
+                if (key != null) {
+                    next = Converters.convert(Variables.getVariable(name + key, event, local), types);
+                    next = (T) convertIfOldPlayer(name + key, event, local, next);
+                    if (next != null && !(next instanceof TreeMap))
+                        return true;
+                }
+            }
+            next = null;
+            return false;
+        }
+
+        @Override
+        public final T next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final T n = next;
+            assert n != null;
+            next = null;
+            return n;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

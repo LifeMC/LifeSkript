@@ -48,11 +48,11 @@ public final class FunctionEvent<T> extends Event {
      * @deprecated Use the one with async parameter instead.
      */
     @Deprecated
-    public FunctionEvent(final @Nullable Function<? extends T> function) {
+    public FunctionEvent(@Nullable final Function<? extends T> function) {
         this(!Bukkit.isPrimaryThread(), function);
     }
 
-    public FunctionEvent(final boolean async, final @Nullable Function<? extends T> function) {
+    public FunctionEvent(final boolean async, @Nullable final Function<? extends T> function) {
         super(async);
         this.function = function;
     }

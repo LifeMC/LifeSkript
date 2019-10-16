@@ -132,47 +132,6 @@ public class ExpressionList<T> implements Expression<T> {
         return new ExpressionListIterator<>(expressions, e);
     }
 
-    private static final class ExpressionListIterator<T> implements Iterator<T> {
-        private int i;
-
-        @Nullable
-        private Iterator<? extends T> current;
-
-        private final Expression<? extends T>[] expressions;
-        private final Event e;
-
-        ExpressionListIterator(final Expression<? extends T>[] expressions,
-                               final Event e) {
-            this.expressions = expressions;
-            this.e = e;
-        }
-
-        @Override
-        public final boolean hasNext() {
-            Iterator<? extends T> c = current;
-            while (i < expressions.length && (c == null || !c.hasNext()))
-                current = c = expressions[i++].iterator(e);
-            return c != null && c.hasNext();
-        }
-
-        @Override
-        public final T next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            final Iterator<? extends T> c = current;
-            if (c == null)
-                throw new NoSuchElementException();
-            final T t = c.next();
-            assert t != null : current;
-            return t;
-        }
-
-        @Override
-        public final void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     @Override
     public boolean isSingle() {
         return single;
@@ -342,6 +301,45 @@ public class ExpressionList<T> implements Expression<T> {
             return new LiteralList<>(Arrays.copyOf(expressions, expressions.length, Literal[].class), returnType, and);
         }
         return this;
+    }
+
+    private static final class ExpressionListIterator<T> implements Iterator<T> {
+        private final Expression<? extends T>[] expressions;
+        private final Event e;
+        private int i;
+        @Nullable
+        private Iterator<? extends T> current;
+
+        ExpressionListIterator(final Expression<? extends T>[] expressions,
+                               final Event e) {
+            this.expressions = expressions;
+            this.e = e;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            Iterator<? extends T> c = current;
+            while (i < expressions.length && (c == null || !c.hasNext()))
+                current = c = expressions[i++].iterator(e);
+            return c != null && c.hasNext();
+        }
+
+        @Override
+        public final T next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final Iterator<? extends T> c = current;
+            if (c == null)
+                throw new NoSuchElementException();
+            final T t = c.next();
+            assert t != null : current;
+            return t;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

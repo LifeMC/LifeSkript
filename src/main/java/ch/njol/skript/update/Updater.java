@@ -36,14 +36,6 @@ import java.util.function.Consumer;
 public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
 
     /**
-     * Enables or disables this {@link Updater}.
-     *
-     * @param enabled True to toggle/enable
-     */
-    @Override
-    void setEnabled(final boolean enabled);
-
-    /**
      * Checks if this {@link Updater} is enabled.
      *
      * @return True if this {@link Updater} is enabled.
@@ -52,13 +44,12 @@ public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
     boolean isEnabled();
 
     /**
-     * Sets this {@link Updater} to auto install
-     * or just notify new updates depending on the given flag.
+     * Enables or disables this {@link Updater}.
      *
-     * @param enabled The flag to enable or disable automatic
-     *                installation of the new updates.
+     * @param enabled True to toggle/enable
      */
-    void setAutoInstallEnabled(final boolean enabled);
+    @Override
+    void setEnabled(final boolean enabled);
 
     /**
      * Checks if this {@link Updater} is configured to
@@ -70,8 +61,17 @@ public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
     boolean isAutoInstallEnabled();
 
     /**
-     * Gets the name of this {@link Updater}.
+     * Sets this {@link Updater} to auto install
+     * or just notify new updates depending on the given flag.
      *
+     * @param enabled The flag to enable or disable automatic
+     *                installation of the new updates.
+     */
+    void setAutoInstallEnabled(final boolean enabled);
+
+    /**
+     * Gets the name of this {@link Updater}.
+     * <p>
      * For example if this updater is for a plugin,
      * it should return the name of plugin.
      *
@@ -116,7 +116,7 @@ public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
      * Sets the check frequency of this {@link Updater}.
      *
      * @param frequency The check frequency to set.
-     * @param unit The unit of the frequency.
+     * @param unit      The unit of the frequency.
      */
     void setCheckFrequency(final long frequency,
                            final TimeUnit unit);
@@ -141,23 +141,20 @@ public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
      * Installs the specified {@link Release}.
      *
      * @param release The {@link Release} to install.
-     *
      * @throws InstalledReleaseException If the given release
-     * is already installed or another release that requires restart is installed (optional)
-     * and server is not restarted.
-     *
-     * @throws IOException If backup creating (optional) or update
-     * installing fails
+     *                                   is already installed or another release that requires restart is installed (optional)
+     *                                   and server is not restarted.
+     * @throws IOException               If backup creating (optional) or update
+     *                                   installing fails
      */
     void installRelease(final Release release) throws InstalledReleaseException, IOException;
 
     /**
      * Checks and installs updates as configured.
      *
-     * @throws IOException If backup creating (optional) or update
-     * installing fails
-     *
      * @return The current {@link Updater} for chaining.
+     * @throws IOException If backup creating (optional) or update
+     *                     installing fails
      */
     default <T extends Updater> T checkAndInstallUpdates() throws IOException {
         return checkAndInstallUpdates(null);
@@ -168,18 +165,16 @@ public interface Updater extends Toggleable, Nameable, Stateable<UpdaterState> {
      *
      * @param callback The callback to run when the update checking
      *                 and installing is finished.
-     *
-     * @throws IOException If backup creating (optional) or update
-     * installing fails
-     *
      * @return The current {@link Updater} for chaining.
+     * @throws IOException If backup creating (optional) or update
+     *                     installing fails
      */
     <T extends Updater> T checkAndInstallUpdates(@Nullable final Consumer<T> callback) throws IOException;
 
     /**
      * Registers the periodical update checker of this {@link Updater}.
      * Does nothing if the updater is not enabled.
-     *
+     * <p>
      * If periodical task is already registered, it cancels and re-
      * registers it.
      *

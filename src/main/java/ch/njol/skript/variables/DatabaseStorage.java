@@ -68,7 +68,6 @@ public final class DatabaseStorage extends VariablesStorage {
     @SuppressWarnings("null")
     final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
-    private long monitorInterval;
     /**
      * Params: rowID
      * <p>
@@ -76,6 +75,7 @@ public final class DatabaseStorage extends VariablesStorage {
      */
     @Nullable
     PreparedStatement monitorCleanUpQuery;
+    private long monitorInterval;
     private long lastRowID = -1;
     private boolean monitor;
     /**
@@ -406,7 +406,7 @@ public final class DatabaseStorage extends VariablesStorage {
     }
 
     @Override
-    protected boolean save(final String name, final @Nullable String type, final @Nullable byte[] value) {
+    protected boolean save(final String name, @Nullable final String type, @Nullable final byte[] value) {
         synchronized (db) {
             // REMIND get the actual maximum size from the database
             if (name.length() > MAX_VARIABLE_NAME_LENGTH)

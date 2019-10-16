@@ -43,9 +43,9 @@ public final class LogEntry {
     @Nullable
     private final String from;
     private final boolean tracked;
-    private boolean isOverflowed;
     @Nullable
     public String waitingMessage;
+    private boolean isOverflowed;
 
     public LogEntry(final Level level, final String message) {
         this(level, ErrorQuality.SEMANTIC_ERROR.quality(), message, SkriptLogger.getNode());

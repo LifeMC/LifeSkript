@@ -81,7 +81,7 @@ public final class RegexMessage extends Message {
     /**
      * Consider using direct {@link RegexMessage#matches(String)} or
      * {@link RegexMessage#find(String)}
-     *
+     * <p>
      * If you need thread safety, use {@link RegexMessage#newMatcher(CharSequence)}
      */
     public final Matcher matcher(final String s) {

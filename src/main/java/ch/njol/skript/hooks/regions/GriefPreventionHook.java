@@ -123,7 +123,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         } else {
             assert claimsField != null;
             try {
-                final List<?> claims = (List<?>) claimsField.get(plugin.dataStore);
+                final Iterable<?> claims = (Iterable<?>) claimsField.get(plugin.dataStore);
                 for (final Object claim : claims) {
                     if (!(claim instanceof Claim))
                         continue;
@@ -266,7 +266,7 @@ public final class GriefPreventionHook extends RegionsPlugin<GriefPrevention> {
         }
 
         @Override
-        public boolean equals(final @Nullable Object o) {
+        public boolean equals(@Nullable final Object o) {
             if (o == this)
                 return true;
             if (o == null)

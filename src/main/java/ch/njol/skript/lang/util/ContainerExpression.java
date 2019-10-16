@@ -59,6 +59,26 @@ public class ContainerExpression extends SimpleExpression<Object> {
         return new ContainerIterator(iter, expr);
     }
 
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
+    @Override
+    public Class<?> getReturnType() {
+        return c;
+    }
+
+    @Override
+    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return expr.toString(e, debug);
+    }
+
     private static final class ContainerIterator implements Iterator<Object> {
         private final Iterator<? extends Container<?>> iterator;
         private final Expression<? extends Container<?>> expression;
@@ -97,26 +117,6 @@ public class ContainerExpression extends SimpleExpression<Object> {
         public final void remove() {
             throw new UnsupportedOperationException();
         }
-    }
-
-    @Override
-    public boolean isSingle() {
-        return false;
-    }
-
-    @Override
-    public Class<?> getReturnType() {
-        return c;
-    }
-
-    @Override
-    public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        return expr.toString(e, debug);
     }
 
 }

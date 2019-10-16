@@ -88,7 +88,7 @@ public final class WorldGuardHook extends RegionsPlugin<WorldGuardPlugin> {
         if (l.getWorld() == null)
             return Collections.emptyList();
         final RegionManager manager = plugin.getRegionManager(l.getWorld());
-        final ArrayList<Region> r = new ArrayList<>();
+        final List<Region> r = new ArrayList<>();
         if (manager == null)
             return r;
         final ApplicableRegionSet applicable = manager.getApplicableRegions(l);

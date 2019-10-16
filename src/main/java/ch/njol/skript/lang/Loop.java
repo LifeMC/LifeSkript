@@ -97,7 +97,7 @@ public final class Loop extends TriggerSection {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "loop " + expr.toString(e, debug);
     }
 
@@ -111,7 +111,7 @@ public final class Loop extends TriggerSection {
     }
 
     @Override
-    public Loop setNext(final @Nullable TriggerItem next) {
+    public Loop setNext(@Nullable final TriggerItem next) {
         actualNext = next;
         return this;
     }

@@ -59,7 +59,7 @@ public final class InventorySlot extends Slot {
     }
 
     @Override
-    public void setItem(final @Nullable ItemStack item) {
+    public void setItem(@Nullable final ItemStack item) {
         invi.setItem(index, item != null && item.getType() != Material.AIR ? item : null);
         if (invi instanceof PlayerInventory)
             PlayerUtils.updateInventory((Player) invi.getHolder());

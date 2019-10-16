@@ -46,10 +46,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * General updater for {@link SkriptAddon}s.
- *
+ * <p>
  * You can register your add-on with {@link AddonKnowledge#addKnowledge(SkriptAddon, String, String)}.<p />
  * <p />If your add-on is supported natively by default, you don't need to do anything.
- *
+ * <p>
  * {@link Skript Skript} uses workarounds and correct handling of JAR updating,
  * so your add-on does not break in run-time.
  *
@@ -57,149 +57,20 @@ import java.util.concurrent.TimeUnit;
  */
 public final class AddonUpdater extends AbstractUpdater {
 
-    public static final class AddonKnowledge {
-
-        private static final AddonKnowledge[] defaultKnowledge = {
-                new AddonKnowledge("SharpSK",
-                        "https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml",
-                        "https://github.com/TheDGOfficial/SharpSK/releases/download/%version%/SharpSK-%version%.jar"),
-                new AddonKnowledge("skRayFall",
-                        "https://raw.githubusercontent.com/eyesniper2/skRayFall/master/build.gradle",
-                        "https://skripttools.net/dl/skRayFall+%version%.jar"
-                        /*"https://dev.bukkit.org/projects/skrayfall/files/latest"*/) // TODO maybe support downloads from CloudFlare-sites?
-                /*
-                new AddonKnowledge("skUtilities",
-                        "https://raw.githubusercontent.com/tim740/skUtilities/master/latest.ver",
-                        "https://github.com/tim740/skUtilities/releases/download/v%version%/skUtilities.v%version%.jar"),
-                new AddonKnowledge("Skellet",
-                        "https://raw.githubusercontent.com/TheLimeGlass/Skellett/master/gradle.properties",
-                        "https://github.com/TheLimeGlass/Skellett/releases/download/%version%/Skellett-Legacy.jar")*/
-        };
-
-        private static final Map<String, AddonKnowledge> knowledge =
-                new HashMap<>(defaultKnowledge.length);
-
-        static {
-            for (final AddonKnowledge addonKnowledge : defaultKnowledge)
-                addKnowledge(addonKnowledge);
-        }
-
-        /**
-         * Constructs a new {@link AddonKnowledge} with the given parameters
-         * and adds it to the add-on updater dictionary.
-         *
-         * @param addon The {@link Skript Skript} addon, can be get using {@link Skript#registerAddon(JavaPlugin)}.
-         * @param versionCheckUrl The version check URL of the add-on.
-         * @param downloadUrl The download URL of the add-on. Use %version% placeholder for latest version.
-         */
-        public static final void addKnowledge(final SkriptAddon addon,
-                                              final String versionCheckUrl,
-                                              final String downloadUrl) {
-            addKnowledge(new AddonKnowledge(addon.getName(), versionCheckUrl, downloadUrl));
-        }
-
-        /**
-         * Constructs a new {@link AddonKnowledge} with the given parameters
-         * and adds it to the add-on updater dictionary.
-         *
-         * @param addonName The name of the add-on, must be same as the plugin's name.
-         * @param versionCheckUrl The version check URL of the add-on.
-         * @param downloadUrl The download URL of the add-on. Use %version% placeholder for latest version.
-         */
-        public static final void addKnowledge(final String addonName,
-                                              final String versionCheckUrl,
-                                              final String downloadUrl) {
-            addKnowledge(new AddonKnowledge(addonName, versionCheckUrl, downloadUrl));
-        }
-
-        /**
-         * Adds the given knowledge to the add-on updater dictionary.
-         *
-         * @param addonKnowledge The add-on knowledge to use.
-         */
-        public static final void addKnowledge(final AddonKnowledge addonKnowledge) {
-            if (knowledge.containsKey(addonKnowledge.addon))
-                return; // Natively supported by default or programmer's mistake
-            knowledge.put(addonKnowledge.addon, addonKnowledge);
-        }
-
-        @Nullable
-        public static final AddonKnowledge get(final SkriptAddon addon) {
-            return get(addon.getName());
-        }
-
-        @Nullable
-        public static final AddonKnowledge get(final String addonName) {
-            return knowledge.get(addonName);
-        }
-
-        private final String addon;
-
-        private final String versionCheckUrl;
-        private final String downloadUrl;
-
-        @Nullable
-        private AddonUpdater updater;
-
-        public AddonKnowledge(final String addon,
-                              final String versionCheckUrl,
-                              final String downloadUrl) {
-            this.addon = addon;
-            this.versionCheckUrl = versionCheckUrl;
-            this.downloadUrl = downloadUrl;
-        }
-
-        public final AddonUpdater getUpdater() {
-            AddonUpdater addonUpdater = updater;
-            if (addonUpdater == null) {
-                final SkriptAddon skriptAddon = Skript.getAddon(addon);
-                assert skriptAddon != null : addon;
-
-                addonUpdater = new AddonUpdater(skriptAddon, versionCheckUrl, downloadUrl, SkriptConfig.checkForNewAddonVersions.value(), ReleaseChannel.parseOrNightly(skriptAddon.version.toString()), SkriptConfig.addonUpdateCheckInterval.value().getMilliSeconds(), TimeUnit.MILLISECONDS);
-            }
-            if (updater == null)
-                updater = addonUpdater;
-            return addonUpdater;
-        }
-
-        @Override
-        public final boolean equals(@Nullable final Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            final AddonKnowledge that = (AddonKnowledge) o;
-
-            if (!addon.equals(that.addon)) return false;
-            if (!versionCheckUrl.equals(that.versionCheckUrl)) return false;
-            return downloadUrl.equals(that.downloadUrl);
-        }
-
-        @Override
-        public final int hashCode() {
-            int result = addon.hashCode();
-            result = 31 * result + versionCheckUrl.hashCode();
-            result = 31 * result + downloadUrl.hashCode();
-            return result;
-        }
-    }
-
     private final SkriptAddon addon;
-
     private final String downloadUrl;
     private final String versionCheckUrl;
-
     private final Executor updateCheckerExecutor;
     private final Release current;
-
     public AddonUpdater(final SkriptAddon addon,
 
-                         final String versionCheckUrl,
-                         final String downloadUrl,
+                        final String versionCheckUrl,
+                        final String downloadUrl,
 
-                         final boolean enabled,
-                         final ReleaseChannel channel,
-                         final long frequency,
-                         final TimeUnit unit) {
+                        final boolean enabled,
+                        final ReleaseChannel channel,
+                        final long frequency,
+                        final TimeUnit unit) {
         super(enabled, channel, frequency, unit);
 
         this.addon = addon;
@@ -215,13 +86,13 @@ public final class AddonUpdater extends AbstractUpdater {
     }
 
     @Override
-    public void setAutoInstallEnabled(final boolean enabled) {
-        SkriptConfig.automaticallyDownloadNewAddonVersions.setValue(enabled);
+    public boolean isAutoInstallEnabled() {
+        return SkriptConfig.automaticallyDownloadNewAddonVersions.value();
     }
 
     @Override
-    public boolean isAutoInstallEnabled() {
-        return SkriptConfig.automaticallyDownloadNewAddonVersions.value();
+    public void setAutoInstallEnabled(final boolean enabled) {
+        SkriptConfig.automaticallyDownloadNewAddonVersions.setValue(enabled);
     }
 
     @Override
@@ -305,6 +176,130 @@ public final class AddonUpdater extends AbstractUpdater {
         }, addon.getName() + " update installer"));
 
         state = UpdaterState.PENDING_RESTART;
+    }
+
+    public static final class AddonKnowledge {
+
+        private static final AddonKnowledge[] defaultKnowledge = {
+                new AddonKnowledge("SharpSK",
+                        "https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml",
+                        "https://github.com/TheDGOfficial/SharpSK/releases/download/%version%/SharpSK-%version%.jar"),
+                new AddonKnowledge("skRayFall",
+                        "https://raw.githubusercontent.com/eyesniper2/skRayFall/master/build.gradle",
+                        "https://skripttools.net/dl/skRayFall+%version%.jar"
+                        /*"https://dev.bukkit.org/projects/skrayfall/files/latest"*/) // TODO maybe support downloads from CloudFlare-sites?
+                /*
+                new AddonKnowledge("skUtilities",
+                        "https://raw.githubusercontent.com/tim740/skUtilities/master/latest.ver",
+                        "https://github.com/tim740/skUtilities/releases/download/v%version%/skUtilities.v%version%.jar"),
+                new AddonKnowledge("Skellet",
+                        "https://raw.githubusercontent.com/TheLimeGlass/Skellett/master/gradle.properties",
+                        "https://github.com/TheLimeGlass/Skellett/releases/download/%version%/Skellett-Legacy.jar")*/
+        };
+
+        private static final Map<String, AddonKnowledge> knowledge =
+                new HashMap<>(defaultKnowledge.length);
+
+        static {
+            for (final AddonKnowledge addonKnowledge : defaultKnowledge)
+                addKnowledge(addonKnowledge);
+        }
+
+        private final String addon;
+        private final String versionCheckUrl;
+        private final String downloadUrl;
+        @Nullable
+        private AddonUpdater updater;
+
+        public AddonKnowledge(final String addon,
+                              final String versionCheckUrl,
+                              final String downloadUrl) {
+            this.addon = addon;
+            this.versionCheckUrl = versionCheckUrl;
+            this.downloadUrl = downloadUrl;
+        }
+
+        /**
+         * Constructs a new {@link AddonKnowledge} with the given parameters
+         * and adds it to the add-on updater dictionary.
+         *
+         * @param addon           The {@link Skript Skript} addon, can be get using {@link Skript#registerAddon(JavaPlugin)}.
+         * @param versionCheckUrl The version check URL of the add-on.
+         * @param downloadUrl     The download URL of the add-on. Use %version% placeholder for latest version.
+         */
+        public static final void addKnowledge(final SkriptAddon addon,
+                                              final String versionCheckUrl,
+                                              final String downloadUrl) {
+            addKnowledge(new AddonKnowledge(addon.getName(), versionCheckUrl, downloadUrl));
+        }
+
+        /**
+         * Constructs a new {@link AddonKnowledge} with the given parameters
+         * and adds it to the add-on updater dictionary.
+         *
+         * @param addonName       The name of the add-on, must be same as the plugin's name.
+         * @param versionCheckUrl The version check URL of the add-on.
+         * @param downloadUrl     The download URL of the add-on. Use %version% placeholder for latest version.
+         */
+        public static final void addKnowledge(final String addonName,
+                                              final String versionCheckUrl,
+                                              final String downloadUrl) {
+            addKnowledge(new AddonKnowledge(addonName, versionCheckUrl, downloadUrl));
+        }
+
+        /**
+         * Adds the given knowledge to the add-on updater dictionary.
+         *
+         * @param addonKnowledge The add-on knowledge to use.
+         */
+        public static final void addKnowledge(final AddonKnowledge addonKnowledge) {
+            if (knowledge.containsKey(addonKnowledge.addon))
+                return; // Natively supported by default or programmer's mistake
+            knowledge.put(addonKnowledge.addon, addonKnowledge);
+        }
+
+        @Nullable
+        public static final AddonKnowledge get(final SkriptAddon addon) {
+            return get(addon.getName());
+        }
+
+        @Nullable
+        public static final AddonKnowledge get(final String addonName) {
+            return knowledge.get(addonName);
+        }
+
+        public final AddonUpdater getUpdater() {
+            AddonUpdater addonUpdater = updater;
+            if (addonUpdater == null) {
+                final SkriptAddon skriptAddon = Skript.getAddon(addon);
+                assert skriptAddon != null : addon;
+
+                addonUpdater = new AddonUpdater(skriptAddon, versionCheckUrl, downloadUrl, SkriptConfig.checkForNewAddonVersions.value(), ReleaseChannel.parseOrNightly(skriptAddon.version.toString()), SkriptConfig.addonUpdateCheckInterval.value().getMilliSeconds(), TimeUnit.MILLISECONDS);
+            }
+            if (updater == null)
+                updater = addonUpdater;
+            return addonUpdater;
+        }
+
+        @Override
+        public final boolean equals(@Nullable final Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            final AddonKnowledge that = (AddonKnowledge) o;
+
+            if (!addon.equals(that.addon)) return false;
+            if (!versionCheckUrl.equals(that.versionCheckUrl)) return false;
+            return downloadUrl.equals(that.downloadUrl);
+        }
+
+        @Override
+        public final int hashCode() {
+            int result = addon.hashCode();
+            result = 31 * result + versionCheckUrl.hashCode();
+            result = 31 * result + downloadUrl.hashCode();
+            return result;
+        }
     }
 
 }

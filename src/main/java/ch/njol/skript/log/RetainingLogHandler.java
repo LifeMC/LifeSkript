@@ -66,12 +66,12 @@ public final class RetainingLogHandler extends LogHandler {
      * @param def Error to print if no errors were logged, can be null to not print any error if there are none
      * @return Whatever there were any errors
      */
-    public final boolean printErrors(final @Nullable String def) {
+    public final boolean printErrors(@Nullable final String def) {
         return printErrors(def, ErrorQuality.SEMANTIC_ERROR);
     }
 
     // FIXME actually use the quality parameter?
-    public final boolean printErrors(final @Nullable String def, @SuppressWarnings("unused") final ErrorQuality quality) {
+    public final boolean printErrors(@Nullable final String def, @SuppressWarnings("unused") final ErrorQuality quality) {
         assert !printedErrorOrLog;
         printedErrorOrLog = true;
         stop();
@@ -101,7 +101,7 @@ public final class RetainingLogHandler extends LogHandler {
      * @param def       Error to send if no errors were logged, can be null to not print any error if there are none
      * @return Whatever there were any errors to send
      */
-    public final boolean printErrors(final CommandSender recipient, final @Nullable String def) {
+    public final boolean printErrors(final CommandSender recipient, @Nullable final String def) {
         assert !printedErrorOrLog;
         printedErrorOrLog = true;
         stop();

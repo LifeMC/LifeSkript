@@ -110,7 +110,7 @@ public final class Fields implements Iterable<FieldContext> {
         if (fields != null)
             return fields;
         fields = new ArrayList<>();
-        final Set<String> ids = new HashSet<>();
+        final Collection<String> ids = new HashSet<>();
         for (Class<?> sc = c; sc != null; sc = sc.getSuperclass()) {
             final Field[] fs = sc.getDeclaredFields();
             for (final Field f : fs) {
@@ -142,7 +142,7 @@ public final class Fields implements Iterable<FieldContext> {
         final Yggdrasil y = yggdrasil;
         if (y == null)
             throw new YggdrasilException("");
-        final Set<FieldContext> excessive = new HashSet<>(fields.values());
+        final Collection<FieldContext> excessive = new HashSet<>(fields.values());
         final Class<?> oc = o.getClass();
         assert oc != null;
         for (final Field f : getFields(oc)) {

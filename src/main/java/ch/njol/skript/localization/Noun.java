@@ -43,8 +43,8 @@ public final class Noun extends Message {
     static final HashMap<String, Integer> genders = new HashMap<>();
     static final List<String> indefiniteArticles = new ArrayList<>(3);
     static final List<String> definiteArticles = new ArrayList<>(3);
-    static final List<String> localIndefiniteArticles = new ArrayList<>(3);
-    static final List<String> localDefiniteArticles = new ArrayList<>(3);
+    static final Collection<String> localIndefiniteArticles = new ArrayList<>(3);
+    static final Collection<String> localDefiniteArticles = new ArrayList<>(3);
     static String definitePluralArticle = "";
     static String localDefinitePluralArticle = "";
 

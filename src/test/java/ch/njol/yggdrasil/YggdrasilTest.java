@@ -132,7 +132,7 @@ public final class YggdrasilTest {
             return true;
         }
         if (o1 instanceof Collection) {
-            final Iterator<?> i1 = ((Collection<?>) o1).iterator(), i2 = ((Collection<?>) o2).iterator();
+            final Iterator<?> i1 = ((Iterable<?>) o1).iterator(), i2 = ((Iterable<?>) o2).iterator();
             while (i1.hasNext()) {
                 if (!i2.hasNext())
                     return false;

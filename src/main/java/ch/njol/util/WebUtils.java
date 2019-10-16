@@ -169,19 +169,19 @@ public final class WebUtils {
         setup(con, contentType, /* followRedirects: */true);
 
         try (final InputStream is = StreamUtils.getInputStream(con);
-            final BufferedInputStream in = new BufferedInputStream(is)) {
+             final BufferedInputStream in = new BufferedInputStream(is)) {
             final String encoding = con.getContentEncoding();
 
             if (encoding != null) {
                 if ("gzip".equalsIgnoreCase(encoding)) {
                     try (final GZIPInputStream gzipIs = new GZIPInputStream(in);
-                        final BufferedInputStream gzip = new BufferedInputStream(gzipIs)) {
+                         final BufferedInputStream gzip = new BufferedInputStream(gzipIs)) {
                         return StreamUtils.readString(gzip);
                     }
                 }
                 if ("deflate".equalsIgnoreCase(encoding)) {
                     try (final InflaterInputStream inf = new InflaterInputStream(in, new Inflater(true));
-                        final BufferedInputStream deflate = new BufferedInputStream(inf)) {
+                         final BufferedInputStream deflate = new BufferedInputStream(inf)) {
                         return StreamUtils.readString(deflate);
                     }
                 }

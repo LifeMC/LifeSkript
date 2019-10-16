@@ -84,7 +84,7 @@ public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the " + (owners ? "owner" + (isSingle() ? "" : "s") : "members") + " of " + regions.toString(e, debug);
     }
 

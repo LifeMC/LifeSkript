@@ -40,19 +40,15 @@ import java.io.IOException;
 public final class VaultHook extends Hook<Vault> {
 
     public static final String NO_GROUP_SUPPORT = "The permissions plugin you are using does not support groups.";
-
-    @SuppressWarnings("null")
-    public static Economy economy;
-
-    @SuppressWarnings("null")
-    public static Chat chat;
-
-    @SuppressWarnings("null")
-    public static Permission permission;
-
     private static final boolean oldVault = !Skript.methodExists(Economy.class, "getBalance", OfflinePlayer.class) ||
             !Skript.methodExists(Economy.class, "withdrawPlayer", OfflinePlayer.class, double.class) ||
             !Skript.methodExists(Economy.class, "depositPlayer", OfflinePlayer.class, double.class);
+    @SuppressWarnings("null")
+    public static Economy economy;
+    @SuppressWarnings("null")
+    public static Chat chat;
+    @SuppressWarnings("null")
+    public static Permission permission;
 
     static {
         if (oldVault)
@@ -60,31 +56,6 @@ public final class VaultHook extends Hook<Vault> {
     }
 
     public VaultHook() throws IOException {
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    protected boolean init() {
-        economy = Bukkit.getServicesManager().getRegistration(Economy.class) == null ? null : Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
-        chat = Bukkit.getServicesManager().getRegistration(Chat.class) == null ? null : Bukkit.getServicesManager().getRegistration(Chat.class).getProvider();
-        permission = Bukkit.getServicesManager().getRegistration(Permission.class) == null ? null : Bukkit.getServicesManager().getRegistration(Permission.class).getProvider();
-        return economy != null || chat != null || permission != null;
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    protected void loadClasses() throws IOException {
-        if (economy != null)
-            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".economy");
-        if (chat != null)
-            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".chat");
-        if (permission != null)
-            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".permission");
-    }
-
-    @Override
-    public String getName() {
-        return "Vault";
     }
 
     @SuppressWarnings("deprecation")
@@ -115,6 +86,31 @@ public final class VaultHook extends Hook<Vault> {
         }
 
         economy.depositPlayer(player, amount);
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected boolean init() {
+        economy = Bukkit.getServicesManager().getRegistration(Economy.class) == null ? null : Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
+        chat = Bukkit.getServicesManager().getRegistration(Chat.class) == null ? null : Bukkit.getServicesManager().getRegistration(Chat.class).getProvider();
+        permission = Bukkit.getServicesManager().getRegistration(Permission.class) == null ? null : Bukkit.getServicesManager().getRegistration(Permission.class).getProvider();
+        return economy != null || chat != null || permission != null;
+    }
+
+    @SuppressWarnings("null")
+    @Override
+    protected void loadClasses() throws IOException {
+        if (economy != null)
+            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".economy");
+        if (chat != null)
+            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".chat");
+        if (permission != null)
+            Skript.getAddonInstance().loadClasses(getClass().getPackage().getName() + ".permission");
+    }
+
+    @Override
+    public String getName() {
+        return "Vault";
     }
 
 }

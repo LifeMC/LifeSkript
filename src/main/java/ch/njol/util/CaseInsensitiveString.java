@@ -61,7 +61,7 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
     }
 
     @Override
-    public boolean equals(final @Nullable Object o) {
+    public boolean equals(@Nullable final Object o) {
         if (o == null)
             return false;
         if (o == this)
@@ -71,9 +71,8 @@ public final class CaseInsensitiveString implements Serializable, Comparable<Cha
         return false;
     }
 
-    @NotNull
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return s;
     }
 

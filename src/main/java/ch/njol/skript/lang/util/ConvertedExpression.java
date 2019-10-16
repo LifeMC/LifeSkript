@@ -212,12 +212,25 @@ public class ConvertedExpression<F, T> implements Expression<T> {
         return new ConvertedIterator<T, F>(iter, conv);
     }
 
-    private static final class ConvertedIterator<T, F> implements Iterator<T> {
-        @Nullable
-        private T next;
+    @Override
+    public Expression<?> getSource() {
+        return source;
+    }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Expression<? extends T> simplify() {
+        final Expression<? extends T> c = source.simplify().getConvertedExpression(to);
+        if (c != null)
+            return c;
+        return this;
+    }
+
+    private static final class ConvertedIterator<T, F> implements Iterator<T> {
         private final Iterator<? extends F> iter;
         private final Converter<? super F, ? extends T> conv;
+        @Nullable
+        private T next;
 
         ConvertedIterator(final Iterator<? extends F> iter, final Converter<? super F, ? extends T> conv) {
             this.iter = iter;
@@ -249,20 +262,6 @@ public class ConvertedExpression<F, T> implements Expression<T> {
         public final void remove() {
             throw new UnsupportedOperationException();
         }
-    }
-
-    @Override
-    public Expression<?> getSource() {
-        return source;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Expression<? extends T> simplify() {
-        final Expression<? extends T> c = source.simplify().getConvertedExpression(to);
-        if (c != null)
-            return c;
-        return this;
     }
 
 }

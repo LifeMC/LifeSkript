@@ -31,10 +31,12 @@ import java.util.function.Supplier;
 
 public final class FormattedMessage extends Message {
 
-    private final @Nullable
+    @Nullable
+    private final
     Object[] args;
 
-    private final @Nullable
+    @Nullable
+    private final
     Supplier<Object[]> supplier;
 
     /**

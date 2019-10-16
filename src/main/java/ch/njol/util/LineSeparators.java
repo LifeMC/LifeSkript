@@ -25,7 +25,7 @@ package ch.njol.util;
 /**
  * An utility class (currently only consists of constants) about Line Separators.
  * You should generally use {@link LineSeparators#SYSTEM} only and not other hard-coded ones.
- *
+ * <p>
  * But they can be used in things like {@link java.util.regex.Pattern#split(CharSequence)} where
  * a hard-coded one is required to make algorithm work same on all machines.
  */

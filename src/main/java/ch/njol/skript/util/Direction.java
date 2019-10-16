@@ -352,7 +352,7 @@ public final class Direction implements YggdrasilRobustSerializable {
             }
 
             @Override
-            public String toString(final @Nullable Event e, final boolean debug) {
+            public String toString(@Nullable final Event e, final boolean debug) {
                 return dirs.toString(e, debug) + ' ' + locs.toString(e, debug);
             }
 
@@ -416,7 +416,7 @@ public final class Direction implements YggdrasilRobustSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -444,7 +444,7 @@ public final class Direction implements YggdrasilRobustSerializable {
         return false;
     }
 
-    private void set(final String field, final @Nullable Double value) throws StreamCorruptedException {
+    private void set(final String field, @Nullable final Double value) throws StreamCorruptedException {
         if (value == null)
             throw new StreamCorruptedException();
         try {

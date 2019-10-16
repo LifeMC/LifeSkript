@@ -179,7 +179,7 @@ public final class SkriptAddon {
             }
         }
         final int unloadableClassCount = unloadableClasses.get();
-        if (!(plugin instanceof Skript) && unloadableClassCount >  0 && !Skript.testing() && !Skript.debug())
+        if (!(plugin instanceof Skript) && unloadableClassCount > 0 && !Skript.testing() && !Skript.debug())
             Skript.warning(name + ": Skipping " + unloadableClassCount + " unloadable classes, use debug verbosity for more details");
         return this;
     }

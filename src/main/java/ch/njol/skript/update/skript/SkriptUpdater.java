@@ -56,13 +56,13 @@ public final class SkriptUpdater extends AbstractUpdater {
     }
 
     @Override
-    public void setAutoInstallEnabled(final boolean enabled) {
-        SkriptConfig.automaticallyDownloadNewVersion.setValue(enabled);
+    public boolean isAutoInstallEnabled() {
+        return SkriptConfig.automaticallyDownloadNewVersion.value();
     }
 
     @Override
-    public boolean isAutoInstallEnabled() {
-        return SkriptConfig.automaticallyDownloadNewVersion.value();
+    public void setAutoInstallEnabled(final boolean enabled) {
+        SkriptConfig.automaticallyDownloadNewVersion.setValue(enabled);
     }
 
     @Override
@@ -119,9 +119,9 @@ public final class SkriptUpdater extends AbstractUpdater {
                 throw handleError(e, "Can't install the release " + release.getVersion() + " of " + getName());
             }
         });
-            final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
-            final FileOutputStream fileOutputStream = new FileOutputStream(updatedJar);
-            final FileChannel fileChannel = fileOutputStream.getChannel()) {
+             final ReadableByteChannel readableByteChannel = Channels.newChannel(stream);
+             final FileOutputStream fileOutputStream = new FileOutputStream(updatedJar);
+             final FileChannel fileChannel = fileOutputStream.getChannel()) {
 
             state = UpdaterState.INSTALLING;
 

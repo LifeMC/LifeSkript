@@ -50,7 +50,10 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
+    public static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
+    public static final EventExecutor ee = new SkriptEventExecutor();
     static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>(100);
+    static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
     private static final Listener listener = new Listener() {
         /* empty */
     };
@@ -59,49 +62,11 @@ public final class SkriptEventHandler {
      * Stores which events are currently registered with Bukkit
      */
     private static final Set<Class<? extends Event>> registeredEvents = new HashSet<>(100);
-    static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
-    public static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
     @Nullable
     public static Event last;
     static long startTrigger;
-    private static long startEvent;
     static long lastCall;
-    public static final EventExecutor ee = new SkriptEventExecutor();
-
-    private static final class SkriptEventExecutor implements EventExecutor {
-        SkriptEventExecutor() {
-            /* implicit super call */
-        }
-
-        @Override
-        public final void execute(@Nullable final Listener l, @Nullable final Event e) {
-            if (e == null)
-                return;
-
-            if (last == e) // an event is received multiple times if multiple superclasses of it are registered
-                return;
-
-            last = e;
-
-            // Event is asynchronous, but it ran from main thread
-            assert !e.isAsynchronous() || !Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is asynchronous, but it ran from main thread";
-
-            // Event is synchronous, but it ran from a different thread
-            assert e.isAsynchronous() || Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is synchronous, but it ran from a different thread";
-
-            // Skip the event if it's a frequently called event
-            // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
-            if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < moveEventCooldown)
-                return;
-
-            if ((e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
-                return;
-
-            lastCall = System.currentTimeMillis();
-
-            check(e);
-        }
-    }
+    private static long startEvent;
 
     private SkriptEventHandler() {
         throw new UnsupportedOperationException();
@@ -295,7 +260,7 @@ public final class SkriptEventHandler {
     static final void registerBukkitEvents() {
         for (final Class<? extends Event> e : triggers.keySet()) {
             assert e != null;
-            if (!containsSuperclass((Set) registeredEvents, e)) { // I just love Java's generics
+            if (!containsSuperclass(registeredEvents, e)) { // I just love Java's generics
                 Bukkit.getPluginManager().registerEvent(e, listener, SkriptConfig.defaultEventPriority.value(), ee, Skript.getInstance());
                 registeredEvents.add(e);
 //				for (final Iterator<Class<? extends Event>> i = registeredEvents.iterator(); i.hasNext();) {
@@ -309,14 +274,49 @@ public final class SkriptEventHandler {
         }
     }
 
-    public static final boolean containsSuperclass(final Collection<Class<?>> classes, final Class<?> c) {
+    private static final boolean containsSuperclass(final Collection<Class<? extends Event>> classes, final Class<? extends Event> c) {
         if (classes.contains(c))
             return true;
-        for (final Class<?> cl : classes) {
+        for (final Class<? extends Event> cl : classes) {
             if (cl.isAssignableFrom(c))
                 return true;
         }
         return false;
+    }
+
+    private static final class SkriptEventExecutor implements EventExecutor {
+        SkriptEventExecutor() {
+            /* implicit super call */
+        }
+
+        @Override
+        public final void execute(@Nullable final Listener l, @Nullable final Event e) {
+            if (e == null)
+                return;
+
+            if (last == e) // an event is received multiple times if multiple superclasses of it are registered
+                return;
+
+            last = e;
+
+            // Event is asynchronous, but it ran from main thread
+            assert !e.isAsynchronous() || !Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is asynchronous, but it ran from main thread";
+
+            // Event is synchronous, but it ran from a different thread
+            assert e.isAsynchronous() || Bukkit.isPrimaryThread() : e.getClass().getCanonicalName() + " is synchronous, but it ran from a different thread";
+
+            // Skip the event if it's a frequently called event
+            // Note: Making anti-cheats with Skript is already a bad idea, I'm not responsible if it breaks them
+            if (e instanceof PlayerMoveEvent && System.currentTimeMillis() - lastCall < moveEventCooldown)
+                return;
+
+            if ((e instanceof BlockPhysicsEvent || e instanceof InventoryMoveItemEvent) && System.currentTimeMillis() - lastCall < eventCooldown)
+                return;
+
+            lastCall = System.currentTimeMillis();
+
+            check(e);
+        }
     }
 
 //	private static final void unregisterEvents() {

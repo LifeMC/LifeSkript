@@ -51,7 +51,7 @@ public final class Functions {
     public static final String functionNamePattern = "[\\p{IsAlphabetic}][\\p{IsAlphabetic}\\p{IsDigit}_]*";
     public static final Map<String, JavaFunction<?>> javaFunctions = new HashMap<>(100);
     public static final Map<String, FunctionData> functions = new HashMap<>(100);
-    private static final List<FunctionReference<?>> postCheckNeeded = new ArrayList<>(100);
+    private static final Collection<FunctionReference<?>> postCheckNeeded = new ArrayList<>(100);
     @SuppressWarnings("null")
     private static final Pattern functionPattern = Pattern.compile("function (" + functionNamePattern + ")\\((.*)\\)(?: :: (.+))?", Pattern.CASE_INSENSITIVE),
             paramPattern = Pattern.compile("\\s*(.+?)\\s*:\\s*(.+?)(?:\\s*=\\s*(.+))?\\s*");
@@ -86,8 +86,7 @@ public final class Functions {
      * e.g a function returning string, not strings.
      *
      * @param function The function to wrap it as {@link java.util.function.Function}.
-     * @param <T> The return type of the {@link Function}.
-     *
+     * @param <T>      The return type of the {@link Function}.
      * @return The wrapped {@link java.util.function.Function} object that
      * returns the result of the function.
      */
@@ -110,13 +109,12 @@ public final class Functions {
     /**
      * Wraps a function {@link Function} to an {@link java.util.function.Function}
      * object that can be used easily.
-     *
+     * <p>
      * The return type of the {@link Function} can be single or plural, in case of
      * single type functions use {@link Functions#wrapSingle(Function)} instead.
      *
      * @param function The function to wrap it as {@link java.util.function.Function}.
-     * @param <T> The return type of the {@link Function}.
-     *
+     * @param <T>      The return type of the {@link Function}.
      * @return The wrapped {@link java.util.function.Function} object that
      * returns the result of the function.
      */

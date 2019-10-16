@@ -44,7 +44,7 @@ public final class LoggerFilter implements Filter, Closeable {
     }
 
     @Override
-    public boolean isLoggable(final @Nullable LogRecord record) {
+    public boolean isLoggable(@Nullable final LogRecord record) {
         if (oldFilter != null && !oldFilter.isLoggable(record))
             return false;
         for (final Filter f : filters)

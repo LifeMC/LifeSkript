@@ -24,7 +24,7 @@ package ch.njol.skript.update;
 
 /**
  * Thrown to indicate a release is already installed.
- *
+ * <p>
  * This either may represent "can't install a release two times" or
  * just "can't install two updates at same time, restart required"
  */

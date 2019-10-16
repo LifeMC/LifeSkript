@@ -136,7 +136,6 @@ public final class StringUtils {
      *
      * @param d        The number to be turned into a string
      * @param accuracy Maximum number of digits after the period
-     *
      * @return The string that represents the given number
      */
     public static final String toString(final double d, final int accuracy) {

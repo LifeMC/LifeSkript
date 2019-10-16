@@ -49,16 +49,15 @@ import java.util.regex.Pattern;
 
 /**
  * A pre-made abstract implementation of {@link Updater}.
- *
+ * <p>
  * You must still override the {@link Updater#installRelease(Release)},
  * {@link Updater#getLatestRelease()} and {@link Updater#getCurrentRelease()} methods.<p />
- *
+ * <p>
  * <p />This class also contains various utility methods dealing with updater stuff,
  * for examples you can view the implementations.
  *
  * @see SkriptUpdater
  * @see ScriptUpdater
- *
  * @see AddonUpdater
  */
 public abstract class AbstractUpdater implements Updater {
@@ -82,6 +81,27 @@ public abstract class AbstractUpdater implements Updater {
     private static final Matcher DOUBLE_QUOTE_PATTERN = Pattern.compile("\"", Pattern.LITERAL).matcher("");
 
     private static final String EMPTY_STRING_REGEX_READY = Matcher.quoteReplacement("");
+    protected UpdaterState state;
+    protected ReleaseChannel channel;
+    private boolean enabled;
+    @Nullable
+    private SoftReference<Throwable> lastError;
+    private long frequency;
+    private TimeUnit unit;
+    private int taskId = -1;
+
+    protected AbstractUpdater(final boolean enabled,
+                              final ReleaseChannel channel,
+                              final long frequency,
+                              final TimeUnit unit) {
+        this.enabled = enabled;
+        state = UpdaterState.NOT_STARTED;
+
+        this.channel = channel;
+
+        this.frequency = frequency;
+        this.unit = unit;
+    }
 
     private static final String stripLineEndings(final CharSequence s) {
         return UNIX_NEW_LINE_MATCHER.reset(MAC_NEW_LINE.reset(WINDOWS_NEW_LINE.reset(s).replaceAll("")).replaceAll("")).replaceAll("");
@@ -181,7 +201,7 @@ public abstract class AbstractUpdater implements Updater {
         lastError = new SoftReference<>(error);
 
         if (info == null || info.length < 1)
-            info = new String[] { "Error occurred in the updater of " + getName() };
+            info = new String[]{"Error occurred in the updater of " + getName()};
 
         return Skript.exception(error, info);
     }
@@ -209,45 +229,19 @@ public abstract class AbstractUpdater implements Updater {
         return latestVersion;
     }
 
-    private boolean enabled;
-
-    protected UpdaterState state;
-    protected ReleaseChannel channel;
-
-    @Nullable
-    private SoftReference<Throwable> lastError;
-
-    private long frequency;
-    private TimeUnit unit;
-
-    private int taskId = -1;
-
-    protected AbstractUpdater(final boolean enabled,
-                              final ReleaseChannel channel,
-                              final long frequency,
-                              final TimeUnit unit) {
-        this.enabled = enabled;
-        state = UpdaterState.NOT_STARTED;
-
-        this.channel = channel;
-
-        this.frequency = frequency;
-        this.unit = unit;
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     @Override
     public final void setEnabled(final boolean enabled) {
         this.enabled = enabled;
-		if (!enabled)
-			if (taskId != -1)
-				Bukkit.getScheduler().cancelTask(taskId);
-		else
-			registerListener();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
+        if (!enabled)
+            if (taskId != -1)
+                Bukkit.getScheduler().cancelTask(taskId);
+            else
+                registerListener();
     }
 
     @Override

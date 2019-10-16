@@ -216,6 +216,22 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
         return new LiteralIterator<>(data);
     }
 
+    @Override
+    public boolean isLoopOf(final String s) {
+        return false;
+    }
+
+    @Override
+    public Expression<?> getSource() {
+        final UnparsedLiteral s = source;
+        return s == null ? this : s;
+    }
+
+    @Override
+    public Expression<T> simplify() {
+        return this;
+    }
+
     private static final class LiteralIterator<T> extends NonNullIterator<T> {
         private final transient T[] data;
         private int i;
@@ -231,22 +247,6 @@ public class SimpleLiteral<T> implements Literal<T>, DefaultExpression<T> {
                 return null;
             return data[i++];
         }
-    }
-
-    @Override
-    public boolean isLoopOf(final String s) {
-        return false;
-    }
-
-    @Override
-    public Expression<?> getSource() {
-        final UnparsedLiteral s = source;
-        return s == null ? this : s;
-    }
-
-    @Override
-    public Expression<T> simplify() {
-        return this;
     }
 
 }

@@ -85,12 +85,12 @@ public final class ReversedListIterator<T> implements ListIterator<T> {
     }
 
     @Override
-    public void set(final @Nullable T e) {
+    public void set(@Nullable final T e) {
         iter.set(e);
     }
 
     @Override
-    public void add(final @Nullable T e) {
+    public void add(@Nullable final T e) {
         throw new UnsupportedOperationException();
     }
 

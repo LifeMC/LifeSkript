@@ -39,11 +39,11 @@ public final class ArrayIterator<T> implements Iterator<T> {
 
     private int index;
 
-    public ArrayIterator(final @Nullable T[] array) {
+    public ArrayIterator(@Nullable final T[] array) {
         this.array = array;
     }
 
-    public ArrayIterator(final @Nullable T[] array, final int start) {
+    public ArrayIterator(@Nullable final T[] array, final int start) {
         this.array = array;
         index = start;
     }

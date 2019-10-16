@@ -41,7 +41,7 @@ public class ErrorDescLogHandler extends LogHandler {
         this(null, null, null);
     }
 
-    public ErrorDescLogHandler(final @Nullable String before, final @Nullable String after, final @Nullable String success) {
+    public ErrorDescLogHandler(@Nullable final String before, @Nullable final String after, @Nullable final String success) {
         this.before = before;
         this.after = after;
         this.success = success;

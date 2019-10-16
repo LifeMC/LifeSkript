@@ -37,42 +37,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SuppressWarnings("static-method")
 final class ConvertersTest {
 
-    @SuppressWarnings("unused")
-    private static final class SampleConvertableObject {
-        static final SampleConvertableTargetObject convert(final SampleConvertableObject o) {
-            return new SampleConvertableTargetObject(o.number);
-        }
-
-        final int number;
-
-        SampleConvertableObject(final int number) {
-            this.number = number;
-        }
-
-        final int getNumber() {
-            return number;
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private static final class SampleConvertableTargetObject {
-        final int number;
-        final int n2;
-
-        SampleConvertableTargetObject(final int number) {
-            this.number = number;
-            n2 = number << 1;
-        }
-
-        final int getNumber() {
-            return number;
-        }
-
-        final int getN2() {
-            return n2;
-        }
-    }
-
     @SuppressWarnings("null")
     @Test
     final void testConverters() {
@@ -108,6 +72,42 @@ final class ConvertersTest {
             assertEquals(key.hashCode(), new Pair<>(SampleConvertableObject.class, SampleConvertableTargetObject.class).hashCode());
 
             assertSame(converter, value);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private static final class SampleConvertableObject {
+        final int number;
+
+        SampleConvertableObject(final int number) {
+            this.number = number;
+        }
+
+        static final SampleConvertableTargetObject convert(final SampleConvertableObject o) {
+            return new SampleConvertableTargetObject(o.number);
+        }
+
+        final int getNumber() {
+            return number;
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private static final class SampleConvertableTargetObject {
+        final int number;
+        final int n2;
+
+        SampleConvertableTargetObject(final int number) {
+            this.number = number;
+            n2 = number << 1;
+        }
+
+        final int getNumber() {
+            return number;
+        }
+
+        final int getN2() {
+            return n2;
         }
     }
 

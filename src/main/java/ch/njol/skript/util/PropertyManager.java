@@ -27,13 +27,13 @@ import ch.njol.skript.lang.SkriptParser;
 
 /**
  * A utility class for options controlled by the JVM arguments.<br /><br />
- *
+ * <p>
  * Supports default values, minimum maximum ranges and gives warnings
  * when an invalid input is found instead of just silently returning the default value.<br /><br />
- *
+ * <p>
  * This prevents typos, etc. This the main reason we don't use direct
  * methods like {@link Integer#getInteger(String, int)}.<br /><br />
- *
+ * <p>
  * The another reason is that method returns a boxed Integer, which is not a primitive.
  */
 public final class PropertyManager {
@@ -79,7 +79,7 @@ public final class PropertyManager {
     }
 
     public static final int getInt(final String propertyName,
-                                       final int defaultValue) {
+                                   final int defaultValue) {
         return getInt(propertyName, defaultValue, -1);
     }
 

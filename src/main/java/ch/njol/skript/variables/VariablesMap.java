@@ -85,7 +85,7 @@ final class VariablesMap {
         if (!(!name.isEmpty() && name.charAt(name.length() - 1) == '*')) {
             return hashMap.get(name);
         }
-        final String[] split = Variables.splitVariableName(name);
+        final String[] split = Variables.splitVariableName0(name);
         Map<String, Object> current = treeMap;
         for (int i = 0; i < split.length; i++) {
             final String n = split[i];
@@ -120,8 +120,8 @@ final class VariablesMap {
             else
                 hashMap.put(name, value);
         }
-        final String[] split = Variables.splitVariableName(name);
-        TreeMap<String, Object> parent = treeMap;
+        final String[] split = Variables.splitVariableName0(name);
+        Map<String, Object> parent = treeMap;
         for (int i = 0; i < split.length; i++) {
             final String n = split[i];
             Object current = parent.get(n);
@@ -140,15 +140,15 @@ final class VariablesMap {
             } else if (current instanceof TreeMap) {
                 if (i == split.length - 1) {
                     if (value == null)
-                        ((TreeMap<String, Object>) current).remove(null);
+                        ((Map<String, Object>) current).remove(null);
                     else
-                        ((TreeMap<String, Object>) current).put(null, value);
+                        ((Map<String, Object>) current).put(null, value);
                     break;
                 }
                 if (i == split.length - 2 && "*".equals(split[i + 1])) {
                     assert value == null;
                     deleteFromHashMap(StringUtils.join(split, Variable.SEPARATOR, 0, i + 1), (TreeMap<String, Object>) current);
-                    final Object v = ((TreeMap<String, Object>) current).get(null);
+                    final Object v = ((Map<String, Object>) current).get(null);
                     if (v == null)
                         parent.remove(n);
                     else

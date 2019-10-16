@@ -33,7 +33,7 @@ public final class SerializedVariable {
     @Nullable
     public final Value value;
 
-    public SerializedVariable(final String name, final @Nullable Value value) {
+    public SerializedVariable(final String name, @Nullable final Value value) {
         this.name = name;
         this.value = value;
     }

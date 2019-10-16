@@ -262,6 +262,10 @@ public final class Variables {
 
     @SuppressWarnings("null")
     public static final String[] splitVariableName(final String name) {
+        return splitVariableName0(name);
+    }
+
+    static final String[] splitVariableName0(final CharSequence name) {
         return variableNameSplitPattern.split(name);
     }
 

@@ -57,32 +57,6 @@ public abstract class Condition extends Statement {
     }
 
     /**
-     * Not an actual registered condition. (for now?)
-     */
-    private static final class BooleanCondition extends Condition {
-        private final Expression<Boolean> bool;
-
-        BooleanCondition(final Expression<Boolean> bool) {
-            this.bool = bool;
-        }
-
-        @Override
-        public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
-            return true;
-        }
-
-        @Override
-        public final boolean check(final Event e) {
-            return bool.check(e, o -> o, isNegated());
-        }
-
-        @Override
-        public final String toString(@Nullable final Event e, final boolean debug) {
-            return bool.toString(e, debug);
-        }
-    }
-
-    /**
      * Checks whatever this condition is satisfied with the given event. This should not alter the event or the world in any way, as conditions are only checked until one returns
      * false. All subsequent conditions of the same trigger will then be omitted.<br/>
      * <br/>
@@ -112,6 +86,32 @@ public abstract class Condition extends Statement {
      */
     protected final void setNegated(final boolean invert) {
         negated = invert;
+    }
+
+    /**
+     * Not an actual registered condition. (for now?)
+     */
+    private static final class BooleanCondition extends Condition {
+        private final Expression<Boolean> bool;
+
+        BooleanCondition(final Expression<Boolean> bool) {
+            this.bool = bool;
+        }
+
+        @Override
+        public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final SkriptParser.ParseResult parseResult) {
+            return true;
+        }
+
+        @Override
+        public final boolean check(final Event e) {
+            return bool.check(e, o -> o, isNegated());
+        }
+
+        @Override
+        public final String toString(@Nullable final Event e, final boolean debug) {
+            return bool.toString(e, debug);
+        }
     }
 
 }

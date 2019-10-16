@@ -49,162 +49,12 @@ import java.util.function.Predicate;
  */
 public final class ScriptUpdater extends AbstractUpdater {
 
-    public static final class Parser {
-        private static final ch.njol.skript.classes.Parser<Boolean> booleanParser =
-                (ch.njol.skript.classes.Parser<Boolean>) Objects.requireNonNull(Objects.requireNonNull(Classes.getExactClassInfo(Boolean.class))
-                        .getParser());
-
-        private static final Predicate<String> parseBoolean = value -> booleanParser.parse(value, ParseContext.DEFAULT);
-
-        private Parser() {
-            throw new UnsupportedOperationException("Static class");
-        }
-
-        public static final boolean checkValid(final String key) {
-            return "script name".equalsIgnoreCase(key) ||
-                    "version".equalsIgnoreCase(key) ||
-                    "version check url".equalsIgnoreCase(key) ||
-                    "latest version download url".equalsIgnoreCase(key) ||
-                    "release channel".equalsIgnoreCase(key) ||
-                    "auto install".equalsIgnoreCase(key) ||
-                    "updater enabled".equalsIgnoreCase(key);
-        }
-
-        @Nullable
-        private static String scriptName;
-
-        @Nullable
-        private static Version scriptVersion;
-
-        @Nullable
-        private static String versionCheckUrl;
-
-        @Nullable
-        private static String latestVersionDownloadUrl;
-
-        @Nullable
-        private static ReleaseChannel releaseChannel;
-
-        private static boolean isAutoInstall = true;
-
-        public static final void clearValues() {
-            scriptName = null;
-            scriptVersion = null;
-            versionCheckUrl = null;
-            latestVersionDownloadUrl = null;
-            releaseChannel = null;
-            isAutoInstall = true;
-        }
-
-        public static final boolean parse(final File script,
-                                   final Collection<String> duplicateCheckList,
-                                   final String key,
-                                   final String value) throws IOException {
-            assert checkValid(key);
-
-            if ("script name".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("script name")) {
-                    Skript.error("Duplicate script name configuration setting");
-                    return false;
-                }
-                scriptName = value;
-                duplicateCheckList.add("script name");
-            } else if ("version".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("version")) {
-                    Skript.error("Duplicate version configuration setting");
-                    return false;
-                }
-                scriptVersion = new Version(value, true);
-                duplicateCheckList.add("version");
-            } else if ("version check url".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("version check url")) {
-                    Skript.error("Duplicate version check url configuration setting");
-                    return false;
-                }
-                versionCheckUrl = value;
-                duplicateCheckList.add("version check url");
-            } else if ("latest version download url".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("latest version download url")) {
-                    Skript.error("Duplicate latest version download url configuration setting");
-                    return false;
-                }
-                latestVersionDownloadUrl = value.replace("\\github\\b", "https://github.com")
-                                                .replace("\\githubRaw\\b", "https://raw.githubusercontent.com");
-                versionCheckUrl = latestVersionDownloadUrl;
-                duplicateCheckList.add("latest version download url");
-            } else if ("release channel".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("release channel")) {
-                    Skript.error("Duplicate release channel configuration setting");
-                    return false;
-                }
-                final ReleaseChannel parsed = ReleaseChannel.parse(value);
-                if (parsed == null) {
-                    Skript.error('"' + value + "\" is not a valid release channel");
-                    return false;
-                }
-                releaseChannel = parsed;
-                duplicateCheckList.add("release channel");
-            } else if ("auto install".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("auto install")) {
-                    Skript.error("Duplicate auto install configuration setting");
-                    return false;
-                }
-                isAutoInstall = parseBoolean.test(value); // not Boolean#parseBoolean to also accept words from lang/%lang%.sk, such as 'yes' and 'no'
-                duplicateCheckList.add("auto install");
-            } else if ("updater enabled".equalsIgnoreCase(key)) {
-                if (duplicateCheckList.contains("updater enabled")) {
-                    Skript.error("Duplicate updater enabled configuration setting");
-                    return false;
-                }
-                final boolean enabled = parseBoolean.test(value);
-                if (enabled) {
-                    // Eclipse forces local variables for guaranteeing non-null status
-                    final String localScriptName = scriptName;
-                    final Version localScriptVersion = scriptVersion;
-                    final String localVersionCheckUrl = versionCheckUrl;
-                    final String localLatestVersionDownloadUrl = latestVersionDownloadUrl;
-                    final ReleaseChannel localReleaseChannel = releaseChannel;
-                    if (localScriptName == null) {
-                        Skript.error("Script name must be specified to use updater");
-                        return false;
-                    }
-                    if (localScriptVersion == null) {
-                        Skript.error("Script version must be specified to use updater");
-                        return false;
-                    }
-                    if (localVersionCheckUrl == null) {
-                        Skript.error("Version check URL must be specified to use updater");
-                        return false;
-                    }
-                    if (localLatestVersionDownloadUrl == null) {
-                        Skript.error("Latest version download link must be specified to use updater");
-                        return false;
-                    }
-                    if (localReleaseChannel == null) {
-                        Skript.error("Release channel must be specified to use updater");
-                        return false;
-                    }
-                    new ScriptUpdater(script, localScriptName, localScriptVersion, localVersionCheckUrl, localLatestVersionDownloadUrl, true, localReleaseChannel, 1L, TimeUnit.MINUTES, isAutoInstall)
-                            .registerListener()
-                            .checkAndInstallUpdates(); // Initial check
-                }
-                duplicateCheckList.add("updater enabled");
-            } else
-                assert false : key;
-
-            return true;
-        }
-    }
-
     private final File script;
     private final String scriptName;
-
     private final String downloadUrl;
     private final String versionCheckUrl;
-
     private final Executor updateCheckerExecutor;
     private final Release current;
-
     private boolean isAutoInstall;
 
     public ScriptUpdater(final File script,
@@ -239,13 +89,13 @@ public final class ScriptUpdater extends AbstractUpdater {
     }
 
     @Override
-    public void setAutoInstallEnabled(final boolean enabled) {
-        isAutoInstall = enabled;
+    public boolean isAutoInstallEnabled() {
+        return isAutoInstall;
     }
 
     @Override
-    public boolean isAutoInstallEnabled() {
-        return isAutoInstall;
+    public void setAutoInstallEnabled(final boolean enabled) {
+        isAutoInstall = enabled;
     }
 
     @Override
@@ -331,6 +181,147 @@ public final class ScriptUpdater extends AbstractUpdater {
         // Apply changes immediately
         Bukkit.getScheduler().runTask(Skript.getInstance(), () -> Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),
                 "skript reload " + script.getName()));
+    }
+
+    public static final class Parser {
+        private static final ch.njol.skript.classes.Parser<Boolean> booleanParser =
+                (ch.njol.skript.classes.Parser<Boolean>) Objects.requireNonNull(Objects.requireNonNull(Classes.getExactClassInfo(Boolean.class))
+                        .getParser());
+
+        private static final Predicate<String> parseBoolean = value -> booleanParser.parse(value, ParseContext.DEFAULT);
+        @Nullable
+        private static String scriptName;
+        @Nullable
+        private static Version scriptVersion;
+        @Nullable
+        private static String versionCheckUrl;
+        @Nullable
+        private static String latestVersionDownloadUrl;
+        @Nullable
+        private static ReleaseChannel releaseChannel;
+        private static boolean isAutoInstall = true;
+
+        private Parser() {
+            throw new UnsupportedOperationException("Static class");
+        }
+
+        public static final boolean checkValid(final String key) {
+            return "script name".equalsIgnoreCase(key) ||
+                    "version".equalsIgnoreCase(key) ||
+                    "version check url".equalsIgnoreCase(key) ||
+                    "latest version download url".equalsIgnoreCase(key) ||
+                    "release channel".equalsIgnoreCase(key) ||
+                    "auto install".equalsIgnoreCase(key) ||
+                    "updater enabled".equalsIgnoreCase(key);
+        }
+
+        public static final void clearValues() {
+            scriptName = null;
+            scriptVersion = null;
+            versionCheckUrl = null;
+            latestVersionDownloadUrl = null;
+            releaseChannel = null;
+            isAutoInstall = true;
+        }
+
+        public static final boolean parse(final File script,
+                                          final Collection<String> duplicateCheckList,
+                                          final String key,
+                                          final String value) throws IOException {
+            assert checkValid(key);
+
+            if ("script name".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("script name")) {
+                    Skript.error("Duplicate script name configuration setting");
+                    return false;
+                }
+                scriptName = value;
+                duplicateCheckList.add("script name");
+            } else if ("version".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("version")) {
+                    Skript.error("Duplicate version configuration setting");
+                    return false;
+                }
+                scriptVersion = new Version(value, true);
+                duplicateCheckList.add("version");
+            } else if ("version check url".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("version check url")) {
+                    Skript.error("Duplicate version check url configuration setting");
+                    return false;
+                }
+                versionCheckUrl = value;
+                duplicateCheckList.add("version check url");
+            } else if ("latest version download url".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("latest version download url")) {
+                    Skript.error("Duplicate latest version download url configuration setting");
+                    return false;
+                }
+                latestVersionDownloadUrl = value.replace("\\github\\b", "https://github.com")
+                        .replace("\\githubRaw\\b", "https://raw.githubusercontent.com");
+                versionCheckUrl = latestVersionDownloadUrl;
+                duplicateCheckList.add("latest version download url");
+            } else if ("release channel".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("release channel")) {
+                    Skript.error("Duplicate release channel configuration setting");
+                    return false;
+                }
+                final ReleaseChannel parsed = ReleaseChannel.parse(value);
+                if (parsed == null) {
+                    Skript.error('"' + value + "\" is not a valid release channel");
+                    return false;
+                }
+                releaseChannel = parsed;
+                duplicateCheckList.add("release channel");
+            } else if ("auto install".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("auto install")) {
+                    Skript.error("Duplicate auto install configuration setting");
+                    return false;
+                }
+                isAutoInstall = parseBoolean.test(value); // not Boolean#parseBoolean to also accept words from lang/%lang%.sk, such as 'yes' and 'no'
+                duplicateCheckList.add("auto install");
+            } else if ("updater enabled".equalsIgnoreCase(key)) {
+                if (duplicateCheckList.contains("updater enabled")) {
+                    Skript.error("Duplicate updater enabled configuration setting");
+                    return false;
+                }
+                final boolean enabled = parseBoolean.test(value);
+                if (enabled) {
+                    // Eclipse forces local variables for guaranteeing non-null status
+                    final String localScriptName = scriptName;
+                    final Version localScriptVersion = scriptVersion;
+                    final String localVersionCheckUrl = versionCheckUrl;
+                    final String localLatestVersionDownloadUrl = latestVersionDownloadUrl;
+                    final ReleaseChannel localReleaseChannel = releaseChannel;
+                    if (localScriptName == null) {
+                        Skript.error("Script name must be specified to use updater");
+                        return false;
+                    }
+                    if (localScriptVersion == null) {
+                        Skript.error("Script version must be specified to use updater");
+                        return false;
+                    }
+                    if (localVersionCheckUrl == null) {
+                        Skript.error("Version check URL must be specified to use updater");
+                        return false;
+                    }
+                    if (localLatestVersionDownloadUrl == null) {
+                        Skript.error("Latest version download link must be specified to use updater");
+                        return false;
+                    }
+                    if (localReleaseChannel == null) {
+                        Skript.error("Release channel must be specified to use updater");
+                        return false;
+                    }
+                    new ScriptUpdater(script, localScriptName, localScriptVersion, localVersionCheckUrl, localLatestVersionDownloadUrl, true, localReleaseChannel, 1L, TimeUnit.MINUTES, isAutoInstall)
+                            .registerListener()
+                            .checkAndInstallUpdates(); // Initial check
+                }
+                duplicateCheckList.add("updater enabled");
+            } else
+                assert false : key;
+
+            return true;
+        }
     }
 
 }

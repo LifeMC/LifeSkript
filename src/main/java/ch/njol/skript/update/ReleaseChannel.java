@@ -44,7 +44,7 @@ public enum ReleaseChannel {
 
     /**
      * Represents a pre/preview-release.
-     *
+     * <p>
      * Preview releases are used to indicate an update is mostly
      * ready but still not production ready.
      */
@@ -52,7 +52,7 @@ public enum ReleaseChannel {
 
     /**
      * Represents a beta release.
-     *
+     * <p>
      * Beta releases are not finished yet, so it's better
      * to use either {@link ReleaseChannel#PREVIEW} or {@link ReleaseChannel#STABLE}.
      */
@@ -60,7 +60,7 @@ public enum ReleaseChannel {
 
     /**
      * Represents an early alpha release.
-     *
+     * <p>
      * Alpha releases are mostly unstable and contains more
      * unfinished work and bugs than {@link ReleaseChannel#BETA}
      */
@@ -68,7 +68,7 @@ public enum ReleaseChannel {
 
     /**
      * Represents a dev/development release.
-     *
+     * <p>
      * This generally not released to public, only sent people
      * to test certain things.
      */
@@ -76,10 +76,10 @@ public enum ReleaseChannel {
 
     /**
      * Represents a nightly/self built release.
-     *
+     * <p>
      * The difference between {@link ReleaseChannel#DEV} and this
      * is, in dev the developer sends a private dev/test version,
-     *
+     * <p>
      * but in nightly user or anyone can build and publish
      * releases, and these are considered {@link ReleaseChannel#NIGHTLY}
      */
@@ -97,6 +97,30 @@ public enum ReleaseChannel {
         for (final ReleaseChannel releaseChannel : values)
             cache.put(releaseChannel.name(), releaseChannel);
         cacheSet = cache.entrySet();
+    }
+
+    private final int id;
+    @Nullable
+    private final String prefix;
+    @Nullable
+    private final String suffix;
+
+    ReleaseChannel(final int id) {
+        this(id, null);
+    }
+
+    ReleaseChannel(final int id,
+                   @Nullable final String prefix) {
+        this(id, prefix, null);
+    }
+
+    ReleaseChannel(final int id,
+                   @Nullable final String prefix,
+                   @Nullable final String suffix) {
+        this.id = id;
+
+        this.prefix = prefix;
+        this.suffix = suffix;
     }
 
     public static final ReleaseChannel mostStable() {
@@ -265,36 +289,10 @@ public enum ReleaseChannel {
         return parse != null ? parse : STABLE;
     }
 
-    private final int id;
-
-    @Nullable
-    private final String prefix;
-
-    @Nullable
-    private final String suffix;
-
-    ReleaseChannel(final int id) {
-        this(id, null);
-    }
-
-    ReleaseChannel(final int id,
-                   @Nullable final String prefix) {
-        this(id, prefix, null);
-    }
-
-    ReleaseChannel(final int id,
-                   @Nullable final String prefix,
-                   @Nullable final String suffix) {
-        this.id = id;
-
-        this.prefix = prefix;
-        this.suffix = suffix;
-    }
-
     /**
      * Gets the prefix of this update in
      * version strings.<p />
-     *
+     * <p>
      * <p />Can return null.
      *
      * @return The prefix of this update in
@@ -308,7 +306,7 @@ public enum ReleaseChannel {
     /**
      * Gets the suffix of this update in
      * version strings.<p />
-     *
+     * <p>
      * <p />Can return null.
      *
      * @return The suffix of this update in
@@ -322,10 +320,10 @@ public enum ReleaseChannel {
     /**
      * Gets one release channel up comes
      * before this one.
-     *
+     * <p>
      * The returned {@link ReleaseChannel}
      * will be more stable.
-     *
+     * <p>
      * If this the most stable {@link ReleaseChannel}
      * it returns itself.
      *
@@ -341,10 +339,10 @@ public enum ReleaseChannel {
     /**
      * Gets one release channel down comes
      * after this one.
-     *
+     * <p>
      * The returned {@link ReleaseChannel}
      * will be more unstable.
-     *
+     * <p>
      * If this the most unstable {@link ReleaseChannel},
      * it returns itself.
      *

@@ -37,7 +37,7 @@ public interface Release extends Versionable, Stateable<ReleaseStatus> {
     /**
      * Gets the updater used to fetch
      * this {@link Release}.
-     *
+     * <p>
      * You can install this {@link Release}
      * with the returned {@link Updater}.
      *
@@ -72,7 +72,7 @@ public interface Release extends Versionable, Stateable<ReleaseStatus> {
     /**
      * Checks if this {@link Release} is the
      * currently installed {@link Release}.
-     *
+     * <p>
      * Note that you can't update to this
      * release if this the currently installed release.
      *
@@ -107,11 +107,9 @@ public interface Release extends Versionable, Stateable<ReleaseStatus> {
      * currently installed {@link Release}.
      *
      * @return The current {@link Release} for chaining.
-     *
      * @throws InstalledReleaseException If this release
-     * is not the currently installed {@link Release}.
-     *
-     * @throws IOException If backup creation failed.
+     *                                   is not the currently installed {@link Release}.
+     * @throws IOException               If backup creation failed.
      */
     <T extends Release> T backup() throws InstalledReleaseException, IOException;
 

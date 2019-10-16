@@ -55,7 +55,7 @@ public final class EmptyIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         return obj instanceof EmptyIterator;
     }
 

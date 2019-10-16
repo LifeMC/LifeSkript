@@ -151,8 +151,6 @@ public final class SkriptConfig {
             .optional(true)
             .setter(t -> Function.executeWithNulls = t);
     public static final Option<Boolean> disableMissingAndOrWarnings = new Option<>("disable variable missing and/or warnings", false);
-    static final Collection<Config> configs = new ArrayList<>();
-    static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
     public static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", true);
     public static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(10, TimeUnit.MINUTES)).setter(t -> {
         if (Skript.getInstance().updater == null)
@@ -166,6 +164,8 @@ public final class SkriptConfig {
             updater.setCheckFrequency(t.getMilliSeconds(), TimeUnit.MILLISECONDS);
     });
     public static final Option<Boolean> automaticallyDownloadNewAddonVersions = new Option<>("automatically download new addon versions", true);
+    static final Collection<Config> configs = new ArrayList<>();
+    static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
     @SuppressWarnings("null")
     private static final DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     private static final Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, s -> {

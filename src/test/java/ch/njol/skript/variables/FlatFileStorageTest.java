@@ -42,7 +42,7 @@ final class FlatFileStorageTest {
 
     private static final String encode(final byte[] data) {
         try {
-            return (String) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("encode", byte[].class), (Function<Method, Method>) Skript::setAccessible).invoke(null, new Object[] {data});
+            return (String) Skript.invoke(FlatFileStorage.class.getDeclaredMethod("encode", byte[].class), (Function<Method, Method>) Skript::setAccessible).invoke(null, new Object[]{data});
         } catch (final InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             return fail(e);
         }

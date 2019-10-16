@@ -65,7 +65,7 @@ public final class ScriptFunction<T> extends Function<T> {
      * @param e
      * @param value
      */
-    public void setReturnValue(final FunctionEvent<? extends T> e, final @Nullable T[] value) {
+    public void setReturnValue(final FunctionEvent<? extends T> e, @Nullable final T[] value) {
         setReturnValue(e, value, false);
     }
 
@@ -75,12 +75,11 @@ public final class ScriptFunction<T> extends Function<T> {
      * @param e
      * @param value
      * @param ignoreEmptyReturn
-     * 
      * @deprecated use {@link ScriptFunction#setReturnValue(Object[], boolean)} instead.
      */
     @Deprecated
-    public void setReturnValue(@SuppressWarnings("unused") final FunctionEvent<? extends T> e, final @Nullable T[] value, final boolean ignoreEmptyReturn) {
-    	setReturnValue(value, ignoreEmptyReturn);
+    public void setReturnValue(@SuppressWarnings("unused") final FunctionEvent<? extends T> e, @Nullable final T[] value, final boolean ignoreEmptyReturn) {
+        setReturnValue(value, ignoreEmptyReturn);
     }
 
     /**
@@ -120,7 +119,7 @@ public final class ScriptFunction<T> extends Function<T> {
     public boolean resetReturnValue() {
         returnValue = null;
         returnValueSet = false;
-		ignoreEmptyReturn = false;
+        ignoreEmptyReturn = false;
         return true;
     }
 

@@ -30,19 +30,19 @@ package ch.njol.util.misc;
 public interface Toggleable {
 
     /**
-     * Sets this {@link Toggleable} objects
-     * toggled status.
-     *
-     * @param enabled True to toggle/enable
-     */
-    void setEnabled(final boolean enabled);
-
-    /**
      * Checks this {@link Toggleable} objects
      * toggled status.
      *
      * @return True if toggled/enabled
      */
     boolean isEnabled();
+
+    /**
+     * Sets this {@link Toggleable} objects
+     * toggled status.
+     *
+     * @param enabled True to toggle/enable
+     */
+    void setEnabled(final boolean enabled);
 
 }

@@ -42,7 +42,7 @@ public final class Validate {
         }
     }
 
-    public static final void notNull(final @Nullable Object object, final String name) {
+    public static final void notNull(@Nullable final Object object, final String name) {
         if (object == null)
             throw new IllegalArgumentException(name + " must not be null");
     }
@@ -57,22 +57,22 @@ public final class Validate {
             throw new IllegalArgumentException(error);
     }
 
-    public static final void notNullOrEmpty(final @Nullable String s, final String name) {
+    public static final void notNullOrEmpty(@Nullable final String s, final String name) {
         if (s == null || s.isEmpty())
             throw new IllegalArgumentException(name + " must neither be null nor empty");
     }
 
-    public static final void notNullOrEmpty(final @Nullable Object[] array, final String name) {
+    public static final void notNullOrEmpty(@Nullable final Object[] array, final String name) {
         if (array == null || array.length == 0)
             throw new IllegalArgumentException(name + " must neither be null nor empty");
     }
 
-    public static final void notNullOrEmpty(final @Nullable Collection<?> collection, final String name) {
+    public static final void notNullOrEmpty(@Nullable final Collection<?> collection, final String name) {
         if (collection == null || collection.isEmpty())
             throw new IllegalArgumentException(name + " must neither be null nor empty");
     }
 
-    public static final void notEmpty(final @Nullable String s, final String name) {
+    public static final void notEmpty(@Nullable final String s, final String name) {
         if (s != null && s.isEmpty())
             throw new IllegalArgumentException(name + " must not be empty");
     }

@@ -87,7 +87,7 @@ public final class ExprRegionsAt extends SimpleExpression<Region> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the regions at " + locs.toString(e, debug);
     }
 

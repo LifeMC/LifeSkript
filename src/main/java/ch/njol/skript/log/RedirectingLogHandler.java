@@ -42,7 +42,7 @@ public final class RedirectingLogHandler extends LogHandler {
 
     private int numErrors;
 
-    public RedirectingLogHandler(final CommandSender recipient, final @Nullable String prefix) {
+    public RedirectingLogHandler(final CommandSender recipient, @Nullable final String prefix) {
         this.recipient = recipient == Bukkit.getConsoleSender() ? null : recipient;
         this.prefix = prefix == null ? "" : prefix;
     }

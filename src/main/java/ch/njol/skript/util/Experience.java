@@ -62,7 +62,7 @@ public final class Experience implements YggdrasilSerializable {
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)

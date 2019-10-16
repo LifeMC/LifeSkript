@@ -123,7 +123,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
         return type.effect instanceof EntityEffect;
     }
 
-    public void play(final @Nullable Player[] ps, final Location l, final @Nullable Entity e) {
+    public void play(@Nullable final Player[] ps, final Location l, @Nullable final Entity e) {
         assert e == null || l.equals(e.getLocation());
         if (isEntityEffect()) {
             if (e != null)
@@ -158,7 +158,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
     }
 
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    public boolean equals(@Nullable final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -178,13 +178,13 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
     private enum Type implements YggdrasilSerializable {
         ENDER_SIGNAL(Effect.ENDER_SIGNAL), MOBSPAWNER_FLAMES(Effect.MOBSPAWNER_FLAMES), POTION_BREAK(Effect.POTION_BREAK) {
             @Override
-            public Object getData(final @Nullable Object raw, final Location l) {
+            public Object getData(@Nullable final Object raw, final Location l) {
                 return new PotionEffect(raw == null ? PotionEffectType.SPEED : (PotionEffectType) raw, 1, 0);
             }
         },
         SMOKE(Effect.SMOKE) {
             @Override
-            public Object getData(final @Nullable Object raw, final Location l) {
+            public Object getData(@Nullable final Object raw, final Location l) {
                 if (raw == null)
                     return BlockFace.SELF;
                 return Direction.getFacing(((Direction) raw).getDirection(l), false); // TODO allow this to not be a literal
@@ -206,7 +206,7 @@ public final class VisualEffect implements SyntaxElement, YggdrasilSerializable 
          * Converts the data from the pattern to the data required by Bukkit
          */
         @Nullable
-        public Object getData(final @Nullable Object raw, @SuppressWarnings("unused") final Location l) {
+        public Object getData(@Nullable final Object raw, @SuppressWarnings("unused") final Location l) {
             assert raw == null;
             return null;
         }

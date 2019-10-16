@@ -258,7 +258,7 @@ public final class Language {
             }
         }
         l.remove("version");
-        final HashMap<String, String> loc = localized;
+        final Map<String, String> loc = localized;
         if (loc != null)
             loc.putAll(l);
         else
@@ -288,12 +288,12 @@ public final class Language {
     }
 
     private static final void validateLocalized() {
-        final HashMap<String, String> loc = localized;
+        final Map<String, String> loc = localized;
         if (loc == null) {
             assert false;
             return;
         }
-        HashSet<String> s = new HashSet<>(english.keySet());
+        Set<String> s = new HashSet<>(english.keySet());
         s.removeAll(loc.keySet());
         removeIgnored(s);
         if (!s.isEmpty() && Skript.logNormal())
@@ -305,7 +305,7 @@ public final class Language {
             Skript.warning("The localized language file(s) has/ve superfluous entries: " + StringUtils.join(s, ", "));
     }
 
-    private static final void removeIgnored(final Set<String> keys) {
+    private static final void removeIgnored(final Collection<String> keys) {
         keys.removeIf(s -> s.startsWith(Noun.GENDERS_SECTION));
     }
 

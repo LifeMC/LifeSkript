@@ -25,6 +25,7 @@ package ch.njol.util;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.junit.jupiter.api.Test;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -39,7 +40,7 @@ final class Math2Test {
     private static final int RANDOM_NUMBERS = 10000;
 
     private static final int[] a(final int... is) {
-        final Random rand = new Random();
+        final Random rand = new SecureRandom();
         final int[] r = Arrays.copyOf(is, is.length + RANDOM_NUMBERS);
         for (int i = is.length; i < r.length; i++)
             r[i] = rand.nextInt();
@@ -47,7 +48,7 @@ final class Math2Test {
     }
 
     private static final long[] a(final long... ls) {
-        final Random rand = new Random();
+        final Random rand = new SecureRandom();
         final long[] r = Arrays.copyOf(ls, ls.length + RANDOM_NUMBERS);
         for (int i = ls.length; i < r.length; i++)
             r[i] = rand.nextLong();
@@ -55,7 +56,7 @@ final class Math2Test {
     }
 
     private static final float[] a(final float... fs) {
-        final Random rand = new Random();
+        final Random rand = new SecureRandom();
         final float[] r = new float[(fs.length << 1) + RANDOM_NUMBERS];
         for (int i = 0; i < fs.length; i++) {
             r[2 * i] = fs[i];
@@ -67,7 +68,7 @@ final class Math2Test {
     }
 
     private static final double[] a(final double... ds) {
-        final Random rand = new Random();
+        final Random rand = new SecureRandom();
         final double[] r = new double[(ds.length << 1) + RANDOM_NUMBERS];
         for (int i = 0; i < ds.length; i++) {
             r[2 * i] = ds[i];
@@ -88,7 +89,7 @@ final class Math2Test {
         final double[] doubles = a(Double.MIN_VALUE, Double.MIN_NORMAL, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NaN, Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE, 0, -0, 1, 0.1, 0x1.fffffffffffffp-2, 0.5, 1.5, 100, 5726579381544559d, 5726579381544559.5d);
         final float[] floats = a(Float.MIN_VALUE, Float.MIN_NORMAL, Float.MAX_VALUE, Float.POSITIVE_INFINITY, Float.NaN, Integer.MAX_VALUE, Integer.MIN_VALUE, Long.MAX_VALUE, Long.MIN_VALUE, 0, -0, 1, 0.1f, 0x1.fffffep-2f, 0.5f, 1.5f, 100, 12954701, 12954701.5f);
 
-        final Random rand = new Random();
+        final Random rand = new SecureRandom();
 
         final int[][] modvs = {{5, 4, 1}, {-3, 4, 1}, {4, 4, 0}, {-4, 4, 0}, {-100, 5, 0}, {-50, 100, 50}, {-1000, 4, 0}, {-10, 9, 8}
         };

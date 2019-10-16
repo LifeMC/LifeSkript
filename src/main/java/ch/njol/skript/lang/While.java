@@ -42,7 +42,7 @@ public final class While extends TriggerSection {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "while " + c.toString(e, debug);
     }
 
@@ -57,7 +57,7 @@ public final class While extends TriggerSection {
     }
 
     @Override
-    public While setNext(final @Nullable TriggerItem next) {
+    public While setNext(@Nullable final TriggerItem next) {
         actualNext = next;
         return this;
     }

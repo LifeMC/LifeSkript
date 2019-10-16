@@ -35,7 +35,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
     private static final Class<?>[] supportedClasses = {ArrayList.class, LinkedList.class, HashSet.class, HashMap.class, UUID.class
     };
 
-    private static final Set<Class<?>> set = new HashSet<>(Arrays.asList(supportedClasses));
+    private static final Collection<Class<?>> supportedClassesCollection = new HashSet<>(Arrays.asList(supportedClasses));
 
     @Override
     @Nullable
@@ -49,7 +49,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
     @Override
     @Nullable
     public String getID(final Class<?> c) {
-        if (set.contains(c))
+        if (supportedClassesCollection.contains(c))
             return c.getSimpleName();
         return null;
     }
@@ -57,7 +57,7 @@ public final class JRESerializer extends YggdrasilSerializer<Object> {
     @SuppressWarnings("null")
     @Override
     public Fields serialize(final Object o) {
-        if (!set.contains(o.getClass()))
+        if (!supportedClassesCollection.contains(o.getClass()))
             throw new IllegalArgumentException();
         final Fields f = new Fields();
         if (o instanceof Collection) {

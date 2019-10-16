@@ -46,7 +46,7 @@ public final class Parameter<T> {
     final boolean isNone;
 
     @SuppressWarnings("null")
-    public Parameter(final @Nullable String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def) {
+    public Parameter(@Nullable final String name, final ClassInfo<T> type, final boolean single, @Nullable final Expression<? extends T> def) {
         this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;
@@ -55,7 +55,7 @@ public final class Parameter<T> {
     }
 
     @SuppressWarnings("null")
-    public Parameter(final @Nullable String name, final ClassInfo<T> type, final boolean single, final @Nullable Expression<? extends T> def, final boolean isNone) {
+    public Parameter(@Nullable final String name, final ClassInfo<T> type, final boolean single, @Nullable final Expression<? extends T> def, final boolean isNone) {
         this.name = name != null ? name.toLowerCase(Locale.ENGLISH) : null;
         this.type = type;
         this.def = def;
@@ -64,7 +64,7 @@ public final class Parameter<T> {
     }
 
     @Nullable
-    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def) {
+    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, @Nullable final String def) {
         if (def != null) {
             final boolean isNone = (def.contains("none") || def.contains("null")) && def.contains("value of");
             return newInstance(name, type, single, def, isNone);
@@ -74,7 +74,7 @@ public final class Parameter<T> {
 
     @SuppressWarnings("unchecked")
     @Nullable
-    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, final @Nullable String def, final boolean isNone) {
+    public static final <T> Parameter<T> newInstance(final String name, final ClassInfo<T> type, final boolean single, @Nullable final String def, final boolean isNone) {
         if (!Variable.isValidVariableName(name, false, false)) {
             Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
             return null;
