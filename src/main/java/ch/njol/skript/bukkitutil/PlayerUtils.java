@@ -46,7 +46,8 @@ public final class PlayerUtils {
     public static final Task task = new Task(Skript.getInstance(), 1L, 1L) {
         @Override
         public final void run() {
-            SpikeDetector.tick();
+			assert Bukkit.isPrimaryThread() : Thread.currentThread();
+            TickUtils.tickAll();
             try {
                 for (final Player p : inviUpdate)
                     p.updateInventory();

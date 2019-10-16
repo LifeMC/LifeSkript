@@ -28,6 +28,7 @@ import ch.njol.skript.classes.Parser;
 import ch.njol.skript.config.Node;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.util.misc.Tickable;
 import org.bukkit.Bukkit;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
@@ -77,10 +78,11 @@ public final class SpikeDetector extends Thread {
     private volatile long lastEarlyWarning;
     private volatile long lastTick;
     private volatile boolean stopping;
+    private static final Tickable sampleTicker = SpikeDetector::tick;
 
     private SpikeDetector(final Thread serverThread) {
         super("Skript spike detector");
-        super.setPriority(Thread.MAX_PRIORITY);
+        setPriority(Thread.MAX_PRIORITY);
 
         this.serverThread = serverThread;
 
@@ -132,8 +134,9 @@ public final class SpikeDetector extends Thread {
         if (instance == null) {
             instance = new SpikeDetector(serverThread);
             instance.start();
+
+            TickUtils.everyTick(sampleTicker);
         }
-        PlayerUtils.task.run();
     }
 
     /**
@@ -220,6 +223,101 @@ public final class SpikeDetector extends Thread {
         }
     }
 
+    public static final void flushOutErr() {
+        System.err.flush(); // Errors first
+        System.out.flush();
+    }
+
+    public static final void dumpMainThreadStack() {
+        dumpMainThreadStack(null);
+    }
+
+    @SuppressWarnings("null")
+    public static final void dumpMainThreadStack(@Nullable final String customMessage) {
+        assert Skript.serverThread != null;
+
+        dumpMainThreadStack(Skript.serverThread, Skript.minecraftLogger, false, customMessage, 0, 0);
+    }
+
+    public static final void dumpMainThreadStack(final Thread serverThread,
+                                                 final Logger log,
+                                                 final boolean freeze,
+                                                 final long currentTime,
+                                                 final long lastTick) {
+        dumpMainThreadStack(serverThread, log, freeze, null, currentTime, lastTick);
+    }
+
+    @SuppressWarnings("null")
+    public static final void dumpMainThreadStack(final Thread serverThread,
+                                                 final Logger log,
+                                                 final boolean freeze,
+                                                 @Nullable final String customMessage,
+                                                 final long currentTime,
+                                                 final long lastTick) {
+        // Minimize server thread to get true stack trace
+        final int oldPriority = serverThread.getPriority();
+        serverThread.setPriority(Thread.MIN_PRIORITY);
+
+        // Get true spike time here
+        final long spikeTime = (currentTime + sleepMillisDelay - lastTick) / 1000L;
+
+        // Get true stack trace here
+        final ThreadInfo threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(serverThread.getId(), Integer.MAX_VALUE);
+        final StackTraceElement[] stackTrace = threadInfo.getStackTrace();
+
+        // Get true monitor info here
+        final MonitorInfo[] monitorInfo = threadInfo.getLockedMonitors();
+        final State threadState = threadInfo.getThreadState();
+
+        // Get true lock info here
+        final LockInfo lockInfo = threadInfo.getLockInfo();
+        final LockInfo[] lockedSynchronizers = threadInfo.getLockedSynchronizers();
+
+        // Get true alive and suspended status here
+        final boolean alive = serverThread.isAlive();
+        final boolean suspended = threadInfo.isSuspended();
+
+        // Get true interrupted status here
+        final boolean interrupted = serverThread.isInterrupted();
+
+        // Print colored to make admins pay attention, if possible
+        final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
+                Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString() : "";
+
+        final String suffix = Skript.hasJLineSupport() && Skript.hasJansi() ?
+                Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString() : "";
+
+        if (freeze)
+            log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
+        if (customMessage != null)
+            log.log(Level.WARNING, prefix + customMessage);
+        log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + (Skript.version != null ? " | Skript: " + Skript.version : "") + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')' + " | OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
+
+        log.log(Level.WARNING, prefix + "------------------------------");
+        log.log(Level.WARNING, prefix + "Server thread dump:");
+        dumpThread(serverThread, threadState, oldPriority, alive, suspended, interrupted, threadInfo, lockInfo, lockedSynchronizers, monitorInfo, stackTrace, log, prefix);
+        final Node node;
+        if ((node = SkriptLogger.getNode()) != null)
+            log.log(Level.WARNING, prefix + "\tNode: " + node);
+        final Parser<?> lastParser;
+        final Class<?> lastParserClass;
+        if ((lastParser = Classes.lastCheckedParser) != null && (lastParserClass = lastParser.getClass()) != null) {
+            final Class<?> enclosingClass;
+            log.log(Level.WARNING, prefix + "\tParser: " + lastParserClass + " (" + ((enclosingClass = Classes.getEnclosingClass(lastParserClass)) != null ? enclosingClass : "no enclosing class") + ')');
+        }
+        final Class<?> currentlyConstructing;
+        if ((currentlyConstructing = Skript.currentlyConstructing) != null) {
+            log.log(Level.WARNING, "Thread is currently creating an instance of " + currentlyConstructing + " - constructor or reflection invocation may taken too long!");
+        }
+        log.log(Level.WARNING, prefix + "------------------------------" + suffix);
+
+        // Flush to guarantee everything is written
+        flushOutErr();
+
+        // Finally restore the priority to not cause issues
+        serverThread.setPriority(oldPriority);
+    }
+
     private static final void dumpThread(final Thread thread, final State state, final int priority, final boolean alive, final boolean suspended, final boolean interrupted, final ThreadInfo threadInfo, @Nullable final LockInfo lockInfo, final LockInfo[] lockedSynchronizers, final MonitorInfo[] monitorInfo, final StackTraceElement[] stackTrace, final Logger log, final String prefix) {
         log.log(Level.WARNING, prefix + "------------------------------");
 
@@ -270,62 +368,7 @@ public final class SpikeDetector extends Thread {
             if (lastTick != 0L && currentTime + sleepMillisDelay >= lastTick + earlyWarningEvery && !(earlyWarningEvery <= 0L || !hasStarted || !enabled || currentTime < lastEarlyWarning + /*earlyWarningEvery*/ earlyWarningCooldown /*|| currentTime < lastTick + earlyWarningDelay*/)) {
                 lastEarlyWarning = currentTime;
 
-                // Minimize server thread to get true stack trace
-                final int oldPriority = serverThread.getPriority();
-                serverThread.setPriority(Thread.MIN_PRIORITY);
-
-                // Get true spike time here
-                final long spikeTime = (currentTime + sleepMillisDelay - lastTick) / 1000L;
-
-                // Get true stack trace here
-                final ThreadInfo threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(serverThread.getId(), Integer.MAX_VALUE);
-                final StackTraceElement[] stackTrace = threadInfo.getStackTrace();
-
-                // Get true monitor info here
-                final MonitorInfo[] monitorInfo = threadInfo.getLockedMonitors();
-                final State threadState = threadInfo.getThreadState();
-
-                // Get true lock info here
-                final LockInfo lockInfo = threadInfo.getLockInfo();
-                final LockInfo[] lockedSynchronizers = threadInfo.getLockedSynchronizers();
-
-                // Get true alive and suspended status here
-                final boolean alive = serverThread.isAlive();
-                final boolean suspended = threadInfo.isSuspended();
-
-                // Get true interrupted status here
-                final boolean interrupted = serverThread.isInterrupted();
-
-                // Print colored to make admins pay attention, if possible
-                final String prefix = Skript.hasJLineSupport() && Skript.hasJansi() ?
-                        Ansi.ansi().a(Ansi.Attribute.RESET).fg(Ansi.Color.YELLOW).bold().toString() : "";
-
-                final String suffix = Skript.hasJLineSupport() && Skript.hasJansi() ?
-                        Ansi.ansi().a(Ansi.Attribute.RESET).reset().toString() : "";
-
-                log.log(Level.WARNING, prefix + "The server has not responded for " + spikeTime + " seconds! Creating thread dump...");
-                log.log(Level.WARNING, prefix + "Bukkit: " + Bukkit.getServer().getVersion() + (Skript.version != null ? " | Skript: " + Skript.version : "") + " | Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')' + " | OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (x64)" : " (x86)") + " | Cores: " + Runtime.getRuntime().availableProcessors() + " | Host: " + Skript.ipAddress);
-
-                log.log(Level.WARNING, prefix + "------------------------------");
-                log.log(Level.WARNING, prefix + "Server thread dump:");
-                dumpThread(serverThread, threadState, oldPriority, alive, suspended, interrupted, threadInfo, lockInfo, lockedSynchronizers, monitorInfo, stackTrace, log, prefix);
-                final Node node;
-                if ((node = SkriptLogger.getNode()) != null)
-                    log.log(Level.WARNING, prefix + "\tNode: " + node);
-                final Parser<?> lastParser;
-                final Class<?> lastParserClass;
-                if ((lastParser = Classes.lastCheckedParser) != null && (lastParserClass = lastParser.getClass()) != null) {
-                    final Class<?> enclosingClass;
-                    log.log(Level.WARNING, prefix + "\tParser: " + lastParserClass + " (" + ((enclosingClass = Classes.getEnclosingClass(lastParserClass)) != null ? enclosingClass : "no enclosing class") + ')');
-                }
-                log.log(Level.WARNING, prefix + "------------------------------" + suffix);
-
-                // Flush to guarantee everything is written
-                System.err.flush();
-                System.out.flush();
-
-                // Finally restore the priority to not cause issues
-                serverThread.setPriority(oldPriority);
+                dumpMainThreadStack(serverThread, log, true, currentTime, lastTick);
             }
 
             try {
