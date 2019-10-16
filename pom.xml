@@ -702,6 +702,29 @@
                     </dependency>
                 </dependencies>
             </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+				  <execution>
+					<id>regex-property</id>
+					<phase>validate</phase>
+					<goals>
+					  <goal>regex-property</goal>
+					</goals>
+					<configuration>
+					  <name>project.internalPackage</name>
+					  <value>${project.version}</value>
+
+					  <regex>(\d+)\.(\d+)(?:\.(\d+))?\s*(.*)</regex>
+
+					  <replacement>ch.njol.internal.skript.v$1_$3_R$2</replacement>
+					  <failIfNoMatch>true</failIfNoMatch>
+					</configuration>
+				  </execution>
+				</executions>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -767,27 +790,33 @@
                                 Also: Add-ons should not use these libraries. -->
                         <relocation>
                             <pattern>kotlin</pattern>
-                            <shadedPattern>ch.njol.libraries.kotlin</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.libraries.kotlin</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.jetbrains.annotations</pattern>
-                            <shadedPattern>ch.njol.libraries.annotations.jetbrains</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.annotations.jetbrains</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.intellij.lang.annotations</pattern>
-                            <shadedPattern>ch.njol.libraries.annotations.intellij</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.annotations.intellij</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.eclipse.jdt.annotation</pattern>
-                            <shadedPattern>ch.njol.libraries.annotations.eclipse</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.annotations.eclipse</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>javax.annotation</pattern>
-                            <shadedPattern>ch.njol.libraries.annotations.javax</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.annotations.javax</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>edu.umd.cs.findbugs.annotations</pattern>
-                            <shadedPattern>ch.njol.libraries.annotations.findbugs</shadedPattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.annotations.findbugs</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
