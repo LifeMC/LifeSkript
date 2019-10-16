@@ -23,7 +23,6 @@
 package ch.njol.skript.update;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.config.Node;
 import ch.njol.skript.update.addon.AddonUpdater;
 import ch.njol.skript.update.script.ScriptUpdater;
 import ch.njol.skript.update.skript.SkriptUpdater;
@@ -71,6 +70,7 @@ public abstract class AbstractUpdater implements Updater {
     private static final Matcher UNIX_NEW_LINE_MATCHER = UNIX_NEW_LINE.matcher("");
 
     private static final Matcher EXPR_VERSION_PATTERN = Pattern.compile("%version%", Pattern.LITERAL).matcher("");
+    private static final Matcher SINGLE_COMMENT_PATTERN_MATCHER = Pattern.compile("#", Pattern.LITERAL).matcher("");
 
     private static final Matcher WINDOWS_NEW_LINE = Pattern.compile(LineSeparators.DOS, Pattern.LITERAL).matcher("");
     private static final Matcher MAC_NEW_LINE = Pattern.compile(LineSeparators.MAC_STR, Pattern.LITERAL).matcher("");
@@ -101,7 +101,7 @@ public abstract class AbstractUpdater implements Updater {
         if (version != null)
             return version;
 
-        final String uncommonVersionText = Node.SINGLE_COMMENT_PATTERN_MATCHER
+        final String uncommonVersionText = SINGLE_COMMENT_PATTERN_MATCHER
                 .reset(versionText.trim().toLowerCase(Locale.ENGLISH))
                 .replaceAll(Matcher.quoteReplacement(""));
 
