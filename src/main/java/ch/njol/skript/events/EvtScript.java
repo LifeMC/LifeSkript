@@ -72,7 +72,7 @@ public final class EvtScript extends SelfRegisteringSkriptEvent {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "script " + (load ? "" : "un") + "load";
     }
 

@@ -87,7 +87,7 @@ public final class ExprLocationAt extends SimpleExpression<Location> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the location at (" + x.toString(e, debug) + ", " + y.toString(e, debug) + ", " + z.toString(e, debug) + ") in " + world.toString(e, debug);
     }
 

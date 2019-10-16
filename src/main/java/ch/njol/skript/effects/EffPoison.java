@@ -70,7 +70,7 @@ public final class EffPoison extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "poison " + entites.toString(e, debug);
     }
 

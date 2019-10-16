@@ -55,7 +55,7 @@ public final class EntryNode extends Node implements Entry<String, String> {
     }
 
     @Override
-    public String setValue(final @Nullable String v) {
+    public String setValue(@Nullable final String v) {
         if (v == null)
             return value;
         final String r = value;

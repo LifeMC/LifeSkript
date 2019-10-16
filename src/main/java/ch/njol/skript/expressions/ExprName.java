@@ -55,8 +55,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4.6 (players' name & display name), <i>unknown</i> (player list name), 2.0 (item name)")
 public final class ExprName extends SimplePropertyExpression<Object, String> {
 
-    private static final int ITEMSTACK = 1, ENTITY = 2, PLAYER = 4;
     static final String[] types = {"itemstacks/slots", "livingentities", "players"};
+    private static final int ITEMSTACK = 1, ENTITY = 2, PLAYER = 4;
 
     static {
         for (final NameType n : NameType.values()) {

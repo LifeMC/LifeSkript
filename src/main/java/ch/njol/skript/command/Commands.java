@@ -733,32 +733,6 @@ public final class Commands {
         return numCommands;
     }
 
-    private static final class SkriptPlayerCommandExecutor implements EventExecutor {
-        SkriptPlayerCommandExecutor() {
-            /* implicit super call */
-        }
-
-        @Override
-        public final void execute(@Nullable final Listener listener,
-                                  @Nullable final Event event) {
-            if (event instanceof PlayerCommandPreprocessEvent)
-                onPlayerCommand((PlayerCommandPreprocessEvent) event);
-        }
-    }
-
-    private static final class SkriptConsoleCommandExecutor implements EventExecutor {
-        SkriptConsoleCommandExecutor() {
-            /* implicit super call */
-        }
-
-        @Override
-        public final void execute(@Nullable final Listener listener,
-                                  @Nullable final Event event) {
-            if (event instanceof ServerCommandEvent)
-                onServerCommand((ServerCommandEvent) event);
-        }
-    }
-
     public static final void registerListeners() {
         if (!registeredListeners) {
             final EventPriority commandPriority = SkriptConfig.commandPriority.value();
@@ -816,6 +790,32 @@ public final class Commands {
             c.unregisterHelp();
         }
         commands.clear();
+    }
+
+    private static final class SkriptPlayerCommandExecutor implements EventExecutor {
+        SkriptPlayerCommandExecutor() {
+            /* implicit super call */
+        }
+
+        @Override
+        public final void execute(@Nullable final Listener listener,
+                                  @Nullable final Event event) {
+            if (event instanceof PlayerCommandPreprocessEvent)
+                onPlayerCommand((PlayerCommandPreprocessEvent) event);
+        }
+    }
+
+    private static final class SkriptConsoleCommandExecutor implements EventExecutor {
+        SkriptConsoleCommandExecutor() {
+            /* implicit super call */
+        }
+
+        @Override
+        public final void execute(@Nullable final Listener listener,
+                                  @Nullable final Event event) {
+            if (event instanceof ServerCommandEvent)
+                onServerCommand((ServerCommandEvent) event);
+        }
     }
 
     /**

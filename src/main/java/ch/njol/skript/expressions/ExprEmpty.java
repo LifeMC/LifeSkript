@@ -78,7 +78,7 @@ public final class ExprEmpty extends SimpleExpression<Object> {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "empty value of the type " + emptyType.toString(e, debug);
     }
 }

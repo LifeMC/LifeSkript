@@ -109,7 +109,7 @@ public final class ExprXOf extends PropertyExpression<Object, Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return amount.toString(e, debug) + " of " + getExpr().toString(e, debug);
     }
 

@@ -53,7 +53,8 @@ public final class EffAssert extends Effect {
     @Nullable
     private Expression<String> errorMsg;
 
-    private @Nullable
+    @Nullable
+    private
     String script;
     private int line;
 
@@ -93,7 +94,7 @@ public final class EffAssert extends Effect {
 
     @SuppressWarnings("null")
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "assert " + condition.toString(e, debug) + (errorMsg != null ? " else " + errorMsg.toString(e, debug) : "");
     }
 

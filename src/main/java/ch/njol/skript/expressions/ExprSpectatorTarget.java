@@ -74,7 +74,7 @@ public final class ExprSpectatorTarget extends SimplePropertyExpression<Player, 
     }
 
     @Override
-    public final void change(final Event e, final @Nullable Object[] delta, final Changer.ChangeMode mode) {
+    public final void change(final Event e, @Nullable final Object[] delta, final Changer.ChangeMode mode) {
         for (final Player player : getExpr().getArray(e)) {
             if (player.getGameMode() == GameMode.SPECTATOR) {
                 switch (mode) {

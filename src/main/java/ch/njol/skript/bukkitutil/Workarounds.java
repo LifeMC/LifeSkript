@@ -141,13 +141,13 @@ public final class Workarounds {
     }
 
     public static final void setProperty(final String key,
-                                          final String value) {
+                                         final String value) {
         oldValues.put(key, System.getProperty(key));
         System.setProperty(key, value);
     }
 
     public static final void setProperty(final String key,
-                                          final int value) {
+                                         final int value) {
         setProperty(key, Integer.toString(value));
     }
 

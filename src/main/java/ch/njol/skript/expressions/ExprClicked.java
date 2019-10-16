@@ -129,7 +129,7 @@ public final class ExprClicked extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the clicked " + (entityType != null ? entityType : itemType != null ? itemType : "block");
     }
 

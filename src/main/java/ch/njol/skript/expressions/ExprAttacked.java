@@ -97,7 +97,7 @@ public final class ExprAttacked extends SimpleExpression<Entity> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the attacked " + type;
         return Classes.getDebugMessage(getSingle(e));

@@ -54,7 +54,7 @@ public final class VillagerData extends EntityData<Villager> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Villager> c, final @Nullable Villager e) {
+    protected boolean init(@Nullable final Class<? extends Villager> c, @Nullable final Villager e) {
         profession = e == null ? null : e.getProfession();
         return true;
     }

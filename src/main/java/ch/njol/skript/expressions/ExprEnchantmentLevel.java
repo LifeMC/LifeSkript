@@ -83,7 +83,7 @@ public final class ExprEnchantmentLevel extends PropertyExpression<ItemType, Int
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the level of " + enchantment.toString(e, debug) + " of " + getExpr().toString(e, debug);
     }
 

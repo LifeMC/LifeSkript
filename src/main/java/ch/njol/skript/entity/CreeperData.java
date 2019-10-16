@@ -44,7 +44,7 @@ public final class CreeperData extends EntityData<Creeper> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Creeper> c, final @Nullable Creeper e) {
+    protected boolean init(@Nullable final Class<? extends Creeper> c, @Nullable final Creeper e) {
         powered = e == null ? 0 : e.isPowered() ? 1 : -1;
         return true;
     }

@@ -622,7 +622,7 @@ public final class BukkitEventValues {
             @Override
             @Nullable
             public World get(final CommandEvent e) {
-                return e.getSender() instanceof Player ? ((Player) e.getSender()).getWorld() : null;
+                return e.getSender() instanceof Entity ? ((Entity) e.getSender()).getWorld() : null;
             }
         }, 0);
 

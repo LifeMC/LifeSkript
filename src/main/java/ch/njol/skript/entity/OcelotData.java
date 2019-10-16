@@ -44,7 +44,7 @@ public final class OcelotData extends EntityData<Ocelot> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Ocelot> c, final @Nullable Ocelot e) {
+    protected boolean init(@Nullable final Class<? extends Ocelot> c, @Nullable final Ocelot e) {
         tamed = e == null ? 0 : e.isTamed() ? 1 : -1;
         return true;
     }

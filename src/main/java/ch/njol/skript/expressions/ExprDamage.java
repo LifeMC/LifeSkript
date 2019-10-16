@@ -86,7 +86,7 @@ public final class ExprDamage extends SimpleExpression<Double> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         if (!(e instanceof EntityDamageEvent))
             return;
         double d = delta == null ? 0 : ((Number) delta[0]).doubleValue();
@@ -118,7 +118,7 @@ public final class ExprDamage extends SimpleExpression<Double> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the damage";
     }
 

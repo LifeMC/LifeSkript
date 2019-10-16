@@ -56,7 +56,7 @@ public final class HorseData extends EntityData<Horse> {
     public HorseData() {
     }
 
-    public HorseData(final @Nullable Variant variant) {
+    public HorseData(@Nullable final Variant variant) {
         this.variant = variant;
     }
 
@@ -70,7 +70,7 @@ public final class HorseData extends EntityData<Horse> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Horse> c, final @Nullable Horse e) {
+    protected boolean init(@Nullable final Class<? extends Horse> c, @Nullable final Horse e) {
         if (e != null) {
             variant = e.getVariant();
             color = e.getColor();

@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import static org.bukkit.ChatColor.GRAY;
@@ -46,7 +47,7 @@ public final class CommandHelp {
     private static final ArgsMessage m_invalid_argument = new ArgsMessage("commands.invalid argument");
     private static final Message m_usage = new Message("commands.usage");
     private final String argsColor;
-    private final LinkedHashMap<String, Object> arguments = new LinkedHashMap<>();
+    private final Map<String, Object> arguments = new LinkedHashMap<>();
     private String command;
     @Nullable
     private Message description;
@@ -68,17 +69,19 @@ public final class CommandHelp {
     }
 
     public CommandHelp add(final String argument) {
+        final boolean condition = !argument.isEmpty() && argument.charAt(0) == '<' && argument.charAt(argument.length() - 1) == '>';
+        final String arg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
         if (langNode == null) {
-            if (argument.startsWith("<") && argument.endsWith(">")) {
-                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
+            if (condition) {
+                final String carg = arg;
                 arguments.put(carg, argument);
             } else {
                 arguments.put(argument, null);
             }
         } else {
-            if (argument.startsWith("<") && argument.endsWith(">")) {
+            if (condition) {
                 wildcardArg = new Message(langNode + '.' + argument);
-                final String carg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
+                final String carg = arg;
                 arguments.put(carg, wildcardArg);
             } else {
                 arguments.put(argument, new Message(langNode + '.' + argument));

@@ -94,6 +94,24 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
         });
     }
 
+    @Override
+    public Class<Slot> getReturnType() {
+        return Slot.class;
+    }
+
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        if (e == null)
+            return "the " + (getTime() == 1 ? "future " : getTime() == -1 ? "former " : "") + "tool of " + getExpr().toString(null, debug);
+        return Classes.getDebugMessage(getSingle(e));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean setTime(final int time) {
+        return setTime(time, getExpr(), PlayerItemHeldEvent.class, PlayerBucketFillEvent.class, PlayerBucketEmptyEvent.class);
+    }
+
     private static final class BucketInventorySlot extends InventorySlot {
         private final PlayerBucketEvent event;
         private final int time;
@@ -136,23 +154,5 @@ public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
         public final String toString_i() {
             return "the " + (time == 1 ? "future " : time == -1 ? "former " : "") + super.toString_i();
         }
-    }
-
-    @Override
-    public Class<Slot> getReturnType() {
-        return Slot.class;
-    }
-
-    @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        if (e == null)
-            return "the " + (getTime() == 1 ? "future " : getTime() == -1 ? "former " : "") + "tool of " + getExpr().toString(null, debug);
-        return Classes.getDebugMessage(getSingle(e));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public boolean setTime(final int time) {
-        return setTime(time, getExpr(), PlayerItemHeldEvent.class, PlayerBucketFillEvent.class, PlayerBucketEmptyEvent.class);
     }
 }

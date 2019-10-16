@@ -57,7 +57,7 @@ public final class Argument<T> {
 
     private final transient WeakHashMap<Event, T[]> current = new WeakHashMap<>();
 
-    private Argument(@Nullable final String name, final @Nullable Expression<? extends T> def, final ClassInfo<T> type, final boolean single, final int index, final boolean optional) {
+    private Argument(@Nullable final String name, @Nullable final Expression<? extends T> def, final ClassInfo<T> type, final boolean single, final int index, final boolean optional) {
         this.name = name;
         this.def = def;
         this.type = type;
@@ -68,7 +68,7 @@ public final class Argument<T> {
 
     @SuppressWarnings({"unchecked", "null"})
     @Nullable
-    public static final <T> Argument<T> newInstance(@Nullable final String name, final ClassInfo<T> type, final @Nullable String def, final int index, final boolean single, final boolean forceOptional) {
+    public static final <T> Argument<T> newInstance(@Nullable final String name, final ClassInfo<T> type, @Nullable final String def, final int index, final boolean single, final boolean forceOptional) {
         if (name != null && !Variable.isValidVariableName(name, false, false)) {
             Skript.error("An argument's name must be a valid variable name, and cannot be a list variable.");
             return null;

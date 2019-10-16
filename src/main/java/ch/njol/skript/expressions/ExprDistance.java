@@ -69,7 +69,7 @@ public final class ExprDistance extends SimpleExpression<Double> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "distance between " + loc1.toString(e, debug) + " and " + loc2.toString(e, debug);
     }
 

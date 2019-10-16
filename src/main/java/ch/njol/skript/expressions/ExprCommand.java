@@ -98,7 +98,7 @@ public final class ExprCommand extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return what == 0 ? "the full command" : what == 1 ? "the command" : "the arguments";
     }
 

@@ -51,7 +51,8 @@ public final class ExprPluginVersion extends SimpleExpression<String> {
         Skript.registerExpression(ExprPluginVersion.class, String.class, ExpressionType.SIMPLE, "version of plugin %string%");
     }
 
-    private @Nullable
+    @Nullable
+    private
     Expression<String> pluginName;
 
     /**

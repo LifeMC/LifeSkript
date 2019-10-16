@@ -29,6 +29,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.expressions.base.WrapperExpression;
+import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -59,11 +60,11 @@ public final class ExprLocation extends WrapperExpression<Location> {
             return true;
         }
         setExpr(new EventValueExpression<>(Location.class));
-        return ((EventValueExpression<Location>) getExpr()).init();
+        return ((DefaultExpression<Location>) getExpr()).init();
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return getExpr() instanceof EventValueExpression ? "the location" : "the location " + getExpr().toString(e, debug);
     }
 

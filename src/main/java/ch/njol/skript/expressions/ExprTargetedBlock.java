@@ -76,7 +76,7 @@ public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the targeted block" + (getExpr().isSingle() ? "" : "s") + " of " + getExpr().toString(null, debug);
         return Classes.getDebugMessage(getAll(e));
@@ -84,7 +84,7 @@ public final class ExprTargetedBlock extends PropertyExpression<Player, Block> {
 
     @SuppressWarnings("deprecation")
     @Nullable
-    Block getTargetedBlock(final @Nullable Player p, final Event e) {
+    Block getTargetedBlock(@Nullable final Player p, final Event e) {
         if (p == null)
             return null;
         final long time = Bukkit.getWorlds().get(0).getFullTime();

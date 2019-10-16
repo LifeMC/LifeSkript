@@ -81,7 +81,7 @@ public final class ExprScript extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the script's name";
     }
 

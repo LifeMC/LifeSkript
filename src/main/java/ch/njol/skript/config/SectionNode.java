@@ -183,39 +183,6 @@ public final class SectionNode extends Node implements Iterable<Node> {
         return new NodeChecker(nodes.iterator(), this);
     }
 
-    private static final class NodeChecker extends CheckedIterator<Node> {
-        @Nullable
-        private final Node node;
-
-        NodeChecker(final Iterator<Node> iter, @Nullable final Node node) {
-            super(iter, n -> n != null && !n.isVoid());
-
-            this.node = node;
-        }
-
-        @Override
-        public final boolean hasNext() {
-            final boolean hasNext = super.hasNext();
-            if (!hasNext)
-                SkriptLogger.setNode(node);
-            return hasNext;
-        }
-
-        @Override
-        @Nullable
-        public final Node next() {
-            final Node n = super.next();
-            SkriptLogger.setNode(n);
-
-            return n;
-        }
-
-        @Override
-        public final void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     /**
      * Gets a subnode (EntryNode or SectionNode) with the specified name.
      *
@@ -512,6 +479,39 @@ public final class SectionNode extends Node implements Iterable<Node> {
             }
         }
         return r;
+    }
+
+    private static final class NodeChecker extends CheckedIterator<Node> {
+        @Nullable
+        private final Node node;
+
+        NodeChecker(final Iterator<Node> iter, @Nullable final Node node) {
+            super(iter, n -> n != null && !n.isVoid());
+
+            this.node = node;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            final boolean hasNext = super.hasNext();
+            if (!hasNext)
+                SkriptLogger.setNode(node);
+            return hasNext;
+        }
+
+        @Override
+        @Nullable
+        public final Node next() {
+            final Node n = super.next();
+            SkriptLogger.setNode(n);
+
+            return n;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

@@ -160,7 +160,7 @@ public final class ExprBlocks extends SimpleExpression<Block> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         final Expression<Block> end = this.end;
         if (end != null) {
             return "blocks from " + from.toString(e, debug) + " to " + end.toString(e, debug);

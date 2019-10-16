@@ -44,7 +44,7 @@ public final class PigData extends EntityData<Pig> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Pig> c, final @Nullable Pig e) {
+    protected boolean init(@Nullable final Class<? extends Pig> c, @Nullable final Pig e) {
         saddled = e == null ? 0 : e.hasSaddle() ? 1 : -1;
         return true;
     }

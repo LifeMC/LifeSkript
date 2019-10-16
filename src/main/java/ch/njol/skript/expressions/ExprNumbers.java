@@ -124,11 +124,30 @@ public final class ExprNumbers extends SimpleExpression<Number> {
         return new NumberIterator(integer, isInLoop, f, s);
     }
 
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return (integer ? "integers" : "numbers") + " from " + start.toString(e, debug) + " to " + end.toString(e, debug);
+    }
+
+    @Override
+    public boolean isLoopOf(final String s) {
+        return integer && ("integer".equalsIgnoreCase(s) || "int".equalsIgnoreCase(s));
+    }
+
+    @Override
+    public boolean isSingle() {
+        return false;
+    }
+
+    @Override
+    public Class<? extends Number> getReturnType() {
+        return integer ? Long.class : Double.class;
+    }
+
     private static final class NumberIterator implements Iterator<Number> {
+        final double max;
         private final boolean integer;
         private final boolean isInLoop;
-
-        final double max;
         double i;
 
         long startTime;
@@ -173,26 +192,6 @@ public final class ExprNumbers extends SimpleExpression<Number> {
         public final void remove() {
             throw new UnsupportedOperationException();
         }
-    }
-
-    @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        return (integer ? "integers" : "numbers") + " from " + start.toString(e, debug) + " to " + end.toString(e, debug);
-    }
-
-    @Override
-    public boolean isLoopOf(final String s) {
-        return integer && ("integer".equalsIgnoreCase(s) || "int".equalsIgnoreCase(s));
-    }
-
-    @Override
-    public boolean isSingle() {
-        return false;
-    }
-
-    @Override
-    public Class<? extends Number> getReturnType() {
-        return integer ? Long.class : Double.class;
     }
 
 }

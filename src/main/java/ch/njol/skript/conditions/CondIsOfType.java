@@ -83,7 +83,7 @@ public final class CondIsOfType extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return what.toString(e, debug) + (what.isSingle() ? " is " : " are ") + (isNegated() ? "not " : "") + "of type " + types.toString(e, debug);
     }
 

@@ -76,7 +76,7 @@ public final class ThrownPotionData extends EntityData<ThrownPotion> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends ThrownPotion> c, final @Nullable ThrownPotion e) {
+    protected boolean init(@Nullable final Class<? extends ThrownPotion> c, @Nullable final ThrownPotion e) {
         if (e != null) {
             final ItemStack i = e.getItem();
             if (i == null)

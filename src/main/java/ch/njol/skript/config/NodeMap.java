@@ -66,14 +66,14 @@ public final class NodeMap {
     }
 
     @Nullable
-    public Node remove(final @Nullable String key) {
+    public Node remove(@Nullable final String key) {
         if (key == null)
             return null;
         return map.remove(getKey(key));
     }
 
     @Nullable
-    public Node get(final @Nullable String key) {
+    public Node get(@Nullable final String key) {
         if (key == null)
             return null;
         return map.get(getKey(key));

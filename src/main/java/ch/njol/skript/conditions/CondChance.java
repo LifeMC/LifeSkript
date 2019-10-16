@@ -67,7 +67,7 @@ public final class CondChance extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "chance of " + chance.toString(e, debug) + (percent ? "%" : "");
     }
 

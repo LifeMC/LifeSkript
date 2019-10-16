@@ -81,7 +81,7 @@ public final class ExprRandom extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "a random element out of " + expr.toString(e, debug);
     }
 

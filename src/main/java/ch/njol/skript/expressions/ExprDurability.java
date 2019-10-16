@@ -81,7 +81,7 @@ public final class ExprDurability extends SimplePropertyExpression<Object, Short
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         int a = delta == null ? 0 : ((Number) delta[0]).intValue();
         final Object[] os = getExpr().getArray(e);
         for (final Object o : os) {

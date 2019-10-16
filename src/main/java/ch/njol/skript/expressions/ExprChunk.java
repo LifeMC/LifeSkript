@@ -81,7 +81,7 @@ public final class ExprChunk extends PropertyExpression<Location, Chunk> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the chunk at " + locations.toString(e, debug);
     }
 
@@ -94,7 +94,7 @@ public final class ExprChunk extends PropertyExpression<Location, Chunk> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         assert mode == ChangeMode.RESET;
 
         final Chunk[] cs = getArray(e);

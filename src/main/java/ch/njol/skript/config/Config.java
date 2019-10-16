@@ -44,16 +44,14 @@ public final class Config {
 
     public static final int GLOBAL_BUFFER_LENGTH = System.getProperty("skript.bufferLength") != null
             ? Integer.parseInt(System.getProperty("skript.bufferLength")) : -1;
-
-    private final String defaultSeparator;
     final boolean allowEmptySections;
+    private final String defaultSeparator;
     private final SectionNode main;
+    private final String fileName;
     boolean simple;
     String separator;
-
     int level;
     int errors;
-    private final String fileName;
     @Nullable
     private
     File file;
@@ -256,7 +254,6 @@ public final class Config {
      * Backwards compatibility.
      *
      * @see Config#validate(NodeValidator)
-     *
      * @deprecated Use more generic {@link Config#validate(NodeValidator)}
      */
     @Deprecated

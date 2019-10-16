@@ -118,7 +118,7 @@ public final class ExprLore extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (line != null ? "the line " + line.toString(e, debug) + " of " : "") + "the lore of " + item.toString(e, debug);
     }
 
@@ -142,7 +142,7 @@ public final class ExprLore extends SimpleExpression<String> {
 
     // TODO test (especially remove)
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final Object i = item.getSingle(e);
         if (i == null || i instanceof ItemStack && ((ItemStack) i).getType() == Material.AIR)
             return;

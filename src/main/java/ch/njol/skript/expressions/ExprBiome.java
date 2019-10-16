@@ -72,7 +72,7 @@ public final class ExprBiome extends PropertyExpression<Location, Biome> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (mode == ChangeMode.SET) {
             assert delta != null;
             for (final Location l : getExpr().getArray(e))
@@ -88,7 +88,7 @@ public final class ExprBiome extends PropertyExpression<Location, Biome> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the biome at " + getExpr().toString(e, debug);
     }
 

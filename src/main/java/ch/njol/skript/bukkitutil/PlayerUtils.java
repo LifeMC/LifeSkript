@@ -31,7 +31,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.EmptyStackException;
+import java.util.HashSet;
 
 /**
  * TODO check all updates and find out which ones are not required
@@ -41,12 +44,12 @@ import java.util.*;
 public final class PlayerUtils {
 
     public static final boolean hasCollecionGetOnlinePlayers = Skript.methodExists(Bukkit.class, "getOnlinePlayers", EmptyArrays.EMPTY_CLASS_ARRAY, Collection.class);
-    static final Set<Player> inviUpdate = new HashSet<>();
+    static final Collection<Player> inviUpdate = new HashSet<>();
     // created when first used
     public static final Task task = new Task(Skript.getInstance(), 1L, 1L) {
         @Override
         public final void run() {
-			assert Bukkit.isPrimaryThread() : Thread.currentThread();
+            assert Bukkit.isPrimaryThread() : Thread.currentThread();
             TickUtils.tickAll();
             try {
                 for (final Player p : inviUpdate)

@@ -56,7 +56,7 @@ public final class ExprLocationOf extends WrapperExpression<Location> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the location of " + getExpr().toString(e, debug);
     }
 

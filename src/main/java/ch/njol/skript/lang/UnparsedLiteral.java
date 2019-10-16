@@ -64,7 +64,7 @@ public final class UnparsedLiteral implements Literal<Object> {
      * @param data  non-null, non-empty & trimmed string
      * @param error Error to log if this literal cannot be parsed
      */
-    public UnparsedLiteral(final String data, final @Nullable LogEntry error) {
+    public UnparsedLiteral(final String data, @Nullable final LogEntry error) {
         assert data != null && !data.isEmpty();
         assert error == null || error.getLevel().intValue() >= Level.SEVERE.intValue();
         this.data = data;
@@ -248,7 +248,7 @@ public final class UnparsedLiteral implements Literal<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return '\'' + data + '\'';
     }
 
@@ -313,7 +313,7 @@ public final class UnparsedLiteral implements Literal<Object> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         throw invalidAccessException();
     }
 

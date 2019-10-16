@@ -54,9 +54,6 @@ public final class ExprHash extends PropertyExpression<String, String> {
     @Nullable
     private static final MessageDigest sha256;
 
-    @Nullable
-    private MessageDigest algorithm;
-
     static {
         Skript.registerExpression(ExprHash.class, String.class, ExpressionType.PROPERTY,
                 "[md5]( |-)hash(ed|[( |-|)code] of) %strings%",
@@ -71,6 +68,9 @@ public final class ExprHash extends PropertyExpression<String, String> {
             throw new InternalError("JVM does not adhere to Java specifications");
         }
     }
+
+    @Nullable
+    private MessageDigest algorithm;
 
     private static final String toHex(final byte[] b) {
         final char[] r = new char[2 * b.length];
@@ -101,7 +101,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
         }
         setExpr((Expression<String>) exprs[0]);
         if (algorithm == md5)
-        	Skript.warning("The MD5 hashing algorithm is deprecated and will be removed in a future release. Use SHA-256 instead. (e.g " + getExpr() + " hashed with SHA-256)");
+            Skript.warning("The MD5 hashing algorithm is deprecated and will be removed in a future release. Use SHA-256 instead. (e.g " + getExpr() + " hashed with SHA-256)");
         return true;
     }
 

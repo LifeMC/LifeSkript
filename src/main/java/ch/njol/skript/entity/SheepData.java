@@ -61,7 +61,7 @@ public final class SheepData extends EntityData<Sheep> {
 
     @SuppressWarnings("null")
     @Override
-    protected boolean init(final @Nullable Class<? extends Sheep> c, final @Nullable Sheep e) {
+    protected boolean init(@Nullable final Class<? extends Sheep> c, @Nullable final Sheep e) {
         sheared = e == null ? 0 : e.isSheared() ? 1 : -1;
         colors = e == null ? null : new Color[]{Color.byWoolColor(e.getColor())};
         return true;

@@ -97,7 +97,7 @@ public final class ExprColorOf extends SimplePropertyExpression<Object, Color> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         assert mode == ChangeMode.SET;
         assert delta != null;
 

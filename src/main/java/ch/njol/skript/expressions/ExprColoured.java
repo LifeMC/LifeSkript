@@ -70,7 +70,7 @@ public final class ExprColoured extends PropertyExpression<String, String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (color ? "" : "un") + "coloured " + getExpr().toString(e, debug);
     }
 

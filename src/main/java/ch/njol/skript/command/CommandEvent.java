@@ -44,11 +44,11 @@ public class CommandEvent extends Event {
      * @deprecated use the one with async status instead
      */
     @Deprecated
-    public CommandEvent(final CommandSender sender, final String command, final @Nullable String[] args) {
+    public CommandEvent(final CommandSender sender, final String command, @Nullable final String[] args) {
         this(!Bukkit.isPrimaryThread(), sender, command, args);
     }
 
-    public CommandEvent(final boolean async, final CommandSender sender, final String command, final @Nullable String[] args) {
+    public CommandEvent(final boolean async, final CommandSender sender, final String command, @Nullable final String[] args) {
         super(async);
         this.sender = sender;
         this.command = command;

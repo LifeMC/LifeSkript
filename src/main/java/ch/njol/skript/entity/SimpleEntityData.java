@@ -157,7 +157,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Entity> c, final @Nullable Entity e) {
+    protected boolean init(@Nullable final Class<? extends Entity> c, @Nullable final Entity e) {
         assert false;
         return false;
     }
@@ -266,7 +266,7 @@ public final class SimpleEntityData extends EntityData<Entity> {
         }
 
         @Override
-        public boolean equals(final @Nullable Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj)
                 return true;
             if (obj == null)

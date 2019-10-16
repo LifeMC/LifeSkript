@@ -46,7 +46,7 @@ public final class PlayerData extends EntityData<Player> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Player> c, final @Nullable Player e) {
+    protected boolean init(@Nullable final Class<? extends Player> c, @Nullable final Player e) {
         op = e == null ? 0 : e.isOp() ? 1 : -1;
         return true;
     }

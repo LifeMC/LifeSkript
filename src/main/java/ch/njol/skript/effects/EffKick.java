@@ -65,7 +65,7 @@ public final class EffKick extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "kick " + players.toString(e, debug) + (reason != null ? " because " + reason.toString(e, debug) : "");
     }
 

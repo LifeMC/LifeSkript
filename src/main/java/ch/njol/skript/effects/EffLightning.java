@@ -73,7 +73,7 @@ public final class EffLightning extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "strike lightning " + (effectOnly ? "effect " : "") + locations.toString(e, debug);
     }
 

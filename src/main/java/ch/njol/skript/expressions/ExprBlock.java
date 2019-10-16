@@ -65,7 +65,7 @@ public final class ExprBlock extends WrapperExpression<Block> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return getExpr() instanceof EventValueExpression ? "the block" : "the block " + getExpr().toString(e, debug);
     }
 

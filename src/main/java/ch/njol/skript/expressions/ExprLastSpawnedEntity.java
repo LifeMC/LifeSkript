@@ -91,7 +91,7 @@ public final class ExprLastSpawnedEntity extends SimpleExpression<Entity> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the last " + (spawned ? "spawned" : "shot") + ' ' + type;
     }
 

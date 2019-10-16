@@ -104,7 +104,7 @@ public final class Compatibility {
      *
      * @param oldClass The old, deprecated or moved class.
      * @param newClass The new class.
-     * @param dummy Do not pass this parameter.
+     * @param dummy    Do not pass this parameter.
      * @return The most compatible class as super class.
      * If you must do operations specific to old or new one,
      * check via {@link Class#isAssignableFrom(Class)} and cast it.

@@ -72,7 +72,7 @@ public final class MinecartData extends EntityData<Minecart> {
 
     @SuppressWarnings("null")
     @Override
-    protected boolean init(final @Nullable Class<? extends Minecart> c, final @Nullable Minecart e) {
+    protected boolean init(@Nullable final Class<? extends Minecart> c, @Nullable final Minecart e) {
         final MinecartType[] ts = MinecartType.values();
         for (int i = ts.length - 1; i >= 0; i--) {
             final Class<?> mc = ts[i].c;
@@ -167,7 +167,7 @@ public final class MinecartData extends EntityData<Minecart> {
         final Class<? extends Minecart> c;
         private final String codeName;
 
-        MinecartType(final @Nullable Class<? extends Minecart> c, final String codeName) {
+        MinecartType(@Nullable final Class<? extends Minecart> c, final String codeName) {
             this.c = c;
             this.codeName = codeName;
         }

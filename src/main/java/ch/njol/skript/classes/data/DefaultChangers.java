@@ -68,7 +68,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Entity[] entities, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Entity[] entities, @Nullable final Object[] delta, final ChangeMode mode) {
             if (delta == null) {
                 for (final Entity e : entities) {
                     if (!(e instanceof Player))
@@ -127,7 +127,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Player[] players, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Player[] players, @Nullable final Object[] delta, final ChangeMode mode) {
             entityChanger.change(players, delta, mode);
         }
     };
@@ -142,7 +142,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Entity[] entities, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Entity[] entities, @Nullable final Object[] delta, final ChangeMode mode) {
             assert mode == ChangeMode.DELETE;
             for (final Entity e : entities) {
                 if (e instanceof Player)
@@ -162,7 +162,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Item[] what, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Item[] what, @Nullable final Object[] delta, final ChangeMode mode) {
             if (mode == ChangeMode.SET) {
                 assert delta != null;
                 for (final Item i : what)
@@ -186,7 +186,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Inventory[] invis, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Inventory[] invis, @Nullable final Object[] delta, final ChangeMode mode) {
             for (final Inventory invi : invis) {
                 assert invi != null;
                 switch (mode) {
@@ -234,7 +234,7 @@ public final class DefaultChangers {
                                             invi.addItem(i);
                                     }
                                 } else if (d instanceof ItemStack) {
-                                	new ItemType((ItemStack) d).addTo(invi);
+                                    new ItemType((ItemStack) d).addTo(invi);
                                 } else if (d instanceof ItemType) {
                                     ((ItemType) d).addTo(invi);
                                 } else if (d instanceof Block) {
@@ -315,7 +315,7 @@ public final class DefaultChangers {
         }
 
         @Override
-        public void change(final Block[] blocks, final @Nullable Object[] delta, final ChangeMode mode) {
+        public void change(final Block[] blocks, @Nullable final Object[] delta, final ChangeMode mode) {
             for (final Block block : blocks) {
                 assert block != null;
                 switch (mode) {

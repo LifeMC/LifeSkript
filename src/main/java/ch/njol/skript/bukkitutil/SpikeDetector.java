@@ -74,11 +74,11 @@ public final class SpikeDetector extends Thread {
     private static volatile boolean enabled = alwaysEnabled;
     @Nullable
     private static SpikeDetector instance;
+    private static final Tickable sampleTicker = SpikeDetector::tick;
     private final Thread serverThread;
     private volatile long lastEarlyWarning;
     private volatile long lastTick;
     private volatile boolean stopping;
-    private static final Tickable sampleTicker = SpikeDetector::tick;
 
     private SpikeDetector(final Thread serverThread) {
         super("Skript spike detector");
@@ -146,6 +146,10 @@ public final class SpikeDetector extends Thread {
         return alwaysEnabled || (!Skript.isRunningMinecraft(1, 12) || Skript.getServerPlatform() != ServerPlatform.BUKKIT_PAPER && Skript.getServerPlatform() != ServerPlatform.BUKKIT_TACO) && !Boolean.getBoolean("skript.disableSpikeDetector");
     }
 
+    public static final boolean isEnabled() {
+        return SpikeDetector.enabled;
+    }
+
     public static final void setEnabled(final boolean enabled) {
         SpikeDetector.hasStarted = enabled;
         SpikeDetector.enabled = enabled;
@@ -154,10 +158,6 @@ public final class SpikeDetector extends Thread {
             Skript.debug("Enabled spike detector");
         else
             Skript.info("Spike detector is disabled");
-    }
-
-    public static final boolean isEnabled() {
-        return SpikeDetector.enabled;
     }
 
     public static final void tick() {

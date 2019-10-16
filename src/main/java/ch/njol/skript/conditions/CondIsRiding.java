@@ -68,7 +68,7 @@ public final class CondIsRiding extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return entities.toString(e, debug) + (isNegated() ? " is" : " isn't") + " riding" + types.toString(e, debug);
     }
 

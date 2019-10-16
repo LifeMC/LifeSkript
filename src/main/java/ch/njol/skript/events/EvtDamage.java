@@ -95,7 +95,7 @@ public final class EvtDamage extends SkriptEvent {
 //    private static final WeakHashMap<LivingEntity, Integer> lastDamages = new WeakHashMap<LivingEntity, Integer>();
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "damage" + (types != null ? " of " + types.toString(e, debug) : "");
     }
 

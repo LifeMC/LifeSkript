@@ -29,6 +29,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.Condition;
+import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
@@ -57,7 +58,7 @@ public final class CondDamageCause extends Condition {
         cause = new EventValueExpression<>(DamageCause.class);
         expected = (Expression<DamageCause>) exprs[0];
         setNegated(parseResult.mark == 1);
-        return ((EventValueExpression<DamageCause>) cause).init();
+        return ((DefaultExpression<DamageCause>) cause).init();
     }
 
     @Override
@@ -69,7 +70,7 @@ public final class CondDamageCause extends Condition {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "damage was" + (isNegated() ? " not" : "") + " caused by " + expected.toString(e, debug);
     }
 

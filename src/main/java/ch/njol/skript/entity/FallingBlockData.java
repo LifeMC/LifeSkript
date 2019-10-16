@@ -85,7 +85,7 @@ public final class FallingBlockData extends EntityData<FallingBlock> {
 
     @SuppressWarnings("deprecation")
     @Override
-    protected boolean init(final @Nullable Class<? extends FallingBlock> c, final @Nullable FallingBlock e) {
+    protected boolean init(@Nullable final Class<? extends FallingBlock> c, @Nullable final FallingBlock e) {
         if (e != null)
             types = new ItemType[]{new ItemType(e.getBlockId(), e.getBlockData())};
         return true;

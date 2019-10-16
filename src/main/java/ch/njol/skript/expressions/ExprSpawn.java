@@ -74,7 +74,7 @@ public final class ExprSpawn extends PropertyExpression<World, Location> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "spawn of " + getExpr().toString(e, debug);
     }
 
@@ -88,7 +88,7 @@ public final class ExprSpawn extends PropertyExpression<World, Location> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         assert mode == ChangeMode.SET;
         assert delta != null;
 

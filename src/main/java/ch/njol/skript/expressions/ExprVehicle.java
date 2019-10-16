@@ -89,7 +89,7 @@ public final class ExprVehicle extends SimplePropertyExpression<Entity, Entity> 
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (mode == ChangeMode.SET) {
             assert delta != null;
             final Entity[] ps = getExpr().getArray(e);

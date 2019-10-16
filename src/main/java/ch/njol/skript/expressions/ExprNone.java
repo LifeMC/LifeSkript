@@ -77,7 +77,7 @@ public final class ExprNone extends SimpleExpression<Object> {
     }
 
     @Override
-    public final String toString(final @Nullable Event e, final boolean debug) {
+    public final String toString(@Nullable final Event e, final boolean debug) {
         return "none value of the type " + noneType.toString(e, debug);
     }
 }

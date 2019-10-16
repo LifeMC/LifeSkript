@@ -129,7 +129,7 @@ public final class ExprDifference extends SimpleExpression<Object> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "difference between " + first.toString(e, debug) + " and " + second.toString(e, debug);
     }
 

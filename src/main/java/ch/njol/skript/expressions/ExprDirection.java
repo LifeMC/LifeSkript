@@ -99,10 +99,10 @@ public final class ExprDirection extends SimpleExpression<Direction> {
             case 4:
                 yaw = Math.PI / 2 * parseResult.mark;
                 horizontal = matchedPattern == 4;
-				break;
-			default:
-            	assert false : matchedPattern;
-            	break;
+                break;
+            default:
+                assert false : matchedPattern;
+                break;
         }
         return true;
     }

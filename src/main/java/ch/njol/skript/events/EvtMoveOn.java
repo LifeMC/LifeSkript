@@ -229,12 +229,6 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
         }
     }
 
-    private static final class EmptyListener implements Listener {
-        EmptyListener() {
-            /* implicit super call */
-        }
-    }
-
     @Override
     public final void unregister(final Trigger t) {
 //		final Iterator<Entry<BlockLocation, List<Trigger>>> i = blockTriggers.entrySet().iterator();
@@ -257,6 +251,12 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
     public final void unregisterAll() {
 //		blockTriggers.clear();
         itemTypeTriggers.clear();
+    }
+
+    private static final class EmptyListener implements Listener {
+        EmptyListener() {
+            /* implicit super call */
+        }
     }
 
 }

@@ -67,7 +67,7 @@ public final class ProjectileUtils {
     }
 
     @Nullable
-    public static final Object getShooter(final @Nullable Projectile p) {
+    public static final Object getShooter(@Nullable final Projectile p) {
         if (p == null)
             return null;
         // Not sure why Njol used reflection, method seems to be public
@@ -81,7 +81,7 @@ public final class ProjectileUtils {
         }
     }
 
-    public static final void setShooter(final Projectile p, final @Nullable Object shooter) {
+    public static final void setShooter(final Projectile p, @Nullable final Object shooter) {
         // Not sure why Njol used reflection, method seems to be public
         if (setShooterSupport) {
             p.setShooter((ProjectileSource) shooter);

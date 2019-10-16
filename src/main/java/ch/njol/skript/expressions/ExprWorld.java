@@ -88,7 +88,7 @@ public final class ExprWorld extends PropertyExpression<Object, World> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the world" + (getExpr().isDefault() ? "" : " of " + getExpr().toString(e, debug));
     }
 

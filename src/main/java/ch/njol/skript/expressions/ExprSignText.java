@@ -103,7 +103,7 @@ public final class ExprSignText extends SimpleExpression<String> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "line " + line.toString(e, debug) + " of " + block.toString(e, debug);
     }
 
@@ -118,7 +118,7 @@ public final class ExprSignText extends SimpleExpression<String> {
 
     @SuppressWarnings("incomplete-switch")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final Number l = line.getSingle(e);
         if (l == null)
             return;

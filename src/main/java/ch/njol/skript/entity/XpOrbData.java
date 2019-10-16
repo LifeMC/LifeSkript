@@ -54,7 +54,7 @@ public final class XpOrbData extends EntityData<ExperienceOrb> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends ExperienceOrb> c, final @Nullable ExperienceOrb e) {
+    protected boolean init(@Nullable final Class<? extends ExperienceOrb> c, @Nullable final ExperienceOrb e) {
         xp = e == null ? -1 : e.getExperience();
         return true;
     }

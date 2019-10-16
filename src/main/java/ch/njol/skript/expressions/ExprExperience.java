@@ -84,7 +84,7 @@ public final class ExprExperience extends SimpleExpression<Experience> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (!(e instanceof ExperienceSpawnEvent))
             return;
         if (delta == null) {
@@ -123,7 +123,7 @@ public final class ExprExperience extends SimpleExpression<Experience> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the experience";
     }
 

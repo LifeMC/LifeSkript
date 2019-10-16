@@ -117,7 +117,7 @@ public final class ExprFacing extends SimplePropertyExpression<Object, Direction
 
     @SuppressWarnings("deprecation")
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         assert mode == ChangeMode.SET;
         assert delta != null;
 

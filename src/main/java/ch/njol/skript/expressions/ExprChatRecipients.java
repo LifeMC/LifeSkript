@@ -106,7 +106,7 @@ public final class ExprChatRecipients extends SimpleExpression<Player> {
                     a.getRecipients().remove(p);
                 return;
             case REMOVE_ALL:
-            //$FALL-THROUGH$
+                //$FALL-THROUGH$
             case DELETE:
                 a.getRecipients().clear();
                 return;

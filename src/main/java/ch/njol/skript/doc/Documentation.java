@@ -335,7 +335,7 @@ public final class Documentation {
         return s.replace("'", "\\'").replace("\"", "\\\"");
     }
 
-    public static final String escapeHTML(final @Nullable String s) {
+    public static final String escapeHTML(@Nullable final String s) {
         if (s == null) {
             assert false;
             return "";

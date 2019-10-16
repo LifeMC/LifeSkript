@@ -77,7 +77,7 @@ public final class ExprAmount extends SimpleExpression<Integer> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "amount of " + expr.toString(e, debug);
     }
 

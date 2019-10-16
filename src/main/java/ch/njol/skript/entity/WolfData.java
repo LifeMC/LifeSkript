@@ -49,7 +49,7 @@ public final class WolfData extends EntityData<Wolf> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Wolf> c, final @Nullable Wolf e) {
+    protected boolean init(@Nullable final Class<? extends Wolf> c, @Nullable final Wolf e) {
         angry = e == null ? 0 : e.isAngry() ? 1 : -1;
         tamed = e == null ? 0 : e.isTamed() ? 1 : -1;
         return true;

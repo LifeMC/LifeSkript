@@ -77,7 +77,7 @@ public final class ExprGameMode extends PropertyExpression<Player, GameMode> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the gamemode of " + getExpr().toString(e, debug);
     }
 
@@ -91,7 +91,7 @@ public final class ExprGameMode extends PropertyExpression<Player, GameMode> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) throws UnsupportedOperationException {
         final GameMode m = delta == null ? Bukkit.getDefaultGameMode() : (GameMode) delta[0];
         for (final Player p : getExpr().getArray(e)) {
             if (getTime() >= 0 && e instanceof PlayerGameModeChangeEvent && ((PlayerGameModeChangeEvent) e).getPlayer() == p && !Delay.isDelayed(e) && ((PlayerGameModeChangeEvent) e).getNewGameMode() != m) {

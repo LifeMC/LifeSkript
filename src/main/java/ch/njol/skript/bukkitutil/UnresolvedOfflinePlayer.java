@@ -33,6 +33,7 @@ import org.bukkit.entity.Player;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Map;
+import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -103,7 +104,7 @@ public final class UnresolvedOfflinePlayer implements OfflinePlayer {
             }
         }
     }, "Skript offline player resolver thread");
-    final BlockingQueue<Runnable> actionQueue = new LinkedBlockingQueue<>();
+    final Queue<Runnable> actionQueue = new LinkedBlockingQueue<>();
     final String name;
     @Nullable
     OfflinePlayer bukkitOfflinePlayer;

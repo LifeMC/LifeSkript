@@ -57,7 +57,7 @@ public final class DroppedItemData extends EntityData<Item> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Item> c, final @Nullable Item e) {
+    protected boolean init(@Nullable final Class<? extends Item> c, @Nullable final Item e) {
         if (e != null) {
             final ItemStack i = e.getItemStack();
             if (i == null)

@@ -52,7 +52,8 @@ public final class ExprProperty extends SimpleExpression<String> {
         Skript.registerExpression(ExprProperty.class, String.class, ExpressionType.SIMPLE, "property( |-)%string%");
     }
 
-    private @Nullable
+    @Nullable
+    private
     Expression<String> propertyName;
 
     /**

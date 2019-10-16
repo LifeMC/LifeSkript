@@ -77,7 +77,7 @@ public final class ExprShooter extends PropertyExpression<Projectile, LivingEnti
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (mode == ChangeMode.SET) {
             assert delta != null;
             for (final Projectile p : getExpr().getArray(e)) {
@@ -95,7 +95,7 @@ public final class ExprShooter extends PropertyExpression<Projectile, LivingEnti
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the shooter" + (getExpr().isDefault() ? "" : " of " + getExpr().toString(e, debug));
     }
 

@@ -240,15 +240,20 @@ public final class ExprEntities extends SimpleExpression<Entity> {
         return new EntityIterator(returnType, worlds, e, types);
     }
 
+    @SuppressWarnings("null")
+    @Override
+    public String toString(@Nullable final Event e, final boolean debug) {
+        return "all entities of types " + types.toString(e, debug) + (worlds != null ? " in " + worlds.toString(e, debug) : radius != null && center != null ? " in radius " + radius.toString(e, debug) + " around " + center.toString(e, debug) : "");
+    }
+
     private static final class EntityIterator extends NonNullIterator<Entity> {
         private final World[] ws;
 
         private final EntityData<?>[] ts;
+        private final Class<? extends Entity> returnType;
         private int w = -1;
-
         @Nullable
         private Iterator<? extends Entity> curIter;
-        private final Class<? extends Entity> returnType;
 
         EntityIterator(final Class<? extends Entity> returnType,
                        @Nullable final Expression<World> worlds,
@@ -280,12 +285,6 @@ public final class ExprEntities extends SimpleExpression<Entity> {
             }
             return null;
         }
-    }
-
-    @SuppressWarnings("null")
-    @Override
-    public String toString(@Nullable final Event e, final boolean debug) {
-        return "all entities of types " + types.toString(e, debug) + (worlds != null ? " in " + worlds.toString(e, debug) : radius != null && center != null ? " in radius " + radius.toString(e, debug) + " around " + center.toString(e, debug) : "");
     }
 
 }

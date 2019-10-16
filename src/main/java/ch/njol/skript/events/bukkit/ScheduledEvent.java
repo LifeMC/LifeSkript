@@ -50,7 +50,7 @@ public class ScheduledEvent extends Event {
     @Nullable
     private final World world;
 
-    public ScheduledEvent(final @Nullable World world) {
+    public ScheduledEvent(@Nullable final World world) {
         this.world = world;
     }
 

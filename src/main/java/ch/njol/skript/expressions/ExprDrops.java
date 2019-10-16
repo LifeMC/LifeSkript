@@ -95,7 +95,7 @@ public final class ExprDrops extends SimpleExpression<ItemStack> {
 
     @SuppressWarnings({"unchecked", "null"})
     @Override
-    public void change(final Event e, final @Nullable Object[] deltas, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] deltas, final ChangeMode mode) {
         assert mode != ChangeMode.RESET;
         if (!(e instanceof EntityDeathEvent)) {
             assert false;
@@ -169,7 +169,7 @@ public final class ExprDrops extends SimpleExpression<ItemStack> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the drops";
         return Classes.getDebugMessage(getAll(e));

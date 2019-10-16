@@ -74,7 +74,7 @@ public final class ExprWeather extends PropertyExpression<World, WeatherType> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return "the weather in " + getExpr().toString(e, debug);
     }
 
@@ -88,7 +88,7 @@ public final class ExprWeather extends PropertyExpression<World, WeatherType> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         final WeatherType t = delta == null ? WeatherType.CLEAR : (WeatherType) delta[0];
         for (final World w : getExpr().getArray(e)) {
             assert w != null : getExpr();

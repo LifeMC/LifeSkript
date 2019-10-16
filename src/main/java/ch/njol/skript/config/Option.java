@@ -103,14 +103,14 @@ public final class Option<T> {
         }
     }
 
-    public final void setValue(final T value) {
-        this.value = String.valueOf(value);
-        this.parsedValue = value;
-    }
-
     @Nullable
     public final String getValue() {
         return this.value;
+    }
+
+    public final void setValue(final T value) {
+        this.value = String.valueOf(value);
+        this.parsedValue = value;
     }
 
     void onValueChange() {

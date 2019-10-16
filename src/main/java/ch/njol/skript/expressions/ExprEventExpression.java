@@ -27,6 +27,7 @@ import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.doc.NoDoc;
 import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.expressions.base.WrapperExpression;
+import ch.njol.skript.lang.DefaultExpression;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.Literal;
@@ -49,13 +50,13 @@ public final class ExprEventExpression extends WrapperExpression<Object> {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parser) {
         @SuppressWarnings("unchecked") final ClassInfo<?> ci = ((Literal<ClassInfo<?>>) exprs[0]).getSingle();
-        final EventValueExpression<?> e = new EventValueExpression<Object>(ci.getC());
+        final DefaultExpression<?> e = new EventValueExpression<Object>(ci.getC());
         setExpr(e);
         return e.init();
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return getExpr().toString(e, debug);
     }
 

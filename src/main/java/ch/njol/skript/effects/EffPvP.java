@@ -68,7 +68,7 @@ public final class EffPvP extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (enable ? "enable" : "disable") + " PvP in " + worlds.toString(e, debug);
     }
 

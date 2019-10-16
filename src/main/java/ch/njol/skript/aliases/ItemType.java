@@ -558,60 +558,6 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return new ItemStackIterator(types, meta, enchantments, getAmount());
     }
 
-    private static final class ItemStackIterator implements Iterator<ItemStack> {
-        @Nullable
-        private final transient Map<Enchantment, Integer> enchantments;
-        private final Iterator<ItemData> iter;
-
-        @Nullable
-        private final transient Object meta;
-        private final int amount;
-
-        @Nullable
-        private Iterator<ItemStack> currentDataIter;
-
-        ItemStackIterator(final Iterable<ItemData> types,
-                          @Nullable final Object meta,
-                          @Nullable final Map<Enchantment, Integer> enchantments,
-                          final int amount) {
-            iter = types.iterator();
-            this.meta = meta;
-
-            this.enchantments = enchantments;
-            this.amount = amount;
-        }
-
-        @Override
-        public final boolean hasNext() {
-            Iterator<ItemStack> cdi = currentDataIter;
-            while (iter.hasNext() && (cdi == null || !cdi.hasNext())) {
-                currentDataIter = cdi = iter.next().getAll();
-            }
-            return cdi != null && cdi.hasNext();
-        }
-
-        @Override
-        public final ItemStack next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            final Iterator<ItemStack> cdi = currentDataIter;
-            if (cdi == null)
-                throw new NoSuchElementException();
-            final ItemStack is = cdi.next();
-            is.setAmount(amount);
-            if (meta != null)
-                is.setItemMeta(Bukkit.getItemFactory().asMetaFor((ItemMeta) meta, is.getType()));
-            if (enchantments != null)
-                is.addUnsafeEnchantments(enchantments);
-            return is;
-        }
-
-        @Override
-        public final void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     /**
      * Gets all ItemStacks this ItemType represents. Only use this if you know what you're doing, as it returns only one element if this is not an 'every' alias.
      *
@@ -782,39 +728,6 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return new ItemDataIterator(this, types);
     }
 
-    private static final class ItemDataIterator implements Iterator<ItemData> {
-        private final ItemType itemType;
-        private final List<ItemData> types;
-
-        private int next;
-
-        ItemDataIterator(final ItemType itemType,
-                         final List<ItemData> types) {
-            this.itemType = itemType;
-            this.types = types;
-        }
-
-        @Override
-        public final boolean hasNext() {
-            return next < types.size();
-        }
-
-        @SuppressWarnings("null")
-        @Override
-        public final ItemData next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-            return types.get(next++);
-        }
-
-        @Override
-        public final void remove() {
-            if (next <= 0)
-                throw new IllegalStateException();
-            itemType.remove(--next);
-        }
-    }
-
     public boolean isContainedIn(final Inventory invi) {
         return isContainedIn((Iterable<ItemStack>) invi);
     }
@@ -950,23 +863,6 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         return ok;
     }
 
-//	/**
-//	 * Saves an array of ItemTypes, separated by '|'
-//	 */
-//	public static final String serialize(final ItemType[] types) {
-//		if (types == null)
-//			return "";
-//		final StringBuilder b = new StringBuilder();
-//		for (final ItemType t : types) {
-//			if (b.length() != 0)
-//				b.append("|");
-//			final Pair<String, String> p = Classes.serialize(t);
-//			assert p.first.equals("itemtype");
-//			b.append(p.second.replace("|", "||"));
-//		}
-//		return b.toString();
-//	}
-
     /**
      * Adds this ItemType to the given list, without filling existing stacks.
      *
@@ -996,6 +892,23 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         invi.setContents(buf);
         return b;
     }
+
+//	/**
+//	 * Saves an array of ItemTypes, separated by '|'
+//	 */
+//	public static final String serialize(final ItemType[] types) {
+//		if (types == null)
+//			return "";
+//		final StringBuilder b = new StringBuilder();
+//		for (final ItemType t : types) {
+//			if (b.length() != 0)
+//				b.append("|");
+//			final Pair<String, String> p = Classes.serialize(t);
+//			assert p.first.equals("itemtype");
+//			b.append(p.second.replace("|", "||"));
+//		}
+//		return b.toString();
+//	}
 
     public boolean addTo(final ItemStack[] buf) {
         if (!all) {
@@ -1145,6 +1058,93 @@ public final class ItemType implements Unit, Iterable<ItemData>, Container<ItemS
         if (meta != null && !(meta instanceof ItemMeta))
             throw new StreamCorruptedException();
         fields.setFields(this);
+    }
+
+    private static final class ItemStackIterator implements Iterator<ItemStack> {
+        @Nullable
+        private final transient Map<Enchantment, Integer> enchantments;
+        private final Iterator<ItemData> iter;
+
+        @Nullable
+        private final transient Object meta;
+        private final int amount;
+
+        @Nullable
+        private Iterator<ItemStack> currentDataIter;
+
+        ItemStackIterator(final Iterable<ItemData> types,
+                          @Nullable final Object meta,
+                          @Nullable final Map<Enchantment, Integer> enchantments,
+                          final int amount) {
+            iter = types.iterator();
+            this.meta = meta;
+
+            this.enchantments = enchantments;
+            this.amount = amount;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            Iterator<ItemStack> cdi = currentDataIter;
+            while (iter.hasNext() && (cdi == null || !cdi.hasNext())) {
+                currentDataIter = cdi = iter.next().getAll();
+            }
+            return cdi != null && cdi.hasNext();
+        }
+
+        @Override
+        public final ItemStack next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            final Iterator<ItemStack> cdi = currentDataIter;
+            if (cdi == null)
+                throw new NoSuchElementException();
+            final ItemStack is = cdi.next();
+            is.setAmount(amount);
+            if (meta != null)
+                is.setItemMeta(Bukkit.getItemFactory().asMetaFor((ItemMeta) meta, is.getType()));
+            if (enchantments != null)
+                is.addUnsafeEnchantments(enchantments);
+            return is;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private static final class ItemDataIterator implements Iterator<ItemData> {
+        private final ItemType itemType;
+        private final List<ItemData> types;
+
+        private int next;
+
+        ItemDataIterator(final ItemType itemType,
+                         final List<ItemData> types) {
+            this.itemType = itemType;
+            this.types = types;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            return next < types.size();
+        }
+
+        @SuppressWarnings("null")
+        @Override
+        public final ItemData next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            return types.get(next++);
+        }
+
+        @Override
+        public final void remove() {
+            if (next <= 0)
+                throw new IllegalStateException();
+            itemType.remove(--next);
+        }
     }
 
 }

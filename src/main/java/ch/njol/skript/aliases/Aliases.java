@@ -132,7 +132,7 @@ public final class Aliases {
         return Language.isUsingLocal() ? materialNames_localised : materialNames_english;
     }
 
-    private static final int nextBracket(final String s, final char closingBracket, final char openingBracket, final int start) {
+    private static final int nextBracket(final CharSequence s, final char closingBracket, final char openingBracket, final int start) {
         assert s.charAt(start) == openingBracket;
         int n = 0;
         for (int i = start + 1; i < s.length(); i++) {
@@ -183,8 +183,8 @@ public final class Aliases {
      * @param variations
      * @return A map containing all parsed aliases
      */
-    static final LinkedHashMap<String, ItemType> getAliases(final String name, final ItemType value, final Variations variations) {
-        final LinkedHashMap<String, ItemType> r = new LinkedHashMap<>(); // LinkedHashMap to preserve order for item names
+    static final HashMap<String, ItemType> getAliases(final String name, final ItemType value, final Variations variations) {
+        final HashMap<String, ItemType> r = new LinkedHashMap<>(); // LinkedHashMap to preserve order for item names
         for (int i = 0; i < name.length(); i++) {
             final char c = name.charAt(i);
             if ("[({".indexOf(c) != -1) {
@@ -220,7 +220,7 @@ public final class Aliases {
                                 break;
                             }
                             default:
-                            	break;
+                                break;
                         }
                     }
                     if (!hasParts) {
@@ -332,7 +332,7 @@ public final class Aliases {
             return 0;
         }
         final HashMap<String, ItemType> aliases = getAliases();
-        final HashMap<String, ItemType> as = getAliases(WHITESPACE.reset(name).replaceAll(" "), t, variations);
+        final Map<String, ItemType> as = getAliases(WHITESPACE.reset(name).replaceAll(" "), t, variations);
         boolean printedStartingWithNumberError = false;
 //		boolean printedSyntaxError = false;
         for (final Entry<String, ItemType> e : as.entrySet()) {
@@ -485,7 +485,8 @@ public final class Aliases {
         final StringBuilder missing = new StringBuilder(m_missing_aliases + " ");
         for (final Material m : Material.values()) {
             if (materialNames.get(m.getId()) == null) {
-                materialNames.put(m.getId(), new MaterialName(m.getId(), m.toString().toLowerCase(Locale.ENGLISH).replace('_', ' '), m.toString().toLowerCase(Locale.ENGLISH).replace('_', ' '), 0));
+                final String spacedMaterialName = m.toString().toLowerCase(Locale.ENGLISH).replace('_', ' ');
+                materialNames.put(m.getId(), new MaterialName(m.getId(), spacedMaterialName, spacedMaterialName, 0));
                 missing.append(m.getId()).append(", ");
                 r++;
             }
@@ -805,7 +806,7 @@ public final class Aliases {
                     return;
                 }
 
-                final ArrayList<String> aliasNodes = new ArrayList<>();
+                final List<String> aliasNodes = new ArrayList<>();
 
                 aliasConfig.validate((NodeValidator) new SectionValidator().addEntry("aliases", s -> {
                     for (final String n : s.split(","))

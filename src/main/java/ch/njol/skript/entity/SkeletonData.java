@@ -63,7 +63,7 @@ public final class SkeletonData extends EntityData<Skeleton> {
     }
 
     @Override
-    protected boolean init(final @Nullable Class<? extends Skeleton> c, final @Nullable Skeleton e) {
+    protected boolean init(@Nullable final Class<? extends Skeleton> c, @Nullable final Skeleton e) {
         wither = e != null && hasWither && e.getSkeletonType() == SkeletonType.WITHER;
         return true;
     }

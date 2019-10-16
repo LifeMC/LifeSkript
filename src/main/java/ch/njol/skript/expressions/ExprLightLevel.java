@@ -76,7 +76,7 @@ public final class ExprLightLevel extends PropertyExpression<Location, Byte> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (whatLight == BLOCK ? "block " : whatLight == SKY ? "sky " : "") + "light level " + getExpr().toString(e, debug);
     }
 

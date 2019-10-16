@@ -87,7 +87,7 @@ public final class ExprTarget extends PropertyExpression<LivingEntity, Entity> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         if (e == null)
             return "the target" + (type == null ? "" : "ed " + type) + (getExpr().isDefault() ? "" : " of " + getExpr().toString(null, debug));
         return Classes.getDebugMessage(getAll(e));
@@ -108,7 +108,7 @@ public final class ExprTarget extends PropertyExpression<LivingEntity, Entity> {
     }
 
     @Override
-    public void change(final Event e, final @Nullable Object[] delta, final ChangeMode mode) {
+    public void change(final Event e, @Nullable final Object[] delta, final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
             final LivingEntity target = delta == null ? null : (LivingEntity) delta[0];
             for (final LivingEntity entity : getExpr().getArray(e)) {

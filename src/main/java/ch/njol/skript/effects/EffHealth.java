@@ -120,7 +120,7 @@ public final class EffHealth extends Effect {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return (heal ? "heal " : "damage ") + damageables.toString(e, debug) + (damage != null ? " by " + damage.toString(e, debug) : "");
     }
 

@@ -122,6 +122,7 @@ public final class SkriptClasses {
             }
 
             //					return c.getCodeName();
+
             /**
              * @deprecated not used anymore
              */
