@@ -341,7 +341,7 @@ public abstract class AbstractUpdater implements Updater {
                 } else { // Automatic installing of the new updates are disabled
                     Skript.warning("There is a new version available for " + getName() + ". The new version is " + latest.getVersion() + ". You are running " + current.getVersion() + '.');
                 }
-				setEnabled(false); // Updater is done its work
+                setEnabled(false); // Updater is done its work
             }
             runCallback.run();
         });
