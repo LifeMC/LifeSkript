@@ -1558,7 +1558,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     public final SkriptUpdater getUpdater() {
         final SkriptUpdater localUpdater = updater;
         if (localUpdater == null)
-            throw new IllegalStateException("Updater not yet initialized");
+            throw new IllegalStateException("Updater is not yet initialized");
         return localUpdater;
     }
 
