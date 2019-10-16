@@ -24,6 +24,11 @@ package ch.njol.util.misc;
 
 import ch.njol.skript.util.Version;
 
+/**
+ * Represents a {@link Versionable} object.
+ *
+ * @since 2.2.18
+ */
 @FunctionalInterface
 public interface Versionable {
 

@@ -22,6 +22,11 @@
 
 package ch.njol.util.misc;
 
+/**
+ * Represents a {@link Nameable} object.
+ *
+ * @since 2.2.18
+ */
 @FunctionalInterface
 public interface Nameable {
 

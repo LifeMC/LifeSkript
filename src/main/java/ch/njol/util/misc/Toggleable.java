@@ -22,6 +22,11 @@
 
 package ch.njol.util.misc;
 
+/**
+ * Represents a {@link Toggleable} object.
+ *
+ * @since 2.2.18
+ */
 public interface Toggleable {
 
     /**
