@@ -43,6 +43,7 @@ public final class LogEntry {
     @Nullable
     private final String from;
     private final boolean tracked;
+    private boolean isOverflowed;
     @Nullable
     public String waitingMessage;
 
@@ -98,8 +99,11 @@ public final class LogEntry {
         for (int i = 0; i < es.length; i++) {
             if (!es[i].getClassName().startsWith(skriptLogPackageName))
                 continue;
+            if (entry != null && "handleStackOverFlow".equals(es[i].getMethodName())) {
+                entry.isOverflowed = true;
+            }
             i++;
-            while (i < es.length - 1 && (es[i].getClassName().startsWith(skriptLogPackageName) || es[i].getClassName().equals(Skript.class.getName())))
+            while (i < es.length - 1 && (es[i].getClassName().startsWith(skriptLogPackageName) || es[i].getClassName().equals(Skript.class.getName()) || !actual && "handleStackOverFlow".equals(es[i].getMethodName())))
                 i++;
             if (i >= es.length)
                 i = es.length - 1;
@@ -140,6 +144,8 @@ public final class LogEntry {
             return waitingMessage;
         final Node n = node;
         if (n == null || level.intValue() < Level.WARNING.intValue())
+            return message;
+        if (isOverflowed)
             return message;
         final Config c = n.getConfig();
         return message + from + " (" + c.getFileName() + ", line " + n.getLine() + ": " + n.save().trim() + "')";
