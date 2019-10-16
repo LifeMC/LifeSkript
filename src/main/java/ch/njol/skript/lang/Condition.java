@@ -40,6 +40,7 @@ public abstract class Condition extends Statement {
     private boolean negated;
 
     protected Condition() {
+        /* implicit super call */
     }
 
     @SuppressWarnings({"rawtypes", "unchecked", "null"})
