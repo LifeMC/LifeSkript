@@ -279,6 +279,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     @Nullable
     private static SkriptAddon addon;
     @Nullable
+    public static Thread serverThread;
+    @Nullable
     private static ThreadGroup rootThreadGroup;
     @Nullable
     private static Runnable optimizeNetty;
@@ -299,6 +301,9 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             if (Skript.testing() && Skript.debug())
                 Skript.exception(e);
         }
+
+        if (Skript.isBukkitRunning() && Bukkit.isPrimaryThread())
+            serverThread = Thread.currentThread();
 
 //      Language.addListener(new LanguageChangeListener() {
 //          @Override
@@ -2208,7 +2213,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16"))) {
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16")) || line.contains("2.2.17")) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
 
