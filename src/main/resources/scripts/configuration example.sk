@@ -1,0 +1,26 @@
+# Configuration system is available on Skript v2.2.15 or later.
+# It is used to define some info about script. Skript reads them.
+
+# For example you can say "My script requires .. add-on" to Skript and Skript will handle it.
+# Or you can define your auto-updater using GitHub and configuration section.
+
+# Note: Updater currently does not respect source, target and requires minecraft configuration
+# settings. Updater will always try to install latest version if the config and release channel allows.
+
+# Configuration must be on top of the script
+configuration:
+    source: ${project.version} # The Skript version this script is written and recommended for use
+    target: ${project.version} # The absolute minimum Skript version that can run this script
+
+    script name: Configuration Example # The name of the script
+    version: 1.0 # The script version. If this not the latest version, it will be automatically updated.
+
+    latest version download url: githubRaw/LifeMC/LifeSkript/updater-system/src/main/resources/scripts/configuration example.sk # Use %version% for latest version string
+    release channel: stable # Release channel. For example if this "stable" and latest version contains e.g "1.1-beta2", it will be ignored.
+
+    auto install: true # Make this false to only notify updates, not automatically update.
+    updater enabled: true # This actually starts the updater, so it should be on the end, after the all settings.
+
+# Some sample event and send code just for example
+on load: # When the script is loaded
+    send "Configuration example script is enabled" to console # Send a message to console

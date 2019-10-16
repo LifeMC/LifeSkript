@@ -466,6 +466,7 @@
                     <include>META-INF/*</include>
                     <include>config.sk</include>
                     <include>lang/*</include>
+                    <include>scripts/configuration example.sk</include>
                 </includes>
             </resource>
             <resource>
@@ -480,6 +481,7 @@
                     <exclude>META-INF/*</exclude>
                     <exclude>config.sk</exclude>
                     <exclude>lang/*</exclude>
+                    <exclude>scripts/configuration example.sk</exclude>
                 </excludes>
             </resource>
             <resource>
