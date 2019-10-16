@@ -459,10 +459,28 @@
         <resources>
             <resource>
                 <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                    <include>version</include>
+                    <include>META-INF/*</include>
+                    <include>config.sk</include>
+                    <include>lang/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
                 <filtering>false</filtering>
                 <includes>
                     <include>**/*</include>
                 </includes>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                    <exclude>version</exclude>
+                    <exclude>META-INF/*</exclude>
+                    <exclude>config.sk</exclude>
+                    <exclude>lang/*</exclude>
+                </excludes>
             </resource>
             <resource>
                 <directory>./</directory>
