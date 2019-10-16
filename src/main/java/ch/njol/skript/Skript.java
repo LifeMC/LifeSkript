@@ -47,6 +47,10 @@ import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.timings.SkriptTimings;
+import ch.njol.skript.update.ReleaseChannel;
+import ch.njol.skript.update.UpdaterState;
+import ch.njol.skript.update.addon.AddonUpdater;
+import ch.njol.skript.update.skript.SkriptUpdater;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.FlatFileStorage;
@@ -57,6 +61,7 @@ import ch.njol.util.*;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
 import ch.njol.util.coll.iterator.EnumerationIterable;
+import ch.njol.util.misc.Updatable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -139,7 +144,7 @@ import java.util.zip.ZipFile;
  * @see ch.njol.skript.registrations.Comparators#registerComparator(Class, Class, ch.njol.skript.classes.Comparator)
  * @see Converters#registerConverter(Class, Class, ch.njol.skript.classes.Converter)
  */
-public final class Skript extends JavaPlugin implements NonReflectiveAddon, Listener {
+public final class Skript extends JavaPlugin implements Listener, Updatable, NonReflectiveAddon {
 
     // ================ CONSTANTS ================
 
@@ -251,6 +256,11 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
     @Nullable
     public static Version version;
     static boolean disabled;
+    /**
+     * Use {@link Skript#getUpdater()} for asserted access
+     */
+    @Nullable
+    public SkriptUpdater updater;
     @Nullable
     public static String latestVersion;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
@@ -1536,6 +1546,39 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
 
     public static final Collection<SkriptEventInfo<?>> getEvents() {
         return events;
+    }
+
+    /**
+     * Gets the updater with asserted access. It will throw an
+     * {@link IllegalStateException} if the updater is not yet initialized.
+     *
+     * @return The non-null {@link SkriptUpdater} instance.
+     */
+    @Override
+    public final SkriptUpdater getUpdater() {
+        final SkriptUpdater localUpdater = updater;
+        if (localUpdater == null)
+            throw new IllegalStateException("Updater not yet initialized");
+        return localUpdater;
+    }
+
+    /**
+     * Gets the all add-on updaters that Skript uses. May return
+     * empty map if the updaters are not yet initialized.
+     *
+     * @return The non-null {@link Map} of {@link AddonUpdater}s.
+     */
+    public static final Map<SkriptAddon, AddonUpdater> getAddonUpdaters() {
+        final Map<SkriptAddon, AddonUpdater> addonUpdaters = new HashMap<>();
+
+        for (final Map.Entry<String, SkriptAddon> entry : addons.entrySet()) {
+            final AddonUpdater.AddonKnowledge knowledge = AddonUpdater.AddonKnowledge.get(entry.getKey());
+
+            if (knowledge != null)
+                addonUpdaters.put(entry.getValue(), knowledge.getUpdater());
+        }
+
+        return addonUpdaters;
     }
 
     // ================ COMMANDS ================
@@ -3420,6 +3463,31 @@ public final class Skript extends JavaPlugin implements NonReflectiveAddon, List
                             Bukkit.getScheduler().runTask(this, () -> info("You are using the latest version of Skript."));
                             Bukkit.getScheduler().runTask(this, Skript::printIssuesLink);
                         }
+                        // TODO also use updater to show version warnings
+                        updater = new SkriptUpdater(SkriptConfig.checkForNewVersion.value(), ReleaseChannel.parseOrNightly(getVersion().toString()), SkriptConfig.updateCheckInterval.value().getMilliSeconds(), TimeUnit.MILLISECONDS)
+                                .registerListener()
+                                // Initial check
+                                .checkAndInstallUpdates(updater -> {
+                                    if (updater.getState() == UpdaterState.PENDING_RESTART)
+                                        return; // Must first complete the Skript update before add-ons
+                                    // (because updater system may be changed in a new version, etc.)
+
+                                    // Addon updaters
+                                    for (final Map.Entry<String, SkriptAddon> entry : addons.entrySet()) {
+                                        final String addonName = entry.getKey();
+                                        final AddonUpdater.AddonKnowledge knowledge = AddonUpdater.AddonKnowledge.get(addonName);
+
+                                        if (knowledge != null) {
+                                            try {
+                                                knowledge.getUpdater()
+                                                        .registerListener()
+                                                        .checkAndInstallUpdates(); // Initial check
+                                            } catch (final IOException e) {
+                                                Skript.exception(e, "Can't check/install updates for the add-on \"" + addonName + '"');
+                                            }
+                                        }
+                                    }
+                                });
                     } catch (final Throwable tw) {
                         if (!isEnabled())
                             return;

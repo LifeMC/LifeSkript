@@ -360,6 +360,7 @@ public final class SkriptCommand implements CommandExecutor {
                     return true;
                 }
             } else if ("update".equalsIgnoreCase(args[0])) {
+                // TODO use the Skript#getUpdater
                 /*
                 if ("check".equalsIgnoreCase(args[1])) {
                     Skript.info(sender, Skript.updateAvailable ? "New version v" + Skript.latestVersion + " is available. Download from here: " + Skript.LATEST_VERSION_DOWNLOAD_LINK : m_running_latest_version.toString());

@@ -41,6 +41,7 @@ import ch.njol.skript.localization.PluralizingArgsMessage;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
+import ch.njol.skript.update.script.ScriptUpdater;
 import ch.njol.skript.util.Date;
 import ch.njol.skript.util.*;
 import ch.njol.skript.variables.TypeHints;
@@ -516,6 +517,7 @@ public final class ScriptLoader {
                         }
                         hasConfiguraton = true;
                         node.convertToEntries(0);
+                        ScriptUpdater.Parser.clearValues();
                         final List<String> duplicateCheckList = new ArrayList<>();
                         for (final Node n : node) {
                             if (!(n instanceof EntryNode)) {
@@ -651,6 +653,10 @@ public final class ScriptLoader {
                                         currentOptions.clear();
                                         currentOptions.putAll(options);
                                     }
+                                } else if (ScriptUpdater.Parser.checkValid(key)) {
+                                    ScriptUpdater.Parser.parse(f, duplicateCheckList, key, value);
+                                } else if (Skript.logHigh()) {
+                                    Skript.warning("Configuration option \"" + key + "\" is not supported");
                                 }
                             } catch (final IllegalArgumentException e) {
                                 // Probably an illegal version string is passed
@@ -658,6 +664,7 @@ public final class ScriptLoader {
                                 return new ScriptInfo();
                             }
                         }
+                        ScriptUpdater.Parser.clearValues();
                         duplicateCheckList.clear();
                         continue;
                     }

@@ -49,6 +49,31 @@ check for new version: true
 # If this set to false, the update checking is disabled and not possible at all. You can however check manually :P
 # Setting to false is only recommended if you stuck to some old version of Skript for reasons, or the updater is broken.
 
+update check interval: 10 minutes
+# If 'check for new version' is true, this sets how often to check for a new update.
+# A first check will always be made when the server starts, after that checks will be made in intervals set by this option.
+# Set this to 0 seconds for disabling repeated checks, in which case only one check will be made when the server starts.
+
+automatically download new version: true
+# Whatever Skript should automatically download & install the newest version of Skript if one is available.
+# If you disable this you can still use '/skript update download' to make Skript download the newest version.
+# If you're concerned about changes use '/skript update changes' for a full list of changes since the last update.
+
+check for new addon versions: true
+# Whatever Skript should check for new versions of Skript Add-Ons are available when the server starts.
+# If this set to false, the add-on update checking is disabled and not possible at all. You can however check manually :P
+# Setting to false is only recommended if you stuck to some old version of Skript Add-Ons for reasons, or the updater is broken.
+
+addon update check interval: 30 minutes
+# If 'check for new addon versions' is true, this sets how often to check for new add-on versions.
+# A first check will always be made when the server starts, after that checks will be made in intervals set by this option.
+# Set this to 0 seconds for disabling repeated checks, in which case only one check will be made when the server starts.
+
+automatically download new addon versions: true
+# Whatever Skript should automatically download & install the newest version of Skript Add-Ons if one is available.
+# If you disable this you can still use '/skript addon <name> download' to make Skript download the newest version.
+# If you're concerned about changes use '/skript addon <name> changes' for a full list of changes since the last update.
+
 
 enable effect commands: true
 effect command token: !

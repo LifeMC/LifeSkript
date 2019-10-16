@@ -29,7 +29,9 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.log.Verbosity;
 import ch.njol.skript.timings.SkriptTimings;
+import ch.njol.skript.update.Updater;
 import ch.njol.skript.util.FileUtils;
+import ch.njol.skript.util.Timespan;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -39,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 //import ch.njol.skript.util.Date;
 
@@ -150,13 +153,19 @@ public final class SkriptConfig {
     public static final Option<Boolean> disableMissingAndOrWarnings = new Option<>("disable variable missing and/or warnings", false);
     static final Collection<Config> configs = new ArrayList<>();
     static final Option<String> version = new Option<>("version", Skript.getVersion().toString()).optional(true);
-    static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", true);
-    //static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(15, TimeUnit.MINUTES));//.setter(t -> {
-    //final Task ct = Updater.checkerTask;
-    //if (t.getTicks_i() != 0 && ct != null && !ct.isAlive())
-    //ct.setNextExecution(t.getTicks_i());
-    //});
-    //static final Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", false);
+    public static final Option<Boolean> checkForNewVersion = new Option<>("check for new version", true);
+    public static final Option<Timespan> updateCheckInterval = new Option<>("update check interval", new Timespan(10, TimeUnit.MINUTES)).setter(t -> {
+        if (Skript.getInstance().updater == null)
+            return; // Updater is not yet initialized, ignore
+        Skript.getInstance().getUpdater().setCheckFrequency(t.getMilliSeconds(), TimeUnit.MILLISECONDS);
+    });
+    public static final Option<Boolean> automaticallyDownloadNewVersion = new Option<>("automatically download new version", true);
+    public static final Option<Boolean> checkForNewAddonVersions = new Option<>("check for new addon versions", true);
+    public static final Option<Timespan> addonUpdateCheckInterval = new Option<>("addon update check interval", new Timespan(30, TimeUnit.MINUTES)).setter(t -> {
+        for (final Updater updater : Skript.getAddonUpdaters().values())
+            updater.setCheckFrequency(t.getMilliSeconds(), TimeUnit.MILLISECONDS);
+    });
+    public static final Option<Boolean> automaticallyDownloadNewAddonVersions = new Option<>("automatically download new addon versions", true);
     @SuppressWarnings("null")
     private static final DateFormat shortDateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
     private static final Option<DateFormat> dateFormat = new Option<>("date format", shortDateFormat, s -> {
