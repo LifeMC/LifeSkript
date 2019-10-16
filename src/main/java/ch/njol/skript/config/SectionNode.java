@@ -22,6 +22,7 @@
 
 package ch.njol.skript.config;
 
+import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptAPIException;
 import ch.njol.skript.SkriptConfig;
@@ -31,7 +32,6 @@ import ch.njol.skript.log.SkriptLogger;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.coll.CollectionUtils;
 import ch.njol.util.coll.iterator.CheckedIterator;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.io.IOException;
@@ -39,11 +39,31 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
  */
 public final class SectionNode extends Node implements Iterable<Node> {
+
+    private static final Matcher SPACE_PATTERN_MATCHER = Pattern.compile(" +").matcher("");
+    private static final Matcher TAB_PATTERN_MATCHER = Pattern.compile("\t+").matcher("");
+
+    private static final Matcher SINGLE_TAB_PATTERN_MATCHER = Pattern.compile("\t", Pattern.LITERAL).matcher("");
+    private static final Matcher WHITESPACE_PATTERN_MATCHER = Pattern.compile("\\s").matcher("");
+
+    private static final Matcher WHITESPACE_PATTERN_ONE_MATCHER = Pattern.compile("\\s*").matcher("");
+    private static final Matcher WHITESPACE_PATTERN_TWO_MATCHER = Pattern.compile("\\S.*").matcher("");
+
+    private static final Matcher WHITESPACE_PATTERN_THREE_MATCHER = Pattern.compile("\\S.*$").matcher("");
+
+    /**
+     * This fixes the popular StackOverFlowError when reloading scripts that contain
+     * too long lines, e.g a line with too long contains condition & or lists.
+     */
+    private static final Matcher COMMENT_AND_WHITESPACE_MATCHER = Pattern.compile("(?:[^#]|##)*?#-#(?:\\s.*?)?").matcher("");
 
     private final ArrayList<Node> nodes = new ArrayList<>();
     /**
@@ -73,20 +93,21 @@ public final class SectionNode extends Node implements Iterable<Node> {
     }
 
     private static final String readableWhitespace(final String s) {
-        if (s.matches(" +"))
+        if (SPACE_PATTERN_MATCHER.reset(s).matches())
             return s.length() + " space" + (s.length() == 1 ? "" : "s");
-        if (s.matches("\t+"))
+        if (TAB_PATTERN_MATCHER.reset(s).matches())
             return s.length() + " tab" + (s.length() == 1 ? "" : "s");
-        return '\'' + s.replace("\t", "->").replace(' ', '_').replaceAll("\\s", "?") + "' [-> = tab, _ = space, ? = other whitespace]";
+        return '\'' + WHITESPACE_PATTERN_MATCHER.reset(SINGLE_TAB_PATTERN_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement("->")).replace(' ', '_')).replaceAll("?") + "' [-> = tab, _ = space, ? = other whitespace]";
     }
 
     private final NodeMap getNodeMap() {
         NodeMap nodeMap = this.nodeMap;
         if (nodeMap == null) {
             nodeMap = this.nodeMap = new NodeMap();
-            for (final Node node : nodes) {
-                assert node != null;
-                nodeMap.put(node);
+            {
+                if (!nodes.isEmpty())
+                    for (final Node node : nodes)
+                        nodeMap.put(node);
             }
         }
         return nodeMap;
@@ -158,31 +179,41 @@ public final class SectionNode extends Node implements Iterable<Node> {
      * Iterator over all non-void nodes of this section.
      */
     @Override
-    public Iterator<Node> iterator() {
-        @SuppressWarnings("null")
-        @NonNull final Iterator<Node> iter = nodes.iterator();
-        return new CheckedIterator<Node>(iter, n -> n != null && !n.isVoid()) {
-            @Override
-            public boolean hasNext() {
-                final boolean hasNext = super.hasNext();
-                if (!hasNext)
-                    SkriptLogger.setNode(SectionNode.this);
-                return hasNext;
-            }
+    public final Iterator<Node> iterator() {
+        return new NodeChecker(nodes.iterator(), this);
+    }
 
-            @Override
-            @Nullable
-            public Node next() {
-                final Node n = super.next();
-                SkriptLogger.setNode(n);
-                return n;
-            }
+    private static final class NodeChecker extends CheckedIterator<Node> {
+        @Nullable
+        private final Node node;
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        NodeChecker(final Iterator<Node> iter, @Nullable final Node node) {
+            super(iter, n -> n != null && !n.isVoid());
+
+            this.node = node;
+        }
+
+        @Override
+        public final boolean hasNext() {
+            final boolean hasNext = super.hasNext();
+            if (!hasNext)
+                SkriptLogger.setNode(node);
+            return hasNext;
+        }
+
+        @Override
+        @Nullable
+        public final Node next() {
+            final Node n = super.next();
+            SkriptLogger.setNode(n);
+
+            return n;
+        }
+
+        @Override
+        public final void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     /**
@@ -272,14 +303,16 @@ public final class SectionNode extends Node implements Iterable<Node> {
             SkriptLogger.setNode(this);
 
             final NonNullPair<String, String> line = Node.splitLine(fullLine);
-            String value = line.getFirst();
-            final String comment = line.getSecond();
 
+            String value = line.getFirst();
+            assert value != null;
+
+            final String comment = line.getSecond();
             final SectionNode parent = this.parent;
-            if (!indentationSet && parent != null && parent.parent == null && !value.isEmpty() && !value.matches("\\s*") && !value.matches("\\S.*")) {
-                final String s = value.replaceFirst("\\S.*$", "");
+            if (!indentationSet && parent != null && parent.parent == null && !value.isEmpty() && !WHITESPACE_PATTERN_ONE_MATCHER.reset(value).matches() && !WHITESPACE_PATTERN_TWO_MATCHER.reset(value).matches()) {
+                final String s = WHITESPACE_PATTERN_THREE_MATCHER.reset(value).replaceFirst("");
                 assert !s.isEmpty() : fullLine;
-                if (s.matches(" +") || s.matches("\t+")) {
+                if (SPACE_PATTERN_MATCHER.reset(s).matches() || TAB_PATTERN_MATCHER.reset(s).matches()) {
                     config.setIndentation(s);
                     indentationSet = true;
                 } else {
@@ -288,10 +321,10 @@ public final class SectionNode extends Node implements Iterable<Node> {
                     continue;
                 }
             }
-            if (!value.matches("\\s*") && !value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\S.*")) {
+            if (!WHITESPACE_PATTERN_ONE_MATCHER.reset(value).matches() && !value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\S.*")) {
                 if (value.matches("^(" + config.getIndentation() + "){" + config.level + "}\\s.*") || !value.matches("^(" + config.getIndentation() + ")*\\S.*")) {
                     nodes.add(new InvalidNode(value, comment, this, r.getLineNumber()));
-                    final String s = value.replaceFirst("\\S.*$", "");
+                    final String s = WHITESPACE_PATTERN_THREE_MATCHER.reset(value).replaceFirst("");
                     Skript.error("indentation error: expected " + config.level * config.getIndentation().length() + ' ' + config.getIndentationName() + (config.level * config.getIndentation().length() == 1 ? "" : "s") + ", but found " + readableWhitespace(s));
                     continue;
                 }
@@ -333,9 +366,20 @@ public final class SectionNode extends Node implements Iterable<Node> {
 //				continue;
 //			}
 
-            if (value.endsWith(":") && (config.simple || !value.contains(config.separator) || config.separator.endsWith(":") && value.indexOf(config.separator) == value.length() - config.separator.length()) && !fullLine.matches("([^#]|##)*#-#(\\s.*)?")) {
-                nodes.add(SectionNode.load(value.substring(0, value.length() - 1), comment, this, r));
-                continue;
+            if (value.charAt(value.length() - 1) == ':' && (config.simple || !value.contains(config.separator) || !config.separator.isEmpty() && config.separator.charAt(config.separator.length() - 1) == ':' && value.indexOf(config.separator) == value.length() - config.separator.length())) {
+                boolean matches;
+                try {
+                    {
+                        matches = !COMMENT_AND_WHITESPACE_MATCHER.reset(ScriptLoader.optimizeAndOr(null, fullLine)).matches();
+                    }
+                } catch (final StackOverflowError e) { // JDK bug? (see https://github.com/LifeMC/LifeSkript/issues/26)
+                    Node.handleStackOverFlow(fullLine, COMMENT_AND_WHITESPACE_MATCHER, e);
+                    matches = true; // We already printed a warning
+                }
+                if (matches) {
+                    nodes.add(SectionNode.load(value.substring(0, value.length() - 1), comment, this, r));
+                    continue;
+                }
             }
 
             if (config.simple) {
@@ -367,14 +411,14 @@ public final class SectionNode extends Node implements Iterable<Node> {
     /**
      * Converts all SimpleNodes in this section to EntryNodes.
      *
-     * @param levels Amount of levels to go down, e.g. 0 to only convert direct subnodes of this section or -1 for all subnodes including subnodes of subnodes etc.
+     * @param levels Amount of levels to go down, e.g. 0 to only convert direct sub-nodes of this section or -1 for all subnodes including subnodes of subnodes etc.
      */
     public void convertToEntries(final int levels) {
         convertToEntries(levels, config.separator);
     }
 
     /**
-     * REMIND breaks saving - separator argument can be different from config.sepator
+     * REMIND breaks saving - separator argument can be different from config.separator
      *
      * @param levels    Maximum depth of recursion, <tt>-1</tt> for no limit.
      * @param separator Some separator, e.g. ":" or "=".
@@ -419,8 +463,8 @@ public final class SectionNode extends Node implements Iterable<Node> {
         return validator.validate(this);
     }
 
-    HashMap<String, String> toMap(final String prefix, final String separator) {
-        final HashMap<String, String> r = new HashMap<>();
+    Map<String, String> toMap(final String prefix, final String separator) {
+        final Map<String, String> r = new HashMap<>(size());
         for (final Node n : this) {
             if (n instanceof EntryNode) {
                 r.put(prefix + n.getKey(), ((EntryNode) n).getValue());

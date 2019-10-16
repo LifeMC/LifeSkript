@@ -25,6 +25,7 @@ package ch.njol.skript.config;
 import ch.njol.skript.ScriptLoader;
 import ch.njol.skript.Skript;
 import ch.njol.skript.log.SkriptLogger;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import org.eclipse.jdt.annotation.Nullable;
@@ -38,9 +39,13 @@ import java.util.regex.Pattern;
  */
 public abstract class Node {
 
+    private static final boolean printStackTracesOnStackOverFlow = PropertyManager.getBoolean("skript.printStackTracesOnStackOverFlow");
+
     @SuppressWarnings("null")
     private static final Pattern linePattern = Pattern.compile("^((?:[^#]|##)*)(\\s*#(?!#).*?)$");
     private static final Matcher linePatternMatcher = linePattern.matcher("");
+    private static final Matcher SINGLE_COMMENT_PATTERN_MATCHER = Pattern.compile("#", Pattern.LITERAL).matcher("");
+    private static final Matcher DOUBLE_COMMENT_PATTERN_MATCHER = Pattern.compile("##", Pattern.LITERAL).matcher("");
     protected final int lineNum;
     private final boolean debug;
     @Nullable
@@ -102,24 +107,45 @@ public abstract class Node {
     public static final NonNullPair<String, String> splitLine(final String line) {
         if (!line.contains("#"))
             return new NonNullPair<>(line, "");
-        final Matcher m = linePatternMatcher.reset(line);
+        final Matcher m = linePatternMatcher.reset(ScriptLoader.optimizeAndOr(null, line));
         try {
-            if (m.matches())
-                return new NonNullPair<>(m.group(1).replace("##", "#"), m.group(2));
-        } catch (final StackOverflowError e) { // JDK bug? (see https://github.com/LifeMC/LifeSkript/issues/26)
-            final Config config = ScriptLoader.currentScript;
-            final Node node = SkriptLogger.getNode();
-
-            String additionalInfo = "";
-
-            if (config != null && node != null) {
-                final String script = config.getFileName();
-                additionalInfo += " (" + script + ", line " + node.lineNum + ')';
+            final boolean matches;
+            {
+                matches = m.matches();
             }
-
-            Skript.error("There was an error when parsing line! You should avoid very long and/or lists, very long lines and such!" + additionalInfo);
+            if (matches)
+                return new NonNullPair<>(DOUBLE_COMMENT_PATTERN_MATCHER.reset(m.group(1)).replaceAll(Matcher.quoteReplacement("#")), m.group(2));
+        } catch (final StackOverflowError e) { // JDK bug? (see https://github.com/LifeMC/LifeSkript/issues/26)
+            Node.handleStackOverFlow(line, linePatternMatcher, e);
         }
-        return new NonNullPair<>(line.replace("##", "#"), "");
+        return new NonNullPair<>(DOUBLE_COMMENT_PATTERN_MATCHER.reset(line).replaceAll(Matcher.quoteReplacement("#")), "");
+    }
+
+    public static final void handleStackOverFlow(final String input,
+                                                 final Matcher causedByRegex,
+                                                 final StackOverflowError exception) {
+        //Skript.debug("input", input, "causedByRegex", causedByRegex, "exception", exception);
+
+        final Config config = ScriptLoader.currentScript;
+        final Node node = SkriptLogger.getNode();
+
+        String additionalInfo = "";
+
+        if (config != null && node != null) {
+            final String script = config.getFileName();
+            additionalInfo += " (" + script + ", line " + (node.lineNum + 1) + ": " + input + ')';
+        }
+
+        final String message = "There was a suppressed infinite loop when parsing line, you should avoid very long and/or lists, very long lines and such!" + additionalInfo;
+
+        // This a JDK/regEx engine bug (or design choice, recursion), maybe a regex professional can fix it, I optimized a bit, but It still gives errors. So we inform user and continue parsing.
+        if (Skript.logHigh()) // Ignoring/suppressing is just fine in most situations; normal users does not need to know about this.
+            Skript.warning(message);
+
+        if (printStackTracesOnStackOverFlow)
+            Skript.exception(exception, message);
+
+        causedByRegex.reset();
     }
 
     /**
@@ -184,7 +210,7 @@ public abstract class Node {
     abstract String save_i();
 
     public final String save() {
-        return getIndentation() + save_i().replace("#", "##") + comment;
+        return getIndentation() + SINGLE_COMMENT_PATTERN_MATCHER.reset(save_i()).replaceAll(Matcher.quoteReplacement("##")) + comment;
     }
 
     public void save(final PrintWriter w) {
