@@ -2691,32 +2691,33 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                                             /* ignored */
                                         }
 
-                                        final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
-                                        final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
+                                        try (final BufferedInputStream tempInputStream = new BufferedInputStream(new FileInputStream(tempServerJarFile));
+                                            final FileOutputStream fileOutputStream = new FileOutputStream(serverJarFile);
 
-                                        final FileChannel fileChannel = fileOutputStream.getChannel();
-                                        final ReadableByteChannel tempChannel = Channels.newChannel(tempInputStream);
+                                            final FileChannel fileChannel = fileOutputStream.getChannel();
+                                            final ReadableByteChannel tempChannel = Channels.newChannel(tempInputStream);) {
 
-                                        Workarounds.exceptionsDisabled = true;
+                                            Workarounds.exceptionsDisabled = true;
 
-                                        fileOutputStream.getChannel()
-                                                .transferFrom(tempChannel, 0, Long.MAX_VALUE);
+                                            fileChannel
+                                                    .transferFrom(tempChannel, 0, Long.MAX_VALUE);
 
-                                        fileOutputStream.close();
-                                        fileChannel.close();
+                                            fileOutputStream.close();
+                                            fileChannel.close();
 
-                                        tempInputStream.close();
-                                        tempChannel.close();
+                                            tempInputStream.close();
+                                            tempChannel.close();
 
-                                        Workarounds.exceptionsDisabled = false;
+                                            Workarounds.exceptionsDisabled = false;
 
-                                        if (debug)
-                                            System.out.println("Patched the server JAR file \"" + serverJarFile.getName() + '"');
+                                            if (debug)
+                                                System.out.println("Patched the server JAR file \"" + serverJarFile.getName() + '"');
 
-                                        // Remove the temporary server JAR file
+                                            // Remove the temporary server JAR file
 
-                                        if (tempServerJarFile.exists())
-                                            tempServerJarFile.delete();
+                                            if (tempServerJarFile.exists())
+                                                tempServerJarFile.delete();
+                                        }
                                     } catch (final Throwable tw) {
                                         tw.printStackTrace();
                                         if (debug)
