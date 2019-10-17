@@ -671,6 +671,9 @@
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
+
+                    <!-- Bugged option, false means incremental compilation is enabled -->
+                    <!--<useIncrementalCompilation>false</useIncrementalCompilation>-->
                 </configuration>
                 <dependencies>
                     <dependency>

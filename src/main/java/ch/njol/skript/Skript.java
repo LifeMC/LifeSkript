@@ -203,7 +203,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * We use some hacky way to construct the string argument because proguard tries to
      * detect reflection calls and not removes the reflectively accessed classes.
      */
-    public static final boolean isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'l', 'i', 'b', 'r', 'a', 'r', 'i', 'e', 's', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim());
+    public static boolean isOptimized;
     public static final Version invalidVersion = new Version(999);
     public static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
     public static final Matcher PATTERN_ON_SPACE_MATCHER = PATTERN_ON_SPACE.matcher("");
@@ -2132,6 +2132,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         try {
             try {
                 version = new Version(getDescription().getVersion(), true);
+				isOptimized = !classExists(new String(new char[]{'c', 'h', '.', 'n', 'j', 'o', 'l', '.', 'i', 'n', 't', 'e', 'r', 'n', 'a', 'l', '.', 's', 'k', 'r', 'i', 'p', 't', '.', 'v', 'V', '_', 'E', '_', 'R', 'E', '.', 'a', 'n', 'n', 'o', 't', 'a', 't', 'i', 'o', 'n', 's', '.', 'e', 'c', 'l', 'i', 'p', 's', 'e', '.', 'N', 'o', 'n', 'N', 'u', 'l', 'l', 'B', 'y', 'D', 'e', 'f', 'a', 'u', 'l', 't'}).trim().replace("vV_E_RE", "v" + getVersion().getMajor() + '_' + getVersion().getRevision() + "_R" + getVersion().getMinor()).trim());
             } catch (final IllegalArgumentException e) {
                 Skript.error("Malformed plugin.yml version detecded; some skript features will **not** work. You can try re-downloading the plugin.");
                 printDownloadLink();
