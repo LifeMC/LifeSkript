@@ -95,7 +95,7 @@ public final class EffChange extends Effect {
     });
 
     static {
-        Skript.registerEffect(EffChange.class, patterns.getPatterns());
+        Skript.registerEffect(EffChange.class, EffChange::new, patterns.getPatterns());
     }
 
     @SuppressWarnings("null")

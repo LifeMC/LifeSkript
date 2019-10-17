@@ -135,7 +135,7 @@ public final class EvtMoveOn extends SelfRegisteringSkriptEvent { // TODO on jum
 
     static {
 //		Skript.registerEvent(EvtMoveOn.class, PlayerMoveEvent.class, "(step|walk) on <.+>");
-        Skript.registerEvent("Move On", EvtMoveOn.class, PlayerMoveEvent.class, "(step|walk)[ing] (on|over) %*itemtypes%").description("Called when a player moves onto a certain type of block. Please note that using this event can cause lag if there are many players online.").examples("on walking on dirt or grass", "on stepping on stone").since("2.0");
+        Skript.registerEvent("Move On", EvtMoveOn.class, PlayerMoveEvent.class, EvtMoveOn::new, "(step|walk)[ing] (on|over) %*itemtypes%").description("Called when a player moves onto a certain type of block. Please note that using this event can cause lag if there are many players online.").examples("on walking on dirt or grass", "on stepping on stone").since("2.0");
     }
 
     @SuppressWarnings("null")

@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("A region plugin")
 public final class CondIsMember extends Condition {
     static {
-        Skript.registerCondition(CondIsMember.class, "%offlineplayers% (is|are) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%", "%offlineplayers% (is|are)(n't| not) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%");
+        Skript.registerCondition(CondIsMember.class, CondIsMember::new, "%offlineplayers% (is|are) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%", "%offlineplayers% (is|are)(n't| not) (0¦[a] member|1¦[(the|an)] owner) of [[the] region] %regions%");
     }
 
     @SuppressWarnings("null")

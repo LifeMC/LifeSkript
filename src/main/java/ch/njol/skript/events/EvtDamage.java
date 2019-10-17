@@ -42,7 +42,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("unchecked")
 public final class EvtDamage extends SkriptEvent {
     static {
-        Skript.registerEvent("Damage", EvtDamage.class, EntityDamageEvent.class, "damag(e|ing) [of %entitydata%]").description("Called when an entity receives damage, e.g. by an attack from another entity, lava, fire, drowning, fall, suffocation, etc.").examples("on damage", "on damage of a player").since("1.0");
+        Skript.registerEvent("Damage", EvtDamage.class, EntityDamageEvent.class, EvtDamage::new, "damag(e|ing) [of %entitydata%]").description("Called when an entity receives damage, e.g. by an attack from another entity, lava, fire, drowning, fall, suffocation, etc.").examples("on damage", "on damage of a player").since("1.0");
     }
 
     @Nullable

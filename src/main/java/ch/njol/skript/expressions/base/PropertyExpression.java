@@ -29,6 +29,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.registrations.Converters;
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * Represents an expression which represents a property of another one. Remember to set the expression with {@link #setExpr(Expression)} in
@@ -51,8 +52,20 @@ public abstract class PropertyExpression<F, T> extends SimpleExpression<T> {
      * @param property The name of the property
      * @param fromType Should be plural but doesn't have to be
      */
-    public static final <T> void register(final Class<? extends Expression<T>> c, final Class<T> type, final String property, final String fromType) {
-        Skript.registerExpression(c, type, ExpressionType.PROPERTY, "[the] " + property + " of %" + fromType + '%', '%' + fromType + "%'[s] " + property);
+    public static final <T, E extends Expression<T>> void register(final Class<E> c, final Class<T> type, final String property, final String fromType) {
+        register(c, type, null, property, fromType);
+    }
+
+    /**
+     * Registers an expression as {@link ExpressionType#PROPERTY} with the two default property patterns "property of %types%" and "%types%'[s] property"
+     *
+     * @param c
+     * @param type
+     * @param property The name of the property
+     * @param fromType Should be plural but doesn't have to be
+     */
+    public static final <T, E extends Expression<T>> void register(final Class<E> c, final Class<T> type, @Nullable final Skript.InstanceSupplier<E> instanceSupplier, final String property, final String fromType) {
+        Skript.registerExpression(c, type, ExpressionType.PROPERTY, instanceSupplier, "[the] " + property + " of %" + fromType + '%', '%' + fromType + "%'[s] " + property);
     }
 
     public final Expression<? extends F> getExpr() {

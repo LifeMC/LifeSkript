@@ -55,7 +55,7 @@ public final class EvtAtTime extends SelfRegisteringSkriptEvent implements Compa
     private static int taskID = -1;
 
     static {
-        Skript.registerEvent("*At Time", EvtAtTime.class, ScheduledEvent.class, "at %time% [in %worlds%]").description("An event that occurs at a given <a href='../classes/#time'>minecraft time</a> in every world or only in specific worlds.").examples("at 18:00", "at 7am in \"world\"").since("1.3.4");
+        Skript.registerEvent("*At Time", EvtAtTime.class, ScheduledEvent.class, EvtAtTime::new, "at %time% [in %worlds%]").description("An event that occurs at a given <a href='../classes/#time'>minecraft time</a> in every world or only in specific worlds.").examples("at 18:00", "at 7am in \"world\"").since("1.3.4");
     }
 
     private int tick;

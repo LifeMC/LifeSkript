@@ -73,12 +73,10 @@ public final class ScriptCommand implements TabExecutor {
 
     public static final ConcurrentMap<String, ScriptCommand> commandMap =
             new ConcurrentHashMap<>(300);
-
-    private static final Field topics = Skript.fieldForName(IndexHelpTopic.class, "allTopics", true);
-
     public static final Message m_executable_by_players = new Message("commands.executable by players");
     public static final Message m_executable_by_console = new Message("commands.executable by console");
     public static final int PLAYERS = 0x1, CONSOLE = 0x2, BOTH = PLAYERS | CONSOLE;
+    private static final Field topics = Skript.fieldForName(IndexHelpTopic.class, "allTopics", true);
     final String name;
     final String actualName;
     final String usage;
@@ -122,7 +120,7 @@ public final class ScriptCommand implements TabExecutor {
      * @param items             trigger to execute
      */
     @SuppressWarnings("null")
-    public ScriptCommand(final File script, final String name, final String actualName, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, final @Nullable Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final String tabCompleterFunctionName, final int executableBy, final List<TriggerItem> items) {
+    public ScriptCommand(final File script, final String name, final String actualName, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, @Nullable final Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final String tabCompleterFunctionName, final int executableBy, final List<TriggerItem> items) {
         Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
         this.name = name;
         this.actualName = actualName;
@@ -193,7 +191,7 @@ public final class ScriptCommand implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
+    public boolean onCommand(@Nullable final CommandSender sender, @Nullable final Command command, @Nullable final String label, @Nullable final String[] args) {
         if (sender == null || args == null)
             return false;
         execute(sender, StringUtils.join(args, " "));
@@ -327,7 +325,15 @@ public final class ScriptCommand implements TabExecutor {
         return pattern;
     }
 
-    public void register(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, final @Nullable Set<String> aliases) {
+    /**
+     * @deprecated use {@link ScriptCommand#register(CommandMap, Map, Collection)} instead
+     */
+    @Deprecated
+    public void register(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, @Nullable final Set<String> aliases) {
+        register((CommandMap) commandMap, knownCommands, aliases);
+    }
+
+    public void register(final CommandMap commandMap, final Map<String, Command> knownCommands, @Nullable final Collection<String> aliases) {
         synchronized (commandMap) {
             overriddenAliases.clear();
             overridden = knownCommands.put(label, bukkitCommand);
@@ -352,7 +358,15 @@ public final class ScriptCommand implements TabExecutor {
         }
     }
 
+    /**
+     * @deprecated use {@link ScriptCommand#unregister(CommandMap, Map, Collection)} instead
+     */
+    @Deprecated
     public void unregister(final SimpleCommandMap commandMap, final Map<String, Command> knownCommands, @Nullable final Set<String> aliases) {
+        register((CommandMap) commandMap, knownCommands, aliases);
+    }
+
+    public void unregister(final CommandMap commandMap, final Map<String, Command> knownCommands, @Nullable final Collection<String> aliases) {
         synchronized (commandMap) {
             knownCommands.remove(label);
             knownCommands.remove("skript:" + label);
@@ -390,7 +404,7 @@ public final class ScriptCommand implements TabExecutor {
         if (aliases instanceof IndexHelpTopic) {
             aliases.getFullText(Bukkit.getConsoleSender()); // CraftBukkit has a lazy IndexHelpTopic class (org.bukkit.craftbukkit.help.CustomIndexHelpTopic) - maybe its used for aliases as well
             try {
-                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
+                @SuppressWarnings("unchecked") final List<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 for (final String alias : activeAliases) {
                     final HelpTopic at = new CommandAliasHelpTopic('/' + alias, '/' + label, help);
                     as.add(at);
@@ -409,7 +423,7 @@ public final class ScriptCommand implements TabExecutor {
         final HelpTopic aliases = Bukkit.getHelpMap().getHelpTopic("Aliases");
         if (aliases instanceof IndexHelpTopic) {
             try {
-                @SuppressWarnings("unchecked") final ArrayList<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
+                @SuppressWarnings("unchecked") final List<HelpTopic> as = new ArrayList<>((Collection<HelpTopic>) topics.get(aliases));
                 as.removeAll(helps);
                 topics.set(aliases, as);
             } catch (final Throwable tw) {

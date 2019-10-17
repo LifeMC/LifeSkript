@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("Vault")
 public final class ExprPrefixSuffix extends SimplePropertyExpression<Player, String> {
     static {
-        register(ExprPrefixSuffix.class, String.class, "[chat] (1¦prefix|2¦suffix)", "players");
+        register(ExprPrefixSuffix.class, String.class, ExprPrefixSuffix::new, "[chat] (1¦prefix|2¦suffix)", "players");
     }
 
     private boolean prefix;

@@ -57,7 +57,7 @@ public final class Delay extends Effect {
     public static boolean delayingDisabled;
 
     static {
-        Skript.registerEffect(Delay.class, "(wait|halt) [for] %timespan%");
+        Skript.registerEffect(Delay.class, Delay::new, "(wait|halt) [for] %timespan%");
     }
 
     @SuppressWarnings("null")

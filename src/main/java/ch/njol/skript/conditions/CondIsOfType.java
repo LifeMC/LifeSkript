@@ -49,7 +49,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4")
 public final class CondIsOfType extends Condition {
     static {
-        Skript.registerCondition(CondIsOfType.class, "%itemstacks/entities% (is|are) of type[s] %itemtypes/entitydatas%", "%itemstacks/entities% (isn't|is not|aren't|are not) of type[s] %itemtypes/entitydatas%");
+        Skript.registerCondition(CondIsOfType.class, CondIsOfType::new, "%itemstacks/entities% (is|are) of type[s] %itemtypes/entitydatas%", "%itemstacks/entities% (isn't|is not|aren't|are not) of type[s] %itemtypes/entitydatas%");
     }
 
     @SuppressWarnings("null")

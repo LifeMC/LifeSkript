@@ -46,7 +46,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class CondPermission extends Condition {
     static {
-        Skript.registerCondition(CondPermission.class, "[%commandsenders%] (do[es]n't|don't|do[es] not) have [the] permission[s] %strings%", "[%commandsenders%] ha(s|ve) [the] permission[s] %strings%");
+        Skript.registerCondition(CondPermission.class, CondPermission::new, "[%commandsenders%] (do[es]n't|don't|do[es] not) have [the] permission[s] %strings%", "[%commandsenders%] ha(s|ve) [the] permission[s] %strings%");
     }
 
     @SuppressWarnings("null")

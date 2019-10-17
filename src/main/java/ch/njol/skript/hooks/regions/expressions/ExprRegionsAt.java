@@ -49,7 +49,7 @@ import java.util.ArrayList;
 @RequiredPlugins("A region plugin")
 public final class ExprRegionsAt extends SimpleExpression<Region> {
     static {
-        Skript.registerExpression(ExprRegionsAt.class, Region.class, ExpressionType.PROPERTY, "[the] region(1¦s|) %direction% %locations%");
+        Skript.registerExpression(ExprRegionsAt.class, Region.class, ExpressionType.PROPERTY, ExprRegionsAt::new, "[the] region(1¦s|) %direction% %locations%");
     }
 
     @SuppressWarnings("null")

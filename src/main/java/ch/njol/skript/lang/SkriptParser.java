@@ -84,7 +84,8 @@ public final class SkriptParser {
      *
      * @deprecated use {@link SkriptParser#listSplitMatcher} instead
      */
-    @SuppressWarnings("null") @Deprecated
+    @SuppressWarnings("null")
+    @Deprecated
     public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(?:and|n?or)\\s+|\\s*,\\s*");
     public static final Matcher listSplitMatcher = listSplitPattern.matcher("");
     @SuppressWarnings("rawtypes")

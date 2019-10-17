@@ -40,7 +40,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("A region plugin")
 public final class ExprRegion extends EventValueExpression<Region> {
     static {
-        Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, "[the] [event-]region");
+        Skript.registerExpression(ExprRegion.class, Region.class, ExpressionType.SIMPLE, ExprRegion::new, "[the] [event-]region");
     }
 
     public ExprRegion() {

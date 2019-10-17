@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class EvtScript extends SelfRegisteringSkriptEvent {
     static {
-        Skript.registerEvent("Script Load/Unload", EvtScript.class, ScriptEvent.class, "[script] (load|init|enable)", "[script] (unload|stop|disable)").description("Called directly after the trigger is loaded, or directly before the whole script is unloaded.").examples("on load:", "	set {running.%script%} to true", "on unload:", "	set {running.%script%} to false").since("2.0");
+        Skript.registerEvent("Script Load/Unload", EvtScript.class, ScriptEvent.class, EvtScript::new, "[script] (load|init|enable)", "[script] (unload|stop|disable)").description("Called directly after the trigger is loaded, or directly before the whole script is unloaded.").examples("on load:", "	set {running.%script%} to true", "on unload:", "	set {running.%script%} to false").since("2.0");
     }
 
     private boolean load;

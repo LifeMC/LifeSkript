@@ -62,7 +62,7 @@ public final class CondCompare extends Condition {
     });
 
     static {
-        Skript.registerCondition(CondCompare.class, patterns.getPatterns());
+        Skript.registerCondition(CondCompare.class, CondCompare::new, patterns.getPatterns());
     }
 
     @SuppressWarnings("null")

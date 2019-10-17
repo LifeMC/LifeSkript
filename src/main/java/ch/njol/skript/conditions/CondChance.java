@@ -43,7 +43,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class CondChance extends Condition {
     static {
-        Skript.registerCondition(CondChance.class, "chance of %number%(1¦\\%|)");
+        Skript.registerCondition(CondChance.class, CondChance::new, "chance of %number%(1¦\\%|)");
     }
 
     private boolean percent;

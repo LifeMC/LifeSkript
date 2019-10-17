@@ -45,7 +45,16 @@ public abstract class PropertyCondition<T> extends Condition implements Checker<
      * @param type     must be plural
      */
     public static final void register(final Class<? extends Condition> c, final String property, final String type) {
-        Skript.registerCondition(c, '%' + type + "% (is|are) " + property, '%' + type + "% (isn't|is not|aren't|are not) " + property);
+        register(c, null, property, type);
+    }
+
+    /**
+     * @param c
+     * @param property
+     * @param type     must be plural
+     */
+    public static final <T extends Condition> void register(final Class<T> c, @Nullable final Skript.InstanceSupplier<T> instanceSupplier, final String property, final String type) {
+        Skript.registerCondition(c, instanceSupplier, '%' + type + "% (is|are) " + property, '%' + type + "% (isn't|is not|aren't|are not) " + property);
     }
 
     @SuppressWarnings({"unchecked", "null"})

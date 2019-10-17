@@ -51,7 +51,7 @@ import java.util.List;
 public final class ExprGroup extends SimpleExpression<String> {
 
     static {
-        PropertyExpression.register(ExprGroup.class, String.class, "group[(1¦s)]", "offlineplayers");
+        PropertyExpression.register(ExprGroup.class, String.class, ExprGroup::new, "group[(1¦s)]", "offlineplayers");
     }
 
     private boolean primary;

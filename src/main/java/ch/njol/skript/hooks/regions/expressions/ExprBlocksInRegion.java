@@ -52,7 +52,7 @@ import java.util.NoSuchElementException;
 @RequiredPlugins("A region plugin")
 public final class ExprBlocksInRegion extends SimpleExpression<Block> {
     static {
-        Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
+        Skript.registerExpression(ExprBlocksInRegion.class, Block.class, ExpressionType.COMBINED, ExprBlocksInRegion::new, "[(all|the)] blocks (in|of) [[the] region[s]] %regions%");
     }
 
     @SuppressWarnings("null")

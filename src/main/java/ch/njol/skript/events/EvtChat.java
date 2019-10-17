@@ -86,7 +86,7 @@ public final class EvtChat extends SelfRegisteringSkriptEvent {
     private static boolean registeredExecutor;
 
     static {
-        Skript.registerEvent("Chat", EvtChat.class, PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class, "chat").description("Called whenever a player chats.").examples("").since("1.4.1");
+        Skript.registerEvent("Chat", EvtChat.class, PlayerChatEventHandler.usesAsyncEvent ? AsyncPlayerChatEvent.class : PlayerChatEvent.class, EvtChat::new, "chat").description("Called whenever a player chats.").examples("").since("1.4.1");
     }
 
     @Override

@@ -41,7 +41,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins({"Vault", "An economy Plugin"})
 public final class ExprBalance extends SimplePropertyExpression<OfflinePlayer, Money> {
     static {
-        register(ExprBalance.class, Money.class, "(money|balance|[bank] account)", "offlineplayers");
+        register(ExprBalance.class, Money.class, ExprBalance::new, "(money|balance|[bank] account)", "offlineplayers");
     }
 
     @Override

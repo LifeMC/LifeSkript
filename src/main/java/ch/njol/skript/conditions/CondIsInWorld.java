@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4")
 public final class CondIsInWorld extends Condition {
     static {
-        Skript.registerCondition(CondIsInWorld.class, "%entities% (is|are) in [[the] world[s]] %worlds%", "%entities% (is not|isn't|are not|aren't) in [[the] world[s]] %worlds%");
+        Skript.registerCondition(CondIsInWorld.class, CondIsInWorld::new, "%entities% (is|are) in [[the] world[s]] %worlds%", "%entities% (is not|isn't|are not|aren't) in [[the] world[s]] %worlds%");
     }
 
     @SuppressWarnings("null")

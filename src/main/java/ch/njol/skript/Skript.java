@@ -240,6 +240,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     private static final Pattern DASH = Pattern.compile("-", Pattern.LITERAL);
     private static final Matcher DASH_MATCHER = DASH.matcher("");
     private static final Matcher SPACE_MATCHER = SPACE.matcher("");
+    private static final Map<Class<?>, InstanceSupplier<?>> instanceSupplierMap = new HashMap<>(100);
     /**
      * Use {@link Skript#getInstance()} for asserted access
      */
@@ -255,15 +256,14 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     public static String ipAddress;
     @Nullable
     public static Version version;
-    static boolean disabled;
-    /**
-     * Use {@link Skript#getUpdater()} for asserted access
-     */
-    @Nullable
-    public SkriptUpdater updater;
     @Nullable
     public static String latestVersion;
     public static final FormattedMessage m_update_available = new FormattedMessage("updater.update available", () -> new String[]{latestVersion, Skript.getVersion().toString()});
+    @Nullable
+    public static Thread serverThread;
+    @Nullable
+    public static Class<?> currentlyConstructing;
+    static boolean disabled;
     static Version minecraftVersion = invalidVersion;
     private static boolean closedOnEnable;
     private static boolean closedOnDisable;
@@ -279,13 +279,9 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     @Nullable
     private static SkriptAddon addon;
     @Nullable
-    public static Thread serverThread;
-    @Nullable
     private static ThreadGroup rootThreadGroup;
     @Nullable
     private static Runnable optimizeNetty;
-    @Nullable
-    public static Class<?> currentlyConstructing;
 
     static {
         // Default Handler
@@ -314,6 +310,12 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 //          }
 //      });
     }
+
+    /**
+     * Use {@link Skript#getUpdater()} for asserted access
+     */
+    @Nullable
+    public SkriptUpdater updater;
 
     public Skript() throws IllegalStateException {
         if (instance != null)
@@ -581,6 +583,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         assert !Skript.testing() || minecraftVersion != invalidVersion : "Tried to access version before Skript was initialized";
     }
 
+    // ================ CONSTANTS, OPTIONS & OTHER ================
+
     /**
      * Returns the version that this server is running, but you don't generally need this method, use {@link Skript#classExists(String)} or
      * {@link Skript#methodExists(Class, String, Class[])} instead for checking certain class / feature is exists.
@@ -598,8 +602,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         checkInvalidVersion();
         return minecraftVersion;
     }
-
-    // ================ CONSTANTS, OPTIONS & OTHER ================
 
     /**
      * Returns whatever this server is running CraftBukkit.
@@ -996,8 +998,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * Gets the public nullary constructor of the given class.
      *
      * @param clazz The class to get constructor of it.
-     * @param <T> The type that represents the class.
-     *
+     * @param <T>   The type that represents the class.
      * @return The cached constructor object of the given class.
      * @throws NoSuchMethodException If the class does not have a public nullary constructor.
      */
@@ -1013,14 +1014,12 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * public nullary constructor.
      *
      * @param clazz The class to create new instance of it.
-     * @param <T> The type that represents the class.
-     *
+     * @param <T>   The type that represents the class.
      * @return A new instance of the given class and type.
-     *
      * @throws InvocationTargetException If any error occurs during the constructor invocation.
-     * @throws NoSuchMethodException If class does not have a public nullary constructor.
-     * @throws InstantiationException If the class instantiation fails with an exception.
-     * @throws IllegalAccessException If the nullary constructor is not accessible (i.e private) or security manager is present.
+     * @throws NoSuchMethodException     If class does not have a public nullary constructor.
+     * @throws InstantiationException    If the class instantiation fails with an exception.
+     * @throws IllegalAccessException    If the nullary constructor is not accessible (i.e private) or security manager is present.
      */
     @SuppressWarnings("null")
     public static final <T> T newInstance(@Nullable final Class<T> clazz) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -1034,10 +1033,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         }
     }
 
-    private static final Map<Class<?>, InstanceSupplier<?>> instanceSupplierMap = new HashMap<>(100);
-
     public static final <T> void registerInstanceSupplier(final Class<T> clazz,
-                                               final InstanceSupplier<T> instanceSupplier) {
+                                                          final InstanceSupplier<T> instanceSupplier) {
         instanceSupplierMap.put(clazz, instanceSupplier);
     }
 
@@ -1046,14 +1043,12 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * public nullary constructor.
      *
      * @param clazz The class to create new instance of it.
-     * @param <T> The type that represents the class.
-     *
+     * @param <T>   The type that represents the class.
      * @return A new instance of the given class and type.
-     *
      * @throws InvocationTargetException If any error occurs during the constructor invocation.
-     * @throws NoSuchMethodException If class does not have a public nullary constructor.
-     * @throws InstantiationException If the class instantiation fails with an exception.
-     * @throws IllegalAccessException If the nullary constructor is not accessible (i.e private) or security manager is present.
+     * @throws NoSuchMethodException     If class does not have a public nullary constructor.
+     * @throws InstantiationException    If the class instantiation fails with an exception.
+     * @throws IllegalAccessException    If the nullary constructor is not accessible (i.e private) or security manager is present.
      */
     @SuppressWarnings("null")
     public static final <T> T newInstance(@Nullable final Class<T> clazz,
@@ -1068,34 +1063,12 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         return getInstance(() -> getConstructor(clazz).newInstance());
     }
 
-    @FunctionalInterface
-    public interface InstanceSupplier<T> extends Supplier<T> {
-
-        /**
-         * Gets an instance of the specified type.
-         *
-         * @return An instance of the specified type.
-         */
-        T newInstance() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
-
-        @Override
-        default T get() {
-            try {
-                return newInstance();
-            } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
-                throw Skript.sneakyThrow(e);
-            }
-        }
-
-    }
-
     /**
      * Gets an instance of the given type using the given
      * {@link InstanceSupplier}.
      *
      * @param instanceSupplier The supplier to use when getting instances.
-     * @param <T> The type to get instances of it using the given supplier.
-     *
+     * @param <T>              The type to get instances of it using the given supplier.
      * @return An instance of the given type get with the given
      * {@link InstanceSupplier}.
      */
@@ -1121,17 +1094,17 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     /**
      * Sets the given {@link AccessibleObject}'s accessible status. Catches
      * security exceptions and handles {@link PrivilegedAction}s.
-     * 
+     *
      * @param accessibleObject The {@link AccessibleObject} to set accessible status of.
-     * @param flag The accessible status to set for the given {@link AccessibleObject}.
+     * @param flag             The accessible status to set for the given {@link AccessibleObject}.
      * @return The passed {@link AccessibleObject} that will now hold the new accessible status.
      */
     @SuppressWarnings("null")
     public static final <T extends AccessibleObject> T setAccessible(@Nullable final T accessibleObject,
-    																 final boolean flag) {
-    	if (accessibleObject == null)
-    		return null;
-    	return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
+                                                                     final boolean flag) {
+        if (accessibleObject == null)
+            return null;
+        return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
             try {
                 accessibleObject.setAccessible(flag);
             } catch (final SecurityException e) {
@@ -1140,8 +1113,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             return accessibleObject;
         });
     }
-
-    // ================ REGISTRATIONS ================
 
     /**
      * Clears triggers, commands, functions and variable names
@@ -1156,6 +1127,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         ScriptLoader.loadedFiles.clear();
         ScriptLoader.loadedScriptFiles.clear();
     }
+
+    // ================ REGISTRATIONS ================
 
     /**
      * Prints errors from reloading the config & scripts
@@ -1194,8 +1167,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         SkriptConfig.load();
     }
 
-    // ================ ADDONS ================
-
     /**
      * Prints errors
      */
@@ -1203,6 +1174,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         Aliases.clear();
         Aliases.load();
     }
+
+    // ================ ADDONS ================
 
     /**
      * Registers a Closeable that should be closed when this plugin is disabled.
@@ -1262,7 +1235,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 
     /**
      * Returns true if the Skript config is loaded.
-     *
+     * <p>
      * This can be used before accessing the values in the SkriptConfig class
      * to not give errors when used outside of Bukkit (i.e tests)
      *
@@ -1272,12 +1245,12 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         return configLoaded;
     }
 
-    // ================ CONDITIONS & EFFECTS ================
-
     public static final void checkAcceptRegistrations() {
         if (!acceptRegistrations)
             throw new SkriptAPIException("Registering is disabled after initialization!");
     }
+
+    // ================ CONDITIONS & EFFECTS ================
 
     static final void stopAcceptingRegistrations() {
         acceptRegistrations = false;
@@ -1394,8 +1367,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             registerInstanceSupplier(condition, instanceSupplier);
     }
 
-    // ================ EXPRESSIONS ================
-
     /**
      * Registers an {@link Effect}.
      *
@@ -1405,6 +1376,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     public static final <E extends Effect> void registerEffect(final Class<E> effect, final String... patterns) throws IllegalArgumentException {
         registerEffect(effect, null, patterns);
     }
+
+    // ================ EXPRESSIONS ================
 
     /**
      * Registers an {@link Effect}.
@@ -1451,17 +1424,17 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     /**
      * Registers an {@link Expression}.
      *
-     * @param expression The expression's class
-     * @param returnType The superclass of all values returned by the expression
-     * @param type       The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
+     * @param expression       The expression's class
+     * @param returnType       The superclass of all values returned by the expression
+     * @param type             The expression's {@link ExpressionType type}. This is used to determine in which order to try to parse expressions.
      * @param instanceSupplier The instance supplier, can be constructor reference (e.g ExprEntity::new)
-     * @param patterns   Skript patterns that match this expression
+     * @param patterns         Skript patterns that match this expression
      * @throws IllegalArgumentException if returnType is not a normal class
      */
     public static final <E extends Expression<T>, T> void registerExpression(final Class<E> expression, final Class<T> returnType, final ExpressionType type, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) throws IllegalArgumentException {
         checkAcceptRegistrations();
         //if (returnType.isAnnotation() || returnType.isArray() || returnType.isPrimitive())
-            //throw new IllegalArgumentException("returnType must be a normal type");
+        //throw new IllegalArgumentException("returnType must be a normal type");
         if (returnType.isAnnotation())
             throw new IllegalArgumentException("returnType must not be an annotation");
         if (returnType.isArray())
@@ -1481,34 +1454,15 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             registerInstanceSupplier(expression, instanceSupplier);
     }
 
-    // ================ EVENTS ================
-
     @SuppressWarnings("null")
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions() {
         return expressions.iterator();
     }
 
+    // ================ EVENTS ================
+
     public static final Iterator<ExpressionInfo<?, ?>> getExpressions(final Class<?>... returnTypes) {
         return new CheckedIterator<>(getExpressions(), new ExpressionInfoChecker(returnTypes));
-    }
-
-    private static final class ExpressionInfoChecker implements NullableChecker<ExpressionInfo<?, ?>> {
-        private final Class<?>[] returnTypes;
-
-        ExpressionInfoChecker(final Class<?>[] returnTypes) {
-            this.returnTypes = returnTypes;
-        }
-
-        @Override
-        public final boolean check(@Nullable final ExpressionInfo<?, ?> i) {
-            if (i == null || i.returnType == Object.class)
-                return true;
-            for (final Class<?> returnType : returnTypes) {
-                if (Converters.converterExists(i.returnType, returnType))
-                    return true;
-            }
-            return false;
-        }
     }
 
     /**
@@ -1521,14 +1475,23 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * @param patterns Skript patterns to match this event
      * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
      */
-    @SuppressWarnings("unchecked")
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, final String... patterns) {
-        checkAcceptRegistrations();
-        if (Skript.testing() && Skript.debug())
-            checkDuplicatePatterns(c, "event", patterns);
-        final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, CollectionUtils.array(event));
-        events.add(r);
-        return r;
+        return registerEvent(name, c, CollectionUtils.array(event), patterns);
+    }
+
+    /**
+     * Registers an {@link Event}.
+     *
+     * @param name     Capitalised name of the event without leading "On" which is added automatically (Start the name with an asterisk to prevent this). Used for error messages and
+     *                 the documentation.
+     * @param c        The event's class
+     * @param event    The Bukkit event this event applies to
+     * @param instanceSupplier The instance supplier, can be constructor reference (e.g EvtPeriodical::new)
+     * @param patterns Skript patterns to match this event
+     * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
+     */
+    public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event> event, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) {
+        return registerEvent(name, c, CollectionUtils.array(event), instanceSupplier, patterns);
     }
 
     /**
@@ -1541,30 +1504,32 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
      */
     public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, final String... patterns) {
+        return registerEvent(name, c, events, null, patterns);
+    }
+
+    /**
+     * Registers an {@link Event}.
+     *
+     * @param name     The name of the event, used for error messages
+     * @param c        The event's class
+     * @param events   The Bukkit events this event applies to
+     * @param instanceSupplier The instance supplier, can be constructor reference (e.g EvtPeriodical::new)
+     * @param patterns Skript patterns to match this event
+     * @return A SkriptEventInfo representing the registered event. Used to generate Skript's documentation.
+     */
+    public static final <E extends SkriptEvent> SkriptEventInfo<E> registerEvent(final String name, final Class<E> c, final Class<? extends Event>[] events, @Nullable final InstanceSupplier<E> instanceSupplier, final String... patterns) {
         checkAcceptRegistrations();
         if (Skript.testing() && Skript.debug())
             checkDuplicatePatterns(c, "event", patterns);
         final SkriptEventInfo<E> r = new SkriptEventInfo<>(name, patterns, c, events);
         Skript.events.add(r);
+        if (instanceSupplier != null)
+            registerInstanceSupplier(c, instanceSupplier);
         return r;
     }
 
     public static final Collection<SkriptEventInfo<?>> getEvents() {
         return events;
-    }
-
-    /**
-     * Gets the updater with asserted access. It will throw an
-     * {@link IllegalStateException} if the updater is not yet initialized.
-     *
-     * @return The non-null {@link SkriptUpdater} instance.
-     */
-    @Override
-    public final SkriptUpdater getUpdater() {
-        final SkriptUpdater localUpdater = updater;
-        if (localUpdater == null)
-            throw new IllegalStateException("Updater is not yet initialized");
-        return localUpdater;
     }
 
     /**
@@ -1585,8 +1550,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 
         return addonUpdaters;
     }
-
-    // ================ COMMANDS ================
 
     /**
      * Dispatches a command with calling command events
@@ -1617,8 +1580,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         }
     }
 
-    // ================ LOGGING ================
-
     public static final boolean logNormal() {
         return logHigh() || SkriptLogger.log(Verbosity.NORMAL);
     }
@@ -1627,9 +1588,13 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         return logVeryHigh() || SkriptLogger.log(Verbosity.HIGH);
     }
 
+    // ================ COMMANDS ================
+
     public static final boolean logVeryHigh() {
         return debug() || SkriptLogger.log(Verbosity.VERY_HIGH);
     }
+
+    // ================ LOGGING ================
 
     public static final boolean debug() {
         return debug || SkriptLogger.debug();
@@ -1656,7 +1621,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     /**
      * Formats and prints a debug message with the given arguments.
      * Enter arguments in this format: name, value, name, value and so on.
-     *
+     * <p>
      * Example usage:
      * <pre>
      * {@code
@@ -1666,7 +1631,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * Skript.debug("variableName", variableValue, "test", false);
      * }
      * </pre>
-     *
+     * <p>
      * Arrays and string values are also supported. Not providing
      * a name as string may cause unexpected behaviour.
      *
@@ -1754,14 +1719,6 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 
     public static final RuntimeException exception(@Nullable final Throwable cause, @Nullable final TriggerItem item, @Nullable final String... info) {
         return exception(cause, null, item, info);
-    }
-
-    private static final class StackedException extends RuntimeException {
-        private static final long serialVersionUID = 5931142792396172230L;
-
-        StackedException() {
-            /* implicit super call */
-        }
     }
 
     /**
@@ -2021,15 +1978,13 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     /**
      * Returns an {@link URL} object that represents the given
      * web address.
-     *
+     * <p>
      * Correctly handles the URL encoding and special characters
      * and ensures it is valid.
      *
      * @param address The web address to get a {@link URL} from it.
      * @return An {@link URL} object that represents the given web address.
-     *
      * @throws MalformedURLException If the given address is malformed.
-     *
      * @implNote This method currently returns a new URL each time,
      * but can be improved in future to cache URL objects.
      */
@@ -2115,6 +2070,20 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         if (Skript.isBukkitRunning() && (Skript.testing() || Skript.logHigh()))
             throw Skript.exception(tw);
         throw (T) tw;
+    }
+
+    /**
+     * Gets the updater with asserted access. It will throw an
+     * {@link IllegalStateException} if the updater is not yet initialized.
+     *
+     * @return The non-null {@link SkriptUpdater} instance.
+     */
+    @Override
+    public final SkriptUpdater getUpdater() {
+        final SkriptUpdater localUpdater = updater;
+        if (localUpdater == null)
+            throw new IllegalStateException("Updater is not yet initialized");
+        return localUpdater;
     }
 
     /**
@@ -2854,7 +2823,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                             if (!file.exists())
                                 saveTo = file;
                         } else if ("config.sk".equals(e.getName()) && !config.exists()) {
-                        	saveTo = config;
+                            saveTo = config;
                         }
 //                      else if (e.getName().startsWith("aliases-") && e.getName().endsWith(".sk") && !e.getName().contains("/")) {
 //                          final File af = new File(getDataFolder(), e.getName());
@@ -3715,6 +3684,54 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             if (!Boolean.getBoolean("skript.disableShutdownErrors")) {
                 exception(tw, Thread.currentThread(), (TriggerItem) null, "An error occurred when disabling Skript");
             }
+        }
+    }
+
+    @FunctionalInterface
+    public interface InstanceSupplier<T> extends Supplier<T> {
+
+        /**
+         * Gets an instance of the specified type.
+         *
+         * @return An instance of the specified type.
+         */
+        T newInstance() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException;
+
+        @Override
+        default T get() {
+            try {
+                return newInstance();
+            } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                throw Skript.sneakyThrow(e);
+            }
+        }
+
+    }
+
+    private static final class ExpressionInfoChecker implements NullableChecker<ExpressionInfo<?, ?>> {
+        private final Class<?>[] returnTypes;
+
+        ExpressionInfoChecker(final Class<?>[] returnTypes) {
+            this.returnTypes = returnTypes;
+        }
+
+        @Override
+        public final boolean check(@Nullable final ExpressionInfo<?, ?> i) {
+            if (i == null || i.returnType == Object.class)
+                return true;
+            for (final Class<?> returnType : returnTypes) {
+                if (Converters.converterExists(i.returnType, returnType))
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    private static final class StackedException extends RuntimeException {
+        private static final long serialVersionUID = 5931142792396172230L;
+
+        StackedException() {
+            /* implicit super call */
         }
     }
 

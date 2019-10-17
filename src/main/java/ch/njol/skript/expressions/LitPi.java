@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.2-Fixes-V10c")
 public final class LitPi extends SimpleLiteral<Double> {
     static {
-        Skript.registerExpression(LitPi.class, Double.class, ExpressionType.SIMPLE, "[the] pi [(number|double|constant)]");
+        Skript.registerExpression(LitPi.class, Double.class, ExpressionType.SIMPLE, LitPi::new, "[the] pi [(number|double|constant)]");
     }
 
     @SuppressWarnings("null")

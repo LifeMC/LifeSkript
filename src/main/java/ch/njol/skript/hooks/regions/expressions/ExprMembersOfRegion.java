@@ -48,7 +48,7 @@ import java.util.ArrayList;
 @RequiredPlugins("A region plugin")
 public final class ExprMembersOfRegion extends SimpleExpression<OfflinePlayer> {
     static {
-        Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
+        Skript.registerExpression(ExprMembersOfRegion.class, OfflinePlayer.class, ExpressionType.PROPERTY, ExprMembersOfRegion::new, "(all|the|) (0¦members|1¦owner[s]) of [[the] region[s]] %regions%", "[[the] region[s]] %regions%'[s] (0¦members|1¦owner[s])");
     }
 
     private boolean owners;

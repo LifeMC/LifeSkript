@@ -51,7 +51,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class EffCommand extends Effect {
     static {
-        Skript.registerEffect(EffCommand.class, "[execute] [the] command %strings% [by %-commandsenders%]", "[execute] [the] %commandsenders% command %strings%", "(let|make) %commandsenders% execute [[the] command] %strings%");
+        Skript.registerEffect(EffCommand.class, EffCommand::new, "[execute] [the] command %strings% [by %-commandsenders%]", "[execute] [the] %commandsenders% command %strings%", "(let|make) %commandsenders% execute [[the] command] %strings%");
     }
 
     @Nullable

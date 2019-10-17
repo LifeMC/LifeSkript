@@ -47,7 +47,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class EffBroadcast extends Effect {
     static {
-        Skript.registerEffect(EffBroadcast.class, "broadcast %strings% [(to|in) %-worlds%]");
+        Skript.registerEffect(EffBroadcast.class, EffBroadcast::new, "broadcast %strings% [(to|in) %-worlds%]");
     }
 
     @SuppressWarnings("null")

@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("A region plugin")
 public final class CondCanBuild extends Condition {
     static {
-        Skript.registerCondition(CondCanBuild.class, "%players% (can|(is|are) allowed to) build %directions% %locations%", "%players% (can('t|not)|(is|are)(n't| not) allowed to) build %directions% %locations%");
+        Skript.registerCondition(CondCanBuild.class, CondCanBuild::new, "%players% (can|(is|are) allowed to) build %directions% %locations%", "%players% (can('t|not)|(is|are)(n't| not) allowed to) build %directions% %locations%");
     }
 
     @SuppressWarnings("null")

@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("2.0")
 public final class CondDate extends Condition {
     static {
-        Skript.registerCondition(CondDate.class, "%date% (was|were)( more|(n't| not) less) than %timespan% [ago]", "%date% (was|were)((n't| not) more| less) than %timespan% [ago]");
+        Skript.registerCondition(CondDate.class, CondDate::new, "%date% (was|were)( more|(n't| not) less) than %timespan% [ago]", "%date% (was|were)((n't| not) more| less) than %timespan% [ago]");
     }
 
     @SuppressWarnings("null")

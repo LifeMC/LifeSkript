@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @NoDoc
 public final class LitAt extends SimpleLiteral<Direction> {
     static {
-        Skript.registerExpression(LitAt.class, Direction.class, ExpressionType.SIMPLE, "at");
+        Skript.registerExpression(LitAt.class, Direction.class, ExpressionType.SIMPLE, LitAt::new, "at");
     }
 
     public LitAt() {

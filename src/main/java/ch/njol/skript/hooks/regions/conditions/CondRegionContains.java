@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @RequiredPlugins("A region plugin")
 public final class CondRegionContains extends Condition {
     static {
-        Skript.registerCondition(CondRegionContains.class, "[[the] region] %regions% contain[s] %directions% %locations%", "%locations% (is|are) ([contained] in|part of) [[the] region] %regions%", "[[the] region] %regions% (do|does)(n't| not) contain %directions% %locations%", "%locations% (is|are)(n't| not) (contained in|part of) [[the] region] %regions%");
+        Skript.registerCondition(CondRegionContains.class, CondRegionContains::new, "[[the] region] %regions% contain[s] %directions% %locations%", "%locations% (is|are) ([contained] in|part of) [[the] region] %regions%", "[[the] region] %regions% (do|does)(n't| not) contain %directions% %locations%", "%locations% (is|are)(n't| not) (contained in|part of) [[the] region] %regions%");
     }
 
     @SuppressWarnings("null")

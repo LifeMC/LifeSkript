@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.2")
 public final class CondIsSet extends Condition {
     static {
-        Skript.registerCondition(CondIsSet.class, "%~objects% (exist[s]|(is|are) set)", "%~objects% (do[es](n't| not) exist|(is|are)(n't| not) set)");
+        Skript.registerCondition(CondIsSet.class, CondIsSet::new, "%~objects% (exist[s]|(is|are) set)", "%~objects% (do[es](n't| not) exist|(is|are)(n't| not) set)");
     }
 
     @SuppressWarnings("null")

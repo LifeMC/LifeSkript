@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("unchecked")
 public final class EvtCommand extends SkriptEvent {
     static {
-        Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), "command [%-string%]").description("Called when a player enters a command (not neccessarily a Skript command).").examples("on command", "on command \"/stop\"", "on command \"pm Njol \"").since("2.0");
+        Skript.registerEvent("Command", EvtCommand.class, CollectionUtils.array(PlayerCommandPreprocessEvent.class, ServerCommandEvent.class), EvtCommand::new, "command [%-string%]").description("Called when a player enters a command (not neccessarily a Skript command).").examples("on command", "on command \"/stop\"", "on command \"pm Njol \"").since("2.0");
     }
 
     @Nullable

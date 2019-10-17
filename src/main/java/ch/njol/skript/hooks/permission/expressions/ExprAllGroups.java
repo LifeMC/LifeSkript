@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class ExprAllGroups extends SimpleExpression<String> {
 
     static {
-        Skript.registerExpression(ExprAllGroups.class, String.class, ExpressionType.SIMPLE, "all groups");
+        Skript.registerExpression(ExprAllGroups.class, String.class, ExpressionType.SIMPLE, ExprAllGroups::new, "all groups");
     }
 
     @Override

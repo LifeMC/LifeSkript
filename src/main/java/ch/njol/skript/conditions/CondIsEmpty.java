@@ -41,7 +41,7 @@ import org.bukkit.inventory.ItemStack;
 @Since("1.0")
 public final class CondIsEmpty extends PropertyCondition<Object> {
     static {
-        register(CondIsEmpty.class, "empty", "inventories/slots/strings");
+        register(CondIsEmpty.class, CondIsEmpty::new, "empty", "inventories/slots/strings");
     }
 
     @Override

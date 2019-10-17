@@ -90,7 +90,7 @@ public final class ExprNamed extends PropertyExpression<ItemType, ItemType> {
     }
 
     @Override
-    public String toString(final @Nullable Event e, final boolean debug) {
+    public String toString(@Nullable final Event e, final boolean debug) {
         return getExpr().toString(e, debug) + " named " + name;
     }
 

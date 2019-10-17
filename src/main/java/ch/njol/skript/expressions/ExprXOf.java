@@ -48,7 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.2")
 public final class ExprXOf extends PropertyExpression<Object, Object> {
     static {
-        Skript.registerExpression(ExprXOf.class, Object.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, "%number% of %itemstacks/entitytype%");
+        Skript.registerExpression(ExprXOf.class, Object.class, ExpressionType.PATTERN_MATCHES_EVERYTHING, ExprXOf::new, "%number% of %itemstacks/entitytype%");
     }
 
     @SuppressWarnings("null")

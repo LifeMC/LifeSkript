@@ -45,7 +45,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class CondIsOnline extends Condition {
 
     static {
-        Skript.registerCondition(CondIsOnline.class, "%offlineplayers% ((is|are) online|(is not|isn't|are not|aren't) offline)", "%offlineplayers% ((is|are) offline|(is not|isn't|are not|aren't) online)");
+        Skript.registerCondition(CondIsOnline.class, CondIsOnline::new, "%offlineplayers% ((is|are) online|(is not|isn't|are not|aren't) offline)", "%offlineplayers% ((is|are) offline|(is not|isn't|are not|aren't) online)");
     }
 
     @SuppressWarnings("null")

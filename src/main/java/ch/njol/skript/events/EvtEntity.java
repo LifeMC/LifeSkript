@@ -44,7 +44,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @SuppressWarnings("unchecked")
 public final class EvtEntity extends SkriptEvent {
     static {
-        Skript.registerEvent("Death", EvtEntity.class, EntityDeathEvent.class, "death [of %entitydatas%]").description("Called when a living entity (including players) dies.").examples("on death", "on death of player", "on death of a wither or ender dragon:", "	broadcast \"A %entity% has been slain in %world%!\"").since("1.0");
+        Skript.registerEvent("Death", EvtEntity.class, EntityDeathEvent.class, EvtEntity::new, "death [of %entitydatas%]").description("Called when a living entity (including players) dies.").examples("on death", "on death of player", "on death of a wither or ender dragon:", "	broadcast \"A %entity% has been slain in %world%!\"").since("1.0");
         Skript.registerEvent("Spawn", EvtEntity.class, CreatureSpawnEvent.class, "spawn[ing] [of %entitydatas%]").description("Called when an creature spawns.").examples("on spawn of a zombie", "on spawn of an ender dragon:", "	broadcast \"A dragon has been sighted in %world%!\"").since("1.0");
     }
 

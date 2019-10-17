@@ -59,7 +59,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.0")
 public final class ExprTool extends PropertyExpression<LivingEntity, Slot> {
     static {
-        Skript.registerExpression(ExprTool.class, Slot.class, ExpressionType.PROPERTY, "[the] (tool|held item|weapon) [of %livingentities%]", "%livingentities%'[s] (tool|held item|weapon)");
+        Skript.registerExpression(ExprTool.class, Slot.class, ExpressionType.PROPERTY, ExprTool::new, "[the] (tool|held item|weapon) [of %livingentities%]", "%livingentities%'[s] (tool|held item|weapon)");
     }
 
     @SuppressWarnings({"unchecked", "null"})

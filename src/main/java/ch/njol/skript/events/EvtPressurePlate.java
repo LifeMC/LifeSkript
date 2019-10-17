@@ -39,7 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 public final class EvtPressurePlate extends SkriptEvent {
     static {
         // TODO is EntityInteractEvent similar for entities?
-        Skript.registerEvent("Pressure Plate / Trip", EvtPressurePlate.class, PlayerInteractEvent.class, "[step[ping] on] [a] [pressure] plate", "(trip|[step[ping] on] [a] tripwire)").description("Called when a <i>player</i> steps on a pressure plate or tripwire respectively.").examples("").since("1.0 (pressure plate), 1.4.4 (tripwire)");
+        Skript.registerEvent("Pressure Plate / Trip", EvtPressurePlate.class, PlayerInteractEvent.class, EvtPressurePlate::new, "[step[ping] on] [a] [pressure] plate", "(trip|[step[ping] on] [a] tripwire)").description("Called when a <i>player</i> steps on a pressure plate or tripwire respectively.").examples("").since("1.0 (pressure plate), 1.4.4 (tripwire)");
     }
 
     private boolean tripwire;
