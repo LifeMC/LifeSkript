@@ -465,8 +465,8 @@ public final class Classes {
         if ((enclosingClass = getEnclosingClass(parser.getClass())) != null) {
             final String name = enclosingClass.getName();
             return (!disableEnumClassInfos || !name.contains("EnumClassInfo")) &&
-                   (!disableEnumTypes || !name.contains("EnumType")) &&
-                   (!disableTypeManagers || !name.contains("TypeManager"));
+                    (!disableEnumTypes || !name.contains("EnumType")) &&
+                    (!disableTypeManagers || !name.contains("TypeManager"));
         }
         return true;
     }
@@ -841,12 +841,11 @@ public final class Classes {
      * <p>
      * This method must only be called from Bukkits main thread!
      *
-     * @deprecated not used anymore, see {@link Classes#deserialize(ClassInfo, InputStream)},
-     * {@link Classes#deserialize(ClassInfo, byte[])} and {@link Classes#deserialize(String, byte[])}.
-     *
      * @param type
      * @param value
      * @return Deserialised value or null if the input is invalid
+     * @deprecated not used anymore, see {@link Classes#deserialize(ClassInfo, InputStream)},
+     * {@link Classes#deserialize(ClassInfo, byte[])} and {@link Classes#deserialize(String, byte[])}.
      */
     @Deprecated
     @Nullable

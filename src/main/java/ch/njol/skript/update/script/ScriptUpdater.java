@@ -43,6 +43,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * General updater for scripts. Used in {@link ch.njol.skript.ScriptLoader}.
@@ -188,7 +190,9 @@ public final class ScriptUpdater extends AbstractUpdater {
                 (ch.njol.skript.classes.Parser<Boolean>) Objects.requireNonNull(Objects.requireNonNull(Classes.getExactClassInfo(Boolean.class))
                         .getParser());
 
-        private static final Predicate<String> parseBoolean = value -> booleanParser.parse(value, ParseContext.DEFAULT);
+        private static final Predicate<String> parseBoolean = value -> Objects.requireNonNull(booleanParser.parse(value, ParseContext.DEFAULT));
+        private static final Matcher GITHUB = Pattern.compile("github/", Pattern.LITERAL).matcher("");
+        private static final Matcher GITHUB_RAW = Pattern.compile("githubRaw/", Pattern.LITERAL).matcher("");
         @Nullable
         private static String scriptName;
         @Nullable
@@ -224,6 +228,11 @@ public final class ScriptUpdater extends AbstractUpdater {
             isAutoInstall = true;
         }
 
+        private static final String replacePlaceholdersInUrl(final String url) {
+            return url.contains("githubRaw/") ? GITHUB_RAW.reset(url).replaceAll(Matcher.quoteReplacement("https://raw.githubusercontent.com/"))
+                    : url.contains("github/") ? GITHUB.reset(url).replaceAll(Matcher.quoteReplacement("https://github.com/")) : url;
+        }
+
         public static final boolean parse(final File script,
                                           final Collection<String> duplicateCheckList,
                                           final String key,
@@ -249,15 +258,14 @@ public final class ScriptUpdater extends AbstractUpdater {
                     Skript.error("Duplicate version check url configuration setting");
                     return false;
                 }
-                versionCheckUrl = value;
+                versionCheckUrl = replacePlaceholdersInUrl(value);
                 duplicateCheckList.add("version check url");
             } else if ("latest version download url".equalsIgnoreCase(key)) {
                 if (duplicateCheckList.contains("latest version download url")) {
                     Skript.error("Duplicate latest version download url configuration setting");
                     return false;
                 }
-                latestVersionDownloadUrl = value.replace("\\github\\b", "https://github.com")
-                        .replace("\\githubRaw\\b", "https://raw.githubusercontent.com");
+                latestVersionDownloadUrl = replacePlaceholdersInUrl(value);
                 versionCheckUrl = latestVersionDownloadUrl;
                 duplicateCheckList.add("latest version download url");
             } else if ("release channel".equalsIgnoreCase(key)) {
