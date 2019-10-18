@@ -391,8 +391,8 @@ public final class ScriptLoader {
         return i;
     }
 
-    @SuppressWarnings({"unchecked", "null"})
-    public static final ScriptInfo loadScript(final File f) {
+    @SuppressWarnings("null")
+    private static final ScriptInfo loadScript(final File f) {
         assert f != null;
 
         // FIXME Fix assertion errors when using /sk reload
@@ -481,6 +481,7 @@ public final class ScriptLoader {
 
             currentAliases.clear();
             currentOptions.clear();
+
             currentScript = config;
 
 //			final SerializedScript script = new SerializedScript();
@@ -546,6 +547,8 @@ public final class ScriptLoader {
                                     // Target: Actual minimum version that script supports.
                                     if (Skript.getVersion().isSmallerThan(target)) {
                                         Skript.error("This script requires Skript version " + value);
+
+                                        currentScript = null;
                                         return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
                                     if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
@@ -567,7 +570,9 @@ public final class ScriptLoader {
                                     }
                                     if (Skript.getMinecraftVersion().isSmallerThan(new Version(value, true))) {
                                         Skript.error("This script requires Minecraft version " + value);
-                                        return new ScriptInfo();
+
+                                        currentScript = null;
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
                                     duplicateCheckList.add("requires minecraft");
                                 } else if ("requires plugin".equalsIgnoreCase(key)) {
@@ -584,7 +589,9 @@ public final class ScriptLoader {
                                             Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
                                         else // it does not exist at all
                                             Skript.error("This script requires plugin " + value);
-                                        return new ScriptInfo();
+
+                                        currentScript = null;
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
                                     if ("Skript".equalsIgnoreCase(value))
                                         Skript.warning("Requiring Skript is redundant. Please remove this requires plugin section.");
@@ -597,7 +604,9 @@ public final class ScriptLoader {
                                         Skript.error("This script requires addon " + value);
                                     else // it exists, but it's not registered to Skript
                                         Skript.error("This script requires addon " + value + ", but that addon is not correctly registered to Skript currently.");
-                                    return new ScriptInfo();
+
+                                    currentScript = null;
+                                    return new ScriptInfo(); // we return empty script info to abort parsing
                                 } else if ("requires hook".equalsIgnoreCase(key) && !Hook.isHookEnabled(value)) {
                                     // This can be duplicateable to require more than one hook
 
@@ -607,7 +616,9 @@ public final class ScriptLoader {
                                         Skript.error("This script requires plugin " + value);
                                     else // it exists, but Skript is not hooked to it
                                         Skript.error("This script requires hook " + value + ", but Skript is currently not hooked to that plugin.");
-                                    return new ScriptInfo();
+
+                                    currentScript = null;
+                                    return new ScriptInfo(); // we return empty script info to abort parsing
                                 } else if ("load after".equalsIgnoreCase(key)) { // This also can be duplicateable to require more than one script
                                     // This can be used to require a script (not generally), or defer loading of this script after a specific script is loaded.
                                     // it also can be used for functions, etc., when not using 'allow function calls before definitions'
@@ -617,13 +628,17 @@ public final class ScriptLoader {
                                         // This generally should not be used to require a script because user may change names of the scripts
                                         // so we are not using something like "This script requires script ..." as the message
                                         Skript.error("Can't find required script " + value);
-                                        return new ScriptInfo();
+
+                                        currentScript = null;
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
 
                                     if (file.getPath().equals(f.getPath())) {
                                         // The script tries to load itself after itself, which it should be permitted
                                         Skript.error("Loading the current script after current script is not possible");
-                                        return new ScriptInfo();
+
+                                        currentScript = null;
+                                        return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
 
                                     // FIXME check if it causes issues on reloads, I know I am experienced one, but I forgot what is wrong
@@ -661,7 +676,9 @@ public final class ScriptLoader {
                             } catch (final IllegalArgumentException e) {
                                 // Probably an illegal version string is passed
                                 Skript.error(e.getLocalizedMessage());
-                                return new ScriptInfo();
+
+                                currentScript = null;
+                                return new ScriptInfo(); // we return empty script info to abort parsing
                             }
                         }
                         ScriptUpdater.Parser.clearValues();

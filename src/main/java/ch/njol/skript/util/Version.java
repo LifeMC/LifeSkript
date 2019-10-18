@@ -84,6 +84,7 @@ public final class Version implements Serializable, Comparable<Version> {
     }
 
     public Version(String version, final boolean failSafe) {
+        final String finalVersion = version;
         if (!version.isEmpty() && version.charAt(0) == 'v')
             version = version.substring(1);
 
@@ -92,7 +93,7 @@ public final class Version implements Serializable, Comparable<Version> {
 
         if (!m.matches()) {
             if (!failSafe)
-                throw new IllegalArgumentException('\'' + version + "' is not a valid version string");
+                throw new IllegalArgumentException('\'' + finalVersion + "' is not a valid version string");
             // Remove any non-digit character to get a "meaningful" version string.
             final StringBuilder stringBuilder = new StringBuilder(4096);
             final StringBuilder postfixBuilder = new StringBuilder(4096);
@@ -125,7 +126,7 @@ public final class Version implements Serializable, Comparable<Version> {
 
             // If it still fails.. Then probably it's a bad argument.
             if (!m.matches())
-                throw new IllegalArgumentException('\'' + version + "' is not a valid version string");
+                throw new IllegalArgumentException('\'' + finalVersion + "' is not a version string");
 
             postfixStr = postfixBuilder.toString().trim();
         }
