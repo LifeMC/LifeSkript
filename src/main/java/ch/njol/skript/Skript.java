@@ -2183,7 +2183,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                     final List<String> lines = Files.readAllLines(Paths.get(dataFolder.getPath(), "config.sk"));
 
                     for (final String line : lines) {
-                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16")) || line.contains("2.2.17")) {
+                        if (line.contains("version: ") && (line.contains("2.1") || line.contains("V7") || line.contains("V8") || line.contains("V9") || line.contains("dev") || line.contains("2.3") || line.contains("2.4") || line.contains("2.5") || line.contains("2.6") || line.contains("2.7") || line.contains("V10") || line.contains("V11") || line.contains("V12") || line.contains("V13") || line.contains("2.2.14") || line.contains("2.2.15") || line.contains("2.2.16")) || line.contains("2.2.17")) {
                             final File english = new File(dataFolder, "aliases-english.sk");
                             final File german = new File(dataFolder, "aliases-german.sk");
 
@@ -2332,8 +2332,10 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                             String replacedContents = contents.replace(afterJar, stripColor.toString());
                             if (!contents.equalsIgnoreCase(replacedContents)) {
                                 String beforeJar = replacedContents.substring(0, replacedContents.indexOf("-jar")).trim();
-                                if (beforeJar.contains(System.lineSeparator()))
-                                    beforeJar = beforeJar.split(System.lineSeparator())[0];
+                                if (beforeJar.contains(System.lineSeparator())) {
+                                    final String[] beforeJarArray = beforeJar.split(System.lineSeparator());
+                                    beforeJar = beforeJarArray[beforeJarArray.length - 1];
+                                }
                                 final StringBuilder fileEncoding = new StringBuilder(beforeJar);
                                 // This is required on some locales to fix some issues with localization and other plugins
                                 if (!beforeJar.toLowerCase(Locale.ENGLISH).contains("-Dfile.encoding=UTF-8".toLowerCase(Locale.ENGLISH)))
@@ -2447,7 +2449,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 
                             @SuppressWarnings("resource")
                             // We can't do anything about that, we must lock the file until server stops.
-                            final FileLock lock = is.getChannel().tryLock(0L, Long.MAX_VALUE, true);
+                            final FileLock lock = is.getChannel().tryLock(0L, Long.MAX_VALUE, false);
 
                             Skript.closeOnDisable(() -> {
                                 try {
@@ -2492,7 +2494,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
 
                             Runtime.getRuntime().addShutdownHook(Skript.newThread(() -> {
                                 try {
-                                    Files.delete(Paths.get(serverDirectory.getCanonicalPath(), "/plugins/SharpSKUpdater.jar"));
+                                    Files.delete(new File(new File(serverDirectory, "plugins"), "SharpSKUpdater.jar").toPath());
                                 } catch (final IOException io) {
                                     /* ignore, bad things happening! */
                                 }
