@@ -79,11 +79,29 @@ public final class Version implements Serializable, Comparable<Version> {
         this.postfix = suffix.isEmpty() ? null : suffix;
     }
 
-    public Version(final String version) {
+    /**
+     * Constructs a new {@link Version} object
+     * by parsing the given version string.
+     *
+     * @param version The version string to parse.
+     * @throws IllegalArgumentException If the version is not a valid version string.
+     */
+    public Version(final String version) throws IllegalArgumentException {
         this(version, false);
     }
 
-    public Version(String version, final boolean failSafe) {
+    /**
+     * Constructs a new {@link Version} object
+     * by parsing the given version.
+     *
+     * @param version The version string to parse.
+     * @param failSafe Pass true to construct a new {@link Version} object
+     *                 with the numbers in the input string even when the passed version string
+     *                 contains letters, i.e a malformed version string that would normally throw {@link IllegalArgumentException}.
+     * @throws IllegalArgumentException If the version is not a valid version string or the parsing
+     * fails even with the fail safe, i.e the input does not contain any numbers.
+     */
+    public Version(String version, final boolean failSafe) throws IllegalArgumentException {
         final String finalVersion = version;
         if (!version.isEmpty() && version.charAt(0) == 'v')
             version = version.substring(1);

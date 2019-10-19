@@ -44,6 +44,7 @@ import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.*;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.util.*;
+import ch.njol.util.ImmutablePair;
 import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
@@ -230,16 +231,6 @@ public final class SkriptParser {
         return true;
     }
 
-    /**
-     * Parses the text as the given pattern as {@link ParseContext#COMMAND}.
-     * <p>
-     * Prints parse errors (i.e. must start a ParseLog before calling this method)
-     */
-    @Nullable
-    public static final ParseResult parse(final String text, final String pattern) {
-        return new SkriptParser(text, PARSE_LITERALS, ParseContext.COMMAND).parse_i(pattern, 0, 0);
-    }
-
 //    @SuppressWarnings("unchecked")
 //    @Nullable
 //    private final Expression<?> parseObjectExpression() {
@@ -261,7 +252,7 @@ public final class SkriptParser {
 //            if ((flags & PARSE_LITERALS) != 0) {
 //                // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
 //                final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
-//                for (final Class<?> c : new Class[] {Number.class, Time.class, ItemType.class, ItemStack.class}) {
+//                for (final Class<?> c : new Class<?>[] {Number.class, Time.class, ItemType.class, ItemStack.class}) {
 //                    final Expression<?> e = p.parseExpression(c);
 //                    if (e != null) {
 //                        log.printLog();
@@ -329,7 +320,7 @@ public final class SkriptParser {
 //        if (and.isUnknown() && !suppressMissingAndOrWarnings && !SkriptConfig.disableMissingAndOrWarnings.value())
 //            Skript.warning(MISSING_AND_OR);
 //
-//        final Class<?>[] exprRetTypes = new Class[ts.size()];
+//        final Class<?>[] exprRetTypes = new Class<?>[ts.size()];
 //        int i = 0;
 //        for (final Expression<?> t : ts)
 //            exprRetTypes[i++] = t.getReturnType();
@@ -344,6 +335,16 @@ public final class SkriptParser {
 //            return new ExpressionList<Object>(es, (Class<Object>) Utils.getSuperType(exprRetTypes), !and.isFalse());
 //        }
 //    }
+
+    /**
+     * Parses the text as the given pattern as {@link ParseContext#COMMAND}.
+     * <p>
+     * Prints parse errors (i.e. must start a ParseLog before calling this method)
+     */
+    @Nullable
+    public static final ParseResult parse(final String text, final String pattern) {
+        return new SkriptParser(text, PARSE_LITERALS, ParseContext.COMMAND).parse_i(pattern, 0, 0);
+    }
 
     @Nullable
     public static final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent(final String event, final String defaultError) {
@@ -1890,8 +1891,275 @@ public final class SkriptParser {
             }
         }
         if (i == expr.length() && j == pattern.length())
-            return new ParseResult(this, pattern);
+            return new ParseResult(expr, pattern);
         return null;
+    }
+
+    @Nullable
+    private final <T extends SyntaxElement> T parse(final Iterator<? extends SyntaxElementInfo<? extends T>> source) {
+        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+        try {
+            while (source.hasNext()) {
+                final SyntaxElementInfo<? extends T> info = source.next();
+                patternsLoop:
+                for (int i = 0; i < info.patterns.length; ++i) {
+                    log.clear();
+                    try {
+                        final String pattern = info.patterns[i];
+                        assert pattern != null;
+                        final ParseResult res = parse_i(pattern, 0, 0);
+                        if (res != null) {
+                            int x = -1;
+                            for (int j = 0; (x = nextUnescaped(pattern, '%', x + 1)) != -1; ++j) {
+                                final int x2 = nextUnescaped(pattern, '%', x + 1);
+                                if (res.exprs[j] == null) {
+                                    final String name = pattern.substring(x + 1, x2);
+                                    if (!(!name.isEmpty() && name.charAt(0) == '-')) {
+                                        final ExprInfo vi = getExprInfo(name);
+                                        final DefaultExpression<?> expression = vi.classes[0].getDefaultExpression();
+                                        if (expression == null)
+                                            throw new SkriptAPIException("The class '" + vi.classes[0].getCodeName() + "' does not provide a default expression. Either allow null (with %-" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + ']');
+                                        if (!(expression instanceof Literal) && (vi.flagMask & PARSE_EXPRESSIONS) == 0)
+                                            throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is not a literal. Either allow null (with %-*" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + ']');
+                                        if (expression instanceof Literal && (vi.flagMask & PARSE_LITERALS) == 0)
+                                            throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is a literal. Either allow null (with %-~" + vi.classes[0].getCodeName() + "%) or make it mandatory [pattern: " + info.patterns[i] + ']');
+                                        if (!vi.isPlural[0] && !expression.isSingle())
+                                            throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' is not a single-element expression. Change your pattern to allow multiple elements or make the expression mandatory [pattern: " + info.patterns[i] + ']');
+                                        if (vi.time != 0 && !expression.setTime(vi.time))
+                                            throw new SkriptAPIException("The default expression of '" + vi.classes[0].getCodeName() + "' does not have distinct time states. [pattern: " + info.patterns[i] + ']');
+                                        if (!expression.init())
+                                            continue patternsLoop;
+                                        res.exprs[j] = expression;
+                                    }
+                                }
+                                x = x2;
+                            }
+                            final Class<? extends T> clazz = info.c;
+                            if (!clazz.getPackage().getName().startsWith("ch.njol")) { // If it's not a native Skript expression
+                                final Config config = ScriptLoader.currentScript;
+                                final Node node = SkriptLogger.getNode();
+
+                                if (config != null && node != null) {
+                                    final String script = config.getFileName();
+                                    final int line = node.getLine();
+
+                                    final String name = clazz.getCanonicalName();
+
+                                    if (Skript.logSpam()) // Don't print unless we explicitly want it
+                                        Skript.info("Using expression " + name + " (" + script + ", line " + line + ')'); // Conditions etc. are also expressions
+
+                                    // Those are un required and laggy expressions that hangs the parser
+                                    // TODO Refuse to register those conditions in future
+                                    if (!SkriptConfig.disableDeprecationWarnings.value() && "com.w00tmast3r.skquery.elements.conditions.CondBoolean".equalsIgnoreCase(name) || "com.pie.tlatoani.Miscellaneous.CondBoolean".equalsIgnoreCase(name)) {
+                                        Skript.warning("Using this condition is deprecated. Please add 'is true' at the end of this condition to use Skript's native condition instead." + " (" + script + ", line " + line + ')');
+                                    }
+                                }
+                            }
+                            final T t = Skript.newInstance(clazz);
+                            if (t.init(res.exprs, i, ScriptLoader.hasDelayBefore, res)) {
+                                log.printLog();
+                                return t;
+                            }
+                        }
+                    } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                        throw Skript.exception(e);
+                    }
+                }
+            }
+            log.printError();
+            return null;
+        } finally {
+            log.stop();
+        }
+    }
+
+    @Nullable
+    private final Expression<?> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final ExprInfo vi) {
+        return parseSingleExpr0(this, allowUnparsedLiteral, error, vi);
+    }
+
+    private final SkriptParser suppressMissingAndOrWarnings() {
+        suppressMissingAndOrWarnings = true;
+        return this;
+    }
+
+    @Nullable
+    private final Expression<?> andOrHack(final boolean isObject,
+                                          final ParseLogHandler log) {
+        if (!disableAndOrHack && isObject && (flags & PARSE_LITERALS) != 0) {
+            // Hack as items use '..., ... and ...' for enchantments. Numbers and times are parsed beforehand as they use the same (deprecated) id[:data] syntax.
+            final SkriptParser p = new SkriptParser(expr, PARSE_LITERALS, context);
+            if (!p.suppressMissingAndOrWarnings) {
+                p.suppressMissingAndOrWarnings = suppressMissingAndOrWarnings;
+                // If we suppress warnings here, we suppress them in the parser we created too
+            }
+            for (final Class<?> c : new Class<?>[]{Number.class, Time.class, ItemType.class, ItemStack.class}) {
+                final Expression<?> e = parseExpression0(p, new Class<?>[]{c});
+                if (e != null) {
+                    log.printLog();
+                    return e;
+                }
+                log.clear();
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    public final <T> Expression<? extends T> parseExpression(final Class<? extends T>[] types) {
+        return parseExpression0(this, types);
+    }
+
+    @Nullable
+    public final Expression<?> parseExpression(final ExprInfo vi) {
+        return parseExpression0(this, vi);
+    }
+
+    /**
+     * @param types The required return type or null if it is not used (e.g. when calling a void function)
+     * @return The parsed function, or null if the given expression is not a function call or is an invalid function call (check for an error to differentiate these two)
+     */
+    @SuppressWarnings("null")
+    @Nullable
+    public final <T> FunctionReference<T> parseFunction(@Nullable final Class<? extends T>[] types) {
+        if (context != ParseContext.DEFAULT && context != ParseContext.EVENT)
+            return null;
+        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+        try {
+            final Matcher m = functionCallPatternMatcher.reset(expr);
+            if (!m.matches()) {
+                log.printLog();
+                return null;
+            }
+            if ((flags & PARSE_EXPRESSIONS) == 0) {
+                Skript.error("Functions cannot be used here (or there is a problem with your arguments).");
+                log.printError();
+                return null;
+            }
+            final String functionName = m.group(1);
+            final String args = m.group(2);
+            final Expression<?>[] params;
+            if (!args.isEmpty()) {
+                final Expression<?> ps = parseExpression0(new SkriptParser(args, flags | PARSE_LITERALS, context).suppressMissingAndOrWarnings(), new Class<?>[]{Object.class});
+                if (ps == null) {
+                    log.printError();
+                    return null;
+                }
+                if (ps instanceof ExpressionList) {
+                    if (!ps.getAnd()) {
+                        Skript.error("Function arguments must be separated by commas and optionally an 'and', but not an 'or'." + " Put the 'or' into a second set of parentheses if you want to make it a single parameter, e.g. 'give(player, (sword or axe))'");
+                        log.printError();
+                        return null;
+                    }
+                    params = ((ExpressionList<?>) ps).getExpressions();
+                } else {
+                    params = new Expression<?>[]{ps};
+                }
+            } else {
+                params = EmptyArrays.EMPTY_EXPRESSION_ARRAY;
+            }
+
+            final Function<?> function = Functions.getFunction(functionName);
+            if (function == null && !SkriptConfig.allowFunctionsBeforeDefs.value()) {
+                Skript.error("The function '" + functionName + "' does not exist");
+                log.printError();
+                return null;
+            }
+
+//            final List<Expression<?>> params = new ArrayList<Expression<?>>();
+//            if (args.length() != 0) {
+//                final int p = 0;
+//                int j = 0;
+//                for (int i = 0; i != -1 && i <= args.length(); i = next(args, i, context)) {
+//                    if (i == args.length() || args.charAt(i) == ',') {
+//                        final Expression<?> e = new SkriptParser( args.substring(j, i).trim(), flags | PARSE_LITERALS, context).parseExpression(function.getParameter(p).getType().getC());
+//                        if (e == null) {
+//                            log.printError("Can't understand this expression: '" + args.substring(j, i) + "'", ErrorQuality.NOT_AN_EXPRESSION);
+//                            return null;
+//                        }
+//                        params.add(e);
+//                        j = i + 1;
+//                    }
+//                }
+//            }
+            @SuppressWarnings("null") final FunctionReference<T> e = new FunctionReference<>(functionName, SkriptLogger.getNode(), ScriptLoader.currentScript != null ? ScriptLoader.currentScript.getFile() : null, types, params);//.toArray(new Expression[params.size()]));
+
+            if (SkriptConfig.allowFunctionsBeforeDefs.value()) {
+                Functions.addPostCheck(e); // Query function for post-checking
+            } else if (!e.validateFunction(true)) {
+                log.printError();
+                return null;
+            }
+            log.printLog();
+            return e;
+        } finally {
+            log.stop();
+        }
+    }
+
+    @Nullable
+    private final NonNullPair<SkriptEventInfo<?>, SkriptEvent> parseEvent() {
+        assert context == ParseContext.EVENT;
+        assert flags == PARSE_LITERALS;
+        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+        try {
+            for (final SkriptEventInfo<?> info : Skript.getEvents()) {
+                for (int i = 0; i < info.patterns.length; ++i) {
+                    log.clear();
+                    try {
+                        final String pattern = info.patterns[i];
+                        assert pattern != null;
+                        final ParseResult res = parse_i(pattern, 0, 0);
+                        if (res != null) {
+                            if (Skript.logSpam() && !info.c.getPackage().getName().startsWith("ch.njol")) // Log spam is true, and it's not a native Skript event
+                                Skript.info("Using event " + info.c.getCanonicalName());
+                            final SkriptEvent e = Skript.newInstance(info.c);
+                            final Literal<?>[] ls = Arrays.copyOf(res.exprs, res.exprs.length, Literal[].class);
+                            if (!e.init(ls, i, res)) {
+                                log.printError();
+                                return null;
+                            }
+                            log.printLog();
+                            return new NonNullPair<>(info, e);
+                        }
+                    } catch (final InvocationTargetException | NoSuchMethodException | InstantiationException | IllegalAccessException e) {
+                        throw Skript.exception(e);
+                    }
+                }
+            }
+            log.printError(null);
+            return null;
+        } finally {
+            log.stop();
+        }
+    }
+
+    /**
+     * Prints errors.
+     * <p>
+     * Caches the {@link ParseResult}s, the {@link SkriptParser#parse0(String, ParseContext, int, String, int, int)} method
+     * (currently) uses recursion, and it is so slow. So, this method caches results.
+     *
+     * @param pattern The pattern to parse
+     * @param i       Position in the input string
+     * @param j       Position in the pattern
+     * @return Parsed result or null on error (which does not imply that an error was printed)
+     */
+    @Nullable
+    private final ParseResult parse_i(final String pattern, final int i, final int j) {
+        final ImmutablePair<String, String> exprPatternPair = new ImmutablePair<>(expr, pattern, true);
+
+        if (parseCache.containsKey(exprPatternPair))
+            return parseCache.get(exprPatternPair); // Return the cached result (maybe null, so containsKey)
+        {
+            final ParseResult computedResult;
+            {
+                computedResult = parse0(expr, context, flags, pattern, i, j);
+            }
+            parseCache.put(exprPatternPair, computedResult);
+
+            return computedResult;
+        }
     }
 
     public static final class ParseResult {
@@ -1907,9 +2175,32 @@ public final class SkriptParser {
          */
         public int mark;
 
-        public ParseResult(final SkriptParser parser, final String pattern) {
-            expr = parser.expr;
+        ParseResult(final String expr, final String pattern) {
+            this.expr = expr;
             exprs = new Expression<?>[countUnescaped(pattern, '%') / 2];
+        }
+
+        @Override
+        public final boolean equals(@Nullable final Object o) {
+            if (this == o) return true;
+            if (!(o instanceof ParseResult)) return false;
+
+            final ParseResult that = (ParseResult) o;
+
+            if (mark != that.mark) return false;
+            if (!Arrays.equals(exprs, that.exprs)) return false;
+            if (!regexes.equals(that.regexes)) return false;
+
+            return Objects.equals(expr, that.expr);
+        }
+
+        @Override
+        public final int hashCode() {
+            int result = Arrays.hashCode(exprs);
+            result = 31 * result + regexes.hashCode();
+            result = 31 * result + expr.hashCode();
+            result = 31 * result + mark;
+            return result;
         }
 
     }
@@ -1918,11 +2209,11 @@ public final class SkriptParser {
 
         private static final long serialVersionUID = -5133477361763823946L;
 
-        public MalformedPatternException(final String pattern, final String message) {
+        MalformedPatternException(final String pattern, final String message) {
             this(pattern, message, null);
         }
 
-        public MalformedPatternException(final String pattern, final String message, @Nullable final Throwable cause) {
+        MalformedPatternException(final String pattern, final String message, @Nullable final Throwable cause) {
             super(message + " [pattern: " + pattern + ']', cause);
         }
 
@@ -1938,9 +2229,34 @@ public final class SkriptParser {
         int flagMask = ~0;
         int time;
 
-        public ExprInfo(final int length) {
+        ExprInfo(final int length) {
             classes = new ClassInfo<?>[length];
             isPlural = new boolean[length];
+        }
+
+        @Override
+        public final boolean equals(@Nullable final Object o) {
+            if (this == o) return true;
+            if (!(o instanceof ExprInfo)) return false;
+
+            final ExprInfo exprInfo = (ExprInfo) o;
+
+            if (isOptional != exprInfo.isOptional) return false;
+            if (flagMask != exprInfo.flagMask) return false;
+            if (time != exprInfo.time) return false;
+            if (!Arrays.equals(classes, exprInfo.classes)) return false;
+
+            return Arrays.equals(isPlural, exprInfo.isPlural);
+        }
+
+        @Override
+        public final int hashCode() {
+            int result = Arrays.hashCode(classes);
+            result = 31 * result + Arrays.hashCode(isPlural);
+            result = 31 * result + (isOptional ? 1 : 0);
+            result = 31 * result + flagMask;
+            result = 31 * result + time;
+            return result;
         }
 
     }

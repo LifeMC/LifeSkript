@@ -29,6 +29,8 @@ import java.io.Serializable;
 import java.util.Map.Entry;
 
 /**
+ * For performance-critical, full-immutable pairs use {@link ImmutablePair} instead.
+ *
  * @author Peter Güttinger
  */
 public class Pair<T1, T2> implements Entry<T1, T2>, Cloneable, Serializable {
