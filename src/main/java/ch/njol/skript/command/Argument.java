@@ -30,6 +30,7 @@ import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
 import ch.njol.skript.variables.Variables;
+import ch.njol.util.coll.CollectionUtils;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -78,7 +79,7 @@ public final class Argument<T> {
             if (def.startsWith("%") && def.endsWith("%")) {
                 final RetainingLogHandler log = SkriptLogger.startRetainingLog();
                 try {
-                    d = new SkriptParser(def.substring(1, def.length() - 1), SkriptParser.PARSE_EXPRESSIONS, ParseContext.COMMAND).parseExpression(type.getC());
+                    d = new SkriptParser(def.substring(1, def.length() - 1), SkriptParser.PARSE_EXPRESSIONS, ParseContext.COMMAND).parseExpression(CollectionUtils.array(type.getC()));
                     if (d == null) {
                         log.printErrors("Can't understand this expression: " + def);
                         return null;
@@ -96,7 +97,7 @@ public final class Argument<T> {
                         else
                             d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                     } else {
-                        d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
+                        d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(CollectionUtils.array(type.getC()));
                     }
                     if (d == null) {
                         log.printErrors("Can't understand this expression: '" + def + '\'');

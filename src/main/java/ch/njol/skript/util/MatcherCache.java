@@ -26,46 +26,47 @@ import ch.njol.skript.Skript;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
-public final class PatternCache {
+@NotThreadSafe
+public final class MatcherCache {
 
     @SuppressWarnings("UnstableApiUsage")
-    private static final Cache<String, Pattern> patternCache = CacheBuilder.newBuilder()
+    private static final Cache<Pattern, Matcher> matcherCache = CacheBuilder.newBuilder()
             //.softValues()
             .initialCapacity(100)
             .concurrencyLevel(Runtime.getRuntime().availableProcessors())
             .expireAfterWrite(1L, TimeUnit.MINUTES)
             .build();
 
-    private PatternCache() {
+    private MatcherCache() {
         throw new UnsupportedOperationException("Static class");
     }
 
-    public static final Pattern get(final String pattern) {
-        return get(pattern, -1);
-    }
-
-    public static final Pattern get(final String pattern, final int flags) throws PatternSyntaxException {
+    /**
+     * Matchers are not thread safe, care must be taken if you are calling
+     * this method.
+     */
+    public static final Matcher getMatcher(final Pattern pattern,
+                                           final CharSequence input) {
         try {
-            return patternCache.get(pattern, () -> flags == -1 ? Pattern.compile(pattern) : Pattern.compile(pattern, flags));
+            return matcherCache.get(pattern, () -> pattern.matcher("")).reset(input);
         } catch (final ExecutionException e) {
-            if (e.getCause() instanceof PatternSyntaxException)
-                throw (PatternSyntaxException) e.getCause();
-
             assert false : e;
+
             throw Skript.sneakyThrow(e);
         }
     }
 
     public static final void clear() {
-        patternCache.cleanUp();
+        matcherCache.cleanUp();
 
-        patternCache.invalidateAll();
-        patternCache.cleanUp();
+        matcherCache.invalidateAll();
+        matcherCache.cleanUp();
     }
 
 }

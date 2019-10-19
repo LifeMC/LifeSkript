@@ -22,6 +22,7 @@
 
 package ch.njol.util;
 
+import ch.njol.skript.util.MatcherCache;
 import ch.njol.skript.util.PatternCache;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -101,7 +102,7 @@ public final class StringUtils {
     }
 
     public static final String replaceLast(final CharSequence text, final String regex, final String replacement) {
-        return PatternCache.get("(?s)(.*?)" + regex).matcher(text).replaceFirst("$1" + replacement);
+        return MatcherCache.getMatcher(PatternCache.get("(?s)(.*?)" + regex), text).replaceFirst("$1" + replacement);
     }
 
     public static final int count(final String s, final char c) {

@@ -182,7 +182,7 @@ public final class VariableString implements Expression<String> {
                 } else {
                     final RetainingLogHandler log = SkriptLogger.startRetainingLog();
                     try {
-                        @SuppressWarnings("unchecked") final Expression<?> expr = new SkriptParser(s.substring(c + 1, c2), SkriptParser.PARSE_EXPRESSIONS, ParseContext.DEFAULT).parseExpression(Object.class);
+                        @SuppressWarnings("unchecked") final Expression<?> expr = new SkriptParser(s.substring(c + 1, c2), SkriptParser.PARSE_EXPRESSIONS, ParseContext.DEFAULT).parseExpression(new Class<?>[]{Object.class});
                         if (expr == null) {
                             log.printErrors("Can't understand this expression: " + s.substring(c + 1, c2));
                             return null;

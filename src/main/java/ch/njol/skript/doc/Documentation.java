@@ -32,6 +32,8 @@ import ch.njol.skript.lang.function.Functions;
 import ch.njol.skript.lang.function.JavaFunction;
 import ch.njol.skript.lang.function.Parameter;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.MatcherCache;
+import ch.njol.skript.util.PatternCache;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.LineSeparators;
 import ch.njol.util.NonNullPair;
@@ -283,11 +285,11 @@ public final class Documentation {
             return null;
         }
         for (final Pattern p : validation) {
-            if (p.matcher(html).find())
+            if (MatcherCache.getMatcher(p, html).find())
                 return null;
         }
         html = html.replaceAll("&(?!(amp|lt|gt|quot);)", "&amp;");
-        final Matcher m = Pattern.compile("<a href='(.*?)'>").matcher(html);
+        final Matcher m = MatcherCache.getMatcher(PatternCache.get("<a href='(.*?)'>"), html);
         linkLoop:
         while (m.find()) {
             final String url = m.group(1);

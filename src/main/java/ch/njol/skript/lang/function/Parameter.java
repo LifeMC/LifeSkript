@@ -29,6 +29,7 @@ import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.log.RetainingLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.Utils;
+import ch.njol.util.coll.CollectionUtils;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Locale;
@@ -117,7 +118,7 @@ public final class Parameter<T> {
                         d = (Expression<? extends T>) new SimpleLiteral<>(def, false);
                     }
                 } else {
-                    d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(type.getC());
+                    d = new SkriptParser(def, SkriptParser.PARSE_LITERALS, ParseContext.DEFAULT).parseExpression(CollectionUtils.array(type.getC()));
                 }
                 if (d == null && !isNone) {
                     log.printErrors('\'' + def + "' is not " + type.getName().withIndefiniteArticle());
