@@ -63,6 +63,7 @@ public final class ImmutablePair<T, E> implements Immutable {
     /**
      * @param immutable Whatever the passed objects are also immutable.
      */
+    @SuppressWarnings("null")
     public ImmutablePair(final T first, final E second, final boolean immutable) {
         this(first, second, immutable, () -> 31 * (first != null ? first.hashCode() : 0) + (second != null ? second.hashCode() : 0));
     }

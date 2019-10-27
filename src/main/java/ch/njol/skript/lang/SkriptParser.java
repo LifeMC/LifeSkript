@@ -89,9 +89,9 @@ public final class SkriptParser {
     public static final Pattern listSplitPattern = Pattern.compile("\\s*,?\\s+(?:and|n?or)\\s+|\\s*,\\s*");
     public static final Matcher listSplitMatcher = listSplitPattern.matcher("");
     @SuppressWarnings("rawtypes")
-    public static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
+    private static final Literal[] EMPTY_RAW_LITERAL_ARRAY = new Literal[0];
     @SuppressWarnings("rawtypes")
-    public static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
+    private static final Expression[] EMPTY_RAW_EXPRESSION_ARRAY = new Expression[0];
     private static final Matcher varPatternMatcher = Pattern.compile("((the )?var(?:iable)? )?\\{([^{}]|%\\{|}%)+}").matcher("");
     private static final String MULTIPLE_AND_OR = "List has multiple 'and' or 'or', will default to 'and'. Use brackets if you want to define multiple lists.";
     private static final String MISSING_AND_OR = "List is missing 'and' or 'or', defaulting to 'and'";
@@ -102,7 +102,7 @@ public final class SkriptParser {
     private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack");
     //private static final Map<ImmutablePair<String, String>, ParseResult> parseCache = new HashMap<>(300);
     public final ParseContext context;
-    final String expr;
+    private final String expr;
     private final int flags;
     private boolean suppressMissingAndOrWarnings = SkriptConfig.disableMissingAndOrWarnings.value();
 

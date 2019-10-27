@@ -234,12 +234,14 @@ public final class Functions {
      * @param script
      * @return How many functions were removed
      */
+    @SuppressWarnings("null")
     public static final int clearFunctions(final File script) {
+        assert script != null;
         int r = 0;
         final Iterator<FunctionData> iter = functions.values().iterator();
         while (iter.hasNext()) {
             final FunctionData d = iter.next();
-            if (d.function instanceof ScriptFunction && script.equals(((ScriptFunction<?>) d.function).trigger.getScript())) {
+            if (d != null && d.function instanceof ScriptFunction && ((ScriptFunction<?>) d.function).trigger != null && script.equals(((ScriptFunction<?>) d.function).trigger.getScript())) {
                 iter.remove();
                 r++;
                 final Iterator<FunctionReference<?>> it = d.calls.iterator();

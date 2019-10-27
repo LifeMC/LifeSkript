@@ -174,6 +174,8 @@ public final class DefaultConverters {
                 return (InventoryHolder) s;
             return null;
         }, Converter.NO_RIGHT_CHAINING | Converter.NO_COMMAND_ARGUMENTS);
+
+//      // InventoryHolder - Block		
 //		Skript.registerConverter(InventoryHolder.class, Block.class, new Converter<InventoryHolder, Block>() {
 //			@Override
 //			public Block convert(final InventoryHolder h) {
@@ -198,15 +200,7 @@ public final class DefaultConverters {
         // Enchantment - EnchantmentType
         Converters.registerConverter(Enchantment.class, EnchantmentType.class, e -> new EnchantmentType(e, -1));
 
-        // CommandSender - Block
-        Converters.registerConverter(CommandSender.class, Block.class, s -> {
-            if (s instanceof Block) // Already a block?
-                return (Block) s;
-            if (s instanceof BlockCommandSender) // Command block or such
-                return ((BlockCommandSender) s).getBlock();
-            if (s instanceof Entity) // A Player, assuming other Entities can't use commands
-                return ((Entity) s).getLocation().getBlock();
-            return null; // This not our problem C:
-        });
+        // BlockCommandSender - Block
+		Converters.registerConverter(BlockCommandSender.class, Block.class, BlockCommandSender::getBlock);
     }
 }

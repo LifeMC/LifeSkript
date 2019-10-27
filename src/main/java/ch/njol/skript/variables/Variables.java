@@ -404,7 +404,7 @@ public final class Variables {
      */
     @SuppressWarnings({"unused", "null"})
     static final boolean variableLoaded(final String name, @Nullable final Object value, final VariablesStorage source) {
-        assert Bukkit.isPrimaryThread(); // required by serialisation
+        assert Bukkit.isPrimaryThread(); // required by serialization
 
         synchronized (tempVars) {
             final Map<String, NonNullPair<Object, VariablesStorage>> tvs = tempVars.get();
