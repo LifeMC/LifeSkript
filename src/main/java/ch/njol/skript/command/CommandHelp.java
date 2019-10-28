@@ -119,7 +119,8 @@ public final class CommandHelp {
     }
 
     private final boolean test(final CommandSender sender, final String[] args, final int index) {
-        if (index >= args.length) {
+        return test0(this, sender, args, index); // Non-recursive version
+        /*if (index >= args.length) {
             showHelp(sender);
             return false;
         }
@@ -130,7 +131,25 @@ public final class CommandHelp {
         }
         if (help instanceof CommandHelp)
             return ((CommandHelp) help).test(sender, args, index + 1);
-        return true;
+        return true;*/
+    }
+
+    private static final boolean test0(CommandHelp commandHelp, final CommandSender sender, final String[] args, int index) {
+        while (index < args.length) {
+            final Object help = commandHelp.arguments.get(args[index].toLowerCase(Locale.ENGLISH));
+            if (help == null && commandHelp.wildcardArg == null) {
+                commandHelp.showHelp(sender, m_invalid_argument.toString(commandHelp.argsColor + args[index]));
+                return false;
+            }
+            if (!(help instanceof CommandHelp)) {
+                return true;
+            }
+            ++index;
+            commandHelp = (CommandHelp) help;
+        }
+
+        commandHelp.showHelp(sender);
+        return false;
     }
 
     @SuppressWarnings("null")

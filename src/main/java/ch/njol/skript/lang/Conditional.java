@@ -43,6 +43,14 @@ public final class Conditional extends TriggerSection {
     @Nullable
     private TriggerSection elseClause;
 
+    public Conditional(final Condition cond) {
+        this.cond = cond;
+    }
+
+    public final void setTriggerItems0(final List<TriggerItem> items) {
+        setTriggerItems(items);
+    }
+
     public Conditional(final Condition cond, final SectionNode node) {
         super(node);
         this.cond = cond;
