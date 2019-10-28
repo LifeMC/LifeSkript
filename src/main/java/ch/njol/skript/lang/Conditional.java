@@ -27,6 +27,8 @@ import ch.njol.skript.config.SectionNode;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import java.util.List;
+
 /**
  * Represents a conditional trigger section.
  * <p>
