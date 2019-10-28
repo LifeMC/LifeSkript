@@ -43,7 +43,9 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.update.script.ScriptUpdater;
 import ch.njol.skript.util.Date;
-import ch.njol.skript.util.*;
+import ch.njol.skript.util.ExceptionUtils;
+import ch.njol.skript.util.Timespan;
+import ch.njol.skript.util.Version;
 import ch.njol.skript.variables.TypeHints;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
@@ -101,7 +103,8 @@ public final class ScriptLoader {
     private static final ScriptInfo loadedScripts = new ScriptInfo();
     private static final Matcher FUNC_PATTERN_MATCHER = Pattern.compile("func").matcher("");
     private static final Matcher FUN_PATTERN_MATCHER = Pattern.compile("fun").matcher("");
-    private static final Matcher OR_PATTERN_MATCHER = Pattern.compile(" or ", Pattern.LITERAL).matcher("");
+    private static final Matcher OR_PATTERN_MATCHER = Pattern.compile("\" or \"", Pattern.LITERAL).matcher("");
+    private static final String commaSpace = Matcher.quoteReplacement("\", \"");
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -391,6 +394,21 @@ public final class ScriptLoader {
         return i;
     }
 
+    /**
+     * This is an internal method, if you want to load scripts,
+     * use either {@link ScriptLoader#loadScripts(File[])} or {@link ScriptLoader#loadScripts(File)}.<br /><br />
+     *
+     * If you need to load a single script file, use {@link ScriptLoader#loadScripts(File[])} with a single
+     * element array that contains your file.<br /><br />
+     *
+     * For example, use it like this<br />
+     * {@code
+     * ScriptLoader.loadScripts(new File[] {new File("hello world.sk")})
+     * }
+     *
+     * @see ScriptLoader#loadScripts(File[])
+     * @see ScriptLoader#loadScripts(File)
+     */
     @SuppressWarnings("null")
     private static final ScriptInfo loadScript(final File f) {
         assert f != null;
@@ -1138,8 +1156,8 @@ public final class ScriptLoader {
             throw new IllegalArgumentException();
         String optimized = s != null ? s : n != null ? n.getKey() : null;
         if (optimized != null && (!Skript.isConfigLoaded() || SkriptConfig.optimizeAndOrLists.value()) && !optimized.contains(", ") && optimized.contains(" or ")) {
-            optimized = StringUtils.replaceLast(OR_PATTERN_MATCHER.reset(optimized).replaceAll(Matcher.quoteReplacement(", ")),
-                    ", ", " or ");
+            optimized = StringUtils.replaceLast(OR_PATTERN_MATCHER.reset(optimized).replaceAll(commaSpace),
+                    "\", \"", "\" or \"");
         }
         if (n != null && optimized != null)
             n.setKey(optimized);

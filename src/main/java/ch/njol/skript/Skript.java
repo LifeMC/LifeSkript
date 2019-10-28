@@ -1803,7 +1803,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             logEx("  Bukkit: " + (Skript.isBukkitRunning() ? Bukkit.getBukkitVersion() + " (" + Bukkit.getVersion() + ')' + (hasJLineSupport() && Skript.hasJansi() ? " (jAnsi support enabled)" : "") : "unknown"));
             logEx("  Minecraft: " + (minecraftVersion != invalidVersion ? minecraftVersion : "not checked"));
             logEx("  Java: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.name") + ' ' + System.getProperty("java.vm.version") + ')');
-            logEx("  OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + ("64".equalsIgnoreCase(System.getProperty("sun.arch.data.model")) ? " (64-bit)" : " (32-bit)"));
+            logEx("  OS: " + System.getProperty("os.name") + ' ' + System.getProperty("os.arch") + ' ' + System.getProperty("os.version") + (SystemUtils.getBitModel() == 64 ? " (64-bit)" : SystemUtils.getBitModel() == 32 ? " (32-bit)" : " (unknown bit model)"));
             logEx();
             logEx("Server platform: " + getServerPlatform().platformName + (getServerPlatform().isSupported ? "" : " (unsupported)"));
             if (!getServerPlatform().isWorking) {
@@ -1829,7 +1829,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
             logEx();
             logEx("Thread: " + (thread == null ? Thread.currentThread() : thread).getName());
             logEx();
-            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + Workarounds.getOriginalProperty("user.language").toLowerCase(Locale.ENGLISH) + '-' + Workarounds.getOriginalProperty("user.country") + ')');
+            logEx("Language: " + Language.getName().substring(0, 1).toUpperCase(Locale.ENGLISH) + Language.getName().substring(1) + " (system: " + StringUtils.nullSafe(Workarounds.getOriginalProperty("user.language")).toLowerCase(Locale.ENGLISH) + '-' + Workarounds.getOriginalProperty("user.country") + ')');
             logEx("Encoding: " + "file = " + Workarounds.getOriginalProperty("file.encoding") + " , jnu = " + Workarounds.getOriginalProperty("sun.jnu.encoding") + " , stderr = " + Workarounds.getOriginalProperty("sun.stderr.encoding") + " , stdout = " + Workarounds.getOriginalProperty("sun.stdout.encoding"));
             logEx();
             final StringBuilder stringBuilder = new StringBuilder(4096);

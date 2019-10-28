@@ -60,7 +60,7 @@ public final class SectionNode extends Node implements Iterable<Node> {
      * This fixes the popular StackOverFlowError when reloading scripts that contain
      * too long lines, e.g a line with too long contains condition & or lists.
      */
-    private static final Matcher COMMENT_AND_WHITESPACE_MATCHER = Pattern.compile("(?:[^#]|##)*?#-#(?:\\s.*?)?").matcher("");
+    private static final Matcher COMMENT_AND_WHITESPACE_MATCHER = CriticalRegexps.COMMENT_AND_WHITESPACE;
 
     private final ArrayList<Node> nodes = new ArrayList<>();
     /**

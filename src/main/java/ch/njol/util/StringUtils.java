@@ -36,6 +36,8 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
 
+    public static final String EMPTY = "";
+
     private StringUtils() {
         throw new UnsupportedOperationException();
     }
@@ -101,8 +103,33 @@ public final class StringUtils {
         return sb.toString();
     }
 
+    /**
+     * Replaces the last match of the given regex with the given replacement in the given {@link CharSequence}.
+     *
+     * @param text The text to search and replace the last match of the given regex.
+     * @param regex The regex to search for last match.
+     *
+     * @param replacement The replacement to replace the last match with it.
+     *
+     * @return The replaced result string, whose the last match determined by the given regex in the given text
+     * is replaced by the given replacement.
+     */
     public static final String replaceLast(final CharSequence text, final String regex, final String replacement) {
-        return MatcherCache.getMatcher(PatternCache.get("(?s)(.*?)" + regex), text).replaceFirst("$1" + replacement);
+        return MatcherCache.getMatcher(PatternCache.get("(?s)(.*)" + regex), text).replaceFirst("$1" + replacement);
+    }
+
+    /**
+     * Returns the null safe version of the given string. If the given string is {@code null}, then "null" string
+     * is returned. Otherwise, the passed string will be returned.
+     *
+     * @param s The string to make it null safe, for use it on operations that may throw {@link NullPointerException} otherwise.
+     *          Note that this method only used if the null status does not matter with the use of the string, otherwise use a manual check.
+     *
+     * @return The null safe version of the given string. If the given string is {@code null}, "null" string will be returned.
+     * Otherwise, the passed string will be returned.
+     */
+    public static final String nullSafe(@Nullable final String s) {
+        return s == null ? "null" : s;
     }
 
     public static final int count(final String s, final char c) {

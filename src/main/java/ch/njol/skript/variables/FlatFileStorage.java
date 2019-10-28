@@ -22,6 +22,7 @@
 
 package ch.njol.skript.variables;
 
+import ch.njol.skript.CriticalRegexps;
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptCommand;
 import ch.njol.skript.config.SectionNode;
@@ -62,18 +63,15 @@ public final class FlatFileStorage extends VariablesStorage {
     public static final Charset UTF_8 = StandardCharsets.UTF_8;
     public static final int REQUIRED_CHANGES_FOR_RESAVE = Integer.getInteger("skript.requiredVariableChangesForSave", 1000);
     @SuppressWarnings("null")
-    private static final Pattern csv = Pattern.compile("(?<=^|,)\\s*?([^\",]*?|\"([^\"]|\"\")*?\")\\s*?(,|$)");
+    private static final Pattern csv = CriticalRegexps.CSV;
     private static final Matcher csvMatcher = csv.matcher("");
     /**
      * Use with find()
      */
-    @SuppressWarnings("null")
-    private static final Pattern containsWhitespace = Pattern.compile("\\s");
-    private static final Matcher containsWhitespaceMatcher = containsWhitespace.matcher("");
-    private static final Pattern SPLIT_PATTERN = Pattern.compile("\"\"", Pattern.LITERAL);
-    private static final Matcher SPLIT_PATTERN_MATCHER = SPLIT_PATTERN.matcher("");
-    private static final Pattern SINGLE_QUOTE = Pattern.compile("\"", Pattern.LITERAL);
-    private static final Matcher SINGLE_QUOTE_MATCHER = SINGLE_QUOTE.matcher("");
+    private static final Matcher containsWhitespaceMatcher = Pattern.compile("\\s").matcher("");
+    private static final Matcher SPLIT_PATTERN_MATCHER = Pattern.compile("\"\"", Pattern.LITERAL).matcher("");
+    private static final String splitQuoted = Matcher.quoteReplacement("\"");
+    private static final Matcher SINGLE_QUOTE_MATCHER = Pattern.compile("\"", Pattern.LITERAL).matcher("");
     static boolean savingVariables;
     private static long savedVariables;
     @Nullable
@@ -113,19 +111,23 @@ public final class FlatFileStorage extends VariablesStorage {
     private static final String[] splitCSV(final CharSequence line) {
         final Matcher m = csvMatcher.reset(line);
         int lastEnd = 0;
-        final ArrayList<String> r = new ArrayList<>();
+        ArrayList<String> r = null;
         while (m.find()) {
             if (lastEnd != m.start())
                 return null;
             final String v = m.group(1);
+            if (r == null)
+                r = new ArrayList<>();
             if (!v.isEmpty() && v.charAt(0) == '\"')
-                r.add(SPLIT_PATTERN_MATCHER.reset(v.substring(1, v.length() - 1)).replaceAll(Matcher.quoteReplacement("\"")));
+                r.add(SPLIT_PATTERN_MATCHER.reset(v.substring(1, v.length() - 1)).replaceAll(splitQuoted));
             else
                 r.add(v.trim());
             lastEnd = m.end();
         }
         if (lastEnd != line.length())
             return null;
+        if (r == null)
+            return EmptyArrays.EMPTY_STRING_ARRAY;
         return r.toArray(EmptyArrays.EMPTY_STRING_ARRAY);
     }
 
