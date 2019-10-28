@@ -30,7 +30,6 @@ import ch.njol.skript.command.Commands;
 import ch.njol.skript.command.ScriptCommand;
 import ch.njol.skript.config.*;
 import ch.njol.skript.effects.Delay;
-import ch.njol.skript.hooks.Hook;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.FunctionEvent;
@@ -52,7 +51,6 @@ import ch.njol.util.Kleenean;
 import ch.njol.util.NonNullPair;
 import ch.njol.util.StringUtils;
 import ch.njol.util.coll.CollectionUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.fusesource.jansi.Ansi;
@@ -63,6 +61,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -525,7 +524,7 @@ public final class ScriptLoader {
                     if (event == null)
                         continue;
 
-                    if ("configuration".equalsIgnoreCase(event)) {
+                    if (ScriptConfig.isConfig(event)) {
                         if (hasConfiguraton) {
                             Skript.error("duplicate configuration section");
                             continue;
@@ -547,97 +546,28 @@ public final class ScriptLoader {
                             final String value = ((EntryNode) n).getValue();
 
                             try {
-                                if ("source".equalsIgnoreCase(key)) {
-                                    if (duplicateCheckList.contains("source")) {
-                                        Skript.error("Duplicate source configuration setting");
-                                        continue;
-                                    }
-                                    scriptVersion = new Version(value, true);
-                                    currentScriptVersion = scriptVersion;
-                                    duplicateCheckList.add("source");
-                                } else if ("target".equalsIgnoreCase(key)) {
-                                    final Version target = new Version(value, true);
-                                    if (duplicateCheckList.contains("target")) {
-                                        Skript.error("Duplicate target configuration setting");
-                                        continue;
-                                    }
-                                    // Source: The version that script is written and tested with.
-                                    // Target: Actual minimum version that script supports.
-                                    if (Skript.getVersion().isSmallerThan(target)) {
-                                        Skript.error("This script requires Skript version " + value);
+                                final AtomicReference<Version> _scriptVersion = new AtomicReference<>(scriptVersion);
+                                final AtomicReference<Version> _currentScriptVersion = new AtomicReference<>(currentScriptVersion);
 
+                                final ScriptConfig.ConfigParseResult configParseResult = ScriptConfig.tryParse(f, duplicateCheckList, key, value,
+                                        _scriptVersion, _currentScriptVersion);
+
+                                scriptVersion = _scriptVersion.get();
+                                currentScriptVersion = _currentScriptVersion.get();
+
+                                switch (configParseResult) {
+                                    case OK:
+                                        break;
+                                    case ABORT_PARSING:
                                         currentScript = null;
                                         return new ScriptInfo(); // we return empty script info to abort parsing
-                                    }
-                                    if (target.isLargerThan(scriptVersion)) // It is redundant to require a version higher than source version
-                                        Skript.warning("This script is written in source version " + scriptVersion + " but it requires " + target + " target version, please change source version to " + target + " or decrease the minimum target requirement for this script.");
-                                    if (scriptVersion == null || scriptVersion.isSmallerThan(target))
-                                        scriptVersion = target;
-                                    duplicateCheckList.add("target");
-                                } else if ("loops".equalsIgnoreCase(key)) {
-                                    if (duplicateCheckList.contains("loops")) {
-                                        Skript.error("Duplicate loops configuration setting");
-                                        continue;
-                                    }
-                                    ScriptOptions.getInstance().setUsesNewLoops(ScriptLoader.currentScript.getFile(), !"old".equalsIgnoreCase(value));
-                                    duplicateCheckList.add("loops");
-                                } else if ("requires minecraft".equalsIgnoreCase(key)) {
-                                    if (duplicateCheckList.contains("requires minecraft")) {
-                                        Skript.error("Duplicate requires minecraft configuration setting");
-                                        continue;
-                                    }
-                                    if (Skript.getMinecraftVersion().isSmallerThan(new Version(value, true))) {
-                                        Skript.error("This script requires Minecraft version " + value);
+                                    case CONTINUE:
+                                        break;
+                                    default: // Special handling or such
+                                        break;
+                                }
 
-                                        currentScript = null;
-                                        return new ScriptInfo(); // we return empty script info to abort parsing
-                                    }
-                                    duplicateCheckList.add("requires minecraft");
-                                } else if ("requires plugin".equalsIgnoreCase(key)) {
-                                    if (Skript.getAddon(value) != null && ScriptLoader.isWarningAllowed(VersionRegistry.STABLE_2_2_16))
-                                        Skript.warning("Use 'requires addon' instead of 'requires plugin' for add-ons.");
-
-                                    if (Hook.isHookEnabled(value) && ScriptLoader.isWarningAllowed(VersionRegistry.STABLE_2_2_16))
-                                        Skript.warning("Use 'requires hook' instead of 'requires plugin' for hooks.");
-
-                                    if (!Bukkit.getPluginManager().isPluginEnabled(value)) {
-                                        // This can be duplicateable to require more than one plugin
-
-                                        if (Bukkit.getPluginManager().getPlugin(value) != null) // exists, but not enabled
-                                            Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
-                                        else // it does not exist at all
-                                            Skript.error("This script requires plugin " + value);
-
-                                        currentScript = null;
-                                        return new ScriptInfo(); // we return empty script info to abort parsing
-                                    }
-                                    if ("Skript".equalsIgnoreCase(value))
-                                        Skript.warning("Requiring Skript is redundant. Please remove this requires plugin section.");
-                                } else if ("requires addon".equalsIgnoreCase(key) && Skript.getAddon(value) == null) {
-                                    // This can be duplicateable to require more than one addon
-
-                                    if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
-                                        Skript.error("This script requires addon " + value + ", but that addon is not enabled currently.");
-                                    else if (Bukkit.getPluginManager().getPlugin(value) == null) // it does not exist at all
-                                        Skript.error("This script requires addon " + value);
-                                    else // it exists, but it's not registered to Skript
-                                        Skript.error("This script requires addon " + value + ", but that addon is not correctly registered to Skript currently.");
-
-                                    currentScript = null;
-                                    return new ScriptInfo(); // we return empty script info to abort parsing
-                                } else if ("requires hook".equalsIgnoreCase(key) && !Hook.isHookEnabled(value)) {
-                                    // This can be duplicateable to require more than one hook
-
-                                    if (Bukkit.getPluginManager().getPlugin(value) != null && !Bukkit.getPluginManager().isPluginEnabled(value)) // exists, but not enabled
-                                        Skript.error("This script requires plugin " + value + ", but that plugin is not enabled currently.");
-                                    else if (Bukkit.getPluginManager().getPlugin(value) == null) // it does not exist at all
-                                        Skript.error("This script requires plugin " + value);
-                                    else // it exists, but Skript is not hooked to it
-                                        Skript.error("This script requires hook " + value + ", but Skript is currently not hooked to that plugin.");
-
-                                    currentScript = null;
-                                    return new ScriptInfo(); // we return empty script info to abort parsing
-                                } else if ("load after".equalsIgnoreCase(key)) { // This also can be duplicateable to require more than one script
+                                if ("load after".equalsIgnoreCase(key)) { // This also can be duplicate-able to require more than one script
                                     // This can be used to require a script (not generally), or defer loading of this script after a specific script is loaded.
                                     // it also can be used for functions, etc., when not using 'allow function calls before definitions'
                                     final File file = new File(getScriptsFolder(), value.endsWith(".sk") ? value : value + ".sk"); // .sk suffix can be omitted
@@ -659,8 +589,6 @@ public final class ScriptLoader {
                                         return new ScriptInfo(); // we return empty script info to abort parsing
                                     }
 
-                                    // FIXME check if it causes issues on reloads, I know I am experienced one, but I forgot what is wrong
-                                    // I finally found the problem, of course from the server logs. The error was some function calls are giving errors like "The function was either renamed or deleted"
                                     if (!loadedScriptFiles.contains(file.getName())) { // If the script is not already loaded
                                         if (Skript.logHigh())
                                             Skript.info("Loading script '" + file.getName() + "' because the script '" + f.getName() + "' requires it");
@@ -686,10 +614,6 @@ public final class ScriptLoader {
                                         currentOptions.clear();
                                         currentOptions.putAll(options);
                                     }
-                                } else if (ScriptUpdater.Parser.checkValid(key)) {
-                                    ScriptUpdater.Parser.parse(f, duplicateCheckList, key, value);
-                                } else if (Skript.logHigh()) {
-                                    Skript.warning("Configuration option \"" + key + "\" is not supported");
                                 }
                             } catch (final IllegalArgumentException e) {
                                 // Probably an illegal version string is passed
@@ -1016,8 +940,166 @@ public final class ScriptLoader {
         return r;
     }
 
-    @SuppressWarnings({"unchecked", "null"})
-    public static final ArrayList<TriggerItem> loadItems(final SectionNode node) {
+    @SuppressWarnings({"unchecked", "null", "finally", "ContinueOrBreakFromFinallyBlock"})
+    public static final ArrayList<TriggerItem> loadItems(SectionNode node) {
+        /*final Stack<SectionNode> nodes = new Stack<>();
+        nodes.push(node);
+
+        final Stack<ArrayList<TriggerItem>> items_ = new Stack<>();
+        final Supplier<ArrayList<TriggerItem>> newArrayList = () -> new ArrayList<>(100);
+
+        items_.push(newArrayList.get());
+
+        final Stack<Conditional> conditionals = new Stack<>();
+        root: while (!nodes.isEmpty()) {
+            node = nodes.pop();
+
+            if (Skript.debug())
+                indentation += "    ";
+
+            final ArrayList<TriggerItem> items = items_.pop();
+            Kleenean hadDelayBeforeLastIf = Kleenean.FALSE;
+
+            for (final Node n : node) {
+                SkriptLogger.setNode(n);
+                if (n instanceof SimpleNode) {
+                    final SimpleNode e = (SimpleNode) n;
+                    @SuppressWarnings("null") final String s = optimizeAndOr(n, replaceOptions(e.getKey()));
+                    if (!SkriptParser.validateLine(s))
+                        continue;
+                    final Statement stmt = Statement.parse(s, "Can't understand this condition/effect: " + s);
+                    if (stmt == null)
+                        continue;
+                    if (Skript.debug() || n.debug())
+                        Skript.debug(indentation + stmt.toString(null, true));
+                    items.add(stmt);
+                    if (stmt instanceof Delay)
+                        hasDelayBefore = Kleenean.TRUE;
+                } else if (n instanceof SectionNode) {
+                    @SuppressWarnings("null")
+                    String name = replaceOptions(n.getKey());
+                    if (!SkriptParser.validateLine(name))
+                        continue;
+                    TypeHints.enterScope(); // Begin conditional type hints
+
+                    if (StringUtils.startsWithIgnoreCase(name, "loop ")) {
+                        final String l = optimizeAndOr(n, name.substring("loop ".length()));
+                        final RetainingLogHandler h = SkriptLogger.startRetainingLog();
+                        Expression<?> loopedExpr;
+                        try {
+                            loopedExpr = new SkriptParser(l).parseExpression(new Class<?>[]{Object.class});
+                            if (loopedExpr != null)
+                                loopedExpr = loopedExpr.getConvertedExpression(Object.class);
+                            if (loopedExpr == null) {
+                                h.printErrors("Can't understand this loop: '" + name + '\'');
+                                continue;
+                            }
+                            h.printLog();
+                        } finally {
+                            h.stop();
+                        }
+                        if (loopedExpr.isSingle()) {
+                            Skript.error("Can't loop " + loopedExpr + " because it's only a single value");
+                            continue;
+                        }
+                        if (Skript.debug() || n.debug())
+                            Skript.debug(indentation + "loop " + loopedExpr.toString(null, true) + ':');
+                        final Kleenean hadDelayBefore = hasDelayBefore;
+                        items.add(new Loop(loopedExpr, (SectionNode) n));
+                        if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
+                            hasDelayBefore = Kleenean.UNKNOWN;
+                    } else if (StringUtils.startsWithIgnoreCase(name, "while ")) {
+                        final String l = optimizeAndOr(n, name.substring("while ".length()));
+                        final Condition c = Condition.parse(l, "Can't understand this condition: " + l);
+                        if (c == null)
+                            continue;
+                        if (Skript.debug() || n.debug())
+                            Skript.debug(indentation + "while " + c.toString(null, true) + ':');
+                        final Kleenean hadDelayBefore = hasDelayBefore;
+                        items.add(new While(c, (SectionNode) n));
+                        if (hadDelayBefore != Kleenean.TRUE && hasDelayBefore != Kleenean.FALSE)
+                            hasDelayBefore = Kleenean.UNKNOWN;
+                    } else if ("else".equalsIgnoreCase(name)) {
+                        if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+                            Skript.error("'else' has to be placed just after an 'if' or 'else if' section");
+                            continue;
+                        }
+                        if (Skript.debug() || n.debug())
+                            Skript.debug(indentation + "else:");
+                        final Kleenean hadDelayAfterLastIf = hasDelayBefore;
+                        hasDelayBefore = hadDelayBeforeLastIf;
+                        ((Conditional) items.get(items.size() - 1)).loadElseClause((SectionNode) n);
+                        hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore));
+                    } else if (StringUtils.startsWithIgnoreCase(name, "else if ")) {
+                        if (items.isEmpty() || !(items.get(items.size() - 1) instanceof Conditional) || ((Conditional) items.get(items.size() - 1)).hasElseClause()) {
+                            Skript.error("'else if' has to be placed just after another 'if' or 'else if' section");
+                            continue;
+                        }
+                        name = name.substring("else if ".length());
+                        name = optimizeAndOr(n, name);
+                        final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
+                        if (cond == null)
+                            continue;
+                        if (Skript.debug() || n.debug())
+                            Skript.debug(indentation + "else if " + cond.toString(null, true));
+                        final Kleenean hadDelayAfterLastIf = hasDelayBefore;
+                        hasDelayBefore = hadDelayBeforeLastIf;
+                        ((Conditional) items.get(items.size() - 1)).loadElseIf(cond, (SectionNode) n);
+                        hasDelayBefore = hadDelayBeforeLastIf.or(hadDelayAfterLastIf.and(hasDelayBefore.and(Kleenean.UNKNOWN)));
+                    } else {
+                        if (StringUtils.startsWithIgnoreCase(name, "if "))
+                            name = name.substring(3);
+                        name = optimizeAndOr(n, name);
+                        final Condition cond = Condition.parse(name, "can't understand this condition: '" + name + '\'');
+                        if (cond == null)
+                            continue;
+                        if (Skript.debug() || n.debug())
+                            Skript.debug(indentation + cond.toString(null, true) + ':');
+                        final Kleenean hadDelayBefore = hasDelayBefore;
+                        hadDelayBeforeLastIf = hadDelayBefore;
+                        final Conditional conditional = new Conditional(cond);
+                        items.add(conditional);
+                        items_.push(newArrayList.get());
+                        ScriptLoader.currentSections.add(conditional);
+                        try {
+                            nodes.push((SectionNode) n);
+                            conditionals.push(conditional);
+
+                            continue root;
+                        } finally {
+                            ScriptLoader.currentSections.remove(ScriptLoader.currentSections.size() - 1);
+                            hasDelayBefore = hadDelayBefore.or(hasDelayBefore.and(Kleenean.UNKNOWN));
+
+                            continue;
+                        }
+                    }
+
+                    // Destroy these conditional type hints
+                    TypeHints.exitScope();
+                }
+            }
+
+            for (int i = 0; i < items.size() - 1; i++)
+                items.get(i).setNext(items.get(i + 1));
+
+            optimizeAndOr(node);
+            SkriptLogger.setNode(node);
+
+            if (Skript.debug())
+                indentation = indentation.substring(0, indentation.length() - 4);
+
+            if (!conditionals.isEmpty())
+                conditionals.pop().setTriggerItems0(items);
+
+            items_.push(items);
+        }
+
+        //final ArrayList<TriggerItem> items = new ArrayList<>();
+
+        //while (!items_.isEmpty())
+            //items.addAll(items_.pop());
+
+        return items_.pop();*/
 
         if (Skript.debug())
             indentation += "    ";
@@ -1125,7 +1207,14 @@ public final class ScriptLoader {
                         Skript.debug(indentation + cond.toString(null, true) + ':');
                     final Kleenean hadDelayBefore = hasDelayBefore;
                     hadDelayBeforeLastIf = hadDelayBefore;
-                    items.add(new Conditional(cond, (SectionNode) n));
+                    final Conditional conditional = new Conditional(cond);
+                    items.add(conditional);
+                    ScriptLoader.currentSections.add(conditional);
+                    try {
+                        conditional.setTriggerItems0(ScriptLoader.loadItems((SectionNode) n));
+                    } finally {
+                        ScriptLoader.currentSections.remove(ScriptLoader.currentSections.size() - 1);
+                    }
                     hasDelayBefore = hadDelayBefore.or(hasDelayBefore.and(Kleenean.UNKNOWN));
                 }
 
