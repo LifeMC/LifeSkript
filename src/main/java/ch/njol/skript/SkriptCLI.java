@@ -34,7 +34,7 @@ final class SkriptCLI {
         // Use of Skript's internal logging methods creates classpath errors.
         System.out.println("[Skript] Skript is a plugin for Bukkit/Spigot, which allows server owners and other people to modify their servers without learning Java.");
         System.out.println("[Skript] Skript is *not* a standalone application, and we don't understand why you'd try to see if it was.");
-        System.out.println("{Skript] If you want to use Skript on your Bukkit/Spigot server, just put Skript.jar file to plugins/ folder.");
+        System.out.println("[Skript] If you want to use Skript on your Bukkit/Spigot server, just put Skript.jar file to the /plugins folder.");
         System.out.println("[Skript] ^-^ Have a nice day! ^-^");
     }
 }
