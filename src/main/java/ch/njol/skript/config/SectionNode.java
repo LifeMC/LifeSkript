@@ -22,10 +22,7 @@
 
 package ch.njol.skript.config;
 
-import ch.njol.skript.ScriptLoader;
-import ch.njol.skript.Skript;
-import ch.njol.skript.SkriptAPIException;
-import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.*;
 import ch.njol.skript.config.validate.EntryValidator;
 import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.log.SkriptLogger;
@@ -334,13 +331,14 @@ public final class SectionNode extends Node implements Iterable<Node> {
 //			}
 
             if (value.charAt(value.length() - 1) == ':' && (config.simple || !value.contains(config.separator) || !config.separator.isEmpty() && config.separator.charAt(config.separator.length() - 1) == ':' && value.indexOf(config.separator) == value.length() - config.separator.length())) {
+                final String str = ScriptLoader.optimizeAndOr(null, fullLine);
                 boolean matches;
                 try {
                     {
-                        matches = !COMMENT_AND_WHITESPACE_MATCHER.reset(ScriptLoader.optimizeAndOr(null, fullLine)).matches();
+                        matches = !COMMENT_AND_WHITESPACE_MATCHER.reset(str).matches();
                     }
                 } catch (final StackOverflowError e) { // JDK bug? (see https://github.com/LifeMC/LifeSkript/issues/26)
-                    Node.handleStackOverFlow(fullLine, COMMENT_AND_WHITESPACE_MATCHER, e);
+                    Node.handleStackOverFlow(str, COMMENT_AND_WHITESPACE_MATCHER, e);
                     matches = true; // We already printed a warning
                 }
                 if (matches) {

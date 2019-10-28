@@ -28,7 +28,6 @@ import ch.njol.util.Math2;
 import ch.njol.util.WebUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -108,19 +107,9 @@ public final class Workarounds {
                 if (event instanceof PlayerInteractEvent) {
                     final PlayerInteractEvent e = (PlayerInteractEvent) event;
                     if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
-                        e.setUseItemInHand(Result.DENY);
+                        e.setUseItemInHand(PlayerInteractEvent.Result.DENY);
                 }
             }, Skript.getInstance(), false);
-
-            /* Bukkit uses reflection to call methods - We use our own hacky way above.
-            Bukkit.getPluginManager().registerEvents(new Listener() {
-                @EventHandler(priority = EventPriority.HIGHEST)
-                public void onInteract(final PlayerInteractEvent e) {
-                    if (e.hasItem() && (e.getPlayer().getItemInHand() == null || e.getPlayer().getItemInHand().getType() == Material.AIR || e.getPlayer().getItemInHand().getAmount() == 0))
-                        e.setUseItemInHand(Result.DENY);
-                }
-            }, Skript.getInstance());
-            */
         });
     }
 
@@ -128,7 +117,7 @@ public final class Workarounds {
         throw new UnsupportedOperationException("Static class");
     }
 
-    @SuppressWarnings("null")
+    @Nullable
     public static final String getOriginalProperty(final String key) {
         final String value = oldValues.get(key);
         return value != null ? value : System.getProperty(key);
