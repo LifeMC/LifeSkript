@@ -48,7 +48,7 @@ import java.util.List;
 public final class ExprExplodedBlocks extends SimpleExpression<Block> {
 
     static {
-        Skript.registerExpression(ExprExplodedBlocks.class, Block.class, ExpressionType.COMBINED, "[the] exploded blocks");
+        Skript.registerExpression(ExprExplodedBlocks.class, Block.class, ExpressionType.COMBINED, ExprExplodedBlocks::new, "[the] exploded blocks");
     }
 
     @Override

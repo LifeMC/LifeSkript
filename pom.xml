@@ -214,10 +214,6 @@
                     <artifactId>json-simple</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>javax.persistence</groupId>
                     <artifactId>persistence-api</artifactId>
                 </exclusion>
@@ -896,13 +892,13 @@
                     <name>m2e.version</name>
                 </property>
             </activation>
-			<pluginRepositories>
+            <pluginRepositories>
                 <pluginRepository>
                     <id>tudelft-repository</id>
                     <name>tudelft's Repository</name>
                     <url>https://simulation.tudelft.nl/maven/</url>
                 </pluginRepository>
-			</pluginRepositories>
+            </pluginRepositories>
             <build>
                 <pluginManagement>
                     <plugins>

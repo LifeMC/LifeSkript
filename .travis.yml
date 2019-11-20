@@ -3,7 +3,8 @@ install: true
 os: linux
 dist: trusty
 jdk:
-  - oraclejdk8
+  - openjdk8
+  #- oraclejdk8
   #- openjdk-ea
 git:
   submodules: false
@@ -28,7 +29,7 @@ before_install:
   - git config --global user.name "Travis CI"
   - git config --global user.email "travis-ci@travis-ci.com"
 script:
-  - git fetch --unshallow --quiet
+  #- git fetch --unshallow --quiet
   - git fetch --no-tags https://github.com/LifeMC/LifeSkript +refs/heads/master:refs/remotes/origin/master
 
   - mvn install:install-file -Dfile=lib/timings-1.8.8.jar -DgroupId=co.aikar -DartifactId=timings -Dversion=1.8.8 -Dpackaging=jar -DgeneratePom=true
