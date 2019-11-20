@@ -49,7 +49,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
     }
 
     @Override
-    public boolean hasNext() {
+    public final boolean hasNext() {
         final T[] arr = this.array;
         if (arr == null)
             return false;
@@ -58,7 +58,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
 
     @Override
     @Nullable
-    public T next() {
+    public final T next() {
         final T[] array = this.array;
         if (array == null || index >= array.length)
             throw new NoSuchElementException();
@@ -71,7 +71,7 @@ public final class ArrayIterator<T> implements Iterator<T> {
      * @throws UnsupportedOperationException always
      */
     @Override
-    public void remove() {
+    public final void remove() {
         throw new UnsupportedOperationException();
     }
 

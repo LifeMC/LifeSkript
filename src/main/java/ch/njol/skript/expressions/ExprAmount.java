@@ -57,7 +57,7 @@ public final class ExprAmount extends SimpleExpression<Integer> {
     @Override
     public boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         expr = exprs[0];
-        if (expr instanceof Literal)
+        if (expr instanceof Literal<?>)
             return false; // FIXME add error?
         if (expr.isSingle()) {
             Skript.error('\'' + expr.toString(null, false) + "' can only ever have one value at most, thus the 'amount of ...' expression is useless. Use '... exists' instead to find out whatever the expression has a value.");

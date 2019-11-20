@@ -58,11 +58,11 @@ public final class CondIsSet extends Condition {
         return true;
     }
 
-    private final boolean check(final Expression<?> expr, final Event e) {
+    private final boolean check0(final Expression<?> expr, final Event e) {
         if (expr instanceof ExpressionList) {
             for (final Expression<?> ex : ((ExpressionList<?>) expr).getExpressions()) {
                 assert ex != null;
-                final boolean b = check(ex, e);
+                final boolean b = check0(ex, e);
                 if (expr.getAnd() ^ b)
                     return !expr.getAnd();
             }
@@ -75,7 +75,7 @@ public final class CondIsSet extends Condition {
 
     @Override
     public final boolean check(final Event e) {
-        return check(expr, e);
+        return check0(expr, e);
     }
 
     @Override

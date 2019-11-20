@@ -28,7 +28,6 @@ import ch.njol.skript.command.Commands.CommandAliasHelpTopic;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.util.SimpleEvent;
-import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.log.LogEntry;
@@ -86,11 +85,11 @@ public final class ScriptCommand implements TabExecutor {
     private final List<String> actualAliases;
     private final List<String> aliases;
     private final String permission;
-    private final Expression<String> permissionMessage;
+    private final VariableString permissionMessage;
     private final String description;
     @Nullable
     private final Timespan cooldown;
-    private final Expression<String> cooldownMessage;
+    private final VariableString cooldownMessage;
     private final String cooldownBypass;
     @Nullable
     private final Expression<String> cooldownStorage;
@@ -120,16 +119,16 @@ public final class ScriptCommand implements TabExecutor {
      * @param items             trigger to execute
      */
     @SuppressWarnings("null")
-    public ScriptCommand(final File script, final String name, final String actualName, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, @Nullable final Expression<String> permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final String tabCompleterFunctionName, final int executableBy, final List<TriggerItem> items) {
+    public ScriptCommand(final File script, final String name, final String actualName, final String pattern, final List<Argument<?>> arguments, final String description, final String usage, final List<String> aliases, final String permission, @Nullable final VariableString permissionMessage, @Nullable final Timespan cooldown, @Nullable final VariableString cooldownMessage, final String cooldownBypass, @Nullable final VariableString cooldownStorage, final String tabCompleterFunctionName, final int executableBy, final List<TriggerItem> items) {
         Validate.notNull(name, pattern, arguments, description, usage, aliases, items);
         this.name = name;
         this.actualName = actualName;
         label = name.toLowerCase(Locale.ENGLISH);
         this.permission = permission;
-        this.permissionMessage = permissionMessage == null ? new SimpleLiteral<>(Language.get("commands.no permission message"), false) : permissionMessage;
+        this.permissionMessage = permissionMessage == null ? VariableString.newInstance(Language.get("commands.no permission message")) : permissionMessage;
 
         this.cooldown = cooldown;
-        this.cooldownMessage = cooldownMessage == null ? new SimpleLiteral<>(Language.get("commands.cooldown message"), false) : cooldownMessage;
+        this.cooldownMessage = cooldownMessage == null ? VariableString.newInstance(Language.get("commands.cooldown message")) : cooldownMessage;
         this.cooldownBypass = cooldownBypass;
         this.cooldownStorage = cooldownStorage;
         this.tabCompleterFunctionName = tabCompleterFunctionName;
@@ -176,9 +175,9 @@ public final class ScriptCommand implements TabExecutor {
             bukkitCommand.setLabel(label);
             bukkitCommand.setPermission(permission);
 
-            // We can only set the message if it's available at parse time (aka a literal)
-            if (permissionMessage instanceof Literal)
-                bukkitCommand.setPermissionMessage(((Literal<String>) permissionMessage).getSingle());
+            // We can only set the message if it's simple (doesn't contain expressions)
+            if (permissionMessage.isSimple())
+                bukkitCommand.setPermissionMessage(permissionMessage.toString(null));
 
             bukkitCommand.setUsage(usage);
             bukkitCommand.setExecutor(this);
@@ -251,14 +250,14 @@ public final class ScriptCommand implements TabExecutor {
         }
 
         if (Bukkit.isPrimaryThread()) {
-            execute2(event, sender, rest);
+            execute0(event, sender, rest);
             if (sender instanceof Player && !event.isCooldownCancelled()) {
                 setLastUsage(((Player) sender).getUniqueId(), event, new Date());
             }
         } else {
             // must not wait for the command to complete as some plugins call commands in such a way that the server will deadlock
             Bukkit.getScheduler().scheduleSyncDelayedTask(Skript.getInstance(), () -> {
-                execute2(event, sender, rest);
+                execute0(event, sender, rest);
                 if (sender instanceof Player && !event.isCooldownCancelled()) {
                     setLastUsage(((Player) sender).getUniqueId(), event, new Date());
                 }
@@ -275,8 +274,16 @@ public final class ScriptCommand implements TabExecutor {
         return execute2(event, sender, rest);
     }
 
+    /**
+	 * @deprecated use {@link ScriptCommand#execute0(ScriptCommandEvent, CommandSender, String)}
+	 */
+    @Deprecated
     final boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
-        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+		return execute0(event, sender, rest);
+    }
+
+	final boolean execute0(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
+	    final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             final boolean ok = SkriptParser.parseArguments(rest, ScriptCommand.this, event);
             if (!ok) {
@@ -304,7 +311,7 @@ public final class ScriptCommand implements TabExecutor {
         if (Skript.log(Verbosity.VERY_HIGH))
             Skript.info("# " + name + " took " + 1. * (System.nanoTime() - startTrigger) / 1000000. + " milliseconds");
         return true;
-    }
+	}
 
     public void sendHelp(final CommandSender sender) {
         if (!description.isEmpty())

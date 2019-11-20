@@ -45,6 +45,9 @@ public final class Conditional extends TriggerSection {
     @Nullable
     private TriggerSection elseClause;
 
+    /**
+     * Important when using this constructor: set the items with {@link #setTriggerItems0(List)}!
+     */
     public Conditional(final Condition cond) {
         this.cond = cond;
     }

@@ -168,7 +168,7 @@ public final class BukkitClasses {
                 final World w = fields.getObject("world", World.class);
                 final int x = fields.getPrimitive("x", int.class), y = fields.getPrimitive("y", int.class), z = fields.getPrimitive("z", int.class);
                 final Block b;
-                if (w == null || (b = w.getBlockAt(x, y, z)) == null)
+                if (w == null || (b = w.getBlockAt(x, y, z)) == null) // REMIND: hotspot, causes disk read because of block and chunk data
                     throw new StreamCorruptedException();
                 return b;
             }

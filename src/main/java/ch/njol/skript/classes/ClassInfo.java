@@ -83,6 +83,14 @@ public class ClassInfo<T> implements Debuggable {
     private String[] examples;
     @Nullable
     private String since;
+    @Nullable
+    private String[] requiredPlugins;
+
+    /**
+     * Overrides documentation id assigned from class name.
+     */
+    @Nullable
+    private String documentationId;
 
     // === FACTORY METHODS ===
     @Nullable
@@ -235,6 +243,39 @@ public class ClassInfo<T> implements Debuggable {
         return this;
     }
 
+    /**
+     * Other plugin dependencies for this ClassInfo.
+     *
+     * Only used for Skript's documentation.
+     *
+     * @param pluginNames
+     * @return This ClassInfo object.
+     */
+    public final ClassInfo<T> requiredPlugins(final String... pluginNames) {
+        assert this.requiredPlugins == null;
+        this.requiredPlugins = pluginNames;
+        return this;
+    }
+
+    /**
+     * A non-critical ID remapping for ClassInfo.
+     *
+     * Overrides default documentation id, which is assigned from class name.
+     *
+     * This is especially useful for inner classes whose names are useless without
+     * parent class name as a context.
+     *
+     * Only used for Skript's documentation.
+     *
+     * @param id
+     * @return This ClassInfo object.
+     */
+    public final ClassInfo<T> documentationId(final String id) {
+        assert this.documentationId == null;
+        this.documentationId = id;
+        return this;
+    }
+
     public final Class<T> getC() {
         return c;
     }
@@ -312,6 +353,23 @@ public class ClassInfo<T> implements Debuggable {
     @Nullable
     public String getDocName() {
         return docName;
+    }
+
+    @Nullable
+    public final String[] getRequiredPlugins() {
+        return requiredPlugins;
+    }
+
+    /**
+     * Gets overridden documentation id of this type. If no override has
+     * been set, null is returned, and the caller may try to derive this from
+     * the name of {@code #getC()}.
+     *
+     * @return Documentation id override, or null.
+     */
+    @Nullable
+    public final String getDocumentationId() {
+        return documentationId;
     }
 
     /**

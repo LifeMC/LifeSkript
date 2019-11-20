@@ -87,7 +87,7 @@ public final class ConfigReader extends BufferedReader {
     @Override
     public final void reset() {
         if (reset)
-            throw new IllegalStateException("reset was called twice without a readLine inbetween");
+            throw new IllegalStateException("reset was called twice without a readLine in between");
         reset = true;
     }
 

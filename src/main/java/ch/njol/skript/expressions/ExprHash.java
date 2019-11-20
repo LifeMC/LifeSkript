@@ -117,7 +117,7 @@ public final class ExprHash extends PropertyExpression<String, String> {
 
     @Override
     public final String toString(@Nullable final Event e, final boolean debug) {
-        return "hash of " + getExpr().toString(e, debug);
+        return algorithm == md5 ? "md5" : "sha256" + " hash of " + getExpr().toString(e, debug);
     }
 
     @Override

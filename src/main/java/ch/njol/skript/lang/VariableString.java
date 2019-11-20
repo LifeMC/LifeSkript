@@ -380,15 +380,21 @@ public final class VariableString implements Expression<String> {
 
     /**
      * Parses all expressions in the string and returns it.
+     * If this is a simple string, the event may be null.
      *
      * @param e Event to pass to the expressions.
      * @return The input string with all expressions replaced.
      */
-    public String toString(final Event e) {
+    public String toString(@Nullable final Event e) {
         if (isSimple) {
             assert simple != null;
             return simple;
         }
+
+        if (e == null) {
+            throw new IllegalArgumentException("Event may not be null in non-simple VariableStrings!");
+        }
+
         final Object[] string = this.string;
         assert string != null;
         final StringBuilder b = new StringBuilder(4096);

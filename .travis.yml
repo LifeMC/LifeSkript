@@ -1,13 +1,14 @@
-sudo: required
 language: java
 install: true
+os: linux
 dist: trusty
 jdk:
   - oraclejdk8
   #- openjdk-ea
 git:
   submodules: false
-matrix:
+  depth: false
+jobs:
   fast_finish: true
   #allow_failures:
   #- jdk: openjdk-ea
@@ -37,5 +38,5 @@ script:
   - mvn install:install-file -Dfile=lib/worldguard-6.1.2.jar -DgroupId=com.sk89q -DartifactId=worldguard -Dversion=6.1.2 -Dpackaging=jar -DgeneratePom=true
   - mvn install:install-file -Dfile=lib/worldedit-6.1.9.jar -DgroupId=com.sk89q -DartifactId=worldedit -Dversion=6.1.9 -Dpackaging=jar -DgeneratePom=true
 
-  - mvn -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul --batch-mode -e -B -DcompilerArgument=-O clean org.jacoco:jacoco-maven-plugin:prepare-agent install package sonar:sonar
+  - mvn -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul --batch-mode -e -B -DcompilerArgument=-O clean org.jacoco:jacoco-maven-plugin:prepare-agent install package sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ch.njol:Skript
   - java -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul -jar lib/proguard.jar @Skript.pro

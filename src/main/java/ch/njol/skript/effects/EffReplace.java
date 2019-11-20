@@ -24,8 +24,8 @@ package ch.njol.skript.effects;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.SkriptConfig;
+import ch.njol.skript.classes.Changer;
 import ch.njol.skript.classes.Changer.ChangeMode;
-import ch.njol.skript.classes.Changer.ChangerUtils;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
@@ -74,7 +74,7 @@ public final class EffReplace extends Effect {
     public final boolean init(final Expression<?>[] exprs, final int matchedPattern, final Kleenean isDelayed, final ParseResult parseResult) {
         haystack = exprs[1 + matchedPattern % 2];
         replaceString = matchedPattern < 2;
-        if (replaceString && !ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
+        if (replaceString && !Changer.ChangerUtils.acceptsChange(haystack, ChangeMode.SET, String.class)) {
             Skript.error(haystack + " cannot be changed and can thus not have parts replaced.");
             return false;
         }

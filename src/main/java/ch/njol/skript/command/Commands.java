@@ -33,7 +33,6 @@ import ch.njol.skript.config.validate.SectionValidator;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.lang.function.Function;
 import ch.njol.skript.lang.function.Functions;
-import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.ArgsMessage;
 import ch.njol.skript.localization.Language;
 import ch.njol.skript.localization.Message;
@@ -497,10 +496,7 @@ public final class Commands {
             aliases = new ArrayList<>(0);
 
         final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
-        Expression<String> permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
-        if (permissionMessage != null && ((VariableString) permissionMessage).isSimple()) {
-            permissionMessage = new SimpleLiteral<>(rawPermissionMessage, false);
-        }
+        VariableString permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
 
         final SectionNode trigger = (SectionNode) node.get("trigger");
         if (trigger == null)

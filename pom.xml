@@ -896,6 +896,13 @@
                     <name>m2e.version</name>
                 </property>
             </activation>
+			<pluginRepositories>
+                <pluginRepository>
+                    <id>tudelft-repository</id>
+                    <name>tudelft's Repository</name>
+                    <url>https://simulation.tudelft.nl/maven/</url>
+                </pluginRepository>
+			</pluginRepositories>
             <build>
                 <pluginManagement>
                     <plugins>
