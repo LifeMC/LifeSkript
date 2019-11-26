@@ -382,7 +382,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
-            <version>1.3.60</version>
+            <version>1.3.61</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
