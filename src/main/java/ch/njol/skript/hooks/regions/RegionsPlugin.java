@@ -46,25 +46,31 @@ public abstract class RegionsPlugin<P extends Plugin> extends Hook<P> {
     public static final List<RegionsPlugin<?>> plugins = new ArrayList<>(2);
 
     static {
-        Variables.yggdrasil.registerClassResolver(new ClassResolver() {
-            @Override
-            @Nullable
-            public String getID(final Class<?> c) {
-                for (final RegionsPlugin<?> p : plugins)
-                    if (p.getRegionClass() == c)
-                        return c.getSimpleName();
-                return null;
-            }
+        Variables.yggdrasil.registerClassResolver(new RegionsPluginClassResolver());
+    }
 
-            @Override
-            @Nullable
-            public Class<?> getClass(final String id) {
-                for (final RegionsPlugin<?> p : plugins)
-                    if (id.equals(p.getRegionClass().getSimpleName()))
-                        return p.getRegionClass();
-                return null;
-            }
-        });
+    private static final class RegionsPluginClassResolver implements ClassResolver {
+        RegionsPluginClassResolver() {
+            /* implicit super call */
+        }
+
+        @Override
+        @Nullable
+        public final String getID(final Class<?> c) {
+            for (final RegionsPlugin<?> p : plugins)
+                if (p.getRegionClass() == c)
+                    return c.getSimpleName();
+            return null;
+        }
+
+        @Override
+        @Nullable
+        public final Class<?> getClass(final String id) {
+            for (final RegionsPlugin<?> p : plugins)
+                if (id.equals(p.getRegionClass().getSimpleName()))
+                    return p.getRegionClass();
+            return null;
+        }
     }
 
     protected RegionsPlugin() throws IOException {
