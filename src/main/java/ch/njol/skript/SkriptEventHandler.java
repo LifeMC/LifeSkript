@@ -50,13 +50,11 @@ import java.util.*;
  */
 public final class SkriptEventHandler {
 
-    public static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", 100L);
+    public static final long moveEventCooldown = Long.getLong("skript.moveEventCooldown", /*100L*/0L);
     public static final EventExecutor ee = new SkriptEventExecutor();
     static final Map<Class<? extends Event>, List<Trigger>> triggers = new HashMap<>(100);
-    static final long eventCooldown = Long.getLong("skript.eventCooldown", 100L);
-    private static final Listener listener = new Listener() {
-        /* empty */
-    };
+    static final long eventCooldown = Long.getLong("skript.eventCooldown", /*100L*/0L);
+    private static final Listener listener = new EmptyListener();
     private static final List<Trigger> selfRegisteredTriggers = new ArrayList<>(100);
     /**
      * Stores which events are currently registered with Bukkit
@@ -282,6 +280,12 @@ public final class SkriptEventHandler {
                 return true;
         }
         return false;
+    }
+
+    private static final class EmptyListener implements Listener {
+        EmptyListener() {
+            /* implicit super call */
+        }
     }
 
     private static final class SkriptEventExecutor implements EventExecutor {

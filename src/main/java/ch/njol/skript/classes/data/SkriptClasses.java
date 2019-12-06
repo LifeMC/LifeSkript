@@ -287,29 +287,29 @@ public final class SkriptClasses {
         Classes.registerClass(new ClassInfo<>(Time.class, "time").user("times?").name("Time").description("A time is a point in a minecraft day's time (i.e. ranges from 0:00 to 23:59), which can vary per world.", "See <a href='#date'>date</a> and <a href='#timespan'>timespan</a> for the other time types of Skript.").usage("<code>##:##</code>", "<code>##[:##][ ]am/pm</code>").examples("at 20:00:", "	time is 8 pm", "	broadcast \"It's %time%\"").since("1.0").defaultExpression(new EventValueExpression<>(Time.class)).parser(new Parser<Time>() {
             @Override
             @Nullable
-            public Time parse(final String s, final ParseContext context) {
+            public final Time parse(final String s, final ParseContext context) {
                 return Time.parse(s);
             }
 
             @Override
-            public String toString(final Time t, final int flags) {
+            public final String toString(final Time t, final int flags) {
                 return t.toString();
             }
 
             @Override
-            public String toVariableNameString(final Time o) {
+            public final String toVariableNameString(final Time o) {
                 return "time:" + o.getTicks();
             }
 
             @Override
-            public String getVariableNamePattern() {
+            public final String getVariableNamePattern() {
                 return "time:\\d+";
             }
         }).serializer(new YggdrasilSerializer<Time>() {
             //						return t.getTicks();
             @Override
             @Nullable
-            public Time deserialize(final String s) {
+            public final Time deserialize(final String s) {
                 try {
                     return new Time(Integer.parseInt(s));
                 } catch (final NumberFormatException e) {

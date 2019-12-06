@@ -165,8 +165,8 @@ public final class FlatFileStorage extends VariablesStorage {
             int lineNum = 0;
             boolean update2_0_beta3 = false;
             while ((line = r.readLine()) != null) {
-                lineNum++;
                 line = line.trim();
+                ++lineNum;
                 if (line.isEmpty() || line.charAt(0) == '#') {
                     if (line.startsWith("# version:")) {
                         try {
@@ -442,7 +442,8 @@ public final class FlatFileStorage extends VariablesStorage {
                         savingVariables = false;
 
                         savingLoggerThread.interrupt(); // In case if not interrupted
-                        Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + '\'' : ""));
+						if (finalSave)
+                            Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + '\'' : ""));
 
                         savedVariables = 0; // Method may be called multiple times
 
