@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: com.github.spotbugs:spotbugs-annotations:4.0.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-20191129.064811-79.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-20191129.064811-79-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-SNAPSHOT-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-20191129.064811-79-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/spotbugs/spotbugs-annotations/4.0.0-SNAPSHOT/spotbugs-annotations-4.0.0-SNAPSHOT-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

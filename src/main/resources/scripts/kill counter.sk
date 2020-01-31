@@ -4,10 +4,10 @@
 
 on death:
 	if attacker is a player:
-	    add 1 to {killcounter::%attacker%::kills_total}
-	    add 1 to {killcounter::%attacker%::kills_session}
-	    if {killcounter::%attacker%::kills_session} is greater than {killcounter::%attacker%::kills_session_max}:
-		    set {killcounter::%attacker%::kills_session_max} to {killcounter::%attacker%::kills_session}
+		add 1 to {killcounter::%attacker%::kills_total}
+		add 1 to {killcounter::%attacker%::kills_session}
+		if {killcounter::%attacker%::kills_session} is greater than {killcounter::%attacker%::kills_session_max}:
+			set {killcounter::%attacker%::kills_session_max} to {killcounter::%attacker%::kills_session}
 
 on death of player:
 	delete {killcounter::%player%::kills_session}

@@ -81,11 +81,6 @@
             <url>https://jcenter.bintray.com/</url>
         </repository>
         <repository>
-            <id>caseif-repo</id>
-            <name>Backup Bukkit Repository</name>
-            <url>https://repo.caseif.net/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>jitpack.io</id>
             <name>JitPack Repository</name>
             <url>https://jitpack.io/</url>
@@ -99,21 +94,6 @@
             <id>sk89q-repo</id>
             <name>sk89q's Repository</name>
             <url>https://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
-            <id>techcable-repo</id>
-            <name>Backup Bukkit Repository</name>
-            <url>https://repo.techcable.net/content/repositories/public/</url>
-        </repository>
-        <repository>
-            <id>md_5-snapshots</id>
-            <name>md_5's Snapshot Repository</name>
-            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>md_5-releases</id>
-            <name>md_5's Release Repository</name>
-            <url>https://repo.md-5.net/content/repositories/releases/</url>
         </repository>
         <repository>
             <id>spigot-releases</id>
@@ -144,11 +124,6 @@
             <url>https://jcenter.bintray.com/</url>
         </pluginRepository>
         <pluginRepository>
-            <id>caseif-repo</id>
-            <name>Backup Bukkit Repository</name>
-            <url>https://repo.caseif.net/content/groups/public/</url>
-        </pluginRepository>
-        <pluginRepository>
             <id>jitpack.io</id>
             <name>JitPack Repository</name>
             <url>https://jitpack.io/</url>
@@ -162,21 +137,6 @@
             <id>sk89q-repo</id>
             <name>sk89q's Repository</name>
             <url>https://maven.sk89q.com/repo/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>techcable-repo</id>
-            <name>Backup Bukkit Repository</name>
-            <url>https://repo.techcable.net/content/repositories/public/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>md_5-snapshots</id>
-            <name>md_5's Snapshot Repository</name>
-            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>md_5-releases</id>
-            <name>md_5's Release Repository</name>
-            <url>https://repo.md-5.net/content/repositories/releases/</url>
         </pluginRepository>
         <pluginRepository>
             <id>tudelft-repository</id>
