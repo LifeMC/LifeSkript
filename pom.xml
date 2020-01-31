@@ -105,6 +105,10 @@
             <name>Spigot Snapshots Repository</name>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>md_5-snapshots</id>
+            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -153,6 +157,10 @@
             <name>Spigot Snapshots Repository</name>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </pluginRepository>
+        <repository>
+            <id>md_5-snapshots</id>
+            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
+        </repository>
     </pluginRepositories>
 
     <dependencies>
@@ -291,7 +299,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.0.0-RC1</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
