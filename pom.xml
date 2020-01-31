@@ -157,10 +157,10 @@
             <name>Spigot Snapshots Repository</name>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </pluginRepository>
-        <repository>
+        <pluginRepository>
             <id>md_5-snapshots</id>
             <url>https://repo.md-5.net/content/repositories/snapshots/</url>
-        </repository>
+        </pluginRepository>
     </pluginRepositories>
 
     <dependencies>
