@@ -54,6 +54,7 @@ public final class InventorySlot extends Slot {
 
     @Override
     @Nullable
+    @SuppressWarnings({"null", "unused"})
     public ItemStack getItem() {
 		if (index == -999) // Non-existent slot, e.g. Outside GUI 
 			return null;

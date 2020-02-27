@@ -37,6 +37,7 @@ import ch.njol.skript.localization.Language;
 import ch.njol.skript.log.ParseLogHandler;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.EmptyArrays;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.skript.util.Slot;
 import ch.njol.skript.util.StringMode;
 import ch.njol.skript.variables.DatabaseStorage;
