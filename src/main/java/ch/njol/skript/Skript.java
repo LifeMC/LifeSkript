@@ -495,6 +495,16 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
     }
 
     /**
+     * Returns the name of this Skript implementation/fork.
+     * @return The name of this Skript implementation/fork.
+     * @since 2.2.18
+     * @throws NoSuchMethodError If this called in an incompatible fork/version.
+     */
+    public static final String getImplementationName() throws NoSuchMethodError {
+        return "LifeSkript"; // LifeSkript > Skript
+    }
+
+    /**
      * Gets the latest version of the Skript. It only
      * returns the latest version of the <b>this implementation of Skript.</b>
      * <p>
@@ -504,8 +514,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * Also, this method does not throw any exceptions and may return null when
      * web server is down or there is no internet connection.
      * <p>
-     * This method must NOT be called from main server thread, becuase it makes
-     * blocking web connection. If using outside of Bukkit, it don't cares.
+     * This method must NOT be called from main server thread, because it makes
+     * blocking web connection. If using outside of Bukkit, it doesn't care.
      * <p>
      * Currently loading of Skript class outside of Bukkit already causes
      * classpath errors, so be familiar.
@@ -528,8 +538,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * Also, this method does not throw any exceptions and may return null when
      * web server is down or there is no internet connection.
      * <p>
-     * This method must NOT be called from main server thread, becuase it makes
-     * blocking web connection. If using outside of Bukkit, it don't cares.
+     * This method must NOT be called from main server thread, because it makes
+     * blocking web connection. If using outside of Bukkit, it doesn't care.
      * <p>
      * Currently loading of Skript class outside of Bukkit already causes
      * classpath errors, so be familiar.
@@ -553,8 +563,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
      * Also, this method does not throw any exceptions and may return null when
      * web server is down or there is no internet connection.
      * <p>
-     * This method must NOT be called from main server thread, becuase it makes
-     * blocking web connection. If using outside of Bukkit, it don't cares.
+     * This method must NOT be called from main server thread, because it makes
+     * blocking web connection. If using outside of Bukkit, it doesn't care.
      * <p>
      * Currently loading of Skript class outside of Bukkit already causes
      * classpath errors, so be familiar.
@@ -2096,6 +2106,57 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         return super.getFile();
     }
 
+    /**
+     * Gets a global Skript variable with the given name. It must be the
+     * exact name, i.e no expressions allowed.<br /><br />
+     *
+     * Example code:<br />
+     * <pre>{@code
+     * // Assuming e is a PlayerEvent
+     * int points = Skript.getGlobalVariable("points::" + e.getPlayer().getName());
+     * }</pre>
+     * The above example code gets the variable {points::%player%} in the Skript
+     * database.<br /><br />
+     *
+     * <strong>Do not modify the returned value!</strong>
+     *
+     * @param name The exact name of the variable, i.e no expressions are allowed.
+     * @return an Object for a normal Variable or a Map for a list variable, or null if the variable is not set.
+     *
+     * @throws ClassCastException If the variable is not on the requested type
+     * @see Variables#getVariable(String, Event, boolean)
+     */
+    @Nullable
+    public static final <T> T getGlobalVariable(final String name) {
+        return (T) Variables.getVariable(name, null, false);
+    }
+
+    /**
+     * Gets a local Skript variable with the given name in the given event. It must be the
+     * exact name, i.e no expressions allowed.<br /><br />
+     *
+     * Example code:<br />
+     * <pre>{@code
+     * // Assuming e is a PlayerEvent
+     * int points = Skript.getLocalVariable("points::" + e.getPlayer().getName(), e);
+     * }</pre>
+     * The above example code gets the variable {_points::%player%} in the Skript
+     * database.<br /><br />
+     *
+     * <strong>Do not modify the returned value!</strong>
+     *
+     * @param name The exact name of the variable, i.e no expressions are allowed.
+     * @return an Object for a normal Variable or a Map for a list variable, or null if the variable is not set.
+     *
+     * @throws ClassCastException If the variable is not on the requested type
+     * @see Variables#getVariable(String, Event, boolean)
+     */
+    @Nullable
+    public static final <T> T getLocalVariable(final String name,
+                                               final Event e) {
+        return (T) Variables.getVariable(name, e, true);
+    }
+
     @Override
     public final void onLoad() {
         try {
@@ -2370,7 +2431,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                             final String resp = WebUtils.getResponse("https://raw.githubusercontent.com/TheDGOfficial/SharpSK/master/src/main/resources/plugin.yml", false);
 
                             if (resp != null) { // The error is already printed if we're on debug verbosity
-                                for (final String line : resp.split(LineSeparators.UNIX_STR)) {
+                                for (final String line : resp.split(LineSeparators.UNIX)) {
                                     if (line.startsWith("version: ")) {
                                         sharpSkversion = line.replace("version: ", "").trim();
                                     }
@@ -2572,10 +2633,10 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                                     String line;
 
                                     while ((line = br.readLine()) != null) {
-                                        builder.append(line).append(LineSeparators.UNIX);
+                                        builder.append(line.trim()).append(LineSeparators.UNIX);
                                     }
 
-                                    contents = builder.toString().replace(LineSeparators.UNIX_STR + LineSeparators.UNIX, LineSeparators.UNIX_STR);
+                                    contents = builder.toString().replace(LineSeparators.UNIX + LineSeparators.UNIX, LineSeparators.UNIX);
                                 } catch (final SecurityException ignored) {
                                     continue outer;
                                 }
@@ -3593,7 +3654,8 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                 final Thread thread = entry.getKey();
                 final Integer oldPriority = entry.getValue();
 
-                thread.setPriority(oldPriority);
+				if (oldPriority != thread.getPriority())
+					thread.setPriority(oldPriority);
             }
 
             if (Skript.logHigh())

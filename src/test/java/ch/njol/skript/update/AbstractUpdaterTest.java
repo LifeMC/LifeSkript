@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 final class AbstractUpdaterTest {
 
     private static final Matcher V_2_2_18 = Pattern.compile("2.2.18", Pattern.LITERAL).matcher("");
-    private static final Pattern UNIX_NEW_LINE = Pattern.compile(LineSeparators.UNIX_STR, Pattern.LITERAL);
+    private static final Pattern UNIX_NEW_LINE = Pattern.compile(LineSeparators.UNIX, Pattern.LITERAL);
 
     @Test
     final void testReplaceVersion() {

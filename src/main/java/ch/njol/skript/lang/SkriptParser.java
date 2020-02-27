@@ -121,7 +121,7 @@ public final class SkriptParser {
      *
      * @param expr    The expression to parse
      * @param flags   Some parse flags ({@link #PARSE_EXPRESSIONS}, {@link #PARSE_LITERALS})
-     * @param context The parse context
+     * @param context The parse context.
      */
     @SuppressWarnings("null")
     public SkriptParser(final String expr, final int flags, final ParseContext context) {
@@ -371,9 +371,9 @@ public final class SkriptParser {
      * @param start          This must not be the index of the opening bracket!
      * @param isGroup        Whatever <tt>start</tt> is assumed to be in a group (will print an error if this is not the case, otherwise it returns <tt>pattern.length()</tt>)
      * @return The index of the next bracket
-     * @throws MalformedPatternException If the group is not closed
+     * @throws MalformedPatternException If the group is not closed.
      */
-    static final int nextBracket(final String pattern, final char closingBracket, final char openingBracket, final int start, final boolean isGroup) throws MalformedPatternException {
+    private static final int nextBracket(final String pattern, final char closingBracket, final char openingBracket, final int start, final boolean isGroup) throws MalformedPatternException {
         int n = 0;
         for (int i = start; i < pattern.length(); ++i) {
             if (pattern.charAt(i) == '\\') {
@@ -418,7 +418,7 @@ public final class SkriptParser {
      *
      * @param pattern
      * @param c       The character to search for
-     * @return The number of unescaped occurrences of the given character
+     * @return The number of unescaped occurrences of the given character.
      */
     static final int countUnescaped(final String pattern, final char c) {
         return countUnescaped(pattern, c, 0, pattern.length());
@@ -431,7 +431,7 @@ public final class SkriptParser {
      * @param start
      * @param end
      * @param c       The character to search for
-     * @return The number of unescaped occurrences of the given character
+     * @return The number of unescaped occurrences of the given character.
      */
     private static final int countUnescaped(final String pattern, final char c, final int start, final int end) {
         assert start >= 0 && start <= end && end <= pattern.length() : start + ", " + end + "; " + pattern.length();
@@ -452,7 +452,7 @@ public final class SkriptParser {
      *
      * @param s
      * @param from Index after the starting quote
-     * @return Index of the end quote
+     * @return Index of the end quote.
      */
     private static final int nextQuote(final CharSequence s, final int from) {
         for (int i = from; i < s.length(); ++i) {
@@ -578,7 +578,7 @@ public final class SkriptParser {
      * Validates a user-defined pattern (used in {@link ch.njol.skript.expressions.ExprParse}).
      *
      * @param pattern
-     * @return The pattern with %codenames% and a boolean array that contains whether the expressions are plural or not
+     * @return The pattern with %codenames%, and a boolean array that contains whether the expressions are plural or not.
      */
     @SuppressWarnings("null")
     @Nullable
@@ -965,10 +965,6 @@ public final class SkriptParser {
                             log.printLog();
                             return var;
                         }
-                        if (log.hasError()) {
-                            log.printError();
-                            return null;
-                        }
                     } else { // Mixed plurals/singulars
                         @SuppressWarnings("unchecked") final Variable<?> var = parseVariable(parser.expr, types);
                         if (var != null) { // Parsing succeeded, we have a variable
@@ -988,7 +984,7 @@ public final class SkriptParser {
                             // TODO:
                             // despite that, we should probably implement a runtime check for this somewhere
                             // before executing the syntax element (perhaps even exceptionally with a console warning,
-                            // otherwise users may have some hard time debugging the plurality issues) - currently an
+                            // otherwise, users may have some hard time debugging the plurality issues) - currently an
                             // improper use in a script would result in an exception
                             if ((vi.classes.length == 1 && !vi.isPlural[0] || Booleans.contains(vi.isPlural, true))
                                     && !var.isSingle()) {
@@ -1002,10 +998,10 @@ public final class SkriptParser {
                             log.printLog();
                             return var;
                         }
-                        if (log.hasError()) {
-                            log.printError();
-                            return null;
-                        }
+                    }
+                    if (log.hasError()) {
+                        log.printError();
+                        return null;
                     }
 
                     // If it wasn't variable, do same for function call
@@ -1191,7 +1187,7 @@ public final class SkriptParser {
                         if (subExpr.charAt(0) == '(' && subExpr.charAt(subExpr.length() - 1) == ')' && next(subExpr, 0, parser.context) == subExpr.length())
                             t = parseExpression0(new SkriptParser(parser, subExpr), types); // only parse as possible expression list if its surrounded by brackets
                         else
-                            t = parseSingleExpr0(new SkriptParser(parser, subExpr), a == 1, log.getError(), types); // otherwise parse as a single expression only
+                            t = parseSingleExpr0(new SkriptParser(parser, subExpr), a == 1, log.getError(), types); // otherwise, parse as a single expression only
                         if (t != null) {
                             isLiteralList &= t instanceof Literal;
                             ts.add(t);
@@ -1364,9 +1360,9 @@ public final class SkriptParser {
                         final Expression<?> t;
 
                         if (subExpr.charAt(0) == '(' && subExpr.charAt(subExpr.length() - 1) == ')' && next(subExpr, 0, parser.context) == subExpr.length())
-                            t = new SkriptParser(parser, subExpr).parseExpression(vi); // only parse as possible expression list if its surrounded by brackets
+                            t = parseExpression0(new SkriptParser(parser, subExpr), vi); // only parse as possible expression list if its surrounded by brackets
                         else
-                            t = new SkriptParser(parser, subExpr).parseSingleExpr(a == 1, log.getError(), vi); // otherwise parse as a single expression only
+                            t = parseSingleExpr0(new SkriptParser(parser, subExpr), a == 1, log.getError(), vi); // otherwise, parse as a single expression only
                         if (t != null) {
                             isLiteralList &= t instanceof Literal;
                             ts.add(t);
@@ -1794,11 +1790,6 @@ public final class SkriptParser {
         } finally {
             log.stop();
         }
-    }
-
-    @Nullable
-    private final Expression<?> parseSingleExpr(final boolean allowUnparsedLiteral, @Nullable final LogEntry error, final ExprInfo vi) {
-        return parseSingleExpr0(this, allowUnparsedLiteral, error, vi);
     }
 
     private final SkriptParser suppressMissingAndOrWarnings() {

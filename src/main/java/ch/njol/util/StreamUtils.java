@@ -82,7 +82,7 @@ public final class StreamUtils {
      * @see StreamUtils#readString(InputStream, String)
      */
     public static final String readString(final InputStream is) throws IOException {
-        return readString(is, LineSeparators.UNIX_STR);
+        return readString(is, LineSeparators.UNIX);
     }
 
     /**

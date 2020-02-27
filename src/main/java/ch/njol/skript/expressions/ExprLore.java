@@ -170,10 +170,10 @@ public final class ExprLore extends SimpleExpression<String> {
                 case REMOVE_ALL:
                     assert delta != null;
                     if (SkriptConfig.caseSensitive.value()) {
-                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? StringUtils.join(lore, LineSeparators.UNIX_STR).replaceFirst(Pattern.quote((String) delta[0]), "") : StringUtils.join(lore, LineSeparators.UNIX_STR).replace((CharSequence) delta[0], "")).split(LineSeparators.UNIX_STR));
+                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? StringUtils.join(lore, LineSeparators.UNIX).replaceFirst(Pattern.quote((String) delta[0]), "") : StringUtils.join(lore, LineSeparators.UNIX).replace((CharSequence) delta[0], "")).split(LineSeparators.UNIX));
                     } else {
-                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, LineSeparators.UNIX_STR));
-                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll("")).split(LineSeparators.UNIX_STR));
+                        final Matcher m = PatternCache.get(Pattern.quote((String) delta[0]), Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(StringUtils.join(lore, LineSeparators.UNIX));
+                        lore = Arrays.asList((mode == ChangeMode.REMOVE ? m.replaceFirst("") : m.replaceAll("")).split(LineSeparators.UNIX));
                     }
                     break;
                 case RESET:

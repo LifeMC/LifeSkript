@@ -66,8 +66,6 @@ fun start(name: String): Any? {
         else
             startTimingMethod!!.invoke(timing)
     }
-    @Suppress("SENSELESS_COMPARISON")
-    assert(timing != null)
     return timing
 }
 
@@ -77,11 +75,12 @@ fun stop(@Nullable timing: Any?) {
     if (!enabled())
         return
     if (timing is Timing) {
-        if (syncMethods)
-            timing.stopTimingIfSync()
-        else if (Bukkit.isPrimaryThread())
+	    if (syncMethods)
+		    timing.stopTimingIfSync()
+		else if (Bukkit.isPrimaryThread())
             timing.stopTiming()
-    }
+    } else
+        throw IllegalArgumentException(timing.javaClass.canonicalName)
 }
 
 fun enabled(): Boolean {
@@ -98,7 +97,7 @@ fun setEnabled(flag: Boolean) {
     if (syncMethods || startTimingVoid || startTimingMethod != null)
         enabled = true
     else {
-        Skript.warning("Can't enable timings on an unsupported environment!")
+        Skript.warning("Can't enable timings on an unsupported environment")
         enabled = false // Just to make sure
     }
 }

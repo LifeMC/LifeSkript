@@ -82,14 +82,21 @@ public final class Classes {
         throw new UnsupportedOperationException();
     }
 
+    private static final boolean enableSoftErrors = PropertyManager.getBoolean("skript.enableSoftErrors");
+
     /**
      * @param info info about the class to register
      */
     public static final <T> void registerClass(final ClassInfo<T> info) {
         Skript.checkAcceptRegistrations();
         if (classInfosByCodeName.containsKey(info.getCodeName()))
-            throw new IllegalArgumentException("Can't register " + info.getC().getName() + " with the code name " + info.getCodeName() + " because that name is already used by " + classInfosByCodeName.get(info.getCodeName()));
-        if (exactClassInfos.containsKey(info.getC()))
+			if (Skript.testing() && Skript.debug() || enableSoftErrors)
+				throw new IllegalArgumentException("Can't register " + info.getC().getName() + " with the code name " + info.getCodeName() + " because that name is already used by " + classInfosByCodeName.get(info.getCodeName()) + '(' + classInfosByCodeName.get(info.getCodeName()).getC().getName() + ')');
+			else if (Skript.logNormal()) { // Do not throw a hard error for compatibility reasons, for example when another add-on or Skript adds some class that exists in another
+				Skript.warning(info.getC().getName() + " with the code name " + info.getCodeName() + " is already used by " + classInfosByCodeName.get(info.getCodeName()) + '(' + classInfosByCodeName.get(info.getCodeName()).getC().getName() + ')');
+				return;
+			}
+		if (exactClassInfos.containsKey(info.getC()))
             throw new IllegalArgumentException("Can't register the class info " + info.getCodeName() + " because the class " + info.getC().getName() + " is already registered");
         if (info.getCodeName().length() > DatabaseStorage.MAX_CLASS_CODENAME_LENGTH)
             throw new IllegalArgumentException("The codename '" + info.getCodeName() + "' is too long to be saved in a database, the maximum length allowed is " + DatabaseStorage.MAX_CLASS_CODENAME_LENGTH);
@@ -674,6 +681,10 @@ public final class Classes {
     }
 
     public static final String toString(final Object[] os, final boolean and, final StringMode mode) {
+		if (os.length == 0)
+            return toString(null);
+        if (os.length == 1)
+            return toString(os[0], mode, 0, null, false);
         return toString(os, and, null, mode, 0);
     }
 

@@ -75,7 +75,7 @@ public class ConfigurationSerializer<T extends ConfigurationSerializable> extend
     public static final <T extends ConfigurationSerializable> T deserializeCSOld(final String s, final Class<T> c) {
         final YamlConfiguration y = new YamlConfiguration();
         try {
-            y.loadFromString(BYTE_ORDER_MARK_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX_STR)));
+            y.loadFromString(BYTE_ORDER_MARK_MATCHER.reset(s).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX)));
         } catch (final InvalidConfigurationException e) {
             return null;
         }

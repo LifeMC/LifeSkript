@@ -28,36 +28,57 @@ package ch.njol.util;
  * <p>
  * But they can be used in things like {@link java.util.regex.Pattern#split(CharSequence)} where
  * a hard-coded one is required to make algorithm work same on all machines.
+ *
+ * @since 2.2.18
  */
 public final class LineSeparators {
 
     /**
-     * UNIX style line ending, the '\n'<br />
-     * If you need string use {@link LineSeparators#UNIX_STR}
+     * UNIX style line ending, the "\n"<br />
+     * If you need char use {@link LineSeparators#UNIX_CHAR}
      */
-    public static final char UNIX = '\n';
-    public static final String UNIX_STR = Character.toString(UNIX);
+    public static final String UNIX = "\n";
+    public static final char UNIX_CHAR = '\n';
 
     /**
-     * MAC style line ending, the '\r'<br />
-     * If you need string use {@link LineSeparators#MAC_STR}
+     * MAC style line ending, the "\r"<br />
+     * If you need char use {@link LineSeparators#MAC_CHAR}
      */
-    public static final char MAC = '\r';
-    public static final String MAC_STR = Character.toString(MAC);
+    public static final String MAC = "\r";
+    public static final char MAC_CHAR = '\r';
 
     /**
-     * DOS (also Windows) style line ending, the "\r\n" (MAC_STR + UNIX_STR)<br />
+     * DOS (also Windows) style line ending, the "\r\n" (MAC + UNIX)<br />
      * This does not have a char variant since it is a combine of multiple separators.
      */
-    public static final String DOS = /*MAC_STR + UNIX_STR*/"\r\n"; // Not first one to make it constant
+    public static final String DOS = /*MAC + UNIX*/"\r\n"; // Not first one to make it constant
     public static final String SYSTEM = System.lineSeparator();
 
     /**
      * Though not an actual line feed/new line character, this a special
      * meaning of representing combined spaces with tab key
      */
-    public static final char TAB = '\t';
-    public static final String TAB_STR = Character.toString(TAB);
+    public static final String TAB = "\t";
+    public static final char TAB_CHAR = '\t';
+
+    /**
+     * Checks the given function (condition) with the all line endings.
+     * Returns true if any of them matches, false otherwise.
+     *
+     * @param checker The checker function/condition to use.
+     * @return True if any of them matches, false otherwise.
+     */
+    public static final boolean check(final LineSeparatorChecker checker) {
+        return checker.check(UNIX) || checker.check(MAC) || checker.check(DOS);
+    }
+
+    /**
+     * @see LineSeparators#check(LineSeparatorChecker)
+     */
+    @FunctionalInterface
+    public interface LineSeparatorChecker {
+        boolean check(final String separator);
+    }
 
     private LineSeparators() {
         throw new UnsupportedOperationException("Static class");

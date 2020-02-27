@@ -102,6 +102,7 @@ public final class EvtExperienceSpawn extends SelfRegisteringSkriptEvent {
             Bukkit.getPluginManager().registerEvent(c, new Listener() {
                 /* empty */
             }, SkriptConfig.defaultEventPriority.value(), executor, Skript.getInstance(), true);
+		registeredExecutor = true;
     }
 
     @Override

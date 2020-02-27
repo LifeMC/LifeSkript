@@ -36,7 +36,7 @@ final class RegexMessageTest {
     @Test
     void testRegexMessage() {
 
-        final String[] tests = {"", "!", "a", "()", "^$", "$^", LineSeparators.UNIX_STR, LineSeparators.DOS};
+        final String[] tests = {"", "!", "a", "()", "^$", "$^", LineSeparators.UNIX, LineSeparators.DOS};
 
         for (final String test : tests)
             assertTrue(!RegexMessage.nop_matcher.reset(test).find() && !RegexMessage.nop_matcher.reset(test).matches(), test);

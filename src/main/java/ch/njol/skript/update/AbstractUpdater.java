@@ -65,14 +65,14 @@ public abstract class AbstractUpdater implements Updater {
     private static final Pattern VERSION_PATTERN = Pattern.compile("version: ");
     private static final Pattern ALTERNATIVE_VERSION_PATTERN = Pattern.compile("version=");
 
-    private static final Pattern UNIX_NEW_LINE = Pattern.compile(LineSeparators.UNIX_STR, Pattern.LITERAL);
+    private static final Pattern UNIX_NEW_LINE = Pattern.compile(LineSeparators.UNIX, Pattern.LITERAL);
     private static final Matcher UNIX_NEW_LINE_MATCHER = UNIX_NEW_LINE.matcher("");
 
     private static final Matcher EXPR_VERSION_PATTERN = Pattern.compile("%version%", Pattern.LITERAL).matcher("");
     private static final Matcher SINGLE_COMMENT_PATTERN_MATCHER = Pattern.compile("#", Pattern.LITERAL).matcher("");
 
     private static final Matcher WINDOWS_NEW_LINE = Pattern.compile(LineSeparators.DOS, Pattern.LITERAL).matcher("");
-    private static final Matcher MAC_NEW_LINE = Pattern.compile(LineSeparators.MAC_STR, Pattern.LITERAL).matcher("");
+    private static final Matcher MAC_NEW_LINE = Pattern.compile(LineSeparators.MAC, Pattern.LITERAL).matcher("");
 
     private static final Matcher UNSPACED_VERSION_PATTERN = Pattern.compile("version:", Pattern.LITERAL).matcher("");
     private static final Matcher SPACED_VERSION_PATTERN = Pattern.compile("version = ", Pattern.LITERAL).matcher("");
@@ -167,7 +167,7 @@ public abstract class AbstractUpdater implements Updater {
 
     private static final Version versionFromPattern(final Pattern pattern,
                                                     final CharSequence versionText) {
-        return new Version(SINGLE_QUOTE_PATTERN.reset(DOUBLE_QUOTE_PATTERN.reset(MAC_NEW_LINE.reset(WINDOWS_NEW_LINE.reset(pattern.split(versionText)[1]).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX_STR))).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX_STR)).split(LineSeparators.UNIX_STR)[0]).replaceAll(EMPTY_STRING_REGEX_READY)).replaceAll(EMPTY_STRING_REGEX_READY).trim());
+        return new Version(SINGLE_QUOTE_PATTERN.reset(DOUBLE_QUOTE_PATTERN.reset(MAC_NEW_LINE.reset(WINDOWS_NEW_LINE.reset(pattern.split(versionText)[1]).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX))).replaceAll(Matcher.quoteReplacement(LineSeparators.UNIX)).split(LineSeparators.UNIX)[0]).replaceAll(EMPTY_STRING_REGEX_READY)).replaceAll(EMPTY_STRING_REGEX_READY).trim());
     }
 
     public static final String replaceVersionInDownloadUrl(final Versionable versionable,

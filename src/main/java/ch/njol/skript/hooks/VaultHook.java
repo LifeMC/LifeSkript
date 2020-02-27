@@ -56,7 +56,7 @@ public final class VaultHook extends Hook<Vault> {
     }
 
     public VaultHook() throws IOException {
-    }
+	}
 
     @SuppressWarnings("deprecation")
     public static final double getBalance(final OfflinePlayer player) {
