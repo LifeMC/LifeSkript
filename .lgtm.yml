@@ -1,6 +1,5 @@
 queries:
   - include: "*"
-  - exclude: java/local-variable-is-never-read # Causes unnecessary warnings for variables used in lambdas
 extraction:
   java:
     index:

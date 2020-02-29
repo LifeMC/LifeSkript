@@ -17,7 +17,7 @@ on break of bookshelf:
 	# You are overriding the event.
 	# So you must do minecraft's jobs yourself.
 	cancel event
-	# Set block  to air, like minecraft.
+	# Set block to air, like minecraft.
 	set block to air
 	# Drop the broken block. (bookshelf)
 	drop event-block

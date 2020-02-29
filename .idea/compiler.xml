@@ -19,7 +19,7 @@
   </component>
   <component name="EclipseCompilerSettings">
     <option name="PROCEED_ON_ERROR" value="false" />
-    <option name="ECJ_TOOL_PATH" value="$MAVEN_REPOSITORY$/org/eclipse/jdt/ecj/3.19.0/ecj-3.19.0.jar" />
+    <option name="ECJ_TOOL_PATH" value="$MAVEN_REPOSITORY$/org/eclipse/jdt/ecj/3.20.0/ecj-3.20.0.jar" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Skript" options="-encoding UTF-8 -O -Xpkginfo:always" />
     </option>
