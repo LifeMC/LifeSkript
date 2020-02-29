@@ -104,6 +104,7 @@ public final class ScriptLoader {
     private static final Matcher FUN_PATTERN_MATCHER = Pattern.compile("fun").matcher("");
     private static final Matcher OR_PATTERN_MATCHER = Pattern.compile("\" or \"", Pattern.LITERAL).matcher("");
     private static final String commaSpace = Matcher.quoteReplacement("\", \"");
+    private static final Pattern PROJECT_VERSION_PATTERN = Pattern.compile("${project.version}", Pattern.LITERAL);
     @Nullable
     public static Config currentScript;
     public static Kleenean hasDelayBefore = Kleenean.FALSE;
@@ -543,7 +544,7 @@ public final class ScriptLoader {
                                 continue;
                             }
                             final String key = n.getKey();
-                            final String value = ((EntryNode) n).getValue();
+                            final String value = PROJECT_VERSION_PATTERN.matcher(Node.splitLine(((EntryNode) n).getValue()).getFirst()).replaceAll(Matcher.quoteReplacement(Skript.getVersion().toString()));
 
                             try {
                                 final AtomicReference<Version> _scriptVersion = new AtomicReference<>(scriptVersion);

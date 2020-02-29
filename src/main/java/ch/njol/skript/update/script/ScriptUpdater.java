@@ -23,6 +23,7 @@
 package ch.njol.skript.update.script;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.config.Node;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.update.*;
@@ -114,7 +115,7 @@ public final class ScriptUpdater extends AbstractUpdater {
     public CompletableFuture<Release> getLatestRelease() {
         state = UpdaterState.CHECKING;
         return CompletableFuture.supplyAsync(() -> {
-            final Version latestVersion = getVersionFromUrl(versionCheckUrl);
+            final Version latestVersion = new Version(Node.splitLine(getVersionFromUrl(versionCheckUrl).toString()).getFirst());
             state = UpdaterState.PENDING_DOWNLOAD;
 
             return new ScriptRelease(script, downloadUrl, ScriptUpdater.this, latestVersion, ScriptUpdater.this.channel, ReleaseStatus.LATEST, false);
