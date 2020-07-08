@@ -284,7 +284,7 @@
         <dependency>
             <groupId>org.eclipse.jdt</groupId>
             <artifactId>org.eclipse.jdt.annotation</artifactId>
-            <version>1.1.400</version>
+            <version>1.1.500</version>
             <!-- Only annotations - but anyway include it. -->
             <scope>compile</scope>
             <exclusions>
