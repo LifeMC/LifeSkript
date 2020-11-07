@@ -604,9 +604,9 @@
 
                         <javacOption>-source</javacOption>
                         <javacOption>8</javacOption>
-						
-						<javacOption>-target</javacOption>
-						<javacOption>8</javacOption>
+
+                        <javacOption>-target</javacOption>
+                        <javacOption>8</javacOption>
                     </javacOptions>
                     <!-- Strictly define language and api version. -->
                     <languageVersion>1.4</languageVersion>
@@ -625,7 +625,7 @@
                     <skipMain>false</skipMain>
                     <skip>false</skip>
                     <source>8</source>
-					<target>8</target>
+                    <target>8</target>
                     <fork>true</fork>
                     <optimize>true</optimize>
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
