@@ -16,7 +16,7 @@
  *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- *   Copyright (C) 2011 Peter Güttinger and contributors
+ *   Copyright 2011-2019 Peter Güttinger and contributors
  *
  */
 
