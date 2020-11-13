@@ -201,6 +201,6 @@ public final class DefaultConverters {
         Converters.registerConverter(Enchantment.class, EnchantmentType.class, e -> new EnchantmentType(e, -1));
 
         // BlockCommandSender - Block
-		Converters.registerConverter(BlockCommandSender.class, Block.class, BlockCommandSender::getBlock);
+        Converters.registerConverter(BlockCommandSender.class, Block.class, BlockCommandSender::getBlock);
     }
 }

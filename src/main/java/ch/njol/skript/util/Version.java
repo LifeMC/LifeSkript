@@ -94,12 +94,12 @@ public final class Version implements Serializable, Comparable<Version> {
      * Constructs a new {@link Version} object
      * by parsing the given version.
      *
-     * @param version The version string to parse.
+     * @param version  The version string to parse.
      * @param failSafe Pass true to construct a new {@link Version} object
      *                 with the numbers in the input string even when the passed version string
      *                 contains letters, i.e a malformed version string that would normally throw {@link IllegalArgumentException}.
      * @throws IllegalArgumentException If the version is not a valid version string or the parsing
-     * fails even with the fail safe, i.e the input does not contain any numbers.
+     *                                  fails even with the fail safe, i.e the input does not contain any numbers.
      */
     public Version(String version, final boolean failSafe) throws IllegalArgumentException {
         final String finalVersion = version;

@@ -682,7 +682,7 @@ public final class Classes {
     }
 
     public static final String toString(final Object[] os, final boolean and, final StringMode mode) {
-		if (os.length == 0)
+        if (os.length == 0)
             return toString(null);
         if (os.length == 1)
             return toString(os[0], mode, 0, null, false);

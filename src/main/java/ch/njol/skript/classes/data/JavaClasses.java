@@ -35,6 +35,7 @@ import ch.njol.skript.lang.util.SimpleLiteral;
 import ch.njol.skript.localization.Message;
 import ch.njol.skript.localization.RegexMessage;
 import ch.njol.skript.registrations.Classes;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.skript.util.Utils;
 import ch.njol.util.StringUtils;
 import ch.njol.yggdrasil.Fields;
@@ -50,7 +51,7 @@ import java.util.regex.Pattern;
 public final class JavaClasses {
 
     public static final int VARIABLENAME_NUMBERACCURACY = 8;
-    public static final boolean DISABLE_BYTE_SHORT_FLOAT = Boolean.getBoolean("skript.disableByteShortFloat");
+    public static final boolean DISABLE_BYTE_SHORT_FLOAT = PropertyManager.getBoolean("skript.disableByteShortFloat");
     public static final Pattern QUOTE_PATTERN = Pattern.compile("\"\"", Pattern.LITERAL);
     public static final Matcher QUOTE_PATTERN_MATCHER = QUOTE_PATTERN.matcher("");
 
@@ -144,7 +145,7 @@ public final class JavaClasses {
                     }
                 }).math(Number.class, new NumberArithmetic()));
 
-        Classes.registerClass(new ClassInfo<>(Long.class, "long").user("int(eger)?s?").name(ClassInfo.NO_DOC).before("integer", "short", "byte").defaultExpression(new SimpleLiteral<>((long) 1, true)).parser(new Parser<Long>() {
+        Classes.registerClass(new ClassInfo<>(Long.class, "long").user("int(eger)?s?").name(ClassInfo.NO_DOC).before("integer", "short", "byte").defaultExpression(new SimpleLiteral<>(1L, true)).parser(new Parser<Long>() {
             @Override
             @Nullable
             public Long parse(final String s, final ParseContext context) {

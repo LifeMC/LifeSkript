@@ -31,6 +31,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.util.Direction;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.util.Kleenean;
 import fr.neatmonster.nocheatplus.hooks.NCPExemptionManager;
 import org.bukkit.Bukkit;
@@ -49,7 +50,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Since("1.4.6")
 public final class EffPush extends Effect {
     public static final boolean hasNoCheatPlus = Bukkit.getPluginManager().getPlugin("NoCheatPlus") != null
-            && Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && !Boolean.getBoolean("skript.disableNcpHook");
+            && Skript.classExists("fr.neatmonster.nocheatplus.hooks.NCPExemptionManager") && !PropertyManager.getBoolean("skript.disableNcpHook");
 
     public static boolean hookNotified;
 

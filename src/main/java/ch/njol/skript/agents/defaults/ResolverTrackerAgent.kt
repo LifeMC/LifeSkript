@@ -32,7 +32,6 @@ import ch.njol.skript.agents.events.start.UnresolvedPlayerEvent
 import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
-import java.util.function.Consumer
 
 class ResolverTrackerAgent(
         /**
@@ -61,7 +60,7 @@ class ResolverTrackerAgent(
      */
     override fun registerTracker(): ResolverTrackerAgent {
         assert(agent == null)
-        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+        agent = registerAgent(Skript.getAddonInstance(), { event ->
             when (event) {
                 is UnresolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "An unresolved player is added to queue: " + event.player.name)
                 is ResolvedPlayerEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The unresolved player \"" + event.player.name + "\" is now resolved.")

@@ -33,7 +33,6 @@ import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
 
 class FunctionTrackerAgent(
         /**
@@ -62,7 +61,7 @@ class FunctionTrackerAgent(
      */
     override fun registerTracker(): FunctionTrackerAgent {
         assert(agent == null)
-        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+        agent = registerAgent(Skript.getAddonInstance(), { event ->
             when (event) {
                 is FunctionEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The function \"" + event.function.name + "\" took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
                 is FunctionStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "The function \"" + event.function.name + "\" is running now...")

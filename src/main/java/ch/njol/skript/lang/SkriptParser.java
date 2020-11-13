@@ -99,7 +99,7 @@ public final class SkriptParser {
     private static final Message m_quotes_error = new Message("skript.quotes error");
     private static final Message m_brackets_error = new Message("skript.brackets error");
     private static final HashMap<String, ExprInfo> exprInfoCache = new HashMap<>(300);
-    private static final boolean disableAndOrHack = Boolean.getBoolean("skript.disableAndOrHack");
+    private static final boolean disableAndOrHack = PropertyManager.getBoolean("skript.disableAndOrHack");
     //private static final Map<ImmutablePair<String, String>, ParseResult> parseCache = new HashMap<>(300);
     public final ParseContext context;
     private final String expr;
@@ -833,7 +833,7 @@ public final class SkriptParser {
                 log.clear();
                 if ((parser.flags & PARSE_EXPRESSIONS) != 0) {
                     final Expression<?> e;
-                    if (parser.expr.charAt(0) == '\"' && parser.expr.charAt(parser.expr.length() - 1) == '\"' && parser.expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
+                    if (parser.expr.charAt(0) == '"' && parser.expr.charAt(parser.expr.length() - 1) == '"' && parser.expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                         e = VariableString.newInstance(parser.expr.substring(1, parser.expr.length() - 1));
                     } else {
                         e = SkriptParser.<Expression<?>>parse(parser.expr, (Iterator/*<? extends SyntaxElementInfo<Expression<?>>>*/) Skript.getExpressions(types), null);
@@ -1018,7 +1018,7 @@ public final class SkriptParser {
                 log.clear();
                 if ((parser.flags & PARSE_EXPRESSIONS) != 0) {
                     final Expression<?> e;
-                    if (parser.expr.charAt(0) == '\"' && parser.expr.charAt(parser.expr.length() - 1) == '\"' && parser.expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
+                    if (parser.expr.charAt(0) == '"' && parser.expr.charAt(parser.expr.length() - 1) == '"' && parser.expr.length() != 1 && (types[0] == Object.class || CollectionUtils.contains(types, String.class))) {
                         e = VariableString.newInstance(parser.expr.substring(1, parser.expr.length() - 1));
                     } else {
                         e = SkriptParser.<Expression<?>>parse(parser.expr, (Iterator/*<? extends SyntaxElementInfo<Expression<?>>>*/) Skript.getExpressions(types), null);
@@ -2006,7 +2006,7 @@ public final class SkriptParser {
             if (!Arrays.equals(exprs, that.exprs)) return false;
             if (!regexes.equals(that.regexes)) return false;
 
-            return Objects.equals(expr, that.expr);
+            return expr.equals(that.expr);
         }
 
         @Override

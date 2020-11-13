@@ -44,32 +44,8 @@ final class ScriptConfig {
         return "configuration".equalsIgnoreCase(event);
     }
 
-    enum ConfigParseResult {
-        /**
-         * Everything should be OK, which means no errors
-         * are encountered, but warnings may have been printed.
-         */
-        OK,
-
-        /**
-         * Fatal error or requirements does not met. Abort parsing.
-         */
-        ABORT_PARSING,
-
-        /**
-         * A non-fatal error was printed or invalid input is received,
-         * but it does not prevent the parse of the script, just continue parsing.
-         */
-        CONTINUE,
-
-        /**
-         * Specially handled by the script loader itself, not our work
-         */
-        SPECIAL_LOAD_AFTER,
-    }
-
     static final ConfigParseResult tryParse(final File f, final List<String> duplicateCheckList, final String key,
-                                 final String value, final AtomicReference<Version> scriptVersion, final AtomicReference<Version> currentScriptVersion) throws IOException, IllegalArgumentException {
+                                            final String value, final AtomicReference<Version> scriptVersion, final AtomicReference<Version> currentScriptVersion) throws IOException, IllegalArgumentException {
         if ("source".equalsIgnoreCase(key)) {
             if (duplicateCheckList.contains("source")) {
                 Skript.error("Duplicate source configuration setting");
@@ -175,6 +151,30 @@ final class ScriptConfig {
             Skript.warning("Configuration option \"" + key + "\" is not supported");
         }
         return ConfigParseResult.OK;
+    }
+
+    enum ConfigParseResult {
+        /**
+         * Everything should be OK, which means no errors
+         * are encountered, but warnings may have been printed.
+         */
+        OK,
+
+        /**
+         * Fatal error or requirements does not met. Abort parsing.
+         */
+        ABORT_PARSING,
+
+        /**
+         * A non-fatal error was printed or invalid input is received,
+         * but it does not prevent the parse of the script, just continue parsing.
+         */
+        CONTINUE,
+
+        /**
+         * Specially handled by the script loader itself, not our work
+         */
+        SPECIAL_LOAD_AFTER,
     }
 
 }

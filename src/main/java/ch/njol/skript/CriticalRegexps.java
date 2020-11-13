@@ -27,26 +27,25 @@ import java.util.regex.Pattern;
 
 /**
  * Contains the regexps that affects most of the load time, thus being 'critical'
- *
+ * <p>
  * Note: All fields in this class must be final and does not being used directly,
  * saved to a private static final field instead.
- *
+ * <p>
  * So changing the value via reflection does not affect runtime values.
  */
 public final class CriticalRegexps {
-
-    private CriticalRegexps() {
-        throw new UnsupportedOperationException("Static class");
-    }
 
     /**
      * Affects variable/database load time. Used in {@link ch.njol.skript.variables.FlatFileStorage}
      */
     public static final Pattern CSV = Pattern.compile("(?<=^|,)\\s*?([^\",]*?|\"([^\"]|\"\")*?\")\\s*?(?:,|$)");
-
     /**
      * Affects config/script load time. Used in {@link ch.njol.skript.config.SectionNode}
      */
     public static final Matcher COMMENT_AND_WHITESPACE = Pattern.compile("(?:[^#]|##)*?#-#(?:\\s.*?)?").matcher("");
+
+    private CriticalRegexps() {
+        throw new UnsupportedOperationException("Static class");
+    }
 
 }

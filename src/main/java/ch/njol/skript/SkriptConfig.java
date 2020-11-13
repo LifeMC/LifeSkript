@@ -31,6 +31,7 @@ import ch.njol.skript.log.Verbosity;
 import ch.njol.skript.timings.SkriptTimings;
 import ch.njol.skript.update.Updater;
 import ch.njol.skript.util.FileUtils;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.skript.util.Timespan;
 import org.bukkit.event.EventPriority;
 import org.eclipse.jdt.annotation.Nullable;
@@ -267,7 +268,7 @@ public final class SkriptConfig {
                     final Config newConfig = new Config(new BufferedInputStream(in), "Skript.jar/config.sk", false, false, ":");
                     in.close();
 
-                    boolean forceUpdate = Boolean.getBoolean("skript.forceConfigUpdates");
+                    boolean forceUpdate = PropertyManager.getBoolean("skript.forceConfigUpdates");
 
                     if (mc.getMainNode().get("database") != null) { // old database layout
                         forceUpdate = true;

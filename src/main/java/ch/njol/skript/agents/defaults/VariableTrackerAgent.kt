@@ -32,7 +32,6 @@ import ch.njol.skript.agents.events.end.VariableChangeEndEvent
 import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
-import java.util.function.Consumer
 
 class VariableTrackerAgent(
         /**
@@ -71,7 +70,7 @@ class VariableTrackerAgent(
             flag = true
             SkriptConfig.warnWhenUsingNoneValues.setValue(true)
         }
-        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+        agent = registerAgent(Skript.getAddonInstance(), { event ->
             if (event is VariableChangeEndEvent) {
                 val value = event.newValue
                 if (value == null)

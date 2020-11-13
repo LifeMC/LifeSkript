@@ -43,6 +43,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * TODO create a metadata table to store some properties (e.g. Skript version, Yggdrasil version) -- but what if some variables cannot be converted? move them to a different table?
@@ -64,7 +66,9 @@ public final class DatabaseStorage extends VariablesStorage {
     /**
      * The delay between transactions in milliseconds.
      */
-    private static final long TRANSACTION_DELAY = 500;
+    private static final long TRANSACTION_DELAY = 500L;
+    private static final Pattern COMMA = Pattern.compile(",", Pattern.LITERAL);
+    private static final Pattern SPACE = Pattern.compile("\\s+");
     @SuppressWarnings("null")
     final SynchronizedReference<Database> db = new SynchronizedReference<>(null);
     private final Type type;
@@ -149,7 +153,7 @@ public final class DatabaseStorage extends VariablesStorage {
                 try {
                     db.query(type.createQuery).close();
                 } catch (final SQLException e) {
-                    Skript.error("Could not create the variables table in the database '" + databaseName + "': " + e.getLocalizedMessage() + ". " + "Please create the table yourself using the following query: " + type.createQuery.replace(",", ", ").replaceAll("\\s+", " "));
+                    Skript.error("Could not create the variables table in the database '" + databaseName + "': " + e.getLocalizedMessage() + ". " + "Please create the table yourself using the following query: " + SPACE.matcher(COMMA.matcher(type.createQuery).replaceAll(Matcher.quoteReplacement(", "))).replaceAll(" "));
                     return false;
                 }
 
@@ -249,7 +253,7 @@ public final class DatabaseStorage extends VariablesStorage {
         // start committing thread. Its first execution will also commit the first batch of changed variables.
         Skript.newThread(() -> {
             while (!closed) {
-                long lastCommit;
+                final long lastCommit;
                 synchronized (db) {
                     final Database db = DatabaseStorage.this.db.get();
                     try {
@@ -261,7 +265,7 @@ public final class DatabaseStorage extends VariablesStorage {
                     lastCommit = System.currentTimeMillis();
                 }
                 try {
-                    Thread.sleep(Math.max(0, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
+                    Thread.sleep(Math.max(0L, lastCommit + TRANSACTION_DELAY - System.currentTimeMillis()));
                 } catch (final InterruptedException ignored) {
                     Thread.currentThread().interrupt();
                     break;

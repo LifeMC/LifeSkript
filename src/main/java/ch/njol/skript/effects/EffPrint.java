@@ -67,7 +67,7 @@ public final class EffPrint extends Effect {
         strings = (Expression<String>) expressions[0];
         if (!console.init(expressions, matchedPattern, isDelayed, parseResult))
             return false;
-        return sender.init(new Expression<?>[] {strings, console}, matchedPattern, isDelayed, parseResult);
+        return sender.init(new Expression<?>[]{strings, console}, matchedPattern, isDelayed, parseResult);
     }
 
 }

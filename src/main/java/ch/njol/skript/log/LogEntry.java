@@ -148,7 +148,7 @@ public final class LogEntry {
         if (isOverflowed)
             return message;
         final Config c = n.getConfig();
-        return message + from + " (" + c.getFileName() + ", line " + n.getLine() + ": " + n.save().trim() + "')";
+        return message + from + " (" + c.getFileName() + ", line " + n.getLine() + ": " + n.save().trim() + ')';
     }
 
 }

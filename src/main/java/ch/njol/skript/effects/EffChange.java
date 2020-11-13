@@ -94,10 +94,6 @@ public final class EffChange extends Effect {
             {"reset %~objects%", ChangeMode.RESET}
     });
 
-    public static final Patterns<ChangeMode> getPatterns() {
-        return patterns;
-    }
-
     static {
         Skript.registerEffect(EffChange.class, EffChange::new, patterns.getPatterns());
     }
@@ -106,9 +102,12 @@ public final class EffChange extends Effect {
     private Expression<?> changed;
     @Nullable
     private Expression<?> changer;
-
     @SuppressWarnings("null")
     private ChangeMode mode;
+
+    public static final Patterns<ChangeMode> getPatterns() {
+        return patterns;
+    }
 
 //	private Changer<?, ?> c = null;
 

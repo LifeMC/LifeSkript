@@ -42,9 +42,7 @@ import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.Converters;
 import ch.njol.skript.update.script.ScriptUpdater;
 import ch.njol.skript.util.Date;
-import ch.njol.skript.util.ExceptionUtils;
-import ch.njol.skript.util.Timespan;
-import ch.njol.skript.util.Version;
+import ch.njol.skript.util.*;
 import ch.njol.skript.variables.TypeHints;
 import ch.njol.skript.variables.Variables;
 import ch.njol.util.Kleenean;
@@ -74,7 +72,7 @@ import java.util.regex.Pattern;
  * @see SkriptParser
  */
 public final class ScriptLoader {
-    public static final boolean COLOR_BASED_ON_LOAD_TIMES = Boolean.getBoolean("skript.colorBasedOnLoadTimes");
+    public static final boolean COLOR_BASED_ON_LOAD_TIMES = PropertyManager.getBoolean("skript.colorBasedOnLoadTimes");
 
     public static final List<TriggerSection> currentSections = new ArrayList<>();
 
@@ -397,10 +395,10 @@ public final class ScriptLoader {
     /**
      * This is an internal method, if you want to load scripts,
      * use either {@link ScriptLoader#loadScripts(File[])} or {@link ScriptLoader#loadScripts(File)}.<br /><br />
-     *
+     * <p>
      * If you need to load a single script file, use {@link ScriptLoader#loadScripts(File[])} with a single
      * element array that contains your file.<br /><br />
-     *
+     * <p>
      * For example, use it like this<br />
      * {@code
      * ScriptLoader.loadScripts(new File[] {new File("hello world.sk")})

@@ -34,7 +34,6 @@ import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
 
 /**
  * A tracker & debugger agent for the [ch.njol.skript.effects.Delay] class.
@@ -102,7 +101,7 @@ class TaskTrackerAgent
      */
     override fun registerTracker(): TaskTrackerAgent {
         assert(agent == null)
-        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+        agent = registerAgent(Skript.getAddonInstance(), { event ->
             if (event is DelayEndEvent) {
                 if (event.endTime - event.startTime > unit.toNanos(limit))
                     out.sendMessage(SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Waited for " + event.duration.milliSeconds + " ms, after that ran a task which is completed in " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms.")

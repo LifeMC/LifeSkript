@@ -36,8 +36,6 @@ import java.lang.reflect.Method
 @Volatile
 private var enabled: Boolean = false
 
-private var skript: Skript? = null // Initialized on Skript load, before any timings would be used anyway
-
 private val timings: Boolean = Skript.classExists("co.aikar.timings.Timings") && Skript.classExists("co.aikar.timings.Timing")
 
 private val syncMethods: Boolean = timings && Skript.methodExists(Timings::class.java, "startTimingIfSync")
@@ -57,7 +55,7 @@ var timingsEnabled: Boolean = false
 fun start(name: String): Any? {
     if (!enabled()) // Timings disabled
         return null
-    val timing = Timings.of(skript!!, name)
+    val timing = Timings.of(Skript.getInstance(), name)
     if (syncMethods)
         timing!!.startTimingIfSync() // No warning spam in async code
     else if (Bukkit.isPrimaryThread()) {
@@ -75,9 +73,9 @@ fun stop(@Nullable timing: Any?) {
     if (!enabled())
         return
     if (timing is Timing) {
-	    if (syncMethods)
-		    timing.stopTimingIfSync()
-		else if (Bukkit.isPrimaryThread())
+        if (syncMethods)
+            timing.stopTimingIfSync()
+        else if (Bukkit.isPrimaryThread())
             timing.stopTiming()
     } else
         throw IllegalArgumentException(timing.javaClass.canonicalName)
@@ -100,8 +98,4 @@ fun setEnabled(flag: Boolean) {
         Skript.warning("Can't enable timings on an unsupported environment")
         enabled = false // Just to make sure
     }
-}
-
-fun setSkript(plugin: Skript) {
-    skript = plugin
 }

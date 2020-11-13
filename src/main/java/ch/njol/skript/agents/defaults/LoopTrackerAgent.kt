@@ -33,7 +33,6 @@ import ch.njol.skript.agents.registerAgent
 import ch.njol.skript.agents.unregisterAgent
 import org.bukkit.command.CommandSender
 import java.util.concurrent.TimeUnit
-import java.util.function.Consumer
 
 class LoopTrackerAgent(
         /**
@@ -62,7 +61,7 @@ class LoopTrackerAgent(
      */
     override fun registerTracker(): LoopTrackerAgent {
         assert(agent == null)
-        agent = registerAgent(Skript.getAddonInstance(), Consumer { event ->
+        agent = registerAgent(Skript.getAddonInstance(), { event ->
             when (event) {
                 is ForLoopEndEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times took " + TimeUnit.NANOSECONDS.toMillis(event.endTime - event.startTime) + " ms to complete.")
                 is ForLoopStartEvent -> out.sendMessage(Skript.SKRIPT_PREFIX.replace("Skript", "Skript Tracker") + "Looping \"" + event.times + "\" times now...")

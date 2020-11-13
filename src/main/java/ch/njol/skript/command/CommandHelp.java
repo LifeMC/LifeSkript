@@ -73,16 +73,14 @@ public final class CommandHelp {
         final String arg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';
         if (langNode == null) {
             if (condition) {
-                final String carg = arg;
-                arguments.put(carg, argument);
+                arguments.put(arg, argument);
             } else {
                 arguments.put(argument, null);
             }
         } else {
             if (condition) {
                 wildcardArg = new Message(langNode + '.' + argument);
-                final String carg = arg;
-                arguments.put(carg, wildcardArg);
+                arguments.put(arg, wildcardArg);
             } else {
                 arguments.put(argument, new Message(langNode + '.' + argument));
             }
@@ -132,24 +130,6 @@ public final class CommandHelp {
         if (help instanceof CommandHelp)
             return ((CommandHelp) help).test(sender, args, index + 1);
         return true;*/
-    }
-
-    private static final boolean test0(CommandHelp commandHelp, final CommandSender sender, final String[] args, int index) {
-        while (index < args.length) {
-            final Object help = commandHelp.arguments.get(args[index].toLowerCase(Locale.ENGLISH));
-            if (help == null && commandHelp.wildcardArg == null) {
-                commandHelp.showHelp(sender, m_invalid_argument.toString(commandHelp.argsColor + args[index]));
-                return false;
-            }
-            if (!(help instanceof CommandHelp)) {
-                return true;
-            }
-            ++index;
-            commandHelp = (CommandHelp) help;
-        }
-
-        commandHelp.showHelp(sender);
-        return false;
     }
 
     @SuppressWarnings("null")

@@ -34,6 +34,7 @@ import ch.njol.skript.lang.Trigger;
 import ch.njol.skript.log.SkriptLogger;
 import ch.njol.skript.util.AsyncEffect;
 import ch.njol.skript.util.ExceptionUtils;
+import ch.njol.skript.util.PropertyManager;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -55,7 +56,7 @@ import java.util.regex.Pattern;
 @Since("2.0")
 public final class EffLog extends AsyncEffect {
     private static final HashMap<String, PrintWriter> writers = new HashMap<>();
-    private static final boolean flushAllLogsOnShutdownOnly = Boolean.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
+    private static final boolean flushAllLogsOnShutdownOnly = PropertyManager.getBoolean("skript.flushAllLogsOnShutdownOnly"); //FIXME test this
     private static final File logsFolder = new File(Skript.getInstance().getDataFolder(), "logs");
     private static final Pattern WINDOWS_PATH_SEPARATOR = Pattern.compile("\\\\", Pattern.LITERAL);
     private static final Matcher WINDOWS_PATH_SEPARATOR_MATCHER = WINDOWS_PATH_SEPARATOR.matcher("");

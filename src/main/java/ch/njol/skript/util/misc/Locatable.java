@@ -28,8 +28,6 @@ import org.bukkit.entity.Entity;
 
 @FunctionalInterface
 public interface Locatable {
-    Location getLocation();
-
     static Locatable wrap(final Block block) {
         return block::getLocation;
     }
@@ -37,4 +35,6 @@ public interface Locatable {
     static Locatable wrap(final Entity entity) {
         return entity::getLocation;
     }
+
+    Location getLocation();
 }

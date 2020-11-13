@@ -118,7 +118,7 @@ public final class FlatFileStorage extends VariablesStorage {
             final String v = m.group(1);
             if (r == null)
                 r = new ArrayList<>();
-            if (!v.isEmpty() && v.charAt(0) == '\"')
+            if (!v.isEmpty() && v.charAt(0) == '"')
                 r.add(SPLIT_PATTERN_MATCHER.reset(v.substring(1, v.length() - 1)).replaceAll(splitQuoted));
             else
                 r.add(v.trim());
@@ -442,8 +442,10 @@ public final class FlatFileStorage extends VariablesStorage {
                         savingVariables = false;
 
                         savingLoggerThread.interrupt(); // In case if not interrupted
-						if (finalSave)
+
+                        if (finalSave) {
                             Skript.info("Saved total of " + savedVariables + " variables" + (Skript.logNormal() ? " in " + start.difference(new Date()) : "") + (Skript.logHigh() ? " to '" + fileName + '\'' : ""));
+                        }
 
                         savedVariables = 0; // Method may be called multiple times
 

@@ -108,7 +108,7 @@ public final class VariableString implements Expression<String> {
      * @return Whatever the string is quoted correctly
      */
     public static final boolean isQuotedCorrectly(final String s, final boolean withQuotes) {
-        if (withQuotes && (!(!s.isEmpty() && s.charAt(0) == '\"') || s.charAt(s.length() - 1) != '\"'))
+        if (withQuotes && (!(!s.isEmpty() && s.charAt(0) == '"') || s.charAt(s.length() - 1) != '"'))
             return false;
         boolean quote = false;
         for (int i = withQuotes ? 1 : 0; i < (withQuotes ? s.length() - 1 : s.length()); i++) {
@@ -342,7 +342,7 @@ public final class VariableString implements Expression<String> {
     public static final VariableString[] makeStringsFromQuoted(final List<String> args) {
         final VariableString[] strings = new VariableString[args.size()];
         for (int i = 0; i < args.size(); i++) {
-            assert !args.get(i).isEmpty() && args.get(i).charAt(0) == '\"' && args.get(i).charAt(args.get(i).length() - 1) == '\"';
+            assert !args.get(i).isEmpty() && args.get(i).charAt(0) == '"' && args.get(i).charAt(args.get(i).length() - 1) == '"';
             final VariableString vs = newInstance(args.get(i).substring(1, args.get(i).length() - 1));
             if (vs == null)
                 return null;

@@ -245,7 +245,7 @@ public class ClassInfo<T> implements Debuggable {
 
     /**
      * Other plugin dependencies for this ClassInfo.
-     *
+     * <p>
      * Only used for Skript's documentation.
      *
      * @param pluginNames
@@ -259,12 +259,12 @@ public class ClassInfo<T> implements Debuggable {
 
     /**
      * A non-critical ID remapping for ClassInfo.
-     *
+     * <p>
      * Overrides default documentation id, which is assigned from class name.
-     *
+     * <p>
      * This is especially useful for inner classes whose names are useless without
      * parent class name as a context.
-     *
+     * <p>
      * Only used for Skript's documentation.
      *
      * @param id

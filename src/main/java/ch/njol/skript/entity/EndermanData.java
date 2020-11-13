@@ -35,12 +35,18 @@ import org.bukkit.material.MaterialData;
 import org.eclipse.jdt.annotation.Nullable;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Peter Güttinger
  */
 public final class EndermanData extends EntityData<Enderman> {
     private static final ArgsMessage format = new ArgsMessage("entities.enderman.format");
+    private static final Pattern ENDERMAN_DATA_1 = Pattern.compile("(?<!,),(?!,)");
+    private static final Pattern ENDERMAN_DATA_2 = Pattern.compile("(?<!:):(?::)");
+    private static final Pattern DOUBLE_COMMA = Pattern.compile(",,", Pattern.LITERAL);
+    private static final Pattern DOUBLE_COLON = Pattern.compile("::", Pattern.LITERAL);
 
     static {
         EntityData.register(EndermanData.class, "enderman", Enderman.class, "enderman");
@@ -135,13 +141,13 @@ public final class EndermanData extends EntityData<Enderman> {
     protected boolean deserialize(final String s) {
         if (s.isEmpty())
             return true;
-        final String[] split = s.split("(?<!,),(?!,)");
+        final String[] split = ENDERMAN_DATA_1.split(s);
         hand = new ItemType[split.length];
         for (int i = 0; i < hand.length; i++) {
-            final String[] t = split[i].split("(?<!:):(?::)");
+            final String[] t = ENDERMAN_DATA_2.split(split[i]);
             if (t.length != 2)
                 return false;
-            final Object o = Classes.deserialize(t[0], t[1].replace(",,", ",").replace("::", ":"));
+            final Object o = Classes.deserialize(t[0], DOUBLE_COLON.matcher(DOUBLE_COMMA.matcher(t[1]).replaceAll(Matcher.quoteReplacement(","))).replaceAll(Matcher.quoteReplacement(":")));
             if (!(o instanceof ItemType))
                 return false;
             hand[i] = (ItemType) o;

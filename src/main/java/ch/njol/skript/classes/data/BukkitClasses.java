@@ -77,6 +77,9 @@ public final class BukkitClasses {
     // See https://github.com/LifeMC/LifeSkript/issues/82 for more information about this topic and problem.
     static final boolean dontUseNames = Skript.offlineUUIDSupported && System.getProperty("skript.dontUseNamesForSerialization") == null || Boolean.parseBoolean(System.getProperty("skript.dontUseNamesForSerialization"));
 
+    private static final Pattern LOCATION_PATTERN = Pattern.compile("[:,|/]");
+    private static final Pattern CHUNK_PATTERN = Pattern.compile("[:,]");
+
     private BukkitClasses() {
         throw new UnsupportedOperationException();
     }
@@ -273,7 +276,7 @@ public final class BukkitClasses {
             @Override
             @Nullable
             public final Location deserialize(final String s) {
-                final String[] split = s.split("[:,|/]");
+                final String[] split = LOCATION_PATTERN.split(s);
                 if (split.length != 6)
                     return null;
                 final World w = Bukkit.getWorld(split[0]);
@@ -832,7 +835,7 @@ public final class BukkitClasses {
             @Override
             @Nullable
             public Chunk deserialize(final String s) {
-                final String[] split = s.split("[:,]");
+                final String[] split = CHUNK_PATTERN.split(s);
                 if (split.length != 3)
                     return null;
                 final World w = Bukkit.getWorld(split[0]);

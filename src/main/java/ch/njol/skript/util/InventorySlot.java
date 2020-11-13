@@ -56,14 +56,14 @@ public class InventorySlot extends Slot {
     @Nullable
     @SuppressWarnings({"null", "unused"})
     public ItemStack getItem() {
-		if (index == -999) // Non-existent slot, e.g. Outside GUI 
-			return null;
+        if (index == -999) // Non-existent slot, e.g. Outside GUI
+            return null;
 
-		if (invi == null) // No inventory?
-			return null;
+        if (invi == null) // No inventory?
+            return null;
 
-		final ItemStack item = invi.getItem(index);
-		return item == null  ? new ItemStack(Material.AIR, 1) : item.clone();
+        final ItemStack item = invi.getItem(index);
+        return item == null ? new ItemStack(Material.AIR, 1) : item.clone();
     }
 
     @Override

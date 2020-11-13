@@ -62,6 +62,7 @@ public final class AddonUpdater extends AbstractUpdater {
     private final String versionCheckUrl;
     private final Executor updateCheckerExecutor;
     private final Release current;
+
     public AddonUpdater(final SkriptAddon addon,
 
                         final String versionCheckUrl,

@@ -103,6 +103,9 @@ public final class Commands {
     private static final Matcher STRING_QUOTE = Pattern.compile("\"", Pattern.LITERAL).matcher(""),
             CONDITION = Pattern.compile("condition", Pattern.LITERAL).matcher(""),
             EXPRESSION = Pattern.compile("expression", Pattern.LITERAL).matcher("");
+    private static final Pattern SLASH = Pattern.compile("\\s+");
+    private static final Pattern ALIASES = Pattern.compile("\\s*,\\s*/?");
+    private static final Pattern EXECUTABLE_BY_AND_OR = Pattern.compile("\\s*,\\s*|\\s+(and|or)\\s+");
     @Nullable
     public static List<Argument<?>> currentArguments;
     private static boolean suppressUnknownCommandMessage;
@@ -287,7 +290,7 @@ public final class Commands {
      * @return whatever to cancel the event
      */
     public static final boolean handleCommand(final CommandSender sender, final String command) {
-        final String[] cmd = command.split("\\s+", 2);
+        final String[] cmd = SLASH.split(command, 2);
         cmd[0] = cmd[0].toLowerCase(Locale.ENGLISH);
         if (cmd[0].endsWith("?")) {
             final ScriptCommand c = commands.get(cmd[0].substring(0, cmd[0].length() - 1));
@@ -424,12 +427,12 @@ public final class Commands {
         }
 
         final String arguments = m.group(3) == null ? "" : m.group(3);
-        final StringBuilder pattern = new StringBuilder(4096);
 
         final List<Argument<?>> currentArguments = Commands.currentArguments = new ArrayList<>(); //Mirre
         m = argumentPatternMatcher.reset(arguments);
         int lastEnd = 0;
         int optionals = 0;
+        final StringBuilder pattern = new StringBuilder(4096);
         for (int i = 0; m.find(); i++) {
             pattern.append(escape(arguments.substring(lastEnd, m.start())));
             optionals += StringUtils.count(arguments, '[', lastEnd, m.start());
@@ -489,19 +492,19 @@ public final class Commands {
         if (!(node.get("trigger") instanceof SectionNode))
             return null;
 
-        ArrayList<String> aliases = new ArrayList<>(Arrays.asList(ScriptLoader.replaceOptions(node.get("aliases", "")).split("\\s*,\\s*/?")));
+        ArrayList<String> aliases = new ArrayList<>(Arrays.asList(ALIASES.split(ScriptLoader.replaceOptions(node.get("aliases", "")))));
         if (aliases.get(0).startsWith("/"))
             aliases.set(0, aliases.get(0).substring(1));
         else if (aliases.get(0).isEmpty())
             aliases = new ArrayList<>(0);
 
         final String rawPermissionMessage = ScriptLoader.replaceOptions(node.get("permission message", ""));
-        VariableString permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
+        final VariableString permissionMessage = rawPermissionMessage.isEmpty() ? null : VariableString.newInstance(rawPermissionMessage);
 
         final SectionNode trigger = (SectionNode) node.get("trigger");
         if (trigger == null)
             return null;
-        final String[] by = ScriptLoader.replaceOptions(node.get("executable by", "console,players")).split("\\s*,\\s*|\\s+(and|or)\\s+");
+        final String[] by = EXECUTABLE_BY_AND_OR.split(ScriptLoader.replaceOptions(node.get("executable by", "console,players")));
         int executableBy = 0;
         for (final String b : by) {
             if ("console".equalsIgnoreCase(b) || "the console".equalsIgnoreCase(b)) {
