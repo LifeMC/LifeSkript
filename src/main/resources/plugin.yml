@@ -22,7 +22,7 @@ name: Skript
 
 description: Customize Minecraft's mechanics with simple scripts written in plain English sentences.
 
-authors: [Njol, Mirreski, LifeMCServer]
+authors: [ Njol, Mirreski, LifeMCServer ]
 website: https://github.com/LifeMC/LifeSkript
 
 main: ch.njol.skript.Skript
@@ -32,12 +32,12 @@ version: ${project.version}
 commands:
   skript:
     description: Skript's main command. Type '/skript help' for more information.
-    aliases: [sk]
+    aliases: [ sk ]
     permission: skript.admin
     usage: /skript help
 
 # Load Skript after some plugins just for safety and interactions with these plugins.
-soft-depend: [Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, ChestCommands, NameTagEdit, ProtocolLib, AsyncKeepAlive, TCE, AntiJoinBot, VisualFixer, ConsoleSpamFix, FarmLimiter, FarmProtect, SuperCensor, AnvilBlocker, Announcer, BungeeChatAPI, FasyAsyncWorldEdit, AsyncWorldEdit, ChestCommands, ClearLag, GroupManager, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones, PingFix, VanillaPlus]
+softdepend: [ Vault, WorldGuard, WorldEdit, SQLibrary, NoCheatPlus, ChestCommands, NameTagEdit, ProtocolLib, AsyncKeepAlive, TCE, AntiJoinBot, VisualFixer, ConsoleSpamFix, FarmLimiter, FarmProtect, SuperCensor, AnvilBlocker, Announcer, BungeeChatAPI, FasyAsyncWorldEdit, AsyncWorldEdit, ChestCommands, ClearLag, GroupManager, IConomy, Residence, ChestShop, Factions, ASkyBlock, MotdManager, ServerListPlus, GriefPrevention, PreciousStones, PingFix, VanillaPlus ]
 
 # Hack to force strict utf-8 encoding when loading Skript
 awareness:

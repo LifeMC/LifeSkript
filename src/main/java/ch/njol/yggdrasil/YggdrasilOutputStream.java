@@ -110,12 +110,11 @@ public abstract class YggdrasilOutputStream implements Flushable, Closeable {
                 assert p != null;
                 writePrimitive_(p);
             }
-            writeArrayEnd();
         } else {
             for (final Object o : (Object[]) array)
                 writeObject(o);
-            writeArrayEnd();
         }
+        writeArrayEnd();
     }
 
     protected abstract void writeEnumType(final String type) throws IOException;

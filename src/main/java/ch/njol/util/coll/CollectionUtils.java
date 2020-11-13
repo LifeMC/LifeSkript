@@ -55,7 +55,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = 0; i < array.length; i++) {
-            if (Objects.equals(array[i], t))
+            if (array[i].equals(t))
                 return i;
         }
         return -1;
@@ -65,7 +65,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = array.length - 1; i >= 0; i--) {
-            if (Objects.equals(array[i], t))
+            if (array[i].equals(t))
                 return i;
         }
         return -1;
@@ -75,7 +75,7 @@ public final class CollectionUtils {
         if (array == null)
             return -1;
         for (int i = start; i < end; i++) {
-            if (Objects.equals(array[i], t))
+            if (array[i].equals(t))
                 return i;
         }
         return -1;
@@ -168,7 +168,7 @@ public final class CollectionUtils {
             return -1;
         int i = 0;
         for (final T a : iter) {
-            if (Objects.equals(a, o))
+            if (a.equals(o))
                 return i;
             i++;
         }

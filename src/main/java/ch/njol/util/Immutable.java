@@ -25,7 +25,7 @@ package ch.njol.util;
 /**
  * Marker interface that defines this
  * object as immutable.
- *
+ * <p>
  * Immutable objects are objects that
  * safe to cache hash code.
  */

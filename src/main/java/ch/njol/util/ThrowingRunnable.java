@@ -27,6 +27,14 @@ import ch.njol.skript.Skript;
 @FunctionalInterface
 public interface ThrowingRunnable<T extends Throwable> extends Runnable {
 
+    static <T extends Throwable> void runSafe(final ThrowingRunnable<T> throwingRunnable) throws T {
+        throwingRunnable.runSafe();
+    }
+
+    static <T extends Throwable> void runUnsafe(final ThrowingRunnable<T> throwingRunnable) {
+        throwingRunnable.runUnsafe();
+    }
+
     void runInternal() throws T;
 
     default void runSafe() throws T {
@@ -44,14 +52,6 @@ public interface ThrowingRunnable<T extends Throwable> extends Runnable {
     @Override
     default void run() {
         runUnsafe();
-    }
-
-    static <T extends Throwable> void runSafe(final ThrowingRunnable<T> throwingRunnable) throws T {
-        throwingRunnable.runSafe();
-    }
-
-    static <T extends Throwable> void runUnsafe(final ThrowingRunnable<T> throwingRunnable) {
-        throwingRunnable.runUnsafe();
     }
 
 }

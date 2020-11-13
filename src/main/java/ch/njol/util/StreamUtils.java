@@ -98,11 +98,11 @@ public final class StreamUtils {
      */
     public static final String readString(final InputStream is,
                                           final String lineSeparator) throws IOException {
-        final StringBuilder responseBody = new StringBuilder(4096);
         try (final InputStreamReader ir = new InputStreamReader(is, StandardCharsets.UTF_8);
              final BufferedReader br = new BufferedReader(ir)) {
             String line;
 
+            final StringBuilder responseBody = new StringBuilder(4096);
             while ((line = br.readLine()) != null) {
                 responseBody.append(line.trim()).append(lineSeparator);
             }

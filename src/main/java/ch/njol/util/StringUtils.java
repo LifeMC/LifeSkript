@@ -106,11 +106,9 @@ public final class StringUtils {
     /**
      * Replaces the last match of the given regex with the given replacement in the given {@link CharSequence}.
      *
-     * @param text The text to search and replace the last match of the given regex.
-     * @param regex The regex to search for last match.
-     *
+     * @param text        The text to search and replace the last match of the given regex.
+     * @param regex       The regex to search for last match.
      * @param replacement The replacement to replace the last match with it.
-     *
      * @return The replaced result string, whose the last match determined by the given regex in the given text
      * is replaced by the given replacement.
      */
@@ -124,7 +122,6 @@ public final class StringUtils {
      *
      * @param s The string to make it null safe, for use it on operations that may throw {@link NullPointerException} otherwise.
      *          Note that this method only used if the null status does not matter with the use of the string, otherwise use a manual check.
-     *
      * @return The null safe version of the given string. If the given string is {@code null}, "null" string will be returned.
      * Otherwise, the passed string will be returned.
      */

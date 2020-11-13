@@ -24,7 +24,10 @@ package ch.njol.util.coll;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Peter Güttinger
@@ -178,7 +181,7 @@ public final class BidiHashMap<T1, T2> extends HashMap<T1, T2> implements BidiMa
 
         final BidiHashMap<?, ?> that = (BidiHashMap<?, ?>) o;
 
-        return Objects.equals(other, that.other);
+        return other.equals(that.other);
     }
 
 }

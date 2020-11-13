@@ -24,7 +24,6 @@ package ch.njol.util;
 
 import org.eclipse.jdt.annotation.Nullable;
 
-import java.util.Objects;
 import java.util.function.IntSupplier;
 
 /**
@@ -32,7 +31,6 @@ import java.util.function.IntSupplier;
  *
  * @param <T> The type of the first object.
  * @param <E> The type of the second object.
- *
  * @since 2.2.18
  */
 public final class ImmutablePair<T, E> implements Immutable {
@@ -46,10 +44,10 @@ public final class ImmutablePair<T, E> implements Immutable {
     /**
      * When using this constructor, if the passed objects are immutable, you should mark the classes
      * that T and E represents immutable to get the performance benefit of cached hash code.<p /><p />
-     *
+     * <p>
      * If you don't control the classes that T and E represents, use {@link ImmutablePair#ImmutablePair(Object, Object, boolean)}
      * with 'true' as third parameter instead to make it cache the result of hash code.<p /><p />
-     *
+     * <p>
      * Keep in mind that caching the hash code result of mutable objects can result in wrong behaviour, and it is
      * not recommended unless you are sure the objects are never modified (though still mutable).
      *
@@ -71,8 +69,8 @@ public final class ImmutablePair<T, E> implements Immutable {
     /**
      * @param computeHashCode The hash code compute function that provides a hash code.
      *                        Must not return -1 since it is a reserved number reserved by this class.
-     * @see Object#hashCode()
      * @throws IllegalArgumentException If the hash code compute function returns a reserved number
+     * @see Object#hashCode()
      */
     public ImmutablePair(final T first, final E second, final boolean immutable, final IntSupplier computeHashCode) throws IllegalArgumentException {
         this.first = first;
@@ -110,8 +108,8 @@ public final class ImmutablePair<T, E> implements Immutable {
 
         final ImmutablePair<?, ?> that = (ImmutablePair<?, ?>) o;
 
-        if (!Objects.equals(first, that.first)) return false;
-        return Objects.equals(second, that.second);
+        if (!first.equals(that.first)) return false;
+        return second.equals(that.second);
     }
 
     @Override

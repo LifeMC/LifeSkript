@@ -32,10 +32,6 @@ public final class SystemUtils {
         throw new UnsupportedOperationException("Static class");
     }
 
-    public enum OperatingSystem {
-        LINUX, OSX, WINDOWS, UNKNOWN
-    }
-
     public static final OperatingSystem getOperatingSystem() {
         final String prop = Workarounds.getOriginalProperty("os.name");
         if (prop != null) {
@@ -71,6 +67,10 @@ public final class SystemUtils {
             }
         }
         return -1; // we don't know...
+    }
+
+    public enum OperatingSystem {
+        LINUX, OSX, WINDOWS, UNKNOWN
     }
 
 }

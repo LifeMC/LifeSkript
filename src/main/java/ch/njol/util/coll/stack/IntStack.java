@@ -57,6 +57,7 @@ public final class IntStack implements Closeable, RandomAccess {
 
     /**
      * Creates a new {@link IntStack} with the given initial capacity.
+     *
      * @param initialCapacity The initial capacity.
      */
     public IntStack(final int initialCapacity) {
@@ -65,6 +66,7 @@ public final class IntStack implements Closeable, RandomAccess {
 
     /**
      * Pushes an {@code int} to the stack.
+     *
      * @param value The {@code int} to add on top of the stack.
      */
     public final void push(final int value) {
@@ -79,6 +81,7 @@ public final class IntStack implements Closeable, RandomAccess {
 
     /**
      * Gets the top {@code int} in the stack. The {@code int} will be removed from the stack.
+     *
      * @return The top {@code int} in the stack.
      */
     public final int pop() {
@@ -93,6 +96,7 @@ public final class IntStack implements Closeable, RandomAccess {
 
     /**
      * Gets the top {@code int} in the stack without removing it.
+     *
      * @return The top {@code int} in the stack.
      */
     public final int peek() {

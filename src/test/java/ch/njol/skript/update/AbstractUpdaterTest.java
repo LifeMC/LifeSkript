@@ -64,7 +64,7 @@ final class AbstractUpdaterTest {
 
         assertEquals(new Version(2, 2, 18), AbstractUpdater.getVersion(samplePluginYml));
 
-        assertEquals(new Version(2, 2, 18), AbstractUpdater.getVersion(samplePluginYml.replace(LineSeparators.UNIX, LineSeparators.MAC)));
+        assertEquals(new Version(2, 2, 18), AbstractUpdater.getVersion(UNIX_NEW_LINE.matcher(samplePluginYml).replaceAll(Matcher.quoteReplacement(LineSeparators.MAC))));
         assertEquals(new Version(2, 2, 18), AbstractUpdater.getVersion(UNIX_NEW_LINE.matcher(samplePluginYml).replaceAll(Matcher.quoteReplacement(LineSeparators.DOS))));
     }
 

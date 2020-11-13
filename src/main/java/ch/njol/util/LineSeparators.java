@@ -61,6 +61,10 @@ public final class LineSeparators {
     public static final String TAB = "\t";
     public static final char TAB_CHAR = '\t';
 
+    private LineSeparators() {
+        throw new UnsupportedOperationException("Static class");
+    }
+
     /**
      * Checks the given function (condition) with the all line endings.
      * Returns true if any of them matches, false otherwise.
@@ -78,10 +82,6 @@ public final class LineSeparators {
     @FunctionalInterface
     public interface LineSeparatorChecker {
         boolean check(final String separator);
-    }
-
-    private LineSeparators() {
-        throw new UnsupportedOperationException("Static class");
     }
 
 }
