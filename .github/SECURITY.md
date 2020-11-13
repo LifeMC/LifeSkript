@@ -11,9 +11,9 @@ e.g for example "beta / alpha / experimental release / feature"
 You have to use (or at least test with) one of the supported versions before reporting
 a vulnerability.
 
-Pre Releases are releases we release with a suffix, e.g V13b. We use this to
+Pre Releases are releases we release with a suffix, e.g 2.2.16-beta1. We use this to
 test the software before releasing a new stable version. Stable releases without a suffix can also
-make pre-releases if some vulnerability found in the future.
+become pre-releases if vulnerabilities found in them in the future.
 
 Since pre-releases are not stable versions; they are not supported. In deeper,
 they supported; but only if it's the last available version.
@@ -27,8 +27,7 @@ and in either case, the vulnerability should be fixed before a new stable releas
 Since we don't released a new major version yet, we don't have any active
 version branches for fixes or security fixes. So, we always provide fixes to the latest version.
 
-For the above statement, modifying the old versions are _not_ possible. Of course
-you can check out the specific tag and modify it yourself.
+For the above statement, modifying the old versions are _not_ possible. Of course, you can check out the specific tag and modify it yourself.
 
 | Version | Supported          |
 | ------- | ------------------ |
@@ -61,5 +60,4 @@ My Discord address: !💲мυѕтαғα öɴcel#0001
 You should clearly describe what the vulnerability, how to reproduce, how to abuse, etc. You should
 also link some sites that explains / documents the vulnerability.
 
-Since we also use Snyk for scanning vulnerabilities, you can use the latest version
-and you should be fine, without any known vulnerability.
+Since we also use Snyk for scanning vulnerabilities, you can use the latest version, and you should be fine, without any known vulnerability.

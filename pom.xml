@@ -18,7 +18,7 @@
   ~    along with Skript. If not, see <https://www.gnu.org/licenses/>.
   ~
   ~
-  ~   Copyright 2011-2019 Peter Güttinger and contributors
+  ~   Copyright 2011-2020 Peter Güttinger and contributors
   ~
   -->
 
@@ -183,6 +183,10 @@
                     <artifactId>gson</artifactId>
                 </exclusion>
                 <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
                     <groupId>com.googlecode.json-simple</groupId>
                     <artifactId>json-simple</artifactId>
                 </exclusion>
@@ -285,6 +289,12 @@
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jdt</groupId>
@@ -474,7 +484,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-SNAPSHOT</version>
+                <version>3.0.0-M3</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.codehaus.mojo</groupId>
@@ -553,7 +563,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>3.0.0-SNAPSHOT</version>
+                <version>3.0.0-M1</version>
             </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -814,6 +824,42 @@
                                 <exclude>META-INF/MANIFEST.MF</exclude>
                             </excludes>
                         </filter>
+                        <filter>
+                            <artifact>com.google.guava:guava</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>org.checkerframework:checker-qual</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>com.google.errorprone:error_prone_annotations</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>com.google.guava:failureaccess</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>com.google.j2objc:j2objc-annotations</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
+                        <filter>
+                            <artifact>com.google.guava:listenablefuture</artifact>
+                            <excludes>
+                                <exclude>META-INF/MANIFEST.MF</exclude>
+                            </excludes>
+                        </filter>
                     </filters>
                     <relocations>
                         <!-- Don't share the Kotlin library with other plugins
@@ -822,6 +868,16 @@
                             <pattern>kotlin</pattern>
                             <!--suppress UnresolvedMavenProperty -->
                             <shadedPattern>${project.internalPackage}.libraries.kotlin</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.google</pattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.libraries.google</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.checkerframework</pattern>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <shadedPattern>${project.internalPackage}.libraries.google.checkerframework</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.jetbrains.annotations</pattern>
@@ -891,7 +947,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-SNAPSHOT</version>
+                <version>3.0.0-M4</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
 
@@ -902,7 +958,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.0.0-SNAPSHOT</version>
+                <version>3.0.0-M1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

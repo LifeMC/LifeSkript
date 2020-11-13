@@ -7,6 +7,8 @@
 
 # Idea personal files
 .idea/dictionaries
+.idea/shelf
+
 workspace.xml
 
 # Sonar lint issue store

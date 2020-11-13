@@ -10,7 +10,7 @@ Project preferences include the requirements you should read before making any c
 
 - You should include license headers and author section in newly added files.
 - You should end new files with a new line. Read more: <a href="https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline">Why should text files end with a newline?</a>
-- You should not make any breaking changes and test at least one time your changes. You must check compile-time errors and you should check runtime errors from a test server before making a pull request. (Tip: If you have a null warning or error, just suppress it.)
+- You should not make any breaking changes and test at least one time your changes. You must check compile-time errors, and you should also check runtime errors from a test server before making a pull request. (Tip: If you have a null warning or error, just suppress it.)
 
 ### Some information about files and folders
 - The files under .github folder are GitHub-specific files for GitHub.
