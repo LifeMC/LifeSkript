@@ -66,6 +66,9 @@ final class Main {
 
         System.out.println("Processing files, please wait...");
         System.out.println();
+		
+		// Analyze self
+		processDirectory(new File(System.getProperty("user.dir")));
 
         processDirectory(directory);
 		System.out.flush();
@@ -149,9 +152,9 @@ final class Main {
 			if (line.contains("// JavaAnalyzer ignore"))
 				continue; // Ignored by supression comment
 
-            if ((line.contains("static") && !line.contains("statically") && !line.contains("initializer") && !line.contains("is static") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !noMethodFinalWarning)
+			if ((line.contains("static") && !line.contains("statically") && !line.contains("initializer") && !line.contains("is static") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !line.contains("abstract") && !noMethodFinalWarning) {
                 warning(file, line, i, "Static method maybe final");
-            else if ((line.contains("private")) && !line.contains("*") /* javadoc */ && !line.contains("static") && !line.contains("private final") && !line.contains("=") && !line.contains("val") && line.contains("(") && !noMethodFinalWarning) {
+            } else if ((line.contains("private")) && !line.contains("*") /* javadoc */ && !line.contains("static") && !line.contains("private final") && !line.contains("=") && !line.contains("val") && line.contains("(") && !noMethodFinalWarning) {
 				if (PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim()).length != 2) // constructor
 					warning(file, line, i, "Private method maybe final");
 			} else if ((line.contains("(")) && !line.contains("*") /* javadoc */ && (line.contains("{") || line.contains(";")) && !line.contains("();") && !line.contains("(final ") && !line.contains("=") && !line.contains("+") && !line.contains("val") && !line.contains("return ") && !line.contains("() {") && !line.contains("@Nullable final") && !line.contains("@NonNull final") && !line.contains("() ->") && !line.contains(") -> {") && !line.contains("},") && !(line.contains("?") && line.contains(":")) && !noMethodFinalWarning) {

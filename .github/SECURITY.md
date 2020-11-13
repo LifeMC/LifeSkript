@@ -55,7 +55,7 @@ You should contact one of the maintainers from Discord, with a
 private message. Do _not_ post critical security vulnerabilities publicly.
 
 Discord server: https://discord.gg/tmupwqn (Do NOT report it publicly!)  
-My Discord address: !💲мυѕтαғα öɴcel#0001
+My Discord address: !💲мυѕтαғα öɴcel#8713
 
 You should clearly describe what the vulnerability, how to reproduce, how to abuse, etc. You should
 also link some sites that explains / documents the vulnerability.
