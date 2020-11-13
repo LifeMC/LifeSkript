@@ -16,7 +16,7 @@
  *    along with Skript. If not, see <https://www.gnu.org/licenses/>.
  *
  *
- *   Copyright 2011-2019 Peter Güttinger and contributors
+ *   Copyright (C) 2011 Peter Güttinger and contributors
  *
  */
 
@@ -80,7 +80,7 @@ public final class YggdrasilTest {
 
             Object.class, ArrayList.class, new ArrayList<>(Arrays.asList(1, 2, 3)), new HashSet<>(Arrays.asList(1, 4, 3, 3, 2)), new HashMap<>(), new LinkedList<>(Arrays.asList(4, 3, 2, 1)),
 
-            TestEnum.SOMETHING, PETest1.PET1_0, PETest1.PETest2.PET1_1, PETest1.PET1_2, PET1_3, PETest1.PETest2.PET2_1, PETest1.PET2_2, PETest1.PETest2.PET2_0, new TestClass1(), new TestClass1("foo"), new TestClass2(20)
+            TestEnum.SOMETHING, PETest1.PET1_0, PETest1.PETest2.PET1_1, PETest1.PET1_2, PET1_3, PETest1.PETest2.PET2_1, PETest1.PETest2.PET2_2, PETest1.PETest2.PET2_0, new TestClass1(), new TestClass1("foo"), new TestClass2(20)
     };
 
     @SuppressWarnings("null")
@@ -260,7 +260,6 @@ public final class YggdrasilTest {
     @YggdrasilID("PETest1")
     private static class PETest1 extends PseudoEnum<PETest1> {
         static final PETest1 PET1_0 = new PETest1("PET1_0 #!~/" + LineSeparators.DOS + LineSeparators.TAB + "\\\"'<>&amp;,.:'`´¢⽰杻鱶");
-        static final PETest2 PET2_2 = new PETest2("PET2_2");
         static final PETest1 PET1_2 = new PETest1("PET1_2") {
             /* empty */
         };
@@ -278,6 +277,7 @@ public final class YggdrasilTest {
                     return "PET2_1!!!";
                 }
             };
+            static final PETest2 PET2_2 = new PETest2("PET2_2");
             static final PETest1 PET1_1 = new PETest1("PET1_1");
 
             PETest2(final String name) {
