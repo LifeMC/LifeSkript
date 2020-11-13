@@ -1955,6 +1955,11 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
         return instance.getClassLoader();
     }
 
+    public static final void preload(final Class<?>... classes) {
+        for (final Class<?> clazz : classes)
+            ThrowingRunnable.runUnsafe(() -> Class.forName(clazz.getName(), true, clazz.getClassLoader()));
+    }
+
     /**
      * Invokes the given statements on an object, and returns it. Useful for
      * making chained calls on void methods without using variables.
@@ -3130,7 +3135,7 @@ public final class Skript extends JavaPlugin implements Listener, Updatable, Non
                 if (!SkriptConfig.disableDocumentationGeneration.value())
                     Documentation.generate();
 
-                SkriptTimings.setSkript(Skript.this);
+                preload(SkriptTimings.class);
                 SkriptCommand.setPriority();
 
                 if (logNormal())

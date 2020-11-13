@@ -68,6 +68,24 @@ public final class CommandHelp {
         this.argsColor = argsColor.getChat();
     }
 
+    private static final boolean test0(CommandHelp commandHelp, final CommandSender sender, final String[] args, int index) {
+        while (index < args.length) {
+            final Object help = commandHelp.arguments.get(args[index].toLowerCase(Locale.ENGLISH));
+            if (help == null && commandHelp.wildcardArg == null) {
+                commandHelp.showHelp(sender, m_invalid_argument.toString(commandHelp.argsColor + args[index]));
+                return false;
+            }
+            if (!(help instanceof CommandHelp)) {
+                return true;
+            }
+            ++index;
+            commandHelp = (CommandHelp) help;
+        }
+
+        commandHelp.showHelp(sender);
+        return false;
+    }
+
     public CommandHelp add(final String argument) {
         final boolean condition = !argument.isEmpty() && argument.charAt(0) == '<' && argument.charAt(argument.length() - 1) == '>';
         final String arg = GRAY + "<" + argsColor + argument.substring(1, argument.length() - 1) + GRAY + '>';

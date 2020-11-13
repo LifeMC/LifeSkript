@@ -275,15 +275,15 @@ public final class ScriptCommand implements TabExecutor {
     }
 
     /**
-	 * @deprecated use {@link ScriptCommand#execute0(ScriptCommandEvent, CommandSender, String)}
-	 */
+     * @deprecated use {@link ScriptCommand#execute0(ScriptCommandEvent, CommandSender, String)}
+     */
     @Deprecated
     final boolean execute2(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
-		return execute0(event, sender, rest);
+        return execute0(event, sender, rest);
     }
 
-	final boolean execute0(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
-	    final ParseLogHandler log = SkriptLogger.startParseLogHandler();
+    final boolean execute0(final ScriptCommandEvent event, final CommandSender sender, final String rest) {
+        final ParseLogHandler log = SkriptLogger.startParseLogHandler();
         try {
             final boolean ok = SkriptParser.parseArguments(rest, ScriptCommand.this, event);
             if (!ok) {
@@ -311,7 +311,7 @@ public final class ScriptCommand implements TabExecutor {
         if (Skript.log(Verbosity.VERY_HIGH))
             Skript.info("# " + name + " took " + 1. * (System.nanoTime() - startTrigger) / 1000000. + " milliseconds");
         return true;
-	}
+    }
 
     public void sendHelp(final CommandSender sender) {
         if (!description.isEmpty())
