@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Eclipse" />
-    <option name="BUILD_PROCESS_HEAP_SIZE" value="1024" />
+    <option name="BUILD_PROCESS_HEAP_SIZE" value="2048" />
     <addNotNullAssertions enabled="false" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
@@ -13,9 +13,6 @@
         <module name="Skript" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Skript" target="8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="EclipseCompilerSettings">
     <option name="PROCEED_ON_ERROR" value="false" />

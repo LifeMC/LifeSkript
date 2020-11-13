@@ -10,21 +10,16 @@ import java.util.regex.Matcher;
 import java.util.function.Supplier;
 
 final class Main {
+    private static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
+    private static final Pattern PATTERN_ON_BRACKET = Pattern.compile("(", Pattern.LITERAL);
+    private static final Pattern FILE_SEPARATOR_PATTERN = Pattern.compile(Matcher.quoteReplacement(File.separator));
     private static boolean debug = false;
-
     private static boolean noConcenationWarning = false;
     private static boolean noMethodFinalWarning = false;
     private static boolean noCatchFinalWarning = false;
-
     private static long processedFiles;
     private static long processedLines;
-
-	private static long printedWarnings;
-
-	private static final Pattern PATTERN_ON_SPACE = Pattern.compile(" ", Pattern.LITERAL);
-	private static final Pattern PATTERN_ON_BRACKET = Pattern.compile("(", Pattern.LITERAL);
-
-	private static final Pattern FILE_SEPARATOR_PATTERN = Pattern.compile(Matcher.quoteReplacement(File.separator));
+    private static long printedWarnings;
 
     public static final void main(final String[] args) throws IOException {
         System.out.println("");
@@ -66,16 +61,16 @@ final class Main {
 
         System.out.println("Processing files, please wait...");
         System.out.println();
-		
-		// Analyze self
-		processDirectory(new File(System.getProperty("user.dir")));
+
+        // Analyze self
+        processDirectory(new File(System.getProperty("user.dir")));
 
         processDirectory(directory);
-		System.out.flush();
+        System.out.flush();
 
         System.out.println();
         System.out.println("Processed total of " + processedFiles + " files and " + processedLines + " lines. Total of " + printedWarnings + " warnings found.");
-		System.out.println();
+        System.out.println();
     }
 
     private static final void processDirectory(final File directory) throws IOException {
@@ -88,8 +83,8 @@ final class Main {
         for (final var file : directory.listFiles()) {
             if (file.isDirectory())
                 processDirectory(file);
-			else
-				analyzeFile(file);
+            else
+                analyzeFile(file);
         }
     }
 
@@ -124,46 +119,46 @@ final class Main {
 
         if (!fileName.endsWith(".java")) {
             debug(() -> "Skipping analyzing of " + fileName + " as it does not seem to be a java source file");
-			return;
-		}
+            return;
+        }
 
         if (fileName.equalsIgnoreCase("package-info.java")) {
             debug(() -> "Skipping package info file " + fileName);
-			return;
-		}
+            return;
+        }
 
-		if (fileName.equalsIgnoreCase("module-info.java")) {
-			debug(() -> "Skipping module info file " + fileName);
-			return;
-		}
+        if (fileName.equalsIgnoreCase("module-info.java")) {
+            debug(() -> "Skipping module info file " + fileName);
+            return;
+        }
 
         debug(() -> "Processing file " + fileName);
 
         var i = 0;
 
         for (final var line : lines) {
-			i++;
+            i++;
 
-			final var trimmedLine = line.trim();
+            final var trimmedLine = line.trim();
 
-			if (trimmedLine.startsWith("//"))
-				continue; // Commented out line does not matter
+            if (trimmedLine.startsWith("//"))
+                continue; // Commented out line does not matter
 
-			if (line.contains("// JavaAnalyzer ignore"))
-				continue; // Ignored by supression comment
+            if (line.contains("// JavaAnalyzer ignore"))
+                continue; // Ignored by supression comment
 
-			if ((line.contains("static") && !line.contains("statically") && !line.contains("initializer") && !line.contains("is static") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !line.contains("abstract") && !noMethodFinalWarning) {
+            if ((line.contains("static") && !line.contains("statically") && !line.contains("initializer") && !line.contains("is static") && !line.contains("non-static") && !line.contains("static {")) && !line.contains("=") && line.contains("(") && !line.contains("static final") && !line.contains("abstract") && !noMethodFinalWarning) {
                 warning(file, line, i, "Static method maybe final");
             } else if ((line.contains("private")) && !line.contains("*") /* javadoc */ && !line.contains("static") && !line.contains("private final") && !line.contains("=") && !line.contains("val") && line.contains("(") && !noMethodFinalWarning) {
-				if (PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim()).length != 2) // constructor
-					warning(file, line, i, "Private method maybe final");
-			} else if ((line.contains("(")) && !line.contains("*") /* javadoc */ && (line.contains("{") || line.contains(";")) && !line.contains("();") && !line.contains("(final ") && !line.contains("=") && !line.contains("+") && !line.contains("val") && !line.contains("return ") && !line.contains("() {") && !line.contains("@Nullable final") && !line.contains("@NonNull final") && !line.contains("() ->") && !line.contains(") -> {") && !line.contains("},") && !(line.contains("?") && line.contains(":")) && !noMethodFinalWarning) {
-				final var method = PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim());
-				if ((method.length > 4 || method[0].contains("abstract")) && (method.length < 4 || !method[4].contains("static")) || method.length > 5)
-					warning(file, line, i, "Method parameters maybe final");
-				else if (line.contains("abstract") && !line.contains("()"))
-					warning(file, line, i, "Abstract method parameters maybe final");
-			} else if ((line.contains("\"\"+") || line.contains("\"\" +")) && !line.contains("\\\"\"") && !noConcenationWarning)
+                if (PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim()).length != 2) // constructor
+                    warning(file, line, i, "Private method maybe final");
+            } else if ((line.contains("(")) && !line.contains("*") /* javadoc */ && (line.contains("{") || line.contains(";")) && !line.contains("();") && !line.contains("(final ") && !line.contains("=") && !line.contains("+") && !line.contains("val") && !line.contains("return ") && !line.contains("() {") && !line.contains("@Nullable final") && !line.contains("@NonNull final") && !line.contains("() ->") && !line.contains(") -> {") && !line.contains("},") && !(line.contains("?") && line.contains(":")) && !noMethodFinalWarning) {
+                final var method = PATTERN_ON_SPACE.split(PATTERN_ON_BRACKET.split(trimmedLine)[0].trim());
+                if ((method.length > 4 || method[0].contains("abstract")) && (method.length < 4 || !method[4].contains("static")) || method.length > 5)
+                    warning(file, line, i, "Method parameters maybe final");
+                else if (line.contains("abstract") && !line.contains("()"))
+                    warning(file, line, i, "Abstract method parameters maybe final");
+            } else if ((line.contains("\"\"+") || line.contains("\"\" +")) && !line.contains("\\\"\"") && !noConcenationWarning)
                 warning(file, line, i, "Redundant empty string concenation");
             else if ((line.contains("catch(") || line.contains("catch (")) && !line.contains("(final ") && !noCatchFinalWarning)
                 warning(file, line, i, "Catched exception maybe final");
@@ -173,11 +168,11 @@ final class Main {
         processedFiles++;
     }
 
-	private static final void warning(final File file, final String line, final int lineNumber, final String message) {
-		final var parent = file.getParent();
-		final var split = FILE_SEPARATOR_PATTERN.split(parent);
+    private static final void warning(final File file, final String line, final int lineNumber, final String message) {
+        final var parent = file.getParent();
+        final var split = FILE_SEPARATOR_PATTERN.split(parent);
 
-		System.out.println(message + " (" + split[split.length - 1] + File.separator + file.getName() + ", line " + lineNumber + "): " + line);
-		printedWarnings++;
-	}
+        System.out.println(message + " (" + split[split.length - 1] + File.separator + file.getName() + ", line " + lineNumber + "): " + line);
+        printedWarnings++;
+    }
 }
