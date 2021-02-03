@@ -640,7 +640,7 @@
                     <optimize>true</optimize>
                     <forceJavacCompilerUse>false</forceJavacCompilerUse>
                     <compilerId>eclipse</compilerId>
-                    <compilerVersion>14</compilerVersion>
+                    <compilerVersion>15</compilerVersion>
                     <compilerArgs>
                         <arg>-properties</arg>
                         <arg>.settings/org.eclipse.jdt.core.prefs</arg>
@@ -651,6 +651,7 @@
                         <arg>-O</arg>
 
                         <arg>-Xpkginfo:always</arg>
+                        <arg>-Xwarn:-tasks</arg>
                     </compilerArgs>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
@@ -768,6 +769,8 @@
                                 <exclude>META-INF/kotlin-stdlib-common-coroutines.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-jdk7.kotlin_module</exclude>
                                 <exclude>META-INF/kotlin-stdlib-jdk8.kotlin_module</exclude>
+
+                                <exclude>**/*module-info*</exclude>
                             </excludes>
                         </filter>
                         <filter>
