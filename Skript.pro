@@ -33,10 +33,10 @@
 -libraryjars '<user.home>/.m2/repository/fr/neatmonster/nocheatplus/3.16.1-SNAPSHOT/nocheatplus-3.16.1-SNAPSHOT.jar'
 
 # Annotations used by Skript - All of them are optional.
--libraryjars '<user.home>/.m2/repository/org/eclipse/jdt/org.eclipse.jdt.annotation/1.1.400/org.eclipse.jdt.annotation-1.1.400.jar'
+-libraryjars '<user.home>/.m2/repository/org/eclipse/jdt/org.eclipse.jdt.annotation/1.1.500/org.eclipse.jdt.annotation-1.1.500.jar'
 #-libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
 -libraryjars '<user.home>/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'
--libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.0.0/spotbugs-annotations-4.0.0.jar'
+-libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.2.0/spotbugs-annotations-4.2.0.jar'
 
 -dontskipnonpubliclibraryclassmembers
 -allowaccessmodification
