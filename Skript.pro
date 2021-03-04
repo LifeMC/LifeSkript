@@ -36,7 +36,7 @@
 -libraryjars '<user.home>/.m2/repository/org/eclipse/jdt/org.eclipse.jdt.annotation/1.1.500/org.eclipse.jdt.annotation-1.1.500.jar'
 #-libraryjars '<user.home>/.m2/repository/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar'
 -libraryjars '<user.home>/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar'
--libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.2.1/spotbugs-annotations-4.2.1.jar'
+-libraryjars '<user.home>/.m2/repository/com/github/spotbugs/spotbugs-annotations/4.2.2/spotbugs-annotations-4.2.2.jar'
 
 -dontskipnonpubliclibraryclassmembers
 -allowaccessmodification
