@@ -60,4 +60,4 @@ jobs:
           path: target/Skript.jar
 
       - name: shellcheck
-        uses: ludeeus/action-shellcheck@1.0.0
+        uses: ludeeus/action-shellcheck@1.1.0
