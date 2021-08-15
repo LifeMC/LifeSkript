@@ -520,7 +520,7 @@
                                 <requireMavenVersion>
                                     <version>3.0.5</version>
                                 </requireMavenVersion>
-                                <banDuplicatePomDependencyVersions/>
+                                <!--<banDuplicatePomDependencyVersions/>
                                 <banDuplicateClasses>
                                     <scopes>
                                         <scope>compile</scope>
@@ -529,7 +529,7 @@
                                     <findAllDuplicates>true</findAllDuplicates>
                                     <ignoreWhenIdentical>false</ignoreWhenIdentical>
                                 </banDuplicateClasses>
-                                <banCircularDependencies/>
+                                <banCircularDependencies/>-->
                                 <requireEncoding>
                                     <encoding>UTF-8</encoding>
                                     <includes>src/main/java/**,src/test/java/**</includes>
