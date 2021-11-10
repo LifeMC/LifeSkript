@@ -343,7 +343,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>22.0.0</version>
+            <version>23.0.0</version>
             <!-- Only annotations - but anyway include it. -->
             <scope>compile</scope>
         </dependency>
