@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Cache
-        uses: actions/cache@v3.0.5
+        uses: actions/cache@v3.0.6
         with:
           # A directory to store and save the cache
           path: cache
@@ -29,14 +29,14 @@ jobs:
           cache: 'maven'
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3.0.5
+        uses: actions/cache@v3.0.6
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Maven packages
-        uses: actions/cache@v3.0.5
+        uses: actions/cache@v3.0.6
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
