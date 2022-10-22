@@ -56,7 +56,7 @@ jobs:
           mvn -Duser.name="Skript Team" -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Duser.language=en -Duser.country=US -Duser.timezone=Asia/Istanbul -DcompilerArgument=-O -e -B verify -U clean org.jacoco:jacoco-maven-plugin:prepare-agent install package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.1
         with:
           name: skript-nightly
           path: target/Skript.jar
